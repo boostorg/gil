@@ -1,0 +1,16 @@
+# Jamfile for building the GIL test app
+
+subproject libs/gil/test
+	;
+
+exe gil_test : 
+    main.cpp
+    image.cpp
+    image_io.cpp
+    pixel.cpp
+    pixel_iterator.cpp
+    channel.cpp
+    sample_image.cpp
+    : <include>$(BOOST_ROOT) <define>BOOST_GIL_NO_IO
+;
+
