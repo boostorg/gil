@@ -1,7 +1,7 @@
 # Jamfile for building the GIL test app
 
 subproject libs/gil/test
-	;
+    ;
 
 exe gil_test : 
     main.cpp
