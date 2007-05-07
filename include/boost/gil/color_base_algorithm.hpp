@@ -1,7 +1,11 @@
 /*
-  Copyright 2005-2007 Adobe Systems Incorporated
-  Distributed under the MIT License (see accompanying file LICENSE_1_0_0.txt
-  or a copy at http://opensource.adobe.com/licenses.html)
+    Copyright 2005-2007 Adobe Systems Incorporated
+   
+    Use, modification and distribution are subject to the Boost Software License,
+    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt).
+
+    See http://opensource.adobe.com/gil for most recent version including documentation.
 */
 
 /*************************************************************************************************/
@@ -353,26 +357,26 @@ template<> struct element_recursion<0> {
 };
 
 // std::min and std::max don't have the mutable overloads...
-template <typename Q> inline const Q& min(const Q& x, const Q& y) { return x<y ? x : y; }
-template <typename Q> inline       Q& min(      Q& x,       Q& y) { return x<y ? x : y; }
-template <typename Q> inline const Q& max(const Q& x, const Q& y) { return x<y ? y : x; }
-template <typename Q> inline       Q& max(      Q& x,       Q& y) { return x<y ? y : x; }
+template <typename Q> inline const Q& mutable_min(const Q& x, const Q& y) { return x<y ? x : y; }
+template <typename Q> inline       Q& mutable_min(      Q& x,       Q& y) { return x<y ? x : y; }
+template <typename Q> inline const Q& mutable_max(const Q& x, const Q& y) { return x<y ? y : x; }
+template <typename Q> inline       Q& mutable_max(      Q& x,       Q& y) { return x<y ? y : x; }
 
 
 // compile-time recursion for min/max element
 template <int N>
 struct min_max_recur {
     template <typename P> static typename element_const_reference_type<P>::type max_(const P& p) {
-        return detail::max(min_max_recur<N-1>::max_(p),semantic_at_c<N-1>(p));
+        return mutable_max(min_max_recur<N-1>::max_(p),semantic_at_c<N-1>(p));
     }    
     template <typename P> static typename element_reference_type<P>::type       max_(      P& p) {
-        return detail::max(min_max_recur<N-1>::max_(p),semantic_at_c<N-1>(p));
+        return mutable_max(min_max_recur<N-1>::max_(p),semantic_at_c<N-1>(p));
     }    
     template <typename P> static typename element_const_reference_type<P>::type min_(const P& p) {
-        return detail::min(min_max_recur<N-1>::min_(p),semantic_at_c<N-1>(p));
+        return mutable_min(min_max_recur<N-1>::min_(p),semantic_at_c<N-1>(p));
     }    
     template <typename P> static typename element_reference_type<P>::type       min_(      P& p) {
-        return detail::min(min_max_recur<N-1>::min_(p),semantic_at_c<N-1>(p));
+        return mutable_min(min_max_recur<N-1>::min_(p),semantic_at_c<N-1>(p));
     }    
 };
 

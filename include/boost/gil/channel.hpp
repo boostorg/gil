@@ -1,7 +1,11 @@
 /*
     Copyright 2005-2007 Adobe Systems Incorporated
-    Distributed under the MIT License (see accompanying file LICENSE_1_0_0.txt
-    or a copy at http://opensource.adobe.com/licenses.html)
+   
+    Use, modification and distribution are subject to the Boost Software License,
+    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt).
+
+    See http://opensource.adobe.com/gil for most recent version including documentation.
 */
 
 /*************************************************************************************************/
@@ -14,7 +18,7 @@
 /// \brief Channel utilities
 /// \author Lubomir Bourdev and Hailin Jin \n
 ///         Adobe Systems Incorporated
-/// \date 2005-2007 \n Last updated on September 18, 2006
+/// \date   2005-2007 \n Last updated on May 6, 2007
 ///
 /// Definitions of standard GIL channel models
 ///
@@ -71,8 +75,8 @@ namespace detail {
         typedef const T&    const_reference;
         typedef T const*    const_pointer;
         BOOST_STATIC_CONSTANT(bool, is_mutable=true);
-        static value_type min_value() { return std::numeric_limits<T>::min(); }
-        static value_type max_value() { return std::numeric_limits<T>::max(); }
+        static value_type min_value() { return (std::numeric_limits<T>::min)(); }
+        static value_type max_value() { return (std::numeric_limits<T>::max)(); }
     };
 
     /// \brief channel traits implementation for constant built-in scalar or floating point type
