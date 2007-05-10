@@ -376,6 +376,134 @@ typename nth_channel_view_type<View>::type nth_channel_view(const View& src, int
     return nth_channel_view_type<View>::make(src,n);
 }
 
+
+
+
+
+
+
+/// \defgroup ImageViewTransformationsKthChannel kth_channel_view
+/// \ingroup ImageViewTransformations
+/// \brief single-channel (grayscale) view of the K-th channel of a given image_view. The channel index is a template parameter
+
+namespace detail {
+    template <int K, typename View, bool AreChannelsTogether> struct __kth_channel_view_basic;
+
+    // kth_channel_view when the channels are not adjacent in memory. This can happen for multi-channel interleaved images 
+    // or images with a step
+    template <int K, typename View>
+    struct __kth_channel_view_basic<K,View,false> {
+    private:
+        typedef typename View::value_type::template kth_element_type<K>::type channel_t;
+    public:
+        typedef typename view_type<channel_t, gray_layout_t, false, true, view_is_mutable<View>::value>::type type;
+
+        static type make(const View& src) {
+            typedef typename type::xy_locator                             locator_t;
+            typedef typename type::x_iterator                            x_iterator_t;
+            typedef typename iterator_adaptor_get_base<x_iterator_t>::type x_iterator_base_t;
+            x_iterator_t sit(x_iterator_base_t(&at_c<K>(src(0,0))),src.pixels().pix_bytestep());
+            return type(src.dimensions(),locator_t(sit, src.pixels().row_bytes()));
+        }
+    };
+
+    // kth_channel_view when the channels are together in memory (true for simple grayscale or planar images)
+    template <int K, typename View>
+    struct __kth_channel_view_basic<K,View,true> {
+    private:
+        typedef typename View::value_type::template kth_element_type<K>::type channel_t;
+    public:
+        typedef typename view_type<channel_t, gray_layout_t, false, false, view_is_mutable<View>::value>::type type;
+        static type make(const View& src) {
+            typedef typename type::x_iterator x_iterator_t;
+            return interleaved_view(src.width(),src.height(),(x_iterator_t)&at_c<K>(src(0,0)), src.pixels().row_bytes());
+        }
+    };
+
+    template <int K, typename View, bool IsBasic> struct __kth_channel_view;
+
+    // For basic (memory-based) views dispatch to __kth_channel_view_basic
+    template <int K, typename View> struct __kth_channel_view<K,View,true> {
+    private:
+        typedef typename View::x_iterator src_x_iterator;
+
+        // Determines whether the channels of a given pixel iterator are adjacent in memory.
+        // Planar and grayscale iterators have channels adjacent in memory, whereas multi-channel interleaved and iterators with non-fundamental step do not.
+        BOOST_STATIC_CONSTANT(bool, adjacent=
+                              !iterator_is_step<src_x_iterator>::value &&
+                              (is_planar<src_x_iterator>::value ||
+                              num_channels<View>::value==1));
+    public:
+        typedef typename __kth_channel_view_basic<K,View,adjacent>::type type;
+
+        static type make(const View& src) {
+            return __kth_channel_view_basic<K,View,adjacent>::make(src);
+        }
+    };
+
+    /// \brief Function object that returns a grayscale reference of the K-th channel (specified as a template parameter) of a given reference. Models: PixelDereferenceAdaptorConcept.
+    /// \ingroup PixelDereferenceAdaptorModel
+    ///
+    /// If the input is a pixel value or constant reference, the function object is immutable. Otherwise it is mutable (and returns non-const reference to the k-th channel)
+    template <int K, typename SrcP>        // SrcP is a reference to PixelConcept (could be pixel value or const/non-const reference)
+                                    // Examples: pixel<T,L>, pixel<T,L>&, const pixel<T,L>&, planar_pixel_reference<T&,L>, planar_pixel_reference<const T&,L>
+    struct kth_channel_deref_fn {
+        BOOST_STATIC_CONSTANT(bool, is_mutable=is_pixel_reference<SrcP>::value && pixel_reference_is_mutable<SrcP>::value);
+    private:
+        typedef typename remove_reference<SrcP>::type src_pixel_t;
+        typedef typename src_pixel_t::template kth_element_type<K>::type channel_t;
+        typedef typename src_pixel_t::const_reference const_ref_t;
+        typedef typename pixel_reference_type<channel_t,gray_layout_t,false,is_mutable>::type ref_t;
+    public:
+        typedef kth_channel_deref_fn<K,const_ref_t>                               const_t;
+        typedef pixel<channel_t,gray_layout_t>                                    value_type;
+        typedef typename pixel_reference_type<channel_t,gray_layout_t,false,false>::type const_reference;
+        typedef SrcP                                                              argument_type;
+        typedef typename mpl::if_c<is_mutable, ref_t, value_type>::type           reference;
+        typedef reference                                                         result_type;
+
+        kth_channel_deref_fn() {}
+        template <typename P> kth_channel_deref_fn(const kth_channel_deref_fn<K,P>&) {}
+
+        result_type operator()(argument_type srcP) const { 
+            return result_type(at_c<K>(srcP)); 
+        }
+    };
+
+    template <int K, typename View> struct __kth_channel_view<K,View,false> {
+    private:
+        typedef kth_channel_deref_fn<K,typename View::reference> deref_t;
+        typedef typename View::template add_deref<deref_t>   AD;
+    public:
+        typedef typename AD::type type;
+        static type make(const View& src) {
+            return AD::make(src, deref_t());
+        }
+    };
+}
+
+/// \brief Given a source image view type View, returns the type of an image view over a given channel of View.
+/// \ingroup ImageViewTransformationsKthChannel
+///
+/// If the channels in the source view are adjacent in memory (such as planar non-step view or single-channel view) then the
+/// return view is a single-channel non-step view.
+/// If the channels are non-adjacent (interleaved and/or step view) then the return view is a single-channel step view.
+template <int K, typename View>
+struct kth_channel_view_type {
+private:
+    GIL_CLASS_REQUIRE(View, boost::gil, ImageViewConcept);
+    typedef detail::__kth_channel_view<K,View,view_is_basic<View>::value> VB;
+public:
+    typedef typename VB::type type;
+    static type make(const View& src) { return VB::make(src); }
+};
+
+/// \ingroup ImageViewTransformationsKthChannel
+template <int K, typename View>
+typename kth_channel_view_type<K,View>::type kth_channel_view(const View& src) {
+    return kth_channel_view_type<K,View>::make(src);
+}
+
 } }  // namespace boost::gil
 
 #endif
