@@ -16,7 +16,7 @@
 /// \brief  Internal support for reading and writing PNG files
 /// \author Hailin Jin and Lubomir Bourdev \n
 ///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated September 24, 2006
+/// \date   2005-2007 \n Last updated August 14, 2007
 
 #include <algorithm>
 #include <vector>
@@ -162,6 +162,8 @@ protected:
         png_init_io(_png_ptr, get());
         png_set_sig_bytes(_png_ptr,PNG_BYTES_TO_CHECK);
         png_read_info(_png_ptr, _info_ptr);
+        if (little_endian() && png_get_bit_depth(_png_ptr,_info_ptr)>8)
+            png_set_swap(_png_ptr);
     }
 public:
     png_reader(FILE* file          ) : file_mgr(file)           { init(); }
@@ -337,6 +339,8 @@ public:
                      PNG_INTERLACE_NONE,
                      PNG_COMPRESSION_TYPE_DEFAULT,PNG_FILTER_TYPE_DEFAULT);
         png_write_info(_png_ptr,_info_ptr);
+        if (little_endian() && png_get_bit_depth(_png_ptr,_info_ptr)>8)
+            png_set_swap(_png_ptr);
         std::vector<pixel<typename channel_type<View>::type,
                           layout<typename color_space_type<View>::type> > > row(view.width());
         for(int y=0;y<view.height();++y) {
