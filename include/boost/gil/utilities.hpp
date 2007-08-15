@@ -279,6 +279,15 @@ void swap_proxy(T1& left, T2& right) {
     right = tmp;
 }
 
+/// \brief Run-time detection of whether the underlying architecture is little endian
+inline bool little_endian() {
+    short tester = 0x0001;
+    return  *(char*)&tester!=0;
+}
+/// \brief Run-time detection of whether the underlying architecture is big endian
+inline bool big_endian() {
+    return !little_endian();
+}
 
 } }  // namespace boost::gil
 
