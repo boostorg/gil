@@ -339,7 +339,9 @@ public:
                      PNG_INTERLACE_NONE,
                      PNG_COMPRESSION_TYPE_DEFAULT,PNG_FILTER_TYPE_DEFAULT);
         png_write_info(_png_ptr,_info_ptr);
-        if (little_endian() && png_get_bit_depth(_png_ptr,_info_ptr)>8)
+        if (little_endian() &&
+            png_write_support_private<typename channel_type<View>::type,
+                                      typename color_space_type<View>::type>::bit_depth>8)
             png_set_swap(_png_ptr);
         std::vector<pixel<typename channel_type<View>::type,
                           layout<typename color_space_type<View>::type> > > row(view.width());
