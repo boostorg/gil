@@ -1,3 +1,20 @@
+/*
+    Copyright 2005-2007 Adobe Systems Incorporated
+   
+    Use, modification and distribution are subject to the Boost Software License,
+    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt).
+
+    See http://opensource.adobe.com/gil for most recent version including documentation.
+*/
+
+/*************************************************************************************************/
+
+///////////////////////
+////  NOTE: This sample file uses the numeric extension, which does not come with the Boost distribution.
+////  You may download it from http://opensource.adobe.com/gil 
+///////////////////////
+
 /// \file
 /// \brief Test file for resample_pixels() in the numeric extension
 /// \author Lubomir Bourdev and Hailin Jin
