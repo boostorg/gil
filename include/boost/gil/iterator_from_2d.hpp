@@ -54,7 +54,7 @@ class iterator_from_2d : public iterator_facade<iterator_from_2d<Loc2>,
                                                 random_access_traversal_tag,
                                                 typename Loc2::reference,
                                                 typename Loc2::coord_t> {
-    GIL_CLASS_REQUIRE(Loc2, boost::gil, PixelLocatorConcept);
+    GIL_CLASS_REQUIRE(Loc2, boost::gil, PixelLocatorConcept)
 public:
     typedef iterator_facade<iterator_from_2d<Loc2>,
                             typename Loc2::value_type,
@@ -67,7 +67,8 @@ public:
     typedef typename Loc2::point_t             point_t;
 
     int width()         const { return _width; }            // number of pixels per image row
-    int x_pos()         const { return _x; }                // current x position
+    int x_pos()         const { return _coords.x; }         // current x position
+    int y_pos()         const { return _coords.y; }         // current y position
 
     /// For some reason operator[] provided by iterator_adaptor returns a custom class that is convertible to reference
     /// We require our own reference because it is registered in iterator_traits
@@ -77,27 +78,29 @@ public:
     x_iterator&     x()                   { return _p.x(); }
 
     iterator_from_2d(){}
-    iterator_from_2d(const Loc2& p, int width, int x=0) : _x(x), _width(width), _p(p) {}
-    iterator_from_2d(const iterator_from_2d& pit) : _x(pit._x), _width(pit._width), _p(pit._p) {}
-    template <typename Loc> iterator_from_2d(const iterator_from_2d<Loc>& pit) : _x(pit._x), _width(pit._width), _p(pit._p) {}
+    iterator_from_2d(const Loc2& p, int width, int x=0, int y=0) : _coords(x,y), _width(width), _p(p) {}
+    iterator_from_2d(const iterator_from_2d& pit) : _coords(pit._coords), _width(pit._width), _p(pit._p) {}
+    template <typename Loc> iterator_from_2d(const iterator_from_2d<Loc>& pit) : _coords(pit._coords), _width(pit._width), _p(pit._p) {}
 
 private:
     template <typename Loc> friend class iterator_from_2d;
     friend class boost::iterator_core_access;
     reference dereference() const { return *_p; }
     void increment() {
-        ++_x;
+        ++_coords.x;
         ++_p.x();
-        if (_x>=_width) {
-            _x=0;
+        if (_coords.x>=_width) {
+            _coords.x=0;
+            ++_coords.y;
             _p+=point_t(-_width,1);
         }           
     }
     void decrement() {
-        --_x;
+        --_coords.x;
         --_p.x();
-        if (_x<0) {
-            _x=_width-1;
+        if (_coords.x<0) {
+            _coords.x=_width-1;
+            --_coords.y;
             _p+=point_t(_width,-1);
         }
     }
@@ -105,29 +108,30 @@ private:
     GIL_FORCEINLINE void advance(difference_type d) {  
         if (_width==0) return;  // unfortunately we need to check for that. Default-constructed images have width of 0 and the code below will throw if executed.
         point_t delta;
-        if (_x+d>=0) {  // not going back to a previous row?
-            delta.x=(_x+(int)d)%_width - _x;
-            delta.y=(_x+(int)d)/_width;
+        if (_coords.x+d>=0) {  // not going back to a previous row?
+            delta.x=(_coords.x+(int)d)%_width - _coords.x;
+            delta.y=(_coords.x+(int)d)/_width;
         } else {
-            delta.x=(_x+(int)d*(1-_width))%_width -_x;
-            delta.y=-(_width-_x-(int)d-1)/_width;
+            delta.x=(_coords.x+(int)d*(1-_width))%_width -_coords.x;
+            delta.y=-(_width-_coords.x-(int)d-1)/_width;
         }   
         _p+=delta;
-        _x+=delta.x;
+        _coords.x+=delta.x;
+        _coords.y+=delta.y;
     }
 
     difference_type distance_to(const iterator_from_2d& it) const { 
         if (_width==0) return 0;
-        int xd=it.x_pos()-_x;
-        return _p.y_distance_to(it._p,xd)*_width+xd;
+        return (it.y_pos()-_coords.y)*_width + (it.x_pos()-_coords.x);
     }
 
     bool equal(const iterator_from_2d& it) const {
         assert(_width==it.width());     // they must belong to the same image
-        return _p==it._p;
+        return _coords==it._coords && _p==it._p;
     }
 
-    int _x,_width;
+    point2<int> _coords;
+    int _width;
     Loc2 _p;
 };
 

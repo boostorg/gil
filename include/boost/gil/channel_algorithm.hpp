@@ -25,8 +25,58 @@
 
 #include "gil_config.hpp"
 #include "channel.hpp"
+#include <boost/mpl/less.hpp>
+#include <boost/mpl/integral_c.hpp>
+#include <boost/mpl/greater.hpp>
+#include <boost/type_traits.hpp>
 
 namespace boost { namespace gil {
+
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4309)      // disable truncation of constant value warning (using -1 to get the max value of an integral)
+#endif
+
+namespace detail {
+
+// some forward declarations
+template <typename SrcChannelV, typename DstChannelV, bool SrcIsIntegral, bool DstIsIntegral> struct channel_converter_unsigned_impl;
+template <typename SrcChannelV, typename DstChannelV, bool SrcIsGreater> struct channel_converter_unsigned_integral;
+template <typename SrcChannelV, typename DstChannelV, bool SrcLessThanDst, bool SrcDivisible> struct channel_converter_unsigned_integral_impl;
+template <typename SrcChannelV, typename DstChannelV, bool SrcLessThanDst, bool CannotFitInInteger> struct channel_converter_unsigned_integral_nondivisible;
+
+//////////////////////////////////////
+////  unsigned_integral_max_value - given an unsigned integral channel type, returns its maximum value as an MPL integral constant
+//////////////////////////////////////
+
+
+template <typename UnsignedIntegralChannel>
+struct unsigned_integral_max_value : public mpl::integral_c<UnsignedIntegralChannel,-1> {};
+
+template <>
+struct unsigned_integral_max_value<uint8_t> : public mpl::integral_c<uint32_t,0xFF> {};
+template <>
+struct unsigned_integral_max_value<uint16_t> : public mpl::integral_c<uint32_t,0xFFFF> {};
+template <>
+struct unsigned_integral_max_value<uint32_t> : public mpl::integral_c<uintmax_t,0xFFFFFFFF> {};
+
+
+template <int K>
+struct unsigned_integral_max_value<packed_channel_value<K> >
+    : public mpl::integral_c<typename packed_channel_value<K>::integer_t, (1<<K)-1> {};
+
+//////////////////////////////////////
+////  unsigned_integral_num_bits - given an unsigned integral channel type, returns the minimum number of bits needed to represent it
+//////////////////////////////////////
+
+template <typename UnsignedIntegralChannel>
+struct unsigned_integral_num_bits : public mpl::int_<sizeof(UnsignedIntegralChannel)*8> {};
+
+template <int K>
+struct unsigned_integral_num_bits<packed_channel_value<K> >
+    : public mpl::int_<K> {};
+
+} // namespace detail
 
 /**
 \defgroup ChannelConvertAlgorithm channel_convert
@@ -39,8 +89,19 @@ One implication of this is that the value 0 of signed channels may not be preser
 
 When creating new channel models, it is often a good idea to provide specializations for the channel conversion algorithms, for
 example, for performance optimizations. If the new model is an integral type that can be signed, it is easier to define the conversion 
-only for the unsigned type (\p channel_converter_unsigned) and provide specializations of \p channel_convert_to_unsigned and \p channel_convert_to_signed
-to convert between the signed and unsigned type.
+only for the unsigned type (\p channel_converter_unsigned) and provide specializations of \p detail::channel_convert_to_unsigned 
+and \p detail::channel_convert_from_unsigned to convert between the signed and unsigned type.
+
+Example:
+\code
+// bits32f is a floating point channel with range [0.0f ... 1.0f]
+bits32f src_channel = channel_traits<bits32f>::max_value();
+assert(src_channel == 1);
+
+// bits8 is 8-bit unsigned integral channel (typedef-ed from unsigned char)
+bits8 dst_channel = channel_convert<bits8>(src_channel);
+assert(dst_channel == 255);     // max value goes to max value
+\endcode
 */
 
 /** 
@@ -50,11 +111,31 @@ to convert between the signed and unsigned type.
  @{
  */
 
-/// \brief This is the default implementation. Performance specializatons are provided
+//////////////////////////////////////
+////  channel_converter_unsigned
+//////////////////////////////////////
+
 template <typename SrcChannelV, typename DstChannelV>     // Model ChannelValueConcept
-struct channel_converter_unsigned : public std::unary_function<DstChannelV,SrcChannelV> {
+struct channel_converter_unsigned
+    : public detail::channel_converter_unsigned_impl<SrcChannelV,DstChannelV,is_integral<SrcChannelV>::value,is_integral<DstChannelV>::value> {};
+
+
+/// \brief Converting a channel to itself - identity operation
+template <typename T> struct channel_converter_unsigned<T,T> : public detail::identity<T> {};
+
+
+namespace detail {
+
+//////////////////////////////////////
+////  channel_converter_unsigned_impl
+//////////////////////////////////////
+
+/// \brief This is the default implementation. Performance specializatons are provided
+template <typename SrcChannelV, typename DstChannelV, bool SrcIsIntegral, bool DstIsIntegral> 
+struct channel_converter_unsigned_impl : public std::unary_function<DstChannelV,SrcChannelV> {
     DstChannelV operator()(SrcChannelV src) const { 
-        return DstChannelV(src / channel_range<SrcChannelV>() * channel_range<DstChannelV>()); 
+        return DstChannelV(channel_traits<DstChannelV>::min_value() +
+            (src - channel_traits<SrcChannelV>::min_value()) / channel_range<SrcChannelV>() * channel_range<DstChannelV>()); 
     }
 private:
     template <typename C>
@@ -63,53 +144,138 @@ private:
     }
 };
 
-/// \brief Converting a channel to itself - identity operation
-template <typename T> struct channel_converter_unsigned<T,T> : public detail::identity<T> {};
+// When both the source and the destination are integral channels, perform a faster conversion
+template <typename SrcChannelV, typename DstChannelV> 
+struct channel_converter_unsigned_impl<SrcChannelV,DstChannelV,true,true>
+    : public channel_converter_unsigned_integral<SrcChannelV,DstChannelV,
+    mpl::less<unsigned_integral_max_value<SrcChannelV>,unsigned_integral_max_value<DstChannelV> >::value > {};
 
-/// \brief 8 bit <-> 16 bit channel conversion
-template <> struct channel_converter_unsigned<bits16,bits8> : public std::unary_function<bits16,bits8> {
-    bits8  operator()(bits16 x) const { return static_cast<bits8>(x/257); }
-};
-/// \brief 8 bit <-> 16 bit channel conversion
-template <> struct channel_converter_unsigned<bits8,bits16> : public std::unary_function<bits8,bits16> {
-    bits16 operator()(bits8  x) const { return static_cast<bits16>(x*257); }
+
+//////////////////////////////////////
+////  channel_converter_unsigned_integral
+//////////////////////////////////////
+
+template <typename SrcChannelV, typename DstChannelV> 
+struct channel_converter_unsigned_integral<SrcChannelV,DstChannelV,true>
+    : public channel_converter_unsigned_integral_impl<SrcChannelV,DstChannelV,true,
+    !(unsigned_integral_max_value<DstChannelV>::value % unsigned_integral_max_value<SrcChannelV>::value) > {};
+
+template <typename SrcChannelV, typename DstChannelV> 
+struct channel_converter_unsigned_integral<SrcChannelV,DstChannelV,false>
+    : public channel_converter_unsigned_integral_impl<SrcChannelV,DstChannelV,false,
+    !(unsigned_integral_max_value<SrcChannelV>::value % unsigned_integral_max_value<DstChannelV>::value) > {};
+
+
+//////////////////////////////////////
+////  channel_converter_unsigned_integral_impl
+//////////////////////////////////////
+
+// Both source and destination are unsigned integral channels, 
+// the src max value is less than the dst max value,
+// and the dst max value is divisible by the src max value
+template <typename SrcChannelV, typename DstChannelV> 
+struct channel_converter_unsigned_integral_impl<SrcChannelV,DstChannelV,true,true> {
+    DstChannelV operator()(SrcChannelV src) const { 
+        typedef typename unsigned_integral_max_value<DstChannelV>::value_type integer_t;
+        static const integer_t mul = unsigned_integral_max_value<DstChannelV>::value / unsigned_integral_max_value<SrcChannelV>::value;
+        return DstChannelV(src * mul);
+    }
 };
 
-/// \brief 8 bit <-> 32 bit channel conversion
-template <> struct channel_converter_unsigned<bits32,bits8> : public std::unary_function<bits32,bits8> {
-    bits8 operator()(bits32 x) const { return static_cast<bits8>(x/16843009); }
-};
-/// \brief 8 bit <-> 32 bit channel conversion
-template <> struct channel_converter_unsigned<bits8,bits32> : public std::unary_function<bits8,bits32> {
-    bits32 operator()(bits8 x) const { return static_cast<bits32>(x*16843009); }
-};
-
-/// \brief 8 bit <-> float0..1 channel conversion
-template <> struct channel_converter_unsigned<bits32f,bits8> : public std::unary_function<bits32f,bits8> {
-    bits8   operator()(bits32f x) const { return static_cast<bits8>(x*255+0.5f); }
-};
-/// \brief 8 bit <-> float0..1 channel conversion
-template <> struct channel_converter_unsigned<bits8,bits32f> : public std::unary_function<bits8,bits32f> {
-    bits32f operator()(bits8   x) const { return static_cast<bits32f>(x/255.0f); }
+// Both source and destination are unsigned integral channels, 
+// the dst max value is less than (or equal to) the src max value,
+// and the src max value is divisible by the dst max value
+template <typename SrcChannelV, typename DstChannelV> 
+struct channel_converter_unsigned_integral_impl<SrcChannelV,DstChannelV,false,true> {
+    DstChannelV operator()(SrcChannelV src) const { 
+        typedef typename unsigned_integral_max_value<SrcChannelV>::value_type integer_t;
+        static const integer_t div = unsigned_integral_max_value<SrcChannelV>::value / unsigned_integral_max_value<DstChannelV>::value;
+        static const integer_t div2 = div/2;
+        return DstChannelV((src + div2) / div);
+    }
 };
 
-/// \brief 16 bit <-> float0..1 channel conversion
-template <> struct channel_converter_unsigned<bits32f,bits16> : public std::unary_function<bits32f,bits16> {
-    bits16  operator()(bits32f x) const { return static_cast<bits16>(x*65535+0.5f); }
-};
-/// \brief 16 bit <-> float0..1 channel conversion
-template <> struct channel_converter_unsigned<bits16,bits32f> : public std::unary_function<bits16,bits32f> {
-    bits32f operator()(bits16  x) const { return static_cast<bits32f>(x/65535.0f); }
+// Prevent overflow for the largest integral type
+template <typename DstChannelV> 
+struct channel_converter_unsigned_integral_impl<uintmax_t,DstChannelV,false,true> {
+    DstChannelV operator()(uintmax_t src) const { 
+        static const uintmax_t div = unsigned_integral_max_value<bits32>::value / unsigned_integral_max_value<DstChannelV>::value;
+        static const uintmax_t div2 = div/2;
+        if (src > unsigned_integral_max_value<uintmax_t>::value - div2)
+            return unsigned_integral_max_value<DstChannelV>::value;
+        return DstChannelV((src + div2) / div);
+    }
 };
 
-/// \brief 16 bit <-> 32 bit channel conversion
-template <> struct channel_converter_unsigned<bits32,bits16> : public std::unary_function<bits32,bits16> {
-    bits16 operator()(bits32 x) const { return static_cast<bits16>(x/65537); }
+// Both source and destination are unsigned integral channels, 
+// and the dst max value is not divisible by the src max value
+// See if you can represent the expression (src * dst_max) / src_max in integral form
+template <typename SrcChannelV, typename DstChannelV, bool SrcLessThanDst> 
+struct channel_converter_unsigned_integral_impl<SrcChannelV,DstChannelV,SrcLessThanDst,false> 
+    : public channel_converter_unsigned_integral_nondivisible<SrcChannelV,DstChannelV,SrcLessThanDst,
+    mpl::greater<
+        mpl::plus<unsigned_integral_num_bits<SrcChannelV>,unsigned_integral_num_bits<DstChannelV> >,
+        unsigned_integral_num_bits<uintmax_t>
+    >::value> {};
+
+
+// Both source and destination are unsigned integral channels, 
+// the src max value is less than the dst max value,
+// and the dst max value is not divisible by the src max value
+// The expression (src * dst_max) / src_max fits in an integer
+template <typename SrcChannelV, typename DstChannelV> 
+struct channel_converter_unsigned_integral_nondivisible<SrcChannelV,DstChannelV,true,false> {
+    DstChannelV operator()(SrcChannelV src) const {
+        typedef typename detail::min_fast_uint<unsigned_integral_num_bits<SrcChannelV>::value+unsigned_integral_num_bits<DstChannelV>::value>::type integer_t;
+        return DstChannelV(integer_t(src * unsigned_integral_max_value<DstChannelV>::value) / unsigned_integral_max_value<SrcChannelV>::value);
+    }
 };
-/// \brief 16 bit <-> 32 bit channel conversion
-template <> struct channel_converter_unsigned<bits16,bits32> : public std::unary_function<bits16,bits32> {
-    bits32 operator()(bits16 x) const { return static_cast<bits32>(x*65537); }
+
+// Both source and destination are unsigned integral channels, 
+// the src max value is less than the dst max value,
+// and the dst max value is not divisible by the src max value
+// The expression (src * dst_max) / src_max cannot fit in an integer (overflows). Use a double
+template <typename SrcChannelV, typename DstChannelV> 
+struct channel_converter_unsigned_integral_nondivisible<SrcChannelV,DstChannelV,true,true> {
+    DstChannelV operator()(SrcChannelV src) const {
+        static const double mul = unsigned_integral_max_value<DstChannelV>::value / double(unsigned_integral_max_value<SrcChannelV>::value);
+        return DstChannelV(src * mul);
+    }
 };
+
+
+// Both source and destination are unsigned integral channels, 
+// the dst max value is less than (or equal to) the src max value,
+// and the src max value is not divisible by the dst max value
+template <typename SrcChannelV, typename DstChannelV, bool CannotFit> 
+struct channel_converter_unsigned_integral_nondivisible<SrcChannelV,DstChannelV,false,CannotFit> {
+    DstChannelV operator()(SrcChannelV src) const { 
+        typedef typename unsigned_integral_max_value<SrcChannelV>::value_type integer_t;
+
+        static const double div = unsigned_integral_max_value<SrcChannelV>::value / double(unsigned_integral_max_value<DstChannelV>::value);
+        static const integer_t div2 = integer_t(div/2);
+        return DstChannelV((src + div2) / div);
+    }
+};
+
+} // namespace detail
+
+/////////////////////////////////////////////////////
+///  bits32f conversion
+/////////////////////////////////////////////////////
+
+template <typename DstChannelV> struct channel_converter_unsigned<bits32f,DstChannelV> : public std::unary_function<bits32f,DstChannelV> {
+    DstChannelV   operator()(bits32f x) const { return DstChannelV(x*channel_traits<DstChannelV>::max_value()+0.5f); }
+};
+
+template <typename SrcChannelV> struct channel_converter_unsigned<SrcChannelV,bits32f> : public std::unary_function<SrcChannelV,bits32f> {
+    bits32f operator()(SrcChannelV   x) const { return bits32f(x/float(channel_traits<SrcChannelV>::max_value())); }
+};
+
+template <> struct channel_converter_unsigned<bits32f,bits32f> : public std::unary_function<bits32f,bits32f> {
+    bits32f operator()(bits32f   x) const { return x; }
+};
+
 
 /// \brief 32 bit <-> float channel conversion
 template <> struct channel_converter_unsigned<bits32,bits32f> : public std::unary_function<bits32,bits32f> {
@@ -127,85 +293,66 @@ template <> struct channel_converter_unsigned<bits32f,bits32> : public std::unar
         return bits32(x * channel_traits<bits32>::max_value() + 0.5f); 
     }
 };
+
 /// @} 
 
-/** 
-\defgroup ChannelConvertToUnsignedAlgorithm channel_convert_to_unsigned
-\brief Convert signed channel to unsigned. By default it is an identity operation. Specializations are provided for signed integral channels
-\ingroup ChannelConvertAlgorithm
- 
-@{
-*/
-
-/// \brief Converting from signed to unsigned integral channel. 
-/// It is both a unary function, and a metafunction (thus requires the 'type' nested typedef, which equals result_type)
+namespace detail {
+// Converting from signed to unsigned integral channel. 
+// It is both a unary function, and a metafunction (thus requires the 'type' nested typedef, which equals result_type)
 template <typename ChannelValue>     // Model ChannelValueConcept
 struct channel_convert_to_unsigned : public detail::identity<ChannelValue> {
     typedef ChannelValue type;
 };
 
-/// \brief Converting from  8-bit signed to 8-bit unsigned integral channel
 template <> struct channel_convert_to_unsigned<bits8s> : public std::unary_function<bits8s,bits8> { 
     typedef bits8 type;
     type operator()(bits8s  val) const { return val+128; } 
 };
 
-/// \brief Converting from 16-bit signed to 16-bit unsigned integral channel
 template <> struct channel_convert_to_unsigned<bits16s> : public std::unary_function<bits16s,bits16> { 
     typedef bits16 type;
     type operator()(bits16s  val) const { return val+32768; } 
 };
 
-/// \brief Converting from 32-bit signed to 32-bit unsigned integral channel
 template <> struct channel_convert_to_unsigned<bits32s> : public std::unary_function<bits32s,bits32> {
     typedef bits32 type;
     type operator()(bits32s x) const { return static_cast<bits32>(x+(1<<31)); }
 };
-/// @} 
 
-/** 
-\defgroup ChannelConvertToSignedAlgorithm channel_convert_to_signed
-\brief Convert unsigned channel to signed. By default it is an identity operation. Specializations are provided for signed integral channels
-\ingroup ChannelConvertAlgorithm
- 
-@{
-*/
 
-/// \brief Converting from unsigned to signed integral channel
-/// It is both a unary function, and a metafunction (thus requires the 'type' nested typedef, which equals result_type)
+// Converting from unsigned to signed integral channel
+// It is both a unary function, and a metafunction (thus requires the 'type' nested typedef, which equals result_type)
 template <typename ChannelValue>     // Model ChannelValueConcept
-struct channel_convert_to_signed : public detail::identity<ChannelValue> {
+struct channel_convert_from_unsigned : public detail::identity<ChannelValue> {
     typedef ChannelValue type;
 };
 
-/// \brief Converting from 8-bit unsigned to 8-bit signed integral channel
-template <> struct channel_convert_to_signed<bits8s> : public std::unary_function<bits8,bits8s> { 
+template <> struct channel_convert_from_unsigned<bits8s> : public std::unary_function<bits8,bits8s> { 
     typedef bits8s type;
     type  operator()(bits8  val) const { return val-128; } 
 };
 
-/// \brief Converting from 16-bit unsigned to 16-bit signed integral channel
-template <> struct channel_convert_to_signed<bits16s> : public std::unary_function<bits16,bits16s> { 
+template <> struct channel_convert_from_unsigned<bits16s> : public std::unary_function<bits16,bits16s> { 
     typedef bits16s type;
     type operator()(bits16 val) const { return val-32768; } 
 };
 
-/// \brief Converting from 32-bit unsigned to 32-bit signed integral channel
-template <> struct channel_convert_to_signed<bits32s> : public std::unary_function<bits32,bits32s> {
+template <> struct channel_convert_from_unsigned<bits32s> : public std::unary_function<bits32,bits32s> {
     typedef bits32s type;
     type operator()(bits32 x) const { return static_cast<bits32s>(x-(1<<31)); }
 };
-/// @} 
+
+}	// namespace detail
 
 /// \ingroup ChannelConvertAlgorithm
 /// \brief A unary function object converting between channel types
 template <typename SrcChannelV, typename DstChannelV> // Model ChannelValueConcept
 struct channel_converter : public std::unary_function<SrcChannelV,DstChannelV> {
     DstChannelV operator()(SrcChannelV src) const {
-        typedef channel_convert_to_unsigned<SrcChannelV> to_unsigned;
-        typedef channel_convert_to_signed<DstChannelV>   to_signed;
-        typedef channel_converter_unsigned<typename to_unsigned::result_type, typename to_signed::argument_type> converter_unsigned;
-        return to_signed()(converter_unsigned()(to_unsigned()(src))); 
+		typedef detail::channel_convert_to_unsigned<SrcChannelV> to_unsigned;
+        typedef detail::channel_convert_from_unsigned<DstChannelV>   from_unsigned;
+        typedef channel_converter_unsigned<typename to_unsigned::result_type, typename from_unsigned::argument_type> converter_unsigned;
+        return from_unsigned()(converter_unsigned()(to_unsigned()(src))); 
     }
 };
 
@@ -236,9 +383,19 @@ namespace detail {
     inline uint32_t div32768(uint32_t in) { return (in+16384)>>15; }
 }
 
-/// \defgroup ChannelMultiplyAlgorithm channel_multiply
-/// \ingroup ChannelAlgorithm
-/// \brief Multiplying unsigned channel values of the same type. Performs scaled multiplication result = a * b / max_value
+/**
+\defgroup ChannelMultiplyAlgorithm channel_multiply
+\ingroup ChannelAlgorithm
+\brief Multiplying unsigned channel values of the same type. Performs scaled multiplication result = a * b / max_value
+
+Example:
+\code
+bits8 x=128;
+bits8 y=128;
+bits8 mul = channel_multiply(x,y);
+assert(mul == 64);    // 64 = 128 * 128 / 255
+\endcode
+*/
 /// @{
 
 /// \brief This is the default implementation. Performance specializatons are provided
@@ -268,10 +425,10 @@ template<> struct channel_multiplier_unsigned<bits32f> : public std::binary_func
 template <typename ChannelValue>
 struct channel_multiplier : public std::binary_function<ChannelValue, ChannelValue, ChannelValue> {
     ChannelValue operator()(ChannelValue a, ChannelValue b) const {
-        typedef channel_convert_to_unsigned<ChannelValue> to_unsigned;
-        typedef channel_convert_to_signed<ChannelValue>   to_signed;
+		typedef detail::channel_convert_to_unsigned<ChannelValue> to_unsigned;
+        typedef detail::channel_convert_from_unsigned<ChannelValue>   from_unsigned;
         typedef channel_multiplier_unsigned<typename to_unsigned::result_type> multiplier_unsigned;
-        return to_signed()(multiplier_unsigned()(to_unsigned()(a), to_unsigned()(b))); 
+        return from_unsigned()(multiplier_unsigned()(to_unsigned()(a), to_unsigned()(b))); 
     }
 };
 
@@ -282,9 +439,19 @@ inline typename channel_traits<Channel>::value_type channel_multiply(Channel a, 
 }
 /// @} 
 
-/// \defgroup ChannelInvertAlgorithm channel_invert
-/// \ingroup ChannelAlgorithm
-/// \brief Returns the inverse of a channel. result = max_value - x + min_value
+/**
+\defgroup ChannelInvertAlgorithm channel_invert
+\ingroup ChannelAlgorithm
+\brief Returns the inverse of a channel. result = max_value - x + min_value
+
+Example:
+\code
+// bits8 == uint8_t == unsigned char
+bits8 x=255;
+bits8 inv = channel_invert(x);
+assert(inv == 0);
+\endcode
+*/
 
 /// \brief Default implementation. Provide overloads for performance
 /// \ingroup ChannelInvertAlgorithm channel_invert
@@ -293,6 +460,9 @@ inline typename channel_traits<Channel>::value_type channel_invert(Channel x) {
     return channel_traits<Channel>::max_value()-x + channel_traits<Channel>::min_value(); 
 }
 
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
 } }  // namespace boost::gil
 

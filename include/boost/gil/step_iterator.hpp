@@ -108,15 +108,15 @@ bool operator!=(const step_iterator_adaptor<D,Iterator,SFn>& p1, const step_iter
 } // namespace detail
 
 ////////////////////////////////////////////////////////////////////////////////////////
-///                 BYTE-ADDRESSABLE STEP ITERATOR
+///                 MEMORY-BASED STEP ITERATOR
 ////////////////////////////////////////////////////////////////////////////////////////
 
-/// \class byte_addressable_step_iterator
+/// \class memory_based_step_iterator
 /// \ingroup PixelIteratorModelStepPtr PixelBasedModel
-/// \brief Iterator with dynamically specified step in bytes. Models StepIteratorConcept, IteratorAdaptorConcept, ByteAdvanceableIteratorConcept, PixelIteratorConcept, HasDynamicXStepTypeConcept
+/// \brief Iterator with dynamically specified step in memory units (bytes or bits). Models StepIteratorConcept, IteratorAdaptorConcept, MemoryBasedIteratorConcept, PixelIteratorConcept, HasDynamicXStepTypeConcept
 ///
 /// A refinement of step_iterator_adaptor that uses a dynamic parameter for the step 
-/// which is specified in bytes
+/// which is specified in memory units, such as bytes or bits
 ///
 /// Pixel step iterators are used to provide iteration over non-adjacent pixels. 
 /// Common use is a vertical traversal, where the step is the row stride.
@@ -128,59 +128,59 @@ bool operator!=(const step_iterator_adaptor<D,Iterator,SFn>& p1, const step_iter
 ////////////////////////////////////////////////////////////////////////////////////////
 
 /// \ingroup PixelIteratorModelStepPtr
-/// \brief function object that returns the byte distance between two iterators and advances a given iterator a given number of bytes
+/// \brief function object that returns the memory unit distance between two iterators and advances a given iterator a given number of mem units (bytes or bits)
 template <typename Iterator>
-struct byte_step_fn {
+struct memunit_step_fn {
     typedef std::ptrdiff_t difference_type;
 
-    byte_step_fn(difference_type step=byte_step(Iterator())) : _step(step) {}
+    memunit_step_fn(difference_type step=memunit_step(Iterator())) : _step(step) {}
 
-    difference_type difference(const Iterator& it1, const Iterator& it2) const { return byte_distance(it1,it2)/_step; }
-    void            advance(Iterator& it, difference_type d)       const { byte_advance(it,d*_step); } 
-    difference_type step()                                   const { return _step; }
+    difference_type difference(const Iterator& it1, const Iterator& it2) const { return memunit_distance(it1,it2)/_step; }
+    void            advance(Iterator& it, difference_type d)             const { memunit_advance(it,d*_step); } 
+    difference_type step()                                               const { return _step; }
 
     void            set_step(std::ptrdiff_t step) { _step=step; }
 private:
-    GIL_CLASS_REQUIRE(Iterator, boost::gil, ByteAdvanceableIteratorConcept);
+    GIL_CLASS_REQUIRE(Iterator, boost::gil, MemoryBasedIteratorConcept);
     difference_type _step;
 };
 
 template <typename Iterator>
-class byte_addressable_step_iterator : public detail::step_iterator_adaptor<byte_addressable_step_iterator<Iterator>, 
+class memory_based_step_iterator : public detail::step_iterator_adaptor<memory_based_step_iterator<Iterator>, 
                                                                             Iterator, 
-                                                                            byte_step_fn<Iterator> > {
-    GIL_CLASS_REQUIRE(Iterator, boost::gil, ByteAdvanceableIteratorConcept);
+                                                                            memunit_step_fn<Iterator> > {
+    GIL_CLASS_REQUIRE(Iterator, boost::gil, MemoryBasedIteratorConcept);
 public:
-    typedef detail::step_iterator_adaptor<byte_addressable_step_iterator<Iterator>, 
+    typedef detail::step_iterator_adaptor<memory_based_step_iterator<Iterator>, 
                                           Iterator, 
-                                          byte_step_fn<Iterator> > parent_t;
+                                          memunit_step_fn<Iterator> > parent_t;
     typedef typename parent_t::reference                            reference;
     typedef typename parent_t::difference_type                      difference_type;
     typedef Iterator                                                x_iterator;
 
-    byte_addressable_step_iterator() : parent_t(Iterator()) {}
-    byte_addressable_step_iterator(Iterator it, std::ptrdiff_t byte_step) : parent_t(it, byte_step_fn<Iterator>(byte_step)) {}
+    memory_based_step_iterator() : parent_t(Iterator()) {}
+    memory_based_step_iterator(Iterator it, std::ptrdiff_t memunit_step) : parent_t(it, memunit_step_fn<Iterator>(memunit_step)) {}
     template <typename I2> 
-    byte_addressable_step_iterator(const byte_addressable_step_iterator<I2>& it)
-        : parent_t(it.base(), byte_step_fn<Iterator>(it.step())) {}
+    memory_based_step_iterator(const memory_based_step_iterator<I2>& it)
+        : parent_t(it.base(), memunit_step_fn<Iterator>(it.step())) {}
 
     /// For some reason operator[] provided by iterator_adaptor returns a custom class that is convertible to reference
     /// We require our own reference because it is registered in iterator_traits
     reference operator[](difference_type d) const { return *(*this+d); }
 
-    void set_step(std::ptrdiff_t byte_step) { this->_step_fn.set_step(byte_step); }
+    void set_step(std::ptrdiff_t memunit_step) { this->_step_fn.set_step(memunit_step); }
 
     x_iterator& base()              { return parent_t::base_reference(); }
     x_iterator const& base() const  { return parent_t::base_reference(); }
 };
 
 template <typename Iterator>
-struct const_iterator_type<byte_addressable_step_iterator<Iterator> > {
-    typedef byte_addressable_step_iterator<typename const_iterator_type<Iterator>::type>  type;
+struct const_iterator_type<memory_based_step_iterator<Iterator> > {
+    typedef memory_based_step_iterator<typename const_iterator_type<Iterator>::type>  type;
 };
 
 template <typename Iterator>
-struct iterator_is_mutable<byte_addressable_step_iterator<Iterator> > : public iterator_is_mutable<Iterator> {};
+struct iterator_is_mutable<memory_based_step_iterator<Iterator> > : public iterator_is_mutable<Iterator> {};
 
 
 /////////////////////////////
@@ -188,16 +188,16 @@ struct iterator_is_mutable<byte_addressable_step_iterator<Iterator> > : public i
 /////////////////////////////
 
 template <typename Iterator>
-struct is_iterator_adaptor<byte_addressable_step_iterator<Iterator> > : public mpl::true_{};
+struct is_iterator_adaptor<memory_based_step_iterator<Iterator> > : public mpl::true_{};
 
 template <typename Iterator>
-struct iterator_adaptor_get_base<byte_addressable_step_iterator<Iterator> > {
+struct iterator_adaptor_get_base<memory_based_step_iterator<Iterator> > {
     typedef Iterator type;
 };
 
 template <typename Iterator, typename NewBaseIterator>
-struct iterator_adaptor_rebind<byte_addressable_step_iterator<Iterator>,NewBaseIterator> {
-    typedef byte_addressable_step_iterator<NewBaseIterator> type;
+struct iterator_adaptor_rebind<memory_based_step_iterator<Iterator>,NewBaseIterator> {
+    typedef memory_based_step_iterator<NewBaseIterator> type;
 };
 
 /////////////////////////////
@@ -205,48 +205,50 @@ struct iterator_adaptor_rebind<byte_addressable_step_iterator<Iterator>,NewBaseI
 /////////////////////////////
 
 template <typename Iterator>
-struct color_space_type<byte_addressable_step_iterator<Iterator> > : public color_space_type<Iterator> {};
+struct color_space_type<memory_based_step_iterator<Iterator> > : public color_space_type<Iterator> {};
 
 template <typename Iterator>
-struct channel_mapping_type<byte_addressable_step_iterator<Iterator> > : public channel_mapping_type<Iterator> {};
+struct channel_mapping_type<memory_based_step_iterator<Iterator> > : public channel_mapping_type<Iterator> {};
 
 template <typename Iterator>
-struct is_planar<byte_addressable_step_iterator<Iterator> > : public is_planar<Iterator> {};
+struct is_planar<memory_based_step_iterator<Iterator> > : public is_planar<Iterator> {};
 
 template <typename Iterator>
-struct channel_type<byte_addressable_step_iterator<Iterator> > : public channel_type<Iterator> {};
+struct channel_type<memory_based_step_iterator<Iterator> > : public channel_type<Iterator> {};
 
 /////////////////////////////
-//  ByteAdvanceableIteratorConcept
+//  MemoryBasedIteratorConcept
 /////////////////////////////
+template <typename Iterator>
+struct byte_to_memunit<memory_based_step_iterator<Iterator> > : public byte_to_memunit<Iterator> {};
 
 template <typename Iterator>
-inline std::ptrdiff_t byte_step(const byte_addressable_step_iterator<Iterator>& p) { return p.step(); }
+inline std::ptrdiff_t memunit_step(const memory_based_step_iterator<Iterator>& p) { return p.step(); }
 
 template <typename Iterator>
-inline std::ptrdiff_t byte_distance(const byte_addressable_step_iterator<Iterator>& p1, 
-                                    const byte_addressable_step_iterator<Iterator>& p2) { 
-    return byte_distance(p1.base(),p2.base()); 
+inline std::ptrdiff_t memunit_distance(const memory_based_step_iterator<Iterator>& p1, 
+                                    const memory_based_step_iterator<Iterator>& p2) { 
+    return memunit_distance(p1.base(),p2.base()); 
 }
 
 template <typename Iterator>
-inline void byte_advance(byte_addressable_step_iterator<Iterator>& p, 
-                         std::ptrdiff_t byteDiff) { 
-    byte_advance(p.base(), byteDiff);
+inline void memunit_advance(memory_based_step_iterator<Iterator>& p, 
+                         std::ptrdiff_t diff) { 
+    memunit_advance(p.base(), diff);
 }
 
 template <typename Iterator>
-inline byte_addressable_step_iterator<Iterator> 
-byte_advanced(const byte_addressable_step_iterator<Iterator>& p, 
-              std::ptrdiff_t byteDiff) {
-    return byte_addressable_step_iterator<Iterator>(byte_advanced(p.base(), byteDiff),p.step());
+inline memory_based_step_iterator<Iterator> 
+memunit_advanced(const memory_based_step_iterator<Iterator>& p, 
+              std::ptrdiff_t diff) {
+    return memory_based_step_iterator<Iterator>(memunit_advanced(p.base(), diff),p.step());
 }
 
 template <typename Iterator>
 inline typename std::iterator_traits<Iterator>::reference 
-byte_advanced_ref(const byte_addressable_step_iterator<Iterator>& p, 
-                  std::ptrdiff_t byteDiff) { 
-    return byte_advanced_ref(p.base(), byteDiff);
+memunit_advanced_ref(const memory_based_step_iterator<Iterator>& p, 
+                  std::ptrdiff_t diff) { 
+    return memunit_advanced_ref(p.base(), diff);
 }
 
 /////////////////////////////
@@ -254,18 +256,18 @@ byte_advanced_ref(const byte_addressable_step_iterator<Iterator>& p,
 /////////////////////////////
 
 template <typename Iterator>
-struct dynamic_x_step_type<byte_addressable_step_iterator<Iterator> > {
-    typedef byte_addressable_step_iterator<Iterator> type;
+struct dynamic_x_step_type<memory_based_step_iterator<Iterator> > {
+    typedef memory_based_step_iterator<Iterator> type;
 };
 
 // For step iterators, pass the function object to the base
 template <typename Iterator, typename Deref>
-struct iterator_add_deref<byte_addressable_step_iterator<Iterator>,Deref> {
+struct iterator_add_deref<memory_based_step_iterator<Iterator>,Deref> {
     GIL_CLASS_REQUIRE(Deref, boost::gil, PixelDereferenceAdaptorConcept);
 
-    typedef byte_addressable_step_iterator<typename iterator_add_deref<Iterator, Deref>::type> type;
+    typedef memory_based_step_iterator<typename iterator_add_deref<Iterator, Deref>::type> type;
 
-    static type make(const byte_addressable_step_iterator<Iterator>& it, const Deref& d) { return type(iterator_add_deref<Iterator, Deref>::make(it.base(),d),it.step()); }
+    static type make(const memory_based_step_iterator<Iterator>& it, const Deref& d) { return type(iterator_add_deref<Iterator, Deref>::make(it.base(),d),it.step()); }
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -276,10 +278,10 @@ template <typename I> typename dynamic_x_step_type<I>::type make_step_iterator(c
 
 namespace detail {
 
-// if the iterator is a plain base iterator (non-adaptor), wraps it in byte_addressable_step_iterator
+// if the iterator is a plain base iterator (non-adaptor), wraps it in memory_based_step_iterator
 template <typename I> 
 typename dynamic_x_step_type<I>::type make_step_iterator_impl(const I& it, std::ptrdiff_t step, mpl::false_) {
-    return byte_addressable_step_iterator<I>(it, step);
+    return memory_based_step_iterator<I>(it, step);
 }
 
 // If the iterator is compound, put the step in its base
@@ -288,27 +290,27 @@ typename dynamic_x_step_type<I>::type make_step_iterator_impl(const I& it, std::
     return make_step_iterator(it.base(), step);
 }
 
-// If the iterator is byte_addressable_step_iterator, change the step
+// If the iterator is memory_based_step_iterator, change the step
 template <typename BaseIt> 
-byte_addressable_step_iterator<BaseIt> make_step_iterator_impl(const byte_addressable_step_iterator<BaseIt>& it, std::ptrdiff_t step, mpl::true_) {
-    return byte_addressable_step_iterator<BaseIt>(it.base(), step);
+memory_based_step_iterator<BaseIt> make_step_iterator_impl(const memory_based_step_iterator<BaseIt>& it, std::ptrdiff_t step, mpl::true_) {
+    return memory_based_step_iterator<BaseIt>(it.base(), step);
 }
 }
 
 /// \brief Constructs a step iterator from a base iterator and a step.
 ///
 /// To construct a step iterator from a given iterator Iterator and a given step, if Iterator does not
-/// already have a dynamic step, we wrap it in a byte_addressable_step_iterator. Otherwise we 
+/// already have a dynamic step, we wrap it in a memory_based_step_iterator. Otherwise we 
 /// do a compile-time traversal of the chain of iterator adaptors to locate the step iterator
 /// and then set it step to the new one.
 ///
-/// The step iterator of Iterator is not always byte_addressable_step_iterator<Iterator>. For example, Iterator may
-/// already be a byte_addressable_step_iterator, in which case it will be inefficient to stack them;
+/// The step iterator of Iterator is not always memory_based_step_iterator<Iterator>. For example, Iterator may
+/// already be a memory_based_step_iterator, in which case it will be inefficient to stack them;
 /// we can obtain the same result by multiplying their steps. Note that for Iterator to be a
-/// step iterator it does not necessarily have to have the form byte_addressable_step_iterator<J>.
+/// step iterator it does not necessarily have to have the form memory_based_step_iterator<J>.
 /// The step iterator can be wrapped inside another iterator. Also, it may not have the
-/// type byte_addressable_step_iterator, but it could be a user-provided type.
-template <typename I>  // Models ByteAdvanceableIteratorConcept, HasDynamicXStepTypeConcept
+/// type memory_based_step_iterator, but it could be a user-provided type.
+template <typename I>  // Models MemoryBasedIteratorConcept, HasDynamicXStepTypeConcept
 typename dynamic_x_step_type<I>::type make_step_iterator(const I& it, std::ptrdiff_t step) {
     return detail::make_step_iterator_impl(it, step, typename is_iterator_adaptor<I>::type());
 }

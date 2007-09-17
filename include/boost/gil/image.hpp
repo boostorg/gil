@@ -188,39 +188,44 @@ private:
     }
 
     void deallocate(const point_t& dimensions) { 
-        if (_memory) _alloc.deallocate(_memory, total_allocated_size(dimensions));
+        if (_memory) _alloc.deallocate(_memory, total_allocated_size_in_bytes(dimensions));
     }
 
-    std::size_t total_allocated_size(const point_t& dimensions) const {
-        return _total_allocated_size(dimensions, mpl::bool_<IsPlanar>());
+    std::size_t total_allocated_size_in_bytes(const point_t& dimensions) const {
+        std::size_t size_in_units = _total_allocated_size(dimensions, mpl::bool_<IsPlanar>());
+        // return the size rounded up to the nearest byte
+        return (size_in_units + byte_to_memunit<typename view_t::x_iterator>::value - 1) / byte_to_memunit<typename view_t::x_iterator>::value;
+    }
+
+    std::size_t get_row_size(x_coord_t width) const {   // number of units per row
+        return align(width*memunit_step(typename view_t::x_iterator()),_align);
     }
 
     std::size_t _total_allocated_size(const point_t& dimensions,mpl::false_) const {
-        std::size_t row_bytes=align(dimensions.x*sizeof(value_type),_align);
-        return row_bytes*dimensions.y+_align-1;
+        return get_row_size(dimensions.x)*dimensions.y+_align-1;
     }
     std::size_t _total_allocated_size(const point_t& dimensions,mpl::true_) const {
-        std::size_t row_bytes=align(dimensions.x*sizeof(typename channel_type<view_t>::type),_align);
-        std::size_t plane_bytes=row_bytes*dimensions.y;
-        return plane_bytes*num_channels<view_t>::value+_align-1;
+        std::size_t plane_size=get_row_size(dimensions.x)*dimensions.y;
+        return plane_size*num_channels<view_t>::value+_align-1;
     }
 
     
     void allocate_(const point_t& dimensions, mpl::false_) {  // if it throws and _memory!=0 the client must deallocate _memory
-        std::size_t row_bytes=align(dimensions.x*sizeof(value_type),_align);
-        _memory=_alloc.allocate(total_allocated_size(dimensions));
+        _memory=_alloc.allocate(total_allocated_size_in_bytes(dimensions));
         unsigned char* tmp=(unsigned char*)align((std::size_t)_memory,_align);
-        _view=view_t(dimensions,typename view_t::locator(typename view_t::x_iterator(tmp),row_bytes));
+        _view=view_t(dimensions,typename view_t::locator(typename view_t::x_iterator(tmp),get_row_size(dimensions.x)));
     }
     void allocate_(const point_t& dimensions, mpl::true_) {   // if it throws and _memory!=0 the client must deallocate _memory
-        std::size_t row_bytes=align(dimensions.x*sizeof(typename channel_type<view_t>::type),_align);
-        std::size_t plane_bytes=row_bytes*dimensions.y;
-        _memory=_alloc.allocate(total_allocated_size(dimensions));
+        std::size_t row_size=get_row_size(dimensions.x);
+        std::size_t plane_size=row_size*dimensions.y;
+        _memory=_alloc.allocate(total_allocated_size_in_bytes(dimensions));
         unsigned char* tmp=(unsigned char*)align((std::size_t)_memory,_align);
         typename view_t::x_iterator first; 
-        for (int i=0; i<num_channels<view_t>::value; ++i)
-            dynamic_at_c(first,i) = (typename channel_type<view_t>::type*)(tmp + plane_bytes*i);
-        _view=view_t(dimensions, typename view_t::locator(first, dimensions.x*sizeof(typename channel_type<view_t>::type)));
+        for (int i=0; i<num_channels<view_t>::value; ++i) {
+            dynamic_at_c(first,i) = (typename channel_type<view_t>::type*)tmp;
+            memunit_advance(dynamic_at_c(first,i), plane_size*i);
+        }
+        _view=view_t(dimensions, typename view_t::locator(first, row_size));
     }
 };
 

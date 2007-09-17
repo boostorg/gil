@@ -35,9 +35,9 @@
 namespace boost { namespace gil {
 
 //forward declarations
-template <typename P> ptrdiff_t byte_step(const P*);
-template <typename P> P* byte_advanced(const P* p, ptrdiff_t byteDiff);
-template <typename P> P& byte_advanced_ref(P* p, ptrdiff_t byteDiff);
+template <typename P> ptrdiff_t memunit_step(const P*);
+template <typename P> P* memunit_advanced(const P* p, ptrdiff_t diff);
+template <typename P> P& memunit_advanced_ref(P* p, ptrdiff_t diff);
 template <typename Iterator, typename D> struct iterator_add_deref;
 template <typename T> class point2;
 namespace detail {
@@ -50,6 +50,7 @@ template <typename T> struct dynamic_y_step_type;
 template <typename T> struct channel_type;
 template <typename T> struct color_space_type;
 template <typename T> struct channel_mapping_type;
+template <typename T> struct is_planar;
 template <typename T> struct num_channels;
 
 // The type of a locator or a view that has X and Y swapped. By default it is the same
@@ -77,7 +78,7 @@ template <typename T> struct transposed_type {
 /// Also 2D difference between two locators cannot be computed without knowledge of the X position within the image.
 /// 
 /// This base class provides most of the methods and typedefs needed to create a model of a locator. GIL provides two
-/// locator models as subclasses of \p pixel_2d_locator_base. A memory-based locator, \p byte_addressable_2d_locator and a virtual
+/// locator models as subclasses of \p pixel_2d_locator_base. A memory-based locator, \p memory_based_2d_locator and a virtual
 /// locator, \p virtual_2d_locator.
 /// The minimum functionality a subclass must provide is this:
 /// \code
@@ -215,7 +216,7 @@ struct channel_mapping_type<pixel_2d_locator_base<Loc,XIt,YIt> > : public channe
 template <typename Loc, typename XIt, typename YIt>
 struct is_planar<pixel_2d_locator_base<Loc,XIt,YIt> > : public is_planar<XIt> {};
 
-/// \class byte_addressable_2d_locator
+/// \class memory_based_2d_locator
 /// \brief Memory-based pixel locator. Models: PixelLocatorConcept,HasDynamicXStepTypeConcept,HasDynamicYStepTypeConcept,HasTransposedTypeConcept
 /// \ingroup PixelLocatorModel PixelBasedModel
 ///
@@ -230,19 +231,19 @@ struct is_planar<pixel_2d_locator_base<Loc,XIt,YIt> > : public is_planar<XIt> {}
 /// one std::ptrdiff_t for the horizontal step of two and a CMYK planar_pixel_iterator consisting of 4 pointers (24 bytes).
 /// In this case ++locator.x() results in four native pointer additions.
 ///
-/// Note also that \p byte_addressable_2d_locator does not require that its element type be a pixel. It could be
+/// Note also that \p memory_based_2d_locator does not require that its element type be a pixel. It could be
 /// instantiated with an iterator whose \p value_type models only \p Regular. In this case the locator
 /// models the weaker RandomAccess2DLocatorConcept, and does not model PixelBasedConcept.
 /// Many generic algorithms don't require the elements to be pixels.
 ////////////////////////////////////////////////////////////////////////////////////////
 
 template <typename StepIterator>
-class byte_addressable_2d_locator : public pixel_2d_locator_base<byte_addressable_2d_locator<StepIterator>, typename iterator_adaptor_get_base<StepIterator>::type, StepIterator> {
-    typedef byte_addressable_2d_locator<StepIterator>  this_t;
-    GIL_CLASS_REQUIRE(StepIterator, boost::gil, StepIteratorConcept);
+class memory_based_2d_locator : public pixel_2d_locator_base<memory_based_2d_locator<StepIterator>, typename iterator_adaptor_get_base<StepIterator>::type, StepIterator> {
+    typedef memory_based_2d_locator<StepIterator>  this_t;
+    GIL_CLASS_REQUIRE(StepIterator, boost::gil, StepIteratorConcept)
 public:
-    typedef pixel_2d_locator_base<byte_addressable_2d_locator<StepIterator>, typename iterator_adaptor_get_base<StepIterator>::type, StepIterator> parent_t;
-    typedef byte_addressable_2d_locator<typename const_iterator_type<StepIterator>::type> const_t; // same as this type, but over const values
+    typedef pixel_2d_locator_base<memory_based_2d_locator<StepIterator>, typename iterator_adaptor_get_base<StepIterator>::type, StepIterator> parent_t;
+    typedef memory_based_2d_locator<typename const_iterator_type<StepIterator>::type> const_t; // same as this type, but over const values
 
     typedef typename parent_t::coord_t          coord_t;
     typedef typename parent_t::x_coord_t        x_coord_t;
@@ -253,22 +254,22 @@ public:
     typedef typename parent_t::reference        reference;
 
     template <typename Deref> struct add_deref {
-        typedef byte_addressable_2d_locator<typename iterator_add_deref<StepIterator,Deref>::type> type;
-        static type make(const byte_addressable_2d_locator<StepIterator>& loc, const Deref& nderef) { 
+        typedef memory_based_2d_locator<typename iterator_add_deref<StepIterator,Deref>::type> type;
+        static type make(const memory_based_2d_locator<StepIterator>& loc, const Deref& nderef) { 
             return type(iterator_add_deref<StepIterator,Deref>::make(loc.y(),nderef)); 
         }
     };
 
-    byte_addressable_2d_locator() {}
-    byte_addressable_2d_locator(const StepIterator& yit) : _p(yit) {}
-    template <typename SI> byte_addressable_2d_locator(const byte_addressable_2d_locator<SI>& loc, coord_t y_step) : _p(loc.x(), loc.row_bytes()*y_step) {}
-    template <typename SI> byte_addressable_2d_locator(const byte_addressable_2d_locator<SI>& loc, coord_t x_step, coord_t y_step, bool transpose=false)
-        : _p(make_step_iterator(loc.x(),(transpose ? loc.row_bytes() : loc.pix_bytestep())*x_step),
-                                        (transpose ? loc.pix_bytestep() : loc.row_bytes())*y_step ) {}
+    memory_based_2d_locator() {}
+    memory_based_2d_locator(const StepIterator& yit) : _p(yit) {}
+    template <typename SI> memory_based_2d_locator(const memory_based_2d_locator<SI>& loc, coord_t y_step) : _p(loc.x(), loc.row_size()*y_step) {}
+    template <typename SI> memory_based_2d_locator(const memory_based_2d_locator<SI>& loc, coord_t x_step, coord_t y_step, bool transpose=false)
+        : _p(make_step_iterator(loc.x(),(transpose ? loc.row_size() : loc.pixel_size())*x_step),
+                                        (transpose ? loc.pixel_size() : loc.row_size())*y_step ) {}
 
-    byte_addressable_2d_locator(x_iterator xit, std::ptrdiff_t row_bytes) : _p(xit,row_bytes) {}
-    template <typename X> byte_addressable_2d_locator(const byte_addressable_2d_locator<X>& pl) : _p(pl._p) {}
-    byte_addressable_2d_locator(const byte_addressable_2d_locator& pl) : _p(pl._p) {}
+    memory_based_2d_locator(x_iterator xit, std::ptrdiff_t row_bytes) : _p(xit,row_bytes) {}
+    template <typename X> memory_based_2d_locator(const memory_based_2d_locator<X>& pl) : _p(pl._p) {}
+    memory_based_2d_locator(const memory_based_2d_locator& pl) : _p(pl._p) {}
 
     bool                  operator==(const this_t& p)  const { return _p==p._p; }
 
@@ -278,37 +279,37 @@ public:
     y_iterator&           y()                                { return _p; }
 
     // These are faster versions of functions already provided in the superclass 
-    x_iterator x_at      (x_coord_t dx, y_coord_t dy)  const { return byte_advanced(x(), byte_offset(dx,dy)); }    
-    x_iterator x_at      (const difference_type& d)    const { return byte_advanced(x(), byte_offset(d.x,d.y)); }
-    this_t     xy_at     (x_coord_t dx, y_coord_t dy)  const { return this_t(x_at( dx , dy ), row_bytes()); }
-    this_t     xy_at     (const difference_type& d)    const { return this_t(x_at( d.x, d.y), row_bytes()); }
-    reference  operator()(x_coord_t dx, y_coord_t dy)  const { return byte_advanced_ref(x(),byte_offset(dx,dy)); }
-    reference  operator[](const difference_type& d)    const { return byte_advanced_ref(x(),byte_offset(d.x,d.y)); }
-    this_t&    operator+=(const difference_type& d)          { byte_advance(x(),byte_offset(d.x,d.y)); return *this; }
-    this_t&    operator-=(const difference_type& d)          { byte_advance(x(),byte_offset(-d.x,-d.y)); return *this; }
+    x_iterator x_at      (x_coord_t dx, y_coord_t dy)  const { return memunit_advanced(x(), offset(dx,dy)); }    
+    x_iterator x_at      (const difference_type& d)    const { return memunit_advanced(x(), offset(d.x,d.y)); }
+    this_t     xy_at     (x_coord_t dx, y_coord_t dy)  const { return this_t(x_at( dx , dy ), row_size()); }
+    this_t     xy_at     (const difference_type& d)    const { return this_t(x_at( d.x, d.y), row_size()); }
+    reference  operator()(x_coord_t dx, y_coord_t dy)  const { return memunit_advanced_ref(x(),offset(dx,dy)); }
+    reference  operator[](const difference_type& d)    const { return memunit_advanced_ref(x(),offset(d.x,d.y)); }
+    this_t&    operator+=(const difference_type& d)          { memunit_advance(x(),offset(d.x,d.y)); return *this; }
+    this_t&    operator-=(const difference_type& d)          { memunit_advance(x(),offset(-d.x,-d.y)); return *this; }
 
     // Memory-based locators can have 1D caching of 2D relative coordinates
     typedef std::ptrdiff_t cached_location_t; // type used to store relative location (to allow for more efficient repeated access)
-    cached_location_t cache_location(const difference_type& d)  const { return byte_offset(d.x,d.y); }
-    cached_location_t cache_location(x_coord_t dx, y_coord_t dy)const { return byte_offset(dx,dy); }
-    reference         operator[](const cached_location_t& loc)  const { return byte_advanced_ref(x(),loc); }
+    cached_location_t cache_location(const difference_type& d)  const { return offset(d.x,d.y); }
+    cached_location_t cache_location(x_coord_t dx, y_coord_t dy)const { return offset(dx,dy); }
+    reference         operator[](const cached_location_t& loc)  const { return memunit_advanced_ref(x(),loc); }
 
     // Only make sense for memory-based locators
-    std::ptrdiff_t         row_bytes()                          const { return byte_step(y()); }    // row bytes
-    std::ptrdiff_t         pix_bytestep()                       const { return byte_step(x()); }    // distance in bytes between adjacent pixels on the same row
+    std::ptrdiff_t         row_size()                           const { return memunit_step(y()); }    // distance in mem units (bytes or bits) between adjacent rows
+    std::ptrdiff_t         pixel_size()                         const { return memunit_step(x()); }    // distance in mem units (bytes or bits) between adjacent pixels on the same row
 
-    bool                   is_1d_traversable(x_coord_t width)   const { return row_bytes()-pix_bytestep()*width==0; }   // is there no gap at the end of each row?
+    bool                   is_1d_traversable(x_coord_t width)   const { return row_size()-pixel_size()*width==0; }   // is there no gap at the end of each row?
 
     // Returns the vertical distance (it2.y-it1.y) between two x_iterators given the difference of their x positions
     std::ptrdiff_t y_distance_to(const this_t& p2, x_coord_t xDiff) const { 
-        std::ptrdiff_t rowDiff=byte_distance(x(),p2.x())-pix_bytestep()*xDiff;
-        assert(( rowDiff % row_bytes())==0);
-        return rowDiff / row_bytes();
+        std::ptrdiff_t rowDiff=memunit_distance(x(),p2.x())-pixel_size()*xDiff;
+        assert(( rowDiff % row_size())==0);
+        return rowDiff / row_size();
     }
 
 private:
-    template <typename X> friend class byte_addressable_2d_locator;
-    std::ptrdiff_t byte_offset(x_coord_t x, y_coord_t y)        const { return y*row_bytes() + x*pix_bytestep(); }
+    template <typename X> friend class memory_based_2d_locator;
+    std::ptrdiff_t offset(x_coord_t x, y_coord_t y)        const { return y*row_size() + x*pixel_size(); }
     StepIterator _p;
 };
 
@@ -317,19 +318,19 @@ private:
 /////////////////////////////
 
 template <typename SI>
-struct color_space_type<byte_addressable_2d_locator<SI> > : public color_space_type<typename byte_addressable_2d_locator<SI>::parent_t> {
+struct color_space_type<memory_based_2d_locator<SI> > : public color_space_type<typename memory_based_2d_locator<SI>::parent_t> {
 };
 
 template <typename SI>
-struct channel_mapping_type<byte_addressable_2d_locator<SI> > : public channel_mapping_type<typename byte_addressable_2d_locator<SI>::parent_t> {
+struct channel_mapping_type<memory_based_2d_locator<SI> > : public channel_mapping_type<typename memory_based_2d_locator<SI>::parent_t> {
 };
 
 template <typename SI>
-struct is_planar<byte_addressable_2d_locator<SI> > : public is_planar<typename byte_addressable_2d_locator<SI>::parent_t> {
+struct is_planar<memory_based_2d_locator<SI> > : public is_planar<typename memory_based_2d_locator<SI>::parent_t> {
 };
 
 template <typename SI>
-struct channel_type<byte_addressable_2d_locator<SI> > : public channel_type<typename byte_addressable_2d_locator<SI>::parent_t> {
+struct channel_type<memory_based_2d_locator<SI> > : public channel_type<typename memory_based_2d_locator<SI>::parent_t> {
 };
 
 /////////////////////////////
@@ -338,13 +339,13 @@ struct channel_type<byte_addressable_2d_locator<SI> > : public channel_type<type
 
 // Take the base iterator of SI (which is typically a step iterator) and change it to have a step in x
 template <typename SI>
-struct dynamic_x_step_type<byte_addressable_2d_locator<SI> > {
+struct dynamic_x_step_type<memory_based_2d_locator<SI> > {
 private:
     typedef typename iterator_adaptor_get_base<SI>::type                        base_iterator_t;
     typedef typename dynamic_x_step_type<base_iterator_t>::type                 base_iterator_step_t;
     typedef typename iterator_adaptor_rebind<SI, base_iterator_step_t>::type    dynamic_step_base_t;
 public:
-    typedef byte_addressable_2d_locator<dynamic_step_base_t> type;
+    typedef memory_based_2d_locator<dynamic_step_base_t> type;
 };
 
 /////////////////////////////
@@ -352,8 +353,8 @@ public:
 /////////////////////////////
 
 template <typename SI>
-struct dynamic_y_step_type<byte_addressable_2d_locator<SI> > {
-    typedef byte_addressable_2d_locator<SI> type;
+struct dynamic_y_step_type<memory_based_2d_locator<SI> > {
+    typedef memory_based_2d_locator<SI> type;
 };
 
 } }  // namespace boost::gil

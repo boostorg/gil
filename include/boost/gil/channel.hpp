@@ -51,8 +51,7 @@ namespace boost { namespace gil {
 namespace detail {
     template <typename T, bool is_class> struct channel_traits_impl;
 
-    /// \brief channel traits for custom class
-    /// \ingroup ChannelModel
+    // channel traits for custom class
     template <typename T> 
     struct channel_traits_impl<T, true> {
         typedef typename T::value_type      value_type;
@@ -65,8 +64,7 @@ namespace detail {
         static value_type max_value() { return T::max_value(); }
     };
 
-    /// \brief channel traits implementation for built-in scalar or floating point channel type
-    /// \ingroup ChannelModel
+    // channel traits implementation for built-in integral or floating point channel type
     template <typename T> 
     struct channel_traits_impl<T, false> {
         typedef T           value_type;
@@ -79,8 +77,7 @@ namespace detail {
         static value_type max_value() { return (std::numeric_limits<T>::max)(); }
     };
 
-    /// \brief channel traits implementation for constant built-in scalar or floating point type
-    /// \ingroup ChannelModel
+    // channel traits implementation for constant built-in scalar or floating point type
     template <typename T> 
     struct channel_traits_impl<const T, false> : public channel_traits_impl<T, false> {
         typedef const T&    reference;
@@ -89,15 +86,31 @@ namespace detail {
     };
 }
 
+/**
+\ingroup ChannelModel
+\brief Traits for channels. Contains the following members:
+\code
+template <typename Channel>
+struct channel_traits {
+    typedef ... value_type;
+    typedef ... reference;
+    typedef ... pointer;
+    typedef ... const_reference;
+    typedef ... const_pointer;
+    
+    static const bool is_mutable;
+    static value_type min_value();
+    static value_type max_value();
+};
+\endcode
+*/
 template <typename T>
 struct channel_traits : public detail::channel_traits_impl<T, is_class<T>::value> {};
 
-/// \ingroup ChannelModel
-/// \brief Channel traits for C++ reference type - remove the reference
+// Channel traits for C++ reference type - remove the reference
 template <typename T> struct channel_traits<      T&> : public channel_traits<T> {};
 
-/// \ingroup ChannelModel
-/// \brief Channel traits for constant C++ reference type
+// Channel traits for constant C++ reference type
 template <typename T> struct channel_traits<const T&> : public channel_traits<T> {
     typedef typename channel_traits<T>::const_reference reference;
     typedef typename channel_traits<T>::const_pointer   pointer;
@@ -110,9 +123,25 @@ template <typename T> struct channel_traits<const T&> : public channel_traits<T>
 ////
 ///////////////////////////////////////////
 
-/// \defgroup ScopedChannelValue scoped_channel_value
-/// \ingroup ChannelModel
-/// \brief A channel adaptor that modifies the range of the source channel. Models: ChannelValueConcept
+/**
+\defgroup ScopedChannelValue scoped_channel_value
+\ingroup ChannelModel
+\brief A channel adaptor that modifies the range of the source channel. Models: ChannelValueConcept
+
+Example:
+\code
+// Create a double channel with range [-0.5 .. 0.5]
+struct double_minus_half  { static double apply() { return -0.5; } };
+struct double_plus_half   { static double apply() { return  0.5; } };
+typedef scoped_channel_value<double, double_minus_half, double_plus_half> bits64custom_t;
+
+// channel_convert its maximum should map to the maximum
+bits64custom_t x = channel_traits<bits64custom_t>::max_value();
+assert(x == 0.5);
+bits16 y = channel_convert<bits16>(x);
+assert(y == 65535);
+\endcode
+*/
 
 /// \ingroup ScopedChannelValue
 /// \brief A channel adaptor that modifies the range of the source channel. Models: ChannelValueConcept
@@ -167,14 +196,33 @@ struct float_one  { static float apply() { return 1.0f; } };
 namespace detail {
     // returns the smallest fast unsigned integral type that has at least NumBits bits
     template <int NumBits>
-    struct min_fast_uint : public mpl::if_c< (NumBits<8), 
+    struct min_fast_uint : public mpl::if_c< (NumBits<=8), 
             uint_least8_t, 
-            typename mpl::if_c< (NumBits<16), uint_least16_t, 
-                                                     uint_least32_t>::type > {};
+            typename mpl::if_c< (NumBits<=16), 
+                    uint_least16_t, 
+                    typename mpl::if_c< (NumBits<=32), 
+                            uint_least32_t, 
+                            uintmax_t
+                    >::type
+            >::type
+          > {};
 }
-/// \defgroup PackedChannelValueModel packed_channel_value
-/// \ingroup ChannelModel
-/// \brief Represents the value of an unsigned integral channel operating over a bit range. Models: ChannelValueConcept
+
+/**
+\defgroup PackedChannelValueModel packed_channel_value
+\ingroup ChannelModel
+\brief Represents the value of an unsigned integral channel operating over a bit range. Models: ChannelValueConcept
+Example:
+\code
+// A 4-bit unsigned integral channel.
+typedef packed_channel_value<4> bits4;
+
+assert(channel_traits<bits4>::min_value()==0);
+assert(channel_traits<bits4>::max_value()==15);
+assert(sizeof(bits4)==1);
+BOOST_STATIC_ASSERT((boost::is_integral<bits4>::value));
+\endcode
+*/
 
 /// \ingroup PackedChannelValueModel
 /// \brief The value of a subbyte channel. Models: ChannelValueConcept
@@ -208,24 +256,25 @@ namespace detail {
 template <typename Derived, typename BitField, int NumBits, bool Mutable>
 class packed_channel_reference_base {
 protected:
-    typedef typename mpl::if_c<Mutable,BitField&,const BitField&>::type data_ref_t;
-    data_ref_t _data;
-
-    static const BitField max_val    = (1<<NumBits) - 1;
+    typedef typename mpl::if_c<Mutable,void*,const void*>::type data_ptr_t;
 public:
+    data_ptr_t _data_ptr;   // void* pointer to the first byte of the bit range
+
     typedef packed_channel_value<NumBits>   value_type;
     typedef const Derived                   reference;
     typedef value_type*                     pointer;
     typedef const value_type*               const_pointer;
+    BOOST_STATIC_CONSTANT(int,  num_bits=NumBits);
     BOOST_STATIC_CONSTANT(bool, is_mutable=Mutable);
 
     static value_type min_value()       { return channel_traits<value_type>::min_value(); }
     static value_type max_value()       { return channel_traits<value_type>::max_value(); }
 
+    typedef BitField                       bitfield_t;
     typedef typename value_type::integer_t integer_t;
 
-    packed_channel_reference_base(data_ref_t data) : _data(data) {}
-    packed_channel_reference_base(const packed_channel_reference_base& ref) : _data(ref._data) {}
+    packed_channel_reference_base(data_ptr_t data_ptr) : _data_ptr(data_ptr) {}
+    packed_channel_reference_base(const packed_channel_reference_base& ref) : _data_ptr(ref._data_ptr) {}
     const Derived& operator=(integer_t v) const { set(v); return derived(); }
 
     const Derived& operator++() const { set(get()+1); return derived(); }
@@ -240,7 +289,11 @@ public:
     template <typename Scalar2> const Derived& operator/=(Scalar2 v) const { set(get()/v); return derived(); }
 
     operator integer_t() const { return get(); }
-    BitField* operator &() const {return &_data;}
+    data_ptr_t operator &() const {return _data_ptr;}
+protected:
+    static const integer_t max_val    = (1<<NumBits) - 1;
+    const bitfield_t& const_data() const { return *static_cast<const bitfield_t*>(_data_ptr); }
+          bitfield_t& data()       const { return *static_cast<      bitfield_t*>(_data_ptr); }
 private:
     void set(integer_t value) const {     // can this be done faster??
         const integer_t num_values = max_val+1;
@@ -251,14 +304,31 @@ private:
 };
 }   // namespace detail
 
-/// \defgroup PackedChannelReferenceModel packed_channel_reference
-/// \ingroup ChannelModel
-/// \brief Represents a reference proxy to a channel operating over a bit range whose offset is fixed at compile time. Models ChannelConcept
+/**
+\defgroup PackedChannelReferenceModel packed_channel_reference
+\ingroup ChannelModel
+\brief Represents a reference proxy to a channel operating over a bit range whose offset is fixed at compile time. Models ChannelConcept
+Example:
+\code
+// Reference to a 2-bit channel starting at bit 1 (i.e. the second bit)
+typedef const packed_channel_reference<uint16_t,1,2,true> bits2_1_ref_t;
 
-template <typename BitField,       // An integral type (the data type containing the bits of interest). Models unsigned integer
+uint16_t data=0;
+bits2_1_ref_t channel_ref(&data);
+channel_ref = channel_traits<bits2_1_ref_t>::max_value();   // == 3
+assert(data == 6);                                          // == 3<<1 == 6
+\endcode
+*/
+
+template <typename BitField,        // A type that holds the bits of the pixel from which the channel is referenced. Typically an integral type, like boost::uint16_t
           int FirstBit, int NumBits,// Defines the sequence of bits in the data value that contain the channel 
           bool Mutable>             // true if the reference is mutable 
 class packed_channel_reference;
+
+template <typename BitField,        // A type that holds the bits of the pixel from which the channel is referenced. Typically an integral type, like boost::uint16_t
+          int NumBits,              // Defines the sequence of bits in the data value that contain the channel 
+          bool Mutable>             // true if the reference is mutable 
+class packed_dynamic_channel_reference;
 
 /// \ingroup PackedChannelReferenceModel
 /// \brief A constant subbyte channel reference whose bit offset is fixed at compile time. Models ChannelConcept
@@ -266,19 +336,22 @@ template <typename BitField, int FirstBit, int NumBits>
 class packed_channel_reference<BitField,FirstBit,NumBits,false> 
    : public detail::packed_channel_reference_base<packed_channel_reference<BitField,FirstBit,NumBits,false>,BitField,NumBits,false> {
     typedef detail::packed_channel_reference_base<packed_channel_reference<BitField,FirstBit,NumBits,false>,BitField,NumBits,false> parent_t;
-    static const BitField channel_mask = parent_t::max_val<<FirstBit;
-    typedef typename parent_t::integer_t  integer_t;
-
-    typedef packed_channel_reference<BitField,FirstBit,NumBits,true> mutable_reference;
     friend class packed_channel_reference<BitField,FirstBit,NumBits,true>;
+
+    static const BitField channel_mask = parent_t::max_val<<FirstBit;
+    void operator=(const packed_channel_reference&);
 public:
-    typedef const packed_channel_reference const_reference;
+    typedef const packed_channel_reference<BitField,FirstBit,NumBits,false> const_reference;
+    typedef const packed_channel_reference<BitField,FirstBit,NumBits,true>  mutable_reference;
+    typedef typename parent_t::integer_t                           integer_t;
 
-    explicit packed_channel_reference(const BitField& data) : parent_t(data) {}
-    packed_channel_reference(const packed_channel_reference& ref) : parent_t(ref._data) {}
-    packed_channel_reference(const mutable_reference& ref) : parent_t(ref._data) {}
+    explicit packed_channel_reference(const void* data_ptr) : parent_t(data_ptr) {}
+    packed_channel_reference(const packed_channel_reference& ref) : parent_t(ref._data_ptr) {}
+    packed_channel_reference(const mutable_reference& ref) : parent_t(ref._data_ptr) {}
 
-    integer_t get() const { return (this->_data&(parent_t::max_val<<FirstBit)) >> FirstBit; }
+    unsigned first_bit() const { return FirstBit; }
+
+    integer_t get() const { return integer_t((this->const_data()&channel_mask) >> FirstBit); }
 };
 
 /// \ingroup PackedChannelReferenceModel
@@ -287,24 +360,30 @@ template <typename BitField, int FirstBit, int NumBits>
 class packed_channel_reference<BitField,FirstBit,NumBits,true> 
    : public detail::packed_channel_reference_base<packed_channel_reference<BitField,FirstBit,NumBits,true>,BitField,NumBits,true> {
     typedef detail::packed_channel_reference_base<packed_channel_reference<BitField,FirstBit,NumBits,true>,BitField,NumBits,true> parent_t;
-    static const BitField channel_mask = parent_t::max_val<<FirstBit;
-
-    typedef typename parent_t::integer_t  integer_t;
     friend class packed_channel_reference<BitField,FirstBit,NumBits,false>;
-public:
-    typedef packed_channel_reference<BitField,FirstBit,NumBits,false> const_reference;
 
-    explicit packed_channel_reference(BitField& data) : parent_t(data) {}
-    packed_channel_reference(const packed_channel_reference& ref) : parent_t(ref._data) {}
+    static const BitField channel_mask = parent_t::max_val<<FirstBit;
+public:
+    typedef const packed_channel_reference<BitField,FirstBit,NumBits,false> const_reference;
+    typedef const packed_channel_reference<BitField,FirstBit,NumBits,true>  mutable_reference;
+    typedef typename parent_t::integer_t                           integer_t;
+
+    explicit packed_channel_reference(void* data_ptr) : parent_t(data_ptr) {}
+    packed_channel_reference(const packed_channel_reference& ref) : parent_t(ref._data_ptr) {}
 
     const packed_channel_reference& operator=(integer_t value) const { assert(value<=parent_t::max_val); set_unsafe(value); return *this; }
-    const packed_channel_reference& operator=(const packed_channel_reference& ref) const { set_from_reference(ref._data); return *this; }
-    const packed_channel_reference& operator=(const const_reference& ref)          const { set_from_reference(ref._data); return *this; }
+    const packed_channel_reference& operator=(const mutable_reference& ref) const { set_from_reference(ref.data()); return *this; }
+    const packed_channel_reference& operator=(const const_reference&   ref) const { set_from_reference(ref.const_data()); return *this; }
 
-    integer_t get() const { return (this->_data&channel_mask) >> FirstBit; }
-    void set_unsafe(integer_t value)              const { this->_data = (this->_data & ~channel_mask) | (value<<FirstBit); }
+    template <bool Mutable1>
+    const packed_channel_reference& operator=(const packed_dynamic_channel_reference<BitField,NumBits,Mutable1>& ref) const { set_unsafe(ref.get()); return *this; }
+
+    unsigned first_bit() const { return FirstBit; }
+
+    integer_t get()                               const { return integer_t((this->const_data()&channel_mask) >> FirstBit); }
+    void set_unsafe(integer_t value)              const { this->data() = (this->const_data() & ~channel_mask) | (value<<FirstBit); }
 private:
-    void set_from_reference(const BitField& data) const { this->_data = (this->_data & ~channel_mask) | (data & channel_mask); }
+    void set_from_reference(const BitField& other_bits) const { this->data() = (this->const_data() & ~channel_mask) | (other_bits & channel_mask); }
 };
 
 } }  // namespace boost::gil
@@ -342,16 +421,22 @@ void swap(boost::gil::packed_channel_reference<BF,FB,NB,M> x, boost::gil::packed
 
 namespace boost { namespace gil {
 
+/**
+\defgroup PackedChannelDynamicReferenceModel packed_dynamic_channel_reference
+\ingroup ChannelModel
+\brief Represents a reference proxy to a channel operating over a bit range whose offset is specified at run time. Models ChannelConcept
 
+Example:
+\code
+// Reference to a 2-bit channel whose offset is specified at construction time
+typedef const packed_dynamic_channel_reference<uint8_t,2,true> bits2_dynamic_ref_t;
 
-/// \defgroup PackedChannelDynamicReferenceModel packed_dynamic_channel_reference
-/// \ingroup ChannelModel
-/// \brief Represents a reference proxy to a channel operating over a bit range whose offset is specified at run time. Models ChannelConcept
-
-template <typename BitField,       // An integral type (the data type containing the bits of interest). Models unsigned integer
-          int NumBits,              // Defines the sequence of bits in the data value that contain the channel 
-          bool Mutable>             // true if the reference is mutable 
-class packed_dynamic_channel_reference;
+uint16_t data=0;
+bits2_dynamic_ref_t channel_ref(&data,1);
+channel_ref = channel_traits<bits2_dynamic_ref_t>::max_value();     // == 3
+assert(data == 6);                                                  // == (3<<1) == 6
+\endcode
+*/
 
 /// \brief Models a constant subbyte channel reference whose bit offset is a runtime parameter. Models ChannelConcept
 ///        Same as packed_channel_reference, except that the offset is a runtime parameter
@@ -360,20 +445,25 @@ template <typename BitField, int NumBits>
 class packed_dynamic_channel_reference<BitField,NumBits,false>
    : public detail::packed_channel_reference_base<packed_dynamic_channel_reference<BitField,NumBits,false>,BitField,NumBits,false> {
     typedef detail::packed_channel_reference_base<packed_dynamic_channel_reference<BitField,NumBits,false>,BitField,NumBits,false> parent_t;
-    int _first_bit;
+    friend class packed_dynamic_channel_reference<BitField,NumBits,true>;
 
-    typedef packed_dynamic_channel_reference<BitField,NumBits,true>   mutable_reference;
-    typedef typename parent_t::integer_t  integer_t;
+    unsigned _first_bit;     // 0..7
+
+    void operator=(const packed_dynamic_channel_reference&);
 public:
-    typedef packed_dynamic_channel_reference<BitField,NumBits,false>   const_reference;
+    typedef const packed_dynamic_channel_reference<BitField,NumBits,false> const_reference;
+    typedef const packed_dynamic_channel_reference<BitField,NumBits,true>  mutable_reference;
+    typedef typename parent_t::integer_t                          integer_t;
 
-    packed_dynamic_channel_reference(typename parent_t::data_ref_t data, int first_bit) : parent_t(data), _first_bit(first_bit) {}
-    packed_dynamic_channel_reference(const packed_dynamic_channel_reference& ref) : parent_t(ref._data), _first_bit(ref._first_bit) {}
-    packed_dynamic_channel_reference(const mutable_reference& ref) : parent_t(ref._data), _first_bit(ref._first_bit) {}
+    packed_dynamic_channel_reference(const void* data_ptr, unsigned first_bit) : parent_t(data_ptr), _first_bit(first_bit) {}
+    packed_dynamic_channel_reference(const const_reference&   ref) : parent_t(ref._data_ptr), _first_bit(ref._first_bit) {}
+    packed_dynamic_channel_reference(const mutable_reference& ref) : parent_t(ref._data_ptr), _first_bit(ref._first_bit) {}
+
+    unsigned first_bit() const { return _first_bit; }
 
     integer_t get() const { 
         const BitField channel_mask = parent_t::max_val<<_first_bit;
-        return (this->_data&channel_mask) >> _first_bit; 
+        return (this->const_data()&channel_mask) >> _first_bit; 
     }
 };
 
@@ -384,26 +474,35 @@ template <typename BitField, int NumBits>
 class packed_dynamic_channel_reference<BitField,NumBits,true>
    : public detail::packed_channel_reference_base<packed_dynamic_channel_reference<BitField,NumBits,true>,BitField,NumBits,true> {
     typedef detail::packed_channel_reference_base<packed_dynamic_channel_reference<BitField,NumBits,true>,BitField,NumBits,true> parent_t;
-    int _first_bit;
+    friend class packed_dynamic_channel_reference<BitField,NumBits,false>;
 
-    typedef typename parent_t::integer_t  integer_t;
+    unsigned _first_bit;
+
 public:
-    typedef packed_dynamic_channel_reference<BitField,NumBits,false>   const_reference;
+    typedef const packed_dynamic_channel_reference<BitField,NumBits,false> const_reference;
+    typedef const packed_dynamic_channel_reference<BitField,NumBits,true>  mutable_reference;
+    typedef typename parent_t::integer_t                          integer_t;
 
-    packed_dynamic_channel_reference(typename parent_t::data_ref_t data, int first_bit) : parent_t(data), _first_bit(first_bit) {}
-    packed_dynamic_channel_reference(const packed_dynamic_channel_reference& ref) : parent_t(ref._data), _first_bit(ref._first_bit) {}
+    packed_dynamic_channel_reference(void* data_ptr, unsigned first_bit) : parent_t((((char*)data_ptr)+first_bit/8)), _first_bit(first_bit%8) {}
+    packed_dynamic_channel_reference(const packed_dynamic_channel_reference& ref) : parent_t(ref._data_ptr), _first_bit(ref._first_bit) {}
 
     const packed_dynamic_channel_reference& operator=(integer_t value) const { assert(value<=parent_t::max_val); set_unsafe(value); return *this; }
-    const packed_dynamic_channel_reference& operator=(const packed_dynamic_channel_reference& ref) const {  set_unsafe(ref.get()); return *this; }
-    const packed_dynamic_channel_reference& operator=(const const_reference& ref)                  const {  set_unsafe(ref.get()); return *this; }
+    const packed_dynamic_channel_reference& operator=(const mutable_reference& ref) const {  set_unsafe(ref.get()); return *this; }
+    const packed_dynamic_channel_reference& operator=(const const_reference&   ref) const {  set_unsafe(ref.get()); return *this; }
+
+    template <typename BitField1, int FirstBit1, bool Mutable1>
+    const packed_dynamic_channel_reference& operator=(const packed_channel_reference<BitField1, FirstBit1, NumBits, Mutable1>& ref) const 
+        {  set_unsafe(ref.get()); return *this; }
+
+    unsigned first_bit() const { return _first_bit; }
 
     integer_t get() const { 
         const BitField channel_mask = parent_t::max_val<<_first_bit;
-        return (this->_data&channel_mask) >> _first_bit; 
+        return (this->const_data()&channel_mask) >> _first_bit; 
     }
     void set_unsafe(integer_t value) const { 
         const BitField channel_mask = parent_t::max_val<<_first_bit;
-        this->_data = (this->_data & ~channel_mask) | value<<_first_bit; 
+        this->data() = (this->const_data() & ~channel_mask) | value<<_first_bit; 
     }
 };
 } }  // namespace boost::gil
@@ -449,42 +548,42 @@ namespace boost { namespace gil {
 
 /// \defgroup bits8 bits8
 /// \ingroup ChannelModel
-/// \brief 8-bit unsigned integral channel type. Models ChannelValueConcept
+/// \brief 8-bit unsigned integral channel type (typedef from uint8_t). Models ChannelValueConcept
 
 /// \ingroup bits8
 typedef uint8_t  bits8;
 
 /// \defgroup bits16 bits16
 /// \ingroup ChannelModel
-/// \brief 16-bit unsigned integral channel type. Models ChannelValueConcept
+/// \brief 16-bit unsigned integral channel type (typedef from uint16_t). Models ChannelValueConcept
 
 /// \ingroup bits16
 typedef uint16_t bits16;
 
 /// \defgroup bits32 bits32
 /// \ingroup ChannelModel
-/// \brief 32-bit unsigned integral channel type. Models ChannelValueConcept
+/// \brief 32-bit unsigned integral channel type  (typedef from uint32_t). Models ChannelValueConcept
 
 /// \ingroup bits32
 typedef uint32_t bits32;
 
 /// \defgroup bits8s bits8s
 /// \ingroup ChannelModel
-/// \brief 8-bit signed integral channel type. Models ChannelValueConcept
+/// \brief 8-bit signed integral channel type (typedef from int8_t). Models ChannelValueConcept
 
 /// \ingroup bits8s
 typedef int8_t   bits8s;
 
 /// \defgroup bits16s bits16s
 /// \ingroup ChannelModel
-/// \brief 16-bit signed integral channel type. Models ChannelValueConcept
+/// \brief 16-bit signed integral channel type (typedef from int16_t). Models ChannelValueConcept
 
 /// \ingroup bits16s
 typedef int16_t  bits16s;
 
 /// \defgroup bits32s bits32s
 /// \ingroup ChannelModel
-/// \brief 32-bit signed integral channel type. Models ChannelValueConcept
+/// \brief 32-bit signed integral channel type (typedef from int32_t). Models ChannelValueConcept
 
 /// \ingroup bits32s
 typedef int32_t  bits32s;
@@ -498,5 +597,20 @@ typedef scoped_channel_value<float,float_zero,float_one> bits32f;
 
 } }  // namespace boost::gil
 
+namespace boost {
+
+template <int NumBits>
+struct is_integral<gil::packed_channel_value<NumBits> > : public mpl::true_ {};
+
+template <typename BitField, int FirstBit, int NumBits, bool IsMutable>
+struct is_integral<gil::packed_channel_reference<BitField,FirstBit,NumBits,IsMutable> > : public mpl::true_ {};
+
+template <typename BitField, int NumBits, bool IsMutable>
+struct is_integral<gil::packed_dynamic_channel_reference<BitField,NumBits,IsMutable> > : public mpl::true_ {};
+
+template <typename BaseChannelValue, typename MinVal, typename MaxVal> 
+struct is_integral<gil::scoped_channel_value<BaseChannelValue,MinVal,MaxVal> > : public is_integral<BaseChannelValue> {};
+
+}
 
 #endif

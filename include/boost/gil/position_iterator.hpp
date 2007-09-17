@@ -78,7 +78,7 @@ private:
     void decrement()                  { _p[Dim]-=_step[Dim]; }
     void advance(difference_type d)   { _p[Dim]+=d*_step[Dim]; }
 
-    ptrdiff_t distance_to(const position_iterator& it) const { return (it._p[Dim]-_p[Dim])/_step[Dim]; }
+    difference_type distance_to(const position_iterator& it) const { return (it._p[Dim]-_p[Dim])/_step[Dim]; }
     bool equal(const position_iterator& it) const { return _p==it._p; }
 };
 

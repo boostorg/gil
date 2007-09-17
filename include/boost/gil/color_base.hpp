@@ -44,6 +44,12 @@ typename kth_semantic_element_const_reference_type<ColorBase,K>::type semantic_a
 // Forward declare element_reference_type
 template <typename ColorBase> struct element_reference_type;
 template <typename ColorBase> struct element_const_reference_type;
+template <typename ColorBase, int K> struct kth_element_type;
+template <typename ColorBase, int K> struct kth_element_type<const ColorBase,K> : public kth_element_type<ColorBase,K> {};
+template <typename ColorBase, int K> struct kth_element_reference_type;
+template <typename ColorBase, int K> struct kth_element_reference_type<const ColorBase,K> : public kth_element_reference_type<ColorBase,K> {};
+template <typename ColorBase, int K> struct kth_element_const_reference_type;
+template <typename ColorBase, int K> struct kth_element_const_reference_type<const ColorBase,K> : public kth_element_const_reference_type<ColorBase,K> {};
 
 namespace detail {
 
@@ -59,25 +65,14 @@ struct mapping_transform
 /// If the element type models Regular, this class models HomogeneousColorBaseValueConcept.
 
 
-template <typename Element, typename Layout>
-struct homogeneous_color_base_impl {
-    typedef Layout layout_t;
-    
-    template <int K> struct kth_element_type                 { typedef Element type; };
-    template <int K> struct kth_element_reference_type       : public add_reference<Element> {};
-    template <int K> struct kth_element_const_reference_type : public add_reference<typename add_const<Element>::type> {};
-};
-
-
-template <typename Element, typename Layout, int K> struct homogeneous_color_base;
-
 /// \brief A homogeneous color base holding one color element. Models HomogeneousColorBaseConcept or HomogeneousColorBaseValueConcept
 /// \ingroup ColorBaseModelHomogeneous
 template <typename Element, typename Layout>
-struct homogeneous_color_base<Element,Layout,1> : public homogeneous_color_base_impl<Element,Layout> {
+struct homogeneous_color_base<Element,Layout,1> {
 private:
     Element _v0;
 public:
+    typedef Layout layout_t;
     typename element_reference_type<homogeneous_color_base>::type       at(mpl::int_<0>)       { return _v0; }
     typename element_const_reference_type<homogeneous_color_base>::type at(mpl::int_<0>) const { return _v0; }
 
@@ -94,10 +89,11 @@ public:
 /// \brief A homogeneous color base holding two color elements. Models HomogeneousColorBaseConcept or HomogeneousColorBaseValueConcept
 /// \ingroup ColorBaseModelHomogeneous
 template <typename Element, typename Layout>
-struct homogeneous_color_base<Element,Layout,2> : public homogeneous_color_base_impl<Element,Layout> {
+struct homogeneous_color_base<Element,Layout,2> {
 private:
     Element _v0, _v1;
 public:
+    typedef Layout layout_t;
     typename element_reference_type<homogeneous_color_base>::type       at(mpl::int_<0>)       { return _v0; }
     typename element_const_reference_type<homogeneous_color_base>::type at(mpl::int_<0>) const { return _v0; }
     typename element_reference_type<homogeneous_color_base>::type       at(mpl::int_<1>)       { return _v1; }
@@ -126,8 +122,8 @@ public:
 
     // Support for planar_pixel_reference offset constructor
     template <typename Ptr> homogeneous_color_base(const Ptr& ptr, std::ptrdiff_t diff) 
-        : _v0(*byte_advanced(semantic_at_c<0>(ptr),diff)),
-          _v1(*byte_advanced(semantic_at_c<1>(ptr),diff)) {}
+        : _v0(*memunit_advanced(semantic_at_c<0>(ptr),diff)),
+          _v1(*memunit_advanced(semantic_at_c<1>(ptr),diff)) {}
 
     // Support for planar_pixel_reference operator[]
     Element at_c_dynamic(size_t i) const {
@@ -139,10 +135,11 @@ public:
 /// \brief A homogeneous color base holding three color elements. Models HomogeneousColorBaseConcept or HomogeneousColorBaseValueConcept
 /// \ingroup ColorBaseModelHomogeneous
 template <typename Element, typename Layout>
-struct homogeneous_color_base<Element,Layout,3> : public homogeneous_color_base_impl<Element,Layout> {
+struct homogeneous_color_base<Element,Layout,3> {
 private:
     Element _v0, _v1, _v2;
 public:
+    typedef Layout layout_t;
     typename element_reference_type<homogeneous_color_base>::type       at(mpl::int_<0>)       { return _v0; }
     typename element_const_reference_type<homogeneous_color_base>::type at(mpl::int_<0>) const { return _v0; }
     typename element_reference_type<homogeneous_color_base>::type       at(mpl::int_<1>)       { return _v1; }
@@ -177,9 +174,9 @@ public:
 
     // Support for planar_pixel_reference offset constructor
     template <typename Ptr> homogeneous_color_base(const Ptr& ptr, std::ptrdiff_t diff) 
-        : _v0(*byte_advanced(semantic_at_c<0>(ptr),diff)),
-          _v1(*byte_advanced(semantic_at_c<1>(ptr),diff)),
-          _v2(*byte_advanced(semantic_at_c<2>(ptr),diff)) {}
+        : _v0(*memunit_advanced(semantic_at_c<0>(ptr),diff)),
+          _v1(*memunit_advanced(semantic_at_c<1>(ptr),diff)),
+          _v2(*memunit_advanced(semantic_at_c<2>(ptr),diff)) {}
 
     // Support for planar_pixel_reference operator[]
     Element at_c_dynamic(size_t i) const {
@@ -194,10 +191,11 @@ public:
 /// \brief A homogeneous color base holding four color elements. Models HomogeneousColorBaseConcept or HomogeneousColorBaseValueConcept
 /// \ingroup ColorBaseModelHomogeneous
 template <typename Element, typename Layout>
-struct homogeneous_color_base<Element,Layout,4> : public homogeneous_color_base_impl<Element,Layout> {
+struct homogeneous_color_base<Element,Layout,4> {
 private:
     Element _v0, _v1, _v2, _v3;
 public:
+    typedef Layout layout_t;
     typename element_reference_type<homogeneous_color_base>::type       at(mpl::int_<0>)       { return _v0; }
     typename element_const_reference_type<homogeneous_color_base>::type at(mpl::int_<0>) const { return _v0; }
     typename element_reference_type<homogeneous_color_base>::type       at(mpl::int_<1>)       { return _v1; }
@@ -238,10 +236,10 @@ public:
 
     // Support for planar_pixel_reference offset constructor
     template <typename Ptr> homogeneous_color_base(const Ptr& ptr, std::ptrdiff_t diff) 
-        : _v0(*byte_advanced(semantic_at_c<0>(ptr),diff)),
-          _v1(*byte_advanced(semantic_at_c<1>(ptr),diff)),
-          _v2(*byte_advanced(semantic_at_c<2>(ptr),diff)),
-          _v3(*byte_advanced(semantic_at_c<3>(ptr),diff)) {}
+        : _v0(*memunit_advanced(semantic_at_c<0>(ptr),diff)),
+          _v1(*memunit_advanced(semantic_at_c<1>(ptr),diff)),
+          _v2(*memunit_advanced(semantic_at_c<2>(ptr),diff)),
+          _v3(*memunit_advanced(semantic_at_c<3>(ptr),diff)) {}
 
     // Support for planar_pixel_reference operator[]
     Element at_c_dynamic(size_t i) const {
@@ -257,10 +255,11 @@ public:
 /// \brief A homogeneous color base holding five color elements. Models HomogeneousColorBaseConcept or HomogeneousColorBaseValueConcept
 /// \ingroup ColorBaseModelHomogeneous
 template <typename Element, typename Layout>
-struct homogeneous_color_base<Element,Layout,5> : public homogeneous_color_base_impl<Element,Layout> {
+struct homogeneous_color_base<Element,Layout,5> {
 private:
     Element _v0, _v1, _v2, _v3, _v4;
 public:
+    typedef Layout layout_t;
     typename element_reference_type<homogeneous_color_base>::type       at(mpl::int_<0>)       { return _v0; }
     typename element_const_reference_type<homogeneous_color_base>::type at(mpl::int_<0>) const { return _v0; }
     typename element_reference_type<homogeneous_color_base>::type       at(mpl::int_<1>)       { return _v1; }
@@ -307,11 +306,11 @@ public:
 
     // Support for planar_pixel_reference offset constructor
     template <typename Ptr> homogeneous_color_base(const Ptr& ptr, std::ptrdiff_t diff) 
-        : _v0(*byte_advanced(semantic_at_c<0>(ptr),diff)),
-          _v1(*byte_advanced(semantic_at_c<1>(ptr),diff)),
-          _v2(*byte_advanced(semantic_at_c<2>(ptr),diff)),
-          _v3(*byte_advanced(semantic_at_c<3>(ptr),diff)),
-          _v4(*byte_advanced(semantic_at_c<4>(ptr),diff)) {}
+        : _v0(*memunit_advanced(semantic_at_c<0>(ptr),diff)),
+          _v1(*memunit_advanced(semantic_at_c<1>(ptr),diff)),
+          _v2(*memunit_advanced(semantic_at_c<2>(ptr),diff)),
+          _v3(*memunit_advanced(semantic_at_c<3>(ptr),diff)),
+          _v4(*memunit_advanced(semantic_at_c<4>(ptr),diff)) {}
 
     // Support for planar_pixel_reference operator[]
     Element at_c_dynamic(size_t i) const {
@@ -366,17 +365,28 @@ dynamic_at_c(const homogeneous_color_base<const Element&,Layout,K>& cb, std::siz
 
 } // namespace detail
 
+template <typename Element, typename Layout, int K1, int K>  
+struct kth_element_type<detail::homogeneous_color_base<Element,Layout,K1>, K> {
+    typedef Element type;
+};
+
+template <typename Element, typename Layout, int K1, int K> 
+struct kth_element_reference_type<detail::homogeneous_color_base<Element,Layout,K1>, K> : public add_reference<Element> {};
+
+template <typename Element, typename Layout, int K1, int K> 
+struct kth_element_const_reference_type<detail::homogeneous_color_base<Element,Layout,K1>, K> : public add_reference<typename add_const<Element>::type> {};
+
 /// \brief Provides mutable access to the K-th element, in physical order
 /// \ingroup ColorBaseModelHomogeneous
 template <int K, typename E, typename L, int N> inline
 typename add_reference<E>::type
-at_c(      detail::homogeneous_color_base<E,L,N>& p) { return p.at(mpl::int_<K>()); };
+at_c(      detail::homogeneous_color_base<E,L,N>& p) { return p.at(mpl::int_<K>()); }
 
 /// \brief Provides constant access to the K-th element, in physical order
 /// \ingroup ColorBaseModelHomogeneous
 template <int K, typename E, typename L, int N> inline
 typename add_reference<typename add_const<E>::type>::type
-at_c(const detail::homogeneous_color_base<E,L,N>& p) { return p.at(mpl::int_<K>()); };
+at_c(const detail::homogeneous_color_base<E,L,N>& p) { return p.at(mpl::int_<K>()); }
 
 namespace detail {
     struct swap_fn {
@@ -389,7 +399,7 @@ namespace detail {
 template <typename E, typename L, int N> inline
 void swap(detail::homogeneous_color_base<E,L,N>& x, detail::homogeneous_color_base<E,L,N>& y) { 
     static_for_each(x,y,detail::swap_fn());
-};
+}
 
 
 } }  // namespace boost::gil

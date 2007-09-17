@@ -36,9 +36,9 @@
     template <typename, typename>    struct pixel;                                                \
     template <typename, typename>    struct planar_pixel_reference;                                            \
     template <typename, typename>    struct planar_pixel_iterator;                                            \
-    template <typename>                class byte_addressable_step_iterator;                                    \
+    template <typename>                class memory_based_step_iterator;                                    \
     template <typename>                class point2;                                                \
-    template <typename>                class byte_addressable_2d_locator;                                    \
+    template <typename>                class memory_based_2d_locator;                                    \
     template <typename>                class image_view;                                            \
     template <typename, bool, typename>    class image;                                                \
     typedef pixel<bits##T, LAYOUT >                        CS##T##_pixel_t;        \
@@ -47,12 +47,12 @@
     typedef const pixel<bits##T, LAYOUT >&                CS##T##c_ref_t;            \
     typedef CS##T##_pixel_t*                                               CS##T##_ptr_t;            \
     typedef CS##T##c_pixel_t*                                               CS##T##c_ptr_t;            \
-    typedef byte_addressable_step_iterator<CS##T##_ptr_t>                               CS##T##_step_ptr_t;        \
-    typedef byte_addressable_step_iterator<CS##T##c_ptr_t>                               CS##T##c_step_ptr_t;    \
-    typedef byte_addressable_2d_locator<byte_addressable_step_iterator<CS##T##_ptr_t> >       CS##T##_loc_t;            \
-    typedef byte_addressable_2d_locator<byte_addressable_step_iterator<CS##T##c_ptr_t> >       CS##T##c_loc_t;            \
-    typedef byte_addressable_2d_locator<byte_addressable_step_iterator<CS##T##_step_ptr_t> >  CS##T##_step_loc_t;        \
-    typedef byte_addressable_2d_locator<byte_addressable_step_iterator<CS##T##c_step_ptr_t> > CS##T##c_step_loc_t;    \
+    typedef memory_based_step_iterator<CS##T##_ptr_t>                               CS##T##_step_ptr_t;        \
+    typedef memory_based_step_iterator<CS##T##c_ptr_t>                               CS##T##c_step_ptr_t;    \
+    typedef memory_based_2d_locator<memory_based_step_iterator<CS##T##_ptr_t> >       CS##T##_loc_t;            \
+    typedef memory_based_2d_locator<memory_based_step_iterator<CS##T##c_ptr_t> >       CS##T##c_loc_t;            \
+    typedef memory_based_2d_locator<memory_based_step_iterator<CS##T##_step_ptr_t> >  CS##T##_step_loc_t;        \
+    typedef memory_based_2d_locator<memory_based_step_iterator<CS##T##c_step_ptr_t> > CS##T##c_step_loc_t;    \
     typedef image_view<CS##T##_loc_t>                                        CS##T##_view_t;            \
     typedef image_view<CS##T##c_loc_t>                                        CS##T##c_view_t;        \
     typedef image_view<CS##T##_step_loc_t>                                    CS##T##_step_view_t;    \
@@ -66,12 +66,12 @@
     typedef planar_pixel_reference<const bits##T&,CS_FULL >                                      CS##T##c_planar_ref_t;        \
     typedef planar_pixel_iterator<bits##T*,CS_FULL >                                          CS##T##_planar_ptr_t;        \
     typedef planar_pixel_iterator<const bits##T*,CS_FULL >                                      CS##T##c_planar_ptr_t;        \
-    typedef byte_addressable_step_iterator<CS##T##_planar_ptr_t>                              CS##T##_planar_step_ptr_t;    \
-    typedef byte_addressable_step_iterator<CS##T##c_planar_ptr_t>                              CS##T##c_planar_step_ptr_t;    \
-    typedef byte_addressable_2d_locator<byte_addressable_step_iterator<CS##T##_planar_ptr_t> >          CS##T##_planar_loc_t;        \
-    typedef byte_addressable_2d_locator<byte_addressable_step_iterator<CS##T##c_planar_ptr_t> >      CS##T##c_planar_loc_t;        \
-    typedef byte_addressable_2d_locator<byte_addressable_step_iterator<CS##T##_planar_step_ptr_t> >  CS##T##_planar_step_loc_t;    \
-    typedef byte_addressable_2d_locator<byte_addressable_step_iterator<CS##T##c_planar_step_ptr_t> > CS##T##c_planar_step_loc_t;    \
+    typedef memory_based_step_iterator<CS##T##_planar_ptr_t>                              CS##T##_planar_step_ptr_t;    \
+    typedef memory_based_step_iterator<CS##T##c_planar_ptr_t>                              CS##T##c_planar_step_ptr_t;    \
+    typedef memory_based_2d_locator<memory_based_step_iterator<CS##T##_planar_ptr_t> >          CS##T##_planar_loc_t;        \
+    typedef memory_based_2d_locator<memory_based_step_iterator<CS##T##c_planar_ptr_t> >      CS##T##c_planar_loc_t;        \
+    typedef memory_based_2d_locator<memory_based_step_iterator<CS##T##_planar_step_ptr_t> >  CS##T##_planar_step_loc_t;    \
+    typedef memory_based_2d_locator<memory_based_step_iterator<CS##T##c_planar_step_ptr_t> > CS##T##c_planar_step_loc_t;    \
     typedef image_view<CS##T##_planar_loc_t>                                      CS##T##_planar_view_t;        \
     typedef image_view<CS##T##c_planar_loc_t>                                      CS##T##c_planar_view_t;        \
     typedef image_view<CS##T##_planar_step_loc_t>                                  CS##T##_planar_step_view_t;    \

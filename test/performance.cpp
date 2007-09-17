@@ -1,3 +1,15 @@
+/*
+    Copyright 2005-2007 Adobe Systems Incorporated
+   
+    Use, modification and distribution are subject to the Boost Software License,
+    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt).
+
+    See http://opensource.adobe.com/gil for most recent version including documentation.
+*/
+
+/*************************************************************************************************/
+
 /// \file
 /// \brief GIL performance test suite
 /// \date 2007 \n Last updated on February 12, 2007
@@ -47,9 +59,9 @@ double measure_time(Op op, std::size_t num_loops) {
 std::size_t width=1000, height=400;
 
 // macros for standard GIL views
-#define RGB_VIEW(T) image_view<byte_addressable_2d_locator<byte_addressable_step_iterator<pixel<T,rgb_layout_t>*> > >
-#define BGR_VIEW(T) image_view<byte_addressable_2d_locator<byte_addressable_step_iterator<pixel<T,bgr_layout_t>*> > >
-#define RGB_PLANAR_VIEW(T) image_view<byte_addressable_2d_locator<byte_addressable_step_iterator<planar_pixel_iterator<T*,rgb_t> > > >
+#define RGB_VIEW(T) image_view<memory_based_2d_locator<memory_based_step_iterator<pixel<T,rgb_layout_t>*> > >
+#define BGR_VIEW(T) image_view<memory_based_2d_locator<memory_based_step_iterator<pixel<T,bgr_layout_t>*> > >
+#define RGB_PLANAR_VIEW(T) image_view<memory_based_2d_locator<memory_based_step_iterator<planar_pixel_iterator<T*,rgb_t> > > >
 
 template <typename View, typename P>
 struct fill_gil_t {

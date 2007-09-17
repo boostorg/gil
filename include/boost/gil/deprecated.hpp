@@ -27,8 +27,8 @@
 
 #define planar_ptr          planar_pixel_iterator
 #define planar_ref          planar_pixel_reference
-#define membased_2d_locator byte_addressable_2d_locator
-#define pixel_step_iterator byte_addressable_step_iterator
+#define membased_2d_locator memory_based_2d_locator
+#define pixel_step_iterator memory_based_step_iterator
 #define pixel_image_iterator iterator_from_2d
 
 #define equal_channels      static_equal
@@ -61,5 +61,17 @@ template <typename T> std::size_t get_num_channels(const T& a) { return a.num_ch
 #define ADOBE_GIL_NAMESPACE_BEGIN  namespace boost { namespace gil {
 #define ADOBE_GIL_NAMESPACE_END    } }
 
+#define ByteAdvancableIteratorConcept  MemoryBasedIteratorConcept
+#define byte_advance                   memunit_advance
+#define byte_advanced                  memunit_advanced
+#define byte_step                      memunit_step
+#define byte_distance                  memunit_distance
+
+#define byte_addressable_step_iterator memory_based_step_iterator
+#define byte_addressable_2d_locator    memory_based_2d_locator
+
+// These are members of memory-based locators
+//#define row_bytes    row_size         // commented out because row_bytes is commonly used
+#define pix_bytestep pixel_size
 
 #endif

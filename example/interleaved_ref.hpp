@@ -1,9 +1,15 @@
 /*
     Copyright 2005-2007 Adobe Systems Incorporated
-    Distributed under the MIT License (see accompanying file LICENSE_1_0_0.txt
-    or a copy at http://opensource.adobe.com/licenses.html)
+   
+    Use, modification and distribution are subject to the Boost Software License,
+    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt).
+
+    See http://opensource.adobe.com/gil for most recent version including documentation.
 */
+
 /*************************************************************************************************/
+
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file               
@@ -53,10 +59,6 @@ public:
 // Required by ColorBaseConcept
     typedef Layout layout_t;
 
-    // Type of each channel, and the result of constant and mutable at_c<K>(*this);
-    template <int K> struct kth_element_type                 { typedef channel_t type; };
-    template <int K> struct kth_element_const_reference_type { typedef channel_reference_t type; };
-
     // Copy construction from a compatible type. The copy constructor of references is shallow. The channels themselves are not copied.
     interleaved_ref(const interleaved_ref& p) : _channels(p._channels) {}
     template <typename P> interleaved_ref(const P& p) : _channels(p._channels) { check_compatible<P>(); }
@@ -65,7 +67,6 @@ public:
     template <typename P> bool operator!=(const P& p)    const { return !(*this==p); }
 
 // Required by MutableColorBaseConcept
-    template <int K> struct kth_element_reference_type       { typedef channel_reference_t type; };
     
     // Assignment from a compatible type 
     const interleaved_ref&  operator=(const interleaved_ref& p)  const { static_copy(p,*this); return *this; }
@@ -89,6 +90,24 @@ private:
 
     template <typename Pixel> static void check_compatible() { gil_function_requires<PixelsCompatibleConcept<Pixel,interleaved_ref> >(); }
 };
+
+// Required by ColorBaseConcept
+template <typename ChannelReference, typename Layout, int K>
+struct kth_element_type<interleaved_ref<ChannelReference,Layout>,K> { 
+    typedef ChannelReference type; 
+};
+
+template <typename ChannelReference, typename Layout, int K>
+struct kth_element_reference_type<interleaved_ref<ChannelReference,Layout>,K> { 
+    typedef ChannelReference type; 
+};
+
+template <typename ChannelReference, typename Layout, int K>
+struct kth_element_const_reference_type<interleaved_ref<ChannelReference,Layout>,K> {
+    typedef ChannelReference type; 
+//    typedef typename channel_traits<ChannelReference>::const_reference type; 
+};
+
 
 // Required by ColorBaseConcept
 template <int K, typename ChannelReference, typename Layout>

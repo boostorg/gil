@@ -39,6 +39,9 @@ typename channel_traits<dstT>::value_type channel_convert(srcT val);
 template <typename T> class point2;
 template <std::size_t K, typename T> const T& axis_value(const point2<T>& p);
 template <std::size_t K, typename T>       T& axis_value(      point2<T>& p);
+template <typename ColorBase, int K> struct kth_element_type;
+template <typename ColorBase, int K> struct kth_element_reference_type;
+template <typename ColorBase, int K> struct kth_element_const_reference_type;
 template <typename ColorBase, int K> struct kth_semantic_element_reference_type;
 template <typename ColorBase, int K> struct kth_semantic_element_const_reference_type;
 template <typename ColorBase> struct size;
@@ -65,14 +68,20 @@ template <int K, typename E, typename L, int N>
 typename add_reference<typename add_const<E>::type>::type at_c(const detail::homogeneous_color_base<E,L,N>& p);
 
 #if !defined(_MSC_VER)  || _MSC_VER > 1310
-template <typename P, typename C, typename L> struct heterogeneous_packed_pixel;
+template <typename P, typename C, typename L> struct packed_pixel;
 template <int K, typename P, typename C, typename L>
-typename heterogeneous_packed_pixel<P,C,L>::template kth_element_reference_type<K>::type 
-at_c(heterogeneous_packed_pixel<P,C,L>& p);
+typename kth_element_reference_type<packed_pixel<P,C,L>, K>::type 
+at_c(packed_pixel<P,C,L>& p);
 
 template <int K, typename P, typename C, typename L>
-typename heterogeneous_packed_pixel<P,C,L>::template kth_element_const_reference_type<K>::type 
-at_c(const heterogeneous_packed_pixel<P,C,L>& p);
+typename kth_element_const_reference_type<packed_pixel<P,C,L>,K>::type 
+at_c(const packed_pixel<P,C,L>& p);
+
+template <typename C, typename L, bool M> struct bit_aligned_pixel_reference;
+
+template <int K, typename C, typename L, bool M> inline
+typename kth_element_reference_type<bit_aligned_pixel_reference<C,L,M>, K>::type
+at_c(const bit_aligned_pixel_reference<C,L,M>& p);
 #endif
 
 // Forward-declare semantic_at_c
@@ -91,10 +100,10 @@ void initialize_it(T& x) {}
 } // namespace detail
 
 template <typename T>
-struct remove_const_and_reference : public remove_reference<typename remove_const<T>::type> {};
+struct remove_const_and_reference : public remove_const<typename remove_reference<T>::type> {};
 
 #ifdef BOOST_GIL_USE_CONCEPT_CHECK
-    #define GIL_CLASS_REQUIRE(type_var, ns, concept) BOOST_CLASS_REQUIRE(type_var, ns, concept)
+    #define GIL_CLASS_REQUIRE(type_var, ns, concept) BOOST_CLASS_REQUIRE(type_var, ns, concept);
     template <typename C> void gil_function_requires() { function_requires<C>(); }
 #else
     #define GIL_CLASS_REQUIRE(T,NS,C) 
@@ -227,14 +236,13 @@ struct Metafunction {
     }
 };
 ////////////////////////////////////////////////////////////////////////////////////////
-///
+//
 //          POINT CONCEPTS
-/// 
+// 
 ////////////////////////////////////////////////////////////////////////////////////////
 
 /// \brief N-dimensional point concept
 /// \ingroup PointConcept
-
 /**
 \code
 concept PointNDConcept<typename T> : Regular<T> {    
@@ -337,9 +345,9 @@ namespace detail {
 }   // namespace detail
 
 ////////////////////////////////////////////////////////////////////////////////////////
-///
-///         COLOR SPACE CONCEPTS
-///
+//
+//         COLOR SPACE CONCEPTS
+//
 ////////////////////////////////////////////////////////////////////////////////////////
 
 /// \brief Color space type concept
@@ -488,9 +496,16 @@ struct ChannelValueConcept {
 
 
 /// \brief Predicate metafunction returning whether two channels are compatible
+/// \ingroup ChannelAlgorithm
 ///
-/// Channels are considered compatible if their value types (ignoring constness and references) are the same
-/// \ingroup ChannelModel
+/// Channels are considered compatible if their value types (ignoring constness and references) are the same.
+/**
+Example:
+
+\code
+BOOST_STATIC_ASSERT((channels_are_compatible<bits8, const bits8&>::value));
+\endcode
+*/
 template <typename T1, typename T2>  // Models GIL Pixel
 struct channels_are_compatible 
     : public is_same<typename channel_traits<T1>::value_type, typename channel_traits<T2>::value_type> {};
@@ -599,8 +614,8 @@ struct ColorBaseConcept {
 
         static const std::size_t num_elements = size<ColorBase>::value;
 
-        typedef typename ColorBase::template kth_element_type<num_elements-1>::type TN; 
-        typedef typename ColorBase::template kth_element_const_reference_type<num_elements-1>::type CR; 
+        typedef typename kth_element_type<ColorBase,num_elements-1>::type TN; 
+        typedef typename kth_element_const_reference_type<ColorBase,num_elements-1>::type CR; 
 
 #if !defined(_MSC_VER) || _MSC_VER > 1310
         CR cr=at_c<num_elements-1>(cb);  ignore_unused_variable_warning(cr);
@@ -623,7 +638,7 @@ struct ColorBaseConcept {
 concept MutableColorBaseConcept<ColorBaseConcept T> : Assignable<T>, Swappable<T> {
     template <int K> struct kth_element_reference_type;       where Metafunction<kth_element_reference_type>;
 
-    template <int K> kth_element_reference_type<kth_element_type<K>::type>::type at_c(T);
+    template <int K> kth_element_reference_type<kth_element_type<T,K>::type>::type at_c(T);
     
     template <ColorBaseConcept T2> where { ColorBasesCompatibleConcept<T,T2> } 
         T& operator=(T&, const T2&);
@@ -637,7 +652,7 @@ struct MutableColorBaseConcept {
         gil_function_requires< Assignable<ColorBase> >();
         gil_function_requires< Swappable<ColorBase> >();
 
-        typedef typename ColorBase::template kth_element_reference_type<0>::type CR; 
+        typedef typename kth_element_reference_type<ColorBase, 0>::type CR; 
 
 #if !defined(_MSC_VER) || _MSC_VER > 1310
         CR r=at_c<0>(cb);
@@ -670,8 +685,8 @@ struct ColorBaseValueConcept {
 \code
 concept HomogeneousColorBaseConcept<ColorBaseConcept CB> {
     // For all K in [0 ... size<C1>::value-1):
-    //     where SameType<kth_element_type<K>::type, kth_element_type<K+1>::type>;    
-    kth_element_const_reference_type<0>::type dynamic_at_c(const CB&, std::size_t n) const;
+    //     where SameType<kth_element_type<CB,K>::type, kth_element_type<CB,K+1>::type>;    
+    kth_element_const_reference_type<CB,0>::type dynamic_at_c(const CB&, std::size_t n) const;
 };
 \endcode
 */
@@ -683,11 +698,11 @@ struct HomogeneousColorBaseConcept {
 
         static const std::size_t num_elements = size<ColorBase>::value;
 
-        typedef typename ColorBase::template kth_element_type<0>::type T0; 
-        typedef typename ColorBase::template kth_element_type<num_elements-1>::type TN; 
+        typedef typename kth_element_type<ColorBase,0>::type T0; 
+        typedef typename kth_element_type<ColorBase,num_elements-1>::type TN; 
 
         BOOST_STATIC_ASSERT((is_same<T0,TN>::value));   // better than nothing
-        typedef typename ColorBase::template kth_element_const_reference_type<0>::type CR0; 
+        typedef typename kth_element_const_reference_type<ColorBase,0>::type CR0; 
         CR0 e0=dynamic_at_c(cb,0);
     }
     ColorBase cb;
@@ -699,7 +714,7 @@ struct HomogeneousColorBaseConcept {
 
 \code
 concept MutableHomogeneousColorBaseConcept<ColorBaseConcept CB> : HomogeneousColorBaseConcept<CB> {
-    kth_element_reference_type<0>::type dynamic_at_c(CB&, std::size_t n);
+    kth_element_reference_type<CB,0>::type dynamic_at_c(CB&, std::size_t n);
 };
 \endcode
 */
@@ -709,7 +724,7 @@ struct MutableHomogeneousColorBaseConcept {
     void constraints() {
         gil_function_requires< ColorBaseConcept<ColorBase> >();
         gil_function_requires< HomogeneousColorBaseConcept<ColorBase> >();
-        typedef typename ColorBase::template kth_element_reference_type<0>::type R0;
+        typedef typename kth_element_reference_type<ColorBase, 0>::type R0;
         R0 x=dynamic_at_c(cb,0);
         dynamic_at_c(cb,0) = dynamic_at_c(cb,0);
     }
@@ -848,7 +863,7 @@ struct HomogeneousPixelBasedConcept {
 concept PixelConcept<typename P> : ColorBaseConcept<P>, PixelBasedConcept<P> {    
     where is_pixel<P>::type::value==true;
     // where for each K [0..size<P>::value-1]:
-    //      ChannelConcept<kth_element_type<K> >;
+    //      ChannelConcept<kth_element_type<P,K> >;
         
     typename P::value_type;       where PixelValueConcept<value_type>;
     typename P::reference;        where PixelConcept<reference>;
@@ -990,7 +1005,7 @@ namespace detail {
 /// \brief Returns whether two pixels are compatible
 ///
 /// Pixels are compatible if their channels and color space types are compatible. Compatible pixels can be assigned and copy constructed from one another.
-/// \ingroup PixelModel
+/// \ingroup PixelAlgorithm
 template <typename P1, typename P2>  // Models GIL Pixel
 struct pixels_are_compatible 
     : public mpl::and_<typename color_spaces_are_compatible<typename color_space_type<P1>::type, 
@@ -1232,15 +1247,15 @@ struct MutablePixelIteratorConcept {
 };
 
 namespace detail {
-    // Iterators that can be used as the base of byte_addressable_step_iterator require some additional functions
+    // Iterators that can be used as the base of memory_based_step_iterator require some additional functions
     template <typename Iterator>  // Preconditions: Iterator Models boost_concepts::RandomAccessTraversalConcept
-    struct RandomAccessIteratorIsByteAdvanceableConcept {
+    struct RandomAccessIteratorIsMemoryBasedConcept {
         void constraints() {
-            std::ptrdiff_t bs=byte_step(it);  ignore_unused_variable_warning(bs);
-            it=byte_advanced(it,3);
-            std::ptrdiff_t bd=byte_distance(it,it);  ignore_unused_variable_warning(bd);
-            byte_advance(it,3);
-            // for performace you may also provide a customized implementation of byte_advanced_ref
+            std::ptrdiff_t bs=memunit_step(it);  ignore_unused_variable_warning(bs);
+            it=memunit_advanced(it,3);
+            std::ptrdiff_t bd=memunit_distance(it,it);  ignore_unused_variable_warning(bd);
+            memunit_advance(it,3);
+            // for performace you may also provide a customized implementation of memunit_advanced_ref
         }
         Iterator it;
     };
@@ -1250,24 +1265,25 @@ namespace detail {
 /// \ingroup PixelIteratorConcept
 /// \brief Iterator that advances by a specified step
 
-/// \brief Concept of a random-access iterator that can be advanced in bytes
+/// \brief Concept of a random-access iterator that can be advanced in memory units (bytes or bits)
 /// \ingroup PixelIteratorConceptStepIterator
 /**
 \code
-concept ByteAdvanceableIteratorConcept<boost_concepts::RandomAccessTraversalConcept Iterator> {
-    std::ptrdiff_t      byte_step(const Iterator&);
-    std::ptrdiff_t      byte_distance(const Iterator& , const Iterator&);
-    void                byte_advance(Iterator&, std::ptrdiff_t byteDiff);
-    Iterator            byte_advanced(const Iterator& p, std::ptrdiff_t byteDiff) { Iterator tmp; byte_advance(tmp,pyteDiff); return tmp; }
-    Iterator::reference byte_advanced_ref(const Iterator& p, std::ptrdiff_t byteDiff) { return *byte_advanced(p,byteDiff); }
+concept MemoryBasedIteratorConcept<boost_concepts::RandomAccessTraversalConcept Iterator> {
+    typename byte_to_memunit<Iterator>; where metafunction<byte_to_memunit<Iterator> >;
+    std::ptrdiff_t      memunit_step(const Iterator&);
+    std::ptrdiff_t      memunit_distance(const Iterator& , const Iterator&);
+    void                memunit_advance(Iterator&, std::ptrdiff_t diff);
+    Iterator            memunit_advanced(const Iterator& p, std::ptrdiff_t diff) { Iterator tmp; memunit_advance(tmp,diff); return tmp; }
+    Iterator::reference memunit_advanced_ref(const Iterator& p, std::ptrdiff_t diff) { return *memunit_advanced(p,diff); }
 };
 \endcode
 */
 template <typename Iterator>
-struct ByteAdvanceableIteratorConcept {
+struct MemoryBasedIteratorConcept {
     void constraints() {
         gil_function_requires<boost_concepts::RandomAccessTraversalConcept<Iterator> >();
-        gil_function_requires<detail::RandomAccessIteratorIsByteAdvanceableConcept<Iterator> >();
+        gil_function_requires<detail::RandomAccessIteratorIsMemoryBasedConcept<Iterator> >();
     }
 };
 

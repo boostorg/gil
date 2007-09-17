@@ -1,9 +1,11 @@
+.SUFFIXES: .cpp 
+#CXX=/usr/local/gcc-411/bin/g++
 CXX=g++
 CXX_FLAGS=-Wall -O2 -DNDEBUG -DBOOST_GIL_USE_CONCEPT_CHECK
 
-BOOST_INCLUDE_PATH=-I../../..
-LIBJPEG_INCLUDE_PATH=-I../../../boost/gil/lib/libjpeg
-LIBJPEG_LIB_PATH=-L../../../boost/gil/lib/libjpeg
+BOOST_INCLUDE_PATH=-I../../.. -I../../../../boost_libraries
+LIBJPEG_INCLUDE_PATH=-I../../../../lib/libjpeg
+LIBJPEG_LIB_PATH=-L../../../../lib/libjpeg
 
 all: resize affine convolution mandelbrot x_gradient histogram dynamic_image interleaved_ptr packed_pixel
 .cpp.o:
@@ -11,7 +13,7 @@ all: resize affine convolution mandelbrot x_gradient histogram dynamic_image int
 clean:
 	-rm -f *.o *.exe 
 	-rm -f out-affine.jpg out-resize.jpg out-convolution.jpg out-convolution2.jpg out-mandelbrot.jpg
-	-rm -f out-interleaved_ptr.jpg out-x_gradient.jpg out-histogram.txt out-packed_pixel.jpg out-dynamic_image.jpg
+	-rm -f out-interleaved_ptr.jpg out-x_gradient.jpg out-histogram.txt out-packed_pixel_bgr772.jpg out-packed_pixel_gray1.jpg out-dynamic_image.jpg
 resize:	resize.o
 	${CXX} -o resize ${CXX_FLAGS} resize.o ${LIBJPEG_LIB_PATH} -ljpeg 
 affine:	affine.o

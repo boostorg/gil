@@ -31,91 +31,140 @@
 
 namespace boost { namespace gil {
 
-/// \defgroup ColorBaseModelPackedPixel heterogeneous_packed_pixel 
+/// \defgroup ColorBaseModelPackedPixel packed_pixel 
 /// \ingroup ColorBaseModel
 /// \brief A heterogeneous color base whose elements are reference proxies to channels in a pixel. Models ColorBaseValueConcept. This class is used to model packed pixels, such as 16-bit packed RGB.
 
-/// \defgroup PixelModelPackedPixel heterogeneous_packed_pixel 
-/// \ingroup PixelModel
-/// \brief A heterogeneous pixel used to represent packed pixels with non-byte-aligned channels. Models PixelValueConcept
+/**
+\defgroup PixelModelPackedPixel packed_pixel 
+\ingroup PixelModel
+\brief A heterogeneous pixel used to represent packed pixels with non-byte-aligned channels. Models PixelValueConcept
+
+Example:
+\code
+typedef packed_pixel_type<uint16_t, mpl::vector3_c<unsigned,5,6,5>, rgb_layout_t>::type rgb565_pixel_t;
+BOOST_STATIC_ASSERT((sizeof(rgb565_pixel_t)==2));
+
+rgb565_pixel_t r565;
+get_color(r565,red_t())   = 31;
+get_color(r565,green_t()) = 63;
+get_color(r565,blue_t())  = 31;
+assert(r565 == rgb565_pixel_t((uint16_t)0xFFFF));    
+\endcode
+*/
 
 /// \ingroup ColorBaseModelPackedPixel PixelModelPackedPixel PixelBasedModel
-/// \brief Heterogeneous pixel value whose channel references can be constructed from the pixel data and their index. Models ColorBaseValueConcept, PixelValueConcept, PixelBasedConcept
+/// \brief Heterogeneous pixel value whose channel references can be constructed from the pixel bitfield and their index. Models ColorBaseValueConcept, PixelValueConcept, PixelBasedConcept
 /// Typical use for this is a model of a packed pixel (like 565 RGB)
-template <typename PixelData, typename ChannelRefVec, typename Layout>
-struct heterogeneous_packed_pixel {
-    PixelData _data;
+template <typename BitField,      // A type that holds the bits of the pixel. Typically an integral type, like boost::uint16_t
+          typename ChannelRefVec, // An MPL vector whose elements are packed channels. They must be constructible from BitField. GIL uses packed_channel_reference
+          typename Layout>        // Layout defining the color space and ordering of the channels. Example value: rgb_layout_t
+struct packed_pixel {
+    BitField _bitfield;
 
-    // required by ColorBaseConcept, MutableColorBaseConcept
-    typedef Layout layout_t;
-    template <int K> struct kth_element_type           : public mpl::at_c<ChannelRefVec,K> {};
-    template <int K> struct kth_element_reference_type : public mpl::at_c<ChannelRefVec,K> {};
-    template <int K> struct kth_element_const_reference_type {
-        typedef typename channel_traits<typename mpl::at_c<ChannelRefVec,K>::type>::const_reference type;    
-    };
-
-    typedef heterogeneous_packed_pixel          value_type;
-    typedef value_type&                         reference;
-    typedef const value_type&                   const_reference;
+    typedef Layout                layout_t;
+    typedef packed_pixel          value_type;
+    typedef value_type&           reference;
+    typedef const value_type&     const_reference;
 
     BOOST_STATIC_CONSTANT(bool, is_mutable = channel_traits<typename mpl::front<ChannelRefVec>::type>::is_mutable);
 
-    heterogeneous_packed_pixel(){}
-    heterogeneous_packed_pixel(const PixelData& data) : _data(data) {}
+    packed_pixel(){}
+    explicit packed_pixel(const BitField& bitfield) : _bitfield(bitfield) {}
 
     // Construct from another compatible pixel type
-    heterogeneous_packed_pixel(const heterogeneous_packed_pixel& p) : _data(p._data) {}
-    template <typename P> heterogeneous_packed_pixel(const P& p)                    { check_compatible<P>(); static_copy(p,*this); }   
+    packed_pixel(const packed_pixel& p) : _bitfield(p._bitfield) {}
+    template <typename P> packed_pixel(const P& p, typename enable_if_c<is_pixel<P>::value>::type* d=0)            { check_compatible<P>(); static_copy(p,*this); }   
+    packed_pixel(int chan0, int chan1) : _bitfield(0) { 
+        BOOST_STATIC_ASSERT((num_channels<packed_pixel>::value==2)); 
+        at_c<0>(*this)=chan0; at_c<1>(*this)=chan1; 
+    } 
+    packed_pixel(int chan0, int chan1, int chan2) : _bitfield(0) { 
+        BOOST_STATIC_ASSERT((num_channels<packed_pixel>::value==3)); 
+        at_c<0>(*this)=chan0; at_c<1>(*this)=chan1; at_c<2>(*this)=chan2; 
+    } 
+    packed_pixel(int chan0, int chan1, int chan2, int chan3) : _bitfield(0) { 
+        BOOST_STATIC_ASSERT((num_channels<packed_pixel>::value==4)); 
+        at_c<0>(*this)=chan0; at_c<1>(*this)=chan1; at_c<2>(*this)=chan2; at_c<2>(*this)=chan3; 
+    } 
+    packed_pixel(int chan0, int chan1, int chan2, int chan3, int chan4) : _bitfield(0) { 
+        BOOST_STATIC_ASSERT((num_channels<packed_pixel>::value==5)); 
+        at_c<0>(*this)=chan0; at_c<1>(*this)=chan1; at_c<2>(*this)=chan2; at_c<2>(*this)=chan3;  at_c<3>(*this)=chan4;
+    } 
 
-    template <typename P> heterogeneous_packed_pixel& operator=(const P& p)        { check_compatible<P>(); static_copy(p,*this); return *this; } 
-    heterogeneous_packed_pixel& operator=(const heterogeneous_packed_pixel& p)     { _data=p._data; return *this; }
+    packed_pixel& operator=(const packed_pixel& p)     { _bitfield=p._bitfield; return *this; }
 
-    template <typename P> bool                        operator==(const P& p) const { check_compatible<P>(); return static_equal(*this,p); }
-    template <typename P> bool                        operator!=(const P& p) const { return !(*this==p); }
+    template <typename P> packed_pixel& operator=(const P& p)        { assign(p, mpl::bool_<is_pixel<P>::value>()); return *this; } 
+    template <typename P> bool          operator==(const P& p) const { return equal(p, mpl::bool_<is_pixel<P>::value>()); } 
+
+    template <typename P> bool operator!=(const P& p) const { return !(*this==p); }
 
 private:
-    template <typename Pixel> static void check_compatible() { gil_function_requires<PixelsCompatibleConcept<Pixel,heterogeneous_packed_pixel> >(); }
+    template <typename Pixel> static void check_compatible() { gil_function_requires<PixelsCompatibleConcept<Pixel,packed_pixel> >(); }
+    template <typename Pixel> void assign(const Pixel& p, mpl::true_)       { check_compatible<Pixel>(); static_copy(p,*this); } 
+    template <typename Pixel> bool  equal(const Pixel& p, mpl::true_) const { check_compatible<Pixel>(); return static_equal(*this,p); } 
+
+// Support for assignment/equality comparison of a channel with a grayscale pixel
+    static void check_gray() {  BOOST_STATIC_ASSERT((is_same<typename Layout::color_space_t, gray_t>::value)); }
+    template <typename Channel> void assign(const Channel& chan, mpl::false_)       { check_gray(); at_c<0>(*this)=chan; }
+    template <typename Channel> bool equal (const Channel& chan, mpl::false_) const { check_gray(); return at_c<0>(*this)==chan; }
+public:
+    packed_pixel&  operator= (int chan)       { check_gray(); at_c<0>(*this)=chan; return *this; }
+    bool           operator==(int chan) const { check_gray(); return at_c<0>(*this)==chan; }
 };
 
-/// \brief Metafunction predicate that flags heterogeneous_packed_pixel as a model of PixelConcept. Required by PixelConcept
-/// \ingroup PixelModelPackedPixel
-template <typename PixelData, typename ChannelRefVec, typename Layout>  
-struct is_pixel<heterogeneous_packed_pixel<PixelData,ChannelRefVec,Layout> > : public mpl::true_{};
+/////////////////////////////
+//  ColorBasedConcept
+/////////////////////////////
 
-/// \brief mutable at_c required by MutableColorBaseConcept
-/// \ingroup ColorBaseModelPackedPixel
+template <typename BitField, typename ChannelRefVec, typename Layout, int K>  
+struct kth_element_type<packed_pixel<BitField,ChannelRefVec,Layout>,K> : public mpl::at_c<ChannelRefVec,K> {};
+
+template <typename BitField, typename ChannelRefVec, typename Layout, int K>  
+struct kth_element_reference_type<packed_pixel<BitField,ChannelRefVec,Layout>,K> : public mpl::at_c<ChannelRefVec,K> {};
+
+template <typename BitField, typename ChannelRefVec, typename Layout, int K>  
+struct kth_element_const_reference_type<packed_pixel<BitField,ChannelRefVec,Layout>,K> {
+    typedef typename channel_traits<typename mpl::at_c<ChannelRefVec,K>::type>::const_reference type;
+};
+
 template <int K, typename P, typename C, typename L> inline
-typename heterogeneous_packed_pixel<P,C,L>::template kth_element_reference_type<K>::type 
-at_c(heterogeneous_packed_pixel<P,C,L>& p) { 
-    return typename heterogeneous_packed_pixel<P,C,L>::template kth_element_reference_type<K>::type(p._data); 
+typename kth_element_reference_type<packed_pixel<P,C,L>, K>::type 
+at_c(packed_pixel<P,C,L>& p) { 
+    return typename kth_element_reference_type<packed_pixel<P,C,L>, K>::type(&p._bitfield); 
 }
 
-/// \brief constant at_c required by ColorBaseConcept
-/// \ingroup ColorBaseModelPackedPixel
 template <int K, typename P, typename C, typename L> inline
-typename heterogeneous_packed_pixel<P,C,L>::template kth_element_const_reference_type<K>::type 
-at_c(const heterogeneous_packed_pixel<P,C,L>& p) { 
-    return typename heterogeneous_packed_pixel<P,C,L>::template kth_element_const_reference_type<K>::type(p._data);
+typename kth_element_const_reference_type<packed_pixel<P,C,L>, K>::type 
+at_c(const packed_pixel<P,C,L>& p) { 
+    return typename kth_element_const_reference_type<packed_pixel<P,C,L>, K>::type(&p._bitfield);
 }
 
-/// \brief Specifies the color space type of a heterogeneous packed pixel. Required by PixelBasedConcept
-/// \ingroup PixelModelPackedPixel
+/////////////////////////////
+//  PixelConcept
+/////////////////////////////
+
+// Metafunction predicate that flags packed_pixel as a model of PixelConcept. Required by PixelConcept
+template <typename BitField, typename ChannelRefVec, typename Layout>  
+struct is_pixel<packed_pixel<BitField,ChannelRefVec,Layout> > : public mpl::true_{};
+
+/////////////////////////////
+//  PixelBasedConcept
+/////////////////////////////
+
 template <typename P, typename C, typename Layout>
-struct color_space_type<heterogeneous_packed_pixel<P,C,Layout> > {
+struct color_space_type<packed_pixel<P,C,Layout> > {
     typedef typename Layout::color_space_t type;
 }; 
 
-/// \brief Specifies the channel mapping of a heterogeneous packed pixel. Required by PixelBasedConcept
-/// \ingroup PixelModelPackedPixel
 template <typename P, typename C, typename Layout>
-struct channel_mapping_type<heterogeneous_packed_pixel<P,C,Layout> > {
+struct channel_mapping_type<packed_pixel<P,C,Layout> > {
     typedef typename Layout::channel_mapping_t type;
 }; 
 
-/// \brief Specifies that the heterogeneous packed pixel is not planar. Required by PixelBasedConcept
-/// \ingroup PixelModelPackedPixel
 template <typename P, typename C, typename Layout>
-struct is_planar<heterogeneous_packed_pixel<P,C,Layout> > : mpl::false_ {}; 
+struct is_planar<packed_pixel<P,C,Layout> > : mpl::false_ {}; 
+
 
 ////////////////////////////////////////////////////////////////////////////////
 ///
@@ -123,61 +172,22 @@ struct is_planar<heterogeneous_packed_pixel<P,C,Layout> > : mpl::false_ {};
 ///
 ////////////////////////////////////////////////////////////////////////////////
 
-/// \defgroup PixelIteratorModelPackedInterleavedPtr Pointer to heterogeneous_packed_pixel<P,CR,Layout>
+/// \defgroup PixelIteratorModelPackedInterleavedPtr Pointer to packed_pixel<P,CR,Layout>
 /// \ingroup PixelIteratorModel
 /// \brief Iterators over interleaved pixels.
-/// The pointer heterogeneous_packed_pixel<P,CR,Layout>* is used as an iterator over interleaved pixels of packed format. Models PixelIteratorConcept, HasDynamicXStepTypeConcept, ByteAdvanceableIteratorConcept
+/// The pointer packed_pixel<P,CR,Layout>* is used as an iterator over interleaved pixels of packed format. Models PixelIteratorConcept, HasDynamicXStepTypeConcept, MemoryBasedIteratorConcept
 
 template <typename P, typename C, typename L>  
-struct iterator_is_mutable<heterogeneous_packed_pixel<P,C,L>*> : public mpl::bool_<heterogeneous_packed_pixel<P,C,L>::is_mutable> {};
+struct iterator_is_mutable<packed_pixel<P,C,L>*> : public mpl::bool_<packed_pixel<P,C,L>::is_mutable> {};
 template <typename P, typename C, typename L>  
-struct iterator_is_mutable<const heterogeneous_packed_pixel<P,C,L>*> : public mpl::false_ {};
+struct iterator_is_mutable<const packed_pixel<P,C,L>*> : public mpl::false_ {};
 
-/////////////////////////////
-//  HasDynamicXStepTypeConcept
-/////////////////////////////
-
-/// \ingroup PixelIteratorModelPackedInterleavedPtr 
-template <typename P, typename C, typename L>
-struct dynamic_x_step_type<heterogeneous_packed_pixel<P,C,L>*> {
-    typedef byte_addressable_step_iterator<heterogeneous_packed_pixel<P,C,L>*> type;
-};
-
-/// \ingroup PixelIteratorModelPackedInterleavedPtr 
-template <typename P, typename C, typename L>
-struct dynamic_x_step_type<const heterogeneous_packed_pixel<P,C,L>*> {
-    typedef byte_addressable_step_iterator<const heterogeneous_packed_pixel<P,C,L>*> type;
-};
-
-
-/////////////////////////////
-//  PixelBasedConcept
-/////////////////////////////
-
-template <typename P, typename C, typename L>
-struct color_space_type<heterogeneous_packed_pixel<P,C,L>*> : public color_space_type<heterogeneous_packed_pixel<P,C,L> > {};
-
-template <typename P, typename C, typename L>
-struct channel_mapping_type<heterogeneous_packed_pixel<P,C,L>*> : public channel_mapping_type<heterogeneous_packed_pixel<P,C,L> > {};
-
-template <typename P, typename C, typename L>
-struct is_planar<heterogeneous_packed_pixel<P,C,L>*> : public is_planar<heterogeneous_packed_pixel<P,C,L> > {};
-
-
-template <typename P, typename C, typename L>
-struct color_space_type<const heterogeneous_packed_pixel<P,C,L>*> : public color_space_type<heterogeneous_packed_pixel<P,C,L> > {};
-
-template <typename P, typename C, typename L>
-struct channel_mapping_type<const heterogeneous_packed_pixel<P,C,L>*> : public channel_mapping_type<heterogeneous_packed_pixel<P,C,L> > {};
-
-template <typename P, typename C, typename L>
-struct is_planar<const heterogeneous_packed_pixel<P,C,L>*> : public is_planar<heterogeneous_packed_pixel<P,C,L> > {};
 
 
 } }  // namespace boost::gil
 
 namespace boost {
     template <typename P, typename C, typename L>
-    struct has_trivial_constructor<gil::heterogeneous_packed_pixel<P,C,L> > : public has_trivial_constructor<P> {};
+    struct has_trivial_constructor<gil::packed_pixel<P,C,L> > : public has_trivial_constructor<P> {};
 }
 #endif

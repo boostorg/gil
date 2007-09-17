@@ -1,3 +1,15 @@
+/*
+    Copyright 2005-2007 Adobe Systems Incorporated
+   
+    Use, modification and distribution are subject to the Boost Software License,
+    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt).
+
+    See http://opensource.adobe.com/gil for most recent version including documentation.
+*/
+
+/*************************************************************************************************/
+
 /// \file
 /// \brief Example file to demonstrate how to create a model of a pixel iterator
 /// \author Lubomir Bourdev and Hailin Jin
@@ -32,7 +44,7 @@ int main(int argc, unsigned char* argv[])
 
     boost::function_requires<MutablePixelIteratorConcept<rgb8_interleaved_ptr> >();
     boost::function_requires<PixelIteratorConcept<rgb8c_interleaved_ptr> >();
-    boost::function_requires<ByteAdvanceableIteratorConcept<byte_addressable_step_iterator<rgb8_interleaved_ptr> > >();
+    boost::function_requires<MemoryBasedIteratorConcept<memory_based_step_iterator<rgb8_interleaved_ptr> > >();
 
     boost::function_requires<MutablePixelConcept<rgb8_interleaved_ptr::value_type> >();
     boost::function_requires<PixelConcept<rgb8c_interleaved_ptr::value_type> >();
@@ -51,7 +63,7 @@ int main(int argc, unsigned char* argv[])
 
     // Construct a view from it, without casting it to rgb8_pixel_t*
     rgb8_interleaved_view_t src_view=interleaved_view(img.width(),img.height(),rgb8_interleaved_ptr(raw_ptr),
-                                                      view(img).pixels().row_bytes());
+                                                      view(img).pixels().row_size());
 
     // Apply view transformations and algorithms on it
     jpeg_write_view("out-interleaved_ptr.jpg",nth_channel_view(flipped_up_down_view(src_view),1));

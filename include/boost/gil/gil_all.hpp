@@ -39,6 +39,7 @@
 #include "color_convert.hpp"
 #include "device_n.hpp"
 #include "virtual_locator.hpp"
+#include "bit_aligned_pixel_iterator.hpp"
 // Uncomment this line to help in porting your code from an older version of GIL
 //#include "deprecated.hpp"
 

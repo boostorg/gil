@@ -28,6 +28,8 @@
 #include <boost/gil/channel_algorithm.hpp>
 #include <boost/gil/color_convert.hpp>
 #include <boost/gil/gil_concept.hpp>
+#include <boost/gil/metafunctions.hpp>
+#include <boost/gil/bit_aligned_pixel_reference.hpp>
 
 // Testing pixel references and values, pixel operations, color conversion
 
@@ -239,34 +241,24 @@ void test_color_convert() {
    for_each<representative_pixels_t>(ccv1());
 }
 
-void test_packed_pixel() {
-    // define an rgb565 pixel
-    typedef const packed_channel_reference<boost::uint16_t, 0,5,true> rgb565_channel0_t;
-    typedef const packed_channel_reference<boost::uint16_t, 5,6,true> rgb565_channel1_t;
-    typedef const packed_channel_reference<boost::uint16_t,11,5,true> rgb565_channel2_t;
+void test_packed_pixel() {    
+    typedef packed_pixel_type<uint16_t, mpl::vector3_c<unsigned,5,6,5>, rgb_layout_t>::type rgb565_pixel_t;
 
-    typedef heterogeneous_packed_pixel<uint16_t, 
-        mpl::vector3<rgb565_channel0_t,rgb565_channel1_t,rgb565_channel2_t>, rgb_layout_t> rgb565_pixel_t;
     boost::function_requires<PixelValueConcept<rgb565_pixel_t> >();
     BOOST_STATIC_ASSERT((sizeof(rgb565_pixel_t)==2));
 
     // define a bgr556 pixel
-    typedef const packed_channel_reference<boost::uint16_t, 0,5,true> bgr556_channel0_t;
-    typedef const packed_channel_reference<boost::uint16_t, 5,6,true> bgr556_channel1_t;
-    typedef const packed_channel_reference<boost::uint16_t,11,5,true> bgr556_channel2_t;
-
-    typedef heterogeneous_packed_pixel<uint16_t, 
-        mpl::vector3<bgr556_channel0_t,bgr556_channel1_t,bgr556_channel2_t>, bgr_layout_t> bgr556_pixel_t;
-    boost::function_requires<PixelValueConcept<rgb565_pixel_t> >();
+    typedef packed_pixel_type<uint16_t, mpl::vector3_c<unsigned,5,6,5>, bgr_layout_t>::type bgr556_pixel_t;
+    boost::function_requires<PixelValueConcept<bgr556_pixel_t> >();
 
     // Create a zero packed pixel and a full regular unpacked pixel.
     rgb565_pixel_t r565;//((uint16_t)0);
     rgb8_pixel_t rgb_full(255,255,255);
 
     // Convert all channels of the unpacked pixel to the packed one & assert the packed one is full
-    get_color(r565,red_t())   = channel_convert<rgb565_channel0_t>(get_color(rgb_full,red_t()));
-    get_color(r565,green_t()) = channel_convert<rgb565_channel1_t>(get_color(rgb_full,green_t()));
-    get_color(r565,blue_t())  = channel_convert<rgb565_channel2_t>(get_color(rgb_full,blue_t()));
+    get_color(r565,red_t())   = channel_convert<kth_element_type<rgb565_pixel_t, 0>::type>(get_color(rgb_full,red_t()));
+    get_color(r565,green_t()) = channel_convert<kth_element_type<rgb565_pixel_t, 1>::type>(get_color(rgb_full,green_t()));
+    get_color(r565,blue_t())  = channel_convert<kth_element_type<rgb565_pixel_t, 2>::type>(get_color(rgb_full,blue_t()));
     error_if(r565 != rgb565_pixel_t((uint16_t)65535));    
     
     // rgb565 is compatible with bgr556. Test interoperability
@@ -274,9 +266,36 @@ void test_packed_pixel() {
 
     do_basic_test<value_core<rgb565_pixel_t,0>, value_core<bgr556_pixel_t,1> >(r565).test_heterogeneous(); 
 
-    // Color conversion works, but there are warnings
-    //    color_convert(r565,rgb_full);
-    //    color_convert(rgb_full,r565);
+    color_convert(r565,rgb_full);
+    color_convert(rgb_full,r565);
+
+    // Test bit-aligned pixel reference
+    typedef const bit_aligned_pixel_reference<boost::mpl::vector3_c<int,1,2,1>, bgr_layout_t, true>  bgr121_ref_t;
+    typedef const bit_aligned_pixel_reference<boost::mpl::vector3_c<int,1,2,1>, rgb_layout_t, true>  rgb121_ref_t;
+    typedef rgb121_ref_t::value_type rgb121_pixel_t;
+    rgb121_pixel_t p121;
+    do_basic_test<reference_core<bgr121_ref_t,0>, reference_core<rgb121_ref_t,1> >(p121).test_heterogeneous();     
+    do_basic_test<value_core<rgb121_pixel_t,0>, reference_core<rgb121_ref_t,1> >(p121).test_heterogeneous();     
+
+    BOOST_STATIC_ASSERT((pixel_reference_is_proxy<rgb8_planar_ref_t>::value));
+    BOOST_STATIC_ASSERT((pixel_reference_is_proxy<bgr121_ref_t>::value));
+
+    BOOST_STATIC_ASSERT(!(pixel_reference_is_proxy<rgb8_pixel_t>::value));
+    BOOST_STATIC_ASSERT(!(pixel_reference_is_proxy<rgb8_pixel_t&>::value));
+    BOOST_STATIC_ASSERT(!(pixel_reference_is_proxy<const rgb8_pixel_t&>::value));
+
+    BOOST_STATIC_ASSERT( (pixel_reference_is_mutable<      rgb8_pixel_t&>::value));
+    BOOST_STATIC_ASSERT(!(pixel_reference_is_mutable<const rgb8_pixel_t&>::value));
+
+    BOOST_STATIC_ASSERT((pixel_reference_is_mutable<const rgb8_planar_ref_t&>::value));
+    BOOST_STATIC_ASSERT((pixel_reference_is_mutable<      rgb8_planar_ref_t >::value));
+
+    BOOST_STATIC_ASSERT(!(pixel_reference_is_mutable<const rgb8c_planar_ref_t&>::value));
+    BOOST_STATIC_ASSERT(!(pixel_reference_is_mutable<      rgb8c_planar_ref_t >::value));
+
+    BOOST_STATIC_ASSERT( (pixel_reference_is_mutable<bgr121_ref_t>::value));
+    BOOST_STATIC_ASSERT(!(pixel_reference_is_mutable<bgr121_ref_t::const_reference>::value));
+
 }
 
 void test_pixel() {

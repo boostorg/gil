@@ -23,7 +23,7 @@
 
 #include <boost/config.hpp>
 
-#define GIL_VERSION 2.0
+#define GIL_VERSION "2.1.1"
 
 #ifdef _DEBUG
 #    define GIL_FORCEINLINE inline

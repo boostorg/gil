@@ -89,10 +89,39 @@ private:
     template <typename Pixel> static void check_compatible() { gil_function_requires<PixelsCompatibleConcept<Pixel,planar_pixel_reference> >(); }
 };
 
+/////////////////////////////
+//  ColorBasedConcept
+/////////////////////////////
+
+template <typename ChannelReference, typename ColorSpace, int K>  
+struct kth_element_type<planar_pixel_reference<ChannelReference,ColorSpace>, K> {
+    typedef ChannelReference type;
+};
+
+template <typename ChannelReference, typename ColorSpace, int K>  
+struct kth_element_reference_type<planar_pixel_reference<ChannelReference,ColorSpace>, K> {
+    typedef ChannelReference type;
+};
+
+template <typename ChannelReference, typename ColorSpace, int K>  
+struct kth_element_const_reference_type<planar_pixel_reference<ChannelReference,ColorSpace>, K> 
+    : public add_reference<typename add_const<ChannelReference>::type> 
+{
+//    typedef typename channel_traits<ChannelReference>::const_reference type;
+};
+
+/////////////////////////////
+//  PixelConcept
+/////////////////////////////
+
 /// \brief Metafunction predicate that flags planar_pixel_reference as a model of PixelConcept. Required by PixelConcept
 /// \ingroup PixelModelPlanarRef
 template <typename ChannelReference, typename ColorSpace>  
 struct is_pixel< planar_pixel_reference<ChannelReference,ColorSpace> > : public mpl::true_{};
+
+/////////////////////////////
+//  HomogeneousPixelBasedConcept
+/////////////////////////////
 
 /// \brief Specifies the color space type of a planar pixel reference. Required by PixelBasedConcept
 /// \ingroup PixelModelPlanarRef

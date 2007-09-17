@@ -16,10 +16,13 @@
 #include <boost/gil/pixel_iterator.hpp>
 #include <boost/gil/pixel_iterator_adaptor.hpp>
 #include <boost/gil/planar_pixel_iterator.hpp>
+#include <boost/gil/bit_aligned_pixel_iterator.hpp>
+#include <boost/gil/packed_pixel.hpp>
 #include <boost/gil/iterator_from_2d.hpp>
 #include <boost/gil/step_iterator.hpp>
 #include <boost/gil/typedefs.hpp>
 #include <boost/gil/color_convert.hpp>
+#include <boost/mpl/vector.hpp>
 
 using namespace boost::gil;
 using namespace std;
@@ -38,7 +41,15 @@ void test_pixel_iterator() {
     boost::function_requires<MutableStepIteratorConcept<cmyk8_planar_step_ptr_t> >();
     boost::function_requires<StepIteratorConcept<gray8c_step_ptr_t> >();
 
-    boost::function_requires<MutablePixelLocatorConcept<byte_addressable_2d_locator<rgb8_step_ptr_t> > >();
+    boost::function_requires<MutablePixelLocatorConcept<memory_based_2d_locator<rgb8_step_ptr_t> > >();
+
+    typedef const bit_aligned_pixel_reference<boost::mpl::vector3_c<int,1,2,1>, bgr_layout_t, true>  bgr121_ref_t;
+    typedef bit_aligned_pixel_iterator<bgr121_ref_t> bgr121_ptr_t;
+
+    boost::function_requires<MutablePixelIteratorConcept<bgr121_ptr_t> >();
+    boost::function_requires<PixelBasedConcept<bgr121_ptr_t> >();
+    boost::function_requires<MemoryBasedIteratorConcept<bgr121_ptr_t> >();
+    boost::function_requires<HasDynamicXStepTypeConcept<bgr121_ptr_t> >();
 
 // TEST dynamic_step_t
     BOOST_STATIC_ASSERT(( boost::is_same<cmyk16_step_ptr_t,dynamic_x_step_type<cmyk16_step_ptr_t>::type>::value )); 
@@ -69,10 +80,32 @@ void test_pixel_iterator() {
     BOOST_STATIC_ASSERT(iterator_is_step< rgb2gray_step_ptr1 >::value);
     BOOST_STATIC_ASSERT(( boost::is_same< rgb2gray_step_ptr1, dynamic_x_step_type<rgb2gray_step_ptr1>::type >::value));
 
-    typedef byte_addressable_step_iterator<dereference_iterator_adaptor<rgb8_ptr_t, ccv_rgb_g_fn> > rgb2gray_step_ptr2;
+    typedef memory_based_step_iterator<dereference_iterator_adaptor<rgb8_ptr_t, ccv_rgb_g_fn> > rgb2gray_step_ptr2;
     BOOST_STATIC_ASSERT(iterator_is_step< rgb2gray_step_ptr2 >::value);
     BOOST_STATIC_ASSERT(( boost::is_same< rgb2gray_step_ptr2, dynamic_x_step_type<rgb2gray_step_ptr2>::type >::value));
     make_step_iterator(rgb2gray_step_ptr2(),2);
+
+// bit_aligned iterators test
+
+    // Mutable reference to a BGR232 pixel
+    typedef const bit_aligned_pixel_reference<boost::mpl::vector3_c<unsigned,2,3,2>, bgr_layout_t, true>  bgr232_ref_t;
+
+    // A mutable iterator over BGR232 pixels
+    typedef bit_aligned_pixel_iterator<bgr232_ref_t> bgr232_ptr_t;
+
+    // BGR232 pixel value. It is a packed_pixel of size 1 byte. (The last bit is unused)
+    typedef std::iterator_traits<bgr232_ptr_t>::value_type bgr232_pixel_t; 
+    BOOST_STATIC_ASSERT((sizeof(bgr232_pixel_t)==1));
+
+    bgr232_pixel_t red(0,0,3); // = 0RRGGGBB, = 01100000
+
+    // a buffer of 7 bytes fits exactly 8 BGR232 pixels.
+    unsigned char pix_buffer[7];    
+    std::fill(pix_buffer,pix_buffer+7,0);
+    bgr232_ptr_t pix_it(&pix_buffer[0],0);  // start at bit 0 of the first pixel
+    for (int i=0; i<8; ++i) {
+        *pix_it++ = red;
+    }
 }
 
 // TODO: Make better tests. Use some code from below.
@@ -91,17 +124,17 @@ void test_pixel_iterator() {
     rgba8_pixel_t rgba8;
 
     rgb8_ptr_t ptr1=&rgb8;
-    byte_advance(ptr1, 3);
-    const rgb8_ptr_t ptr2=byte_advanced(ptr1,10);
+    memunit_advance(ptr1, 3);
+    const rgb8_ptr_t ptr2=memunit_advanced(ptr1,10);
 
-    byte_distance(ptr1,ptr2);
-    const rgb8_pixel_t& ref=byte_advanced_ref(ptr1,10); ignore_unused_variable_warning(ref);
+    memunit_distance(ptr1,ptr2);
+    const rgb8_pixel_t& ref=memunit_advanced_ref(ptr1,10); ignore_unused_variable_warning(ref);
 
     rgb8_planar_ptr_t planarPtr1(&rgb8);
     rgb8_planar_ptr_t planarPtr2(&rgb8);
-    byte_advance(planarPtr1,10);
-    byte_distance(planarPtr1,planarPtr2);
-    rgb8_planar_ptr_t planarPtr3=byte_advanced(planarPtr1,10);
+    memunit_advance(planarPtr1,10);
+    memunit_distance(planarPtr1,planarPtr2);
+    rgb8_planar_ptr_t planarPtr3=memunit_advanced(planarPtr1,10);
 
 //    planarPtr2=&rgba8;
 
@@ -112,7 +145,7 @@ void test_pixel_iterator() {
 
     assert(*(planarPtr1+5)==planarPtr1[5]);
 
-    rgb8_planar_ref_t planarRef=byte_advanced_ref(planarPtr1,10);
+    rgb8_planar_ref_t planarRef=memunit_advanced_ref(planarPtr1,10);
 
     rgb8_step_ptr_t stepIt(&rgb8,5);
     stepIt++;
@@ -122,7 +155,7 @@ void test_pixel_iterator() {
     rgb8_step_ptr_t stepIt3(&rgb8,5);
 
     rgb8_pixel_t& ref1=stepIt3[5];
-//  bool v=boost::is_POD<iterator_traits<byte_addressable_step_iterator<rgb8_ptr_t> >::value_type>::value;
+//  bool v=boost::is_POD<iterator_traits<memory_based_step_iterator<rgb8_ptr_t> >::value_type>::value;
 //  v=boost::is_POD<rgb8_pixel_t>::value;
 //  v=boost::is_POD<int>::value;
 
@@ -177,12 +210,12 @@ void test_pixel_iterator() {
 
 
 
-    //  byte_addressable_step_iterator<rgb8_pixel_t> stepIt3Err=stepIt+10;       // error: non-const from const iterator
+    //  memory_based_step_iterator<rgb8_pixel_t> stepIt3Err=stepIt+10;       // error: non-const from const iterator
 
-    byte_addressable_2d_locator<rgb8_step_ptr_t> xy_locator(ptr,27);
+    memory_based_2d_locator<rgb8_step_ptr_t> xy_locator(ptr,27);
 
     xy_locator.x()++;
-//  byte_addressable_step_iterator<rgb8_pixel_t>& yit=xy_locator.y();
+//  memory_based_step_iterator<rgb8_pixel_t>& yit=xy_locator.y();
     xy_locator.y()++;
     xy_locator+=point2<std::ptrdiff_t>(3,4);
     // *xy_locator=(xy_locator(-1,0)+xy_locator(0,1))/2;
@@ -252,7 +285,7 @@ ignore_unused_variable_warning(rgb8_const_ptr_err);
     *rgb8_pptr=rgb8;
     *rgb8_pptr=crgb8;
 
-    byte_advance(rgb8_pptr,3);
-    byte_advance(rgb8_pptr,-3);
+    memunit_advance(rgb8_pptr,3);
+    memunit_advance(rgb8_pptr,-3);
 }
 */

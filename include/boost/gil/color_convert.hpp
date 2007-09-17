@@ -102,11 +102,11 @@ struct default_color_converter_impl<gray_t,rgb_t> {
     template <typename P1, typename P2>
     void operator()(const P1& src, P2& dst) const {
         get_color(dst,red_t())  =
-            channel_convert<typename color_element_type<red_t,  P2>::type>(get_color(src,gray_color_t()));
+            channel_convert<typename color_element_type<P2, red_t  >::type>(get_color(src,gray_color_t()));
         get_color(dst,green_t())=
-            channel_convert<typename color_element_type<green_t,P2>::type>(get_color(src,gray_color_t()));
+            channel_convert<typename color_element_type<P2, green_t>::type>(get_color(src,gray_color_t()));
         get_color(dst,blue_t()) =
-            channel_convert<typename color_element_type<blue_t, P2>::type>(get_color(src,gray_color_t()));
+            channel_convert<typename color_element_type<P2, blue_t >::type>(get_color(src,gray_color_t()));
     }
 };
 
@@ -117,13 +117,13 @@ struct default_color_converter_impl<gray_t,cmyk_t> {
     template <typename P1, typename P2>
     void operator()(const P1& src, P2& dst) const {
         get_color(dst,cyan_t())=
-            channel_traits<typename color_element_type<cyan_t,   P2>::type>::min_value();
+            channel_traits<typename color_element_type<P2, cyan_t   >::type>::min_value();
         get_color(dst,magenta_t())=
-            channel_traits<typename color_element_type<magenta_t,P2>::type>::min_value();
+            channel_traits<typename color_element_type<P2, magenta_t>::type>::min_value();
         get_color(dst,yellow_t())=
-            channel_traits<typename color_element_type<yellow_t, P2>::type>::min_value();
+            channel_traits<typename color_element_type<P2, yellow_t >::type>::min_value();
         get_color(dst,black_t())=
-            channel_convert<typename color_element_type<black_t, P2>::type>(get_color(src,gray_color_t()));
+            channel_convert<typename color_element_type<P2, black_t >::type>(get_color(src,gray_color_t()));
     }
 };
 
@@ -134,7 +134,7 @@ struct default_color_converter_impl<rgb_t,gray_t> {
     template <typename P1, typename P2>
     void operator()(const P1& src, P2& dst) const {
         get_color(dst,gray_color_t()) = 
-            detail::rgb_to_luminance<typename color_element_type<gray_color_t,P2>::type>(
+            detail::rgb_to_luminance<typename color_element_type<P2,gray_color_t>::type>(
                 get_color(src,red_t()), get_color(src,green_t()), get_color(src,blue_t())
             );
     }
@@ -183,17 +183,17 @@ struct default_color_converter_impl<cmyk_t,rgb_t> {
     void operator()(const P1& src, P2& dst) const {
         typedef typename channel_type<P1>::type T1;
         get_color(dst,red_t())  =
-            channel_convert<typename color_element_type<red_t,P2>::type>(
+            channel_convert<typename color_element_type<P2,red_t>::type>(
                 channel_invert<T1>(
                     (std::min)(channel_traits<T1>::max_value(), 
                              T1(get_color(src,cyan_t())*channel_invert(get_color(src,black_t()))+get_color(src,black_t())))));
         get_color(dst,green_t())=
-            channel_convert<typename color_element_type<green_t,P2>::type>(
+            channel_convert<typename color_element_type<P2,green_t>::type>(
                 channel_invert<T1>(
                     (std::min)(channel_traits<T1>::max_value(), 
                              T1(get_color(src,magenta_t())*channel_invert(get_color(src,black_t()))+get_color(src,black_t())))));
         get_color(dst,blue_t()) =
-            channel_convert<typename color_element_type<blue_t,P2>::type>(
+            channel_convert<typename color_element_type<P2,blue_t>::type>(
                 channel_invert<T1>(
                     (std::min)(channel_traits<T1>::max_value(), 
                              T1(get_color(src,yellow_t())*channel_invert(get_color(src,black_t()))+get_color(src,black_t())))));
@@ -210,10 +210,10 @@ struct default_color_converter_impl<cmyk_t,gray_t> {
     template <typename P1, typename P2>
     void operator()(const P1& src, P2& dst) const  {
         get_color(dst,gray_color_t())=
-            channel_convert<typename color_element_type<gray_t,P2>::type>(
+            channel_convert<typename color_element_type<P2,gray_t>::type>(
                 channel_multiply(
                     channel_invert(
-                       detail::rgb_to_luminance<typename color_element_type<black_t,P1>::type>(
+                       detail::rgb_to_luminance<typename color_element_type<P1,black_t>::type>(
                             get_color(src,cyan_t()), 
                             get_color(src,magenta_t()), 
                             get_color(src,yellow_t())
@@ -308,7 +308,7 @@ struct default_color_converter {
 template <typename SrcP, typename DstP>
 inline void color_convert(const SrcP& src, DstP& dst) {
     default_color_converter()(src,dst);
-};
+}
 
 } }  // namespace boost::gil
 
