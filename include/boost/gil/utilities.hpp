@@ -32,7 +32,7 @@
 /// \brief  Various utilities not specific to the image library. Some are non-standard STL extensions or generic iterator adaptors
 /// \author Lubomir Bourdev and Hailin Jin \n
 ///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated on August 14, 2007
+/// \date   2005-2007 \n Last updated on September 18, 2007
 ///
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -44,7 +44,7 @@ namespace boost { namespace gil {
 
 Example:
 \code
-point2<int> p(3,2);
+point2<std::ptrdiff_t> p(3,2);
 assert((p[0] == p.x) && (p[1] == p.y));
 assert(axis_value<0>(p) == 3);
 assert(axis_value<1>(p) == 2);
@@ -74,8 +74,8 @@ public:
 
     point2& operator=(const point2& p)            { x=p.x; y=p.y; return *this; }
 
-    point2        operator<<(int shift)         const   { return point2(x<<shift,y<<shift); }
-    point2        operator>>(int shift)         const   { return point2(x>>shift,y>>shift); }
+    point2        operator<<(std::ptrdiff_t shift)         const   { return point2(x<<shift,y<<shift); }
+    point2        operator>>(std::ptrdiff_t shift)         const   { return point2(x>>shift,y>>shift); }
     point2& operator+=(const point2& p)           { x+=p.x; y+=p.y; return *this; }
     point2& operator-=(const point2& p)           { x-=p.x; y-=p.y; return *this; }
     point2& operator/=(double t)                  { x/=t; y/=t; return *this; }
@@ -112,10 +112,10 @@ template <typename T> GIL_FORCEINLINE
 point2<double> operator/(const point2<T>& p, double t)      { return t==0 ? point2<double>(0,0):point2<double>(p.x/t,p.y/t); }
 /// \ingroup PointModel
 template <typename T> GIL_FORCEINLINE
-point2<T> operator*(const point2<T>& p, int t)      { return point2<T>(p.x*t,p.y*t); }
+point2<T> operator*(const point2<T>& p, std::ptrdiff_t t)      { return point2<T>(p.x*t,p.y*t); }
 /// \ingroup PointModel
 template <typename T> GIL_FORCEINLINE
-point2<T> operator*(int t, const point2<T>& p)      { return point2<T>(p.x*t,p.y*t); }
+point2<T> operator*(std::ptrdiff_t t, const point2<T>& p)      { return point2<T>(p.x*t,p.y*t); }
 
 /// \ingroup PointModel
 template <std::size_t K, typename T> GIL_FORCEINLINE
@@ -131,34 +131,34 @@ template <std::size_t K, typename T> GIL_FORCEINLINE
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-inline int iround(float x ) { return static_cast<int>(x + (x < 0.0f ? -0.5f : 0.5f)); }
-inline int iround(double x) { return static_cast<int>(x + (x < 0.0 ? -0.5 : 0.5)); }
-inline int ifloor(float x ) { return static_cast<int>(std::floor(x)); }
-inline int ifloor(double x) { return static_cast<int>(std::floor(x)); }
-inline int iceil(float x )  { return static_cast<int>(std::ceil(x)); }
-inline int iceil(double x)  { return static_cast<int>(std::ceil(x)); }
+inline std::ptrdiff_t iround(float x ) { return static_cast<std::ptrdiff_t>(x + (x < 0.0f ? -0.5f : 0.5f)); }
+inline std::ptrdiff_t iround(double x) { return static_cast<std::ptrdiff_t>(x + (x < 0.0 ? -0.5 : 0.5)); }
+inline std::ptrdiff_t ifloor(float x ) { return static_cast<std::ptrdiff_t>(std::floor(x)); }
+inline std::ptrdiff_t ifloor(double x) { return static_cast<std::ptrdiff_t>(std::floor(x)); }
+inline std::ptrdiff_t iceil(float x )  { return static_cast<std::ptrdiff_t>(std::ceil(x)); }
+inline std::ptrdiff_t iceil(double x)  { return static_cast<std::ptrdiff_t>(std::ceil(x)); }
 
 /**
 \addtogroup PointAlgorithm
 
 Example:
 \code
-assert(iround(point2<double>(3.1, 3.9)) == point2<int>(3,4));
+assert(iround(point2<double>(3.1, 3.9)) == point2<std::ptrdiff_t>(3,4));
 \endcode
 */
 
 /// \ingroup PointAlgorithm
-inline point2<int> iround(const point2<float >& p)  { return point2<int>(iround(p.x),iround(p.y)); }
+inline point2<std::ptrdiff_t> iround(const point2<float >& p)  { return point2<std::ptrdiff_t>(iround(p.x),iround(p.y)); }
 /// \ingroup PointAlgorithm
-inline point2<int> iround(const point2<double>& p)  { return point2<int>(iround(p.x),iround(p.y)); }
+inline point2<std::ptrdiff_t> iround(const point2<double>& p)  { return point2<std::ptrdiff_t>(iround(p.x),iround(p.y)); }
 /// \ingroup PointAlgorithm
-inline point2<int> ifloor(const point2<float >& p)  { return point2<int>(ifloor(p.x),ifloor(p.y)); }
+inline point2<std::ptrdiff_t> ifloor(const point2<float >& p)  { return point2<std::ptrdiff_t>(ifloor(p.x),ifloor(p.y)); }
 /// \ingroup PointAlgorithm
-inline point2<int> ifloor(const point2<double>& p)  { return point2<int>(ifloor(p.x),ifloor(p.y)); }
+inline point2<std::ptrdiff_t> ifloor(const point2<double>& p)  { return point2<std::ptrdiff_t>(ifloor(p.x),ifloor(p.y)); }
 /// \ingroup PointAlgorithm
-inline point2<int> iceil (const point2<float >& p)  { return point2<int>(iceil(p.x), iceil(p.y)); }
+inline point2<std::ptrdiff_t> iceil (const point2<float >& p)  { return point2<std::ptrdiff_t>(iceil(p.x), iceil(p.y)); }
 /// \ingroup PointAlgorithm
-inline point2<int> iceil (const point2<double>& p)  { return point2<int>(iceil(p.x), iceil(p.y)); }
+inline point2<std::ptrdiff_t> iceil (const point2<double>& p)  { return point2<std::ptrdiff_t>(iceil(p.x), iceil(p.y)); }
 
 ////////////////////////////////////////////////////////////////////////////////////////
 ///

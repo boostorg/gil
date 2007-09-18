@@ -18,7 +18,7 @@
 /// \brief pixel step iterator
 /// \author Lubomir Bourdev and Hailin Jin \n
 ///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated on February 12, 2007
+/// \date   2005-2007 \n Last updated on September 18, 2007
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -141,7 +141,7 @@ struct memunit_step_fn {
 
     void            set_step(std::ptrdiff_t step) { _step=step; }
 private:
-    GIL_CLASS_REQUIRE(Iterator, boost::gil, MemoryBasedIteratorConcept);
+    GIL_CLASS_REQUIRE(Iterator, boost::gil, MemoryBasedIteratorConcept)
     difference_type _step;
 };
 
@@ -149,7 +149,7 @@ template <typename Iterator>
 class memory_based_step_iterator : public detail::step_iterator_adaptor<memory_based_step_iterator<Iterator>, 
                                                                             Iterator, 
                                                                             memunit_step_fn<Iterator> > {
-    GIL_CLASS_REQUIRE(Iterator, boost::gil, MemoryBasedIteratorConcept);
+    GIL_CLASS_REQUIRE(Iterator, boost::gil, MemoryBasedIteratorConcept)
 public:
     typedef detail::step_iterator_adaptor<memory_based_step_iterator<Iterator>, 
                                           Iterator, 
@@ -263,7 +263,7 @@ struct dynamic_x_step_type<memory_based_step_iterator<Iterator> > {
 // For step iterators, pass the function object to the base
 template <typename Iterator, typename Deref>
 struct iterator_add_deref<memory_based_step_iterator<Iterator>,Deref> {
-    GIL_CLASS_REQUIRE(Deref, boost::gil, PixelDereferenceAdaptorConcept);
+    GIL_CLASS_REQUIRE(Deref, boost::gil, PixelDereferenceAdaptorConcept)
 
     typedef memory_based_step_iterator<typename iterator_add_deref<Iterator, Deref>::type> type;
 
