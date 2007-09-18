@@ -18,14 +18,16 @@
 /// \brief Support for run-time instantiated types
 /// \author Lubomir Bourdev and Hailin Jin \n
 ///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated on March 9, 2007
+/// \date   2005-2007 \n Last updated on September 18, 2007
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include "../../gil_config.hpp"
 #include "../../utilities.hpp"
+#include <cstddef>
 #include <cassert>
-#include <stdexcept>
+#include <algorithm>
+#include <typeinfo>
 #include <boost/bind.hpp>
 
 #include <boost/mpl/transform.hpp>
