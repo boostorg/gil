@@ -30,10 +30,10 @@
 
 namespace boost { namespace gil {
 
-#ifdef _MSC_VER
-#pragma warning(push)
-#pragma warning(disable : 4244)     // conversion from 'gil::image<V,Alloc>::coord_t' to 'int', possible loss of data (visual studio compiler doesn't realize that the two types are the same)
-#endif
+//#ifdef _MSC_VER
+//#pragma warning(push)
+//#pragma warning(disable : 4244)     // conversion from 'gil::image<V,Alloc>::coord_t' to 'int', possible loss of data (visual studio compiler doesn't realize that the two types are the same)
+//#endif
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup ImageModel PixelBasedModel
@@ -276,9 +276,9 @@ struct channel_mapping_type<image<Pixel,IsPlanar,Alloc> > : public channel_mappi
 template <typename Pixel, bool IsPlanar, typename Alloc>
 struct is_planar<image<Pixel,IsPlanar,Alloc> > : public mpl::bool_<IsPlanar> {};
 
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif
+//#ifdef _MSC_VER
+//#pragma warning(pop)
+//#endif
 
 } }  // namespace boost::gil
 

@@ -32,10 +32,10 @@
 
 namespace boost { namespace gil {
 
-#ifdef _MSC_VER
-#pragma warning(push)
-#pragma warning(disable: 4309)      // disable truncation of constant value warning (using -1 to get the max value of an integral)
-#endif
+//#ifdef _MSC_VER
+//#pragma warning(push)
+//#pragma warning(disable: 4309)      // disable truncation of constant value warning (using -1 to get the max value of an integral)
+//#endif
 
 namespace detail {
 
@@ -460,9 +460,9 @@ inline typename channel_traits<Channel>::value_type channel_invert(Channel x) {
     return channel_traits<Channel>::max_value()-x + channel_traits<Channel>::min_value(); 
 }
 
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif
+//#ifdef _MSC_VER
+//#pragma warning(pop)
+//#endif
 
 } }  // namespace boost::gil
 

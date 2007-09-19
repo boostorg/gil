@@ -24,10 +24,10 @@
 #include "any_image_view.hpp"
 #include "../../image.hpp"
 
-#ifdef _MSC_VER
-#pragma warning(push)
-#pragma warning(disable : 4244)     // conversion from 'std::ptrdiff_t' to 'int', possible loss of data. even if we static-assert the two types are the same (on visual studio 8)
-#endif
+//#ifdef _MSC_VER
+//#pragma warning(push)
+//#pragma warning(disable : 4244)     // conversion from 'std::ptrdiff_t' to 'int', possible loss of data. even if we static-assert the two types are the same (on visual studio 8)
+//#endif
 
 namespace boost { namespace gil {
 
@@ -118,8 +118,8 @@ typename any_image<Types>::const_view_t const_view(const any_image<Types>& anyIm
 
 } }  // namespace boost::gil
 
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif
+//#ifdef _MSC_VER
+//#pragma warning(pop)
+//#endif
 
 #endif

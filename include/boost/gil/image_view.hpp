@@ -26,10 +26,10 @@
 #include "gil_config.hpp"
 #include "iterator_from_2d.hpp"
 
-#ifdef _MSC_VER
-#pragma warning(push)
-#pragma warning(disable : 4244)     // conversion from 'gil::image<V,Alloc>::coord_t' to 'int', possible loss of data (visual studio compiler doesn't realize that the two types are the same)
-#endif
+//#ifdef _MSC_VER
+//#pragma warning(push)
+//#pragma warning(disable : 4244)     // conversion from 'gil::image<V,Alloc>::coord_t' to 'int', possible loss of data (visual studio compiler doesn't realize that the two types are the same)
+//#endif
 
 namespace boost { namespace gil {
 
@@ -216,8 +216,8 @@ struct transposed_type<image_view<L> > {
 
 } }  // namespace boost::gil
 
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif
+//#ifdef _MSC_VER
+//#pragma warning(pop)
+//#endif
 
 #endif
