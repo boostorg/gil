@@ -11,8 +11,7 @@
 //
 
 #ifdef _MSC_VER
-#pragma warning(push)
-#pragma warning(disable : 4244)     // conversion from 'gil::image<V,Alloc>::coord_t' to 'int', possible loss of data (visual studio compiler doesn't realize that the two types are the same)
+//#pragma warning(disable : 4244)     // conversion from 'gil::image<V,Alloc>::coord_t' to 'int', possible loss of data (visual studio compiler doesn't realize that the two types are the same)
 #pragma warning(disable : 4503)     // decorated name length exceeded, name was truncated
 #endif
 
@@ -558,11 +557,6 @@ void test_image(const char* ref_checksum) {
     mgr.run();
     static_checks();
 }
-
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif
-
 
 
 
