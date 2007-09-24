@@ -43,7 +43,7 @@ void test_pixel_iterator() {
 
     boost::function_requires<MutablePixelLocatorConcept<memory_based_2d_locator<rgb8_step_ptr_t> > >();
 
-    typedef const bit_aligned_pixel_reference<boost::mpl::vector3_c<int,1,2,1>, bgr_layout_t, true>  bgr121_ref_t;
+    typedef const bit_aligned_pixel_reference<boost::uint8_t, boost::mpl::vector3_c<int,1,2,1>, bgr_layout_t, true>  bgr121_ref_t;
     typedef bit_aligned_pixel_iterator<bgr121_ref_t> bgr121_ptr_t;
 
     boost::function_requires<MutablePixelIteratorConcept<bgr121_ptr_t> >();
@@ -88,7 +88,7 @@ void test_pixel_iterator() {
 // bit_aligned iterators test
 
     // Mutable reference to a BGR232 pixel
-    typedef const bit_aligned_pixel_reference<boost::mpl::vector3_c<unsigned,2,3,2>, bgr_layout_t, true>  bgr232_ref_t;
+    typedef const bit_aligned_pixel_reference<boost::uint8_t, boost::mpl::vector3_c<unsigned,2,3,2>, bgr_layout_t, true>  bgr232_ref_t;
 
     // A mutable iterator over BGR232 pixels
     typedef bit_aligned_pixel_iterator<bgr232_ref_t> bgr232_ptr_t;

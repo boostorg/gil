@@ -339,7 +339,7 @@ void image_test::run() {
     image_all_test<rgb8_planar_image_t>("planarrgb8_");
     image_all_test<gray8_image_t>("gray8_");
 
-    typedef const bit_aligned_pixel_reference<mpl::vector3_c<int,1,2,1>, bgr_layout_t, true>  bgr121_ref_t;
+    typedef const bit_aligned_pixel_reference<uint8_t, mpl::vector3_c<int,1,2,1>, bgr_layout_t, true>  bgr121_ref_t;
     typedef image<bgr121_ref_t,false> bgr121_image_t;
     image_all_test<bgr121_image_t>("bgr121_");
 
