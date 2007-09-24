@@ -77,11 +77,11 @@ template <int K, typename P, typename C, typename L>
 typename kth_element_const_reference_type<packed_pixel<P,C,L>,K>::type 
 at_c(const packed_pixel<P,C,L>& p);
 
-template <typename C, typename L, bool M> struct bit_aligned_pixel_reference;
+template <typename B, typename C, typename L, bool M> struct bit_aligned_pixel_reference;
 
-template <int K, typename C, typename L, bool M> inline
-typename kth_element_reference_type<bit_aligned_pixel_reference<C,L,M>, K>::type
-at_c(const bit_aligned_pixel_reference<C,L,M>& p);
+template <int K, typename B, typename C, typename L, bool M> inline
+typename kth_element_reference_type<bit_aligned_pixel_reference<B,C,L,M>, K>::type
+at_c(const bit_aligned_pixel_reference<B,C,L,M>& p);
 #endif
 
 // Forward-declare semantic_at_c

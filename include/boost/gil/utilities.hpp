@@ -175,13 +175,13 @@ inline T align(T val, std::size_t alignment) {
 /// \ingroup PixelDereferenceAdaptorModel
 ///
 template <typename ConstT, typename Value, typename Reference, typename ConstReference,
-		  typename ArgType, typename ResultType, bool IsMutable>
+          typename ArgType, typename ResultType, bool IsMutable>
 struct deref_base : public std::unary_function<ArgType, ResultType> {
     typedef ConstT         const_t;
-	typedef Value          value_type;
-	typedef Reference      reference;
-	typedef ConstReference const_reference;
-	BOOST_STATIC_CONSTANT(bool, is_mutable = IsMutable);
+    typedef Value          value_type;
+    typedef Reference      reference;
+    typedef ConstReference const_reference;
+    BOOST_STATIC_CONSTANT(bool, is_mutable = IsMutable);
 };
 
 /// \brief Composes two dereference function objects. Similar to std::unary_compose but needs to pull some typedefs from the component types.  Models: PixelDereferenceAdaptorConcept
@@ -190,8 +190,8 @@ struct deref_base : public std::unary_function<ArgType, ResultType> {
 template <typename D1, typename D2>
 class deref_compose : public deref_base<
       deref_compose<typename D1::const_t, typename D2::const_t>,
-	  typename D1::value_type, typename D1::reference, typename D1::const_reference, 
-	  typename D2::argument_type, typename D1::result_type, D1::is_mutable && D2::is_mutable>
+      typename D1::value_type, typename D1::reference, typename D1::const_reference, 
+      typename D2::argument_type, typename D1::result_type, D1::is_mutable && D2::is_mutable>
 {
 public:
     D1 _fn1;

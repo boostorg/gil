@@ -483,7 +483,7 @@ public:
     typedef const packed_dynamic_channel_reference<BitField,NumBits,true>  mutable_reference;
     typedef typename parent_t::integer_t                          integer_t;
 
-    packed_dynamic_channel_reference(void* data_ptr, unsigned first_bit) : parent_t((((char*)data_ptr)+first_bit/8)), _first_bit(first_bit%8) {}
+    packed_dynamic_channel_reference(void* data_ptr, unsigned first_bit) : parent_t(data_ptr), _first_bit(first_bit) {}
     packed_dynamic_channel_reference(const packed_dynamic_channel_reference& ref) : parent_t(ref._data_ptr), _first_bit(ref._first_bit) {}
 
     const packed_dynamic_channel_reference& operator=(integer_t value) const { assert(value<=parent_t::max_val); set_unsafe(value); return *this; }

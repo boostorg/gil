@@ -159,19 +159,19 @@ struct dynamic_x_step_type<bit_aligned_pixel_iterator<NonAlignedPixelReference> 
 //  iterator_type_from_pixel
 /////////////////////////////
 
-template <typename C, typename L, bool M>
-struct iterator_type_from_pixel<const bit_aligned_pixel_reference<C,L,M>,false,false,false> {
-    typedef bit_aligned_pixel_iterator<bit_aligned_pixel_reference<C,L,false> > type;
+template <typename B, typename C, typename L, bool M>
+struct iterator_type_from_pixel<const bit_aligned_pixel_reference<B,C,L,M>,false,false,false> {
+    typedef bit_aligned_pixel_iterator<bit_aligned_pixel_reference<B,C,L,false> > type;
 };
 
-template <typename C, typename L, bool M>
-struct iterator_type_from_pixel<const bit_aligned_pixel_reference<C,L,M>,false,false,true> {
-    typedef bit_aligned_pixel_iterator<bit_aligned_pixel_reference<C,L,true> > type;
+template <typename B, typename C, typename L, bool M>
+struct iterator_type_from_pixel<const bit_aligned_pixel_reference<B,C,L,M>,false,false,true> {
+    typedef bit_aligned_pixel_iterator<bit_aligned_pixel_reference<B,C,L,true> > type;
 };
 
-template <typename C, typename L, bool M, bool IsPlanar, bool IsStep, bool IsMutable>
-struct iterator_type_from_pixel<bit_aligned_pixel_reference<C,L,M>,IsPlanar,IsStep,IsMutable>
-    : public iterator_type_from_pixel<const bit_aligned_pixel_reference<C,L,M>,IsPlanar,IsStep,IsMutable> {};
+template <typename B, typename C, typename L, bool M, bool IsPlanar, bool IsStep, bool IsMutable>
+struct iterator_type_from_pixel<bit_aligned_pixel_reference<B,C,L,M>,IsPlanar,IsStep,IsMutable>
+    : public iterator_type_from_pixel<const bit_aligned_pixel_reference<B,C,L,M>,IsPlanar,IsStep,IsMutable> {};
 
 } }  // namespace boost::gil
 
