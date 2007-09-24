@@ -14,5 +14,5 @@ test-suite gil :
            sample_image.cpp
         :
         :
-        : <include>$(BOOST_ROOT) <define>BOOST_GIL_NO_IO  ]
+        : <include>$(BOOST_ROOT) <define>BOOST_GIL_NO_IO <define>_SCL_SECURE_NO_WARNINGS ]
 ;
