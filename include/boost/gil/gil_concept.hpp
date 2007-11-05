@@ -1363,7 +1363,7 @@ struct IteratorAdaptorConcept {
         typedef typename iterator_adaptor_get_base<Iterator>::type base_t;
         gil_function_requires<boost_concepts::ForwardTraversalConcept<base_t> >();
 
-        BOOST_STATIC_ASSERT(is_iterator_adaptor<Iterator>());
+        BOOST_STATIC_ASSERT(is_iterator_adaptor<Iterator>::value);
         typedef typename iterator_adaptor_rebind<Iterator, void*>::type rebind_t;
 
         base_t base=it.base();  ignore_unused_variable_warning(base);

@@ -35,6 +35,9 @@
 
 namespace boost { namespace gil {
 
+// Forward-declare
+template <typename P> P* memunit_advanced(const P* p, std::ptrdiff_t diff);
+
 // Forward-declare semantic_at_c
 template <int K, typename ColorBase>
 typename disable_if<is_const<ColorBase>,typename kth_semantic_element_reference_type<ColorBase,K>::type>::type semantic_at_c(ColorBase& p);

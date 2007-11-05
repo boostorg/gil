@@ -26,6 +26,7 @@
 #include <iterator>
 #include "gil_config.hpp"
 #include "gil_concept.hpp"
+#include "utilities.hpp"
 #include "pixel.hpp"
 
 namespace boost { namespace gil {
@@ -132,8 +133,6 @@ inline std::ptrdiff_t memunit_distance(const P* p1, const P* p2) {
     return (gil_reinterpret_cast_c<const unsigned char*>(p2)-gil_reinterpret_cast_c<const unsigned char*>(p1)); 
 }
 
-template <typename P> P* memunit_advanced(const P* p, std::ptrdiff_t diff);
-
 template <typename P>
 inline void memunit_advance(P* &p, std::ptrdiff_t diff) { 
     p=(P*)((unsigned char*)(p)+diff);
@@ -141,9 +140,8 @@ inline void memunit_advance(P* &p, std::ptrdiff_t diff) {
 
 template <typename P>
 inline P* memunit_advanced(const P* p, std::ptrdiff_t diff) {
-    return (P*)((unsigned char*)(p)+diff);
+    return (P*)((char*)(p)+diff);
 }
-
 
 //  memunit_advanced_ref
 //  (shortcut to advancing a pointer by a given number of memunits and taking the reference in case the compiler is not smart enough)

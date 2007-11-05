@@ -100,7 +100,7 @@ namespace detail {
 
     // Create specializations of apply_operation_fn for each N 0..100
     GIL_GENERATE_APPLY_FWD_OPS(99)
-};
+}
 
 // unary application
 template <typename Types, typename Bits, typename Op> 
