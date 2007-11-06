@@ -93,7 +93,7 @@ namespace detail {
 
     template <typename View> struct channel_pointer_type
         : public channel_pointer_type_impl<View, view_is_mutable<View>::value> {};
-};
+} // namespace detail
 
 /// \ingroup ImageViewConstructors
 /// \brief Returns C pointer to the the channels of an interleaved homogeneous view.
@@ -379,7 +379,7 @@ namespace detail {
             return AD::make(src, deref_t(n));
         }
     };
-}
+} // namespace detail
 
 /// \brief Given a source image view type View, returns the type of an image view over a single channel of View
 /// \ingroup ImageViewTransformationsNthChannel
@@ -508,7 +508,7 @@ namespace detail {
             return AD::make(src, deref_t());
         }
     };
-}
+} // namespace detail
 
 /// \brief Given a source image view type View, returns the type of an image view over a given channel of View.
 /// \ingroup ImageViewTransformationsKthChannel

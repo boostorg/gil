@@ -27,7 +27,7 @@
 ///        casts the object to its appropriate type and applies the operation
 /// \author Lubomir Bourdev and Hailin Jin \n
 ///         Adobe Systems Incorporated
-/// \date 2005-2006 \n Last updated on May 4, 2006
+/// \date 2005-2007 \n Last updated on November 6, 2007
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -96,11 +96,11 @@ GENERATE_APPLY_FWD_OPS generates for every N functions that look like this (for 
 #define GIL_GENERATE_APPLY_FWD_OPS(N) BOOST_PP_REPEAT(N, GIL_APPLY_FWD_OP, BOOST_PP_EMPTY)
 
 namespace detail {
-    template <std::size_t N> struct apply_operation_fwd_fn {};
+template <std::size_t N> struct apply_operation_fwd_fn {};
 
-    // Create specializations of apply_operation_fn for each N 0..100
-    GIL_GENERATE_APPLY_FWD_OPS(99)
-}
+// Create specializations of apply_operation_fn for each N 0..100
+GIL_GENERATE_APPLY_FWD_OPS(99)
+} // namespace detail
 
 // unary application
 template <typename Types, typename Bits, typename Op> 
@@ -141,7 +141,7 @@ namespace detail {
             return apply_operation_basec<Types1>(_bits1, _index1, reduce_bind1<T2,Op>(t2, _op));
         }
     };
-}
+} // namespace detail
 
 // Binary application by applying on each dimension separately
 template <typename Types1, typename Types2, typename Bits1, typename Bits2, typename Op>
