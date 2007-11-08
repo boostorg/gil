@@ -17,6 +17,9 @@
 #include <functional>
 #include <cmath>
 #include <cstddef>
+#include <algorithm>
+#include <utility>
+#include <iterator>
 #include <boost/static_assert.hpp>
 #include <boost/type_traits.hpp>
 #include <boost/mpl/size.hpp>
