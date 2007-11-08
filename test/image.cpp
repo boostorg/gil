@@ -292,7 +292,7 @@ void image_test::virtual_view_test() {
 }
 
 void image_test::packed_image_test() {
-    typedef packed_image3_type<uint16_t, 5,6,5, rgb_layout_t>::type rgb565_image_t;
+    typedef packed_image3_type<boost::uint16_t, 5,6,5, rgb_layout_t>::type rgb565_image_t;
 
     rgb565_image_t img565(sample_view.dimensions());
     copy_and_convert_pixels(sample_view, view(img565));
@@ -339,7 +339,7 @@ void image_test::run() {
     image_all_test<rgb8_planar_image_t>("planarrgb8_");
     image_all_test<gray8_image_t>("gray8_");
 
-    typedef const bit_aligned_pixel_reference<uint8_t, mpl::vector3_c<int,1,2,1>, bgr_layout_t, true>  bgr121_ref_t;
+    typedef const bit_aligned_pixel_reference<boost::uint8_t, mpl::vector3_c<int,1,2,1>, bgr_layout_t, true>  bgr121_ref_t;
     typedef image<bgr121_ref_t,false> bgr121_image_t;
     image_all_test<bgr121_image_t>("bgr121_");
 
