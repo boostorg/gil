@@ -44,7 +44,7 @@ This tutorial will walk through an example of using GIL to compute the image gra
 For simplicity, we will also ignore the boundary cases - the pixels along the edges of the image for which one of the neighbors is not defined. The focus of this document is how to use GIL, not how to create a good gradient generation algorithm.<h3><a class="anchor" name="InterfaceSec">
 Interface and Glue Code</a></h3>
 Let us first start with 8-bit unsigned grayscale image as the input and 8-bit signed grayscale image as the output. Here is how the interface to our algorithm looks like:<p>
-<div class="fragment"><pre class="fragment"><span class="preprocessor">#include &lt;<a class="code" href="gil__all_8hpp.html">boost/gil/gil_all.hpp</a>&gt;</span>
+<div class="fragment"><pre class="fragment"><span class="preprocessor">#include &lt;<a class="code" href="http://opensource.adobe.com/gil/html/gil__all_8hpp.html">boost/gil/gil_all.hpp</a>&gt;</span>
 <span class="keyword">using</span> <span class="keyword">namespace </span>boost::gil;
 
 <span class="keywordtype">void</span> x_gradient(<span class="keyword">const</span> gray8c_view_t&amp; src, <span class="keyword">const</span> gray8s_view_t&amp; dst) {
@@ -404,7 +404,7 @@ Run-Time Specified Images and Image Views</a></h3>
 So far we have created a generic function that computes the image gradient of a templated image view. Sometimes, however, the properties of an image view, such as its color space and channel depth, may not be available at compile time. GIL's <code>dynamic_image</code> extension allows for working with GIL constructs that are specified at run time, also called <em>variants</em>. GIL provides models of a run-time instantiated image, <code>any_image</code>, and a run-time instantiated image view, <code>any_image_view</code>. The mechanisms are in place to create other variants, such as <code>any_pixel</code>, <code>any_pixel_iterator</code>, etc. Most of GIL's algorithms and all of the view transformation functions also work with run-time instantiated image views and binary algorithms, such as <code>copy_pixels</code> can have either or both arguments be variants.<p>
 Lets make our <code>x_luminosity_gradient</code> algorithm take a variant image view. For simplicity, let's assume that only the source view can be a variant. (As an example of using multiple variants, see GIL's image view algorithm overloads taking multiple variants.)<p>
 First, we need to make a function object that contains the templated destination view and has an application operator taking a templated source view:<p>
-<div class="fragment"><pre class="fragment"><span class="preprocessor">#include &lt;<a class="code" href="dynamic__image__all_8hpp.html">boost/gil/extension/dynamic_image/dynamic_image_all.hpp</a>&gt;</span>
+<div class="fragment"><pre class="fragment"><span class="preprocessor">#include &lt;<a class="code" href="http://opensource.adobe.com/gil/html/dynamic__image__all_8hpp.html">boost/gil/extension/dynamic_image/dynamic_image_all.hpp</a>&gt;</span>
 
 <span class="keyword">template</span> &lt;<span class="keyword">typename</span> DstView&gt;
 <span class="keyword">struct </span>x_gradient_obj {
@@ -426,7 +426,7 @@ The second step is to provide an overload of <code>x_luminosity_gradient</code> 
 <code>any_image_view&lt;SrcViews&gt;</code> is the image view variant. It is templated over <code>SrcViews</code>, an enumeration of all possible view types the variant can take. <code>src</code> contains inside an index of the currently instantiated type, as well as a block of memory containing the instance. <code>apply_operation</code> goes through a switch statement over the index, each case of which casts the memory to the correct view type and invokes the function object with it. Invoking an algorithm on a variant has the overhead of one switch statement. Algorithms that perform an operation for each pixel in an image view have practically no performance degradation when used with a variant.<p>
 Here is how we can construct a variant and invoke the algorithm:<p>
 <div class="fragment"><pre class="fragment"><span class="preprocessor">#include &lt;boost/mpl/vector.hpp&gt;</span>
-<span class="preprocessor">#include &lt;<a class="code" href="jpeg__dynamic__io_8hpp.html">boost/gil/extension/io/jpeg_dynamic_io.hpp</a>&gt;</span>
+<span class="preprocessor">#include &lt;<a class="code" href="http://opensource.adobe.com/gil/html/jpeg__dynamic__io_8hpp.html">boost/gil/extension/io/jpeg_dynamic_io.hpp</a>&gt;</span>
 
 <span class="keyword">typedef</span> mpl::vector&lt;gray8_image_t, gray16_image_t, rgb8_image_t, rgb16_image_t&gt; my_img_types;
 any_image&lt;my_img_types&gt; runtime_image;

@@ -1205,7 +1205,7 @@ Most of these algorithms check whether the image views are 1D-traversable. A 1D-
 The algorithms typically delegate the work to their corresponding STL algorithms. For example, <code>copy_pixels</code> calls <code><a class="el" href="http://opensource.adobe.com/gil/html/group___s_t_l_optimizations.html#ga2">std::copy</a></code> either for each row, or, when the images are 1D-traversable, once for all pixels.<p>
 In addition, overloads are sometimes provided for the STL algorithms. For example, <code><a class="el" href="http://opensource.adobe.com/gil/html/group___s_t_l_optimizations.html#ga2">std::copy</a></code> for planar iterators is overloaded to perform <code><a class="el" href="http://opensource.adobe.com/gil/html/group___s_t_l_optimizations.html#ga2">std::copy</a></code> for each of the planes. <code><a class="el" href="http://opensource.adobe.com/gil/html/group___s_t_l_optimizations.html#ga2">std::copy</a></code> over bitwise-copiable pixels results in <code><a class="el" href="http://opensource.adobe.com/gil/html/group___s_t_l_optimizations.html#ga2">std::copy</a></code> over unsigned char, which STL typically implements via <code>memmove</code>.<p>
 As a result <code>copy_pixels</code> may result in a single call to <code>memmove</code> for interleaved 1D-traversable views, or one per each plane of planar 1D-traversable views, or one per each row of interleaved non-1D-traversable images, etc.<p>
-GIL also provides some beta-versions of image processing algorithms, such as resampling and convolution in a numerics extension available on <a href="http://opensource.adobe.com/gil/download.html.">http://opensource.adobe.com/gil/download.html.</a> This code is in early stage of development and is not optimized for speed<p>
+GIL also provides some beta-versions of image processing algorithms, such as resampling and convolution in a numerics extension available on <a href="http://opensource.adobe.com/gil/download.html">http://opensource.adobe.com/gil/download.html</a>. This code is in early stage of development and is not optimized for speed<p>
 <hr>
  <h2><a class="anchor" name="ImageSectionDG">
 10. Image</a></h2>
@@ -1267,7 +1267,7 @@ By default images have 1 memory unit (no) alignment - i.e. there is no padding a
  <h2><a class="anchor" name="VariantSecDG">
 11. Run-time specified images and image views</a></h2>
 The color space, channel depth, channel ordering, and interleaved/planar structure of an image are defined by the type of its template argument, which makes them compile-time bound. Often some of these parameters are available only at run time. Consider, for example, writing a module that opens the image at a given file path, rotates it and saves it back in its original color space and channel depth. How can we possibly write this using our generic image? What type is the image loading code supposed to return?<p>
-GIL's dynamic_image extension allows for images, image views or any GIL constructs to have their parameters defined at run time. Here is an example: <div class="fragment"><pre class="fragment"><span class="preprocessor">#include &lt;<a class="code" href="dynamic__image__all_8hpp.html">boost/gil/extension/dynamic_image/dynamic_image_all.hpp</a>&gt;</span>
+GIL's dynamic_image extension allows for images, image views or any GIL constructs to have their parameters defined at run time. Here is an example: <div class="fragment"><pre class="fragment"><span class="preprocessor">#include &lt;<a class="code" href="http://opensource.adobe.com/gil/html/dynamic__image__all_8hpp.html">boost/gil/extension/dynamic_image/dynamic_image_all.hpp</a>&gt;</span>
 <span class="keyword">using</span> <span class="keyword">namespace </span>boost;
 
 <span class="preprocessor">#define ASSERT_SAME(A,B) BOOST_STATIC_ASSERT((is_same&lt; A,B &gt;::value))</span>
@@ -1413,7 +1413,7 @@ any_image_view&lt;Types&gt;  av(...);  <span class="comment">// run-time specifi
 <a class="code" href="http://opensource.adobe.com/gil/html/group___image_view_s_t_l_algorithms_copy_pixels.html#ga0">copy_pixels</a>(av, av);
 </pre></div><p>
 By having algorithm overloads supporting dynamic constructs, we create a base upon which it is possible to write algorithms that can work with either compile-time or runtime images or views. The following code, for example, uses the GIL I/O extension to turn an image on disk upside down:<p>
-<div class="fragment"><pre class="fragment"><span class="preprocessor">#include &lt;<a class="code" href="jpeg__dynamic__io_8hpp.html">boost\gil\extension\io\jpeg_dynamic_io.hpp</a>&gt;</span>
+<div class="fragment"><pre class="fragment"><span class="preprocessor">#include &lt;<a class="code" href="http://opensource.adobe.com/gil/html/jpeg__dynamic__io_8hpp.html">boost\gil\extension\io\jpeg_dynamic_io.hpp</a>&gt;</span>
 
 <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Image&gt;    <span class="comment">// Could be rgb8_image_t or any_image&lt;...&gt;</span>
 <span class="keywordtype">void</span> save_180rot(<span class="keyword">const</span> std::string&amp; file_name) {
