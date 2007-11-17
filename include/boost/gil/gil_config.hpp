@@ -23,7 +23,7 @@
 
 #include <boost/config.hpp>
 
-#define GIL_VERSION "2.1.1"
+#define GIL_VERSION "2.1.2"
 
 #ifdef _DEBUG
 #    define GIL_FORCEINLINE inline
@@ -41,5 +41,10 @@
 #endif
 #endif
 
+// Enable GIL_NONWORD_POINTER_ALIGNMENT_SUPPORTED if your platform supports dereferencing on non-word memory boundary.
+// Enabling the flag results in performance improvement
+#if !defined(__hpux) && !defined(sun) && !defined(__sun) && !defined(__osf__)
+	#define GIL_NONWORD_POINTER_ALIGNMENT_SUPPORTED
+#endif
 
 #endif

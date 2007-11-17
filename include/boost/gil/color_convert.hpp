@@ -32,7 +32,6 @@
 #include "rgb.hpp"
 #include "rgba.hpp"
 #include "cmyk.hpp"
-#include "image_view_factory.hpp"
 #include "metafunctions.hpp"
 #include "utilities.hpp"
 #include "color_base_algorithm.hpp"
@@ -229,7 +228,7 @@ typename channel_type<Pixel>::type alpha_or_max_impl(const Pixel& p, mpl::true_)
     return get_color(p,alpha_t());
 }
 template <typename Pixel> 
-typename channel_type<Pixel>::type alpha_or_max_impl(const Pixel& p, mpl::false_) {
+typename channel_type<Pixel>::type alpha_or_max_impl(const Pixel&  , mpl::false_) {
     return channel_traits<typename channel_type<Pixel>::type>::max_value();
 }
 } // namespace detail

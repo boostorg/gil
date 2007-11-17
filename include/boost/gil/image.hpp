@@ -63,42 +63,44 @@ public:
     x_coord_t               width()                 const { return _view.width(); }
     y_coord_t               height()                const { return _view.height(); }
 
-    explicit image(std::size_t alignment=1,
+    explicit image(std::size_t alignment=0,
                    const Alloc alloc_in = Alloc()) : 
-        _memory(0), _align(alignment), _alloc(alloc_in) {}
+        _memory(0), _align_in_bytes(alignment), _alloc(alloc_in) {}
 
     // Create with dimensions and optional initial value and alignment
     image(const point_t& dimensions,
-          std::size_t alignment=1) : _memory(0), _align(alignment) {
+          std::size_t alignment=0,
+		  const Alloc alloc_in = Alloc()) : _memory(0), _align_in_bytes(alignment), _alloc(alloc_in) {
         allocate_and_default_construct(dimensions);
     }
     image(x_coord_t width, y_coord_t height,
-          std::size_t alignment=1) : _memory(0), _align(alignment) {
+          std::size_t alignment=0,
+		  const Alloc alloc_in = Alloc()) : _memory(0), _align_in_bytes(alignment), _alloc(alloc_in) {
         allocate_and_default_construct(point_t(width,height));
     }
     image(const point_t& dimensions, 
           const Pixel& p_in,
           std::size_t alignment,
           const Alloc alloc_in = Alloc())  :
-        _memory(0), _align(alignment), _alloc(alloc_in) {
+        _memory(0), _align_in_bytes(alignment), _alloc(alloc_in) {
         allocate_and_fill(dimensions, p_in);
     }
     image(x_coord_t width, y_coord_t height,
           const Pixel& p_in,
           std::size_t alignment,
           const Alloc alloc_in = Alloc())  :
-        _memory(0), _align(alignment), _alloc(alloc_in) {
+        _memory(0), _align_in_bytes(alignment), _alloc(alloc_in) {
         allocate_and_fill(point_t(width,height),p_in);
     }
 
     image(const image& img) :
-        _memory(0), _align(img._align), _alloc(img._alloc) {
+        _memory(0), _align_in_bytes(img._align_in_bytes), _alloc(img._alloc) {
         allocate_and_copy(img.dimensions(),img._view);
     }
 
     template <typename P2, bool IP2, typename Alloc2>
     image(const image<P2,IP2,Alloc2>& img) : 
-        _memory(0), _align(img._align), _alloc(img._alloc) {
+        _memory(0), _align_in_bytes(img._align_in_bytes), _alloc(img._alloc) {
        allocate_and_copy(img.dimensions(),img._view);
     }
     image& operator=(const image& img) {
@@ -132,37 +134,37 @@ public:
 
     void swap(image& img) { // required by MutableContainerConcept
         using std::swap;
-        swap(_align, img._align);
-        swap(_memory,img._memory);
-        swap(_view,  img._view); 
-        swap(_alloc, img._alloc);
+        swap(_align_in_bytes, img._align_in_bytes);
+        swap(_memory,         img._memory);
+        swap(_view,           img._view); 
+        swap(_alloc,          img._alloc);
     }    
 
-    void recreate(const point_t& dims, std::size_t alignment=1) {
-        if (dims!=_view.dimensions() || _align!=alignment) {
-            image tmp(dims, alignment);
+    void recreate(const point_t& dims, std::size_t alignment=0, const Alloc alloc_in = Alloc()) {
+        if (dims!=_view.dimensions() || _align_in_bytes!=alignment || alloc_in!=_alloc) {
+            image tmp(dims, alignment, alloc_in);
             swap(tmp);
         }
     }
-    void recreate(x_coord_t width, y_coord_t height, std::size_t alignment=1) {
-        recreate(point_t(width,height),alignment);
+    void recreate(x_coord_t width, y_coord_t height, std::size_t alignment=0, const Alloc alloc_in = Alloc()) {
+        recreate(point_t(width,height),alignment,alloc_in);
     }
     void recreate(const point_t& dims, 
-                  const Pixel& p_in, std::size_t alignment) {
-        if (dims!=_view.dimensions() || _align!=alignment) {
-            image tmp(dims, p_in, alignment);
+                  const Pixel& p_in, std::size_t alignment, const Alloc alloc_in = Alloc()) {
+        if (dims!=_view.dimensions() || _align_in_bytes!=alignment || alloc_in!=_alloc) {
+            image tmp(dims, p_in, alignment, alloc_in);
             swap(tmp);
         }
     }
     void recreate(x_coord_t width, y_coord_t height, 
-                  const Pixel& p_in, std::size_t alignment) {
-        recreate(point_t(width,height),p_in,alignment);
+                  const Pixel& p_in, std::size_t alignment, const Alloc alloc_in = Alloc()) {
+        recreate(point_t(width,height),p_in,alignment,alloc_in);
     }
 
     view_t       _view;      // contains pointer to the pixels, the image size and ways to navigate pixels
 private:
     unsigned char* _memory;
-    std::size_t _align;
+    std::size_t    _align_in_bytes;
     allocator_type _alloc;
 
     void allocate_and_default_construct(const point_t& dimensions) { 
@@ -192,34 +194,35 @@ private:
     }
 
     std::size_t total_allocated_size_in_bytes(const point_t& dimensions) const {
-        std::size_t size_in_units = _total_allocated_size(dimensions, mpl::bool_<IsPlanar>());
+        std::size_t size_in_units = get_row_size_in_memunits(dimensions.x)*dimensions.y;
+		if (IsPlanar)
+			size_in_units = size_in_units*num_channels<view_t>::value;
+
         // return the size rounded up to the nearest byte
-        return (size_in_units + byte_to_memunit<typename view_t::x_iterator>::value - 1) / byte_to_memunit<typename view_t::x_iterator>::value;
+        return (size_in_units + byte_to_memunit<typename view_t::x_iterator>::value - 1) / byte_to_memunit<typename view_t::x_iterator>::value
+			+ (_align_in_bytes>0 ? _align_in_bytes-1:0);	// add extra padding in case we need to align the first image pixel
     }
 
-    std::size_t get_row_size(x_coord_t width) const {   // number of units per row
-        return align(width*memunit_step(typename view_t::x_iterator()),_align);
+    std::size_t get_row_size_in_memunits(x_coord_t width) const {   // number of units per row
+		std::size_t size_in_memunits = width*memunit_step(typename view_t::x_iterator());
+		if (_align_in_bytes>0) {
+			std::size_t alignment_in_memunits=_align_in_bytes*byte_to_memunit<typename view_t::x_iterator>::value;
+			return align(size_in_memunits, alignment_in_memunits);
+		}
+		return size_in_memunits;
     }
-
-    std::size_t _total_allocated_size(const point_t& dimensions,mpl::false_) const {
-        return get_row_size(dimensions.x)*dimensions.y+_align-1;
-    }
-    std::size_t _total_allocated_size(const point_t& dimensions,mpl::true_) const {
-        std::size_t plane_size=get_row_size(dimensions.x)*dimensions.y;
-        return plane_size*num_channels<view_t>::value+_align-1;
-    }
-
     
     void allocate_(const point_t& dimensions, mpl::false_) {  // if it throws and _memory!=0 the client must deallocate _memory
         _memory=_alloc.allocate(total_allocated_size_in_bytes(dimensions));
-        unsigned char* tmp=(unsigned char*)align((std::size_t)_memory,_align);
-        _view=view_t(dimensions,typename view_t::locator(typename view_t::x_iterator(tmp),get_row_size(dimensions.x)));
+		unsigned char* tmp=(_align_in_bytes>0) ? (unsigned char*)align((std::size_t)_memory,_align_in_bytes) : _memory;
+        _view=view_t(dimensions,typename view_t::locator(typename view_t::x_iterator(tmp),get_row_size_in_memunits(dimensions.x)));
     }
+
     void allocate_(const point_t& dimensions, mpl::true_) {   // if it throws and _memory!=0 the client must deallocate _memory
-        std::size_t row_size=get_row_size(dimensions.x);
+        std::size_t row_size=get_row_size_in_memunits(dimensions.x);
         std::size_t plane_size=row_size*dimensions.y;
         _memory=_alloc.allocate(total_allocated_size_in_bytes(dimensions));
-        unsigned char* tmp=(unsigned char*)align((std::size_t)_memory,_align);
+		unsigned char* tmp=(_align_in_bytes>0) ? (unsigned char*)align((std::size_t)_memory,_align_in_bytes) : _memory;
         typename view_t::x_iterator first; 
         for (int i=0; i<num_channels<view_t>::value; ++i) {
             dynamic_at_c(first,i) = (typename channel_type<view_t>::type*)tmp;

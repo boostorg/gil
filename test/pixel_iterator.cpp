@@ -22,6 +22,7 @@
 #include <boost/gil/step_iterator.hpp>
 #include <boost/gil/typedefs.hpp>
 #include <boost/gil/color_convert.hpp>
+#include <boost/gil/image_view_factory.hpp>
 #include <boost/mpl/vector.hpp>
 
 using namespace boost::gil;
