@@ -1218,10 +1218,10 @@ In the most general form images are N-dimensional and satisfy the following conc
     <span class="keyword">typename</span> value_type   = view_t::value_type;
     <span class="keyword">typename</span> allocator_type;
 
-    Img::Img(point_t dims, std::size_t alignment=1);
+    Img::Img(point_t dims, std::size_t alignment=0);
     Img::Img(point_t dims, value_type fill_value, std::size_t alignment);
     
-    <span class="keywordtype">void</span> Img::recreate(point_t new_dims, std::size_t alignment=1);
+    <span class="keywordtype">void</span> Img::recreate(point_t new_dims, std::size_t alignment=0);
     <span class="keywordtype">void</span> Img::recreate(point_t new_dims, value_type fill_value, std::size_t alignment);
 
     <span class="keyword">const</span> point_t&amp;        Img::dimensions() <span class="keyword">const</span>;
@@ -1234,13 +1234,13 @@ Two-dimensional images have additional requirements:<p>
     <span class="keyword">typename</span> x_coord_t = const_view_t::x_coord_t;
     <span class="keyword">typename</span> y_coord_t = const_view_t::y_coord_t;
     
-    Img::Img(x_coord_t width, y_coord_t height, std::size_t alignment=1);
+    Img::Img(x_coord_t width, y_coord_t height, std::size_t alignment=0);
     Img::Img(x_coord_t width, y_coord_t height, value_type fill_value, std::size_t alignment);
 
     x_coord_t Img::width() <span class="keyword">const</span>;
     y_coord_t Img::height() <span class="keyword">const</span>;
     
-    <span class="keywordtype">void</span> Img::recreate(x_coord_t width, y_coord_t height, std::size_t alignment=1);
+    <span class="keywordtype">void</span> Img::recreate(x_coord_t width, y_coord_t height, std::size_t alignment=0);
     <span class="keywordtype">void</span> Img::recreate(x_coord_t width, y_coord_t height, value_type fill_value, std::size_t alignment);
 };
 </pre></div><p>
@@ -1262,7 +1262,12 @@ GIL provides a class, <code>image</code>, which is templated over the value type
           <span class="keyword">typename</span> A=std::allocator&lt;unsigned char&gt; &gt;    
 <span class="keyword">class </span>image;
 </pre></div><p>
-By default images have 1 memory unit (no) alignment - i.e. there is no padding at the end of rows. Many operations are faster using such 1D-traversable images <code>image_view::x_iterator</code> can be used to traverse the pixels, instead of the more complicated <code>image_view::iterator</code>. The image constructor takes an alignment parameter which allows for constructing images that are word-aligned or 8-byte aligned. Beware that the alignment parameter is in memory units, which is usually but not always bytes. Specifically, for bit-aligned images the memory unit is a bit.<p>
+
+The image constructor takes an alignment parameter which allows for constructing images that are word-aligned or 8-byte aligned. The alignment is specified in
+bytes. The default value for alignment is 0, which means there is no padding at the end of rows. Many operations are
+faster using such 1D-traversable images, because <code>image_view::x_iterator</code> can be used to traverse the pixels, instead of the more complicated 
+<code>image_view::iterator</code>. Note that when alignment is 0, packed images are aligned to the bit - i.e. there are no padding bits at the end of rows of packed images.
+
 <hr>
  <h2><a class="anchor" name="VariantSecDG">
 11. Run-time specified images and image views</a></h2>
