@@ -183,3 +183,9 @@ void test_image_io() {
     png_write_view(out_dir+"RGBNative.png",view(anyImg));
 }
 #endif
+
+int main(int argc, char* argv[]) {
+    test_image_io();
+    return 0;
+}
+

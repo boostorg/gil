@@ -290,3 +290,9 @@ ignore_unused_variable_warning(rgb8_const_ptr_err);
     memunit_advance(rgb8_pptr,-3);
 }
 */
+
+int main(int argc, char* argv[]) {
+    test_pixel_iterator();
+    return 0;
+}
+

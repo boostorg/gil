@@ -324,3 +324,9 @@ void test_pixel() {
     error_if(g != 8);
     error_if(g16 != 8);
 }
+
+int main(int argc, char* argv[]) {
+    test_pixel();
+    return 0;
+}
+

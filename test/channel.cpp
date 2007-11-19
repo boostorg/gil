@@ -18,10 +18,7 @@
 using namespace boost::gil;
 using namespace std;
 
-void error_if(bool condition) {
-    if (condition)
-        throw std::exception();
-}
+void error_if(bool);
 
 bits8   c8_min   =  channel_traits<bits8  >::min_value();
 bits8   c8_max   =  channel_traits<bits8  >::max_value();
@@ -360,6 +357,11 @@ void test_channel() {
     do_test<reference_core<const channel_archetype&> >();
 }
 
+int main(int argc, char* argv[]) {
+    test_channel();
+    return 0;
+}
+
 // TODO: 
 // - provide algorithm performance overloads for scoped channel and packed channels
 // - Update concepts and documentation
@@ -367,3 +369,4 @@ void test_channel() {
 // - Performance!!
 //      - is channel_convert the same as native?
 //      - is operator++ on bits32f the same as native? How about if operator++ is defined in scoped_channel to do _value++?
+

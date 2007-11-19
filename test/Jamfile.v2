@@ -5,13 +5,29 @@ project libs/gil/test ;
 import testing ;
 
 test-suite gil :
-    [ run  main.cpp 
-           image.cpp 
-           image_io.cpp 
-           pixel.cpp 
-           pixel_iterator.cpp 
-           channel.cpp 
+    [ run  image.cpp 
            sample_image.cpp
+           error_if.cpp
+        :
+        :
+        : <include>$(BOOST_ROOT) <define>BOOST_GIL_NO_IO <define>_SCL_SECURE_NO_WARNINGS ]
+    [ run  channel.cpp 
+           error_if.cpp
+        :
+        :
+        : <include>$(BOOST_ROOT) <define>BOOST_GIL_NO_IO <define>_SCL_SECURE_NO_WARNINGS ]
+    [ run  pixel.cpp 
+           error_if.cpp
+        :
+        :
+        : <include>$(BOOST_ROOT) <define>BOOST_GIL_NO_IO <define>_SCL_SECURE_NO_WARNINGS ]
+    [ run  pixel_iterator.cpp 
+           error_if.cpp
+        :
+        :
+        : <include>$(BOOST_ROOT) <define>BOOST_GIL_NO_IO <define>_SCL_SECURE_NO_WARNINGS ]
+    [ run  image_io.cpp 
+           error_if.cpp
         :
         :
         : <include>$(BOOST_ROOT) <define>BOOST_GIL_NO_IO <define>_SCL_SECURE_NO_WARNINGS ]
