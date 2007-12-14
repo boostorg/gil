@@ -5,7 +5,7 @@
     Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt).
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
+    See http://stlab.adobe.com/gil for most recent version including documentation.
 */
 
 /*************************************************************************************************/
@@ -162,7 +162,7 @@ namespace std {
 /// \brief  swap for planar_pixel_reference
 /// \ingroup PixelModelPlanarRef
 template <typename CR, typename CS, typename R> inline
-void swap(boost::gil::planar_pixel_reference<CR,CS> x, R& y) { 
+void swap(const boost::gil::planar_pixel_reference<CR,CS> x, R& y) { 
     boost::gil::swap_proxy<typename boost::gil::planar_pixel_reference<CR,CS>::value_type>(x,y); 
 }
 
@@ -170,7 +170,7 @@ void swap(boost::gil::planar_pixel_reference<CR,CS> x, R& y) {
 /// \brief  swap for planar_pixel_reference
 /// \ingroup PixelModelPlanarRef
 template <typename CR, typename CS> inline
-void swap(typename boost::gil::planar_pixel_reference<CR,CS>::value_type& x, boost::gil::planar_pixel_reference<CR,CS> y) { 
+void swap(typename boost::gil::planar_pixel_reference<CR,CS>::value_type& x, const boost::gil::planar_pixel_reference<CR,CS> y) { 
     boost::gil::swap_proxy<typename boost::gil::planar_pixel_reference<CR,CS>::value_type>(x,y); 
 }
 
@@ -178,7 +178,7 @@ void swap(typename boost::gil::planar_pixel_reference<CR,CS>::value_type& x, boo
 /// \brief  swap for planar_pixel_reference
 /// \ingroup PixelModelPlanarRef
 template <typename CR, typename CS> inline
-void swap(boost::gil::planar_pixel_reference<CR,CS> x, boost::gil::planar_pixel_reference<CR,CS> y) { 
+void swap(const boost::gil::planar_pixel_reference<CR,CS> x, const boost::gil::planar_pixel_reference<CR,CS> y) { 
     boost::gil::swap_proxy<typename boost::gil::planar_pixel_reference<CR,CS>::value_type>(x,y); 
 }
 }   // namespace std

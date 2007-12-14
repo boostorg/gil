@@ -2,8 +2,8 @@
 #CXX=/usr/local/gcc4/bin/g++
 #CXX=/usr/local/gcc411/bin/g++
 #CXX=/usr/local/gcc422/bin/g++
-#CXX=g++
-CXX='/cygdrive/c/Program Files/Intel/Compiler/C++/10.0.027/IA32/Bin/icl.exe'
+CXX=g++
+#CXX='/cygdrive/c/Program Files/Intel/Compiler/C++/10.0.027/IA32/Bin/icl.exe'
 
 CXX_FLAGS=-Wall -DBOOST_GIL_USE_CONCEPT_CHECK #-DNDEBUG 
 CXX_CHECKSUM_FLAGS=-Wall -DBOOST_GIL_NO_IO -DBOOST_GIL_USE_CONCEPT_CHECK #-DNDEBUG 

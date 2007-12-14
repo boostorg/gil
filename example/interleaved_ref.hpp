@@ -5,7 +5,7 @@
     Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt).
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
+    See http://stlab.adobe.com/gil for most recent version including documentation.
 */
 
 /*************************************************************************************************/
@@ -130,7 +130,7 @@ namespace detail {
 
 // Required by MutableColorBaseConcept. The default std::swap does not do the right thing for proxy references - it swaps the references, not the values
 template <typename ChannelReference, typename Layout>
-void swap(interleaved_ref<ChannelReference,Layout>& x, interleaved_ref<ChannelReference,Layout>& y) { 
+void swap(const interleaved_ref<ChannelReference,Layout>& x, const interleaved_ref<ChannelReference,Layout>& y) { 
     static_for_each(x,y,detail::swap_fn_t());
 };
 
