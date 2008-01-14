@@ -129,7 +129,7 @@ public:
           _v1(*memunit_advanced(semantic_at_c<1>(ptr),diff)) {}
 
     // Support for planar_pixel_reference operator[]
-    Element at_c_dynamic(size_t i) const {
+    Element at_c_dynamic(std::size_t i) const {
         if (i==0) return _v0;
         return _v1;
     }
@@ -245,7 +245,7 @@ public:
           _v3(*memunit_advanced(semantic_at_c<3>(ptr),diff)) {}
 
     // Support for planar_pixel_reference operator[]
-    Element at_c_dynamic(size_t i) const {
+    Element at_c_dynamic(std::size_t i) const {
         switch (i) {
             case 0: return _v0;
             case 1: return _v1;
@@ -316,7 +316,7 @@ public:
           _v4(*memunit_advanced(semantic_at_c<4>(ptr),diff)) {}
 
     // Support for planar_pixel_reference operator[]
-    Element at_c_dynamic(size_t i) const {
+    Element at_c_dynamic(std::size_t i) const {
         switch (i) {
             case 0: return _v0;
             case 1: return _v1;
