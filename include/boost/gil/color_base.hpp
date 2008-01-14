@@ -5,7 +5,7 @@
     Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt).
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
+    See http://stlab.adobe.com/gil for most recent version including documentation.
 */
 
 /*************************************************************************************************/
@@ -182,7 +182,7 @@ public:
           _v2(*memunit_advanced(semantic_at_c<2>(ptr),diff)) {}
 
     // Support for planar_pixel_reference operator[]
-    Element at_c_dynamic(size_t i) const {
+	Element at_c_dynamic(std::size_t i) const {
         switch (i) {
             case 0: return _v0;
             case 1: return _v1;
