@@ -121,7 +121,7 @@ template <typename BitField,
           bool IsMutable>
 struct bit_aligned_pixel_reference {
     BOOST_STATIC_CONSTANT(int, bit_size = (mpl::accumulate<ChannelBitSizes, mpl::int_<0>, mpl::plus<mpl::_1, mpl::_2> >::type::value));
-    typedef bit_range<bit_size,IsMutable>                                           bit_range_t;
+    typedef boost::gil::bit_range<bit_size,IsMutable>                                           bit_range_t;
     typedef BitField                                                                bitfield_t;  
     typedef typename mpl::if_c<IsMutable,unsigned char*,const unsigned char*>::type data_ptr_t;
 

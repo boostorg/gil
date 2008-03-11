@@ -16,9 +16,11 @@
 
 #include <cassert>
 #include <cstddef>
+#include <cstring>
 #include <algorithm>
 #include <iterator>
 #include <memory>
+#include <typeinfo>
 #include "gil_config.hpp"
 #include "gil_concept.hpp"
 #include "color_base_algorithm.hpp"
@@ -31,7 +33,7 @@
 /// \brief Some basic STL-style algorithms when applied to image views
 /// \author Lubomir Bourdev and Hailin Jin \n
 ///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated on May 6, 2007
+/// \date   2005-2008 \n Last updated on March 12, 2008
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
