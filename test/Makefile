@@ -1,8 +1,14 @@
+# Copyright 2008 Lubomir Bourdev and Hailin Jin
+#
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or copy at
+# http://www.boost.org/LICENSE_1_0.txt)
+
 .SUFFIXES: .cpp 
 #CXX=/usr/local/gcc4/bin/g++
 #CXX=/usr/local/gcc411/bin/g++
-#CXX=/usr/local/gcc422/bin/g++
-CXX=g++
+CXX=/usr/local/gcc430/bin/g++
+#CXX=g++
 #CXX='/cygdrive/c/Program Files/Intel/Compiler/C++/10.0.027/IA32/Bin/icl.exe'
 
 CXX_FLAGS=-Wall -DBOOST_GIL_USE_CONCEPT_CHECK #-DNDEBUG 
