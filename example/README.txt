@@ -1,3 +1,9 @@
+Copyright 2008 Lubomir Bourdev and Hailin Jin
+
+Distributed under the Boost Software License, Version 1.0.
+(See accompanying file LICENSE_1_0.txt or copy at
+http://www.boost.org/LICENSE_1_0.txt)
+
 This directory contains GIL sample code.
 
 We provide a Makefile that compiles all examples. You will need to change it to specify the correct path to boost, gil, and libjpeg. Some of the examples include the GIL numeric extension, which you can get from:
