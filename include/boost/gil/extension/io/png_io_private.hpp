@@ -5,7 +5,7 @@
     Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt).
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
+    See http://stlab.adobe.com/gil for most recent version including documentation.
 */
 /*************************************************************************************************/
 
@@ -28,7 +28,7 @@ namespace boost { namespace gil {
 
 namespace detail {
 
-static const size_t PNG_BYTES_TO_CHECK = 4;
+static const std::size_t PNG_BYTES_TO_CHECK = 4;
 
 // lbourdev: These can be greatly simplified, for example:
 template <typename Cs> struct png_color_type {BOOST_STATIC_CONSTANT(int,color_type=0);};

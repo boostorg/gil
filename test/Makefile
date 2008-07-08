@@ -7,8 +7,9 @@
 .SUFFIXES: .cpp 
 #CXX=/usr/local/gcc4/bin/g++
 #CXX=/usr/local/gcc411/bin/g++
-#CXX=/usr/local/gcc412/bin/g++
-CXX=g++
+CXX=/usr/local/gcc430/bin/g++
+#CXX=g++
+#CXX='/cygdrive/c/Program Files/Intel/Compiler/C++/10.0.027/IA32/Bin/icl.exe'
 
 CXX_FLAGS=-Wall -DBOOST_GIL_USE_CONCEPT_CHECK #-DNDEBUG 
 CXX_CHECKSUM_FLAGS=-Wall -DBOOST_GIL_NO_IO -DBOOST_GIL_USE_CONCEPT_CHECK #-DNDEBUG 
@@ -21,17 +22,32 @@ LIBTIFF_LIB_PATH=-L../../../../lib/libtiff
 LIBPNG_INCLUDE_PATH=-I../../../../lib/libpng
 LIBPNG_LIB_PATH=-L../../../../lib/libpng
 LIBZ_LIB_PATH=-L../../../../lib/zlib
-ALL_OBJECTS=main.o channel.o pixel.o pixel_iterator.o image.o image_io.o sample_image.o
 
-all: performance checksum
+all: performance channel_test pixel_test pixel_iterator_test image_checksum_test image_io_checksum_test
 .cpp.o:
 #	${CXX} ${CXX_FLAGS} ${BOOST_INCLUDE_PATH} ${LIBJPEG_INCLUDE_PATH} ${LIBTIFF_INCLUDE_PATH} ${LIBPNG_INCLUDE_PATH} -c $<
 	${CXX} ${CXX_CHECKSUM_FLAGS} ${BOOST_INCLUDE_PATH} -c $<
 clean:
 	-rm -f *.o *.exe 
-performance:	performance.o
+performance: performance.o
 	${CXX} -o performance ${CXX_FLAGS} performance.o
-test:	${ALL_OBJECTS}
-	${CXX} -o test ${CXX_FLAGS} ${ALL_OBJECTS} ${LIBJPEG_LIB_PATH} -ljpeg ${LIBTIFF_LIB_PATH} -ltiff ${LIBPNG_LIB_PATH} -lpng ${LIBZ_LIB_PATH} -lz
-checksum:	${ALL_OBJECTS}
-	${CXX} -o test ${CXX_CHECKSUM_FLAGS} ${ALL_OBJECTS} 
+channel_test:	channel.o error_if.o
+	${CXX} -o channel_test ${CXX_CHECKSUM_FLAGS} channel.o error_if.o
+pixel_test:	pixel.o error_if.o
+	${CXX} -o pixel_test ${CXX_CHECKSUM_FLAGS} pixel.o error_if.o
+pixel_iterator_test:	pixel_iterator.o error_if.o
+	${CXX} -o pixel_iterator_test ${CXX_CHECKSUM_FLAGS} pixel_iterator.o error_if.o
+image_checksum_test:	image.o error_if.o sample_image.o
+	${CXX} -o image_checksum_test ${CXX_CHECKSUM_FLAGS} image.o error_if.o sample_image.o 
+image_test:	image.o  error_if.o sample_image.o
+	${CXX} -o image_test ${CXX_FLAGS} image.o error_if.o sample_image.o ${LIBJPEG_LIB_PATH} -ljpeg ${LIBTIFF_LIB_PATH} -ltiff ${LIBPNG_LIB_PATH} -lpng ${LIBZ_LIB_PATH} -lz
+image_io_checksum_test:	image_io.o error_if.o
+	${CXX} -o image_io_checksum_test ${CXX_CHECKSUM_FLAGS} image_io.o error_if.o
+image_io_test:	image_io.o error_if.o
+	${CXX} -o image_io_test ${CXX_FLAGS} image_io.o error_if.o ${LIBJPEG_LIB_PATH} -ljpeg ${LIBTIFF_LIB_PATH} -ltiff ${LIBPNG_LIB_PATH} -lpng ${LIBZ_LIB_PATH} -lz
+run_all: channel_test pixel_test pixel_iterator_test image_checksum_test image_io_checksum_test
+	channel_test 
+	pixel_test 
+	pixel_iterator_test 
+	image_checksum_test 
+	image_io_checksum_test

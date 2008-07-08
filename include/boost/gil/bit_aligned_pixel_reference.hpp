@@ -5,7 +5,7 @@
     Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt).
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
+    See http://stlab.adobe.com/gil for most recent version including documentation.
 */
 
 /*************************************************************************************************/
@@ -121,7 +121,7 @@ template <typename BitField,
           bool IsMutable>
 struct bit_aligned_pixel_reference {
     BOOST_STATIC_CONSTANT(int, bit_size = (mpl::accumulate<ChannelBitSizes, mpl::int_<0>, mpl::plus<mpl::_1, mpl::_2> >::type::value));
-    typedef bit_range<bit_size,IsMutable>                                           bit_range_t;
+    typedef boost::gil::bit_range<bit_size,IsMutable>                                           bit_range_t;
     typedef BitField                                                                bitfield_t;  
     typedef typename mpl::if_c<IsMutable,unsigned char*,const unsigned char*>::type data_ptr_t;
 
@@ -283,19 +283,19 @@ namespace std {
 // Having three overloads allows us to swap between different (but compatible) models of PixelConcept
 
 template <typename B, typename C, typename L, typename R> inline
-void swap(boost::gil::bit_aligned_pixel_reference<B,C,L,true> x, R& y) { 
+void swap(const boost::gil::bit_aligned_pixel_reference<B,C,L,true> x, R& y) { 
     boost::gil::swap_proxy<typename boost::gil::bit_aligned_pixel_reference<B,C,L,true>::value_type>(x,y); 
 }
 
 
 template <typename B, typename C, typename L> inline
-void swap(typename boost::gil::bit_aligned_pixel_reference<B,C,L,true>::value_type& x, boost::gil::bit_aligned_pixel_reference<B,C,L,true> y) { 
+void swap(typename boost::gil::bit_aligned_pixel_reference<B,C,L,true>::value_type& x, const boost::gil::bit_aligned_pixel_reference<B,C,L,true> y) { 
     boost::gil::swap_proxy<typename boost::gil::bit_aligned_pixel_reference<B,C,L,true>::value_type>(x,y); 
 }
 
 
 template <typename B, typename C, typename L> inline
-void swap(boost::gil::bit_aligned_pixel_reference<B,C,L,true> x, boost::gil::bit_aligned_pixel_reference<B,C,L,true> y) { 
+void swap(const boost::gil::bit_aligned_pixel_reference<B,C,L,true> x, const boost::gil::bit_aligned_pixel_reference<B,C,L,true> y) { 
     boost::gil::swap_proxy<typename boost::gil::bit_aligned_pixel_reference<B,C,L,true>::value_type>(x,y); 
 }
 }   // namespace std

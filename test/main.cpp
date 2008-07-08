@@ -5,13 +5,37 @@
     Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt).
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
+    See http://stlab.adobe.com/gil for most recent version including documentation.
 */
 // main.cpp : Runs all GIL tests.
 //
 
 #include <fstream>
 #include <iostream>
+
+#define main main1
+#include "channel.cpp"
+#undef main
+
+#define main main2
+#define value_core pixel_value_core
+#define reference_core pixel_reference_core
+#include "pixel.cpp"
+#undef value_core 
+#undef reference_core
+#undef main
+
+#define main main3
+#include "pixel_iterator.cpp"
+#undef main
+
+#define main main4
+#include "image.cpp"
+#undef main
+
+#define main main5
+#include "image_io.cpp"
+#undef main
 
 void test_channel();
 void test_pixel();
