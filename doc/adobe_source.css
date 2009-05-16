@@ -133,8 +133,8 @@ A.codeRef:link, A.codeRef:visited {
 
 A:link, A:visited {
     text-decoration: none;
-    color: red;
-    border-bottom: 1px solid red;
+    color: #cc0000;
+    border-bottom: 1px solid #cc0000;
 }
 
 A:link:hover, A:visited:hover {
@@ -149,7 +149,7 @@ DL.el {
 
 .fragment {
 	font-family: Monaco, Courier New, Fixed, monospace;
-    font-size: 10px;
+    font-size: 12px;
 }
 
 PRE.fragment {
@@ -165,6 +165,8 @@ DIV.ah {
     margin-bottom: 3px;
     margin-top: 3px
 }
+
+/* I'm not sure about the next few, but they appear in the doxygen docs but weren't in the doxygen CSS. */
 
 TD.md {
 	font-family: Monaco, Courier New, Fixed, monospace;
@@ -227,10 +229,6 @@ IMG {
     border: none;
 }
 
-.footerdiv {
-    background-color: #eeeeee;
-}
-
 .footerdiv, .footerdiv a, .footerdiv p, .footerdiv ul , .footerdiv ul li {
     font-size: 9px;
     color: grey;
@@ -238,6 +236,15 @@ IMG {
     margin: 0;
     padding: 0;
     margin-bottom: 3px;
+}
+
+.footerdiv {
+    width: 1000px;
+    margin: 0;
+    padding: 0;
+    margin-top: 30px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .footerdiv ul {
@@ -259,6 +266,7 @@ SPAN.preprocessor  { color: mediumblue }
 SPAN.stringliteral { color: maroon }
 SPAN.charliteral   { color: maroon }
 
+/* Again, this is only in the doxygen documentation, but wasn't in the doxygen css. */
 .mdTable {
 	border: 1px solid #666666;
 	background-color: lavender;
@@ -284,6 +292,7 @@ SPAN.charliteral   { color: maroon }
 
 .memItemLeft {
 	font-family: Monaco, Courier New, Fixed, monospace;
+	font-size: 11px;
 	padding: 4px;
 	border: none;
 	border-top: 1px solid lightgray;
@@ -291,6 +300,7 @@ SPAN.charliteral   { color: maroon }
 
 .memItemRight {
 	font-family: Monaco, Courier New, Fixed, monospace;
+	font-size: 11px;
 	padding: 4px;
 	border: none;
 	border-top: 1px solid lightgray;
@@ -298,18 +308,21 @@ SPAN.charliteral   { color: maroon }
 
 .memTemplItemLeft {
 	font-family: Monaco, Courier New, Fixed, monospace;
+	font-size: 11px;
 	padding: 4px;
 	border: none;
 }
 
 .memTemplItemRight {
 	font-family: Monaco, Courier New, Fixed, monospace;
+	font-size: 11px;
 	padding: 4px;
 	border: none;
 }
 
 .memTemplParams {
 	font-family: Monaco, Courier New, Fixed, monospace;
+	font-size: 11px;
 	padding: 4px;
 	border: none;
 	border-top: 1px solid lightgray;
@@ -336,3 +349,85 @@ HR {
     border: none;
     border-top: 1px solid black;
 }
+
+/* Style for detailed member documentation */
+
+.memtemplate {
+	font-family: Monaco, Courier New, Fixed, monospace;
+    color: #606060;
+    font-weight: normal;
+	font-size: 11px;
+} 
+
+.memnav { 
+    background-color: #e8eef2;
+    border: 1px solid #84b0c7;
+    text-align: center;
+    margin: 2px;
+    margin-right: 15px;
+    padding: 2px;
+	font-size: 11px;
+}
+
+.memitem {
+    padding: 0;
+    padding-bottom: 15px;
+	font-size: 11px;
+}
+
+.memname {
+	font-family: Monaco, Courier New, Fixed, monospace;
+	font-size: 11px;
+    white-space: nowrap;
+}
+
+.memname td {
+    vertical-align: bottom;
+	font-size: 11px;
+}
+
+.memdoc{
+    padding-left: 10px;
+}
+
+.memproto {
+    border: 1px solid gray;
+    background-color: lavender;
+    padding: 5px;
+    -moz-border-radius: 8px 8px 8px 8px;
+}
+
+.paramkey {
+	font-family: Monaco, Courier New, Fixed, monospace;
+	font-size: 11px;
+    text-align: right;
+}
+
+.paramtype {
+	font-family: Monaco, Courier New, Fixed, monospace;
+	font-size: 11px;
+    white-space: nowrap;
+}
+
+.paramname {
+	font-family: Monaco, Courier New, Fixed, monospace;
+	font-size: 11px;
+}
+/* End Styling for detailed member documentation */
+
+/* for the tree view */
+
+.ftvtree {
+	font-family: sans-serif;
+	margin:0.5em;
+}
+
+.directory { font-size: 10px; font-weight: bold; }
+.directory h3 { margin: 0px; margin-top: 1em; font-size: 11px; }
+.directory > h3 { margin-top: 0; }
+.directory p {
+    margin: 0px;
+    white-space: nowrap;
+}
+.directory div { display: none; margin: 0px; }
+.directory img { vertical-align: -30%; }

@@ -20,15 +20,8 @@ BODY,TD {
     font-size: 12px;
     margin: 0;
     padding: 0;
-	background: transparent;
+	background: white;
 	color: black;
-}
-
-#content {
-    padding-top: 20px;
-    width: 1000px;
-    margin-right: auto;
-    margin-left: auto;
 }
 
 TABLE {
@@ -44,50 +37,18 @@ H1 {
 
 H2 {
     font-size: 16px;
-    #border-top: 1px dotted #666666;
+    border-top: 1px dotted #666666;
     border-bottom: 1px dotted #666666;
 }
 
 H3 {
     font-size: 14px;
-    #border-top: 1px dotted #666666;
+    border-top: 1px dotted #666666;
     border-bottom: 1px dotted #666666;
 }
 
 CAPTION {
     font-weight: bold
-}
-
-#maintable {
-    padding: 10px;
-    padding-top: 0px;
-    #border: 1px solid grey;
-    background-color: white;
-}
-
-#navtable {
-    padding-top: 3px;
-    padding-left: 3px;
-    background: url('navbkg.png');
-    background-repeat: no-repeat;
-    background-color: white;
-    width: 150px;
-}
-
-#navtable h4 {
-    text-align: center;
-    border: none;
-}
-
-#navtable a {
-    font-size: 11px;
-}
-
-#opensource_banner {
-    width: 1000px;
-    background-color: white;
-    #border: 1px solid grey;
-    margin-bottom: 20px;
 }
 
 DIV.qindex {
@@ -176,6 +137,12 @@ A:link, A:visited {
     border-bottom: 1px solid #cc0000;
 }
 
+A:link:hover, A:visited:hover {
+    text-decoration: none;
+    color: darkred;
+    border-bottom: 1px solid darkred;
+}
+
 DL.el {
     margin-left: -1cm
 }
@@ -194,9 +161,34 @@ PRE.fragment {
 
 DIV.ah {
     background-color: black;
-    color: transparent;
+    color: white;
     margin-bottom: 3px;
     margin-top: 3px
+}
+
+/* I'm not sure about the next few, but they appear in the doxygen docs but weren't in the doxygen CSS. */
+
+TD.md {
+	font-family: Monaco, Courier New, Fixed, monospace;
+    background: transparent;
+}
+
+TD.mdPrefix {
+	font-family: Monaco, Courier New, Fixed, monospace;
+    color: #555555;
+    font-size: 12px;
+    background: transparent;
+}
+
+TD.mdname1 {
+    color: darkred;
+    background: transparent;
+}
+
+TD.mdname {
+    color: darkred;
+    white-space: nowrap;
+    background: transparent;
 }
 
 DIV.groupHeader {
@@ -273,6 +265,18 @@ SPAN.comment       { color: darkgreen }
 SPAN.preprocessor  { color: mediumblue }
 SPAN.stringliteral { color: maroon }
 SPAN.charliteral   { color: maroon }
+
+/* Again, this is only in the doxygen documentation, but wasn't in the doxygen css. */
+.mdTable {
+	border: 1px solid #666666;
+	background-color: lavender;
+    padding: 10px;
+    width: 100%;
+}
+
+.mdRow {
+    background: lavender;
+}
 
 .mdescLeft {
 	font-style: italic;
