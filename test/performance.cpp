@@ -81,9 +81,9 @@ struct fill_nongil_t<RGB_VIEW(T), P> {
         T* first=(T*)_v.row_begin(0);
         T* last=first+_v.size()*3;
         while(first!=last) {
-            first[0]=at_c<0>(_p);
-            first[1]=at_c<1>(_p);
-            first[2]=at_c<2>(_p);
+            first[0]=boost::gil::at_c<0>(_p);
+            first[1]=boost::gil::at_c<1>(_p);
+            first[2]=boost::gil::at_c<2>(_p);
             first+=3;
         }
     }
@@ -99,9 +99,9 @@ struct fill_nongil_t<RGB_VIEW(T1), pixel<T2,bgr_layout_t> > {
         T1* first=(T1*)_v.row_begin(0);
         T1* last=first+_v.size()*3;
         while(first!=last) {
-            first[0]=at_c<2>(_p);
-            first[1]=at_c<1>(_p);
-            first[2]=at_c<0>(_p);
+            first[0]=boost::gil::at_c<2>(_p);
+            first[1]=boost::gil::at_c<1>(_p);
+            first[2]=boost::gil::at_c<0>(_p);
             first+=3;
         }
     }
@@ -116,12 +116,12 @@ struct fill_nongil_t<RGB_PLANAR_VIEW(T1), pixel<T2,rgb_layout_t> > {
     void operator()() const {
         std::size_t size=_v.size();
         T1* first;
-        first=(T1*)at_c<0>(_v.row_begin(0));
-        std::fill(first,first+size,at_c<0>(_p));
-        first=(T1*)at_c<1>(_v.row_begin(0));
-        std::fill(first,first+size,at_c<1>(_p));
-        first=(T1*)at_c<2>(_v.row_begin(0));
-        std::fill(first,first+size,at_c<2>(_p));
+        first=(T1*)boost::gil::at_c<0>(_v.row_begin(0));
+        std::fill(first,first+size,boost::gil::at_c<0>(_p));
+        first=(T1*)boost::gil::at_c<1>(_v.row_begin(0));
+        std::fill(first,first+size,boost::gil::at_c<1>(_p));
+        first=(T1*)boost::gil::at_c<2>(_v.row_begin(0));
+        std::fill(first,first+size,boost::gil::at_c<2>(_p));
     }
 };
 
@@ -135,12 +135,12 @@ struct fill_nongil_t<RGB_PLANAR_VIEW(T1), pixel<T2,bgr_layout_t> > {
     void operator()() const {
         std::size_t size=_v.size();
         T1* first;
-        first=(T1*)at_c<0>(_v.row_begin(0));
-        std::fill(first,first+size,at_c<2>(_p));
-        first=(T1*)at_c<1>(_v.row_begin(0));
-        std::fill(first,first+size,at_c<1>(_p));
-        first=(T1*)at_c<2>(_v.row_begin(0));
-        std::fill(first,first+size,at_c<1>(_p));
+        first=(T1*)boost::gil::at_c<0>(_v.row_begin(0));
+        std::fill(first,first+size,boost::gil::at_c<2>(_p));
+        first=(T1*)boost::gil::at_c<1>(_v.row_begin(0));
+        std::fill(first,first+size,boost::gil::at_c<1>(_p));
+        first=(T1*)boost::gil::at_c<2>(_v.row_begin(0));
+        std::fill(first,first+size,boost::gil::at_c<1>(_p));
     }
 };
 
@@ -191,9 +191,9 @@ struct for_each_nongil_t<RGB_PLANAR_VIEW(T1), rgb_fr_t<T2> > {
     for_each_nongil_t(const View& v_in,const F& f_in) : _v(v_in), _f(f_in) {}
     void operator()() const {
         T1 *first0, *first1, *first2, *last0;
-        first0=(T1*)at_c<0>(_v.row_begin(0));
-        first1=(T1*)at_c<1>(_v.row_begin(0));
-        first2=(T1*)at_c<2>(_v.row_begin(0));
+        first0=(T1*)boost::gil::at_c<0>(_v.row_begin(0));
+        first1=(T1*)boost::gil::at_c<1>(_v.row_begin(0));
+        first2=(T1*)boost::gil::at_c<2>(_v.row_begin(0));
         last0=first0+_v.size();
         while(first0!=last0) {
             *first0++=0;
@@ -261,12 +261,12 @@ struct copy_nongil_t<RGB_PLANAR_VIEW(T1),RGB_PLANAR_VIEW(T2)> {
     copy_nongil_t(const View1& v1_in,const View2& v2_in) : _v1(v1_in), _v2(v2_in) {}
     void operator()() const {
         std::size_t size=_v1.size();
-        T1* first10=(T1*)at_c<0>(_v1.row_begin(0));
-        T1* first11=(T1*)at_c<1>(_v1.row_begin(0));
-        T1* first12=(T1*)at_c<2>(_v1.row_begin(0));
-        T2* first20=(T2*)at_c<0>(_v2.row_begin(0));
-        T2* first21=(T2*)at_c<1>(_v2.row_begin(0));
-        T2* first22=(T2*)at_c<2>(_v2.row_begin(0));
+        T1* first10=(T1*)boost::gil::at_c<0>(_v1.row_begin(0));
+        T1* first11=(T1*)boost::gil::at_c<1>(_v1.row_begin(0));
+        T1* first12=(T1*)boost::gil::at_c<2>(_v1.row_begin(0));
+        T2* first20=(T2*)boost::gil::at_c<0>(_v2.row_begin(0));
+        T2* first21=(T2*)boost::gil::at_c<1>(_v2.row_begin(0));
+        T2* first22=(T2*)boost::gil::at_c<2>(_v2.row_begin(0));
         std::copy(first10,first10+size,first20);
         std::copy(first11,first11+size,first21);
         std::copy(first12,first12+size,first22);
@@ -282,9 +282,9 @@ struct copy_nongil_t<RGB_VIEW(T1),RGB_PLANAR_VIEW(T2)> {
     void operator()() const {
         T1* first=(T1*)_v1.row_begin(0);
         T1* last=first+_v1.size()*3;
-        T2* first0=(T2*)at_c<0>(_v2.row_begin(0));
-        T2* first1=(T2*)at_c<1>(_v2.row_begin(0));
-        T2* first2=(T2*)at_c<2>(_v2.row_begin(0));
+        T2* first0=(T2*)boost::gil::at_c<0>(_v2.row_begin(0));
+        T2* first1=(T2*)boost::gil::at_c<1>(_v2.row_begin(0));
+        T2* first2=(T2*)boost::gil::at_c<2>(_v2.row_begin(0));
         while(first!=last) {
             *first0++=first[0];
             *first1++=first[1];
@@ -303,9 +303,9 @@ struct copy_nongil_t<RGB_PLANAR_VIEW(T1),RGB_VIEW(T2)> {
     void operator()() const {
         T1* first=(T1*)_v2.row_begin(0);
         T1* last=first+_v2.size()*3;
-        T2* first0=(T2*)at_c<0>(_v1.row_begin(0));
-        T2* first1=(T2*)at_c<1>(_v1.row_begin(0));
-        T2* first2=(T2*)at_c<2>(_v1.row_begin(0));
+        T2* first0=(T2*)boost::gil::at_c<0>(_v1.row_begin(0));
+        T2* first1=(T2*)boost::gil::at_c<1>(_v1.row_begin(0));
+        T2* first2=(T2*)boost::gil::at_c<2>(_v1.row_begin(0));
         while(first!=last) {
             first[0]=*first0++;
             first[1]=*first1++;
@@ -369,12 +369,12 @@ struct transform_nongil_t<RGB_PLANAR_VIEW(T1),RGB_PLANAR_VIEW(T2),F> {
     F _f;
     transform_nongil_t(const View1& v1_in,const View2& v2_in,const F& f_in) : _v1(v1_in),_v2(v2_in),_f(f_in) {}
     void operator()() const {
-        T1* first10=(T1*)at_c<0>(_v1.row_begin(0));
-        T1* first11=(T1*)at_c<1>(_v1.row_begin(0));
-        T1* first12=(T1*)at_c<2>(_v1.row_begin(0));
-        T1* first20=(T2*)at_c<0>(_v2.row_begin(0));
-        T1* first21=(T2*)at_c<1>(_v2.row_begin(0));
-        T1* first22=(T2*)at_c<2>(_v2.row_begin(0));
+        T1* first10=(T1*)boost::gil::at_c<0>(_v1.row_begin(0));
+        T1* first11=(T1*)boost::gil::at_c<1>(_v1.row_begin(0));
+        T1* first12=(T1*)boost::gil::at_c<2>(_v1.row_begin(0));
+        T1* first20=(T2*)boost::gil::at_c<0>(_v2.row_begin(0));
+        T1* first21=(T2*)boost::gil::at_c<1>(_v2.row_begin(0));
+        T1* first22=(T2*)boost::gil::at_c<2>(_v2.row_begin(0));
         T1* last10=first10+_v1.size();
         while(first10!=last10) {
             *first20++=T2(*first12++*0.1f);
@@ -394,9 +394,9 @@ struct transform_nongil_t<RGB_VIEW(T1),RGB_PLANAR_VIEW(T2),F> {
     void operator()() const {
         T1* first1=(T1*)_v1.row_begin(0);
         T1* last1=first1+_v1.size()*3;
-        T1* first20=(T2*)at_c<0>(_v2.row_begin(0));
-        T1* first21=(T2*)at_c<1>(_v2.row_begin(0));
-        T1* first22=(T2*)at_c<2>(_v2.row_begin(0));
+        T1* first20=(T2*)boost::gil::at_c<0>(_v2.row_begin(0));
+        T1* first21=(T2*)boost::gil::at_c<1>(_v2.row_begin(0));
+        T1* first22=(T2*)boost::gil::at_c<2>(_v2.row_begin(0));
         while(first1!=last1) {
             *first20++=T2(first1[2]*0.1f);
             *first21++=T2(first1[1]*0.2f);
@@ -414,9 +414,9 @@ struct transform_nongil_t<RGB_PLANAR_VIEW(T1),RGB_VIEW(T2),F> {
     F _f;
     transform_nongil_t(const View1& v1_in,const View2& v2_in,const F& f_in) : _v1(v1_in),_v2(v2_in),_f(f_in) {}
     void operator()() const {
-        T1* first10=(T1*)at_c<0>(_v1.row_begin(0));
-        T1* first11=(T1*)at_c<1>(_v1.row_begin(0));
-        T1* first12=(T1*)at_c<2>(_v1.row_begin(0));
+        T1* first10=(T1*)boost::gil::at_c<0>(_v1.row_begin(0));
+        T1* first11=(T1*)boost::gil::at_c<1>(_v1.row_begin(0));
+        T1* first12=(T1*)boost::gil::at_c<2>(_v1.row_begin(0));
         T2* first2=(T1*)_v2.row_begin(0);
         T1* last2=first2+_v1.size()*3;
         while(first2!=last2) {

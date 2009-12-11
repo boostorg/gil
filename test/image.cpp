@@ -572,8 +572,6 @@ int main(int argc, char* argv[]) {
     const char* local_name = "gil_reference_checksums.txt";
     const char* name_from_status = "../libs/gil/test/gil_reference_checksums.txt";
 
-    if (argc > 1)
-      local_name = argv[1];
     std::ifstream file_is_there(local_name);
     if (file_is_there) {
         test_image(local_name);

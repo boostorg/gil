@@ -34,8 +34,9 @@
 // Testing pixel references and values, pixel operations, color conversion
 
 using namespace boost::gil;
-using namespace std;
+using std::swap;
 using namespace boost;
+
 void error_if(bool condition);
 
 struct increment { 
@@ -63,8 +64,8 @@ struct do_basic_test : public C1, public C2 {
 
         // test homogeneous algorithms - fill, max, min
         static const int num_chan = num_channels<typename C2::pixel_t>::value;
-        static_fill(C2::_pixel, at_c<0>(C1::_pixel)+1);
-        error_if(at_c<0>(C2::_pixel) != at_c<num_chan-1>(C2::_pixel));
+        static_fill(C2::_pixel, gil::at_c<0>(C1::_pixel)+1);
+        error_if(gil::at_c<0>(C2::_pixel) != gil::at_c<num_chan-1>(C2::_pixel));
 
         C2::_pixel = C1::_pixel;
         error_if(static_max(C2::_pixel) != static_max(C1::_pixel));
@@ -107,7 +108,7 @@ struct do_basic_test : public C1, public C2 {
         error_if(C1::_pixel!=C2::_pixel);
 
         static_generate(C2::_pixel, set_to_one());
-        error_if(at_c<0>(C2::_pixel) != 1);
+        error_if(gil::at_c<0>(C2::_pixel) != 1);
 
         // Test swap if both are mutable and if their value type is the same
         // (We know the second one is mutable)
@@ -313,7 +314,7 @@ void test_pixel() {
     bgr8_pixel_t bgr8(rgb8);
     error_if(bgr8[0] == rgb8[0]);
     error_if(dynamic_at_c(bgr8,0) == dynamic_at_c(rgb8,0));
-    error_if(at_c<0>(bgr8) == at_c<0>(rgb8));
+    error_if(gil::at_c<0>(bgr8) == gil::at_c<0>(rgb8));
     error_if(semantic_at_c<0>(bgr8) != semantic_at_c<0>(rgb8));
     error_if(get_color(bgr8,blue_t()) != get_color(rgb8,blue_t()));
 
