@@ -59,7 +59,7 @@ struct mapping_vector {};
 
 template <typename SrcTypes, typename DstTypes, long K>
 struct at_c<mapping_vector<SrcTypes,DstTypes>, K> {
-    static const std::size_t value=size<DstTypes>::value - order<DstTypes, typename at_c<SrcTypes,K>::type>::type::value +1;
+    static const std::size_t value=size<DstTypes>::value - order<DstTypes, typename gil::at_c<SrcTypes,K>::type>::type::value +1;
     typedef size_t<value> type;
 };
 
