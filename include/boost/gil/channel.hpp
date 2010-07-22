@@ -155,6 +155,8 @@ struct scoped_channel_value {
     typedef const value_type*       const_pointer;
     BOOST_STATIC_CONSTANT(bool, is_mutable=channel_traits<BaseChannelValue>::is_mutable);
 
+    typedef BaseChannelValue base_channel_t;
+
     static value_type min_value() { return MinVal::apply(); }
     static value_type max_value() { return MaxVal::apply(); }
 
