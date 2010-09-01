@@ -11,6 +11,7 @@
 //
 
 #include <cassert>
+#include <vector>
 #include <boost/gil/planar_pixel_reference.hpp>
 #include <boost/gil/rgb.hpp>
 #include <boost/gil/pixel_iterator.hpp>
@@ -18,6 +19,7 @@
 #include <boost/gil/planar_pixel_iterator.hpp>
 #include <boost/gil/bit_aligned_pixel_iterator.hpp>
 #include <boost/gil/packed_pixel.hpp>
+#include <boost/gil/image.hpp>
 #include <boost/gil/iterator_from_2d.hpp>
 #include <boost/gil/step_iterator.hpp>
 #include <boost/gil/typedefs.hpp>
@@ -107,6 +109,52 @@ void test_pixel_iterator() {
     for (int i=0; i<8; ++i) {
         *pix_it++ = red;
     }
+
+	// test cross byte pixel values - meaning when a pixel value is stretched over two bytes
+	typedef bit_aligned_image1_type< 3, gray_layout_t >::type gray3_image_t;
+    typedef gray3_image_t image_t;
+
+    typedef image_t::view_t view_t;
+    typedef view_t::reference ref_t;
+
+    typedef bit_aligned_pixel_iterator< ref_t > iterator_t;
+
+	std::vector< unsigned char > buf( 4 );
+	// bit pattern is: 1011 0110  0110 1101  1101 1011
+	// each byte is read right to left
+	buf[0] = 182;
+    buf[1] = 109;
+    buf[2] = 219;
+
+    iterator_t it( &buf[0], 0 );
+    
+    ref_t p1 = *it; it++;
+    ref_t p2 = *it; it++;
+    ref_t p3 = *it; it++;
+    ref_t p4 = *it; it++;
+    ref_t p5 = *it; it++;
+    ref_t p6 = *it; it++;
+    ref_t p7 = *it; it++;
+    ref_t p8 = *it; it++;
+
+    unsigned char v1 = get_color( p1, gray_color_t() );
+    unsigned char v2 = get_color( p2, gray_color_t() );
+    unsigned char v3 = get_color( p3, gray_color_t() );
+    unsigned char v4 = get_color( p4, gray_color_t() );
+    unsigned char v5 = get_color( p5, gray_color_t() );
+    unsigned char v6 = get_color( p6, gray_color_t() );
+    unsigned char v7 = get_color( p7, gray_color_t() );
+    unsigned char v8 = get_color( p8, gray_color_t() );
+
+	// all values should be 110b ( 6 );
+    assert( v1 == 6 );
+    assert( v2 == 6 );
+    assert( v3 == 6 );
+    assert( v4 == 6 );
+    assert( v5 == 6 );
+    assert( v6 == 6 );
+    assert( v7 == 6 );
+    assert( v8 == 6 );
 }
 
 // TODO: Make better tests. Use some code from below.
@@ -293,6 +341,6 @@ ignore_unused_variable_warning(rgb8_const_ptr_err);
 
 int main(int argc, char* argv[]) {
     test_pixel_iterator();
-    return 0;
+	return 0;
 }
 
