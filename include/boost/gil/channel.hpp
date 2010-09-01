@@ -492,7 +492,7 @@ public:
 
     integer_t get() const { 
         const BitField channel_mask = parent_t::max_val<<_first_bit;
-        return ( static_cast< integer_t >( this->get_data()&channel_mask ) >> _first_bit );
+        return static_cast< integer_t >(( this->get_data() & channel_mask ) >> _first_bit);
     }
 };
 
@@ -527,7 +527,7 @@ public:
 
     integer_t get() const { 
         const BitField channel_mask = parent_t::max_val<<_first_bit;
-        return ( static_cast< integer_t >( this->get_data()&channel_mask ) >> _first_bit );
+        return static_cast< integer_t >(( this->get_data() & channel_mask ) >> _first_bit );
     }
     void set_unsafe(integer_t value) const { 
         const BitField channel_mask = parent_t::max_val<<_first_bit;
