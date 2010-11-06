@@ -27,6 +27,7 @@
 #include <limits>
 #include <cassert>
 #include <boost/cstdint.hpp>
+#include <boost/type_traits/remove_cv.hpp>
 #include "gil_config.hpp"
 #include "utilities.hpp"
 
@@ -668,5 +669,31 @@ template <typename BaseChannelValue, typename MinVal, typename MaxVal>
 struct is_integral<gil::scoped_channel_value<BaseChannelValue,MinVal,MaxVal> > : public is_integral<BaseChannelValue> {};
 
 }
+
+// \brief Determines the fundamental type which may be used, e.g., to cast from larger to smaller channel types.
+namespace boost { namespace gil {
+template <typename T>
+struct base_channel_type_impl { typedef T type; };
+
+template <int N>
+struct base_channel_type_impl<packed_channel_value<N> >
+{ typedef typename packed_channel_value<N>::integer_t type; };
+
+template <typename B, int F, int N, bool M>
+struct base_channel_type_impl<packed_channel_reference<B, F, N, M> >
+{ typedef typename packed_channel_reference<B,F,N,M>::integer_t type; };
+
+template <typename B, int N, bool M>
+struct base_channel_type_impl<packed_dynamic_channel_reference<B, N, M> >
+{ typedef typename packed_dynamic_channel_reference<B,N,M>::integer_t type; };
+
+template <typename ChannelValue, typename MinV, typename MaxV>
+struct base_channel_type_impl<scoped_channel_value<ChannelValue, MinV, MaxV> >
+{ typedef ChannelValue type; };
+
+template <typename T>
+struct base_channel_type : base_channel_type_impl<typename remove_cv<T>::type > {};
+
+} } //namespace boost::gil
 
 #endif
