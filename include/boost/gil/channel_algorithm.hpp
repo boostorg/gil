@@ -226,8 +226,8 @@ struct channel_converter_unsigned_integral_impl<SrcChannelV,DstChannelV,SrcLessT
 template <typename SrcChannelV, typename DstChannelV> 
 struct channel_converter_unsigned_integral_nondivisible<SrcChannelV,DstChannelV,true,false> {
     DstChannelV operator()(SrcChannelV src) const {
-        typedef typename detail::min_fast_uint<unsigned_integral_num_bits<SrcChannelV>::value+unsigned_integral_num_bits<DstChannelV>::value>::type integer_t;
-        return DstChannelV(integer_t(src * unsigned_integral_max_value<DstChannelV>::value) / unsigned_integral_max_value<SrcChannelV>::value);
+        typedef typename base_channel_type<DstChannelV>::type dest_t;
+        return DstChannelV(static_cast<dest_t>( src * unsigned_integral_max_value<DstChannelV>::value) / unsigned_integral_max_value<SrcChannelV>::value);
     }
 };
 
@@ -410,7 +410,7 @@ assert(mul == 64);    // 64 = 128 * 128 / 255
 template <typename ChannelValue>
 struct channel_multiplier_unsigned : public std::binary_function<ChannelValue,ChannelValue,ChannelValue> {
     ChannelValue operator()(ChannelValue a, ChannelValue b) const {
-        return ChannelValue(a / double(channel_traits<ChannelValue>::max_value()) * b);
+        return ChannelValue(static_cast<typename base_channel_type<ChannelValue>::type>(a / double(channel_traits<ChannelValue>::max_value()) * b));
     }
 };
 
