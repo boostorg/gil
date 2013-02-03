@@ -67,6 +67,10 @@ struct mapping_transform
 /// \brief A homogeneous color base holding one color element. Models HomogeneousColorBaseConcept or HomogeneousColorBaseValueConcept
 /// If the element type models Regular, this class models HomogeneousColorBaseValueConcept.
 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
+#pragma warning(push) 
+#pragma warning(disable:4512) //assignment operator could not be generated 
+#endif
 
 /// \brief A homogeneous color base holding one color element. Models HomogeneousColorBaseConcept or HomogeneousColorBaseValueConcept
 /// \ingroup ColorBaseModelHomogeneous
@@ -326,6 +330,10 @@ public:
         return _v4;
     }
 };
+
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
+#pragma warning(pop) 
+#endif 
 
 // The following way of casting adjacent channels (the contents of color_base) into an array appears to be unsafe
 // -- there is no guarantee that the compiler won't add any padding between adjacent channels.
