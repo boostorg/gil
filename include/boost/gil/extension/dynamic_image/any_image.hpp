@@ -29,6 +29,11 @@
 //#pragma warning(disable : 4244)     // conversion from 'std::ptrdiff_t' to 'int', possible loss of data. even if we static-assert the two types are the same (on visual studio 8)
 //#endif
 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
+#pragma warning(push) 
+#pragma warning(disable:4512) //assignment operator could not be generated 
+#endif
+
 namespace boost { namespace gil {
 
 namespace detail {
@@ -119,6 +124,10 @@ typename any_image<Types>::const_view_t const_view(const any_image<Types>& anyIm
 ///@}
 
 } }  // namespace boost::gil
+
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
+#pragma warning(pop) 
+#endif 
 
 //#ifdef _MSC_VER
 //#pragma warning(pop)
