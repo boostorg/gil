@@ -29,6 +29,7 @@
 #include <boost/mpl/integral_c.hpp>
 #include <boost/mpl/greater.hpp>
 #include <boost/type_traits.hpp>
+#include <boost/integer_traits.hpp>
 
 namespace boost { namespace gil {
 
@@ -51,8 +52,7 @@ template <typename SrcChannelV, typename DstChannelV, bool SrcLessThanDst, bool 
 
 
 template <typename UnsignedIntegralChannel>
-//struct unsigned_integral_max_value : public mpl::integral_c<UnsignedIntegralChannel,std::numeric_limits<UnsignedIntegralChannel>::max()> {};
-struct unsigned_integral_max_value : public mpl::integral_c<UnsignedIntegralChannel,UnsignedIntegralChannel(-1)> {};
+struct unsigned_integral_max_value : public mpl::integral_c<UnsignedIntegralChannel,integer_traits< UnsignedIntegralChannel>::const_max> {};
 
 template <>
 struct unsigned_integral_max_value<uint8_t> : public mpl::integral_c<uint32_t,0xFF> {};
@@ -64,7 +64,9 @@ struct unsigned_integral_max_value<uint32_t> : public mpl::integral_c<uintmax_t,
 
 template <int K>
 struct unsigned_integral_max_value<packed_channel_value<K> >
-    : public mpl::integral_c<typename packed_channel_value<K>::integer_t, (1<<K)-1> {};
+    : public mpl::integral_c<typename packed_channel_value<K>::integer_t, (uint64_t(1)<<K)-1> {};
+
+
 
 //////////////////////////////////////
 ////  unsigned_integral_num_bits - given an unsigned integral channel type, returns the minimum number of bits needed to represent it
