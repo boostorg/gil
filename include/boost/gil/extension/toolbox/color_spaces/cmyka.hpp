@@ -19,11 +19,11 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost\gil\rgba.hpp>
-#include <boost\gil\cmyk.hpp>
+#include <boost/gil/rgba.hpp>
+#include <boost/gil/cmyk.hpp>
 
-#include <boost\gil\color_convert.hpp>
-#include <boost\gil\typedefs.hpp>
+#include <boost/gil/color_convert.hpp>
+#include <boost/gil/typedefs.hpp>
 
 namespace boost{ namespace gil {
 
