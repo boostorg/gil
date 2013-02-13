@@ -45,5 +45,5 @@ struct default_color_converter_impl<gray_t,rgba_t>
 } // namespace gil
 } // namespace boost
 
-#endif // #define BOOST_GIL_EXTENSION_TOOLBOX_COLOR_CONVERTERS_GRAY_TO_RGBA_HPP
+#endif // BOOST_GIL_EXTENSION_TOOLBOX_COLOR_CONVERTERS_GRAY_TO_RGBA_HPP
 

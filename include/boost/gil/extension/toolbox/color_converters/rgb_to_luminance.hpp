@@ -40,4 +40,4 @@ struct rgb_to_luminance_fn< double, double, double, GrayChannelValue >
 } // namespace gil
 } // namespace boost
 
-#endif // #define BOOST_GIL_EXTENSION_TOOLBOX_COLOR_CONVERTERS_RGB_TO_LUMINANCE_HPP
+#endif // BOOST_GIL_EXTENSION_TOOLBOX_COLOR_CONVERTERS_RGB_TO_LUMINANCE_HPP
