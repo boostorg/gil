@@ -20,6 +20,9 @@ BOOST_AUTO_TEST_CASE( get_num_bits_test )
 
     typedef channel_type< image_t::const_view_t::reference >::type const_channel_t;
     BOOST_STATIC_ASSERT( get_num_bits< const_channel_t >::value == 4 );
+
+    typedef packed_channel_value< 23 > bits_t;
+    BOOST_STATIC_ASSERT( get_num_bits< bits_t >::value == 23 );
 }
 
 BOOST_AUTO_TEST_SUITE_END()
