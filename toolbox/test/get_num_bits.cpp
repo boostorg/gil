@@ -23,6 +23,15 @@ BOOST_AUTO_TEST_CASE( get_num_bits_test )
 
     typedef packed_channel_value< 23 > bits_t;
     BOOST_STATIC_ASSERT( get_num_bits< bits_t >::value == 23 );
+    BOOST_STATIC_ASSERT( get_num_bits< const bits_t >::value == 23 );
+
+    BOOST_STATIC_ASSERT( get_num_bits< unsigned char >::value == 8 );
+    BOOST_STATIC_ASSERT( get_num_bits< const unsigned char >::value == 8 );
+
+    BOOST_STATIC_ASSERT( get_num_bits< channel_type< gray8_image_t::view_t::value_type >::type >::value == 8 );
+    BOOST_STATIC_ASSERT( get_num_bits< channel_type< rgba32_image_t::view_t::value_type >::type >::value == 32 );
+    
 }
 
 BOOST_AUTO_TEST_SUITE_END()
+

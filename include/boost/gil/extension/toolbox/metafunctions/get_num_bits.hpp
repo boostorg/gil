@@ -21,49 +21,51 @@
 
 #include <boost/gil/channel.hpp>
 
+#include <boost/mpl/int.hpp>
+#include <boost/type_traits/is_integral.hpp>
+#include <boost/type_traits/is_class.hpp>
+#include <boost/utility/enable_if.hpp>
+
 namespace boost{ namespace gil {
 
 /// get_num_bits metafunctions
 /// \brief Determines the numbers of bits for the given channel type.
 
-template <typename T>
+template <typename T, class = void >
 struct get_num_bits;
 
 template< typename B, int I, int S, bool M >
-struct get_num_bits< packed_channel_reference< B, I, S, M > >
-{
-    BOOST_STATIC_CONSTANT( int, value = S );
-};
+struct get_num_bits< packed_channel_reference< B, I, S, M > > : mpl::int_< S >
+{};
 
-template<typename B,int I, int S, bool M>
-struct get_num_bits< const packed_channel_reference< B, I, S, M > >
-{
-    BOOST_STATIC_CONSTANT( int, value = S );
-};
+template< typename B, int I, int S, bool M >
+struct get_num_bits< const packed_channel_reference< B, I, S, M > > : mpl::int_< S >
+{};
 
 template<typename B, int I, bool M>
-struct get_num_bits< packed_dynamic_channel_reference< B, I, M > >
-{
-    BOOST_STATIC_CONSTANT( int, value = I );
-};
+struct get_num_bits< packed_dynamic_channel_reference< B, I, M > > : mpl::int_< I >
+{};
 
-template<typename b, int i, bool m>
-struct get_num_bits< const packed_dynamic_channel_reference< b, i, m > >
-{
-    BOOST_STATIC_CONSTANT( int, value = i );
-};
+template<typename B, int I, bool M>
+struct get_num_bits< const packed_dynamic_channel_reference< B, I, M > > : mpl::int_< I >
+{};
 
 template< int N >
-struct get_num_bits< packed_channel_value< N > >
-{
-    BOOST_STATIC_CONSTANT( int, value = N );
-};
+struct get_num_bits< packed_channel_value< N > > : mpl::int_< N >
+{};
 
 template< int N >
-struct get_num_bits< const packed_channel_value< N > >
-{
-    BOOST_STATIC_CONSTANT( int, value = N );
-};
+struct get_num_bits< const packed_channel_value< N > > : mpl::int_< N >
+{};
+
+template< typename T >
+struct get_num_bits< T
+                   , typename enable_if< mpl::and_< is_integral< T > 
+                                                  , mpl::not_< is_class< T > >
+                                                  >
+                                       >::type
+                   > : mpl::int_< sizeof(T) * 8 >
+{};
 
 } // namespace gil
 } // namespace boost
