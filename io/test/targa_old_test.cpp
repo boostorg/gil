@@ -2,7 +2,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include <boost/gil/gil_all.hpp>
-#include <boost/gil/extension/io_new/targa_io_old.hpp>
+#include <boost/gil/extension/io/targa_io_old.hpp>
 
 #include "mandel_view.hpp"
 #include "paths.hpp"

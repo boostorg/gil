@@ -2,7 +2,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include <boost/gil/gil_all.hpp>
-#include <boost/gil/extension/io_new/pnm_io_old.hpp>
+#include <boost/gil/extension/io/pnm_io_old.hpp>
 
 #include "paths.hpp"
 

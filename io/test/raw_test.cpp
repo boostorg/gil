@@ -6,7 +6,7 @@
 #include <fstream>
 
 #include <boost/gil/gil_all.hpp>
-#include <boost/gil/extension/io_new/raw_all.hpp>
+#include <boost/gil/extension/io/raw_all.hpp>
 
 #define BOOST_FILESYSTEM_VERSION 3
 #include <boost/filesystem/convenience.hpp>

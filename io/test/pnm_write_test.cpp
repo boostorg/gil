@@ -1,7 +1,7 @@
 //#define BOOST_TEST_MODULE pnm_write_test_module
 #include <boost/test/unit_test.hpp>
 
-#include <boost/gil/extension/io_new/pnm_all.hpp>
+#include <boost/gil/extension/io/pnm_all.hpp>
 
 #include "color_space_write_test.hpp"
 #include "mandel_view.hpp"
