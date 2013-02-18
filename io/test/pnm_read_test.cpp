@@ -1,7 +1,7 @@
 //#define BOOST_TEST_MODULE pnm_read_test_module
 #include <boost/test/unit_test.hpp>
 
-#include <boost/gil/extension/io_new/pnm_all.hpp>
+#include <boost/gil/extension/io/pnm_all.hpp>
 
 #include "paths.hpp"
 #include "scanline_read_test.hpp"

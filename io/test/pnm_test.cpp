@@ -4,7 +4,7 @@
 #include <fstream>
 
 #include <boost/gil/gil_all.hpp>
-#include <boost/gil/extension/io_new/pnm_all.hpp>
+#include <boost/gil/extension/io/pnm_all.hpp>
 
 #include <boost/type_traits/is_same.hpp>
 

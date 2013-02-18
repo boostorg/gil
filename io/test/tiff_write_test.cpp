@@ -3,8 +3,8 @@
 
 #include <boost/gil/gil_all.hpp>
 
-#include <boost/gil/extension/io_new/detail/typedefs.hpp>
-#include <boost/gil/extension/io_new/tiff_all.hpp>
+#include <boost/gil/extension/io/detail/typedefs.hpp>
+#include <boost/gil/extension/io/tiff_all.hpp>
 
 #include "color_space_write_test.hpp"
 #include "mandel_view.hpp"

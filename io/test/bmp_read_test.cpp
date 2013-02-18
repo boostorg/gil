@@ -3,7 +3,7 @@
 #include <boost/type_traits/is_same.hpp>
 
 #include <boost/gil/gil_all.hpp>
-#include <boost/gil/extension/io_new/bmp_all.hpp>
+#include <boost/gil/extension/io/bmp_all.hpp>
 
 #include "scanline_read_test.hpp"
 

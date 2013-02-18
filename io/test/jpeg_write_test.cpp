@@ -2,7 +2,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include <boost/gil/gil_all.hpp>
-#include <boost/gil/extension/io_new/jpeg_all.hpp>
+#include <boost/gil/extension/io/jpeg_all.hpp>
 
 #include "color_space_write_test.hpp"
 #include "mandel_view.hpp"
