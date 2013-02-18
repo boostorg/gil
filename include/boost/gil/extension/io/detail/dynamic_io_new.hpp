@@ -22,7 +22,7 @@
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/size.hpp>
 #include <boost/gil/gil_config.hpp>
-#include <boost/gil/extension/io_new/detail/io_error.hpp>
+#include <boost/gil/extension/io/detail/io_error.hpp>
 #include <boost/gil/extension/dynamic_image/dynamic_image_all.hpp>
 
 namespace boost { namespace gil {
