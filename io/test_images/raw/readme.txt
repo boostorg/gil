@@ -1,1 +1,1 @@
-Please send me an email to retrieve the test files at chhenning **at** gmail.com.
+Images are taken from http://www.rawsamples.ch/index_en.php
