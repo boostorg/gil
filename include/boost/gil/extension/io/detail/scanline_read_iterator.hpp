@@ -19,6 +19,7 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
+#include <boost/gil/extension/io/detail/io_error.hpp>
 
 namespace boost { namespace gil {
 
@@ -43,6 +44,7 @@ public:
     /// Default Constructor, usually used to create an end iterator.
     scanline_read_iterator()
     : _pos( -1 )
+    , _read_scanline( true )
     , _reader( NULL )
     , _buffer( NULL )
     {}
@@ -52,6 +54,7 @@ public:
                           , byte_t* buffer
                           )
     : _pos( 0 )
+    , _read_scanline( true )
     , _reader( &reader )
     , _buffer( buffer  )
     {
@@ -61,6 +64,7 @@ public:
     /// Constructor with preallocated image. Reading starts at first scanline of source image.
     scanline_read_iterator( Reader& reader )
     : _pos( 0 )
+    , _read_scanline( true )
     , _reader( &reader )
     , _buffer( NULL )
     {
@@ -73,12 +77,13 @@ public:
                           , byte_t*     buffer
                           )
     : _pos( pos )
+    , _read_scanline( true )
     , _reader( &reader )
     , _buffer( buffer  )
     {
         init();
 
-        if( _pos >= _reader->_info._height )
+        if( this->_pos >= this->_reader->_info._height )
         {
             throw std::runtime_error( "Trying to read past image." );
         }
@@ -126,20 +131,31 @@ public:
         _buffer = buffer;
     }
 
+    void skip() const
+    {
+        _read_scanline = false;
+    }
 
     /// Dereference Operator
     reference operator*()
     {
-        if( _reader && _buffer )
+        if( _reader == NULL ) { io_error( "Reader cannot be null for this operation." ); }
+        if( _buffer == NULL ) { io_error( "Buffer cannot be null for this operation." ); }
+
+        if( _read_scanline )
         {
             _reader->read( _buffer, _pos );
 
             increase_pos();
-
-            return _buffer;
+        }
+        else
+        {
+            _skip();
         }
 
-        throw std::runtime_error( "Reader cannot be null for this operation." );
+        _read_scanline = false;
+
+        return _buffer;
     }
 
     /// Pointer-To-Memper Operator.
@@ -153,10 +169,10 @@ public:
     {
         if( _buffer == NULL )
         {
-            throw std::runtime_error( "Cannot proceed without initializing read buffer." );
+            io_error( "Cannot proceed without initializing read buffer." );
         }
 
-        _skip();
+        _read_scanline = true;
 
         return (*this);
     }
@@ -185,7 +201,7 @@ public:
             return *_reader;
         }
 
-        throw std::runtime_error( "Reader cannot be null for this operation." );
+        io_error( "Reader cannot be null for this operation." );
     }
 
 private:
@@ -211,6 +227,8 @@ private:
 
     void increase_pos()
     {
+        if( this->_reader == NULL ) { io_error("Reader cannot be null for this operation."); }
+
         if( _pos < static_cast< int >( this->_reader->_info._height ) - 1 )
         {
             ++_pos;
@@ -224,6 +242,9 @@ private:
 private:
 
     mutable int _pos;
+
+    mutable bool _read_scanline;
+
 
     Reader* _reader;
     byte_t* _buffer;
