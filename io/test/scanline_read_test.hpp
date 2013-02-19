@@ -22,24 +22,28 @@ void test_scanline_reader( const char* file_name )
     reader_t reader = make_scanline_reader( file_name, FormatTag() );
 
     Image dst( reader._info._width, reader._info._height );
-    byte_t* buffer = new byte_t[ reader._scanline_length ];
+    vector< byte_t > buffer( reader._scanline_length );
 
-    scanline_read_iterator< reader_t > it  = scanline_read_iterator< reader_t >( reader, buffer );
-    scanline_read_iterator< reader_t > end = scanline_read_iterator< reader_t >();
+    typedef scanline_read_iterator< reader_t > iterator_t;
 
-    int row = 0;
-    while( it != end )
+    iterator_t it  = iterator_t( reader, &buffer.front() );
+    iterator_t end = iterator_t();
+
+    for( int row = 0; it != end; ++it, ++row )
     {
-        *it;
-
-        copy_pixels( interleaved_view( reader._info._width, 1, ( typename Image::view_t::x_iterator ) buffer, reader._scanline_length )
-                   , subimage_view( view( dst    ), 0, row, reader._info._width, 1 )
+        copy_pixels( interleaved_view( reader._info._width
+                                     , 1
+                                     , ( typename Image::view_t::x_iterator ) *it
+                                     , reader._scanline_length
+                                     )
+                   , subimage_view( view( dst )
+                                  , 0
+                                  , row
+                                  , reader._info._width
+                                  , 1
+                                  )
                    );
-
-        ++row;
     }
-
-    delete[] buffer;
 
     //compare
     Image img;
