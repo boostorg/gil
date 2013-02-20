@@ -46,6 +46,7 @@ public:
     scanline_read_iterator()
     : _pos( -1 )
     , _read_scanline( true )
+    , _skip_scanline( true )
     , _reader( NULL )
     , _buffer( NULL )
     {}
@@ -56,6 +57,7 @@ public:
                           )
     : _pos( 0 )
     , _read_scanline( true )
+    , _skip_scanline( true )
     , _reader( &reader )
     , _buffer( buffer  )
     {
@@ -66,6 +68,7 @@ public:
     scanline_read_iterator( Reader& reader )
     : _pos( 0 )
     , _read_scanline( true )
+    , _skip_scanline( true )
     , _reader( &reader )
     , _buffer( NULL )
     {
@@ -79,6 +82,7 @@ public:
                           )
     : _pos( pos )
     , _read_scanline( true )
+    , _skip_scanline( true )
     , _reader( &reader )
     , _buffer( buffer  )
     {
@@ -132,26 +136,20 @@ public:
         _buffer = buffer;
     }
 
-    void skip() const
-    {
-        _read_scanline = false;
-    }
-
     /// Dereference Operator
     reference operator*()
     {
         if( _reader == NULL ) { io_error( "Reader cannot be null for this operation." ); }
         if( _buffer == NULL ) { io_error( "Buffer cannot be null for this operation." ); }
 
-        if( _read_scanline )
+        if( _read_scanline == true )
         {
             _reader->read( _buffer, _pos );
-        }
-        else
-        {
-            _skip();
+
+            increase_pos();
         }
 
+        _skip_scanline = false;
         _read_scanline = false;
 
         return _buffer;
@@ -166,14 +164,15 @@ public:
     /// Pre-Increment Operator
     scanline_read_iterator< Reader >& operator++()
     {
-        if( _buffer == NULL )
+        if( _skip_scanline == true )
         {
-            io_error( "Cannot proceed without initializing read buffer." );
+            _skip();
+
+            increase_pos();
         }
 
+        _skip_scanline = true;
         _read_scanline = true;
-
-        increase_pos();
 
         return (*this);
     }
@@ -221,8 +220,6 @@ private:
         if( _reader )
         {
             _reader->skip( _buffer, _pos );
-
-            increase_pos();
         }
     }
 
@@ -245,7 +242,7 @@ private:
     mutable int _pos;
 
     mutable bool _read_scanline;
-
+    mutable bool _skip_scanline;
 
     Reader* _reader;
     byte_t* _buffer;
