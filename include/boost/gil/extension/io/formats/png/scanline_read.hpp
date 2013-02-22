@@ -27,6 +27,7 @@
 #include <boost/gil/extension/io/detail/io_device.hpp>
 #include <boost/gil/extension/io/detail/typedefs.hpp>
 #include <boost/gil/extension/io/detail/row_buffer_helper.hpp>
+#include <boost/gil/extension/io/detail/scanline_read_iterator.hpp>
 
 #include "reader_backend.hpp"
 #include "is_allowed.hpp"
@@ -52,7 +53,10 @@ private:
 
 public:
 
-    typedef reader_backend< Device, png_tag > backend_t;
+    typedef png_tag tag_t;
+    typedef reader_backend < Device, tag_t > backend_t;
+    typedef scanline_reader< Device, tag_t > this_t;
+    typedef scanline_read_iterator< this_t > iterator_t;
 
 public:
 
@@ -84,7 +88,8 @@ public:
         read_scanline( dst );
     }
 
-    void clean_up() {}
+    iterator_t begin() { return iterator_t( *this ); }
+    iterator_t end()   { return iterator_t( *this, this->_info._height ); }
 
 private:
 
