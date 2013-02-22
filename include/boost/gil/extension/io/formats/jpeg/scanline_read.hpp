@@ -26,7 +26,9 @@
 #include <boost/gil/extension/io/detail/conversion_policies.hpp>
 #include <boost/gil/extension/io/detail/reader_base.hpp>
 #include <boost/gil/extension/io/detail/io_device.hpp>
+#include <boost/gil/extension/io/detail/scanline_read_iterator.hpp>
 #include <boost/gil/extension/io/detail/typedefs.hpp>
+
 
 #include "reader_backend.hpp"
 #include "base.hpp"
@@ -52,7 +54,10 @@ class scanline_reader< Device
 {
 public:
 
-    typedef reader_backend< Device, jpeg_tag > backend_t;
+    typedef jpeg_tag tag_t;
+    typedef reader_backend < Device, tag_t > backend_t;
+    typedef scanline_reader< Device, tag_t > this_t;
+    typedef scanline_read_iterator< this_t > iterator_t;
 
 public:
     scanline_reader( Device&                                device
@@ -88,7 +93,8 @@ public:
         read_scanline( dst );
     }
 
-    void clean_up() {}
+    iterator_t begin() { return iterator_t( *this ); }
+    iterator_t end()   { return iterator_t( *this, this->_info._height ); }
 
 private:
 
