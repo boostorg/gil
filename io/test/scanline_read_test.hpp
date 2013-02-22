@@ -22,12 +22,11 @@ void test_scanline_reader( const char* file_name )
     reader_t reader = make_scanline_reader( file_name, FormatTag() );
 
     Image dst( reader._info._width, reader._info._height );
-    vector< byte_t > buffer( reader._scanline_length );
 
-    typedef scanline_read_iterator< reader_t > iterator_t;
+     typedef reader_t::iterator_t iterator_t;
 
-    iterator_t it  = iterator_t( reader, &buffer.front() );
-    iterator_t end = iterator_t();
+    iterator_t it  = reader.begin();
+    iterator_t end = reader.end();
 
     for( int row = 0; it != end; ++it, ++row )
     {
