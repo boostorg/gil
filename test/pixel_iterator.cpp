@@ -1,6 +1,6 @@
 /*
     Copyright 2005-2007 Adobe Systems Incorporated
-   
+
     Use, modification and distribution are subject to the Boost Software License,
     Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt).
@@ -55,8 +55,8 @@ void test_pixel_iterator() {
     boost::function_requires<HasDynamicXStepTypeConcept<bgr121_ptr_t> >();
 
 // TEST dynamic_step_t
-    BOOST_STATIC_ASSERT(( boost::is_same<cmyk16_step_ptr_t,dynamic_x_step_type<cmyk16_step_ptr_t>::type>::value )); 
-    BOOST_STATIC_ASSERT(( boost::is_same<cmyk16_planar_step_ptr_t,dynamic_x_step_type<cmyk16_planar_ptr_t>::type>::value )); 
+    BOOST_STATIC_ASSERT(( boost::is_same<cmyk16_step_ptr_t,dynamic_x_step_type<cmyk16_step_ptr_t>::type>::value ));
+    BOOST_STATIC_ASSERT(( boost::is_same<cmyk16_planar_step_ptr_t,dynamic_x_step_type<cmyk16_planar_ptr_t>::type>::value ));
 
     BOOST_STATIC_ASSERT(( boost::is_same<iterator_type<bits8,gray_layout_t,false,false,false>::type,gray8c_ptr_t>::value ));
 
@@ -75,7 +75,6 @@ void test_pixel_iterator() {
 
     typedef dynamic_x_step_type<rgb2gray_ptr>::type rgb2gray_step_ptr;
     BOOST_STATIC_ASSERT(( boost::is_same< rgb2gray_step_ptr, dereference_iterator_adaptor<rgb8_step_ptr_t, ccv_rgb_g_fn> >::value));
-
 
     make_step_iterator(rgb2gray_ptr(),2);
 
@@ -97,13 +96,13 @@ void test_pixel_iterator() {
     typedef bit_aligned_pixel_iterator<bgr232_ref_t> bgr232_ptr_t;
 
     // BGR232 pixel value. It is a packed_pixel of size 1 byte. (The last bit is unused)
-    typedef std::iterator_traits<bgr232_ptr_t>::value_type bgr232_pixel_t; 
+    typedef std::iterator_traits<bgr232_ptr_t>::value_type bgr232_pixel_t;
     BOOST_STATIC_ASSERT((sizeof(bgr232_pixel_t)==1));
 
     bgr232_pixel_t red(0,0,3); // = 0RRGGGBB, = 01100000
 
     // a buffer of 7 bytes fits exactly 8 BGR232 pixels.
-    unsigned char pix_buffer[7];    
+    unsigned char pix_buffer[7];
     std::fill(pix_buffer,pix_buffer+7,0);
     bgr232_ptr_t pix_it(&pix_buffer[0],0);  // start at bit 0 of the first pixel
     for (int i=0; i<8; ++i) {
@@ -127,7 +126,7 @@ void test_pixel_iterator() {
     buf[2] = 219;
 
     iterator_t it( &buf[0], 0 );
-    
+
     ref_t p1 = *it; it++;
     ref_t p2 = *it; it++;
     ref_t p3 = *it; it++;
@@ -168,7 +167,6 @@ void invert_pixel1(Pixel& pix) {
 template <typename T> inline void ignore_unused_variable_warning(const T&){}
 
 void test_pixel_iterator() {
-
     rgb8_pixel_t rgb8(1,2,3);
     rgba8_pixel_t rgba8;
 
@@ -200,7 +198,7 @@ void test_pixel_iterator() {
     stepIt++;
     rgb8_step_ptr_t stepIt2=stepIt+10;
     stepIt2=stepIt;
-    
+
     rgb8_step_ptr_t stepIt3(&rgb8,5);
 
     rgb8_pixel_t& ref1=stepIt3[5];
@@ -214,8 +212,7 @@ void test_pixel_iterator() {
     ++rgb8StepIt;
     rgb8_ref_t reff=*rgb8StepIt; ignore_unused_variable_warning(reff);
     rgb8StepIt+=10;
-    ptrdiff_t dst=rgb8StepIt2-rgb8StepIt; ignore_unused_variable_warning(dst);
-
+    std::ptrdiff_t dst=rgb8StepIt2-rgb8StepIt; ignore_unused_variable_warning(dst);
 
     rgb8_pixel_t val1=ref1;
     rgb8_ptr_t ptr=&ref1;
@@ -255,9 +252,7 @@ void test_pixel_iterator() {
     //  *pix_img_it_c=rgb8_pixel_t(1,2,3);        // error: assigning though const iterator
     typedef iterator_from_2d<rgb8_loc_t>::difference_type dif_t;
     dif_t dt=0;
-    ptrdiff_t tdt=dt; ignore_unused_variable_warning(tdt);
-
-
+    std::ptrdiff_t tdt=dt; ignore_unused_variable_warning(tdt);
 
     //  memory_based_step_iterator<rgb8_pixel_t> stepIt3Err=stepIt+10;       // error: non-const from const iterator
 
@@ -279,7 +274,6 @@ void test_pixel_iterator() {
     rgb8c_planar_ptr_t cp(&rgb8);
     rgb8_planar_ptr_t p(&rgb8);
 //    get_color(p,red_t()) = get_color(cp,green_t());           // does not compile - cannot assign a non-const pointer to a const pointer. Otherwise you will be able to modify the value through it.
-
     }
 //  xy_locator.y()++;
 
@@ -287,8 +281,8 @@ void test_pixel_iterator() {
     //
     // values, references, pointers
     // color spaces (rgb,cmyk,gray)
-    // channel ordering (bgr vs rgb) 
-    // planar vs interleaved    
+    // channel ordering (bgr vs rgb)
+    // planar vs interleaved
 
 // Pixel POINTERS
 //  typedef const iterator_traits<rgb8_ptr_t>::pointer  RGB8ConstPtr;
@@ -299,7 +293,6 @@ void test_pixel_iterator() {
 // constructing from values, references and other pointers
     RGB8ConstPtr rgb8_const_ptr=NULL; ignore_unused_variable_warning(rgb8_const_ptr);
     rgb8_ptr_t rgb8ptr=&rgb8;
-
 
     rgb8=bgr8_pixel_t(30,20,10);
     rgb8_planar_ptr_t rgb8_pptr=&rgb8;
@@ -313,7 +306,6 @@ void test_pixel_iterator() {
 
     rgb8_pptr=&rgb8;
 
-
     //  rgb8_const_planar_ptr=&rgb16p;                  // error: incompatible bit depth
 
     //  iterator_traits<CMYK8>::pointer cmyk8_ptr_t=&rgb8;    // error: incompatible pointer type
@@ -324,11 +316,10 @@ ignore_unused_variable_warning(rgb8_const_ptr_err);
     rgb8_ref_t rgb8ref_2=*rgb8ptr; ignore_unused_variable_warning(rgb8ref_2);
     assert(rgb8ref_2==rgb8);
     //  RGB8Ref rgb8ref_2_err=*rgb8_const_planar_ptr;   // error: non-const reference from const pointer
-    
+
     rgb8_planar_ref_t rgb8planarref_3=*rgb8_pptr; // planar reference from planar pointer
     assert(rgb8planarref_3==rgb8);
     //  RGB8Ref rgb8ref_3=*rgb8_planar_ptr_t; // error: non-planar reference from planar pointer
-
 
     const rgb8_pixel_t crgb8=rgb8;
     *rgb8_pptr=rgb8;
@@ -343,4 +334,3 @@ int main(int argc, char* argv[]) {
     test_pixel_iterator();
 	return 0;
 }
-

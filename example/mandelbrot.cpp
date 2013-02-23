@@ -1,6 +1,6 @@
 /*
     Copyright 2005-2007 Adobe Systems Incorporated
-   
+
     Use, modification and distribution are subject to the Boost Software License,
     Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt).
@@ -24,7 +24,7 @@ using namespace boost::gil;
 // Models a Unary Function
 template <typename P>   // Models PixelValueConcept
 struct mandelbrot_fn {
-    typedef point2<ptrdiff_t>    point_t;
+    typedef point2<std::ptrdiff_t>    point_t;
 
     typedef mandelbrot_fn        const_t;
     typedef P                    value_type;
@@ -80,4 +80,3 @@ int main() {
 
     return 0;
 }
-

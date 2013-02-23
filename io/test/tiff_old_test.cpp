@@ -24,7 +24,7 @@ BOOST_AUTO_TEST_SUITE( tiff_test )
 
 BOOST_AUTO_TEST_CASE( old_read_dimensions_test )
 {
-    point2< ptrdiff_t > dim = tiff_read_dimensions( tiff_filename );
+    point2< std::ptrdiff_t > dim = tiff_read_dimensions( tiff_filename );
 
     BOOST_CHECK_EQUAL( dim.x, 1000 );
     BOOST_CHECK_EQUAL( dim.y,  600 );
