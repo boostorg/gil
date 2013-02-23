@@ -17,7 +17,7 @@ BOOST_AUTO_TEST_SUITE( png_test )
 
 BOOST_AUTO_TEST_CASE( old_read_dimensions_test )
 {
-    point2< ptrdiff_t > dim = png_read_dimensions( png_filename );
+    point2< std::ptrdiff_t > dim = png_read_dimensions( png_filename );
 
     BOOST_CHECK_EQUAL( dim.x, 1000 );
     BOOST_CHECK_EQUAL( dim.y,  600 );

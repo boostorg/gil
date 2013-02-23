@@ -10,7 +10,7 @@ using namespace gil;
 // Models a Unary Function
 template <typename P>   // Models PixelValueConcept
 struct mandelbrot_fn {
-    typedef point2<ptrdiff_t>    point_t;
+    typedef point2<std::ptrdiff_t>    point_t;
 
     typedef mandelbrot_fn        const_t;
     typedef P                    value_type;
@@ -27,8 +27,8 @@ struct mandelbrot_fn {
     mandelbrot_fn() {}
     mandelbrot_fn(const point_t& sz, const value_type& in_color, const value_type& out_color) : _in_color(in_color), _out_color(out_color), _img_size(sz) {}
 
-    ptrdiff_t width()  { return _img_size.x; }
-    ptrdiff_t height() { return _img_size.y; }
+    std::ptrdiff_t width()  { return _img_size.x; }
+    std::ptrdiff_t height() { return _img_size.y; }
 
     result_type operator()(const point_t& p) const {
         // normalize the coords to (-2..1, -1.5..1.5)

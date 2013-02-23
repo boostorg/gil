@@ -17,7 +17,7 @@ BOOST_AUTO_TEST_SUITE( pnm_test )
 BOOST_AUTO_TEST_CASE( old_read_dimensions_test )
 {
     {
-        point2< ptrdiff_t > dim = pnm_read_dimensions( pnm_filename );
+        point2< std::ptrdiff_t > dim = pnm_read_dimensions( pnm_filename );
 
         BOOST_CHECK_EQUAL( dim.x, 256 );
         BOOST_CHECK_EQUAL( dim.y, 256 );
