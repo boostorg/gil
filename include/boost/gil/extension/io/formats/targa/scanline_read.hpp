@@ -91,7 +91,9 @@ public:
     /// Skip over a scanline.
     void skip( byte_t*, int )
     {
-        this->_io_dev.seek( static_cast<long>( this->_scanline_length ), SEEK_CUR );
+        this->_io_dev.seek( static_cast<long>( this->_scanline_length )
+                          , SEEK_CUR
+                          );
     }
 
     iterator_t begin() { return iterator_t( *this ); }
