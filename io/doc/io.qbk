@@ -561,7 +561,7 @@ recommend to have a look at existing implementations and then trying to follow a
 
 [endsect]
 
-[h2 Running gil::io tests]
+[section Running gil::io tests]
 gil::io comes with a large suite of test cases which reads and writes various file formats. It uses some test image suites which can be found online or which can be demanded from me by sending me an email ( _EMAIL_ ).
 
 There are some test images created by me in the test folder. To enable unit tests which make use of them set the following compiler options BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES and BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES.
