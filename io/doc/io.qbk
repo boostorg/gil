@@ -259,37 +259,40 @@ During the review it became clear that there is a need to read big images scanli
 a scanline_reader is implemented for all supported image formats. The scanline_read_iterators will then allow to traverse 
 through the image. The following code sample shows the usage:
 
-    // define the reader type
+    typedef tiff_tag tag_t;
+
     typedef scanline_reader< typename get_read_device< const char*
-                                                     , FormatTag
+                                                     , tag_t
                                                      >::type
-                           , FormatTag
-                           > reader_t;
+                            , tag_t
+                            > reader_t;
 
-    reader_t reader = make_scanline_reader( file_name, FormatTag() );
+    reader_t reader = make_scanline_reader( "C:/boost/libs/gil/io/test_images/tiff/test.tif", tag_t() );
 
-    Image dst( reader._info._width, reader._info._height );
-    vector< byte_t > buffer( reader._scanline_length );
+    typedef rgba8_image_t image_t;
 
-    typedef scanline_read_iterator< reader_t > iterator_t;
+    image_t dst( reader._info._width, reader._info._height );
+    fill_pixels( view(dst), image_t::value_type() );
 
-    iterator_t it  = iterator_t( reader, &buffer.front() );
-    iterator_t end = iterator_t();
+    typedef reader_t::iterator_t iterator_t;
+
+    iterator_t it  = reader.begin();
+    iterator_t end = reader.end();
 
     for( int row = 0; it != end; ++it, ++row )
     {
         copy_pixels( interleaved_view( reader._info._width
-                                     , 1
-                                     , ( typename Image::view_t::x_iterator ) *it
-                                     , reader._scanline_length
-                                     )
-                   , subimage_view( view( dst )
-                                  , 0
-                                  , row
-                                  , reader._info._width
-                                  , 1
-                                  )
-                   );
+                                        , 1
+                                        , ( image_t::view_t::x_iterator ) *it
+                                        , reader._scanline_length
+                                        )
+                    , subimage_view( view( dst )
+                                    , 0
+                                    , row
+                                    , reader._info._width
+                                    , 1
+                                    )
+                    );
     }
 
 There are many ways to travese an image but for as of now only by scanline is supported.
