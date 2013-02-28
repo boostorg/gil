@@ -229,9 +229,9 @@ throw()
 
     while( x )
     {
-	    // clear the least significant bit set
-	    x &= x - 1;
-	    ++n;
+        // clear the least significant bit set
+        x &= x - 1;
+        ++n;
     }
 
     return n;

@@ -71,9 +71,9 @@ public:
 
         _info._type = read_char() - '0';
 
-		io_error_if( _info._type < pnm_image_type::mono_asc_t::value || _info._type > pnm_image_type::color_bin_t::value
-		           , "Invalid PNM file (supports P1 to P6)"
-		           );
+        io_error_if( _info._type < pnm_image_type::mono_asc_t::value || _info._type > pnm_image_type::color_bin_t::value
+                   , "Invalid PNM file (supports P1 to P6)"
+                   );
 
         _info._width  = read_int();
         _info._height = read_int();
@@ -86,9 +86,9 @@ public:
         {
             _info._max_value = read_int();
 
-		    io_error_if( _info._max_value > 255
-		               , "Unsupported PNM format (supports maximum value 255)"
-		               );
+            io_error_if( _info._max_value > 255
+                       , "Unsupported PNM format (supports maximum value 255)"
+                       );
         }
     }
 
@@ -135,41 +135,41 @@ private:
         return ch;
     }
 
-	unsigned int read_int()
-	{
-		char ch;
+    unsigned int read_int()
+    {
+        char ch;
 
         // skip whitespaces, tabs, and new lines
-		do
-		{
-			ch = read_char();
-		}
-		while (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r');
+        do
+        {
+            ch = read_char();
+        }
+        while (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r');
 
-		if( ch < '0' || ch > '9' )
-		{
-			io_error( "Unexpected characters reading decimal digits" );
-		}
+        if( ch < '0' || ch > '9' )
+        {
+            io_error( "Unexpected characters reading decimal digits" );
+        }
 
-		unsigned val = 0;
+        unsigned val = 0;
 
         do
         {
-			unsigned dig = ch - '0';
+            unsigned dig = ch - '0';
 
-			if( val > INT_MAX / 10 - dig )
-			{
-				io_error( "Integer too large" );
-			}
+            if( val > INT_MAX / 10 - dig )
+            {
+                io_error( "Integer too large" );
+            }
 
-			val = val * 10 + dig;
+            val = val * 10 + dig;
 
-			ch = read_char();
-		}
-		while( '0' <= ch && ch <= '9' );
+            ch = read_char();
+        }
+        while( '0' <= ch && ch <= '9' );
 
-		return val;
-	}
+        return val;
+    }
 
 
 public:

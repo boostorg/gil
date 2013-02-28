@@ -151,33 +151,33 @@ public:
 
             case 4:
             {
-				switch ( this->_info._compression )
-				{
-				    case bmp_compression::_rle4:
-				    {
+                switch ( this->_info._compression )
+                {
+                    case bmp_compression::_rle4:
+                    {
                         ///@todo How can we determine that?
                         this->_scanline_length = 0;
 
-					    read_palette_image_rle( dst_view );
+                        read_palette_image_rle( dst_view );
 
-					    break;
+                        break;
                     }
 
-				    case bmp_compression::_rgb:
-				    {
+                    case bmp_compression::_rgb:
+                    {
                         this->_scanline_length = ( this->_info._width * num_channels< rgba8_view_t >::value + 3 ) & ~3;
 
-					    read_palette_image< gray4_image_t::view_t
-									      , detail::swap_half_bytes< byte_vector_t
-									                               , mpl::true_
-									                               >
-									      > ( dst_view );
-					    break;
+                        read_palette_image< gray4_image_t::view_t
+                                          , detail::swap_half_bytes< byte_vector_t
+                                                                   , mpl::true_
+                                                                   >
+                                          > ( dst_view );
+                        break;
                     }
 
-				    default:
-				    {
-					    io_error( "Unsupported compression mode in BMP file." );
+                    default:
+                    {
+                        io_error( "Unsupported compression mode in BMP file." );
                         break;
                     }
                 }
@@ -186,32 +186,32 @@ public:
 
             case 8:
             {
-				switch ( this->_info._compression )
-				{
-				    case bmp_compression::_rle8:
-				    {
+                switch ( this->_info._compression )
+                {
+                    case bmp_compression::_rle8:
+                    {
                         ///@todo How can we determine that?
                         this->_scanline_length = 0;
 
                         read_palette_image_rle( dst_view );
-					    break;
+                        break;
                     }
 
-				    case bmp_compression::_rgb:
-				    {
+                    case bmp_compression::_rgb:
+                    {
                         this->_scanline_length = ( this->_info._width * num_channels< rgba8_view_t >::value + 3 ) & ~3;
 
-					    read_palette_image< gray8_image_t::view_t
-									      , detail::do_nothing< std::vector< gray8_pixel_t > >
-									      > ( dst_view );
-					    break;
+                        read_palette_image< gray8_image_t::view_t
+                                          , detail::do_nothing< std::vector< gray8_pixel_t > >
+                                          > ( dst_view );
+                        break;
                     }
 
-				    default:
-				    {
-					    io_error( "Unsupported compression mode in BMP file." );
+                    default:
+                    {
+                        io_error( "Unsupported compression mode in BMP file." );
                         break;
-				    }
+                    }
                 }
 
                 break;
@@ -436,27 +436,27 @@ private:
         }
     }
 
-	template< typename Buffer
+    template< typename Buffer
             , typename View
-	        >
-	void copy_row_if_needed( const Buffer&  buf
-	                       , const View&    view
-						   , std::ptrdiff_t y
-						   )
-	{
-		if(  y >= this->_settings._top_left.y
-		  && y <  this->_settings._dim.y
-		  )
-		{
+            >
+    void copy_row_if_needed( const Buffer&  buf
+                           , const View&    view
+                           , std::ptrdiff_t y
+                           )
+    {
+        if(  y >= this->_settings._top_left.y
+          && y <  this->_settings._dim.y
+          )
+        {
             typename Buffer::const_iterator beg = buf.begin() + this->_settings._top_left.x;
             typename Buffer::const_iterator end = beg + this->_settings._dim.x;
 
-			std::copy( beg
-			         , end
-			         , view.row_begin( y )
-			         );
-		}
-	}
+            std::copy( beg
+                     , end
+                     , view.row_begin( y )
+                     );
+        }
+    }
 
     template< typename View_Dst >
     void read_palette_image_rle( const View_Dst& view )
@@ -479,7 +479,7 @@ private:
         Buf_type::iterator dst_end = buf.end();
 
         //
-		std::ptrdiff_t ybeg = 0;
+        std::ptrdiff_t ybeg = 0;
         std::ptrdiff_t yend = this->_settings._dim.y;
         std::ptrdiff_t yinc = 1;
 
@@ -634,7 +634,7 @@ private:
                 }
             }
         }
-	}
+    }
 
 private:
 

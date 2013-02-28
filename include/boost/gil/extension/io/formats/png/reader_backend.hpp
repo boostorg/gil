@@ -79,8 +79,8 @@ public:
 
     void read_header()
     {
-		using boost::gil::detail::PNG_BYTES_TO_CHECK;
-		
+        using boost::gil::detail::PNG_BYTES_TO_CHECK;
+        
         // check the file's first few bytes
         byte_t buf[PNG_BYTES_TO_CHECK];
 

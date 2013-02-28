@@ -954,7 +954,7 @@ struct MutableHomogeneousPixelConcept {
         p[0]=v;
         v=p[0];
     }
-	typename P::template element_type<P>::type v;
+    typename P::template element_type<P>::type v;
     P p;
 };
 

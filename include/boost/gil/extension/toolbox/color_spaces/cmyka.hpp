@@ -53,7 +53,7 @@ GIL_DEFINE_ALL_TYPEDEFS(32f,cmyka)
 //            pixel<T1,cmyk_layout_t>(channel_multiply(get_color(src,cyan_t()),  get_color(src,alpha_t())), 
 //                                    channel_multiply(get_color(src,magenta_t()),get_color(src,alpha_t())), 
 //                                    channel_multiply(get_color(src,yellow_t()), get_color(src,alpha_t())),
-//									channel_multiply(get_color(src,black_t()), get_color(src,alpha_t())))
+//                                    channel_multiply(get_color(src,black_t()), get_color(src,alpha_t())))
 //            ,dst);
 //    }
 //};
@@ -66,7 +66,7 @@ struct default_color_converter_impl<cmyka_t,rgba_t> {
             pixel<T1,cmyk_layout_t>(get_color(src,cyan_t()), 
                                     get_color(src,magenta_t()), 
                                     get_color(src,yellow_t()),
-									get_color(src,black_t()))
+                                    get_color(src,black_t()))
             ,dst);
     }
 };

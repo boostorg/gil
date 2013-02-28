@@ -203,7 +203,7 @@ private:
            ; y < src.height()
            ; ++y
            )
-		{
+        {
             //copy_pixels( subimage_view( src
             //                          , 0
             //                          , (int) y
@@ -219,7 +219,7 @@ private:
                      );
 
             this->_io_dev.write( row_addr, pitch );
-		}
+        }
     }
 };
 

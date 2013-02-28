@@ -76,7 +76,7 @@ public:
 
     template <typename T> any_image_view&     operator=(const T& obj)                   { parent_t::operator=(obj); return *this; }
     any_image_view&                           operator=(const any_image_view& v)        { parent_t::operator=((const parent_t&)v); return *this;}
-	template <typename Types> any_image_view& operator=(const any_image_view<Types>& v) { parent_t::operator=((const variant<Types>&)v); return *this;}
+    template <typename Types> any_image_view& operator=(const any_image_view<Types>& v) { parent_t::operator=((const variant<Types>&)v); return *this;}
 
     std::size_t num_channels()  const { return apply_operation(*this, detail::any_type_get_num_channels()); }
     point_t     dimensions()    const { return apply_operation(*this, detail::any_type_get_dimensions()); }
