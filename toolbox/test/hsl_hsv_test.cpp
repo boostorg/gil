@@ -1,7 +1,9 @@
-// Copyright 2012 Christian Henning
-// Distributed under the Boost Software License, Version 1.0. (See
-// accompanying file LICENSE_1_0.txt or copy at
-// http://www.boost.org/LICENSE_1_0.txt)
+/*
+    Copyright 2013 Christian Henning
+    Use, modification and distribution are subject to the Boost Software License,
+    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt).
+*/
 
 /// \brief Unit test for hsl and hsv color spaces 
 
