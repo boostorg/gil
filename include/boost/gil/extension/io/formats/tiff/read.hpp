@@ -639,7 +639,7 @@ private:
 
       std::size_t size_to_allocate = buffer_size< typename View::value_type >( dst_view.width()
                                                                              , is_view_bit_aligned_t() );
-	  row_buffer_helper_t row_buffer_helper( size_to_allocate, true );
+      row_buffer_helper_t row_buffer_helper( size_to_allocate, true );
 
       it_t begin = row_buffer_helper.begin();
 
@@ -682,9 +682,8 @@ private:
         std::size_t element_size = sizeof( Pixel );
 
         std::size_t ret = std::max( width
-                      , (( scanline_size_in_bytes + element_size - 1 ) / element_size ));
-
-        //assert( this->_scanline_length == ret );
+                                  , (( scanline_size_in_bytes + element_size - 1 ) / element_size )
+                                  );
 
         return ret;
     }

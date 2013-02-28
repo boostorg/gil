@@ -112,10 +112,10 @@ public:
                    );
 
         switch( this->_info._type )
-		{
+        {
             // reading mono text is reading grayscale but with only two values
-			case pnm_image_type::mono_asc_t::value:
-			case pnm_image_type::gray_asc_t::value:
+            case pnm_image_type::mono_asc_t::value:
+            case pnm_image_type::gray_asc_t::value:
             {
                 this->_scanline_length = this->_info._width;
 
@@ -124,7 +124,7 @@ public:
                 break;
             }
 
-			case pnm_image_type::color_asc_t::value:
+            case pnm_image_type::color_asc_t::value:
             {
                 this->_scanline_length = this->_info._width * num_channels< rgb8_view_t >::value;
 
@@ -133,7 +133,7 @@ public:
                 break;
             }
 
-			case pnm_image_type::mono_bin_t::value:
+            case pnm_image_type::mono_bin_t::value:
             {
                 //gray1_image_t
                 this->_scanline_length = ( this->_info._width + 7 ) >> 3;
@@ -143,7 +143,7 @@ public:
                 break;
             }
 
-			case pnm_image_type::gray_bin_t::value:
+            case pnm_image_type::gray_bin_t::value:
             {
                 // gray8_image_t
                 this->_scanline_length = this->_info._width;
@@ -153,7 +153,7 @@ public:
                 break;
             }
 
-			case pnm_image_type::color_bin_t::value:
+            case pnm_image_type::color_bin_t::value:
             {
                 // rgb8_image_t
                 this->_scanline_length = this->_info._width * num_channels< rgb8_view_t >::value;
@@ -161,7 +161,7 @@ public:
                 read_bin_data< rgb8_view_t >( view );
                 break;
             }
-		}
+        }
     }
 
 private:
@@ -206,21 +206,21 @@ private:
         {
             for( uint32_t k = 0; ; )
             {
-				int ch = this->_io_dev.getc_unchecked();
+                int ch = this->_io_dev.getc_unchecked();
 
-				if( isdigit( ch ))
-				{
+                if( isdigit( ch ))
+                {
                     buf[ k++ ] = static_cast< char >( ch );
-				}
-				else if( k )
-				{
-					buf[ k ] = 0;
-					break;
-				}
-				else if( ch == EOF || !isspace( ch ))
-				{
-					return;
-				}
+                }
+                else if( k )
+                {
+                    buf[ k ] = 0;
+                    break;
+                }
+                else if( ch == EOF || !isspace( ch ))
+                {
+                    return;
+                }
             }
 
             if( process )

@@ -67,9 +67,9 @@ inline std::string convert_to_string( std::string const& obj)
 
 inline std::string convert_to_string( std::wstring const& s )
 {
-	std::size_t len = wcslen( s.c_str() );
-	char* c = reinterpret_cast<char*>( alloca( len ));
-	wcstombs( c, s.c_str(), len );
+    std::size_t len = wcslen( s.c_str() );
+    char* c = reinterpret_cast<char*>( alloca( len ));
+    wcstombs( c, s.c_str(), len );
 
     return std::string( c, c + len );
 }

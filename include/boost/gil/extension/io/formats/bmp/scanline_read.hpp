@@ -145,16 +145,16 @@ private:
 
             case 4:
             {
-				switch( this->_info._compression )
-				{
-				    case bmp_compression::_rle4:
+                switch( this->_info._compression )
+                {
+                    case bmp_compression::_rle4:
                     {
                         io_error( "Cannot read run-length encoded images in iterator mode. Try to read as whole image." );
 
                         break;
                     }
 
-				    case bmp_compression::_rgb :
+                    case bmp_compression::_rgb :
                     {
                         this->_scanline_length = ( this->_info._width * num_channels< rgba8_view_t >::value + 3 ) & ~3;
 
@@ -166,7 +166,7 @@ private:
                         break;
                     }
 
-				    default:
+                    default:
                     {
                         io_error( "Unsupported compression mode in BMP file." );
                     }
@@ -177,15 +177,15 @@ private:
 
             case 8:
             {
-				switch( this->_info._compression )
-				{
-				    case bmp_compression::_rle8:
+                switch( this->_info._compression )
+                {
+                    case bmp_compression::_rle8:
                     {
                         io_error( "Cannot read run-length encoded images in iterator mode. Try to read as whole image." );
 
                         break;
                     }
-				    case bmp_compression::_rgb:
+                    case bmp_compression::_rgb:
                     {
                         this->_scanline_length = ( this->_info._width * num_channels< rgba8_view_t >::value + 3 ) & ~3;
 
@@ -197,7 +197,7 @@ private:
                         break;
                     }
 
-				    default: { io_error( "Unsupported compression mode in BMP file." ); break; }
+                    default: { io_error( "Unsupported compression mode in BMP file." ); break; }
                 }
 
                 break;

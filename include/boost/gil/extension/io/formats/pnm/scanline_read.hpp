@@ -97,10 +97,10 @@ private:
     void initialize()
     {
         switch( this->_info._type )
-		{
+        {
             // reading mono text is reading grayscale but with only two values
-			case pnm_image_type::mono_asc_t::value:  
-			case pnm_image_type::gray_asc_t::value:
+            case pnm_image_type::mono_asc_t::value:  
+            case pnm_image_type::gray_asc_t::value:
             {
                 this->_scanline_length = this->_info._width;
 
@@ -110,7 +110,7 @@ private:
                 break;
             }
 
-			case pnm_image_type::color_asc_t::value:
+            case pnm_image_type::color_asc_t::value:
             {
                 this->_scanline_length = this->_info._width * num_channels< rgb8_view_t >::value;
 
@@ -121,7 +121,7 @@ private:
             }
 
 
-			case pnm_image_type::mono_bin_t::value:
+            case pnm_image_type::mono_bin_t::value:
             {
                 //gray1_image_t
                 this->_scanline_length = ( this->_info._width + 7 ) >> 3;
@@ -132,7 +132,7 @@ private:
                 break;
             }
 
-			case pnm_image_type::gray_bin_t::value:
+            case pnm_image_type::gray_bin_t::value:
             {
                 // gray8_image_t
                 this->_scanline_length = this->_info._width;
@@ -143,7 +143,7 @@ private:
                 break;
             }
 
-			case pnm_image_type::color_bin_t::value:
+            case pnm_image_type::color_bin_t::value:
             {
                 // rgb8_image_t
                 this->_scanline_length = this->_info._width * num_channels< rgb8_view_t >::value;
@@ -155,7 +155,7 @@ private:
             }
 
             default: { io_error( "Unsupported pnm file." ); break; }
-		}
+        }
     }
 
     void read_text_row( byte_t* dst )
@@ -164,21 +164,21 @@ private:
         {
             for( uint32_t k = 0; ; )
             {
-				int ch = this->_io_dev.getc_unchecked();
+                int ch = this->_io_dev.getc_unchecked();
 
-				if( isdigit( ch ))
-				{
+                if( isdigit( ch ))
+                {
                     _text_buffer[ k++ ] = static_cast< char >( ch );
-				}
-				else if( k )
-				{
-					_text_buffer[ k ] = 0;
-					break;
-				}
-				else if( ch == EOF || !isspace( ch ))
-				{
-					return;
-				}
+                }
+                else if( k )
+                {
+                    _text_buffer[ k ] = 0;
+                    break;
+                }
+                else if( ch == EOF || !isspace( ch ))
+                {
+                    return;
+                }
             }
 
             int value = atoi( _text_buffer );
@@ -203,20 +203,20 @@ private:
         {
             for( uint32_t k = 0; ; )
             {
-				int ch = this->_io_dev.getc_unchecked();
+                int ch = this->_io_dev.getc_unchecked();
 
-				if( isdigit( ch ))
-				{
+                if( isdigit( ch ))
+                {
                     k++;
-				}
-				else if( k )
-				{
-					break;
-				}
-				else if( ch == EOF || !isspace( ch ))
-				{
-					return;
-				}
+                }
+                else if( k )
+                {
+                    break;
+                }
+                else if( ch == EOF || !isspace( ch ))
+                {
+                    return;
+                }
             }
         }
     }

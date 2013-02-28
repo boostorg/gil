@@ -100,12 +100,12 @@ public:
     virtual ~variant()        { apply_operation(*this, detail::destructor_op()); }
 
     // Throws std::bad_cast if T is not in Types
-	template <typename T> explicit variant(const T& obj){ _index=type_id<T>(); if (_index==NUM_TYPES) throw std::bad_cast(); detail::copy_construct_in_place(obj, _bits); }
+    template <typename T> explicit variant(const T& obj){ _index=type_id<T>(); if (_index==NUM_TYPES) throw std::bad_cast(); detail::copy_construct_in_place(obj, _bits); }
 
-	template <typename Types2> explicit variant(const variant<Types2>& obj) : _index(apply_operation(obj,detail::type_to_index_fn<Types>())) {
-		if (_index==NUM_TYPES) throw std::bad_cast();
-		apply_operation(obj, detail::copy_construct_in_place_fn<base_t>(_bits));
-	}
+    template <typename Types2> explicit variant(const variant<Types2>& obj) : _index(apply_operation(obj,detail::type_to_index_fn<Types>())) {
+        if (_index==NUM_TYPES) throw std::bad_cast();
+        apply_operation(obj, detail::copy_construct_in_place_fn<base_t>(_bits));
+    }
 
     // When doSwap is true, swaps obj with the contents of the variant. obj will contain default-constructed instance after the call
     template <typename T> explicit variant(T& obj, bool do_swap);
@@ -132,7 +132,7 @@ public:
 private:
     template <typename T> static std::size_t type_id()     { return detail::type_to_index<Types,T>::value; }
 
-	template <typename Cs> friend void swap(variant<Cs>& x, variant<Cs>& y);
+    template <typename Cs> friend void swap(variant<Cs>& x, variant<Cs>& y);
     template <typename Types2, typename UnaryOp> friend typename UnaryOp::result_type apply_operation(variant<Types2>& var, UnaryOp op);
     template <typename Types2, typename UnaryOp> friend typename UnaryOp::result_type apply_operation(const variant<Types2>& var, UnaryOp op);
     template <typename Types1, typename Types2, typename BinaryOp> friend typename BinaryOp::result_type apply_operation(const variant<Types1>& arg1, const variant<Types2>& arg2, BinaryOp op);
@@ -171,9 +171,9 @@ namespace detail {
 
     template <typename Types>
     struct type_to_index_fn {
-		typedef std::size_t result_type;
+        typedef std::size_t result_type;
 
-		template <typename T> result_type operator()(const T&) const { return detail::type_to_index<Types,T>::value; }
+        template <typename T> result_type operator()(const T&) const { return detail::type_to_index<Types,T>::value; }
     };
 }
 

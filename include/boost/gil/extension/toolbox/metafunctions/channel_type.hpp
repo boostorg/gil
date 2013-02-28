@@ -39,10 +39,10 @@ namespace boost{ namespace gil {
 template <typename B, typename C, typename L, bool M>  
 struct gen_chan_ref
 {
-	typedef packed_dynamic_channel_reference< B
-	                                        , mpl::at_c< C, 0 >::type::value
-	                                        , M
-	                                        > type;
+    typedef packed_dynamic_channel_reference< B
+                                            , mpl::at_c< C, 0 >::type::value
+                                            , M
+                                            > type;
 };
 
 //! This implementation works for bit_algined_pixel_reference 
@@ -53,23 +53,23 @@ struct gen_chan_ref
 // bit_aligned_pixel_reference
 template <typename B, typename C, typename L, bool M>  
 struct channel_type< bit_aligned_pixel_reference<B,C,L,M> > 
-	: lazy_enable_if< is_homogeneous< bit_aligned_pixel_reference< B, C, L, M > >
+    : lazy_enable_if< is_homogeneous< bit_aligned_pixel_reference< B, C, L, M > >
                     , gen_chan_ref< B, C, L, M >
-		            > {};
+                    > {};
 
 template <typename B, typename C, typename L, bool M>  
 struct channel_type<const bit_aligned_pixel_reference<B,C,L,M> > 
-	: lazy_enable_if< is_homogeneous< bit_aligned_pixel_reference< B, C, L, M > >
-	                , gen_chan_ref< B, C, L, M >
-		            > {};
+    : lazy_enable_if< is_homogeneous< bit_aligned_pixel_reference< B, C, L, M > >
+                    , gen_chan_ref< B, C, L, M >
+                    > {};
 
 template <typename B, typename C, typename L>  
 struct gen_chan_ref_p
 {
-	typedef packed_dynamic_channel_reference< B
-	                                        , get_num_bits< typename mpl::at_c<C,0>::type>::value
-	                                        , true
-	                                        > type;
+    typedef packed_dynamic_channel_reference< B
+                                            , get_num_bits< typename mpl::at_c<C,0>::type>::value
+                                            , true
+                                            > type;
 };
 
 // packed_pixel
@@ -90,13 +90,13 @@ struct channel_type< packed_pixel< BitField
                                                      , ChannelRefVec
                                                      , Layout
                                                      >
-		                             > {};
+                                     > {};
 
 template <typename B, typename C, typename L>  
 struct channel_type< const packed_pixel< B, C, L > > 
-	: lazy_enable_if< is_homogeneous<packed_pixel< B, C, L > >
-	                , gen_chan_ref_p< B, C, L >
-		            >
+    : lazy_enable_if< is_homogeneous<packed_pixel< B, C, L > >
+                    , gen_chan_ref_p< B, C, L >
+                    >
 {};
 
 template<>

@@ -199,7 +199,7 @@ public:
             >
     std::size_t read( T (&buf)[N] )
     {
-	    return read( buf, N );
+        return read( buf, N );
     }
 
     /// Reads byte
@@ -259,32 +259,32 @@ public:
     /// Writes byte
     void write_uint8( uint8_t x ) throw()
     {
-	    byte_t m[1] = { x };
-	    write(m);
+        byte_t m[1] = { x };
+        write(m);
     }
 
     /// Writes 16 bit little endian integer
     void write_uint16( uint16_t x ) throw()
     {
-	    byte_t m[2];
+        byte_t m[2];
 
-	    m[0] = byte_t( x >> 0 );
-	    m[1] = byte_t( x >> 8 );
+        m[0] = byte_t( x >> 0 );
+        m[1] = byte_t( x >> 8 );
 
-	    write( m );
+        write( m );
     }
 
     /// Writes 32 bit little endian integer
     void write_uint32( uint32_t x ) throw()
     {
-	    byte_t m[4];
+        byte_t m[4];
 
-	    m[0] = byte_t( x >>  0 );
-	    m[1] = byte_t( x >>  8 );
-	    m[2] = byte_t( x >> 16 );
-	    m[3] = byte_t( x >> 24 );
+        m[0] = byte_t( x >>  0 );
+        m[1] = byte_t( x >>  8 );
+        m[2] = byte_t( x >> 16 );
+        m[3] = byte_t( x >> 24 );
 
-	    write( m );
+        write( m );
     }
 
     void seek( long count, int whence = SEEK_SET )
@@ -397,7 +397,7 @@ public:
             >
     size_t read( T (&buf)[N] )
     {
-	    return read( buf, N );
+        return read( buf, N );
     }
 
     /// Reads byte
@@ -500,32 +500,32 @@ public:
     /// Writes byte
     void write_uint8( uint8_t x ) throw()
     {
-	    byte_t m[1] = { x };
-	    write(m);
+        byte_t m[1] = { x };
+        write(m);
     }
 
     /// Writes 16 bit little endian integer
     void write_uint16( uint16_t x ) throw()
     {
-	    byte_t m[2];
+        byte_t m[2];
 
-	    m[0] = byte_t( x >> 0 );
-	    m[1] = byte_t( x >> 8 );
+        m[0] = byte_t( x >> 0 );
+        m[1] = byte_t( x >> 8 );
 
-	    write( m );
+        write( m );
     }
 
     /// Writes 32 bit little endian integer
     void write_uint32( uint32_t x ) throw()
     {
-	    byte_t m[4];
+        byte_t m[4];
 
-	    m[0] = byte_t( x >>  0 );
-	    m[1] = byte_t( x >>  8 );
-	    m[2] = byte_t( x >> 16 );
-	    m[3] = byte_t( x >> 24 );
+        m[0] = byte_t( x >>  0 );
+        m[1] = byte_t( x >>  8 );
+        m[2] = byte_t( x >> 16 );
+        m[3] = byte_t( x >> 24 );
 
-	    write( m );
+        write( m );
     }
 
     void flush()

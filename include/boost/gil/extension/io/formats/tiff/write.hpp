@@ -51,13 +51,13 @@ template <typename PixelReference>
 struct my_interleaved_pixel_iterator_type_from_pixel_reference
 {
 private:
-	typedef typename remove_reference< PixelReference >::type::value_type pixel_t;
+    typedef typename remove_reference< PixelReference >::type::value_type pixel_t;
 public:
-	typedef typename iterator_type_from_pixel< pixel_t
-	                                         , false
-	                                         , false
-	                                         , true
-	                                         >::type type;
+    typedef typename iterator_type_from_pixel< pixel_t
+                                             , false
+                                             , false
+                                             , true
+                                             >::type type;
 };
 
 
@@ -71,15 +71,15 @@ struct my_interleaved_pixel_iterator_type_from_pixel_reference< const bit_aligne
                                                                                                  , Mutable
                                                                                                  >
                                                               >
-	: public iterator_type_from_pixel< const bit_aligned_pixel_reference< uint8_t
-	                                                                    , Channel
-	                                                                    , Layout
-	                                                                    , Mutable
-	                                                                    >
-	                                 ,false
-	                                 ,false
-	                                 ,true
-	                                 > {};
+    : public iterator_type_from_pixel< const bit_aligned_pixel_reference< uint8_t
+                                                                        , Channel
+                                                                        , Layout
+                                                                        , Mutable
+                                                                        >
+                                     ,false
+                                     ,false
+                                     ,true
+                                     > {};
 
 struct tiff_write_is_supported
 {
