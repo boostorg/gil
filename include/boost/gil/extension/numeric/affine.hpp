@@ -1,22 +1,24 @@
 /*
-  Copyright 2005-2007 Adobe Systems Incorporated
-  Distributed under the MIT License (see accompanying file LICENSE_1_0_0.txt
-  or a copy at http://opensource.adobe.com/licenses.html)
+    Copyright 2005-2007 Adobe Systems Incorporated
+   
+    Use, modification and distribution are subject to the Boost Software License,
+    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt).
 */
 
 /*************************************************************************************************/
 
-#ifndef GIL_AFFINE_HPP
-#define GIL_AFFINE_HPP
+#ifndef BOOST_GIL_EXTENSION_NUMERIC_AFFINE_HPP
+#define BOOST_GIL_EXTENSION_NUMERIC_AFFINE_HPP
 
-#include "../../utilities.hpp"     // point2
+#include <boost/gil/utilities.hpp>     // point2
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file               
 /// \brief support for affine transformations
 /// \author Lubomir Bourdev and Hailin Jin \n
 ///         Adobe Systems Incorporated
-/// \date   2005-2007 \n September 21, 2006
+/// \date   2005-2007 \n
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -88,4 +90,4 @@ point2<F> transform(const matrix3x2<F>& mat, const point2<F2>& src) { return src
 
 } }  // namespace boost::gil
 
-#endif
+#endif // BOOST_GIL_EXTENSION_NUMERIC_AFFINE_HPP

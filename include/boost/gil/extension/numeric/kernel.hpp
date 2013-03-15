@@ -1,20 +1,22 @@
 /*
     Copyright 2005-2007 Adobe Systems Incorporated
-    Distributed under the MIT License (see accompanying file LICENSE_1_0_0.txt
-    or a copy at http://opensource.adobe.com/licenses.html)
+   
+    Use, modification and distribution are subject to the Boost Software License,
+    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt).
 */
 
 /*************************************************************************************************/
 
-#ifndef GIL_KERNEL_HPP
-#define GIL_KERNEL_HPP
+#ifndef BOOST_GIL_EXTENSION_NUMERIC_KERNEL_HPP
+#define BOOST_GIL_EXTENSION_NUMERIC_KERNEL_HPP
 
 /*!
 /// \file
 /// \brief Definitions of 1D fixed-size and variable-size kernels and related operations
 /// \author Hailin Jin and Lubomir Bourdev \n
 ///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated on September 26, 2006
+/// \date   2005-2007 \n
 */
 
 #include <cstddef>
@@ -22,9 +24,10 @@
 #include <algorithm>
 #include <vector>
 #include <memory>
+
 #include <boost/array.hpp>
-#include "../../gil_config.hpp"
-#include "../../utilities.hpp"
+#include <boost/gil/gil_config.hpp>
+#include <boost/gil/utilities.hpp>
 
 namespace boost { namespace gil {
 
@@ -98,4 +101,4 @@ inline Kernel reverse_kernel(const Kernel& kernel) {
 
 } }  // namespace boost::gil
 
-#endif
+#endif // BOOST_GIL_EXTENSION_NUMERIC_KERNEL_HPP
