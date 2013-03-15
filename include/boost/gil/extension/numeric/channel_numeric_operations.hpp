@@ -1,20 +1,22 @@
 /*
     Copyright 2005-2007 Adobe Systems Incorporated
-    Distributed under the MIT License (see accompanying file LICENSE_1_0_0.txt
-    or a copy at http://opensource.adobe.com/licenses.html)
+   
+    Use, modification and distribution are subject to the Boost Software License,
+    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt).
 */
 
 /*************************************************************************************************/
 
-#ifndef GIL_CHANNEL_NUMERIC_OPERATIONS_HPP
-#define GIL_CHANNEL_NUMERIC_OPERATIONS_HPP
+#ifndef BOOST_GIL_EXTENSION_NUMERIC_CHANNEL_NUMERIC_OPERATIONS_HPP
+#define BOOST_GIL_EXTENSION_NUMERIC_CHANNEL_NUMERIC_OPERATIONS_HPP
 
 /*!
 /// \file               
 /// \brief Structures for channel-wise numeric operations
 /// \author Hailin Jin and Lubomir Bourdev \n
 ///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated on September 30, 2006
+/// \date   2005-2007 \n
 /// Currently defined structures:
 ///    channel_plus_t (+), channel_minus_t (-),
 ///    channel_multiplies_t (*), channel_divides_t (/),
@@ -24,8 +26,9 @@
 */
 
 #include <functional>
-#include "../../gil_config.hpp"
-#include "../../channel.hpp"
+
+#include <boost/gil/gil_config.hpp>
+#include <boost/gil/channel.hpp>
 
 namespace boost { namespace gil {
 
@@ -153,4 +156,4 @@ struct channel_assigns_t : public std::binary_function<Channel1,Channel2,Channel
 
 } }  // namespace boost::gil
 
-#endif
+#endif // BOOST_GIL_EXTENSION_NUMERIC_CHANNEL_NUMERIC_OPERATIONS_HPP
