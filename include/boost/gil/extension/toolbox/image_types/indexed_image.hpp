@@ -80,7 +80,7 @@ protected:
 // used for virtual locator
 template< typename IndicesLoc
         , typename PaletteLoc
-        , typename Enable = void // there is specilization for integral indices
+        , typename Enable = void // there is specialization for integral indices
         >
 struct indexed_image_deref_fn : indexed_image_deref_fn_base< IndicesLoc
                                                            , PaletteLoc
@@ -309,8 +309,8 @@ private:
                            , view( _palette ).xy_at( 0, 0 )
                            );
 
-        locator_t locator( point_t( 0, 0 )
-                         , point_t( 1, 1 )
+        locator_t locator( point_t( 0, 0 ) // p
+                         , point_t( 1, 1 ) // step
                          , deref_fn
                          );
 
