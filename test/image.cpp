@@ -27,12 +27,20 @@
 #include <boost/gil/extension/dynamic_image/dynamic_image_all.hpp>
 #include <boost/crc.hpp>
 
+#include <boost/test/unit_test.hpp>
+
 using namespace boost::gil;
 using namespace std;
 using namespace boost;
 
 extern rgb8c_planar_view_t sample_view;
 void error_if(bool condition);
+
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
+#pragma warning(push) 
+#pragma warning(disable:4127) //conditional expression is constant
+#endif
+
 
 // When BOOST_GIL_GENERATE_REFERENCE_DATA is defined, the reference data is generated and saved.
 // When it is undefined, regression tests are checked against it
@@ -456,41 +464,6 @@ const string in_dir="";  // directory of source images
 const string out_dir=in_dir+"image-out/";    // directory where to write output
 const string ref_dir=in_dir+"image-ref/";  // reference directory to compare written with actual output
 
-#ifndef BOOST_GIL_NO_IO
-
-#include <boost/gil/extension/io/jpeg_io.hpp>
-
-class file_image_mgr : public image_test {};
-
-class file_image_test : public file_image_mgr {
-public:
-    file_image_test(const char*) {}
-protected:
-    void check_view_impl(const boost::gil::rgb8c_view_t& img_view,const string& name) {
-        jpeg_write_view(out_dir+name+".jpg",img_view);
-        rgb8_image_t img1, img2;
-        jpeg_read_and_convert_image(out_dir+name+".jpg",img1);
-        cerr << "Testing "<<name<<"\n";
-
-        jpeg_read_and_convert_image(ref_dir+name+".jpg",img2);
-        if (img1!=img2) {
-            cerr << "Error with "<<name<<"\n";
-            error_if(true);
-        }
-    }
-};
-
-class file_image_generate : public file_image_mgr {
-public:
-    file_image_generate(const char*) {}
-protected:
-    void check_view_impl(const boost::gil::rgb8c_view_t& img_view,const string& name) {
-        jpeg_write_view(ref_dir+name+".jpg",img_view);
-        cerr << "Writing "<<name<<"\n";
-    }
-};
-#endif
-
 void static_checks() {
     gil_function_requires<ImageConcept<rgb8_image_t> >();
 
@@ -530,13 +503,8 @@ void static_checks() {
     }
 }
 
-#ifdef BOOST_GIL_NO_IO
 typedef checksum_image_test     image_test_t;
 typedef checksum_image_generate image_generate_t;
-#else
-typedef file_image_test         image_test_t;
-typedef file_image_generate     image_generate_t;
-#endif
 
 #ifdef BOOST_GIL_GENERATE_REFERENCE_DATA
 typedef image_generate_t        image_mgr_t;
@@ -551,22 +519,28 @@ void test_image(const char* ref_checksum) {
     static_checks();
 }
 
-int main(int argc, char* argv[]) {
-    const char* local_name = "gil_reference_checksums.txt";
-    const char* name_from_status = "../libs/gil/test/gil_reference_checksums.txt";
+BOOST_AUTO_TEST_SUITE(GIL_Tests)
 
-    std::ifstream file_is_there(local_name);
-    if (file_is_there) {
-        test_image(local_name);
-    } else {
-        std::ifstream file_is_there(name_from_status);
-        if (file_is_there)
-            test_image(name_from_status);
-        else {
-            std::cerr << "Unable to open gil_reference_checksums.txt"<<std::endl;
-            return 1;
-        }
-    }
+BOOST_AUTO_TEST_CASE(image_test)
+{
+    //const char* local_name = "gil_reference_checksums.txt";
+    //const char* name_from_status = "../libs/gil/test/gil_reference_checksums.txt";
 
-    return 0;
+    //std::ifstream file_is_there(local_name);
+    //if (file_is_there) {
+    //    test_image(local_name);
+    //} else {
+    //    std::ifstream file_is_there(name_from_status);
+    //    if (file_is_there)
+    //        test_image(name_from_status);
+    //    else {
+    //        throw std::runtime_error( "Unable to open gil_reference_checksums.txt" );
+    //    }
+    //}
 }
+
+BOOST_AUTO_TEST_SUITE_END()
+
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
+#pragma warning(pop) 
+#endif 

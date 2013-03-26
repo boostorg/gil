@@ -31,6 +31,8 @@
 #include <boost/gil/metafunctions.hpp>
 #include <boost/gil/bit_aligned_pixel_reference.hpp>
 
+#include <boost/test/unit_test.hpp>
+
 // Testing pixel references and values, pixel operations, color conversion
 
 using namespace boost::gil;
@@ -234,7 +236,7 @@ struct ccv2 {
 struct ccv1 {
     template <typename Pixel> 
     void operator()(Pixel) {
-        for_each<representative_pixels_t>(ccv2<Pixel>());
+        mpl::for_each<representative_pixels_t>(ccv2<Pixel>());
     }
 };
 
@@ -326,8 +328,12 @@ void test_pixel() {
     error_if(g16 != 8);
 }
 
-int main(int argc, char* argv[]) {
+
+BOOST_AUTO_TEST_SUITE(GIL_Tests)
+
+BOOST_AUTO_TEST_CASE(pixel_test)
+{
     test_pixel();
-    return 0;
 }
 
+BOOST_AUTO_TEST_SUITE_END()
