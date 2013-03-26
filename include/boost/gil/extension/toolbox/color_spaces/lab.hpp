@@ -84,7 +84,7 @@ struct default_color_converter_impl< xyz_t, lab_t >
 {
 private:
     /// \ref http://www.brucelindbloom.com/index.html?Eqn_XYZ_to_Lab.html
-    GIL_FORCEINLINE
+    BOOST_FORCEINLINE
     bits32f forward_companding(bits32f value) const
     {
         if (value > 216.f/24389.f)

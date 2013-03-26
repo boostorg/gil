@@ -26,9 +26,12 @@
 
 #include <limits>
 #include <cassert>
+
 #include <boost/cstdint.hpp>
+#include <boost/config/suffix.hpp>
 #include <boost/integer/integer_mask.hpp>
 #include <boost/type_traits/remove_cv.hpp>
+
 #include "gil_config.hpp"
 #include "utilities.hpp"
 
@@ -317,10 +320,10 @@ public:
     Derived operator++(int) const { Derived tmp=derived(); this->operator++(); return tmp; }
     Derived operator--(int) const { Derived tmp=derived(); this->operator--(); return tmp; }
 
-    template <typename Scalar2> const Derived& operator+=(Scalar2 v) const { set(get()+v); return derived(); }
-    template <typename Scalar2> const Derived& operator-=(Scalar2 v) const { set(get()-v); return derived(); }
-    template <typename Scalar2> const Derived& operator*=(Scalar2 v) const { set(get()*v); return derived(); }
-    template <typename Scalar2> const Derived& operator/=(Scalar2 v) const { set(get()/v); return derived(); }
+    template <typename Scalar2> const Derived& operator+=(Scalar2 v) const { set( static_cast<integer_t>(  get() + v )); return derived(); }
+    template <typename Scalar2> const Derived& operator-=(Scalar2 v) const { set( static_cast<integer_t>(  get() - v )); return derived(); }
+    template <typename Scalar2> const Derived& operator*=(Scalar2 v) const { set( static_cast<integer_t>(  get() * v )); return derived(); }
+    template <typename Scalar2> const Derived& operator/=(Scalar2 v) const { set( static_cast<integer_t>(  get() / v )); return derived(); }
 
     operator integer_t() const { return get(); }
     data_ptr_t operator &() const {return _data_ptr;}

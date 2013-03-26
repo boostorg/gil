@@ -32,6 +32,14 @@
 #include <boost/mpl/size.hpp>
 
 namespace boost { namespace gil {
+
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
+#pragma warning(push) 
+#pragma warning(disable:4510) //default constructor could not be generated
+#pragma warning(disable:4512) //assignment operator could not be generated
+#pragma warning(disable:4610) //can never be instantiated - user defined constructor required
+#endif
+
 template <typename T> struct channel_traits;
 template <typename P> struct is_pixel;
 template <typename dstT, typename srcT>
@@ -2182,6 +2190,10 @@ struct ImageConcept {
     }
     Img img;
 };
+
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
+#pragma warning(pop) 
+#endif 
 
 
 } }  // namespace boost::gil
