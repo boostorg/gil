@@ -45,6 +45,9 @@
 #include <boost/gil/typedefs.hpp>
 #include <boost/gil/algorithm.hpp>
 
+#include <boost/test/unit_test.hpp>
+
+
 using namespace boost::gil;
 
 // returns time in milliseconds per call
@@ -436,7 +439,10 @@ void test_transform(std::size_t trials) {
     std::cout << "Non-GIL: "<<measure_time(transform_nongil_t<View1,View2,F>(view(im1),view(im2),F()),trials) << std::endl;
 }
 
-int main() {
+BOOST_AUTO_TEST_SUITE(GIL_Tests)
+
+BOOST_AUTO_TEST_CASE(performance_test)
+{
 #ifdef NDEBUG
     std::size_t num_trials=1000;
 #else
@@ -506,6 +512,6 @@ int main() {
     std::cout<<"test transform_pixels() between rgb8_planar_image_t and rgb8_image_t"<<std::endl;
     test_transform<rgb8_planar_view_t,rgb8_view_t,bgr_to_rgb_t<bits8,planar_pixel_reference<bits8,rgb_t> > >(num_trials);
     std::cout<<std::endl;
-
-    return 0;
 }
+
+BOOST_AUTO_TEST_SUITE_END()

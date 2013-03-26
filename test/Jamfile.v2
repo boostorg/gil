@@ -1,40 +1,45 @@
-# Copyright 2008 Lubomir Bourdev and Hailin Jin
-#  
+# Boost.GIL
+#
+# (C) Copyright 2008: Lubomir Bourdev and Hailin Jin
+#
 # Distributed under the Boost Software License, Version 1.0.
-# (See accompanying file LICENSE_1_0.txt or copy at
-# http://www.boost.org/LICENSE_1_0.txt)
+# (See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-# Jamfile for building the GIL test app
-
-project libs/gil/test ;
-
+# bring in rules for testing
 import testing ;
 
-test-suite gil :
-    [ run  image.cpp 
-           sample_image.cpp
-           error_if.cpp
-        :
-        :
-        : <include>$(BOOST_ROOT) <define>BOOST_GIL_NO_IO <define>_SCL_SECURE_NO_WARNINGS ]
-    [ run  channel.cpp 
-           error_if.cpp
-        :
-        :
-        : <include>$(BOOST_ROOT) <define>BOOST_GIL_NO_IO <define>_SCL_SECURE_NO_WARNINGS ]
-    [ run  pixel.cpp 
-           error_if.cpp
-        :
-        :
-        : <include>$(BOOST_ROOT) <define>BOOST_GIL_NO_IO <define>_SCL_SECURE_NO_WARNINGS ]
-    [ run  pixel_iterator.cpp 
-           error_if.cpp
-        :
-        :
-        : <include>$(BOOST_ROOT) <define>BOOST_GIL_NO_IO <define>_SCL_SECURE_NO_WARNINGS ]
-    [ run  image_io.cpp 
-           error_if.cpp
-        :
-        :
-        : <include>$(BOOST_ROOT) <define>BOOST_GIL_NO_IO <define>_SCL_SECURE_NO_WARNINGS ]
-;
+project
+    : requirements
+        <library>/boost/test//boost_unit_test_framework
+        <link>static
+        <include>../../../..
+        <toolset>intel:<debug-symbols>off
+        <toolset>msvc-7.1:<debug-symbols>off
+        <toolset>msvc-8.0:<define>_SCL_SECURE_NO_DEPRECATE <define>_CRT_SECURE_NO_DEPRECATE <define>_CRT_NONSTDC_NO_DEPRECATE
+        <toolset>msvc-9.0:<define>_SCL_SECURE_NO_DEPRECATE <define>_CRT_SECURE_NO_WARNINGS <define>_CRT_NONSTDC_NO_DEPRECATE
+        <toolset>msvc-10.0:<define>_SCL_SECURE_NO_DEPRECATE <define>_CRT_SECURE_NO_WARNINGS <define>_CRT_NONSTDC_NO_DEPRECATE
+        <link>static
+        <library>/boost/test//boost_unit_test_framework
+#		<library>/boost/system//boost_system
+    ;
+
+test-suite "gil"
+	:
+	[ run
+        # sources
+        test.cpp
+        error_if.cpp
+        image.cpp
+        performance.cpp
+        pixel.cpp
+        pixel_iterator.cpp
+        sample_image.cpp
+        : # args
+        : # input-files
+        :	# requirements
+        : # target-name
+        gil_tests
+        : # default-build
+	]
+
+    ;
