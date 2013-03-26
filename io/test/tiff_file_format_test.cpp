@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_CASE( two_bit_minisblack_gray_image_test )
     }
 }
 
-// flower-minisblack-04.tif	73x43 4-bit minisblack gray image
+// flower-minisblack-04.tif    73x43 4-bit minisblack gray image
 BOOST_AUTO_TEST_CASE( four_bit_minisblack_gray_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-minisblack-04.tif" );
@@ -103,7 +103,7 @@ BOOST_AUTO_TEST_CASE( six_bit_minisblack_gray_image_test )
     }
 }
 
-// flower-minisblack-08.tif	73x43 8-bit minisblack gray image
+// flower-minisblack-08.tif    73x43 8-bit minisblack gray image
 BOOST_AUTO_TEST_CASE( eight_bit_minisblack_gray_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-minisblack-08.tif" );
@@ -126,7 +126,7 @@ BOOST_AUTO_TEST_CASE( eight_bit_minisblack_gray_image_test )
     }
 }
 
-// flower-minisblack-10.tif	73x43 10-bit minisblack gray image
+// flower-minisblack-10.tif    73x43 10-bit minisblack gray image
 BOOST_AUTO_TEST_CASE( ten_bit_minisblack_gray_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-minisblack-10.tif" );
@@ -149,7 +149,7 @@ BOOST_AUTO_TEST_CASE( ten_bit_minisblack_gray_image_test )
     }
 }
 
-// flower-minisblack-12.tif	73x43 12-bit minisblack gray image
+// flower-minisblack-12.tif    73x43 12-bit minisblack gray image
 BOOST_AUTO_TEST_CASE( twelve_bit_minisblack_gray_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-minisblack-12.tif" );
@@ -172,7 +172,7 @@ BOOST_AUTO_TEST_CASE( twelve_bit_minisblack_gray_image_test )
     }
 }
 
-// flower-minisblack-14.tif	73x43 14-bit minisblack gray image
+// flower-minisblack-14.tif    73x43 14-bit minisblack gray image
 BOOST_AUTO_TEST_CASE( fourteen_bit_minisblack_gray_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-minisblack-14.tif" );
@@ -195,7 +195,7 @@ BOOST_AUTO_TEST_CASE( fourteen_bit_minisblack_gray_image_test )
     }
 }
 
-// flower-minisblack-16.tif	73x43 16-bit minisblack gray image
+// flower-minisblack-16.tif    73x43 16-bit minisblack gray image
 BOOST_AUTO_TEST_CASE( sixteen_bit_minisblack_gray_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-minisblack-16.tif" );
@@ -218,7 +218,7 @@ BOOST_AUTO_TEST_CASE( sixteen_bit_minisblack_gray_image_test )
     }
 }
 
-// flower-minisblack-24.tif	73x43 24-bit minisblack gray image
+// flower-minisblack-24.tif    73x43 24-bit minisblack gray image
 BOOST_AUTO_TEST_CASE( twentyfour_bit_minisblack_gray_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-minisblack-24.tif" );
@@ -241,7 +241,7 @@ BOOST_AUTO_TEST_CASE( twentyfour_bit_minisblack_gray_image_test )
     }
 }
 
-// flower-minisblack-32.tif	73x43 32-bit minisblack gray image
+// flower-minisblack-32.tif    73x43 32-bit minisblack gray image
 BOOST_AUTO_TEST_CASE( thirtytwo_bit_minisblack_gray_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-minisblack-32.tif" );
@@ -287,7 +287,7 @@ BOOST_AUTO_TEST_CASE( four_entry_colormapped_image_test )
     }
 }
 
-// flower-palette-04.tif	73x43 16-entry colormapped image
+// flower-palette-04.tif    73x43 16-entry colormapped image
 BOOST_AUTO_TEST_CASE( sixteen_entry_colormapped_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-palette-04.tif" );
@@ -310,7 +310,7 @@ BOOST_AUTO_TEST_CASE( sixteen_entry_colormapped_image_test )
     }
 }
 
-// flower-palette-08.tif	73x43 256-entry colormapped image
+// flower-palette-08.tif    73x43 256-entry colormapped image
 BOOST_AUTO_TEST_CASE( twohundred_twenty_five_entry_colormapped_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-palette-08.tif" );
@@ -333,7 +333,7 @@ BOOST_AUTO_TEST_CASE( twohundred_twenty_five_entry_colormapped_image_test )
     }
 }
 
-// flower-palette-16.tif	73x43 65536-entry colormapped image
+// flower-palette-16.tif    73x43 65536-entry colormapped image
 BOOST_AUTO_TEST_CASE( sixtyfive_thousand_entry_colormapped_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-palette-16.tif" );
@@ -356,7 +356,7 @@ BOOST_AUTO_TEST_CASE( sixtyfive_thousand_entry_colormapped_image_test )
     }
 }
 
-// flower-rgb-contig-02.tif	73x43 2-bit contiguous RGB image
+// flower-rgb-contig-02.tif    73x43 2-bit contiguous RGB image
 BOOST_AUTO_TEST_CASE( two_bit_contiguous_RGB_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-contig-02.tif" );
@@ -379,7 +379,7 @@ BOOST_AUTO_TEST_CASE( two_bit_contiguous_RGB_image_test )
     }
 }
 
-// flower-rgb-contig-04.tif	73x43 4-bit contiguous RGB image
+// flower-rgb-contig-04.tif    73x43 4-bit contiguous RGB image
 BOOST_AUTO_TEST_CASE( four_bit_contiguous_RGB_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-contig-04.tif" );
@@ -402,7 +402,7 @@ BOOST_AUTO_TEST_CASE( four_bit_contiguous_RGB_image_test )
     }
 }
 
-// flower-rgb-contig-08.tif	73x43 8-bit contiguous RGB image
+// flower-rgb-contig-08.tif    73x43 8-bit contiguous RGB image
 BOOST_AUTO_TEST_CASE( eight_bit_contiguous_RGB_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-contig-08.tif" );
@@ -425,7 +425,7 @@ BOOST_AUTO_TEST_CASE( eight_bit_contiguous_RGB_image_test )
     }
 }
 
-// flower-rgb-contig-10.tif	73x43 10-bit contiguous RGB image
+// flower-rgb-contig-10.tif    73x43 10-bit contiguous RGB image
 BOOST_AUTO_TEST_CASE( ten_bit_contiguous_RGB_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-contig-10.tif" );
@@ -448,7 +448,7 @@ BOOST_AUTO_TEST_CASE( ten_bit_contiguous_RGB_image_test )
     }
 }
 
-// flower-rgb-contig-12.tif	73x43 12-bit contiguous RGB image
+// flower-rgb-contig-12.tif    73x43 12-bit contiguous RGB image
 BOOST_AUTO_TEST_CASE( twelve_bit_contiguous_RGB_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-contig-12.tif" );
@@ -471,7 +471,7 @@ BOOST_AUTO_TEST_CASE( twelve_bit_contiguous_RGB_image_test )
     }
 }
 
-// flower-rgb-contig-14.tif	73x43 14-bit contiguous RGB image
+// flower-rgb-contig-14.tif    73x43 14-bit contiguous RGB image
 BOOST_AUTO_TEST_CASE( fourteen_bit_contiguous_RGB_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-contig-14.tif" );
@@ -494,7 +494,7 @@ BOOST_AUTO_TEST_CASE( fourteen_bit_contiguous_RGB_image_test )
     }
 }
 
-// flower-rgb-contig-16.tif	73x43 16-bit contiguous RGB image
+// flower-rgb-contig-16.tif    73x43 16-bit contiguous RGB image
 BOOST_AUTO_TEST_CASE( sixteen_bit_contiguous_RGB_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-contig-16.tif" );
@@ -517,7 +517,7 @@ BOOST_AUTO_TEST_CASE( sixteen_bit_contiguous_RGB_image_test )
     }
 }
 
-// flower-rgb-contig-24.tif	73x43 24-bit contiguous RGB image
+// flower-rgb-contig-24.tif    73x43 24-bit contiguous RGB image
 BOOST_AUTO_TEST_CASE( twenty_four_bit_contiguous_RGB_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-contig-24.tif" );
@@ -540,7 +540,7 @@ BOOST_AUTO_TEST_CASE( twenty_four_bit_contiguous_RGB_image_test )
     }
 }
 
-// flower-rgb-contig-32.tif	73x43 32-bit contiguous RGB image
+// flower-rgb-contig-32.tif    73x43 32-bit contiguous RGB image
 BOOST_AUTO_TEST_CASE( thirty_two_bit_contiguous_RGB_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-contig-32.tif" );
@@ -563,7 +563,7 @@ BOOST_AUTO_TEST_CASE( thirty_two_bit_contiguous_RGB_image_test )
     }
 }
 
-// flower-rgb-planar-02.tif	73x43 2-bit seperated RGB image
+// flower-rgb-planar-02.tif    73x43 2-bit seperated RGB image
 BOOST_AUTO_TEST_CASE( two_bit_seperated_RGB_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-planar-02.tif" );
@@ -586,7 +586,7 @@ BOOST_AUTO_TEST_CASE( two_bit_seperated_RGB_image_test )
     }
 }
 
-// flower-rgb-planar-04.tif	73x43 4-bit seperated RGB image
+// flower-rgb-planar-04.tif    73x43 4-bit seperated RGB image
 BOOST_AUTO_TEST_CASE( four_bit_seperated_RGB_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-planar-04.tif" );
@@ -609,7 +609,7 @@ BOOST_AUTO_TEST_CASE( four_bit_seperated_RGB_image_test )
     }
 }
 
-// flower-rgb-planar-08.tif	73x43 8-bit seperated RGB image
+// flower-rgb-planar-08.tif    73x43 8-bit seperated RGB image
 BOOST_AUTO_TEST_CASE( eight_bit_seperated_RGB_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-planar-08.tif" );
@@ -632,7 +632,7 @@ BOOST_AUTO_TEST_CASE( eight_bit_seperated_RGB_image_test )
     }
 }
 
-// flower-rgb-planar-10.tif	73x43 10-bit seperated RGB image
+// flower-rgb-planar-10.tif    73x43 10-bit seperated RGB image
 BOOST_AUTO_TEST_CASE( ten_bit_seperated_RGB_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-planar-10.tif" );
@@ -655,7 +655,7 @@ BOOST_AUTO_TEST_CASE( ten_bit_seperated_RGB_image_test )
     }
 }
 
-// flower-rgb-planar-12.tif	73x43 12-bit seperated RGB image
+// flower-rgb-planar-12.tif    73x43 12-bit seperated RGB image
 BOOST_AUTO_TEST_CASE( twelve_bit_seperated_RGB_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-planar-12.tif" );
@@ -678,7 +678,7 @@ BOOST_AUTO_TEST_CASE( twelve_bit_seperated_RGB_image_test )
     }
 }
 
-// flower-rgb-planar-14.tif	73x43 14-bit seperated RGB image
+// flower-rgb-planar-14.tif    73x43 14-bit seperated RGB image
 BOOST_AUTO_TEST_CASE( fourteen_bit_seperated_RGB_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-planar-14.tif" );
@@ -701,7 +701,7 @@ BOOST_AUTO_TEST_CASE( fourteen_bit_seperated_RGB_image_test )
     }
 }
 
-// flower-rgb-planar-16.tif	73x43 16-bit seperated RGB image
+// flower-rgb-planar-16.tif    73x43 16-bit seperated RGB image
 BOOST_AUTO_TEST_CASE( sixteen_bit_seperated_RGB_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-planar-16.tif" );
@@ -724,7 +724,7 @@ BOOST_AUTO_TEST_CASE( sixteen_bit_seperated_RGB_image_test )
     }
 }
 
-// flower-rgb-planar-24.tif	73x43 24-bit seperated RGB image
+// flower-rgb-planar-24.tif    73x43 24-bit seperated RGB image
 BOOST_AUTO_TEST_CASE( twenty_four_bit_seperated_RGB_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-planar-24.tif" );
@@ -747,7 +747,7 @@ BOOST_AUTO_TEST_CASE( twenty_four_bit_seperated_RGB_image_test )
     }
 }
 
-// flower-rgb-planar-32.tif	73x43 32-bit seperated RGB image
+// flower-rgb-planar-32.tif    73x43 32-bit seperated RGB image
 BOOST_AUTO_TEST_CASE( thirty_two_bit_seperated_RGB_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-planar-32.tif" );
@@ -770,7 +770,7 @@ BOOST_AUTO_TEST_CASE( thirty_two_bit_seperated_RGB_image_test )
     }
 }
 
-// flower-separated-contig-08.tif	73x43 8-bit contiguous CMYK image
+// flower-separated-contig-08.tif    73x43 8-bit contiguous CMYK image
 BOOST_AUTO_TEST_CASE( eight_bit_contiguous_CMYK_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-separated-contig-08.tif" );
@@ -793,7 +793,7 @@ BOOST_AUTO_TEST_CASE( eight_bit_contiguous_CMYK_image_test )
     }
 }
 
-// flower-separated-contig-16.tif	73x43 16-bit contiguous CMYK image
+// flower-separated-contig-16.tif    73x43 16-bit contiguous CMYK image
 BOOST_AUTO_TEST_CASE( sixteen_bit_contiguous_CMYK_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-separated-contig-16.tif" );
@@ -816,7 +816,7 @@ BOOST_AUTO_TEST_CASE( sixteen_bit_contiguous_CMYK_image_test )
     }
 }
 
-// flower-separated-planar-08.tif	73x43 8-bit separated CMYK image
+// flower-separated-planar-08.tif    73x43 8-bit separated CMYK image
 BOOST_AUTO_TEST_CASE( eight_bit_separated_CMYK_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-separated-planar-08.tif" );
@@ -839,7 +839,7 @@ BOOST_AUTO_TEST_CASE( eight_bit_separated_CMYK_image_test )
     }
 }
 
-// flower-separated-planar-16.tif	73x43 16-bit separated CMYK image
+// flower-separated-planar-16.tif    73x43 16-bit separated CMYK image
 BOOST_AUTO_TEST_CASE( sixteen_bit_separated_CMYK_image_test )
 {
     std::string filename( tiff_in + "libtiffpic/depth/flower-separated-planar-16.tif" );
