@@ -435,8 +435,8 @@ template <typename View1, typename View2, typename F>
 void test_transform(std::size_t trials) {
     image<typename View1::value_type, is_planar<View1>::value> im1(width,height);
     image<typename View2::value_type, is_planar<View2>::value> im2(width,height);
-    std::cout << "GIL: "    <<measure_time(transform_gil_t<View1,View2,F>(view(im1),view(im2),F()),trials) << std::endl;
-    std::cout << "Non-GIL: "<<measure_time(transform_nongil_t<View1,View2,F>(view(im1),view(im2),F()),trials) << std::endl;
+    //std::cout << "GIL: "    <<measure_time(transform_gil_t<View1,View2,F>(view(im1),view(im2),F()),trials) << std::endl;
+    //std::cout << "Non-GIL: "<<measure_time(transform_nongil_t<View1,View2,F>(view(im1),view(im2),F()),trials) << std::endl;
 }
 
 BOOST_AUTO_TEST_SUITE(GIL_Tests)
