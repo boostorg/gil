@@ -81,7 +81,9 @@ struct packed_pixel {
     } 
     packed_pixel(int chan0, int chan1, int chan2) : _bitfield(0) { 
         BOOST_STATIC_ASSERT((num_channels<packed_pixel>::value==3)); 
-        gil::at_c<0>(*this)=chan0; gil::at_c<1>(*this)=chan1; gil::at_c<2>(*this)=chan2; 
+        gil::at_c<0>(*this) = chan0;
+        gil::at_c<1>(*this) = chan1;
+        gil::at_c<2>(*this) = chan2;
     } 
     packed_pixel(int chan0, int chan1, int chan2, int chan3) : _bitfield(0) { 
         BOOST_STATIC_ASSERT((num_channels<packed_pixel>::value==4)); 

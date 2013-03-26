@@ -55,7 +55,7 @@ template <>
 struct default_color_converter_impl< rgb_t, xyz_t >
 {
 private:
-    GIL_FORCEINLINE
+    BOOST_FORCEINLINE
     bits32f inverse_companding(bits32f sample) const
     {
         if ( sample > 0.04045f )
@@ -111,7 +111,7 @@ template <>
 struct default_color_converter_impl<xyz_t,rgb_t>
 {
 private:
-    GIL_FORCEINLINE
+    BOOST_FORCEINLINE
     bits32f companding(bits32f sample) const
     {
         if ( sample > 0.0031308f )

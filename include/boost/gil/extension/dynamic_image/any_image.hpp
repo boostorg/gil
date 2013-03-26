@@ -111,13 +111,13 @@ public:
 /// \ingroup ImageModel
 
 /// \brief Returns the non-constant-pixel view of any image. The returned view is any view.
-template <typename Types>  GIL_FORCEINLINE // Models ImageVectorConcept
+template <typename Types>  BOOST_FORCEINLINE // Models ImageVectorConcept
 typename any_image<Types>::view_t view(any_image<Types>& anyImage) { 
     return apply_operation(anyImage, detail::any_image_get_view<typename any_image<Types>::view_t>());
 }
 
 /// \brief Returns the constant-pixel view of any image. The returned view is any view.
-template <typename Types> GIL_FORCEINLINE // Models ImageVectorConcept
+template <typename Types> BOOST_FORCEINLINE // Models ImageVectorConcept
 typename any_image<Types>::const_view_t const_view(const any_image<Types>& anyImage) { 
     return apply_operation(anyImage, detail::any_image_get_const_view<typename any_image<Types>::const_view_t>());
 }

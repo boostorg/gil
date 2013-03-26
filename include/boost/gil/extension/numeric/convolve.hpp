@@ -144,7 +144,7 @@ public:
 /// \ingroup ImageAlgorithms
 ///correlate a 1D variable-size kernel along the rows of an image
 template <typename PixelAccum,typename SrcView,typename Kernel,typename DstView>
-GIL_FORCEINLINE
+BOOST_FORCEINLINE
 void correlate_rows(const SrcView& src, const Kernel& ker, const DstView& dst,
                     convolve_boundary_option option=convolve_option_extend_zero) {
     detail::correlate_rows_imp<PixelAccum>(src,ker,dst,option,detail::correlator_n<PixelAccum>(ker.size()));
@@ -153,7 +153,7 @@ void correlate_rows(const SrcView& src, const Kernel& ker, const DstView& dst,
 /// \ingroup ImageAlgorithms
 ///correlate a 1D variable-size kernel along the columns of an image
 template <typename PixelAccum,typename SrcView,typename Kernel,typename DstView>
-GIL_FORCEINLINE
+BOOST_FORCEINLINE
 void correlate_cols(const SrcView& src, const Kernel& ker, const DstView& dst,
                     convolve_boundary_option option=convolve_option_extend_zero) {
     correlate_rows<PixelAccum>(transposed_view(src),ker,transposed_view(dst),option);
@@ -162,7 +162,7 @@ void correlate_cols(const SrcView& src, const Kernel& ker, const DstView& dst,
 /// \ingroup ImageAlgorithms
 ///convolve a 1D variable-size kernel along the rows of an image
 template <typename PixelAccum,typename SrcView,typename Kernel,typename DstView>
-GIL_FORCEINLINE
+BOOST_FORCEINLINE
 void convolve_rows(const SrcView& src, const Kernel& ker, const DstView& dst,
                    convolve_boundary_option option=convolve_option_extend_zero) {
     correlate_rows<PixelAccum>(src,reverse_kernel(ker),dst,option);
@@ -171,7 +171,7 @@ void convolve_rows(const SrcView& src, const Kernel& ker, const DstView& dst,
 /// \ingroup ImageAlgorithms
 ///convolve a 1D variable-size kernel along the columns of an image
 template <typename PixelAccum,typename SrcView,typename Kernel,typename DstView>
-GIL_FORCEINLINE
+BOOST_FORCEINLINE
 void convolve_cols(const SrcView& src, const Kernel& ker, const DstView& dst,
                    convolve_boundary_option option=convolve_option_extend_zero) {
     convolve_rows<PixelAccum>(transposed_view(src),ker,transposed_view(dst),option);
@@ -180,7 +180,7 @@ void convolve_cols(const SrcView& src, const Kernel& ker, const DstView& dst,
 /// \ingroup ImageAlgorithms
 ///correlate a 1D fixed-size kernel along the rows of an image
 template <typename PixelAccum,typename SrcView,typename Kernel,typename DstView>
-GIL_FORCEINLINE
+BOOST_FORCEINLINE
 void correlate_rows_fixed(const SrcView& src, const Kernel& ker, const DstView& dst,
                           convolve_boundary_option option=convolve_option_extend_zero) {
     detail::correlate_rows_imp<PixelAccum>(src,ker,dst,option,detail::correlator_k<Kernel::static_size,PixelAccum>());
@@ -189,7 +189,7 @@ void correlate_rows_fixed(const SrcView& src, const Kernel& ker, const DstView& 
 /// \ingroup ImageAlgorithms
 ///correlate a 1D fixed-size kernel along the columns of an image
 template <typename PixelAccum,typename SrcView,typename Kernel,typename DstView>
-GIL_FORCEINLINE
+BOOST_FORCEINLINE
 void correlate_cols_fixed(const SrcView& src, const Kernel& ker, const DstView& dst,
                           convolve_boundary_option option=convolve_option_extend_zero) {
     correlate_rows_fixed<PixelAccum>(transposed_view(src),ker,transposed_view(dst),option);
@@ -198,7 +198,7 @@ void correlate_cols_fixed(const SrcView& src, const Kernel& ker, const DstView& 
 /// \ingroup ImageAlgorithms
 ///convolve a 1D fixed-size kernel along the rows of an image
 template <typename PixelAccum,typename SrcView,typename Kernel,typename DstView>
-GIL_FORCEINLINE
+BOOST_FORCEINLINE
 void convolve_rows_fixed(const SrcView& src, const Kernel& ker, const DstView& dst,
                          convolve_boundary_option option=convolve_option_extend_zero) {
     correlate_rows_fixed<PixelAccum>(src,reverse_kernel(ker),dst,option);
@@ -207,7 +207,7 @@ void convolve_rows_fixed(const SrcView& src, const Kernel& ker, const DstView& d
 /// \ingroup ImageAlgorithms
 ///convolve a 1D fixed-size kernel along the columns of an image
 template <typename PixelAccum,typename SrcView,typename Kernel,typename DstView>
-GIL_FORCEINLINE
+BOOST_FORCEINLINE
 void convolve_cols_fixed(const SrcView& src, const Kernel& ker, const DstView& dst,
                          convolve_boundary_option option=convolve_option_extend_zero) {
     convolve_rows_fixed<PixelAccum>(transposed_view(src),ker,transposed_view(dst),option);
