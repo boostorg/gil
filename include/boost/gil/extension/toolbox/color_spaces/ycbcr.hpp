@@ -25,6 +25,8 @@
 #include <boost/mpl/vector_c.hpp>
 #include <boost/gil/gil_all.hpp>
 
+#include <boost/gil/extension/toolbox/metafunctions/get_num_bits.hpp>
+
 namespace boost{ namespace gil {
 
 /// \addtogroup ColorNameModel
@@ -41,13 +43,13 @@ struct cr_t {};
 /// \}
 
 /// \ingroup ColorSpaceModel
-typedef boost::mpl::vector3<ycbcr_color_space::y_t, ycbcr_color_space::cb_t, ycbcr_color_space::cr_t> ycbcr_t;
+typedef boost::mpl::vector3<ycbcr_color_space::y_t, ycbcr_color_space::cb_t, ycbcr_color_space::cr_t> ycbcr_601__t;
 
 /// \ingroup LayoutModel
-typedef boost::gil::layout<ycbcr_t> ycbcr_layout_t;
+typedef boost::gil::layout<ycbcr_601__t> ycbcr_601__layout_t;
 
 //The channel depth is ALWAYS 8bits ofr YCbCr!
-GIL_DEFINE_ALL_TYPEDEFS(8,  ycbcr)
+GIL_DEFINE_ALL_TYPEDEFS(8,  ycbcr_601_)
 
 /*
  * Source: http://en.wikipedia.org/wiki/YCbCr#ITU-R_BT.601_conversion
@@ -58,12 +60,61 @@ GIL_DEFINE_ALL_TYPEDEFS(8,  ycbcr)
 * @brief Convert YCbCr ITU.BT-601 to RGB.
 */
 template<>
-struct default_color_converter_impl<ycbcr_t, rgb_t>
+struct default_color_converter_impl<ycbcr_601__t, rgb_t>
 {
 	// Note: the RGB_t channels range can be set later on by the users. We dont want to cast to bits8 or anything here.
 	template < typename SRCP, typename DSTP >
 	void operator()( const SRCP& src, DSTP& dst ) const
 	{
+        typedef channel_type< DSTP >::type dst_channel_t;
+        convert( src, dst
+               , boost::is_same< mpl::int_<8>::type, mpl::int_<8>::type >::type()
+               );
+	}
+
+private:
+
+    // optimization for bit8 channels
+    template< typename Src_Pixel
+            , typename Dst_Pixel
+            >
+    void convert( const Src_Pixel& src
+                ,       Dst_Pixel& dst
+                , mpl::true_ // is 8 bit channel
+                ) const
+    {
+		using namespace boost::algorithm;
+        using namespace boost::gil::ycbcr_color_space;
+
+        typedef channel_type< Src_Pixel >::type src_channel_t;
+        typedef channel_type< Dst_Pixel >::type dst_channel_t;
+
+		src_channel_t y  = channel_convert<src_channel_t>( get_color(src,  y_t()));
+		src_channel_t cb = channel_convert<src_channel_t>( get_color(src, cb_t()));
+		src_channel_t cr = channel_convert<src_channel_t>( get_color(src, cr_t()));
+
+		// The intermediate results of the formulas require at least 16bits of precission.
+		boost::int_fast16_t c = y  - 16;
+		boost::int_fast16_t d = cb - 128;
+		boost::int_fast16_t e = cr - 128;
+		boost::int_fast16_t red   = clamp((( 298 * c + 409 * e + 128) >> 8), 0, 255);
+		boost::int_fast16_t green = clamp((( 298 * c - 100 * d - 208 * e + 128) >> 8), 0, 255);
+		boost::int_fast16_t blue  = clamp((( 298 * c + 516 * d + 128) >> 8), 0, 255);
+
+		get_color( dst,  red_t() )  = (dst_channel_t) red;
+		get_color( dst, green_t() ) = (dst_channel_t) green;
+		get_color( dst,  blue_t() ) = (dst_channel_t) blue;
+    }
+
+
+    template< typename Src_Pixel
+            , typename Dst_Pixel
+            >
+    void convert( const Src_Pixel& s
+                ,       Dst_Pixel& d
+                , mpl::false_ // is 8 bit channel
+                ) const
+    {
         using namespace boost::algorithm;
         using namespace boost::gil::ycbcr_color_space;
 
@@ -87,7 +138,7 @@ struct default_color_converter_impl<ycbcr_t, rgb_t>
                                                          , 0.0
                                                          , 255.0
                                                          );
-	}
+    }
 };
 
 /*
@@ -99,7 +150,7 @@ struct default_color_converter_impl<ycbcr_t, rgb_t>
 * @brief Convert RGB to YCbCr ITU.BT-601.
 */
 template<>
-struct default_color_converter_impl<rgb_t, ycbcr_t>
+struct default_color_converter_impl<rgb_t, ycbcr_601__t>
 {
 	template < typename SRCP, typename DSTP >
 	void operator()( const SRCP& src, DSTP& dst ) const
@@ -120,12 +171,11 @@ struct default_color_converter_impl<rgb_t, ycbcr_t>
 
 		get_color( dst,  y_t() ) = (dst_channel_t)  y;
 		get_color( dst, cb_t() ) = (dst_channel_t) cb;
-		get_color( dst, cr_t() ) = (dst_channel_t) cr;
+		get_color( dst, cr_t() ) = (dst_channel_t) cr;  
 	}
 };
 
 } // namespace gil
-
 } // namespace boost
 
 #endif
