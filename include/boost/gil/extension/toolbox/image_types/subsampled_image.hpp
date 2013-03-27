@@ -69,13 +69,13 @@ struct subsampled_image_deref_fn
     /// operator()
     typename result_type operator()( const point_t& p ) const
     {
-        auto y = *_y_locator.xy_at( p );
-        auto v = *_v_locator.xy_at( p.x / _ux_ssfactor, p.y / _uy_ssfactor );
-        auto u = *_u_locator.xy_at( p.x / _vx_ssfactor, p.y / _vy_ssfactor );
+        plane_locator_t y = _y_locator.xy_at( p );
+        plane_locator_t v = _v_locator.xy_at( p.x / _ux_ssfactor, p.y / _uy_ssfactor );
+        plane_locator_t u = _u_locator.xy_at( p.x / _vx_ssfactor, p.y / _vy_ssfactor );
 
-        return value_type( at_c<0>( y )
-                         , at_c<0>( v )
-                         , at_c<0>( u )
+        return value_type( at_c<0>( *y )
+                         , at_c<0>( *v )
+                         , at_c<0>( *u )
                          );
     }
 
@@ -212,7 +212,9 @@ public:
     typedef typename plane_view_t::locator plane_locator_t;
 
     typedef typename view_type_from_pixel< Pixel >::type pixel_view_t;
-    typedef typename subsampled_image_locator< typename pixel_view_t::locator >::type locator_t;
+    typedef typename pixel_view_t::locator pixel_locator_t;
+
+    typedef typename subsampled_image_locator< pixel_locator_t >::type locator_t;
 
     typedef typename plane_image_t::coord_t x_coord_t;
     typedef typename plane_image_t::coord_t y_coord_t;
@@ -254,7 +256,7 @@ private:
              , const std::size_t uy_ssfactor
              )
     {
-        typedef subsampled_image_deref_fn< locator_t > defer_fn_t;
+        typedef subsampled_image_deref_fn< pixel_locator_t > defer_fn_t;
 
         defer_fn_t deref_fn( view( _y_plane ).xy_at( 0, 0 )
                            , view( _v_plane ).xy_at( 0, 0 )
@@ -328,67 +330,66 @@ void fill_pixels( const subsampled_image_view< Locator >& view
 /// \ingroup ImageViewConstructors
 /// \brief Creates a subsampled view from a raw memory
 /////////////////////////////////////////////////////////////////////////////////////////
-//template< typename Pixel >
-//typename subsampled_image< Pixel >::view_t subsampled_view( std::size_t    y_width
-//                                                          , std::size_t    y_height
-//                                                          , unsigned char* y_base
-//                                                          , std::size_t    vx_ssfactor = 2
-//                                                          , std::size_t    vy_ssfactor = 2
-//                                                          , std::size_t    ux_ssfactor = 2
-//                                                          , std::size_t    uy_ssfactor = 2
-//                                                          )
-//{
-//    std::size_t y_channel_size = 1;
-//    std::size_t u_channel_size = 1;
-//
-//    unsigned char* u_base = y_base + ( y_width  * y_height * y_channel_size );
-//    unsigned char* v_base = u_base + ( y_width / ux_ssfactor ) * ( y_height / uy_ssfactor ) * u_channel_size;
-//
-//    typedef subsampled_image< Pixel >::plane_view_t plane_view_t;
-//
-//    plane_view_t y_plane = interleaved_view( y_width
-//                                           , y_height
-//                                           , (plane_view_t::value_type*) y_base // pixels
-//                                           , y_width                            // rowsize_in_bytes
-//                                           );
-//
-//    plane_view_t v_plane = interleaved_view( y_width  / vx_ssfactor 
-//                                           , y_height / vy_ssfactor
-//                                           , (plane_view_t::value_type*) v_base // pixels
-//                                           , y_width                            // rowsize_in_bytes
-//                                           );
-//
-//    plane_view_t u_plane = interleaved_view( y_width  / ux_ssfactor
-//                                           , y_height / uy_ssfactor
-//                                           , (plane_view_t::value_type*) u_base // pixels
-//                                           , y_width                            // rowsize_in_bytes
-//                                           );
-//
-//    typedef subsampled_image_deref_fn< subsampled_image< Pixel >::locator_t > defer_fn_t;
-//    defer_fn_t deref_fn( y_plane.xy_at( 0, 0 )
-//                       , v_plane.xy_at( 0, 0 )
-//                       , u_plane.xy_at( 0, 0 )
-//                       , vx_ssfactor
-//                       , vy_ssfactor
-//                       , ux_ssfactor
-//                       , uy_ssfactor
-//                       );
-//    
-//
-//    typedef subsampled_image< Pixel >::locator_t locator_t;
-//    locator_t locator( point_t( 0, 0 ) // p
-//                     , point_t( 1, 1 ) // step
-//                     , deref_fn
-//                     );
-//
-//    typedef subsampled_image< Pixel >::view_t view_t;
-//    return view_t( point_t(               y_width,               y_height )
-//                 , point_t( y_width / vx_ssfactor, y_height / vy_ssfactor )
-//                 , point_t( y_width / ux_ssfactor, y_height / uy_ssfactor )
-//                 , locator
-//                 );
-//}
+template< typename Pixel >
+typename subsampled_image< Pixel >::view_t subsampled_view( std::size_t    y_width
+                                                          , std::size_t    y_height
+                                                          , unsigned char* y_base
+                                                          , std::size_t    vx_ssfactor = 2
+                                                          , std::size_t    vy_ssfactor = 2
+                                                          , std::size_t    ux_ssfactor = 2
+                                                          , std::size_t    uy_ssfactor = 2
+                                                          )
+{
+    std::size_t y_channel_size = 1;
+    std::size_t u_channel_size = 1;
 
+    unsigned char* u_base = y_base + ( y_width  * y_height * y_channel_size );
+    unsigned char* v_base = u_base + ( y_width / ux_ssfactor ) * ( y_height / uy_ssfactor ) * u_channel_size;
+
+    typedef subsampled_image< Pixel >::plane_view_t plane_view_t;
+
+    plane_view_t y_plane = interleaved_view( y_width
+                                           , y_height
+                                           , (plane_view_t::value_type*) y_base // pixels
+                                           , y_width                            // rowsize_in_bytes
+                                           );
+
+    plane_view_t v_plane = interleaved_view( y_width  / vx_ssfactor 
+                                           , y_height / vy_ssfactor
+                                           , (plane_view_t::value_type*) v_base // pixels
+                                           , y_width                            // rowsize_in_bytes
+                                           );
+
+    plane_view_t u_plane = interleaved_view( y_width  / ux_ssfactor
+                                           , y_height / uy_ssfactor
+                                           , (plane_view_t::value_type*) u_base // pixels
+                                           , y_width                            // rowsize_in_bytes
+                                           );
+
+    typedef subsampled_image_deref_fn< typename subsampled_image< Pixel >::pixel_locator_t > defer_fn_t;
+    defer_fn_t deref_fn( y_plane.xy_at( 0, 0 )
+                       , v_plane.xy_at( 0, 0 )
+                       , u_plane.xy_at( 0, 0 )
+                       , vx_ssfactor
+                       , vy_ssfactor
+                       , ux_ssfactor
+                       , uy_ssfactor
+                       );
+    
+
+    typedef subsampled_image< Pixel >::locator_t locator_t;
+    locator_t locator( point_t( 0, 0 ) // p
+                     , point_t( 1, 1 ) // step
+                     , deref_fn
+                     );
+
+    typedef subsampled_image< Pixel >::view_t view_t;
+    return view_t( point_t(               y_width,               y_height )
+                 , point_t( y_width / vx_ssfactor, y_height / vy_ssfactor )
+                 , point_t( y_width / ux_ssfactor, y_height / uy_ssfactor )
+                 , locator
+                 );
+}
 
 } // namespace gil
 } // namespace boost
