@@ -15,7 +15,6 @@
 ]
 
 [/ Links ]
-[def _EMAIL_               [@chhenning ** @ ** gmail.com]]
 [def _BMP_Wiki_            [@http://en.wikipedia.org/wiki/BMP_file_format]]
 [def _JPEG_Wiki_           [@http://en.wikipedia.org/wiki/JPEG]]
 [def _JPEG_lib_            [@http://www.ijg.org/]]
@@ -562,7 +561,7 @@ recommend to have a look at existing implementations and then trying to follow a
 [endsect]
 
 [section Running gil::io tests]
-gil::io comes with a large suite of test cases which reads and writes various file formats. It uses some test image suites which can be found online or which can be demanded from me by sending me an email ( _EMAIL_ ).
+gil::io comes with a large suite of test cases which reads and writes various file formats. It uses some test image suites which can be found online or which can be demanded from me by sending me an email.
 
 There are some test images created by me in the test folder. To enable unit tests which make use of them set the following compiler options BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES and BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES.
 
@@ -570,7 +569,7 @@ The following list provides all links to the image suites the compiler symbol to
 
 * BMP:   _BMP_TEST_FILES                 -- BOOST_GIL_IO_USE_BMP_TEST_SUITE_IMAGES
 * PNG:   _PNG_TEST_FILES                 -- BOOST_GIL_IO_USE_PNG_TEST_SUITE_IMAGES
-* PNM:   _EMAIL_                         -- BOOST_GIL_IO_USE_PNM_TEST_SUITE_IMAGES
+* PNM:   request files from me           -- BOOST_GIL_IO_USE_PNM_TEST_SUITE_IMAGES
 * TARGA: _TARGA_TEST_FILES               -- BOOST_GIL_IO_USE_TARGA_FILEFORMAT_TEST_SUITE_IMAGES
 * TIFF:  _TIFF_LIB_TIFF_TEST_FILES       -- BOOST_GIL_IO_USE_TIFF_LIBTIFF_TEST_SUITE_IMAGES
 * TIFF   _TIFF_GRAPHICSMAGICK_TEST_FILES -- BOOST_GIL_IO_USE_TIFF_GRAPHICSMAGICK_TEST_SUITE_IMAGES
