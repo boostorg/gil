@@ -86,6 +86,23 @@ struct pixel_multiplies_scalar_t {
 };
 
 /// \ingroup PixelNumericOperations
+/// \brief construct for dividing two pixels
+template <typename PixelRef1, // models pixel concept
+          typename PixelRef2, // models pixel concept
+          typename PixelR>    // models pixel value concept
+struct pixel_multiply_t {
+    PixelR operator() (const PixelRef1& p1,
+                       const PixelRef2& p2) const {
+        PixelR result;
+        static_transform(p1,p2,result,
+                           channel_multiplies_t<typename channel_type<PixelRef1>::type,
+                                                typename channel_type<PixelRef2>::type,
+                                                typename channel_type<PixelR>::type>());
+        return result;
+    }
+};
+
+/// \ingroup PixelNumericOperations
 /// \brief construct for dividing a pixel by a scalar
 template <typename PixelRef, // models pixel concept
           typename Scalar,   // models a scalar type
@@ -98,6 +115,23 @@ struct pixel_divides_scalar_t {
                            std::bind2nd(channel_divides_scalar_t<typename channel_type<PixelRef>::type,
                                                                  Scalar,
                                                                  typename channel_type<PixelR>::type>(),s));
+        return result;
+    }
+};
+
+/// \ingroup PixelNumericOperations
+/// \brief construct for dividing two pixels
+template <typename PixelRef1, // models pixel concept
+          typename PixelRef2, // models pixel concept
+          typename PixelR>    // models pixel value concept
+struct pixel_divide_t {
+    PixelR operator() (const PixelRef1& p1,
+                       const PixelRef2& p2) const {
+        PixelR result;
+        static_transform(p1,p2,result,
+                           channel_divides_t<typename channel_type<PixelRef1>::type,
+                                             typename channel_type<PixelRef2>::type,
+                                             typename channel_type<PixelR>::type>());
         return result;
     }
 };
