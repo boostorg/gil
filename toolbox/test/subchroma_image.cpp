@@ -45,30 +45,35 @@ BOOST_AUTO_TEST_CASE( subchroma_image_test )
     }
 
     {
+        typedef rgb8_pixel_t pixel_t;
+        typedef mpl::vector_c< int, 1, 1, 1, 1 > factors_t;
+        typedef subchroma_image< pixel_t, factors_t > image_t;
+
+        image_t img( 640, 480 );
+
+        fill_pixels( view( img )
+                   , pixel_t( 10, 20, 30 )
+                   );
+    }
+
+    {
         typedef ycbcr_601_8_pixel_t pixel_t;
+        typedef mpl::vector_c< int, 2, 2, 2, 2 > factors_t;
         typedef subchroma_image< pixel_t > image_t;
 
         std::size_t y_width     = 640;
         std::size_t y_height    = 480;
-        std::size_t vx_ssfactor =   2;
-        std::size_t vy_ssfactor =   2;
-        std::size_t ux_ssfactor =   2;
-        std::size_t uy_ssfactor =   2;
 
         std::size_t image_size = ( y_width * y_height )
-                               + ( y_width / vx_ssfactor ) * ( y_height / vy_ssfactor )
-                               + ( y_width / ux_ssfactor ) * ( y_height / uy_ssfactor );
+                               + ( y_width / mpl::at_c<factors_t, 0>::type::value ) * ( y_height / mpl::at_c<factors_t, 1>::type::value )
+                               + ( y_width / mpl::at_c<factors_t, 2>::type::value ) * ( y_height / mpl::at_c<factors_t, 3>::type::value );
 
         vector< unsigned char > data( image_size );
 
-        image_t::view_t v = subsampled_view< pixel_t >( y_width
-                                                      , y_height
-                                                      , &data.front()
-                                                      , vx_ssfactor
-                                                      , vy_ssfactor
-                                                      , ux_ssfactor
-                                                      , uy_ssfactor
-                                                      );
+        image_t::view_t v = subsampled_view< pixel_t, factors_t >( y_width
+                                                                 , y_height
+                                                                 , &data.front()
+                                                                 );
         rgb8_pixel_t p = *v.xy_at( 0, 0 );
     }
 }
