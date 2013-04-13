@@ -11,7 +11,7 @@
 #define BOOST_GIL_EXTENSION_TOOLBOX_IMAGE_TYPES_SUBSAMPLED_IMAGE_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
-/// \file subsampled_image.hpp
+/// \file subchroma_image.hpp
 /// \brief Subsampled Image extension
 /// \author Christian Henning \n
 ///
@@ -26,17 +26,17 @@ namespace boost{ namespace gil {
 typedef boost::gil::point2< std::ptrdiff_t > point_t;
 
 ////////////////////////////////////////////////////////////////////////////////////////
-/// \class subsampled_image_deref_fn
+/// \class subchroma_image_deref_fn
 /// \ingroup PixelLocatorModel PixelBasedModel
 /// \brief Used for virtual_2D_locator
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 template< typename Locator >
-struct subsampled_image_deref_fn
+struct subchroma_image_deref_fn
 {
     typedef gray8_view_t::locator plane_locator_t;
 
-    typedef subsampled_image_deref_fn    const_t;
+    typedef subchroma_image_deref_fn    const_t;
     typedef typename Locator::value_type value_type;
     typedef value_type                   reference;
     typedef value_type                   const_reference;
@@ -46,10 +46,10 @@ struct subsampled_image_deref_fn
     static const bool is_mutable = false;
 
     /// default constructor
-    subsampled_image_deref_fn() {}
+    subchroma_image_deref_fn() {}
 
     /// constructor
-    subsampled_image_deref_fn( const plane_locator_t&    y_locator
+    subchroma_image_deref_fn( const plane_locator_t&    y_locator
                              , const plane_locator_t&    v_locator
                              , const plane_locator_t&    u_locator
                              , const std::size_t ux_ssfactor
@@ -103,45 +103,45 @@ private:
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
-/// \class subsampled_image_locator_type
+/// \class subchroma_image_locator_type
 /// \ingroup PixelLocatorModel PixelBasedModel
 /// \brief 
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 template< typename Locator >
-struct subsampled_image_locator
+struct subchroma_image_locator
 {
-    typedef virtual_2d_locator< subsampled_image_deref_fn< Locator > // Deref
+    typedef virtual_2d_locator< subchroma_image_deref_fn< Locator > // Deref
                               , false                                // IsTransposed
                               > type;
 };
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
-/// \class subsampled_image_view
+/// \class subchroma_image_view
 /// \ingroup ImageViewModel PixelBasedModel
 /// \brief A lightweight object that interprets a subsampled image.Models ImageViewConcept,PixelBasedConcept,HasDynamicXStepTypeConcept,HasDynamicYStepTypeConcept,HasTransposedTypeConcept
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
-template< typename Locator > // subsampled_image_locator< ... >::type
-class subsampled_image_view : public image_view< Locator >
+template< typename Locator > // subchroma_image_locator< ... >::type
+class subchroma_image_view : public image_view< Locator >
 {
 public:
 
     typedef typename Locator::deref_fn_t         deref_fn_t;
     typedef typename deref_fn_t::plane_locator_t plane_locator_t;
 
-    typedef subsampled_image_view const_t;
+    typedef subchroma_image_view const_t;
 
     typedef image_view< plane_locator_t > plane_view_t;
 
     /// default constructor
-    subsampled_image_view()
+    subchroma_image_view()
     : image_view< Locator >()
     {}
 
     /// constructor
-    subsampled_image_view( const point_t& y_dimensions
+    subchroma_image_view( const point_t& y_dimensions
                          , const point_t& v_dimensions
                          , const point_t& u_dimensions
                          , const Locator& locator
@@ -154,7 +154,7 @@ public:
     
     /// copy constructor
     template< typename Subsampled_View >
-    subsampled_image_view( const Subsampled_View& v )
+    subchroma_image_view( const Subsampled_View& v )
     : image_view< locator_t >( v )
     {}
 
@@ -180,7 +180,7 @@ private:
 
 private:
 
-    template< typename Locator > friend class subsampled_image_view;
+    template< typename Locator > friend class subchroma_image_view;
 
     point_t _y_dimensions;
     point_t _v_dimensions;
@@ -198,7 +198,7 @@ private:
 template< typename Pixel
         , typename Allocator = std::allocator< unsigned char >
         >
-class subsampled_image
+class subchroma_image
 {
 public:
     
@@ -214,17 +214,17 @@ public:
     typedef typename view_type_from_pixel< Pixel >::type pixel_view_t;
     typedef typename pixel_view_t::locator pixel_locator_t;
 
-    typedef typename subsampled_image_locator< pixel_locator_t >::type locator_t;
+    typedef typename subchroma_image_locator< pixel_locator_t >::type locator_t;
 
     typedef typename plane_image_t::coord_t x_coord_t;
     typedef typename plane_image_t::coord_t y_coord_t;
 
-    typedef subsampled_image_view< locator_t > view_t;
+    typedef subchroma_image_view< locator_t > view_t;
     typedef typename view_t::const_t           const_view_t;
 
 
     /// constructor
-    subsampled_image( const x_coord_t   y_width
+    subchroma_image( const x_coord_t   y_width
                     , const y_coord_t   y_height
                     , const std::size_t vx_ssfactor = 2
                     , const std::size_t vy_ssfactor = 2
@@ -256,7 +256,7 @@ private:
              , const std::size_t uy_ssfactor
              )
     {
-        typedef subsampled_image_deref_fn< pixel_locator_t > defer_fn_t;
+        typedef subchroma_image_deref_fn< pixel_locator_t > defer_fn_t;
 
         defer_fn_t deref_fn( view( _y_plane ).xy_at( 0, 0 )
                            , view( _v_plane ).xy_at( 0, 0 )
@@ -290,36 +290,36 @@ private:
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /// \name view, const_view
-/// \brief Get an image view from an subsampled_image
+/// \brief Get an image view from an subchroma_image
 /// \ingroup ImageModel
 /// \brief Returns the non-constant-pixel view of an image
 /////////////////////////////////////////////////////////////////////////////////////////
 template< typename Pixel >
 inline
-const typename subsampled_image< Pixel >::view_t& view( subsampled_image< Pixel >& img )
+const typename subchroma_image< Pixel >::view_t& view( subchroma_image< Pixel >& img )
 {
     return img._view;
 }
 
 template< typename Pixel >
 inline
-const typename subsampled_image< Pixel >::const_view_t const_view( subsampled_image< Pixel >& img )
+const typename subchroma_image< Pixel >::const_view_t const_view( subchroma_image< Pixel >& img )
 {
-    return static_cast< const typename subsampled_image< Pixel >::const_view_t>( img._view );
+    return static_cast< const typename subchroma_image< Pixel >::const_view_t>( img._view );
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup ImageViewSTLAlgorithmsFillPixels
-/// \brief std::fill for subsampled_image views
+/// \brief std::fill for subchroma_image views
 /////////////////////////////////////////////////////////////////////////////////////////
 template< typename Locator
         , typename Pixel
         >
-void fill_pixels( const subsampled_image_view< Locator >& view
+void fill_pixels( const subchroma_image_view< Locator >& view
                 , const Pixel&                            value
                 )
 {
-    typedef typename subsampled_image<Pixel>::plane_view_t::value_type channel_t;
+    typedef typename subchroma_image<Pixel>::plane_view_t::value_type channel_t;
 
     fill_pixels( view.y_plane_view(), channel_t( at_c<0>( value )));
     fill_pixels( view.v_plane_view(), channel_t( at_c<1>( value )));
@@ -331,7 +331,7 @@ void fill_pixels( const subsampled_image_view< Locator >& view
 /// \brief Creates a subsampled view from a raw memory
 /////////////////////////////////////////////////////////////////////////////////////////
 template< typename Pixel >
-typename subsampled_image< Pixel >::view_t subsampled_view( std::size_t    y_width
+typename subchroma_image< Pixel >::view_t subsampled_view( std::size_t    y_width
                                                           , std::size_t    y_height
                                                           , unsigned char* y_base
                                                           , std::size_t    vx_ssfactor = 2
@@ -346,7 +346,7 @@ typename subsampled_image< Pixel >::view_t subsampled_view( std::size_t    y_wid
     unsigned char* u_base = y_base + ( y_width  * y_height * y_channel_size );
     unsigned char* v_base = u_base + ( y_width / ux_ssfactor ) * ( y_height / uy_ssfactor ) * u_channel_size;
 
-    typedef subsampled_image< Pixel >::plane_view_t plane_view_t;
+    typedef subchroma_image< Pixel >::plane_view_t plane_view_t;
 
     plane_view_t y_plane = interleaved_view( y_width
                                            , y_height
@@ -366,7 +366,7 @@ typename subsampled_image< Pixel >::view_t subsampled_view( std::size_t    y_wid
                                            , y_width                            // rowsize_in_bytes
                                            );
 
-    typedef subsampled_image_deref_fn< typename subsampled_image< Pixel >::pixel_locator_t > defer_fn_t;
+    typedef subchroma_image_deref_fn< typename subchroma_image< Pixel >::pixel_locator_t > defer_fn_t;
     defer_fn_t deref_fn( y_plane.xy_at( 0, 0 )
                        , v_plane.xy_at( 0, 0 )
                        , u_plane.xy_at( 0, 0 )
@@ -377,13 +377,13 @@ typename subsampled_image< Pixel >::view_t subsampled_view( std::size_t    y_wid
                        );
     
 
-    typedef subsampled_image< Pixel >::locator_t locator_t;
+    typedef subchroma_image< Pixel >::locator_t locator_t;
     locator_t locator( point_t( 0, 0 ) // p
                      , point_t( 1, 1 ) // step
                      , deref_fn
                      );
 
-    typedef subsampled_image< Pixel >::view_t view_t;
+    typedef subchroma_image< Pixel >::view_t view_t;
     return view_t( point_t(               y_width,               y_height )
                  , point_t( y_width / vx_ssfactor, y_height / vy_ssfactor )
                  , point_t( y_width / ux_ssfactor, y_height / uy_ssfactor )
