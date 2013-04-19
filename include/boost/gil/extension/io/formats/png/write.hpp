@@ -19,17 +19,6 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-// taken from jpegxx - https://bitbucket.org/edd/jpegxx/src/ea2492a1a4a6/src/ijg_headers.hpp
-#ifndef BOOST_GIL_EXTENSION_IO_PNG_C_LIB_COMPILED_AS_CPLUSPLUS
-    extern "C" {
-#endif
-
-#include <png.h>
-
-#ifndef BOOST_GIL_EXTENSION_IO_PNG_C_LIB_COMPILED_AS_CPLUSPLUS
-    }
-#endif
-
 #include <boost/mpl/and.hpp>
 #include <boost/mpl/equal_to.hpp>
 #include <boost/mpl/less.hpp>
