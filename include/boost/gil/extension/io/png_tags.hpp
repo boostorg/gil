@@ -25,16 +25,22 @@
 #endif BOOST_GIL_IO_PNG_FIXED_POINT_SUPPORTED
 #endif BOOST_GIL_IO_PNG_FLOATING_POINT_SUPPORTED
 
-// taken from jpegxx - https://bitbucket.org/edd/jpegxx/src/ea2492a1a4a6/src/ijg_headers.hpp
 #ifndef BOOST_GIL_EXTENSION_IO_PNG_C_LIB_COMPILED_AS_CPLUSPLUS
     extern "C" {
 #endif
-
-#include <png.h>
-
+    #include <png.h>
 #ifndef BOOST_GIL_EXTENSION_IO_PNG_C_LIB_COMPILED_AS_CPLUSPLUS
     }
 #endif
+
+#ifndef BOOST_GIL_EXTENSION_IO_ZLIB_C_LIB_COMPILED_AS_CPLUSPLUS
+    extern "C" {
+#endif
+    #include <zlib.h>
+#ifndef BOOST_GIL_EXTENSION_IO_ZLIB_C_LIB_COMPILED_AS_CPLUSPLUS
+    }
+#endif
+
 
 #include <string>
 #include <vector>
@@ -56,9 +62,6 @@ struct png_image_height : property_base< png_uint_32 > {};
 
 /// Defines type for interlace method property.
 struct png_interlace_method : property_base< int > {};
-
-/// Defines type for compression method property.
-struct png_compression_method : property_base< int > {};
 
 /// Defines type for filter method property.
 struct png_filter_method : property_base< int > {};
@@ -184,6 +187,104 @@ struct png_trans_values : property_base< std::vector< png_color_16 > > {};
 
 /// Defines type for png function return type.
 struct png_return_value : property_base< png_uint_32 > {};
+
+////////////////////////
+// Write properties
+////////////////////////
+
+// compression level - default values taken from libpng manual. 
+// Look for png_set_compression_level
+struct png_compression_level : property_base< int >
+{
+    static const type default_value = Z_BEST_COMPRESSION;
+};
+
+struct png_compression_mem_level : property_base< int >
+{
+    static const type default_value = 8;
+};
+
+struct png_compression_strategy : property_base< int >
+{
+    static const type default_value = Z_DEFAULT_STRATEGY;
+};
+
+struct png_compression_window_bits : property_base< int >
+{
+    static const type default_value = 15;
+};
+
+struct png_compression_method : property_base< int >
+{
+    static const type default_value = 8;
+};
+
+struct png_compression_buffer_size : property_base< int >
+{
+    static const type default_value = 8192;
+};
+
+// dithering
+struct png_dithering_palette : property_base< std::vector< png_color > >
+{
+    static const type default_value;
+};
+
+struct png_dithering_num_palette : property_base< int >
+{
+    static const type default_value = 0;
+};
+
+struct png_dithering_maximum_colors : property_base< int >
+{
+    static const type default_value = 0;
+};
+
+struct png_dithering_histogram : property_base< std::vector< png_uint_16 > >
+{
+    static const type default_value;
+};
+
+struct png_full_dither : property_base< int >
+{
+    static const type default_value = 0;
+};
+
+// filter
+struct png_filter : property_base< int >
+{
+    static const type default_value = 0;
+};
+
+// invert mono
+struct png_invert_mono : property_base< bool >
+{
+    static const type default_value = false;
+};
+
+// true bits
+struct png_true_bits : property_base< std::vector< png_color_8 > >
+{
+    static const type default_value;
+};
+
+// sRGB Intent
+struct png_srgb_intent : property_base< int >
+{
+    static const type default_value = 0;
+};
+
+// strip alpha
+struct png_strip_alpha : property_base< bool >
+{
+    static const type default_value = false;
+};
+
+struct png_swap_alpha : property_base< bool >
+{
+    static const type default_value = false;
+};
+
 
 /// PNG info base class. Containing all header information both for reading and writing.
 ///
@@ -640,9 +741,93 @@ struct image_read_settings< png_tag > : public image_read_settings_base
 template<>
 struct image_write_info< png_tag >  : public png_info_base
 {
-    image_write_info()
+    image_write_info( const png_compression_level::type        compression_level       = png_compression_level::default_value
+                    , const png_compression_mem_level::type    compression_mem_level   = png_compression_mem_level::default_value
+                    , const png_compression_strategy::type     compression_strategy    = png_compression_strategy::default_value
+                    , const png_compression_window_bits::type  compression_window_bits = png_compression_window_bits::default_value
+                    , const png_compression_method::type       compression_method      = png_compression_method::default_value
+                    , const png_compression_buffer_size::type  compression_buffer_size = png_compression_buffer_size::default_value
+                    , const png_dithering_palette::type        palette                 = png_dithering_palette::default_value
+                    , const png_dithering_num_palette::type    num_palette             = png_dithering_num_palette::default_value
+                    , const png_dithering_maximum_colors::type maximum_colors          = png_dithering_maximum_colors::default_value
+                    , const png_dithering_histogram::type      histogram               = png_dithering_histogram::default_value
+                    , const png_full_dither::type              full_dither             = png_full_dither::default_value
+                    , const png_filter::type                   filter                  = png_filter::default_value
+                    , const png_invert_mono::type              invert_mono             = png_invert_mono::default_value
+                    , const png_true_bits::type                true_bits               = png_true_bits::default_value
+                    , const png_srgb_intent::type              srgb_intent             = png_srgb_intent::default_value
+                    , const png_strip_alpha::type              strip_alpha             = png_strip_alpha::default_value
+                    , const png_swap_alpha::type               swap_alpha              = png_swap_alpha::default_value
+                    )
     : png_info_base()
+    , _compression_level( compression_level )
+    , _compression_mem_level( compression_mem_level )
+    , _compression_strategy( compression_strategy )
+    , _compression_window_bits( compression_window_bits )
+    , _compression_method( compression_method )
+    , _compression_buffer_size( compression_buffer_size )
+
+    , _set_dithering( false )
+    , _dithering_palette( palette )
+    , _dithering_num_palette( num_palette )
+    , _dithering_maximum_colors( maximum_colors )
+    , _dithering_histogram(histogram)
+    , _full_dither( full_dither )
+
+    , _set_filter( false )
+    , _filter( filter )
+
+    , _invert_mono( invert_mono )
+
+    , _set_true_bits( false )
+    , _true_bits( true_bits )
+
+    , _set_srgb_intent( false )
+    , _srgb_intent( srgb_intent )
+
+    , _strip_alpha( strip_alpha )
+
+    , _swap_alpha( swap_alpha )
     {}
+
+
+    // compression stuff
+    png_compression_level::type       _compression_level;
+    png_compression_mem_level::type   _compression_mem_level;
+    png_compression_strategy::type    _compression_strategy;
+    png_compression_window_bits::type _compression_window_bits;
+    png_compression_method::type      _compression_method;
+    png_compression_buffer_size::type _compression_buffer_size;
+
+    // png_set_dither
+    bool                                _set_dithering;
+    png_dithering_palette::type         _dithering_palette;
+    png_dithering_num_palette::type     _dithering_num_palette;
+    png_dithering_maximum_colors::type  _dithering_maximum_colors;
+    png_dithering_histogram::type       _dithering_histogram;
+    png_full_dither::type               _full_dither;
+
+    //png_set_filter
+    bool _set_filter;
+    png_filter::type _filter;
+
+    // png_set_invert_mono
+    png_invert_mono::type _invert_mono;
+
+    // png_set_sBIT
+    bool _set_true_bits;
+    png_true_bits::type _true_bits;
+
+    // png_set_sRGB
+    bool _set_srgb_intent;
+    png_srgb_intent::type _srgb_intent;
+
+    // png_set_strip_alpha
+    png_strip_alpha::type _strip_alpha;
+
+    // png_set_swap_alpha
+    png_swap_alpha::type _swap_alpha;
+
 };
 
 } // namespace gil

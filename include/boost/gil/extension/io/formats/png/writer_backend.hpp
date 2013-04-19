@@ -380,6 +380,91 @@ protected:
             }
         }
 
+        // Compression Levels - valid values are [0,9]
+        png_set_compression_level( get_struct()
+                                 , _info._compression_level
+                                 );
+
+        png_set_compression_mem_level( get_struct()
+                                     , _info._compression_mem_level
+                                     );
+
+        png_set_compression_strategy( get_struct()
+                                    , _info._compression_strategy
+                                    );
+
+        png_set_compression_window_bits( get_struct()
+                                       , _info._compression_window_bits
+                                       );
+
+        png_set_compression_method( get_struct()
+                                  , _info._compression_method
+                                  );
+
+        png_set_compression_buffer_size( get_struct()
+                                       , _info._compression_buffer_size
+                                       );
+
+#ifdef BOOST_GIL_IO_PNG_DITHERING_SUPPORTED
+        // Dithering 
+        if( _info._set_dithering )
+        {
+            png_set_dither( get_struct()
+                          , &_info._dithering_palette.front()
+                          , _info._dithering_num_palette
+                          , _info._dithering_maximum_colors
+                          , &_info._dithering_histogram.front()
+                          , _info._full_dither
+                          );
+        }
+#endif // BOOST_GIL_IO_PNG_DITHERING_SUPPORTED
+
+        // Filter
+        if( _info._set_filter )
+        {
+            png_set_filter( get_struct()
+                          , 0
+                          , _info._filter
+                          );
+        }
+
+        // Invert Mono
+        if( _info._invert_mono )
+        {
+            png_set_invert_mono( get_struct() );
+        }
+
+        // True Bits
+        if( _info._set_true_bits )
+        {
+            png_set_sBIT( get_struct()
+                        , get_info()
+                        , &_info._true_bits.front()
+                        );
+        }
+
+        // sRGB Intent
+        if( _info._set_srgb_intent )
+        {
+            png_set_sRGB( get_struct()
+                        , get_info()
+                        , _info._srgb_intent
+                        );
+        }
+
+        // Strip Alpha
+        if( _info._strip_alpha )
+        {
+            png_set_strip_alpha( get_struct() );
+        }
+
+        // Swap Alpha
+        if( _info._swap_alpha )
+        {
+            png_set_swap_alpha( get_struct() );
+        }
+
+
         png_write_info( get_struct()
                       , get_info()
                       );
