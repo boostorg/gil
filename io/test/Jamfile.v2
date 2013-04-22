@@ -27,7 +27,7 @@ project
 		<library>/boost/filesystem//boost_filesystem
     ;
 
-test-suite "gil::io_new"
+test-suite "gil::io"
 	:
 	[ run
         # sources
@@ -90,7 +90,7 @@ test-suite "gil::io_new"
         : # input-files
         : # requirements
         : # target-name
-        gil_io_new_tests
+        gil_io_tests
         : # default-build
 	]
 
