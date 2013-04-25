@@ -145,33 +145,9 @@ public:
         swap(_alloc,          img._alloc);
     }
 
-    void recreate(const point_t& dims, std::size_t alignment=0, const Alloc alloc_in = Alloc())
-    {
-        if( dims == _view.dimensions() && _align_in_bytes == alignment )
-        {
-            return;
-        }
-
-        std::size_t old_size = total_allocated_size_in_bytes( _view.dimensions() );
-        std::size_t new_size = total_allocated_size_in_bytes( dims );
-
-        if( old_size >= new_size )
-        {
-            destruct_pixels( _view );
-
-            _view = view_t( dims
-                          , typename view_t::locator( typename view_t::x_iterator( _memory )
-                                                    , get_row_size_in_memunits( dims.x )
-                                                    )
-                          );
-
-            default_construct_pixels( _view );
-        }
-        else
-        {
-            image tmp(dims, alignment, alloc_in);
-            swap(tmp);
-        }
+    void recreate(const point_t& dims, std::size_t alignment=0, const Alloc alloc_in = Alloc()) {
+        image tmp(dims, alignment, alloc_in);
+        swap(tmp);
     }
 
     void recreate(x_coord_t width, y_coord_t height, std::size_t alignment=0, const Alloc alloc_in = Alloc()) {
