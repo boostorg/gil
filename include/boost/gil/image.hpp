@@ -159,9 +159,9 @@ public:
         {
             destruct_pixels( _view );
 
-            _view = view_t( point_t( width, height )
+            _view = view_t( dims
                           , typename view_t::locator( typename view_t::x_iterator( _memory )
-                                                    , get_row_size_in_memunits( width )
+                                                    , get_row_size_in_memunits( dims.x )
                                                     )
                           );
 
