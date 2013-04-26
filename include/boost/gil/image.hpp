@@ -70,36 +70,40 @@ public:
 
     explicit image(std::size_t alignment=0,
                    const Alloc alloc_in = Alloc()) :
-        _memory(0), _align_in_bytes(alignment), _alloc(alloc_in) {}
+        _memory(0), _align_in_bytes(alignment), _alloc(alloc_in), _original_dims(0,0) {}
 
     // Create with dimensions and optional initial value and alignment
     image(const point_t& dimensions,
           std::size_t alignment=0,
-          const Alloc alloc_in = Alloc()) : _memory(0), _align_in_bytes(alignment), _alloc(alloc_in) {
+          const Alloc alloc_in = Alloc()) : _memory(0), _align_in_bytes(alignment), _alloc(alloc_in)
+                                          , _original_dims( dimensions ) {
         allocate_and_default_construct(dimensions);
     }
+
     image(x_coord_t width, y_coord_t height,
           std::size_t alignment=0,
-          const Alloc alloc_in = Alloc()) : _memory(0), _align_in_bytes(alignment), _alloc(alloc_in) {
+          const Alloc alloc_in = Alloc()) : _memory(0), _align_in_bytes(alignment), _alloc(alloc_in)
+                                          , _original_dims( width, height ) {
         allocate_and_default_construct(point_t(width,height));
     }
+
     image(const point_t& dimensions,
           const Pixel& p_in,
           std::size_t alignment,
-          const Alloc alloc_in = Alloc())  :
-        _memory(0), _align_in_bytes(alignment), _alloc(alloc_in) {
+          const Alloc alloc_in = Alloc())  : _memory(0), _align_in_bytes(alignment), _alloc(alloc_in) 
+                                           , _original_dims( dimensions ) {
         allocate_and_fill(dimensions, p_in);
     }
     image(x_coord_t width, y_coord_t height,
           const Pixel& p_in,
           std::size_t alignment,
-          const Alloc alloc_in = Alloc())  :
-        _memory(0), _align_in_bytes(alignment), _alloc(alloc_in) {
+          const Alloc alloc_in = Alloc())  : _memory(0), _align_in_bytes(alignment), _alloc(alloc_in)
+                                           , _original_dims( width, height )  {
         allocate_and_fill(point_t(width,height),p_in);
     }
 
-    image(const image& img) :
-        _memory(0), _align_in_bytes(img._align_in_bytes), _alloc(img._alloc) {
+    image(const image& img) : _memory(0), _align_in_bytes(img._align_in_bytes), _alloc(img._alloc)
+                            , _original_dims( img._original_dims ) {
         allocate_and_copy(img.dimensions(),img._view);
     }
 
@@ -107,7 +111,9 @@ public:
     image(const image<P2,IP2,Alloc2>& img) :
         _memory(0), _align_in_bytes(img._align_in_bytes), _alloc(img._alloc) {
        allocate_and_copy(img.dimensions(),img._view);
+       _original_dims = img.dimensions();
     }
+
     image& operator=(const image& img) {
         if (dimensions() == img.dimensions())
             copy_pixels(img._view,_view);
@@ -131,7 +137,7 @@ public:
 
     ~image() {
         destruct_pixels(_view);
-        deallocate(_view.dimensions());
+        deallocate(_original_dims);
     }
 
     Alloc&       allocator() { return _alloc; }
@@ -143,6 +149,7 @@ public:
         swap(_memory,         img._memory);
         swap(_view,           img._view);
         swap(_alloc,          img._alloc);
+        swap( _original_dims, img._original_dims );
     }
 
     void recreate(const point_t& dims, std::size_t alignment=0, const Alloc alloc_in = Alloc()) {
@@ -171,6 +178,9 @@ private:
     unsigned char* _memory;
     std::size_t    _align_in_bytes;
     allocator_type _alloc;
+
+    point_t _original_dims;
+
 
     void allocate_and_default_construct(const point_t& dimensions) {
         try {
