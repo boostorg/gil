@@ -31,29 +31,44 @@ namespace boost{ namespace gil {
 
 /// \addtogroup ColorNameModel
 /// \{
-namespace ycbcr_color_space
+namespace ycbcr_601_color_space
 {
 /// \brief Luminance
 struct y_t {};    
 /// \brief Blue chrominance component
 struct cb_t {};
 /// \brief Red chrominance component
-struct cr_t {}; 
+struct cr_t {};
+}
+
+namespace ycbcr_709_color_space
+{
+/// \brief Luminance
+struct y_t {};    
+/// \brief Blue chrominance component
+struct cb_t {};
+/// \brief Red chrominance component
+struct cr_t {};
 }
 /// \}
 
 /// \ingroup ColorSpaceModel
-typedef boost::mpl::vector3<ycbcr_color_space::y_t, ycbcr_color_space::cb_t, ycbcr_color_space::cr_t> ycbcr_601__t;
+typedef boost::mpl::vector3< ycbcr_601_color_space::y_t, ycbcr_601_color_space::cb_t, ycbcr_601_color_space::cr_t > ycbcr_601__t;
+typedef boost::mpl::vector3< ycbcr_709_color_space::y_t, ycbcr_709_color_space::cb_t, ycbcr_709_color_space::cr_t > ycbcr_709__t;
 
 /// \ingroup LayoutModel
 typedef boost::gil::layout<ycbcr_601__t> ycbcr_601__layout_t;
+typedef boost::gil::layout<ycbcr_709__t> ycbcr_709__layout_t;
 
 //The channel depth is ALWAYS 8bits ofr YCbCr!
 GIL_DEFINE_ALL_TYPEDEFS(8,  ycbcr_601_)
+GIL_DEFINE_ALL_TYPEDEFS(8,  ycbcr_709_)
 
 /*
- * Source: http://en.wikipedia.org/wiki/YCbCr#ITU-R_BT.601_conversion
+ * 601 Source: http://en.wikipedia.org/wiki/YCbCr#ITU-R_BT.601_conversion
+ * 709 Source: http://en.wikipedia.org/wiki/YCbCr#ITU-R_BT.709_conversion
  * (using values coming directly from ITU-R BT.601 recommendation)
+ * (using values coming directly from ITU-R BT.709 recommendation)
  */
 
 /**
@@ -68,7 +83,9 @@ struct default_color_converter_impl<ycbcr_601__t, rgb_t>
 	{
         typedef channel_type< DSTP >::type dst_channel_t;
         convert( src, dst
-               , boost::is_same< mpl::int_<8>::type, mpl::int_<8>::type >::type()
+               , boost::is_same< mpl::int_< sizeof( dst_channel_t ) >::type
+                               , mpl::int_<1>::type
+                               >::type()
                );
 	}
 
@@ -84,7 +101,7 @@ private:
                 ) const
     {
 		using namespace boost::algorithm;
-        using namespace boost::gil::ycbcr_color_space;
+        using namespace ycbcr_601_color_space;
 
         typedef channel_type< Src_Pixel >::type src_channel_t;
         typedef channel_type< Dst_Pixel >::type dst_channel_t;
@@ -110,15 +127,15 @@ private:
     template< typename Src_Pixel
             , typename Dst_Pixel
             >
-    void convert( const Src_Pixel& s
-                ,       Dst_Pixel& d
+    void convert( const Src_Pixel& src
+                ,       Dst_Pixel& dst
                 , mpl::false_ // is 8 bit channel
                 ) const
     {
         using namespace boost::algorithm;
-        using namespace boost::gil::ycbcr_color_space;
+        using namespace ycbcr_601_color_space;
 
-        typedef channel_type< DSTP >::type dst_channel_t;
+        typedef channel_type< Dst_Pixel >::type dst_channel_t;
 
         double  y = get_color( src,  y_t() );
         double cb = get_color( src, cb_t() );
@@ -155,7 +172,7 @@ struct default_color_converter_impl<rgb_t, ycbcr_601__t>
 	template < typename SRCP, typename DSTP >
 	void operator()( const SRCP& src, DSTP& dst ) const
 	{
-        using namespace boost::gil::ycbcr_color_space;
+        using namespace ycbcr_601_color_space;
 
         typedef channel_type< SRCP >::type src_channel_t;
         typedef channel_type< DSTP >::type dst_channel_t;
@@ -168,10 +185,65 @@ struct default_color_converter_impl<rgb_t, ycbcr_601__t>
 		double cb = 128.0 - 0.1482 * red  - 0.2909 * green + 0.4392 * blue;
 		double cr = 128.0 + 0.4392 * red  - 0.3677 * green - 0.0714 * blue;
 
+		get_color( dst,  y_t() ) = (dst_channel_t)  y;
+		get_color( dst, cb_t() ) = (dst_channel_t) cb;
+		get_color( dst, cr_t() ) = (dst_channel_t) cr;  
+	}
+};
+
+/**
+* @brief Convert RGB to YCbCr ITU.BT-709.
+*/
+template<>
+struct default_color_converter_impl<rgb_t, ycbcr_709__t>
+{
+	template < typename SRCP, typename DSTP >
+	void operator()( const SRCP& src, DSTP& dst ) const
+	{
+        using namespace ycbcr_709_color_space;
+
+        typedef channel_type< SRCP >::type src_channel_t;
+        typedef channel_type< DSTP >::type dst_channel_t;
+
+		src_channel_t red   = channel_convert<src_channel_t>( get_color(src,   red_t()));
+		src_channel_t green = channel_convert<src_channel_t>( get_color(src, green_t()));
+		src_channel_t blue  = channel_convert<src_channel_t>( get_color(src,  blue_t()));
+
+		double  y =            0.299 * red  +    0.587 * green +    0.114 * blue;
+		double cb = 128.0 - 0.168736 * red  - 0.331264 * green +      0.5 * blue;
+		double cr = 128.0 +      0.5 * red  - 0.418688 * green - 0.081312 * blue;
 
 		get_color( dst,  y_t() ) = (dst_channel_t)  y;
 		get_color( dst, cb_t() ) = (dst_channel_t) cb;
 		get_color( dst, cr_t() ) = (dst_channel_t) cr;  
+	}
+};
+
+/**
+* @brief Convert RGB to YCbCr ITU.BT-709.
+*/
+template<>
+struct default_color_converter_impl<ycbcr_709__t, rgb_t>
+{
+	template < typename SRCP, typename DSTP >
+	void operator()( const SRCP& src, DSTP& dst ) const
+	{
+        using namespace ycbcr_709_color_space;
+
+        typedef channel_type< SRCP >::type src_channel_t;
+        typedef channel_type< DSTP >::type dst_channel_t;
+
+		src_channel_t y           = channel_convert<src_channel_t>( get_color(src,  y_t())       );
+		src_channel_t cb_clipped  = channel_convert<src_channel_t>( get_color(src, cb_t()) - 128 );
+		src_channel_t cr_clipped  = channel_convert<src_channel_t>( get_color(src, cr_t()) - 128 );
+
+		double   red =   y                        +   1.042 * cr_clipped;
+		double green =   y - 0.34414 * cb_clipped - 0.71414 * cr_clipped;
+		double  blue =   y +   1.772 * cb_clipped;
+
+		get_color( dst,   red_t() ) = (dst_channel_t)   red;
+		get_color( dst, green_t() ) = (dst_channel_t) green;
+		get_color( dst,  blue_t() ) = (dst_channel_t)  blue;  
 	}
 };
 
