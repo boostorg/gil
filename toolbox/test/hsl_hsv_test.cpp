@@ -17,7 +17,7 @@ using namespace std;
 using namespace boost;
 using namespace gil;
 
-BOOST_AUTO_TEST_SUITE( hsl_hsv_test_suite )
+BOOST_AUTO_TEST_SUITE( toolbox_tests )
 
 BOOST_AUTO_TEST_CASE( hsl_hsv_test )
 {

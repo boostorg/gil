@@ -15,7 +15,7 @@
 using namespace boost;
 using namespace gil;
 
-BOOST_AUTO_TEST_SUITE( channel_view_test )
+BOOST_AUTO_TEST_SUITE( toolbox_tests )
 
 BOOST_AUTO_TEST_CASE( channel_view_test )
 {
