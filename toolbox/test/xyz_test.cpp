@@ -22,7 +22,7 @@ using namespace std;
 
 const float SKEW = 0.0001f;
 
-BOOST_AUTO_TEST_SUITE(ColorSpaceConversionXYZ)
+BOOST_AUTO_TEST_SUITE( toolbox_tests )
 
 BOOST_AUTO_TEST_CASE(rgb32f_xyz32f_1)
 {

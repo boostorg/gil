@@ -16,7 +16,7 @@
 using namespace boost;
 using namespace gil;
 
-BOOST_AUTO_TEST_SUITE( get_num_bits_test )
+BOOST_AUTO_TEST_SUITE( toolbox_tests )
 
 BOOST_AUTO_TEST_CASE( get_num_bits_test )
 {

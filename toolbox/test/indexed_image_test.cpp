@@ -18,7 +18,7 @@ using namespace boost;
 using namespace gil;
 
 
-BOOST_AUTO_TEST_SUITE( index_image_test_suite )
+BOOST_AUTO_TEST_SUITE( toolbox_tests )
 
 BOOST_AUTO_TEST_CASE( index_image_test )
 {

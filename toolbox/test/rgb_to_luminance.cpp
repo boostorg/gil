@@ -21,7 +21,7 @@ typedef scoped_channel_value< double, double_zero, double_one > bits64f;
 typedef pixel< double, gray_layout_t > gray64f_pixel_t;
 typedef pixel< double, rgb_layout_t  > rgb64f_pixel_t;
 
-BOOST_AUTO_TEST_SUITE( rgb_to_luminance_test )
+BOOST_AUTO_TEST_SUITE( toolbox_tests )
 
 BOOST_AUTO_TEST_CASE( rgb_to_luminance_test )
 {

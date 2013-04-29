@@ -13,7 +13,7 @@
 using namespace boost;
 using namespace gil;
 
-BOOST_AUTO_TEST_SUITE( pixel_bit_size_test )
+BOOST_AUTO_TEST_SUITE( toolbox_tests )
 
 BOOST_AUTO_TEST_CASE( pixel_bit_size_test )
 {

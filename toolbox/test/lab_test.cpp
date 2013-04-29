@@ -20,9 +20,9 @@
 
 using namespace boost;
 
-BOOST_AUTO_TEST_SUITE(Lab_Test)
+BOOST_AUTO_TEST_SUITE( toolbox_tests )
 
-BOOST_AUTO_TEST_CASE(Lab_to_XYZ_Test1)
+BOOST_AUTO_TEST_CASE( Lab_to_XYZ_Test1 )
 {
     gil::lab32f_pixel_t lab_pixel(40.366198f, 53.354489f, 26.117702f);
     gil::xyz32f_pixel_t xyz_pixel;
