@@ -153,12 +153,18 @@ public:
 
     void recreate(const point_t& dims, std::size_t alignment=0, const Alloc alloc_in = Alloc())
     {
-        if( dims == _view.dimensions() && _align_in_bytes == alignment )
+        if(  dims            == _view.dimensions() 
+          && _align_in_bytes == alignment
+          && alloc_in        == _alloc
+          )
         {
             return;
         }
 
-        if( _allocated_bytes >= total_allocated_size_in_bytes( dims ) )
+        if(  _allocated_bytes >= total_allocated_size_in_bytes( dims ) 
+          && _align_in_bytes == alignment
+          && alloc_in == _alloc
+          )
         {
             destruct_pixels( _view );
 
@@ -180,14 +186,38 @@ public:
     }
 
     void recreate(const point_t& dims,
-                  const Pixel& p_in, std::size_t alignment, const Alloc alloc_in = Alloc()) {
-        if (dims!=_view.dimensions() || _align_in_bytes!=alignment || alloc_in!=_alloc) {
+                  const Pixel& p_in, std::size_t alignment = 0, const Alloc alloc_in = Alloc())
+    {
+        if(  dims            == _view.dimensions() 
+          && _align_in_bytes == alignment
+          && alloc_in        == _alloc
+          )
+        {
+            return;
+        }
+
+        if(  _allocated_bytes >= total_allocated_size_in_bytes( dims ) 
+          && _align_in_bytes == alignment
+          && alloc_in == _alloc
+          )
+        {
+            destruct_pixels( _view );
+
+            create_view( dims
+                       , typename boost::conditional< IsPlanar, mpl::true_, mpl::false_ >::type()
+                       );
+
+            uninitialized_fill_pixels(_view, p_in);
+        }
+        else
+        {
             image tmp(dims, p_in, alignment, alloc_in);
             swap(tmp);
         }
     }
+
     void recreate(x_coord_t width, y_coord_t height,
-                  const Pixel& p_in, std::size_t alignment, const Alloc alloc_in = Alloc()) {
+                  const Pixel& p_in, std::size_t alignment = 0, const Alloc alloc_in = Alloc()) {
         recreate(point_t(width,height),p_in,alignment,alloc_in);
     }
 
