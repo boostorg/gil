@@ -18,68 +18,31 @@ using namespace gil;
 
 BOOST_AUTO_TEST_SUITE( toolbox_tests )
 
-template< int J, int a, int b >
-struct foo
-{
-    BOOST_STATIC_ASSERT(( mpl::equal_to< mpl::int_< J >, mpl::int_< 4 > >::type::value ));
-
-    BOOST_STATIC_ASSERT(( mpl::or_< mpl::equal_to< mpl::int_< a >, mpl::int_< 4 > >
-                                  , mpl::or_< mpl::equal_to< mpl::int_< a >, mpl::int_< 2 > >
-                                            , mpl::equal_to< mpl::int_< a >, mpl::int_< 1 > >
-                                            >
-                                  >::type::value
-                       )); 
-
-    BOOST_STATIC_ASSERT(( mpl::or_< mpl::equal_to< mpl::int_< b >, mpl::int_< 4 > >
-                                  , mpl::or_< mpl::equal_to< mpl::int_< b >, mpl::int_< 2 > >
-                                            , mpl::or_< mpl::equal_to< mpl::int_< b >, mpl::int_< 1 > >
-                                                      , mpl::equal_to< mpl::int_< b >, mpl::int_< 0 > >
-                                                      >
-                                            >
-                                  >::type::value
-                       )); 
-
-    BOOST_STATIC_CONSTANT( int, ss_X = ( mpl::divides< mpl::int_< J >
-                                                     , mpl::int_< a >
-                                                     >::type::value )
-                         );
-
-    BOOST_STATIC_CONSTANT( int, ss_Y = ( mpl::if_< mpl::equal_to< mpl::int_< b >, mpl::int_< 0 > >
-                                                 , mpl::int_< 2 >
-                                                 , mpl::if_< mpl::equal_to< mpl::int_< a >, mpl::int_< b > >
-                                                           , mpl::int_< 1 >
-                                                           , mpl::int_< 4 >
-                                                           >::type
-                                                 >::type::value )
-                         );
-};
-
-
 BOOST_AUTO_TEST_CASE( subchroma_image_test )
 {
-    //{
-    //    ycbcr_601_8_pixel_t a( 10, 20, 30 );
-    //    rgb8_pixel_t b;
-    //    bgr8_pixel_t c;
+    {
+        ycbcr_601_8_pixel_t a( 10, 20, 30 );
+        rgb8_pixel_t b;
+        bgr8_pixel_t c;
 
-    //    color_convert( a, b );
-    //    color_convert( a, c );
-    //    BOOST_ASSERT( static_equal( b, c ));
+        color_convert( a, b );
+        color_convert( a, c );
+        BOOST_ASSERT( static_equal( b, c ));
 
-    //    color_convert( b, a );
-    //}
+        color_convert( b, a );
+    }
 
-    //{
-    //    ycbcr_709_8_pixel_t a( 10, 20, 30 );
-    //    rgb8_pixel_t b;
-    //    bgr8_pixel_t c;
+    {
+        ycbcr_709_8_pixel_t a( 10, 20, 30 );
+        rgb8_pixel_t b;
+        bgr8_pixel_t c;
 
-    //    color_convert( a, b );
-    //    color_convert( a, c );
-    //    BOOST_ASSERT( static_equal( b, c ));
+        color_convert( a, b );
+        color_convert( a, c );
+        BOOST_ASSERT( static_equal( b, c ));
 
-    //    color_convert( b, a );
-    //}
+        color_convert( b, a );
+    }
 
     {
         typedef rgb8_pixel_t pixel_t;
@@ -125,14 +88,12 @@ BOOST_AUTO_TEST_CASE( subchroma_image_test )
 
         vector< unsigned char > data( image_size );
 
-        image_t::view_t v = subsampled_view< pixel_t, factors_t >( y_width
-                                                                 , y_height
-                                                                 , &data.front()
-                                                                 );
+        image_t::view_t v = subchroma_view< pixel_t, factors_t >( y_width
+                                                                , y_height
+                                                                , &data.front()
+                                                                );
         rgb8_pixel_t p = *v.xy_at( 0, 0 );
     }
 }
 
 BOOST_AUTO_TEST_SUITE_END()
-
-
