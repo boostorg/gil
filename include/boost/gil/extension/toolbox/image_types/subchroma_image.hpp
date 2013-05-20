@@ -117,6 +117,58 @@ struct subchroma_image_locator
 };
 
 
+/////////////////////////////
+//  PixelBasedConcept
+/////////////////////////////
+
+template < typename Locator, typename Factors >
+struct channel_type< subchroma_image_locator< Locator, Factors > > 
+    : public channel_type< typename subchroma_image_locator< Locator, Factors >::type > {};
+
+template < typename Locator, typename Factors >
+struct color_space_type< subchroma_image_locator< Locator, Factors > > 
+    : public color_space_type< typename subchroma_image_locator< Locator, Factors >::type > {};
+
+template < typename Locator, typename Factors >
+struct channel_mapping_type< subchroma_image_locator< Locator, Factors > > 
+    : public channel_mapping_type< typename subchroma_image_locator< Locator, Factors >::type > {};
+
+template < typename Locator, typename Factors >
+struct is_planar< subchroma_image_locator< Locator, Factors > > 
+    : public is_planar< typename subchroma_image_locator< Locator, Factors >::type > {};
+
+/////////////////////////////
+//  HasDynamicXStepTypeConcept
+/////////////////////////////
+
+template < typename Locator, typename Factors >
+struct dynamic_x_step_type< subchroma_image_locator< Locator, Factors > >
+{
+    typedef typename subchroma_image_locator< Locator, Factors >::type type;
+};
+
+/////////////////////////////
+//  HasDynamicYStepTypeConcept
+/////////////////////////////
+
+template < typename Locator, typename Factors >
+struct dynamic_y_step_type< subchroma_image_locator< Locator, Factors > >
+{
+    typedef typename subchroma_image_locator< Locator, Factors >::type type;
+};
+
+/////////////////////////////
+//  HasTransposedTypeConcept
+/////////////////////////////
+
+template < typename Locator, typename Factors >
+struct transposed_type< subchroma_image_locator< Locator, Factors > >
+{
+    typedef typename subchroma_image_locator< Locator, Factors >::type type;
+};
+
+//////////////////////////////////
+
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \class subchroma_image_view
 /// \ingroup ImageViewModel PixelBasedModel
@@ -130,8 +182,8 @@ class subchroma_image_view : public image_view< Locator >
 {
 public:
 
-    typedef typename Locator                     locator_t;
-    typedef typename locator_t::deref_fn_t       deref_fn_t;
+    typedef typename Locator                     locator;
+    typedef typename locator::deref_fn_t         deref_fn_t;
     typedef typename deref_fn_t::plane_locator_t plane_locator_t;
 
 
@@ -159,7 +211,7 @@ public:
     /// copy constructor
     template< typename Subchroma_View >
     subchroma_image_view( const Subchroma_View& v )
-    : image_view< locator_t >( v )
+    : image_view< locator >( v )
     {}
 
     const point_t& v_ssfactors() const { return point_t( get_deref_fn().vx_ssfactor(), get_deref_fn().vx_ssfactor() ); }
@@ -191,6 +243,59 @@ private:
     point_t _u_dimensions;
 };
 
+
+/////////////////////////////
+//  PixelBasedConcept
+/////////////////////////////
+
+template < typename Locator, typename Factors >
+struct channel_type< subchroma_image_view< Locator, Factors > > 
+    : public channel_type< Locator > {}; 
+
+template < typename Locator, typename Factors >
+struct color_space_type< subchroma_image_view< Locator, Factors > > 
+    : public color_space_type< Locator > {};
+
+template < typename Locator, typename Factors >
+struct channel_mapping_type< subchroma_image_view< Locator, Factors > >
+     : public channel_mapping_type< Locator > {};
+
+template < typename Locator, typename Factors >
+struct is_planar< subchroma_image_view< Locator, Factors > > 
+    : public is_planar< Locator > {};
+
+/////////////////////////////
+//  HasDynamicXStepTypeConcept
+/////////////////////////////
+
+template < typename Locator, typename Factors >
+struct dynamic_x_step_type< subchroma_image_view< Locator, Factors > >
+{
+    typedef image_view< typename dynamic_x_step_type< Locator >::type > type;
+};
+
+/////////////////////////////
+//  HasDynamicYStepTypeConcept
+/////////////////////////////
+
+template < typename Locator, typename Factors >
+struct dynamic_y_step_type< subchroma_image_view< Locator, Factors > >
+{
+    typedef image_view< typename dynamic_y_step_type< Locator >::type > type;
+};
+
+/////////////////////////////
+//  HasTransposedTypeConcept
+/////////////////////////////
+
+template < typename Locator, typename Factors >
+struct transposed_type< subchroma_image_view< Locator, Factors > >
+{
+    typedef image_view< typename transposed_type< Locator >::type > type;
+};
+
+
+/////////////////////////////////////////////////////////////
 template< int J
         , int a
         , int b
@@ -246,7 +351,7 @@ template< typename Pixel
 class subchroma_image : public Scaling_Factors< mpl::at_c< Factors, 0 >::type::value
                                               , mpl::at_c< Factors, 1 >::type::value
                                               , mpl::at_c< Factors, 2 >::type::value
-                                                         >
+                                              >
 {
 
 public:
@@ -282,7 +387,7 @@ public:
     , _v_plane( y_width / ss_X, y_height / ss_Y, 0, Allocator() )
     , _u_plane( y_width / ss_X, y_height / ss_Y, 0, Allocator() )
     {
-        init( point_t( y_width, y_height ) );
+        init();
     }
 
 public:
@@ -291,7 +396,7 @@ public:
 
 private:
 
-    void init( const point_t& y_dimensions )
+    void init()
     {
         typedef subchroma_image_deref_fn< pixel_locator_t
                                         , Factors
@@ -322,6 +427,28 @@ private:
     plane_image_t _v_plane;
     plane_image_t _u_plane;
 };
+
+
+/////////////////////////////
+//  PixelBasedConcept
+/////////////////////////////
+
+template < typename Pixel, typename Factors, typename Alloc >
+struct channel_type< subchroma_image< Pixel, Factors, Alloc > >
+    : public channel_type< Pixel > {};
+
+template < typename Pixel, typename Factors, typename Alloc >
+struct color_space_type< subchroma_image< Pixel, Factors, Alloc > >
+    : public color_space_type< Pixel > {};
+
+template < typename Pixel, typename Factors, typename Alloc >
+struct channel_mapping_type<  subchroma_image< Pixel, Factors, Alloc > >
+    : public channel_mapping_type< Pixel > {};
+
+template < typename Pixel, typename Factors, typename Alloc >
+struct is_planar< subchroma_image< Pixel, Factors, Alloc > >
+    : public mpl::bool_< false > {};
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /// \name view, const_view
