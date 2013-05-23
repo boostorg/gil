@@ -226,9 +226,7 @@ struct png_compression_buffer_size : property_base< int >
 
 // dithering
 struct png_dithering_palette : property_base< std::vector< png_color > >
-{
-    static const type default_value;
-};
+{};
 
 struct png_dithering_num_palette : property_base< int >
 {
@@ -241,9 +239,7 @@ struct png_dithering_maximum_colors : property_base< int >
 };
 
 struct png_dithering_histogram : property_base< std::vector< png_uint_16 > >
-{
-    static const type default_value;
-};
+{};
 
 struct png_full_dither : property_base< int >
 {
@@ -264,9 +260,7 @@ struct png_invert_mono : property_base< bool >
 
 // true bits
 struct png_true_bits : property_base< std::vector< png_color_8 > >
-{
-    static const type default_value;
-};
+{};
 
 // sRGB Intent
 struct png_srgb_intent : property_base< int >
@@ -747,14 +741,11 @@ struct image_write_info< png_tag >  : public png_info_base
                     , const png_compression_window_bits::type  compression_window_bits = png_compression_window_bits::default_value
                     , const png_compression_method::type       compression_method      = png_compression_method::default_value
                     , const png_compression_buffer_size::type  compression_buffer_size = png_compression_buffer_size::default_value
-                    , const png_dithering_palette::type        palette                 = png_dithering_palette::default_value
                     , const png_dithering_num_palette::type    num_palette             = png_dithering_num_palette::default_value
                     , const png_dithering_maximum_colors::type maximum_colors          = png_dithering_maximum_colors::default_value
-                    , const png_dithering_histogram::type      histogram               = png_dithering_histogram::default_value
                     , const png_full_dither::type              full_dither             = png_full_dither::default_value
                     , const png_filter::type                   filter                  = png_filter::default_value
                     , const png_invert_mono::type              invert_mono             = png_invert_mono::default_value
-                    , const png_true_bits::type                true_bits               = png_true_bits::default_value
                     , const png_srgb_intent::type              srgb_intent             = png_srgb_intent::default_value
                     , const png_strip_alpha::type              strip_alpha             = png_strip_alpha::default_value
                     , const png_swap_alpha::type               swap_alpha              = png_swap_alpha::default_value
@@ -768,10 +759,10 @@ struct image_write_info< png_tag >  : public png_info_base
     , _compression_buffer_size( compression_buffer_size )
 
     , _set_dithering( false )
-    , _dithering_palette( palette )
+    , _dithering_palette()
     , _dithering_num_palette( num_palette )
     , _dithering_maximum_colors( maximum_colors )
-    , _dithering_histogram(histogram)
+    , _dithering_histogram()
     , _full_dither( full_dither )
 
     , _set_filter( false )
@@ -780,7 +771,7 @@ struct image_write_info< png_tag >  : public png_info_base
     , _invert_mono( invert_mono )
 
     , _set_true_bits( false )
-    , _true_bits( true_bits )
+    , _true_bits()
 
     , _set_srgb_intent( false )
     , _srgb_intent( srgb_intent )
