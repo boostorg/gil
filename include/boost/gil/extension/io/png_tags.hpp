@@ -192,16 +192,22 @@ struct png_return_value : property_base< png_uint_32 > {};
 // Write properties
 ////////////////////////
 
+// relates to info_ptr->compression_type
+struct png_compression_type : property_base< png_byte >
+{
+    static const type default_value = PNG_COMPRESSION_TYPE_BASE;
+};
+
 // compression level - default values taken from libpng manual. 
 // Look for png_set_compression_level
 struct png_compression_level : property_base< int >
 {
-    static const type default_value = Z_BEST_COMPRESSION;
+    static const type default_value = 3;
 };
 
 struct png_compression_mem_level : property_base< int >
 {
-    static const type default_value = 8;
+    static const type default_value = MAX_MEM_LEVEL;
 };
 
 struct png_compression_strategy : property_base< int >
@@ -211,7 +217,7 @@ struct png_compression_strategy : property_base< int >
 
 struct png_compression_window_bits : property_base< int >
 {
-    static const type default_value = 15;
+    static const type default_value = 9;
 };
 
 struct png_compression_method : property_base< int >
@@ -735,7 +741,8 @@ struct image_read_settings< png_tag > : public image_read_settings_base
 template<>
 struct image_write_info< png_tag >  : public png_info_base
 {
-    image_write_info( const png_compression_level::type        compression_level       = png_compression_level::default_value
+    image_write_info( const png_compression_type::type         compression_type        = png_compression_type::default_value
+                    , const png_compression_level::type        compression_level       = png_compression_level::default_value
                     , const png_compression_mem_level::type    compression_mem_level   = png_compression_mem_level::default_value
                     , const png_compression_strategy::type     compression_strategy    = png_compression_strategy::default_value
                     , const png_compression_window_bits::type  compression_window_bits = png_compression_window_bits::default_value
@@ -751,6 +758,7 @@ struct image_write_info< png_tag >  : public png_info_base
                     , const png_swap_alpha::type               swap_alpha              = png_swap_alpha::default_value
                     )
     : png_info_base()
+    , _compression_type( compression_type )
     , _compression_level( compression_level )
     , _compression_mem_level( compression_mem_level )
     , _compression_strategy( compression_strategy )
@@ -781,8 +789,8 @@ struct image_write_info< png_tag >  : public png_info_base
     , _swap_alpha( swap_alpha )
     {}
 
-
     // compression stuff
+    png_compression_type::type        _compression_type;
     png_compression_level::type       _compression_level;
     png_compression_mem_level::type   _compression_mem_level;
     png_compression_strategy::type    _compression_strategy;
