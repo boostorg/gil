@@ -37,7 +37,7 @@ namespace fs = boost::filesystem;
 
 typedef tiff_tag tag_t;
 
-BOOST_AUTO_TEST_SUITE( tiff_test )
+BOOST_AUTO_TEST_SUITE( gil_io_tiff_tests )
 
 #ifdef BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES
 

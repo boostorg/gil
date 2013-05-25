@@ -52,7 +52,7 @@ typedef tiff_tag tag_t;
       BOOST_CHECK( equal_pixels( const_view( img1 ), subimage_view( view( img3 ), top_left, dim ))); \
     } \
 
-BOOST_AUTO_TEST_SUITE( tiff_subimage_test )
+BOOST_AUTO_TEST_SUITE( gil_io_tiff_tests )
 
 #ifdef BOOST_GIL_IO_USE_TIFF_GRAPHICSMAGICK_TEST_SUITE_IMAGES
 

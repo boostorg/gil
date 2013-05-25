@@ -18,7 +18,7 @@ using namespace boost::gil;
 
 typedef pnm_tag tag_t;
 
-BOOST_AUTO_TEST_SUITE( pnm_test )
+BOOST_AUTO_TEST_SUITE( gil_io_pnm_tests )
 
 #ifdef BOOST_GIL_IO_USE_PNM_TEST_SUITE_IMAGES
 

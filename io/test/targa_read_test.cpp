@@ -20,7 +20,7 @@ using namespace boost::gil;
 
 typedef targa_tag tag_t;
 
-BOOST_AUTO_TEST_SUITE( targa_test )
+BOOST_AUTO_TEST_SUITE( gil_io_targa_tests )
 
 #ifdef BOOST_GIL_IO_USE_TARGA_FILEFORMAT_TEST_SUITE_IMAGES
 

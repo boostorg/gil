@@ -18,7 +18,7 @@ using namespace std;
 using namespace boost;
 using namespace gil;
 
-BOOST_AUTO_TEST_SUITE( jpeg_test )
+BOOST_AUTO_TEST_SUITE( gil_io_jpeg_tests )
 
 #ifdef BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES
 

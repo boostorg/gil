@@ -24,7 +24,7 @@ using namespace boost::gil;
 
 typedef tiff_tag tag_t;
 
-BOOST_AUTO_TEST_SUITE( tiff_test )
+BOOST_AUTO_TEST_SUITE( gil_io_tiff_tests )
 
 #ifdef BOOST_GIL_IO_USE_TIFF_LIBTIFF_TEST_SUITE_IMAGES
 

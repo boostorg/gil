@@ -24,7 +24,7 @@ using namespace std;
 using namespace boost::gil;
 
 
-BOOST_AUTO_TEST_SUITE( all_formats_test )
+BOOST_AUTO_TEST_SUITE( gil_io_tests )
 
 BOOST_AUTO_TEST_CASE( non_bit_aligned_image_test )
 {

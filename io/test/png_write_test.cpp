@@ -32,7 +32,7 @@ namespace fs = boost::filesystem;
 
 typedef png_tag tag_t;
 
-BOOST_AUTO_TEST_SUITE( png_test )
+BOOST_AUTO_TEST_SUITE( gil_io_png_tests )
 
 BOOST_AUTO_TEST_CASE( rgb_color_space_write_test )
 {

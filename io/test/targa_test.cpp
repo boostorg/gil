@@ -28,7 +28,7 @@ namespace fs = boost::filesystem;
 
 typedef targa_tag tag_t;
 
-BOOST_AUTO_TEST_SUITE( targa_test )
+BOOST_AUTO_TEST_SUITE( gil_io_targa_tests )
 
 #ifdef BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES
 
