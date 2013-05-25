@@ -31,7 +31,7 @@ namespace fs = boost::filesystem;
 
 typedef png_tag tag_t;
 
-BOOST_AUTO_TEST_SUITE( png_test )
+BOOST_AUTO_TEST_SUITE( gil_io_png_tests )
 
 typedef pixel< uint8_t, gray_alpha_layout_t > gray_alpha8_pixel_t;
 typedef image< gray_alpha8_pixel_t, false   > gray_alpha8_image_t;

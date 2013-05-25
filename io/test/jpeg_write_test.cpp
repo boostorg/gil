@@ -20,7 +20,7 @@ using namespace boost::gil;
 
 typedef jpeg_tag tag_t;
 
-BOOST_AUTO_TEST_SUITE( jpeg_test )
+BOOST_AUTO_TEST_SUITE( gil_io_jpeg_tests )
 
 #ifdef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
 BOOST_AUTO_TEST_CASE( write_test )

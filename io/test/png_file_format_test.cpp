@@ -24,7 +24,7 @@ namespace fs = boost::filesystem;
 
 typedef png_tag tag_t;
 
-BOOST_AUTO_TEST_SUITE( png_test )
+BOOST_AUTO_TEST_SUITE( gil_io_png_tests )
 
 #ifdef BOOST_GIL_IO_USE_PNG_TEST_SUITE_IMAGES
 

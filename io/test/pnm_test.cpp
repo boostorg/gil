@@ -25,7 +25,7 @@ using namespace gil;
 
 typedef pnm_tag tag_t;
 
-BOOST_AUTO_TEST_SUITE( pnm_test )
+BOOST_AUTO_TEST_SUITE( gil_io_pnm_tests )
 
 #ifdef BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES
 
