@@ -370,9 +370,11 @@ The lack of having an indexed image type in gil restricts the current interface 
 write out non-indexed images. This is subject to change soon.
 
 [h3 JPEG]
-For a general overview of the JPEG image file format go to the following _JPEG_Wiki_.
+For a general overview of the JPEG image file format go to the following _JPEG_Wiki_. 
 
-This jpeg extension is based on the libjpeg library which can be found here, _JPEG_Lib_.
+This jpeg extension is based on the libjpeg library which can be found here, _JPEG_Lib_. 
+
+All versions starting from 8x are supported.
 
 The user has to make sure this library is properly installed. I strongly recommend the user
 to build the library yourself. It could potentially save you a lot of trouble.
@@ -390,6 +392,8 @@ This is subject to change soon.
 For a general overview of the PNG image file format go to the following _PNG_Wiki_.
 
 This png extension is based on the libpng, which can be found here, _PNG_Lib.
+
+All versions starting from 1.5.x are supported.
 
 The user has to make sure this library is properly installed. I strongly recommend the user
 to build the library yourself. It could potentially save you a lot of trouble.
@@ -434,6 +438,8 @@ write out non-indexed images. This is subject to change soon.
 For a general overview of the TIFF image file format go to the following _TIFF_Wiki_.
 
 This tiff extension is based on the libtiff, which can be found, _TIFF_Lib_.
+
+All versions starting from 3.9.x are supported.
 
 The user has to make sure this library is properly installed. I strongly recommend the user
 to build the library yourself. It could potentially save you a lot of trouble.
