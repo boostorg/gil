@@ -50,6 +50,8 @@ namespace boost { namespace gil {
 /// Note that its element type does not have to be a pixel. \p image can be instantiated with any Regular element,
 /// in which case it models the weaker RandomAccess2DImageConcept and does not model PixelBasedConcept
 ///
+/// When recreating an image of the same or smaller size the memory will be reused if possible.
+///
 ////////////////////////////////////////////////////////////////////////////////////////
 
 template< typename Pixel, bool IsPlanar = false, typename Alloc=std::allocator<unsigned char> >
