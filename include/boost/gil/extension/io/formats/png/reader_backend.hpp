@@ -476,6 +476,8 @@ public:
             }
         }
 
+#ifndef BOOST_GIL_IO_PNG_1_4_OR_LOWER
+
 #ifdef BOOST_GIL_IO_PNG_FLOATING_POINT_SUPPORTED
 
         // get physical scale settings
@@ -530,6 +532,7 @@ public:
         }
 #endif // BOOST_GIL_IO_PNG_FIXED_POINT_SUPPORTED
 #endif // BOOST_GIL_IO_PNG_FLOATING_POINT_SUPPORTED
+#endif // BOOST_GIL_IO_PNG_1_4_OR_LOWER
 
         // get comments information from png_info structure
         if( this->_settings._read_comments )

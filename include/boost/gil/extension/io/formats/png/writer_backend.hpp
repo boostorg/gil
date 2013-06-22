@@ -286,6 +286,8 @@ protected:
                         );
         }
 
+#ifndef BOOST_GIL_IO_PNG_1_4_OR_LOWER
+
 #ifdef BOOST_GIL_IO_PNG_FLOATING_POINT_SUPPORTED 
         if( _info._valid_scale_factors )
         {
@@ -320,7 +322,7 @@ protected:
 
 #endif // BOOST_GIL_IO_PNG_FIXED_POINT_SUPPORTED
 #endif // BOOST_GIL_IO_PNG_FLOATING_POINT_SUPPORTED
-
+#endif // BOOST_GIL_IO_PNG_1_4_OR_LOWER
 
         if( _info._valid_text )
         {
