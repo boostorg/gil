@@ -204,7 +204,7 @@ public:
         }
         else
         {
-            if( img_dim.x < _info._width ) { io_error( "Supplied image is too small" ); }
+            if( (jpeg_image_width::type) img_dim.x < _info._width ) { io_error( "Supplied image is too small" ); }
         }
 
 
@@ -214,7 +214,7 @@ public:
         }
         else
         {
-            if( img_dim.y < _info._height ) { io_error( "Supplied image is too small" ); }
+            if( (jpeg_image_height::type) img_dim.y < _info._height ) { io_error( "Supplied image is too small" ); }
         }
     }
 
