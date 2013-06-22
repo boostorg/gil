@@ -336,6 +336,7 @@ The following table gives an overview of all supported compiler symbols that can
     [[BOOST_GIL_IO_PNG_FLOATING_POINT_SUPPORTED]                [Use libpng in floating point mode. This symbol is incompatible with BOOST_GIL_IO_PNG_FIXED_POINT_SUPPORTED.]]
     [[BOOST_GIL_IO_PNG_FIXED_POINT_SUPPORTED]                   [Use libpng in integer mode. This symbol is incompatible with BOOST_GIL_IO_PNG_FLOATING_POINT_SUPPORTED.]]
     [[BOOST_GIL_IO_PNG_DITHERING_SUPPORTED]                     [Look up "dithering" in libpng manual for explanation.]]
+    [[BOOST_GIL_IO_PNG_1_4_OR_LOWER]                            [Allow compiling with libpng 1.4 or lower.]]
     [[BOOST_GIL_EXTENSION_IO_JPEG_C_LIB_COMPILED_AS_CPLUSPLUS]  [libjpeg is compiled as c++ lib.]]
     [[BOOST_GIL_EXTENSION_IO_PNG_C_LIB_COMPILED_AS_CPLUSPLUS]   [libpng is compiled as c++ lib.]]
     [[BOOST_GIL_EXTENSION_IO_RAW_C_LIB_COMPILED_AS_CPLUSPLUS]   [libraw is compiled as c++ lib.]]
