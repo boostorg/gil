@@ -41,6 +41,11 @@
     }
 #endif
 
+#if PNG_LIBPNG_VER_MAJOR == 1
+#if PNG_LIBPNG_VER_MINOR <= 4
+#define BOOST_GIL_IO_PNG_1_4_OR_LOWER
+#endif // PNG_LIBPNG_VER_MAJOR == 1
+#endif // PNG_LIBPNG_VER_MINOR <= 4
 
 #include <string>
 #include <vector>
