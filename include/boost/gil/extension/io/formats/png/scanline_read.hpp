@@ -45,12 +45,6 @@ class scanline_reader< Device
                            , png_tag
                            >
 {
-private:
-
-    typedef scanline_reader< Device
-                           , png_tag
-                           > this_t;
-
 public:
 
     typedef png_tag tag_t;
