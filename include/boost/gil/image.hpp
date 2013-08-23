@@ -24,9 +24,10 @@
 #include <cstddef>
 #include <memory>
 
+#include <boost/mpl/bool.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/arithmetic.hpp>
-#include <boost/type_traits/conditional.hpp>
+
 
 #include "gil_config.hpp"
 #include "image_view.hpp"
@@ -173,7 +174,7 @@ public:
             destruct_pixels( _view );
 
             create_view( dims
-                       , typename boost::conditional< IsPlanar, mpl::true_, mpl::false_ >::type()
+                       , typename mpl::bool_<IsPlanar>()
                        );
 
             default_construct_pixels( _view );
@@ -205,7 +206,7 @@ public:
             destruct_pixels( _view );
 
             create_view( dims
-                       , typename boost::conditional< IsPlanar, mpl::true_, mpl::false_ >::type()
+                       , typename mpl::bool_<IsPlanar>()
                        );
 
             uninitialized_fill_pixels(_view, p_in);
@@ -241,7 +242,7 @@ public:
             destruct_pixels( _view );
 
             create_view( dims
-                       , typename boost::conditional< IsPlanar, mpl::true_, mpl::false_ >::type()
+                       , typename mpl::bool_<IsPlanar>()
                        );
 
             default_construct_pixels( _view );
@@ -275,7 +276,7 @@ public:
             destruct_pixels( _view );
 
             create_view( dims
-                       , typename boost::conditional< IsPlanar, mpl::true_, mpl::false_ >::type()
+                       , typename mpl::bool_<IsPlanar>()
                        );
 
             uninitialized_fill_pixels(_view, p_in);
@@ -360,7 +361,7 @@ private:
 
         std::size_t size_in_units = is_planar_impl( get_row_size_in_memunits( dimensions.x ) * dimensions.y
                                                   , _channels_in_image
-                                                  , typename boost::conditional< IsPlanar, mpl::true_, mpl::false_ >::type()
+                                                  , typename mpl::bool_<IsPlanar>()
                                                   );
 
         // return the size rounded up to the nearest byte
