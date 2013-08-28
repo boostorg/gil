@@ -34,7 +34,7 @@ namespace boost{ namespace gil {
 namespace ycbcr_601_color_space
 {
 /// \brief Luminance
-struct y_t {};    
+struct y_t {};
 /// \brief Blue chrominance component
 struct cb_t {};
 /// \brief Red chrominance component
@@ -44,7 +44,7 @@ struct cr_t {};
 namespace ycbcr_709_color_space
 {
 /// \brief Luminance
-struct y_t {};    
+struct y_t {};
 /// \brief Blue chrominance component
 struct cb_t {};
 /// \brief Red chrominance component
@@ -81,11 +81,11 @@ struct default_color_converter_impl<ycbcr_601__t, rgb_t>
 	template < typename SRCP, typename DSTP >
 	void operator()( const SRCP& src, DSTP& dst ) const
 	{
-        typedef channel_type< DSTP >::type dst_channel_t;
+        typedef typename channel_type< DSTP >::type dst_channel_t;
         convert( src, dst
-               , boost::is_same< mpl::int_< sizeof( dst_channel_t ) >::type
-                               , mpl::int_<1>::type
-                               >::type()
+               , typename boost::is_same< typename mpl::int_< sizeof( dst_channel_t ) >::type
+                                        , typename mpl::int_<1>::type
+                                        >::type()
                );
 	}
 
@@ -103,8 +103,8 @@ private:
 		using namespace boost::algorithm;
         using namespace ycbcr_601_color_space;
 
-        typedef channel_type< Src_Pixel >::type src_channel_t;
-        typedef channel_type< Dst_Pixel >::type dst_channel_t;
+        typedef typename channel_type< Src_Pixel >::type src_channel_t;
+        typedef typename channel_type< Dst_Pixel >::type dst_channel_t;
 
 		src_channel_t y  = channel_convert<src_channel_t>( get_color(src,  y_t()));
 		src_channel_t cb = channel_convert<src_channel_t>( get_color(src, cb_t()));
@@ -135,7 +135,7 @@ private:
         using namespace boost::algorithm;
         using namespace ycbcr_601_color_space;
 
-        typedef channel_type< Dst_Pixel >::type dst_channel_t;
+        typedef typename channel_type< Dst_Pixel >::type dst_channel_t;
 
         double  y = get_color( src,  y_t() );
         double cb = get_color( src, cb_t() );
@@ -174,8 +174,8 @@ struct default_color_converter_impl<rgb_t, ycbcr_601__t>
 	{
         using namespace ycbcr_601_color_space;
 
-        typedef channel_type< SRCP >::type src_channel_t;
-        typedef channel_type< DSTP >::type dst_channel_t;
+        typedef typename channel_type< SRCP >::type src_channel_t;
+        typedef typename channel_type< DSTP >::type dst_channel_t;
 
 		src_channel_t red   = channel_convert<src_channel_t>( get_color(src,   red_t()));
 		src_channel_t green = channel_convert<src_channel_t>( get_color(src, green_t()));
@@ -187,7 +187,7 @@ struct default_color_converter_impl<rgb_t, ycbcr_601__t>
 
 		get_color( dst,  y_t() ) = (dst_channel_t)  y;
 		get_color( dst, cb_t() ) = (dst_channel_t) cb;
-		get_color( dst, cr_t() ) = (dst_channel_t) cr;  
+		get_color( dst, cr_t() ) = (dst_channel_t) cr;
 	}
 };
 
@@ -202,8 +202,8 @@ struct default_color_converter_impl<rgb_t, ycbcr_709__t>
 	{
         using namespace ycbcr_709_color_space;
 
-        typedef channel_type< SRCP >::type src_channel_t;
-        typedef channel_type< DSTP >::type dst_channel_t;
+        typedef typename channel_type< SRCP >::type src_channel_t;
+        typedef typename channel_type< DSTP >::type dst_channel_t;
 
 		src_channel_t red   = channel_convert<src_channel_t>( get_color(src,   red_t()));
 		src_channel_t green = channel_convert<src_channel_t>( get_color(src, green_t()));
@@ -215,7 +215,7 @@ struct default_color_converter_impl<rgb_t, ycbcr_709__t>
 
 		get_color( dst,  y_t() ) = (dst_channel_t)  y;
 		get_color( dst, cb_t() ) = (dst_channel_t) cb;
-		get_color( dst, cr_t() ) = (dst_channel_t) cr;  
+		get_color( dst, cr_t() ) = (dst_channel_t) cr;
 	}
 };
 
@@ -230,8 +230,8 @@ struct default_color_converter_impl<ycbcr_709__t, rgb_t>
 	{
         using namespace ycbcr_709_color_space;
 
-        typedef channel_type< SRCP >::type src_channel_t;
-        typedef channel_type< DSTP >::type dst_channel_t;
+        typedef typename channel_type< SRCP >::type src_channel_t;
+        typedef typename channel_type< DSTP >::type dst_channel_t;
 
 		src_channel_t y           = channel_convert<src_channel_t>( get_color(src,  y_t())       );
 		src_channel_t cb_clipped  = channel_convert<src_channel_t>( get_color(src, cb_t()) - 128 );
@@ -243,7 +243,7 @@ struct default_color_converter_impl<ycbcr_709__t, rgb_t>
 
 		get_color( dst,   red_t() ) = (dst_channel_t)   red;
 		get_color( dst, green_t() ) = (dst_channel_t) green;
-		get_color( dst,  blue_t() ) = (dst_channel_t)  blue;  
+		get_color( dst,  blue_t() ) = (dst_channel_t)  blue;
 	}
 };
 
