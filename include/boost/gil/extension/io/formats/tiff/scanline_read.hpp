@@ -64,11 +64,6 @@ class scanline_reader< Device
                            , tiff_tag
                            >
 {
-private:
-
-    typedef scanline_reader< Device
-                           , tiff_tag
-                           > this_t;
 public:
 
 

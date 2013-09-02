@@ -48,12 +48,6 @@ class scanline_reader< Device
                            , bmp_tag
                            >
 {
-private:
-
-    typedef scanline_reader< Device
-                           , bmp_tag
-                           > this_t;
-
 public:
 
     typedef bmp_tag tag_t;
