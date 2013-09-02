@@ -27,9 +27,9 @@
 
 namespace boost { namespace gil {
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
-#pragma warning(push) 
-#pragma warning(disable:4512) //assignment operator could not be generated 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(push)
+#pragma warning(disable:4512) //assignment operator could not be generated
 #endif
 
 /// Input iterator to read images.
@@ -39,6 +39,14 @@ class scanline_read_iterator : public boost::iterator_facade< scanline_read_iter
                                                             , std::input_iterator_tag
                                                             >
 {
+private:
+
+    typedef boost::iterator_facade< scanline_read_iterator< Reader >
+                                                          , byte_t*
+                                                          , std::input_iterator_tag
+                                                          > base_t;
+
+
 public:
 
     scanline_read_iterator( Reader& reader
@@ -76,7 +84,7 @@ private:
         return _pos == rhs._pos;
     }
 
-    reference dereference() const
+    typename base_t::reference dereference() const
     {
         if( _read_scanline == true )
         {
@@ -106,9 +114,9 @@ private:
     mutable byte_t* _buffer_start;
 };
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
-#pragma warning(pop) 
-#endif 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(pop)
+#endif
 
 } // namespace gil
 } // namespace boost

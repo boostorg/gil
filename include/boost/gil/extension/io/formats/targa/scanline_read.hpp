@@ -46,12 +46,6 @@ class scanline_reader< Device
                            , targa_tag
                            >
 {
-private:
-
-    typedef scanline_reader< Device
-                           , targa_tag
-                           > this_t;
-
 public:
 
 
