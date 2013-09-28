@@ -88,7 +88,7 @@ struct default_color_converter_impl< rgb_t, hsv_t >
       }   
       else
       { 
-         if( (std::abs)( boost::numeric_cast<int>(temp_red - max_color) ) < 0.0001f )
+         if( (std::abs)( boost::numeric_cast<bits32f>(temp_red - max_color) ) < 0.0001f )
          {
             hue = ( temp_green - temp_blue )
                 / diff;
