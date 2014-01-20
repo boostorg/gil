@@ -149,6 +149,9 @@ public:
         {
             _settings._dim.y = _info._height;
         }
+
+        get()->scale_num = settings._scale_num;
+        get()->scale_denom = settings._scale_denom;
     }
 
     /// Read image header.
@@ -200,21 +203,21 @@ public:
     {
         if( _settings._dim.x > 0 )
         {
-            if( img_dim.x < _settings._dim.x ) { io_error( "Supplied image is too small" ); }
+            if( img_dim.x < _settings._dim.x * _settings._scale_num / _settings._scale_denom ) { io_error( "Supplied image is too small" ); }
         }
         else
         {
-            if( (jpeg_image_width::type) img_dim.x < _info._width ) { io_error( "Supplied image is too small" ); }
+            if( (jpeg_image_width::type) img_dim.x < _info._width * _settings._scale_num / _settings._scale_denom ) { io_error( "Supplied image is too small" ); }
         }
 
 
         if( _settings._dim.y > 0 )
         {
-            if( img_dim.y < _settings._dim.y ) { io_error( "Supplied image is too small" ); }
+            if( img_dim.y < _settings._dim.y * _settings._scale_num / _settings._scale_denom ) { io_error( "Supplied image is too small" ); }
         }
         else
         {
-            if( (jpeg_image_height::type) img_dim.y < _info._height ) { io_error( "Supplied image is too small" ); }
+            if( (jpeg_image_height::type) img_dim.y < _info._height * _settings._scale_num / _settings._scale_denom ) { io_error( "Supplied image is too small" ); }
         }
     }
 

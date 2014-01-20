@@ -156,6 +156,8 @@ struct image_read_settings< jpeg_tag > : public image_read_settings_base
     image_read_settings<jpeg_tag>()
     : image_read_settings_base()
     , _dct_method( jpeg_dct_method::default_value )
+    , _scale_num(1)
+    , _scale_denom(1)
     {}
 
     /// Constructor
@@ -170,10 +172,13 @@ struct image_read_settings< jpeg_tag > : public image_read_settings_base
                               , dim
                               )
     , _dct_method( dct_method )
+    , _scale_num(1)
+    , _scale_denom(1)
     {}
 
     /// The dct ( discrete cosine transformation ) method. 
     jpeg_dct_method::type _dct_method;
+    unsigned int _scale_num, _scale_denom;
 };
 
 /// Write information for jpeg images.
