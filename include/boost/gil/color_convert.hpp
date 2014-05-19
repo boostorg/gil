@@ -188,17 +188,17 @@ struct default_color_converter_impl<cmyk_t,rgb_t> {
             channel_convert<typename color_element_type<P2,red_t>::type>(
                 channel_invert<T1>(
                     (std::min)(channel_traits<T1>::max_value(), 
-                             T1(get_color(src,cyan_t())*channel_invert(get_color(src,black_t()))+get_color(src,black_t())))));
+                             T1(channel_multiply(get_color(src,cyan_t()),channel_invert(get_color(src,black_t())))+get_color(src,black_t())))));
         get_color(dst,green_t())=
             channel_convert<typename color_element_type<P2,green_t>::type>(
                 channel_invert<T1>(
                     (std::min)(channel_traits<T1>::max_value(), 
-                             T1(get_color(src,magenta_t())*channel_invert(get_color(src,black_t()))+get_color(src,black_t())))));
+                             T1(channel_multiply(get_color(src,magenta_t()),channel_invert(get_color(src,black_t())))+get_color(src,black_t())))));
         get_color(dst,blue_t()) =
             channel_convert<typename color_element_type<P2,blue_t>::type>(
                 channel_invert<T1>(
                     (std::min)(channel_traits<T1>::max_value(), 
-                             T1(get_color(src,yellow_t())*channel_invert(get_color(src,black_t()))+get_color(src,black_t())))));
+                             T1(channel_multiply(get_color(src,yellow_t()),channel_invert(get_color(src,black_t())))+get_color(src,black_t())))));
     }
 };
 
