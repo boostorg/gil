@@ -286,6 +286,7 @@ struct image_write_info< tiff_tag, Log >
     , _tile_length               ( 0 )
     , _x_resolution              ( 0 )
     , _y_resolution              ( 0 )
+		, _extra_samples             ( 0 )
     {}
 
     /// The color space of the image data.
@@ -310,7 +311,10 @@ struct image_write_info< tiff_tag, Log >
     tiff_x_resolution::type               _x_resolution;
     tiff_y_resolution::type               _y_resolution;
 
-    /// A log to transcript error and warning messages issued by libtiff.
+	/// Extra Sample type (for alpha)
+	tiff_extra_samples::type                _extra_samples;
+	uint16_t                                _extra_sample_value;
+	/// A log to transcript error and warning messages issued by libtiff.
     Log                                   _log;
 };
 
