@@ -264,7 +264,6 @@ private:
         internal_write_tiled_data(view, tw, th, row, row_it);
     }
 
-	// @todo: premultiply
     template< typename View,
               typename IteratorType
             >
@@ -291,8 +290,10 @@ private:
                                                       , static_cast< int >( th )
                                                       );
 
-                    std::copy( tile_subimage_view.begin()
-                             , tile_subimage_view.end()
+										auto pm_view = premultiply_view <typename View:: value_type> (tile_subimage_view);
+
+                    std::copy( pm_view.begin()
+                             , pm_view.end()
                              , it
                              );
                 }

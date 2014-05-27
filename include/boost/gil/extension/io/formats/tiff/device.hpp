@@ -33,6 +33,7 @@
 
 #include <tiffio.hxx>
 
+#include <boost/mpl/vector.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/utility/enable_if.hpp>
 
@@ -72,17 +73,37 @@ public:
 
     template <typename Property>
     inline
-    bool set_property( const typename Property::type& value )
+    bool set_property( const typename Property::type& value, ... )
     {
-       if( TIFFSetField( _tiff_file.get()
-                       , Property::tag
-                       , value  ) == 1 )
-       {
-          return true;
-       }
+			// http://www.remotesensing.org/libtiff/man/TIFFSetField.3tiff.html
+			int tiff_set_field_return = 0;
 
-       return false;
-    }
+			if (1 == mpl:: size <typename tiff_tag_arg_types <Property>:: types>:: type:: value) {
+				tiff_set_field_return = TIFFSetField( _tiff_file.get()
+					, Property::tag
+					, value  );
+			} else {
+				va_list ap;
+				va_start (ap, value);
+				if (2 == mpl:: size <typename tiff_tag_arg_types <Property>:: types>:: type:: value) {
+					typedef typename mpl:: at <typename tiff_tag_arg_types <Property>:: types, mpl:: int_<1> >:: type arg_1_t;
+					tiff_set_field_return = TIFFSetField( _tiff_file.get()
+						, Property::tag
+						, value
+						, va_arg (ap, arg_1_t));
+				} else if (3 == mpl:: size <typename tiff_tag_arg_types <Property>:: types>:: type:: value) {
+					typedef typename mpl:: at <typename tiff_tag_arg_types <Property>:: types, mpl:: int_<1> >:: type arg_1_t;
+					typedef typename mpl:: at <typename tiff_tag_arg_types <Property>:: types, mpl:: int_<2> >:: type arg_2_t;
+					tiff_set_field_return = TIFFSetField( _tiff_file.get()
+						, Property::tag
+						, value
+						, va_arg (ap, arg_1_t)
+						, va_arg (ap, arg_2_t));
+				} // @todo: compile-time-assert here since we don't handle 
+				va_end (ap);
+			}
+			return (1 == tiff_set_field_return);
+		}
 
     // TIFFIsByteSwapped returns a non-zero value if the image data was in a different 
     // byte-order than the host machine. Zero is returned if the TIFF file and local 
