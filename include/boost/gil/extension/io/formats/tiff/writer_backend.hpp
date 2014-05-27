@@ -116,9 +116,10 @@ protected:
         // write rows per strip
         this->_io_dev.template set_property<tiff_rows_per_strip>( this->_io_dev.get_default_strip_size() );
 
-        // x, y resolution
-        this->_io_dev.template set_property<tiff_x_resolution>( this->_info._x_resolution );
-        this->_io_dev.template set_property<tiff_y_resolution>( this->_info._y_resolution );
+        // write x, y resolution and units
+				this->_io_dev.template set_property<tiff_resolution_unit>( this->_info._resolution_unit );
+				this->_io_dev.template set_property<tiff_x_resolution>( this->_info._x_resolution );
+				this->_io_dev.template set_property<tiff_y_resolution>( this->_info._y_resolution );
     }
 
 

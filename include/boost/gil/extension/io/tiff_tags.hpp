@@ -125,7 +125,13 @@ struct tiff_x_resolution : tiff_property_base< float, TIFFTAG_XRESOLUTION > {};
 struct tiff_y_resolution : tiff_property_base< float, TIFFTAG_YRESOLUTION > {};
 
 /// Defines type for resolution unit property.
-struct tiff_resolution_unit : tiff_property_base< uint16_t, TIFFTAG_RESOLUTIONUNIT > {};
+		enum class tiff_resolution_unit_value: std:: uint16_t {
+			NONE = RESUNIT_NONE,
+				INCH = RESUNIT_INCH,
+				CENTIMETRE = RESUNIT_CENTIMETER
+				};
+		struct tiff_resolution_unit : tiff_property_base< tiff_resolution_unit_value, TIFFTAG_RESOLUTIONUNIT > {
+		};
 
 /// Defines type for planar configuration property.
 struct tiff_planar_configuration : tiff_property_base< uint16_t, TIFFTAG_PLANARCONFIG > {};
@@ -218,6 +224,10 @@ struct image_read_info< tiff_tag >
 
     , _tile_width ( 0 )
     , _tile_length( 0 )
+
+    , _x_resolution( 0 )
+    , _y_resolution( 0 )
+    , _resolution_unit( tiff_resolution_unit_value:: NONE )
     {}
 
     /// The number of rows of pixels in the image.
@@ -247,6 +257,10 @@ struct image_read_info< tiff_tag >
     tiff_tile_width::type _tile_width;
     /// Tile length
     tiff_tile_length::type _tile_length;
+
+    tiff_x_resolution::type _x_resolution;
+    tiff_y_resolution::type _y_resolution;
+    tiff_resolution_unit::type _resolution_unit;
 };
 
 /// Read settings for tiff images.
@@ -279,9 +293,9 @@ struct image_read_settings< tiff_tag > : public image_read_settings_base
     tiff_directory::type _directory;
 };
 
-/// Read settings for tiff images.
+/// Write settings for tiff images.
 ///
-/// The structure can be used for all read_xxx functions, except read_image_info.
+/// The structure can be used for all write_xxx functions, except write_image_info.
 template< typename Log >
 struct image_write_info< tiff_tag, Log >
 {
@@ -298,6 +312,7 @@ struct image_write_info< tiff_tag, Log >
     , _tile_length               ( 0 )
     , _x_resolution              ( 0 )
     , _y_resolution              ( 0 )
+		, _resolution_unit           ( tiff_resolution_unit_value::NONE )
     {}
 
     /// The color space of the image data.
@@ -321,6 +336,7 @@ struct image_write_info< tiff_tag, Log >
     /// x, y resolution
     tiff_x_resolution::type               _x_resolution;
     tiff_y_resolution::type               _y_resolution;
+    tiff_resolution_unit::type            _resolution_unit;
 
 	/// A log to transcript error and warning messages issued by libtiff.
     Log                                   _log;
