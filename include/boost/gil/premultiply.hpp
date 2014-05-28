@@ -1,5 +1,14 @@
-#ifndef PREMULTIPLY_HPP
-#define PREMULTIPLY_HPP
+/*
+    Copyright 2014 
+    Use, modification and distribution are subject to the Boost Software License,
+    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+    http://www.boost.org/LICENSE_1_0.txt).
+*/
+
+/*************************************************************************************************/
+
+#ifndef BOOST_GIL_PREMULTIPLY_HPP
+#define BOOST_GIL_PREMULTIPLY_HPP
 
 #include <iostream>
 
@@ -73,5 +82,4 @@ typename premultiplied_view_type<View,DstP>::type premultiply_view(const View& s
 	}
 }
 
-
-#endif
+#endif // BOOST_GIL_PREMULTIPLY_HPP
