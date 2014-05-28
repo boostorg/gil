@@ -128,11 +128,7 @@ void test_pixel_iterator() {
     buf[2] = 219;
 
     iterator_t it( &buf[0], 0 );
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> 325700ffa2810faea2f41c77eded9992cbc7e91e
     ref_t p1 = *it; it++;
     ref_t p2 = *it; it++;
     ref_t p3 = *it; it++;
@@ -152,7 +148,6 @@ void test_pixel_iterator() {
     unsigned char v8 = get_color( p8, gray_color_t() );
 
 	// all values should be 110b ( 6 );
-<<<<<<< HEAD
     assert( v1 == 6 );
     assert( v2 == 6 );
     assert( v3 == 6 );
@@ -161,16 +156,6 @@ void test_pixel_iterator() {
     assert( v6 == 6 );
     assert( v7 == 6 );
     assert( v8 == 6 );
-=======
-    //assert( v1 == 6 );
-    //assert( v2 == 6 );
-    //assert( v3 == 6 );
-    //assert( v4 == 6 );
-    //assert( v5 == 6 );
-    //assert( v6 == 6 );
-    //assert( v7 == 6 );
-    //assert( v8 == 6 );
->>>>>>> 325700ffa2810faea2f41c77eded9992cbc7e91e
 }
 
 // TODO: Make better tests. Use some code from below.
@@ -352,10 +337,6 @@ BOOST_AUTO_TEST_SUITE(GIL_Tests)
 BOOST_AUTO_TEST_CASE(pixel_iterator_test)
 {
     test_pixel_iterator();
-<<<<<<< HEAD
-=======
-	return 0;
->>>>>>> 325700ffa2810faea2f41c77eded9992cbc7e91e
 }
 
 BOOST_AUTO_TEST_SUITE_END()
