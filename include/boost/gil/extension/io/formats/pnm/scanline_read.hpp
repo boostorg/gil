@@ -50,12 +50,6 @@ class scanline_reader< Device
                            , pnm_tag
                            >
 {
-private:
-
-    typedef scanline_reader< Device
-                           , pnm_tag
-                           > this_t;
-
 public:
 
     typedef pnm_tag tag_t;

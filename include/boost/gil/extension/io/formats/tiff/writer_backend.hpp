@@ -19,6 +19,8 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
+#include <boost/mpl/contains.hpp>
+
 #include <boost/gil/extension/io/tiff_tags.hpp>
 
 namespace boost { namespace gil {
@@ -58,11 +60,10 @@ protected:
 
         // get the type of the first channel (heterogeneous pixels might be broken for now!)
         typedef typename channel_traits< typename element_type< pixel_t >::type >::value_type channel_t;
+				typedef typename color_space_type< View >::type color_space_t;
 
         if(! this->_info._photometric_interpretation_user_defined )
         {
-            typedef typename color_space_type< View >::type color_space_t;
-
             // write photometric interpretion - Warning: This value is rather
             // subjective. The user should better set this value itself. There
             // is no way to decide if a image is PHOTOMETRIC_MINISWHITE or
@@ -87,6 +88,12 @@ protected:
         tiff_samples_per_pixel::type samples_per_pixel = num_channels< pixel_t >::value;
         this->_io_dev.template set_property<tiff_samples_per_pixel>( samples_per_pixel );
 
+				if (mpl:: contains <color_space_t, alpha_t>:: value) {
+					uint16_t const extra_sample_type [] = { EXTRASAMPLE_ASSOCALPHA };
+					uint16_t const extra_samples_count = sizeof (extra_sample_type) / sizeof (extra_sample_type [0]);
+
+					this->_io_dev.template set_property<tiff_extra_samples>( extra_samples_count, extra_sample_type );
+				}
         // write bits per sample
         // @todo: Settings this value usually requires to write for each sample the bit
         // value seperately in case they are different, like rgb556.
