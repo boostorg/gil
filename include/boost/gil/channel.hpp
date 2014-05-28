@@ -248,6 +248,12 @@ BOOST_STATIC_ASSERT((boost::is_integral<bits4>::value));
 template <int NumBits>
 class packed_channel_value {
 
+<<<<<<< HEAD
+=======
+    typedef  typename detail::num_value_fn< NumBits >::type num_value_t;
+    static const num_value_t num_values = static_cast< num_value_t >( 1 ) << NumBits ;
+   
+>>>>>>> 325700ffa2810faea2f41c77eded9992cbc7e91e
 public:
     typedef typename detail::min_fast_uint<NumBits>::type integer_t;
 
@@ -264,11 +270,20 @@ public:
     BOOST_STATIC_CONSTANT(bool, is_mutable=true);
 
     packed_channel_value() {}
+<<<<<<< HEAD
 
     packed_channel_value(integer_t v) { _value = static_cast< integer_t >( v & low_bits_mask_t<NumBits>::sig_bits_fast ); }
     template <typename Scalar> packed_channel_value(Scalar v) { _value = packed_channel_value( static_cast< integer_t >( v ) ); }
 
     static unsigned int num_bits() { return NumBits; }
+=======
+    packed_channel_value(integer_t v) { _value = static_cast< integer_t >( v % num_values ); }
+    packed_channel_value(const packed_channel_value& v) : _value(v._value) {}
+    template <typename Scalar> packed_channel_value(Scalar v) { _value = static_cast< integer_t >( v ) % num_values; }
+
+    static unsigned int num_bits() { return NumBits; }
+
+>>>>>>> 325700ffa2810faea2f41c77eded9992cbc7e91e
 
     operator integer_t() const { return _value; }
 private:

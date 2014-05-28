@@ -117,7 +117,11 @@ private:
     void advance(std::ptrdiff_t d)   { static_transform(*this,*this,std::bind2nd(detail::plus_asymmetric<ChannelPtr,std::ptrdiff_t>(),d)); }
     reference dereference() const { return this->template deref<reference>(); }
 
+<<<<<<< HEAD
     std::ptrdiff_t distance_to(const planar_pixel_iterator& it) const { return gil::at_c<0>(it)-gil::at_c<0>(*this); }
+=======
+    ptrdiff_t distance_to(const planar_pixel_iterator& it) const { return gil::at_c<0>(it)-gil::at_c<0>(*this); }
+>>>>>>> 325700ffa2810faea2f41c77eded9992cbc7e91e
     bool equal(const planar_pixel_iterator& it) const { return gil::at_c<0>(*this)==gil::at_c<0>(it); }
 };
 
@@ -181,8 +185,13 @@ template <typename IC, typename C>
 inline std::ptrdiff_t memunit_step(const planar_pixel_iterator<IC,C>&) { return sizeof(typename std::iterator_traits<IC>::value_type); }
 
 template <typename IC, typename C>
+<<<<<<< HEAD
 inline std::ptrdiff_t memunit_distance(const planar_pixel_iterator<IC,C>& p1, const planar_pixel_iterator<IC,C>& p2) {
     return memunit_distance(gil::at_c<0>(p1),gil::at_c<0>(p2));
+=======
+inline std::ptrdiff_t memunit_distance(const planar_pixel_iterator<IC,C>& p1, const planar_pixel_iterator<IC,C>& p2) { 
+    return memunit_distance(gil::at_c<0>(p1),gil::at_c<0>(p2)); 
+>>>>>>> 325700ffa2810faea2f41c77eded9992cbc7e91e
 }
 
 template <typename IC>
