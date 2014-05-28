@@ -59,15 +59,17 @@ protected:
         // get the type of the first channel (heterogeneous pixels might be broken for now!)
         typedef typename channel_traits< typename element_type< pixel_t >::type >::value_type channel_t;
 
-        if( this->_info._photometric_interpretation_user_defined )
+        if(! this->_info._photometric_interpretation_user_defined )
         {
             typedef typename color_space_type< View >::type color_space_t;
 
-            // write photometric interpretion - Warning: This value is rather subjective.
-            // The user should better set this value itself. There is no way to decide if
-            // a image is PHOTOMETRIC_MINISWHITE or PHOTOMETRIC_MINISBLACK. This writer
-            // will assume PHOTOMETRIC_MINISBLACK for gray_t images and PHOTOMETRIC_RGB
-            // for rgb_t images.
+            // write photometric interpretion - Warning: This value is rather
+            // subjective. The user should better set this value itself. There
+            // is no way to decide if a image is PHOTOMETRIC_MINISWHITE or
+            // PHOTOMETRIC_MINISBLACK. If the user has not manually set it, then
+            // this writer will assume PHOTOMETRIC_MINISBLACK for gray_t images,
+            // PHOTOMETRIC_RGB for rgb_t images, and PHOTOMETRIC_SEPARATED (as
+            // is conventional) for cmyk_t images.
             this->_info._photometric_interpretation = detail::photometric_interpretation< color_space_t >::value;
         }
 
