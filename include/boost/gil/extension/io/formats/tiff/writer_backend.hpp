@@ -119,7 +119,7 @@ protected:
 				this->_io_dev.template set_property<tiff_x_resolution>( this->_info._x_resolution );
 				this->_io_dev.template set_property<tiff_y_resolution>( this->_info._y_resolution );
 
-				/// Non-baseline tags below here
+				/// Optional and / or non-baseline tags below here
 
 				// write ICC colour profile, if it's there
 				// http://www.color.org/icc_specs2.xalter
