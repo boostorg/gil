@@ -33,7 +33,7 @@
 
 #include <tiffio.hxx>
 
-#include <boost/mpl/vector.hpp>
+#include <boost/fusion/sequence/intrinsic/size.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/utility/enable_if.hpp>
 
@@ -57,53 +57,66 @@ public:
     {}
 
 
+	// For single-valued properties
+	template <typename V>
+	inline
+	bool get_property_data (ttag_t tag, V & value)
+	{
+		// @todo: defaulted, really?
+		return (1 == TIFFGetFieldDefaulted( _tiff_file.get()
+				, tag
+				, & value));
+	}
+	// Specialisation for multi-valued properties. @todo: add one of
+	// these for the three-parameter fields too.
+	template <typename V, typename W>
+	inline
+	bool get_property_data (ttag_t tag, fusion:: vector2 <V, W> & vw)
+	{
+		return (1 == TIFFGetFieldDefaulted( _tiff_file.get()
+				, tag
+				, & fusion:: at <mpl::int_<0> > (vw)
+				, & fusion:: at <mpl::int_<1> > (vw)));
+	}
+
     template <typename Property>
     bool get_property( typename Property::type& value  )
     {
-        if( TIFFGetFieldDefaulted( _tiff_file.get()
-                                 , Property::tag
-                                 , &value ) == 1 )
-        {
-            return true;
-        }
-
-        return false;
-    }
+			return get_property_data (Property:: tag, value);
+		}
    
+
+	// For single-valued properties
+	template <typename V>
+	inline
+	bool set_property_data (ttag_t tag, V const & v)
+	{
+		return (1 == TIFFSetField( _tiff_file.get()
+				, tag
+				, v));
+	}
+
+
+	// Specialisation for multi-valued properties. @todo: add one of
+	// these for the three-parameter fields too.
+	template <typename V, typename W>
+	inline
+	bool set_property_data (ttag_t tag, fusion:: vector2 <V, W> const & vw)
+	{
+		return (1 == TIFFSetField( _tiff_file.get()
+				, tag
+				, fusion:: at_c <0> (vw)
+				, fusion:: at_c <1> (vw)));
+	}
 
     template <typename Property>
     inline
-    bool set_property( const typename Property::type& value, ... )
+    bool set_property( const typename Property::type& value )
     {
 			// http://www.remotesensing.org/libtiff/man/TIFFSetField.3tiff.html
-			int tiff_set_field_return = 0;
-
-			if (1 == mpl:: size <typename tiff_tag_arg_types <Property>:: types>:: type:: value) {
-				tiff_set_field_return = TIFFSetField( _tiff_file.get()
-					, Property::tag
-					, value  );
-			} else {
-				va_list ap;
-				va_start (ap, value);
-				if (2 == mpl:: size <typename tiff_tag_arg_types <Property>:: types>:: type:: value) {
-					typedef typename mpl:: at <typename tiff_tag_arg_types <Property>:: types, mpl:: int_<1> >:: type arg_1_t;
-					tiff_set_field_return = TIFFSetField( _tiff_file.get()
-						, Property::tag
-						, value
-						, va_arg (ap, arg_1_t));
-				} else if (3 == mpl:: size <typename tiff_tag_arg_types <Property>:: types>:: type:: value) {
-					typedef typename mpl:: at <typename tiff_tag_arg_types <Property>:: types, mpl:: int_<1> >:: type arg_1_t;
-					typedef typename mpl:: at <typename tiff_tag_arg_types <Property>:: types, mpl:: int_<2> >:: type arg_2_t;
-					tiff_set_field_return = TIFFSetField( _tiff_file.get()
-						, Property::tag
-						, value
-						, va_arg (ap, arg_1_t)
-						, va_arg (ap, arg_2_t));
-				} // @todo: compile-time-assert here since we don't handle 
-				va_end (ap);
-			}
-			return (1 == tiff_set_field_return);
+			set_property_data (Property:: tag, value);
 		}
+
 
     // TIFFIsByteSwapped returns a non-zero value if the image data was in a different 
     // byte-order than the host machine. Zero is returned if the TIFF file and local 

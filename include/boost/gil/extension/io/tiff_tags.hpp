@@ -19,6 +19,8 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
+#include <boost/fusion/container/vector.hpp>
+
 // taken from jpegxx - https://bitbucket.org/edd/jpegxx/src/ea2492a1a4a6/src/ijg_headers.hpp
 #ifndef BOOST_GIL_EXTENSION_IO_TIFF_C_LIB_COMPILED_AS_CPLUSPLUS
     extern "C" {
@@ -48,16 +50,6 @@ struct tiff_property_base : property_base< T >
     /// Tag, needed when reading or writing image properties.
     static const ttag_t tag = Value;
 };
-
-		// Most tags (properties) just have one value, but some have more.
-		// In the usual case we just follow the type in the
-		// property_base. Otherwise we specialise this to a longer vector
-		// of types.
-		template <typename Property>
-		struct tiff_tag_arg_types
-		{
-			typedef typename mpl:: vector <typename Property:: type> types;
-		};
 
 /// baseline tags
 
@@ -165,13 +157,11 @@ struct tiff_color_map
 };
 
 /// Defines type for extra samples property.
-struct tiff_extra_samples : tiff_property_base< uint16_t, TIFFTAG_EXTRASAMPLES > {};
-		template <> struct tiff_tag_arg_types <tiff_extra_samples> {
-			typedef typename mpl:: vector <typename tiff_extra_samples:: type, uint16_t*> types;
-		};
+		struct tiff_extra_samples : tiff_property_base< fusion:: vector2 <uint16_t, uint16_t *>, TIFFTAG_EXTRASAMPLES > {};
 
 /// Defines type for copyright property.
 struct tiff_copyright : tiff_property_base< std::string, TIFFTAG_COPYRIGHT > {};
+		struct tiff_extra_samples : tiff_property_base< fusion:: vector2 <uint16_t, uint16_t *>, TIFFTAG_EXTRASAMPLES > {};
 
 /// non-baseline tags
 
@@ -199,6 +189,11 @@ struct tiff_directory : property_base< tdir_t >
 {
     typedef boost::mpl::integral_c< type, 0 > default_value;
 };
+
+/// Non-baseline tags
+
+/// Defines type for icc profile property.
+		struct tiff_icc_profile : tiff_property_base< fusion:: vector2 <uint32_t, void *>, TIFFTAG_ICCPROFILE > {};
 
 /// Read information for tiff images.
 ///
@@ -228,6 +223,8 @@ struct image_read_info< tiff_tag >
     , _x_resolution( 0 )
     , _y_resolution( 0 )
     , _resolution_unit( tiff_resolution_unit_value:: NONE )
+
+    , _icc_profile( 0, nullptr )
     {}
 
     /// The number of rows of pixels in the image.
@@ -261,6 +258,8 @@ struct image_read_info< tiff_tag >
     tiff_x_resolution::type _x_resolution;
     tiff_y_resolution::type _y_resolution;
     tiff_resolution_unit::type _resolution_unit;
+
+    tiff_icc_profile:: type _icc_profile;
 };
 
 /// Read settings for tiff images.
@@ -312,7 +311,8 @@ struct image_write_info< tiff_tag, Log >
     , _tile_length               ( 0 )
     , _x_resolution              ( 0 )
     , _y_resolution              ( 0 )
-		, _resolution_unit           ( tiff_resolution_unit_value::NONE )
+    , _resolution_unit           ( tiff_resolution_unit_value::NONE )
+    , _icc_profile               ( 0, nullptr )
     {}
 
     /// The color space of the image data.
@@ -337,6 +337,8 @@ struct image_write_info< tiff_tag, Log >
     tiff_x_resolution::type               _x_resolution;
     tiff_y_resolution::type               _y_resolution;
     tiff_resolution_unit::type            _resolution_unit;
+
+    tiff_icc_profile:: type               _icc_profile;
 
 	/// A log to transcript error and warning messages issued by libtiff.
     Log                                   _log;
