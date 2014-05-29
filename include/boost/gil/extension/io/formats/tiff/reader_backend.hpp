@@ -19,6 +19,8 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
+#include <boost/fusion/sequence/intrinsic/at.hpp>
+
 #include <boost/gil/extension/io/tiff_tags.hpp>
 
 namespace boost { namespace gil {
@@ -108,6 +110,18 @@ public:
 					, "cannot read tiff tag" );
 				io_error_if( _io_dev. template get_property<tiff_y_resolution>( _info._y_resolution ) == false
 					, "cannot read tiff tag" );
+
+				/// optional and non-baseline properties below here
+				if (1 != _io_dev. template get_property <tiff_icc_profile> ( _info._icc_profile )) {
+					// Not clear to me what TIFFGetField will have put into
+					// these locations if it failed (it says “do not interpret
+					// the returned values”), so let's reset them just in
+					// case. @todo: this may not be necessary and could then be
+					// removed. Alternatively we could use locals and copy them
+					// if success.
+					fusion:: at <mpl::int_<0> > ( _info._icc_profile ) = 0;
+					fusion:: at <mpl::int_<1> > ( _info._icc_profile ) = nullptr;
+				}
     }
 
     /// Check if image is large enough.
