@@ -161,7 +161,6 @@ struct tiff_color_map
 
 /// Defines type for copyright property.
 struct tiff_copyright : tiff_property_base< std::string, TIFFTAG_COPYRIGHT > {};
-		struct tiff_extra_samples : tiff_property_base< fusion:: vector2 <uint16_t, uint16_t *>, TIFFTAG_EXTRASAMPLES > {};
 
 /// non-baseline tags
 
@@ -193,7 +192,7 @@ struct tiff_directory : property_base< tdir_t >
 /// Non-baseline tags
 
 /// Defines type for icc profile property.
-		struct tiff_icc_profile : tiff_property_base< fusion:: vector2 <uint32_t, void *>, TIFFTAG_ICCPROFILE > {};
+		struct tiff_icc_profile : tiff_property_base< fusion:: vector2 <uint32_t, void const *>, TIFFTAG_ICCPROFILE > {};
 
 /// Read information for tiff images.
 ///
