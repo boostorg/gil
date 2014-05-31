@@ -35,7 +35,7 @@
 
 #include <tiffio.hxx>
 
-#include <boost/fusion/sequence/intrinsic/size.hpp>
+#include <boost/mpl/size.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/utility/enable_if.hpp>
 
@@ -137,12 +137,11 @@ public:
     : _tiff_file( tiff_file
                 , TIFFClose )
     {}
-
-	template <typename Property>
-	bool get_property( typename Property::type& value  )
-	{
-		return get_property_f <mpl:: size <typename Property:: arg_types>::value > (). template operator () <Property> (value, _tiff_file);
-	}
+    template <typename Property>
+    bool get_property( typename Property::type& value  )
+    {
+      return get_property_f <mpl:: size <typename Property:: arg_types>::value > (). template operator () <Property> (value, _tiff_file);
+    }
 
     template <typename Property>
     inline
@@ -480,7 +479,6 @@ template<> struct photometric_interpretation< gray_t > : public mpl::int_< PHOTO
 template<> struct photometric_interpretation< rgb_t  > : public mpl::int_< PHOTOMETRIC_RGB        > {};
 template<> struct photometric_interpretation< rgba_t > : public mpl::int_< PHOTOMETRIC_RGB        > {};
 template<> struct photometric_interpretation< cmyk_t > : public mpl::int_< PHOTOMETRIC_SEPARATED  > {};
-			
 
 } // namespace detail
 } // namespace gil

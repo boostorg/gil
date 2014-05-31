@@ -49,7 +49,12 @@ struct tiff_property_base : property_base< T >
 {
     /// Tag, needed when reading or writing image properties.
     static const ttag_t tag = Value;
-	typedef mpl:: vector <typename property_base <T>:: type> arg_types;
+    /// The list of argument types used in the interface of LibTIFF
+    /// for
+    /// this property:
+    /// http://www.remotesensing.org/libtiff/man/TIFFGetField.3tiff.html
+    /// http://www.remotesensing.org/libtiff/man/TIFFSetField.3tiff.html
+    typedef mpl:: vector <typename property_base <T>:: type> arg_types;
 };
 
 /// baseline tags
@@ -118,13 +123,13 @@ struct tiff_x_resolution : tiff_property_base< float, TIFFTAG_XRESOLUTION > {};
 struct tiff_y_resolution : tiff_property_base< float, TIFFTAG_YRESOLUTION > {};
 
 /// Defines type for resolution unit property.
-		enum class tiff_resolution_unit_value: std:: uint16_t {
-			NONE = RESUNIT_NONE,
-				INCH = RESUNIT_INCH,
-				CENTIMETRE = RESUNIT_CENTIMETER
-				};
-		struct tiff_resolution_unit : tiff_property_base< tiff_resolution_unit_value, TIFFTAG_RESOLUTIONUNIT > {
-		};
+enum class tiff_resolution_unit_value: std:: uint16_t {
+  NONE = RESUNIT_NONE,
+  INCH = RESUNIT_INCH,
+  CENTIMETER = RESUNIT_CENTIMETER
+};
+
+struct tiff_resolution_unit : tiff_property_base< tiff_resolution_unit_value, TIFFTAG_RESOLUTIONUNIT > {};
 
 /// Defines type for planar configuration property.
 struct tiff_planar_configuration : tiff_property_base< uint16_t, TIFFTAG_PLANARCONFIG > {};
@@ -158,9 +163,9 @@ struct tiff_color_map
 };
 
 /// Defines type for extra samples property.
-		struct tiff_extra_samples : tiff_property_base< std:: vector <uint16_t>, TIFFTAG_EXTRASAMPLES > {
-			typedef mpl:: vector <uint16_t, uint16_t const *> arg_types;
-		};
+struct tiff_extra_samples : tiff_property_base< std:: vector <uint16_t>, TIFFTAG_EXTRASAMPLES > {
+  typedef mpl:: vector <uint16_t, uint16_t const *> arg_types;
+};
 
 /// Defines type for copyright property.
 struct tiff_copyright : tiff_property_base< std::string, TIFFTAG_COPYRIGHT > {};
@@ -195,9 +200,9 @@ struct tiff_directory : property_base< tdir_t >
 /// Non-baseline tags
 
 /// Defines type for icc profile property.
-		struct tiff_icc_profile : tiff_property_base< std:: vector <uint8_t>, TIFFTAG_ICCPROFILE > {
-			typedef mpl:: vector <uint32_t, void const *> arg_types;
-		};
+struct tiff_icc_profile : tiff_property_base< std:: vector <uint8_t>, TIFFTAG_ICCPROFILE > {
+  typedef mpl:: vector <uint32_t, void const *> arg_types;
+};
 
 /// Read information for tiff images.
 ///
@@ -224,8 +229,8 @@ struct image_read_info< tiff_tag >
     , _tile_width ( 0 )
     , _tile_length( 0 )
 
-    , _x_resolution( 0 )
-    , _y_resolution( 0 )
+    , _x_resolution( 1 )
+    , _y_resolution( 1 )
     , _resolution_unit( tiff_resolution_unit_value:: NONE )
 
     , _icc_profile(  )
@@ -313,8 +318,8 @@ struct image_write_info< tiff_tag, Log >
     , _is_tiled                  ( false )
     , _tile_width                ( 0 )
     , _tile_length               ( 0 )
-    , _x_resolution              ( 0 )
-    , _y_resolution              ( 0 )
+    , _x_resolution              ( 1 )
+    , _y_resolution              ( 1 )
     , _resolution_unit           ( tiff_resolution_unit_value::NONE )
     , _icc_profile               (  )
     {}
