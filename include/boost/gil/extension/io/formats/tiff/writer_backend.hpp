@@ -90,7 +90,7 @@ protected:
 
 				if (mpl:: contains <color_space_t, alpha_t>:: value) {
 					std:: vector <uint16_t> extra_samples {EXTRASAMPLE_ASSOCALPHA}; // @todo: const.
-					this->_io_dev.template set_property<tiff_extra_samples>( typename tiff_extra_samples:: type (extra_samples. size(), & (extra_samples. front ())) );
+					this->_io_dev.template set_property<tiff_extra_samples>( extra_samples );
 				}
         // write bits per sample
         // @todo: Settings this value usually requires to write for each sample the bit
@@ -123,7 +123,7 @@ protected:
 
 				// write ICC colour profile, if it's there
 				// http://www.color.org/icc_specs2.xalter
-				if (fusion:: at_c <0> (this->_info._icc_profile))
+				if ( 0 != this->_info._icc_profile.size())
 					this->_io_dev.template set_property<tiff_icc_profile>( this->_info._icc_profile );
     }
 
