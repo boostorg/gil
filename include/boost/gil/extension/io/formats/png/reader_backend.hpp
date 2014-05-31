@@ -296,11 +296,9 @@ public:
                                             );
             }
 
-            if( this->_info._profile_length > 0 )
+            if( this->_info._profile_length != 0 )
             {
-                this->_info._profile.append( reinterpret_cast< char* >( profile )
-                                           , this->_info._profile_length
-                                           );
+                std:: copy_n (profile, this->_info._profile_length, std:: back_inserter (this->_info._profile));
             }
         }
 

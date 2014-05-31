@@ -49,6 +49,7 @@ struct tiff_property_base : property_base< T >
 {
     /// Tag, needed when reading or writing image properties.
     static const ttag_t tag = Value;
+	typedef mpl:: vector <typename property_base <T>:: type> arg_types;
 };
 
 /// baseline tags
@@ -157,7 +158,9 @@ struct tiff_color_map
 };
 
 /// Defines type for extra samples property.
-		struct tiff_extra_samples : tiff_property_base< fusion:: vector2 <uint16_t, uint16_t *>, TIFFTAG_EXTRASAMPLES > {};
+		struct tiff_extra_samples : tiff_property_base< std:: vector <uint16_t>, TIFFTAG_EXTRASAMPLES > {
+			typedef mpl:: vector <uint16_t, uint16_t const *> arg_types;
+		};
 
 /// Defines type for copyright property.
 struct tiff_copyright : tiff_property_base< std::string, TIFFTAG_COPYRIGHT > {};
@@ -192,7 +195,9 @@ struct tiff_directory : property_base< tdir_t >
 /// Non-baseline tags
 
 /// Defines type for icc profile property.
-		struct tiff_icc_profile : tiff_property_base< fusion:: vector2 <uint32_t, void const *>, TIFFTAG_ICCPROFILE > {};
+		struct tiff_icc_profile : tiff_property_base< std:: vector <uint8_t>, TIFFTAG_ICCPROFILE > {
+			typedef mpl:: vector <uint32_t, void const *> arg_types;
+		};
 
 /// Read information for tiff images.
 ///
@@ -223,7 +228,7 @@ struct image_read_info< tiff_tag >
     , _y_resolution( 0 )
     , _resolution_unit( tiff_resolution_unit_value:: NONE )
 
-    , _icc_profile( 0, nullptr )
+    , _icc_profile(  )
     {}
 
     /// The number of rows of pixels in the image.
@@ -311,7 +316,7 @@ struct image_write_info< tiff_tag, Log >
     , _x_resolution              ( 0 )
     , _y_resolution              ( 0 )
     , _resolution_unit           ( tiff_resolution_unit_value::NONE )
-    , _icc_profile               ( 0, nullptr )
+    , _icc_profile               (  )
     {}
 
     /// The color space of the image data.
