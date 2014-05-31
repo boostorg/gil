@@ -19,8 +19,6 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/fusion/sequence/intrinsic/at.hpp>
-
 #include <boost/gil/extension/io/tiff_tags.hpp>
 
 namespace boost { namespace gil {
@@ -104,12 +102,12 @@ public:
                         , "cannot read tiff_tile_length tag." );
         }
 
-				io_error_if( _io_dev.template get_property<tiff_resolution_unit> ( _info._resolution_unit) == false
-					, "cannot read tiff tag");
-				io_error_if( _io_dev. template get_property<tiff_x_resolution>( _info._x_resolution ) == false
-					, "cannot read tiff tag" );
-				io_error_if( _io_dev. template get_property<tiff_y_resolution>( _info._y_resolution ) == false
-					, "cannot read tiff tag" );
+        io_error_if( _io_dev.template get_property<tiff_resolution_unit>( _info._resolution_unit) == false
+          , "cannot read tiff tag");
+        io_error_if( _io_dev. template get_property<tiff_x_resolution>( _info._x_resolution ) == false
+          , "cannot read tiff tag" );
+        io_error_if( _io_dev. template get_property<tiff_y_resolution>( _info._y_resolution ) == false
+          , "cannot read tiff tag" );
 
 				/// optional and non-baseline properties below here
 				_io_dev. template get_property <tiff_icc_profile> ( _info._icc_profile );
