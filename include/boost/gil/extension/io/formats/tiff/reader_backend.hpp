@@ -109,8 +109,8 @@ public:
         io_error_if( _io_dev. template get_property<tiff_y_resolution>( _info._y_resolution ) == false
           , "cannot read tiff tag" );
 
-				/// optional and non-baseline properties below here
-				_io_dev. template get_property <tiff_icc_profile> ( _info._icc_profile );
+        /// optional and non-baseline properties below here
+        _io_dev. template get_property <tiff_icc_profile> ( _info._icc_profile );
     }
 
     /// Check if image is large enough.
