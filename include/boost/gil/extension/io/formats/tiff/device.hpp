@@ -479,7 +479,6 @@ template<> struct photometric_interpretation< gray_t > : public mpl::int_< PHOTO
 template<> struct photometric_interpretation< rgb_t  > : public mpl::int_< PHOTOMETRIC_RGB        > {};
 template<> struct photometric_interpretation< rgba_t > : public mpl::int_< PHOTOMETRIC_RGB        > {};
 template<> struct photometric_interpretation< cmyk_t > : public mpl::int_< PHOTOMETRIC_SEPARATED  > {};
-			
 
 } // namespace detail
 } // namespace gil
