@@ -10,6 +10,8 @@
 #ifndef BOOST_GIL_EXTENSION_IO_DETAIL_TIFF_IO_DEVICE_HPP
 #define BOOST_GIL_EXTENSION_IO_DETAIL_TIFF_IO_DEVICE_HPP
 
+#include <algorithm>
+
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file
 /// \brief
@@ -33,7 +35,7 @@
 
 #include <tiffio.hxx>
 
-#include <boost/mpl/vector.hpp>
+#include <boost/mpl/size.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/utility/enable_if.hpp>
 
@@ -43,10 +45,90 @@
 
 namespace boost { namespace gil { namespace detail {
 
+template <int n_args>
+struct get_property_f {
+	template <typename Property>
+	bool operator () (typename Property:: type& value, shared_ptr <TIFF> & file);
+};
+
+template <int n_args>
+struct set_property_f {
+	template <typename Property>
+	bool operator () (const typename Property:: type& value, shared_ptr <TIFF> & file) const;
+};
+
+template <> struct get_property_f <1> 
+{
+	// For single-valued properties
+	template <typename Property>
+	bool operator () (typename Property::type & value, shared_ptr <TIFF> & file) const
+	{
+		// @todo: defaulted, really?
+		return (1 == TIFFGetFieldDefaulted( file.get()
+				, Property:: tag
+				, & value));
+	}
+};
+
+template <> struct get_property_f <2>
+{
+	// Specialisation for multi-valued properties. @todo: add one of
+	// these for the three-parameter fields too.
+	template <typename Property>
+	bool operator () (typename Property:: type & vs, shared_ptr <TIFF> & file) const
+	{
+		typename mpl:: at <typename Property:: arg_types, mpl::int_<0> >:: type length;
+		typename mpl:: at <typename Property:: arg_types, mpl::int_<1> >:: type pointer;
+		if (1 == TIFFGetFieldDefaulted( file.get()
+				, Property:: tag
+				, & length
+				, & pointer)) {
+			std:: copy_n (static_cast <typename Property:: type:: const_pointer> (pointer), length, std:: back_inserter (vs));
+			return true;
+		} else
+			return false;
+	}
+};
+
+template <> struct set_property_f <1>
+{
+	// For single-valued properties
+	template <typename Property>
+	inline
+	bool operator () (typename Property:: type const & value, shared_ptr <TIFF> & file) const
+	{
+		return (1 == TIFFSetField( file.get()
+				, Property:: tag
+				, value));
+	}
+};
+
+template <> struct set_property_f <2>
+{
+	// Specialisation for multi-valued properties. @todo: add one
+	// of these for the three-parameter fields too. Actually we
+	// will need further templation / specialisation for the
+	// two-element fields which aren't a length and a data buffer
+	// (e.g. http://www.awaresystems.be/imaging/tiff/tifftags/dotrange.html
+	// )
+	template <typename Property>
+	inline
+	bool operator () (typename Property:: type const & values, shared_ptr <TIFF> & file) const
+	{
+		typename mpl:: at <typename Property:: arg_types, mpl::int_<0> >:: type const length = values. size ();
+		typename mpl:: at <typename Property:: arg_types, mpl::int_<1> >:: type const pointer = & (values. front ()); 
+		return (1 == TIFFSetField( file.get()
+				, Property:: tag
+				, length
+				, pointer));
+	}
+};
+
 template< typename Log >
 class tiff_device_base
 {
 public:
+   typedef shared_ptr<TIFF> tiff_file_t;
 
     tiff_device_base()
     {}
@@ -55,54 +137,18 @@ public:
     : _tiff_file( tiff_file
                 , TIFFClose )
     {}
-
-
     template <typename Property>
     bool get_property( typename Property::type& value  )
     {
-        if( TIFFGetFieldDefaulted( _tiff_file.get()
-                                 , Property::tag
-                                 , &value ) == 1 )
-        {
-            return true;
-        }
-
-        return false;
+      return get_property_f <mpl:: size <typename Property:: arg_types>::value > (). template operator () <Property> (value, _tiff_file);
     }
-   
 
     template <typename Property>
     inline
-    bool set_property( const typename Property::type& value, ... )
+    bool set_property( const typename Property::type& value )
     {
 			// http://www.remotesensing.org/libtiff/man/TIFFSetField.3tiff.html
-			int tiff_set_field_return = 0;
-
-			if (1 == mpl:: size <typename tiff_tag_arg_types <Property>:: types>:: type:: value) {
-				tiff_set_field_return = TIFFSetField( _tiff_file.get()
-					, Property::tag
-					, value  );
-			} else {
-				va_list ap;
-				va_start (ap, value);
-				if (2 == mpl:: size <typename tiff_tag_arg_types <Property>:: types>:: type:: value) {
-					typedef typename mpl:: at <typename tiff_tag_arg_types <Property>:: types, mpl:: int_<1> >:: type arg_1_t;
-					tiff_set_field_return = TIFFSetField( _tiff_file.get()
-						, Property::tag
-						, value
-						, va_arg (ap, arg_1_t));
-				} else if (3 == mpl:: size <typename tiff_tag_arg_types <Property>:: types>:: type:: value) {
-					typedef typename mpl:: at <typename tiff_tag_arg_types <Property>:: types, mpl:: int_<1> >:: type arg_1_t;
-					typedef typename mpl:: at <typename tiff_tag_arg_types <Property>:: types, mpl:: int_<2> >:: type arg_2_t;
-					tiff_set_field_return = TIFFSetField( _tiff_file.get()
-						, Property::tag
-						, value
-						, va_arg (ap, arg_1_t)
-						, va_arg (ap, arg_2_t));
-				} // @todo: compile-time-assert here since we don't handle 
-				va_end (ap);
-			}
-			return (1 == tiff_set_field_return);
+			return set_property_f <mpl:: size <typename Property:: arg_types>::value > (). template operator () <Property> (value, _tiff_file);
 		}
 
     // TIFFIsByteSwapped returns a non-zero value if the image data was in a different 
@@ -288,7 +334,6 @@ public:
 
 protected:
 
-   typedef shared_ptr<TIFF> tiff_file_t;
    tiff_file_t _tiff_file;
 
     Log _log;
@@ -434,7 +479,6 @@ template<> struct photometric_interpretation< gray_t > : public mpl::int_< PHOTO
 template<> struct photometric_interpretation< rgb_t  > : public mpl::int_< PHOTOMETRIC_RGB        > {};
 template<> struct photometric_interpretation< rgba_t > : public mpl::int_< PHOTOMETRIC_RGB        > {};
 template<> struct photometric_interpretation< cmyk_t > : public mpl::int_< PHOTOMETRIC_SEPARATED  > {};
-
 
 } // namespace detail
 } // namespace gil

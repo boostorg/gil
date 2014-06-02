@@ -19,6 +19,8 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
+#include <boost/mpl/vector.hpp>
+
 // taken from jpegxx - https://bitbucket.org/edd/jpegxx/src/ea2492a1a4a6/src/ijg_headers.hpp
 #ifndef BOOST_GIL_EXTENSION_IO_TIFF_C_LIB_COMPILED_AS_CPLUSPLUS
     extern "C" {
@@ -47,17 +49,13 @@ struct tiff_property_base : property_base< T >
 {
     /// Tag, needed when reading or writing image properties.
     static const ttag_t tag = Value;
+    /// The list of argument types used in the interface of LibTIFF
+    /// for
+    /// this property:
+    /// http://www.remotesensing.org/libtiff/man/TIFFGetField.3tiff.html
+    /// http://www.remotesensing.org/libtiff/man/TIFFSetField.3tiff.html
+    typedef mpl:: vector <typename property_base <T>:: type> arg_types;
 };
-
-		// Most tags (properties) just have one value, but some have more.
-		// In the usual case we just follow the type in the
-		// property_base. Otherwise we specialise this to a longer vector
-		// of types.
-		template <typename Property>
-		struct tiff_tag_arg_types
-		{
-			typedef typename mpl:: vector <typename Property:: type> types;
-		};
 
 /// baseline tags
 
@@ -125,7 +123,13 @@ struct tiff_x_resolution : tiff_property_base< float, TIFFTAG_XRESOLUTION > {};
 struct tiff_y_resolution : tiff_property_base< float, TIFFTAG_YRESOLUTION > {};
 
 /// Defines type for resolution unit property.
-struct tiff_resolution_unit : tiff_property_base< uint16_t, TIFFTAG_RESOLUTIONUNIT > {};
+enum class tiff_resolution_unit_value: std:: uint16_t {
+  NONE = RESUNIT_NONE,
+  INCH = RESUNIT_INCH,
+  CENTIMETER = RESUNIT_CENTIMETER
+};
+
+struct tiff_resolution_unit : tiff_property_base< tiff_resolution_unit_value, TIFFTAG_RESOLUTIONUNIT > {};
 
 /// Defines type for planar configuration property.
 struct tiff_planar_configuration : tiff_property_base< uint16_t, TIFFTAG_PLANARCONFIG > {};
@@ -159,10 +163,9 @@ struct tiff_color_map
 };
 
 /// Defines type for extra samples property.
-struct tiff_extra_samples : tiff_property_base< uint16_t, TIFFTAG_EXTRASAMPLES > {};
-		template <> struct tiff_tag_arg_types <tiff_extra_samples> {
-			typedef typename mpl:: vector <typename tiff_extra_samples:: type, uint16_t*> types;
-		};
+struct tiff_extra_samples : tiff_property_base< std:: vector <uint16_t>, TIFFTAG_EXTRASAMPLES > {
+  typedef mpl:: vector <uint16_t, uint16_t const *> arg_types;
+};
 
 /// Defines type for copyright property.
 struct tiff_copyright : tiff_property_base< std::string, TIFFTAG_COPYRIGHT > {};
@@ -194,6 +197,13 @@ struct tiff_directory : property_base< tdir_t >
     typedef boost::mpl::integral_c< type, 0 > default_value;
 };
 
+/// Non-baseline tags
+
+/// Defines type for icc profile property.
+struct tiff_icc_profile : tiff_property_base< std:: vector <uint8_t>, TIFFTAG_ICCPROFILE > {
+  typedef mpl:: vector <uint32_t, void const *> arg_types;
+};
+
 /// Read information for tiff images.
 ///
 /// The structure is returned when using read_image_info.
@@ -218,6 +228,12 @@ struct image_read_info< tiff_tag >
 
     , _tile_width ( 0 )
     , _tile_length( 0 )
+
+    , _x_resolution( 1 )
+    , _y_resolution( 1 )
+    , _resolution_unit( tiff_resolution_unit_value:: NONE )
+
+    , _icc_profile(  )
     {}
 
     /// The number of rows of pixels in the image.
@@ -247,6 +263,12 @@ struct image_read_info< tiff_tag >
     tiff_tile_width::type _tile_width;
     /// Tile length
     tiff_tile_length::type _tile_length;
+
+    tiff_x_resolution::type _x_resolution;
+    tiff_y_resolution::type _y_resolution;
+    tiff_resolution_unit::type _resolution_unit;
+
+    tiff_icc_profile:: type _icc_profile;
 };
 
 /// Read settings for tiff images.
@@ -279,9 +301,9 @@ struct image_read_settings< tiff_tag > : public image_read_settings_base
     tiff_directory::type _directory;
 };
 
-/// Read settings for tiff images.
+/// Write settings for tiff images.
 ///
-/// The structure can be used for all read_xxx functions, except read_image_info.
+/// The structure can be used for all write_xxx functions, except write_image_info.
 template< typename Log >
 struct image_write_info< tiff_tag, Log >
 {
@@ -296,8 +318,10 @@ struct image_write_info< tiff_tag, Log >
     , _is_tiled                  ( false )
     , _tile_width                ( 0 )
     , _tile_length               ( 0 )
-    , _x_resolution              ( 0 )
-    , _y_resolution              ( 0 )
+    , _x_resolution              ( 1 )
+    , _y_resolution              ( 1 )
+    , _resolution_unit           ( tiff_resolution_unit_value::NONE )
+    , _icc_profile               (  )
     {}
 
     /// The color space of the image data.
@@ -321,6 +345,9 @@ struct image_write_info< tiff_tag, Log >
     /// x, y resolution
     tiff_x_resolution::type               _x_resolution;
     tiff_y_resolution::type               _y_resolution;
+    tiff_resolution_unit::type            _resolution_unit;
+
+    tiff_icc_profile:: type               _icc_profile;
 
 	/// A log to transcript error and warning messages issued by libtiff.
     Log                                   _log;

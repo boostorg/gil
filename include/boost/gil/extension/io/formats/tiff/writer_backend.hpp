@@ -88,12 +88,10 @@ protected:
         tiff_samples_per_pixel::type samples_per_pixel = num_channels< pixel_t >::value;
         this->_io_dev.template set_property<tiff_samples_per_pixel>( samples_per_pixel );
 
-				if (mpl:: contains <color_space_t, alpha_t>:: value) {
-					uint16_t const extra_sample_type [] = { EXTRASAMPLE_ASSOCALPHA };
-					uint16_t const extra_samples_count = sizeof (extra_sample_type) / sizeof (extra_sample_type [0]);
-
-					this->_io_dev.template set_property<tiff_extra_samples>( extra_samples_count, extra_sample_type );
-				}
+        if (mpl:: contains <color_space_t, alpha_t>:: value) {
+          std:: vector <uint16_t> extra_samples {EXTRASAMPLE_ASSOCALPHA};
+          this->_io_dev.template set_property<tiff_extra_samples>( extra_samples );
+        }
         // write bits per sample
         // @todo: Settings this value usually requires to write for each sample the bit
         // value seperately in case they are different, like rgb556.
@@ -116,9 +114,17 @@ protected:
         // write rows per strip
         this->_io_dev.template set_property<tiff_rows_per_strip>( this->_io_dev.get_default_strip_size() );
 
-        // x, y resolution
+        // write x, y resolution and units
+        this->_io_dev.template set_property<tiff_resolution_unit>( this->_info._resolution_unit );
         this->_io_dev.template set_property<tiff_x_resolution>( this->_info._x_resolution );
         this->_io_dev.template set_property<tiff_y_resolution>( this->_info._y_resolution );
+
+        /// Optional and / or non-baseline tags below here
+
+        // write ICC colour profile, if it's there
+        // http://www.color.org/icc_specs2.xalter
+        if ( 0 != this->_info._icc_profile.size())
+          this->_io_dev.template set_property<tiff_icc_profile>( this->_info._icc_profile );
     }
 
 
