@@ -19,6 +19,8 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
+#include <boost/numeric/conversion/cast.hpp>
+
 namespace boost{ namespace gil {
 
 /// \addtogroup ColorNameModel
