@@ -19,6 +19,7 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
+#include <boost/cast.hpp>
 #include <boost/gil/gil_all.hpp>
 #include <boost/gil/extension/toolbox/color_spaces/xyz.hpp>
 
