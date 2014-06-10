@@ -20,7 +20,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/algorithm/clamp.hpp>
-#include <boost/cast.hpp>
 #include <boost/mpl/range_c.hpp>
 #include <boost/mpl/vector_c.hpp>
 #include <boost/gil/gil_all.hpp>
