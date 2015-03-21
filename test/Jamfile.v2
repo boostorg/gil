@@ -15,7 +15,7 @@ test-suite gil :
            sample_image.cpp
            error_if.cpp
         :
-        :
+        : gil_reference_checksums.txt
         : <include>$(BOOST_ROOT) <define>BOOST_GIL_NO_IO <define>_SCL_SECURE_NO_WARNINGS ]
     [ run  channel.cpp 
            error_if.cpp
