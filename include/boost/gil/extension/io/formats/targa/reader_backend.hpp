@@ -94,8 +94,10 @@ public:
         }
         
         _info._descriptor = _io_dev.read_uint8();
-        if(    ( _info._bits_per_pixel == 24 && _info._descriptor != 0 ) 
-            || ( _info._bits_per_pixel == 32 && _info._descriptor != 8 )
+        targa_descriptor::type pixel_type = _info._descriptor & 0xdf;
+
+        if(    ( _info._bits_per_pixel == 24 && pixel_type != 0 )
+            || ( _info._bits_per_pixel == 32 && pixel_type != 8 )
           )
         {
             io_error( "Unsupported descriptor for targa file" );
