@@ -94,6 +94,7 @@ public:
         }
         
         _info._descriptor = _io_dev.read_uint8();
+        targa_descriptor::type pixel_type = _info._descriptor & 0xdf;
 
         // According to TGA specs, http://www.gamers.org/dEngine/quake3/TGA.txt,
         // the image descriptor byte is:
@@ -103,7 +104,7 @@ public:
         {
             io_error("Unsupported descriptor for targa file");
         }
-        else if (_info._bits_per_pixel == 24)
+        else if (_info._bits_per_pixel == 24 && pixel_type != 0)
         {
             // Bits 3-0 - For the Targa 24, it should be 0.
             if ((_info._descriptor & 0x0FU) != 0)
@@ -111,7 +112,7 @@ public:
                 io_error("Unsupported descriptor for targa file");
             }
         }
-        else if (_info._bits_per_pixel == 32)
+        else if (_info._bits_per_pixel == 32 && pixel_type != 0)
         {
             // Bits 3-0 - For Targa 32, it should be 8.
             if (_info._descriptor != 8 && _info._descriptor != 40)
