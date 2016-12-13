@@ -162,6 +162,8 @@ public:
             default: { io_error( "Unsupported jpeg color space." ); }
         }
 
+        this->_scanline_length *= this->get()->scale_num / this->get()->scale_denom;
+
         jpeg_finish_decompress ( this->get() );
     }
 
@@ -173,7 +175,7 @@ private:
     void read_rows( const View& view )
     {
         typedef std::vector<ImagePixel> buffer_t;
-        buffer_t buffer( this->_info._width );
+        buffer_t buffer( this->_info._width * this->get()->scale_num / this->get()->scale_denom );
 
         // In case of an error we'll jump back to here and fire an exception.
         // @todo Is the buffer above cleaned up when the exception is thrown?
@@ -188,7 +190,7 @@ private:
         JSAMPLE *row_adr = reinterpret_cast< JSAMPLE* >( &buffer[0] );
 
         //Skip scanlines if necessary.
-        for( int y = 0; y <  this->_settings._top_left.y; ++y )
+        for( int y = 0; y < this->_settings._top_left.y; ++y )
         {
             io_error_if( jpeg_read_scanlines( this->get()
                                             , &row_adr
@@ -209,7 +211,7 @@ private:
                        );
 
             typename buffer_t::iterator beg = buffer.begin() + this->_settings._top_left.x;
-            typename buffer_t::iterator end = beg + this->_settings._dim.x;
+            typename buffer_t::iterator end = beg + this->_settings._dim.x / this->get()->scale_num / this->get()->scale_denom;
 
             this->_cc_policy.read( beg
                                  , end
@@ -218,7 +220,7 @@ private:
         }
 
         //@todo: There might be a better way to do that.
-        while( this->get()->output_scanline < this->get()->image_height )
+        while( this->get()->output_scanline < this->get()->image_height * this->get()->scale_num / this->get()->scale_denom )
         {
             io_error_if( jpeg_read_scanlines( this->get()
                                             , &row_adr
