@@ -26,7 +26,7 @@
 
 #include <functional>
 
-#include <boost/config/suffix.hpp>
+#include <boost/config.hpp>
 
 #include "gil_config.hpp"
 #include "channel_algorithm.hpp"

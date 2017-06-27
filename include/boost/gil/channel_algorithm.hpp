@@ -23,7 +23,7 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/config/suffix.hpp>
+#include <boost/config.hpp>
 #include <boost/integer_traits.hpp>
 #include <boost/mpl/less.hpp>
 #include <boost/mpl/integral_c.hpp>

@@ -24,7 +24,7 @@
 
 #include <functional>
 
-#include <boost/config/suffix.hpp>
+#include <boost/config.hpp>
 #include <boost/iterator/iterator_facade.hpp>
 
 #include "gil_config.hpp"
