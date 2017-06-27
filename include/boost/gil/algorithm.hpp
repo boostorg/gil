@@ -21,7 +21,7 @@
 #include <memory>
 #include <typeinfo>
 
-#include <boost/config/suffix.hpp>
+#include <boost/config.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/mpl/and.hpp>
 #include <boost/mpl/or.hpp>
