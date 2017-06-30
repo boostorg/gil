@@ -8,7 +8,13 @@
 #ifndef BOOST_GIL_IO_UNIT_TEST_PATHS_HPP
 #define BOOST_GIL_IO_UNIT_TEST_PATHS_HPP
 
-static const std::string base = "D:/boost_io_tests/";
+#include <boost/filesystem.hpp>
+
+namespace fs = boost::filesystem;
+
+// `base` holds the path to ../.., i.e. the directory containing `test_images`
+static const std::string base =
+  (fs::absolute(fs::path(__FILE__)).parent_path().parent_path().string()) + "/";
 
 static const std::string bmp_in  = base + "test_images/bmp/";
 static const std::string bmp_out = base + "output/bmp/";
