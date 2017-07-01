@@ -120,7 +120,11 @@ struct png_pixels_per_meter : property_base< png_uint_32 > {};
 /// Defines type for ICC profile name property.
 struct png_ICC_name             : property_base< std::string > {};
 /// Defines type for ICC profile property.
+#if PNG_LIBPNG_VER_MINOR >= 5
 struct png_ICC_profile          : property_base< std:: vector <uint8_t> > {};
+#else
+struct png_ICC_profile          : property_base< std:: vector <char> > {};
+#endif
 /// Defines type for ICC profile length property.
 struct png_ICC_profile_length   : property_base< png_uint_32 > {};
 /// Defines type for ICC compression property.
