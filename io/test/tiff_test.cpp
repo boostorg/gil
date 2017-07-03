@@ -366,10 +366,10 @@ BOOST_AUTO_TEST_CASE( dynamic_image_test )
               );
 
 #ifdef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
-    write_view( tiff_out + "dynamic_image_test.tif"
-              , view( runtime_image )
-              , tag_t()
-              );
+    //write_view( tiff_out + "dynamic_image_test.tif"
+    //          , view( runtime_image )
+    //          , tag_t()
+    //          );
 #endif // BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
 }
 

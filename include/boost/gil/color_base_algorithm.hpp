@@ -110,8 +110,8 @@ template <typename ColorBase, int K> struct kth_semantic_element_reference_type 
 /// \brief Specifies the return type of the constant semantic_at_c<K>(color_base);
 /// \ingroup ColorBaseAlgorithmSemanticAtC
 template <typename ColorBase, int K> struct kth_semantic_element_const_reference_type {
-    BOOST_STATIC_CONSTANT(int, semantic_index = (mpl::at_c<typename ColorBase::layout_t::channel_mapping_t,K>::type::value));
-    typedef typename kth_element_const_reference_type<ColorBase,semantic_index>::type type;
+	BOOST_STATIC_CONSTANT(int, semantic_index = (mpl::at_c<typename ColorBase::layout_t::channel_mapping_t,K>::type::value));
+	typedef typename kth_element_const_reference_type<ColorBase,semantic_index>::type type;
     static type       get(const ColorBase& cb) { return gil::at_c<semantic_index>(cb); }
 };
 

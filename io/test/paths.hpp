@@ -8,7 +8,7 @@
 #ifndef BOOST_GIL_IO_UNIT_TEST_PATHS_HPP
 #define BOOST_GIL_IO_UNIT_TEST_PATHS_HPP
 
-static const std::string base = "C:/boost/libs/gil/io/";
+static const std::string base = "D:/boost_io_tests/";
 
 static const std::string bmp_in  = base + "test_images/bmp/";
 static const std::string bmp_out = base + "output/bmp/";
@@ -30,7 +30,7 @@ static const std::string targa_out = base + "output/targa/";
 
 static const std::string tiff_in    = base + "test_images/tiff/";
 static const std::string tiff_out   = base + "output/tiff/";
-static const std::string tiff_in_GM = tiff_in + "GraphicsMagick/tiff-sample-images/";
+static const std::string tiff_in_GM = tiff_in + "graphicmagick/";
 
 static const std::string bmp_filename  ( bmp_in      + "test.bmp"               );
 static const std::string jpeg_filename ( jpeg_in     + "test.jpg"               );
