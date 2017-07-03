@@ -33,43 +33,42 @@ BOOST_AUTO_TEST_SUITE( gil_io_raw_tests )
 
 #ifdef BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES
 
-BOOST_AUTO_TEST_CASE( read_image_info_using_string )
-{
-
-    {
-        /// raw_tag reader's can only constructed with char*, std::string, and LibRaw object
-
-        typedef get_reader_backend< const char*
-                                  , tag_t
-                                  >::type backend_t;
-
-        backend_t b = make_reader_backend( raw_filename.c_str()
-                                         , image_read_settings< raw_tag >()
-                                         );
-
-        backend_t backend = read_image_info( raw_filename
-                                           , tag_t()
-                                           );
-
-        BOOST_CHECK_EQUAL( backend._info._width , 2176 );
-        BOOST_CHECK_EQUAL( backend._info._height, 1448 );
-    }
-
-    {
-        fs::path my_path( raw_filename );
-
-        typedef get_reader_backend< fs::path
-                                  , tag_t
-                                  >::type backend_t;
-
-        backend_t backend = read_image_info( my_path
-                                           , tag_t()
-                                           );
-
-        BOOST_CHECK_EQUAL( backend._info._width , 2176 );
-        BOOST_CHECK_EQUAL( backend._info._height, 1448 );
-    }
-}
+//BOOST_AUTO_TEST_CASE( read_image_info_using_string )
+//{
+//    {
+//        /// raw_tag reader's can only constructed with char*, std::string, and LibRaw object
+//
+//        typedef get_reader_backend< const char*
+//                                  , tag_t
+//                                  >::type backend_t;
+//
+//        backend_t b = make_reader_backend( raw_filename.c_str()
+//                                         , image_read_settings< raw_tag >()
+//                                         );
+//
+//        backend_t backend = read_image_info( raw_filename
+//                                           , tag_t()
+//                                           );
+//
+//        BOOST_CHECK_EQUAL( backend._info._width , 2176 );
+//        BOOST_CHECK_EQUAL( backend._info._height, 1448 );
+//    }
+//
+//    {
+//        fs::path my_path( raw_filename );
+//
+//        typedef get_reader_backend< fs::path
+//                                  , tag_t
+//                                  >::type backend_t;
+//
+//        backend_t backend = read_image_info( my_path
+//                                           , tag_t()
+//                                           );
+//
+//        BOOST_CHECK_EQUAL( backend._info._width , 2176 );
+//        BOOST_CHECK_EQUAL( backend._info._height, 1448 );
+//    }
+//}
 
 //BOOST_AUTO_TEST_CASE( read_image_test )
 //{
