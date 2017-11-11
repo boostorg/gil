@@ -27,8 +27,6 @@
 #include <boost/gil/image_view_factory.hpp>
 #include <boost/mpl/vector.hpp>
 
-#include <boost/test/unit_test.hpp>
-
 using namespace boost::gil;
 using namespace std;
 
@@ -332,12 +330,7 @@ ignore_unused_variable_warning(rgb8_const_ptr_err);
 }
 */
 
-BOOST_AUTO_TEST_SUITE(GIL_Tests)
-
-BOOST_AUTO_TEST_CASE(pixel_iterator_test)
+int main(int argc, char *argv[])
 {
-    test_pixel_iterator();
-    return 0;
+  test_pixel_iterator();
 }
-
-BOOST_AUTO_TEST_SUITE_END()
