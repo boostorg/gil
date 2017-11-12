@@ -10,8 +10,6 @@
 from faber import platform
 from faber.feature import set
 from faber.tools.compiler import include, define, linkpath
-from faber.artefacts.binary import binary
-from faber.test import test, report, fail
 from os.path import join
 
 features += include('include')
@@ -21,3 +19,5 @@ if boost_prefix:
     features += set(include(join(boost_prefix, 'include')), linkpath(join(boost_prefix, 'lib')))
 
 test = module('test', features=features)
+io_test = module('io_test', 'io/test', features=features)
+toolbox_test = module('toolbox_test', 'toolbox/test', features=features)
