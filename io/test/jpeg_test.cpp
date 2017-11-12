@@ -5,7 +5,7 @@
     http://www.boost.org/LICENSE_1_0.txt).
 */
 
-//#define BOOST_TEST_MODULE jpeg_test_module
+#define BOOST_TEST_MODULE jpeg_test
 #include <boost/test/unit_test.hpp>
 #define BOOST_FILESYSTEM_VERSION 3
 #include <boost/filesystem/path.hpp>
