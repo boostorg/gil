@@ -30,7 +30,7 @@ void test_scanline_reader( const char* file_name )
 
     Image dst( reader._info._width, reader._info._height );
 
-     typedef reader_t::iterator_t iterator_t;
+    typedef typename reader_t::iterator_t iterator_t;
 
     iterator_t it  = reader.begin();
     iterator_t end = reader.end();

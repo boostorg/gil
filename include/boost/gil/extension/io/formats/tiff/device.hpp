@@ -148,9 +148,9 @@ public:
     inline
     bool set_property( const typename Property::type& value )
     {
-		// http://www.remotesensing.org/libtiff/man/TIFFSetField.3tiff.html
-		return set_property_f <mpl:: size <typename Property:: arg_types>::value > (). call_me<Property> (value, _tiff_file);
-	}
+      // http://www.remotesensing.org/libtiff/man/TIFFSetField.3tiff.html
+      return set_property_f <mpl:: size <typename Property:: arg_types>::value > ().template call_me<Property> (value, _tiff_file);
+    }
 
     // TIFFIsByteSwapped returns a non-zero value if the image data was in a different 
     // byte-order than the host machine. Zero is returned if the TIFF file and local 
