@@ -16,6 +16,7 @@
 #include <boost/gil/extension/io/targa_all.hpp>
 #include <boost/gil/extension/io/tiff_all.hpp>
 
+#define BOOST_TEST_MODULE all_formats_test
 #include <boost/test/unit_test.hpp>
 
 #include "paths.hpp"

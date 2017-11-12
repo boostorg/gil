@@ -5,7 +5,7 @@
     http://www.boost.org/LICENSE_1_0.txt).
 */
 
-//#define BOOST_TEST_MODULE pnm_test_module
+#define BOOST_TEST_MODULE pnm_test
 #include <boost/test/unit_test.hpp>
 
 #include <fstream>
