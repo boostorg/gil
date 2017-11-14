@@ -15,8 +15,16 @@ from os.path import join
 features += include('include')
 features += define('BOOST_ALL_NO_LIB')  # disable auto-linking
 boost_prefix = options.get_with('boost-prefix')
+boost_include = options.get_with('boost-include')
+boost_lib = options.get_with('boost-lib')
+boost_suffix = options.get_with('boost-suffix')
 if boost_prefix:
     features += set(include(join(boost_prefix, 'include')), linkpath(join(boost_prefix, 'lib')))
+else:
+    if boost_include:
+        features += include(boost_include)
+    if boost_lib:
+        features += linkpath(boost_lib)
 
 test = module('test', features=features)
 io_test = module('io_test', 'io/test', features=features)
