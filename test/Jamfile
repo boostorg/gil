@@ -15,7 +15,9 @@ project
         <toolset>msvc-8.0:<define>_SCL_SECURE_NO_DEPRECATE <define>_CRT_SECURE_NO_DEPRECATE <define>_CRT_NONSTDC_NO_DEPRECATE
         <toolset>msvc-9.0:<define>_SCL_SECURE_NO_DEPRECATE <define>_CRT_SECURE_NO_WARNINGS <define>_CRT_NONSTDC_NO_DEPRECATE
         <toolset>msvc-10.0:<define>_SCL_SECURE_NO_DEPRECATE <define>_CRT_SECURE_NO_WARNINGS <define>_CRT_NONSTDC_NO_DEPRECATE
-	<include>$(BOOST_ROOT) <define>BOOST_GIL_NO_IO
+	<include>$(BOOST_ROOT)
+	<define>BOOST_GIL_NO_IO
+	<library>/boost/filesystem//boost_filesystem
     ;
 
 test-suite gil :
