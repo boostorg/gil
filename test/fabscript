@@ -9,11 +9,11 @@
 
 from faber import platform
 from faber.feature import set
-from faber.tools.compiler import define
+from faber.tools.compiler import define, libs
 from faber.artefacts.binary import binary
 from faber.test import test, report, fail
 
-test_features = set(define('BOOST_GIL_NO_IO'))
+test_features = set(define('BOOST_GIL_NO_IO'), libs('boost_filesystem'))
 
 def gil_test(name, sources, features):
     return test(name, binary(name, sources, features=features))
