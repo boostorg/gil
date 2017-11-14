@@ -14,10 +14,16 @@ from faber.artefacts.binary import binary
 from faber.test import test, report, fail
 from os.path import join
 
+boost_suffix = options.get_with('boost-suffix')
+boost_suffix = '-' + boost_suffix if boost_suffix else ''
+boost_unit_test_framework = 'boost_unit_test_framework' + boost_suffix
+boost_filesystem = 'boost_filesystem' + boost_suffix
+boost_system = 'boost_system' + boost_suffix
+
 test_features = set(define('BOOST_TEST_DYN_LINK'),
-                    libs('boost_unit_test_framework',
-                         'boost_system',
-                         'boost_filesystem'))
+                    libs(boost_unit_test_framework,
+                         boost_system,
+                         boost_filesystem))
 
 without_jpeg = options.get_without('jpeg')
 jpeg_features = test_features + set(libs('jpeg'))
@@ -46,7 +52,7 @@ def gil_test(name, sources, features, condition=True):
     return test(name, binary(name, sources, features=features, condition=condition))
 
 
-tests = [gil_test('all_formats_test', ['all_formats_test.cpp'], features=test_features),
+tests = [gil_test('all_formats_test', ['all_formats_test.cpp'], features=test_features | png_features | jpeg_features),
          gil_test('bmp',
                   ['bmp_test.cpp', 'bmp_old_test.cpp', 'bmp_read_test.cpp', 'bmp_write_test.cpp'],
                   features=test_features),
