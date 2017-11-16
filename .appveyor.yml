@@ -81,5 +81,5 @@ build: off
 test_script:
   - PATH=%ADDPATH%%PATH%
   - b2 address-model=%AM% libs/gil/test toolset=%TOOLSET% %CXXFLAGS%
-  - b2 address-model=%AM% libs/gil/io/test -spng-prefix=%APPVEYOR_BUILD_FOLDER%/../vcpkg/installed/%TRIPLET%  -stiff-prefix=%APPVEYOR_BUILD_FOLDER%/../vcpkg/installed/%TRIPLET% -sjpeg-prefix=%APPVEYOR_BUILD_FOLDER%/../vcpkg/installed/%TRIPLET% -slibpng=libpng16 -szlib=zlib toolset=%TOOLSET% %CXXFLAGS%
+  - b2 address-model=%AM% libs/gil/io/test//simple -spng-prefix=%APPVEYOR_BUILD_FOLDER%/../vcpkg/installed/%TRIPLET%  -stiff-prefix=%APPVEYOR_BUILD_FOLDER%/../vcpkg/installed/%TRIPLET% -sjpeg-prefix=%APPVEYOR_BUILD_FOLDER%/../vcpkg/installed/%TRIPLET% -slibpng=libpng16 -szlib=zlib toolset=%TOOLSET% %CXXFLAGS%
   - b2 address-model=%AM% libs/gil/toolbox/test toolset=%TOOLSET% %CXXFLAGS%

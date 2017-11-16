@@ -40,8 +40,9 @@ project
 	<library>/boost/filesystem//boost_filesystem
     ;
 
-test-suite "gil::io" :
-	[ run all_formats_test.cpp png zlib jpeg tiff ]
+test-suite simple : [ run all_formats_test.cpp png zlib jpeg tiff ] ;
+
+test-suite full :
 	[ run bmp_test.cpp bmp_old_test.cpp bmp_read_test.cpp bmp_write_test.cpp ]
 	[ run jpeg_test.cpp jpeg_old_test.cpp jpeg_read_test.cpp jpeg_write_test.cpp jpeg ]
         #make.cpp
