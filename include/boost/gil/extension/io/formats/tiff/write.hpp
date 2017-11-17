@@ -236,8 +236,8 @@ private:
                    , const mpl::true_&    // bit_aligned
                    )
     {
-	    typedef typename color_space_type<View::value_type>::type colour_space_t;
-	    typedef mpl::bool_<mpl::contains<colour_space_t, alpha_t>::value> has_alpha_t;
+      typedef typename color_space_type<typename View::value_type>::type colour_space_t;
+      typedef mpl::bool_<mpl::contains<colour_space_t, alpha_t>::value> has_alpha_t;
 
         write_bit_aligned_view_to_dev(view, row_size_in_bytes, has_alpha_t());
         
@@ -371,8 +371,8 @@ private:
                                                       , static_cast< int >( th )
                                                       );
                     
-	                typedef typename color_space_type<View::value_type>::type colour_space_t;
-	                typedef mpl::bool_<mpl::contains<colour_space_t, alpha_t>::value> has_alpha_t;
+		    typedef typename color_space_type<typename View::value_type>::type colour_space_t;
+		    typedef mpl::bool_<mpl::contains<colour_space_t, alpha_t>::value> has_alpha_t;
 
                     write_tiled_view_to_dev(tile_subimage_view, it, has_alpha_t());
                 }

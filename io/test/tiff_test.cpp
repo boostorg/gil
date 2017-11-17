@@ -14,7 +14,7 @@
  *
  **************************************************/
 
-//#define BOOST_TEST_MODULE tiff_test_module
+#define BOOST_TEST_MODULE tiff_test
 #include <boost/test/unit_test.hpp>
 
 #define BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
