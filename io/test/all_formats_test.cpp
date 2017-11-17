@@ -18,12 +18,12 @@
 
 #define BOOST_TEST_MODULE all_formats_test
 #include <boost/test/unit_test.hpp>
-
+#include <boost/filesystem.hpp>
 #include "paths.hpp"
 
 using namespace std;
 using namespace boost::gil;
-
+namespace fs = boost::filesystem;
 
 BOOST_AUTO_TEST_SUITE( gil_io_tests )
 
@@ -34,6 +34,7 @@ BOOST_AUTO_TEST_CASE( non_bit_aligned_image_test )
         rgb8_image_t img;
         read_image( bmp_filename, img, bmp_tag() );
 #ifdef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
+	fs::create_directories(fs::path(bmp_out));
         write_view( bmp_out + "all_formats_test.bmp", view( img ), bmp_tag() );
 #endif // BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
     }
@@ -42,6 +43,7 @@ BOOST_AUTO_TEST_CASE( non_bit_aligned_image_test )
         rgb8_image_t img;
         read_image( jpeg_filename, img, jpeg_tag() );
 #ifdef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
+	fs::create_directories(fs::path(jpeg_out));
         write_view( jpeg_out + "all_formats_test.jpg", view( img ), jpeg_tag() );
 #endif // BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
     }
@@ -50,6 +52,7 @@ BOOST_AUTO_TEST_CASE( non_bit_aligned_image_test )
         rgba8_image_t img;
         read_image( png_filename, img, png_tag() );
 #ifdef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
+	fs::create_directories(fs::path(png_out));
         write_view( png_out + "all_formats_test.png", view( img ), png_tag() );
 #endif // BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
     }
@@ -58,6 +61,7 @@ BOOST_AUTO_TEST_CASE( non_bit_aligned_image_test )
         rgb8_image_t img;
         read_image( pnm_filename, img, pnm_tag() );
 #ifdef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
+	fs::create_directories(fs::path(pnm_out));
         write_view( pnm_out + "all_formats_test.pnm", view( img ), pnm_tag() );
 #endif // BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
     }
@@ -66,6 +70,7 @@ BOOST_AUTO_TEST_CASE( non_bit_aligned_image_test )
         rgb8_image_t img;
         read_image( targa_filename, img, targa_tag() );
 #ifdef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
+	fs::create_directories(fs::path(targa_out));
         write_view( targa_out + "all_formats_test.tga", view( img ), targa_tag() );
 #endif // BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
     }
@@ -74,6 +79,7 @@ BOOST_AUTO_TEST_CASE( non_bit_aligned_image_test )
         rgba8_image_t img;
         read_image( tiff_filename, img, tiff_tag() );
 #ifdef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
+	fs::create_directories(fs::path(tiff_out));
         write_view( tiff_out + "all_formats_test.tif", view( img ), tiff_tag() );
 #endif // BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
     }
