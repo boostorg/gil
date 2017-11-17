@@ -35,7 +35,9 @@ project
         <toolset>msvc-10.0:<define>_SCL_SECURE_NO_DEPRECATE <define>_CRT_SECURE_NO_WARNINGS <define>_CRT_NONSTDC_NO_DEPRECATE
         <toolset>msvc-14.0:<define>_SCL_SECURE_NO_DEPRECATE <define>_CRT_SECURE_NO_WARNINGS <define>_CRT_NONSTDC_NO_DEPRECATE
 	<define>BOOST_TEST_DYN_LINK
-        <library>/boost/test//boost_unit_test_framework
+	<define>BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES
+	<define>BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
+	<library>/boost/test//boost_unit_test_framework
 	<library>/boost/system//boost_system
 	<library>/boost/filesystem//boost_filesystem
     ;
