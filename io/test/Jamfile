@@ -11,10 +11,10 @@
 import testing ;
 import ac ;
 
-using libjpeg ;
+using libjpeg : : : : true ; # work around bug on master
 using zlib ;
-using libpng ;
-using libtiff ;
+using libpng : : : : true ;
+using libtiff : : : : true ;
 
 project
     : requirements
