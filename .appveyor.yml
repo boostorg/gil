@@ -82,13 +82,12 @@ test_script:
   - set PATH=%ADDPATH%%PATH%
   - |-
     set VCPKG=%APPVEYOR_BUILD_FOLDER%\..\vcpkg\installed\%TRIPLET%
-    set CONF=%HOMEDRIVE%%HOMEPATH%\user-config.jam
     set "CHUNK=^<include^>%VCPKG%\include ^<search^>%VCPKG%\lib"
-    echo using zlib : : %CHUNK% ; > %CONF%
-    echo using libjpeg : : %CHUNK% ; >> %CONF%
-    echo using libpng : : ^<name^>libpng16 %CHUNK% ; >> %CONF%
-    echo using libtiff : : %CHUNK% ; >> %CONF%
-    more %CONF%
-  - b2 address-model=%AM% libs/gil/test toolset=%TOOLSET% %CXXFLAGS%
-  - b2 address-model=%AM% libs/gil/io/test//simple toolset=%TOOLSET% %CXXFLAGS%
-  - b2 address-model=%AM% libs/gil/toolbox/test toolset=%TOOLSET% %CXXFLAGS%
+    echo using zlib : : %CHUNK% ; > config.jam
+    echo using libjpeg : : %CHUNK% ; >> config.jam
+    echo using libpng : : ^<name^>libpng16 %CHUNK% ; >> config.jam
+    echo using libtiff : : %CHUNK% ; >> config.jam
+    more config.jam
+  - b2 --user-config=config.jam address-model=%AM% libs/gil/test toolset=%TOOLSET% %CXXFLAGS%
+  - b2 --user-config=config.jam address-model=%AM% libs/gil/io/test//simple toolset=%TOOLSET% %CXXFLAGS%
+  - b2 --user-config=config.jam address-model=%AM% libs/gil/toolbox/test toolset=%TOOLSET% %CXXFLAGS%
