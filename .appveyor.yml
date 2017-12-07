@@ -56,7 +56,7 @@ environment:
       ARCH: x86
 
 install:
-  - if %ARCH% == x86 ( set TRIPLET=x86-windows ) else ( set TRIPLET=x64-windows )
+  - if %ARCH% == x86 ( set "TRIPLET=x86-windows" ) else ( set "TRIPLET=x64-windows" )
   - if %ARCH% == x86 ( set AM=32 ) else ( set AM=64 )
   - |
      cd ..
@@ -66,7 +66,7 @@ install:
      powershell -exec bypass scripts\bootstrap.ps1
      vcpkg --triplet %TRIPLET% install libjpeg-turbo libpng tiff
      cd ..
-  - git clone -b master --depth 1 https://github.com/boostorg/boost.git boost-root
+  - git clone -b develop --depth 1 https://github.com/boostorg/boost.git boost-root
   - cd boost-root
   - git submodule update --init tools/build
   - git submodule update --init libs/config
@@ -80,14 +80,10 @@ build: off
 
 test_script:
   - set PATH=%ADDPATH%%PATH%
-  - |-
-    set VCPKG=%APPVEYOR_BUILD_FOLDER%\..\vcpkg\installed\%TRIPLET%
-    set "CHUNK=^<include^>%VCPKG%\include ^<search^>%VCPKG%\lib"
-    echo using zlib : : %CHUNK% ; > config.jam
-    echo using libjpeg : : %CHUNK% ; >> config.jam
-    echo using libpng : : ^<name^>libpng16 %CHUNK% ; >> config.jam
-    echo using libtiff : : %CHUNK% ; >> config.jam
-    more config.jam
-  - b2 --user-config=config.jam address-model=%AM% libs/gil/test toolset=%TOOLSET% %CXXFLAGS%
-  - b2 --user-config=config.jam address-model=%AM% libs/gil/io/test//simple toolset=%TOOLSET% %CXXFLAGS%
-  - b2 --user-config=config.jam address-model=%AM% libs/gil/toolbox/test toolset=%TOOLSET% %CXXFLAGS%
+  - set "VCPKG=%APPVEYOR_BUILD_FOLDER%\..\vcpkg\installed\%TRIPLET%"
+  - set I=%VCPKG%\include
+  - set L=%VCPKG%\lib
+  - set LIBPNG_NAME=libpng16
+  - b2 address-model=%AM% libs/gil/test toolset=%TOOLSET% %CXXFLAGS%
+  - b2 address-model=%AM% libs/gil/io/test//simple toolset=%TOOLSET% %CXXFLAGS% include=%I% library-path=%L%
+  - b2 address-model=%AM% libs/gil/toolbox/test toolset=%TOOLSET% %CXXFLAGS%
