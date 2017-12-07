@@ -52,8 +52,17 @@ environment:
       TOOLSET: msvc-14.1
 
 install:
-  - cd ..
-  - git clone -b %APPVEYOR_REPO_BRANCH% --depth 1 https://github.com/boostorg/boost.git boost-root
+  - if %ARCH% == x86 ( set "TRIPLET=x86-windows" ) else ( set "TRIPLET=x64-windows" )
+  - if %ARCH% == x86 ( set AM=32 ) else ( set AM=64 )
+  - |
+     cd ..
+     set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
+     git clone https://github.com/Microsoft/vcpkg
+     cd vcpkg
+     powershell -exec bypass scripts\bootstrap.ps1
+     vcpkg --triplet %TRIPLET% install libjpeg-turbo libpng tiff
+     cd ..
+  - git clone -b develop --depth 1 https://github.com/boostorg/boost.git boost-root
   - cd boost-root
   - git submodule update --init tools/build
   - git submodule update --init libs/config
@@ -66,7 +75,11 @@ install:
 build: off
 
 test_script:
-  - PATH=%ADDPATH%%PATH%
+  - set PATH=%ADDPATH%%PATH%
+  - set "VCPKG=%APPVEYOR_BUILD_FOLDER%\..\vcpkg\installed\%TRIPLET%"
+  - set I=%VCPKG%\include
+  - set L=%VCPKG%\lib
+  - set LIBPNG_NAME=libpng16
   - b2 address-model=%AM% libs/gil/test toolset=%TOOLSET% %CXXFLAGS%
-  - b2 address-model=%AM% libs/gil/io/test//simple -spng-prefix=%APPVEYOR_BUILD_FOLDER%/../vcpkg/installed/%TRIPLET%  -stiff-prefix=%APPVEYOR_BUILD_FOLDER%/../vcpkg/installed/%TRIPLET% -sjpeg-prefix=%APPVEYOR_BUILD_FOLDER%/../vcpkg/installed/%TRIPLET% -slibpng=libpng16 -szlib=zlib toolset=%TOOLSET% %CXXFLAGS%
+  - b2 address-model=%AM% libs/gil/io/test//simple toolset=%TOOLSET% %CXXFLAGS% include=%I% library-path=%L%
   - b2 address-model=%AM% libs/gil/toolbox/test toolset=%TOOLSET% %CXXFLAGS%
