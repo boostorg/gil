@@ -568,21 +568,17 @@ void test_image(const char* ref_checksum) {
 }
 
 int main(int argc, char* argv[]) {
-
-    const char* local_name = "gil_reference_checksums.txt";
-    const char* name_from_status = "../libs/gil/test/gil_reference_checksums.txt";
-
-    std::ifstream file_is_there(local_name);
+    if(argc != 2)
+    {
+        std::cerr << "Checksum file name argument missing" << std::endl;
+        return 1;
+    }
+    std::ifstream file_is_there(argv[1]);
     if (file_is_there) {
-        test_image(local_name);
+        test_image(argv[1]);
     } else {
-        std::ifstream file_is_there(name_from_status);
-        if (file_is_there)
-            test_image(name_from_status);
-        else {
-            std::cerr << "Unable to open gil_reference_checksums.txt"<<std::endl;
-            return 1;
-        }
+        std::cerr << "Unable to open " << argv[1] << std::endl;
+        return 1;
     }
 
     return 0;
