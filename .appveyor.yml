@@ -81,5 +81,6 @@ test_script:
   - set L=C:\Tools\vcpkg\installed\%TRIPLET%\lib
   - set LIBPNG_NAME=libpng16
   - b2 address-model=%AM% libs/gil/test toolset=%TOOLSET% %CXXFLAGS%
-  - b2 address-model=%AM% libs/gil/io/test//simple toolset=%TOOLSET% %CXXFLAGS% include=%I% library-path=%L%
   - b2 address-model=%AM% libs/gil/toolbox/test toolset=%TOOLSET% %CXXFLAGS%
+  - b2 address-model=%AM% libs/gil/numeric/test toolset=%TOOLSET% %CXXFLAGS%
+  - b2 address-model=%AM% libs/gil/io/test//simple toolset=%TOOLSET% %CXXFLAGS% include=%I% library-path=%L%

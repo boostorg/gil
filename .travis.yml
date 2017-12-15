@@ -302,8 +302,9 @@ script:
   - |-
     echo "using $TOOLSET : : $COMPILER : <cxxflags>-std=$CXXSTD ;" > ~/user-config.jam
   - ./b2 libs/gil/test toolset=$TOOLSET
-  - ./b2 libs/gil/io/test//simple toolset=$TOOLSET
   - ./b2 libs/gil/toolbox/test toolset=$TOOLSET
+  - ./b2 libs/gil/numeric/test toolset=$TOOLSET
+  - ./b2 libs/gil/io/test//simple toolset=$TOOLSET
 
 notifications:
   email:
