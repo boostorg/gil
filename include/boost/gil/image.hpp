@@ -58,7 +58,11 @@ namespace boost { namespace gil {
 template< typename Pixel, bool IsPlanar = false, typename Alloc=std::allocator<unsigned char> >
 class image {
 public:
+#if defined(BOOST_NO_CXX11_ALLOCATOR)
     typedef typename Alloc::template rebind<unsigned char>::other allocator_type;
+#else
+    typedef typename std::allocator_traits<Alloc>::template rebind_alloc<unsigned char> allocator_type;
+#endif
     typedef typename view_type_from_pixel<Pixel, IsPlanar>::type view_t;
     typedef typename view_t::const_t                 const_view_t;
     typedef typename view_t::point_t                 point_t;
