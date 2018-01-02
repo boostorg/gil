@@ -146,6 +146,29 @@ public:
             _info._num_colors            = 0;
             _info._num_important_colors  = 0;
         }
+        else if (_info._header_size > bmp_header_size::_win32_info_size)
+        {
+            // could be v4 or v5 
+            // see MSDN: Bitmap Header Types ( BITMAPV4HEADER or BITMAPV5HEADER )
+
+            _info._width = _io_dev.read_uint32();
+            _info._height = _io_dev.read_uint32();
+
+            // the number of color planes being used. Must be set to 1.
+            _io_dev.read_uint16();
+
+            _info._bits_per_pixel = _io_dev.read_uint16();
+
+            _info._compression = _io_dev.read_uint32();
+
+            _info._image_size = _io_dev.read_uint32();
+
+            _info._horizontal_resolution = _io_dev.read_uint32();
+            _info._vertical_resolution = _io_dev.read_uint32();
+
+            _info._num_colors = _io_dev.read_uint32();
+            _info._num_important_colors = _io_dev.read_uint32();
+        }
         else
         {
             io_error( "Invalid BMP info header." );
