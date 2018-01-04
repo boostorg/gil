@@ -94,15 +94,32 @@ public:
         }
         
         _info._descriptor = _io_dev.read_uint8();
-        targa_descriptor::type pixel_type = _info._descriptor & 0xdf;
 
-        if(    ( _info._bits_per_pixel == 24 && pixel_type != 0 )
-            || ( _info._bits_per_pixel == 32 && pixel_type != 8 )
-          )
+
+
+        if(_info._bits_per_pixel == 24 && _info._descriptor != 0 ) 
         {
             io_error( "Unsupported descriptor for targa file" );
         }
-        
+        else if (_info._bits_per_pixel == 32)
+        {
+            if (_info._descriptor != 8 && _info._descriptor != 40)
+            {
+                io_error("Unsupported descriptor for targa file");
+            }
+
+            http://www.paulbourke.net/dataformats/tga/
+            if (_info._descriptor & 32)
+            {
+                _info._screen_origin_bit = true;
+            }
+        }
+        else
+        {
+            io_error("Unsupported descriptor for targa file");
+        }
+
+       
         _info._valid = true;
     }
 
