@@ -79,6 +79,8 @@ struct targa_depth : property_base< uint8_t > {};
 /// Defines type for image descriptor property.
 struct targa_descriptor : property_base< uint8_t > {};
 
+struct targa_screen_origin_bit : property_base< bool > {};
+
 /// Read information for targa images.
 ///
 /// The structure is returned when using read_image_info.
@@ -87,7 +89,8 @@ struct image_read_info< targa_tag >
 {
     /// Default contructor.
     image_read_info< targa_tag >()
-    : _valid( false )
+    : _screen_origin_bit(false)
+    , _valid( false )
     {}
 
     /// The size of this header:
@@ -128,6 +131,10 @@ struct image_read_info< targa_tag >
     
     /// The targa image descriptor.
     targa_descriptor::type _descriptor;
+
+    // false: Origin in lower left-hand corner.
+    // true: Origin in upper left-hand corner.
+    targa_screen_origin_bit::type _screen_origin_bit;
 
     /// Used internally to identify if the header has been read.
     bool _valid;
