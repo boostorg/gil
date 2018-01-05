@@ -72,6 +72,9 @@ struct bmp_num_colors : property_base< uint32_t > {};
 /// Defines type for important number of colors property.
 struct bmp_num_important_colors : property_base< uint32_t > {};
 
+/// if height is negative then image is stored top-down instead of bottom-up.
+struct bmp_top_down : property_base< bool > {};
+
 static const uint32_t bmp_signature = 0x4D42; /// Constant signature for bmp file format.
 
 /// Read information for bmp images.
@@ -82,7 +85,8 @@ struct image_read_info< bmp_tag >
 {
     /// Default contructor.
     image_read_info< bmp_tag >()
-    : _valid( false )
+    : _top_down(false)
+    , _valid( false )
     {}
 
     /// The offset, i.e. starting address, of the byte where the bitmap data can be found.
@@ -122,6 +126,8 @@ struct image_read_info< bmp_tag >
     /// The number of important colors used, or 0 when every color is important; 
     /// generally ignored.
     bmp_num_important_colors::type  _num_important_colors;
+
+    bmp_top_down::type _top_down;
 
     /// Used internaly to identify is the header has been read.
     bool _valid;
