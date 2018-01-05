@@ -354,7 +354,14 @@ class istream_device
 {
 public:
    istream_device( std::istream& in )
-   : _in( in ) {}
+   : _in( in )
+   {
+       if (!in)
+       {
+           // does the file exists?
+           io_error("Stream is not valid.");
+       }
+   }
 
     int getc_unchecked()
     {
