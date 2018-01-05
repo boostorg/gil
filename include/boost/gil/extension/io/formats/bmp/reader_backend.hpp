@@ -111,6 +111,12 @@ public:
             _info._width  = _io_dev.read_uint32();
             _info._height = _io_dev.read_uint32();
 
+            if (_info._height < 0)
+            {
+                _info._height = -_info._height;
+                _info._top_down = true;
+            }
+
             // the number of color planes being used. Must be set to 1.
             _io_dev.read_uint16();
 
