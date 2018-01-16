@@ -23,6 +23,9 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <boost/gil/color_base_algorithm.hpp>
+#include <boost/gil/image_view_factory.hpp>
+#include <boost/gil/rgba.hpp>
 #include <boost/static_assert.hpp>
 #include <tiffio.h>
 #include "../../gil_all.hpp"
@@ -94,6 +97,12 @@ struct tiff_write_support_private<bits8,rgb_t> {
     BOOST_STATIC_CONSTANT(int,color_type=PHOTOMETRIC_RGB);
 };
 template <>
+struct tiff_write_support_private<bits8,rgba_t> {
+    BOOST_STATIC_CONSTANT(bool,is_supported=true);
+    BOOST_STATIC_CONSTANT(int,bit_depth=8);
+    BOOST_STATIC_CONSTANT(int,color_type=PHOTOMETRIC_RGB);
+};
+template <>
 struct tiff_write_support_private<bits16,gray_t> {
     BOOST_STATIC_CONSTANT(bool,is_supported=true);
     BOOST_STATIC_CONSTANT(int,bit_depth=16);
@@ -106,6 +115,12 @@ struct tiff_write_support_private<bits16,rgb_t> {
     BOOST_STATIC_CONSTANT(int,color_type=PHOTOMETRIC_RGB);
 };
 template <>
+struct tiff_write_support_private<bits16,rgba_t> {
+    BOOST_STATIC_CONSTANT(bool,is_supported=true);
+    BOOST_STATIC_CONSTANT(int,bit_depth=16);
+    BOOST_STATIC_CONSTANT(int,color_type=PHOTOMETRIC_RGB);
+};
+template <>
 struct tiff_write_support_private<bits32f,gray_t> {
     BOOST_STATIC_CONSTANT(bool,is_supported=true);
     BOOST_STATIC_CONSTANT(int,bit_depth=32);
@@ -113,6 +128,12 @@ struct tiff_write_support_private<bits32f,gray_t> {
 };
 template <>
 struct tiff_write_support_private<bits32f,rgb_t> {
+    BOOST_STATIC_CONSTANT(bool,is_supported=true);
+    BOOST_STATIC_CONSTANT(int,bit_depth=32);
+    BOOST_STATIC_CONSTANT(int,color_type=PHOTOMETRIC_RGB);
+};
+template <>
+struct tiff_write_support_private<bits32f,rgba_t> {
     BOOST_STATIC_CONSTANT(bool,is_supported=true);
     BOOST_STATIC_CONSTANT(int,bit_depth=32);
     BOOST_STATIC_CONSTANT(int,color_type=PHOTOMETRIC_RGB);
@@ -290,6 +311,27 @@ public:
     }
 };
 
+template <typename SrcColorSpace, typename DstColorSpace>
+struct premultiplier_impl
+  : public default_color_converter_impl<SrcColorSpace,DstColorSpace> {
+	template <typename SrcP, typename DstP>  // Model PixelConcept
+	void operator()(const SrcP& src, DstP& dst) const {
+		get_color <red_t> (dst) = channel_multiply (get_color <red_t> (src), get_color <alpha_t> (src));
+		get_color <green_t> (dst) = channel_multiply (get_color <green_t> (src), get_color <alpha_t> (src));
+		get_color <blue_t> (dst) = channel_multiply (get_color <blue_t> (src), get_color <alpha_t> (src));
+		get_color <alpha_t> (dst) = get_color <alpha_t> (src);
+	}
+};
+
+struct premultiplier {
+    template <typename SrcP, typename DstP>  // Model PixelConcept
+    void operator()(const SrcP& src,DstP& dst) const {
+        typedef typename color_space_type<SrcP>::type SrcColorSpace;
+        typedef typename color_space_type<DstP>::type DstColorSpace;
+        premultiplier_impl<SrcColorSpace,DstColorSpace>()(src,dst);
+    }
+};
+
 class tiff_writer {
 protected:
     TIFF* _tp;
@@ -312,10 +354,20 @@ public:
         io_error_if(TIFFSetField(_tp,TIFFTAG_BITSPERSAMPLE, tiff_write_support_private<typename channel_type<View>::type,
                                                                      typename color_space_type<View>::type>::bit_depth)!=1);
         io_error_if(TIFFSetField(_tp,TIFFTAG_ROWSPERSTRIP, TIFFDefaultStripSize(_tp, 0))!=1);
+
+        if (3 < num_channels<View>::value) {
+               uint16_t alphaStyle = EXTRASAMPLE_ASSOCALPHA;
+               io_error_if(TIFFSetField(_tp,TIFFTAG_EXTRASAMPLES, 1, & alphaStyle)!=1);
+        }
+
+        View ccv = color_converted_view <typename View:: value_type> (view, premultiplier ());
+        View const & outputView =	3 < num_channels<View>::value? ccv:	view;
+
         std::vector<pixel<typename channel_type<View>::type,
                           layout<typename color_space_type<View>::type> > > row(view.width());
+
         for (int y=0;y<view.height();++y) {
-            std::copy(view.row_begin(y),view.row_end(y),row.begin());
+            std::copy(outputView.row_begin(y),outputView.row_end(y),row.begin());
             io_error_if(TIFFWriteScanline(_tp,&row.front(),y,0)!=1,
                         "tiff_write_view: fail to write file");
         }
