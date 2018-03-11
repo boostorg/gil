@@ -365,7 +365,16 @@ void test_channel() {
 
 int main(int argc, char *argv[])
 {
-  test_channel();
+    try
+    {
+        test_channel();
+
+        return EXIT_SUCCESS;
+    }
+    catch (...)
+    {
+        return EXIT_FAILURE;
+    }
 }
 
 // TODO: 
