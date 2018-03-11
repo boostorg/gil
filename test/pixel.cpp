@@ -328,5 +328,14 @@ void test_pixel() {
 
 int main(int argc, char *argv[])
 {
-  test_pixel();
+    try
+    {
+        test_pixel();
+
+        return EXIT_SUCCESS;
+    }
+    catch (...)
+    {
+        return EXIT_FAILURE;
+    }
 }
