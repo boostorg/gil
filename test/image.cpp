@@ -523,20 +523,32 @@ int main(int argc, char* argv[])
   std::string local_name = here + "gil_reference_checksums.txt";
   const char* name_from_status = "../libs/gil/test/gil_reference_checksums.txt";
 
-  std::ifstream file_is_there(local_name.c_str());
-  if (file_is_there)
-  {
-    test_image(local_name.c_str());
-  }
-  else
-  {
-    std::ifstream file_is_there(name_from_status);
-    if (file_is_there)
-      test_image(name_from_status);
-    else
+    try
     {
-      std::cerr << "Unable to open gil_reference_checksums.txt"<<std::endl;
-      return 1;
+        std::ifstream file_is_there(local_name.c_str());
+        if (file_is_there)
+        {
+            test_image(local_name.c_str());
+        }
+        else
+        {
+            std::ifstream file_is_there(name_from_status);
+            if (file_is_there)
+                test_image(name_from_status);
+            else
+            {
+                throw std::runtime_error("Unable to open gil_reference_checksums.txt");
+            }
+        }
+        return EXIT_SUCCESS;
     }
-  }
+    catch (std::runtime_error const& e)
+    {
+        std::cerr << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
+    catch (...)
+    {
+        return EXIT_FAILURE;
+    }
 }
