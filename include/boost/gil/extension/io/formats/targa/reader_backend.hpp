@@ -108,7 +108,6 @@ public:
                 io_error("Unsupported descriptor for targa file");
             }
 
-            http://www.paulbourke.net/dataformats/tga/
             if (_info._descriptor & 32)
             {
                 _info._screen_origin_bit = true;
