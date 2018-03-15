@@ -154,7 +154,7 @@ protected:
                                   );
 
         writer<Device,jpeg_tag>::init_device( cinfo );
-        return 1;
+        return static_cast<boolean>(TRUE);
     }
 
     static void close_device( jpeg_compress_struct* cinfo )
