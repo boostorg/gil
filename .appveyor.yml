@@ -72,7 +72,7 @@ install:
 build: off
 
 test_script:
-  - set PATH=%ADDPATH%%PATH%
+  - set PATH=c:\Tools\vcpkg\installed\%TRIPLET%\bin;%PATH%
   - set I=C:\Tools\vcpkg\installed\%TRIPLET%\include
   - set L=C:\Tools\vcpkg\installed\%TRIPLET%\lib
   - set LIBPNG_NAME=libpng16
