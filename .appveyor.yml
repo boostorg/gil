@@ -21,9 +21,19 @@ environment:
   matrix:
     - TOOLSET: msvc-14.1
       ARCH: x86_64
+      VARIANT: debug
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - TOOLSET: msvc-14.1
+      ARCH: x86_64
+      VARIANT: release
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     - TOOLSET: msvc-14.1
       ARCH: x86
+      VARIANT: debug
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - TOOLSET: msvc-14.1
+      ARCH: x86
+      VARIANT: release
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     - TOOLSET: msvc-14.1
       ARCH: x86_64
@@ -83,10 +93,10 @@ build: off
 
 build_script:
   - cd c:\projects\boost
-  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=release libs/gil/test
-  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=release libs/gil/toolbox/test
-  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=release libs/gil/numeric/test
-  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=release include=%VCPKG_I% library-path=%VCPKG_L% libs/gil/io/test//simple
+  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% libs/gil/test
+  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% libs/gil/toolbox/test
+  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% libs/gil/numeric/test
+  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% include=%VCPKG_I% library-path=%VCPKG_L% libs/gil/io/test//simple
   - if DEFINED GENERATOR cd libs\gil && md build && cd build
   - if DEFINED GENERATOR cmake -G "%GENERATOR%" -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake ..
   - if DEFINED GENERATOR cmake --build . --config Release
