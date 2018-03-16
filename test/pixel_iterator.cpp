@@ -11,6 +11,8 @@
 //
 
 #include <cassert>
+#include <exception>
+#include <iostream>
 #include <vector>
 #include <boost/gil/planar_pixel_reference.hpp>
 #include <boost/gil/rgb.hpp>
@@ -332,5 +334,19 @@ ignore_unused_variable_warning(rgb8_const_ptr_err);
 
 int main(int argc, char *argv[])
 {
-  test_pixel_iterator();
+    try
+    {
+        test_pixel_iterator();
+
+        return EXIT_SUCCESS;
+    }
+    catch (std::exception const& e)
+    {
+        std::cerr << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
+    catch (...)
+    {
+        return EXIT_FAILURE;
+    }
 }
