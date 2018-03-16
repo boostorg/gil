@@ -11,6 +11,7 @@
 //
 
 #include <exception>
+#include <iostream>
 #include <boost/gil/gil_config.hpp>
 #include <boost/gil/channel_algorithm.hpp>
 #include <boost/gil/gil_concept.hpp>
@@ -370,6 +371,11 @@ int main(int argc, char *argv[])
         test_channel();
 
         return EXIT_SUCCESS;
+    }
+    catch (std::exception const& e)
+    {
+        std::cerr << e.what() << std::endl;
+        return EXIT_FAILURE;
     }
     catch (...)
     {
