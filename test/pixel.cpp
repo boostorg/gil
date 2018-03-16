@@ -8,8 +8,9 @@
     See http://opensource.adobe.com/gil for most recent version including documentation.
 */
 
-#include <iterator>
+#include <exception>
 #include <iostream>
+#include <iterator>
 #include <boost/type_traits.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/size.hpp>
@@ -333,6 +334,11 @@ int main(int argc, char *argv[])
         test_pixel();
 
         return EXIT_SUCCESS;
+    }
+    catch (std::exception const& e)
+    {
+        std::cerr << e.what() << std::endl;
+        return EXIT_FAILURE;
     }
     catch (...)
     {
