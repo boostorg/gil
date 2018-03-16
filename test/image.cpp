@@ -409,9 +409,13 @@ void checksum_image_test::check_view_impl(const rgb8c_view_t& img_view, const st
     boost::crc_32_type checksum_acumulator;
     checksum_acumulator.process_bytes(img_view.row_begin(0),img_view.size()*3);
 
-    cerr << "Checking checksum for " << name << endl;
-    if (checksum_acumulator.checksum()!=_crc_map[name]) {
-        cerr << "Checksum error in "<<name<<"\n";
+    boost::crc_32_type::value_type const crc = checksum_acumulator.checksum();
+    if (crc==_crc_map[name]) {
+        cerr << "Checksum checksum for " << name << " (crc=" << std::hex << crc << ")" << endl;
+    }
+    else {
+        cerr << "Checksum error in " << name
+             << " (crc=" << std::hex << crc << " != " << std::hex << _crc_map[name] << ")" << endl;
         error_if(true);
     }
 }
@@ -513,15 +517,21 @@ typedef image_test_t            image_mgr_t;
 void test_image(const char* ref_checksum) {
     image_mgr_t mgr(ref_checksum);
 
+    cerr << "Reading checksums from " << ref_checksum << endl;
     mgr.run();
     static_checks();
 }
 
 int main(int argc, char* argv[])
 {
-  std::string here = fs::absolute(fs::path(__FILE__)).parent_path().string() + "/";
-  std::string local_name = here + "gil_reference_checksums.txt";
-  const char* name_from_status = "../libs/gil/test/gil_reference_checksums.txt";
+    std::string here = fs::absolute(fs::path(__FILE__)).parent_path().string() + "/";
+    std::string local_name = here + "gil_reference_checksums.txt";
+    const char* name_from_status = "../libs/gil/test/gil_reference_checksums.txt";
+
+    if (argc == 2 && argv[1])
+    {
+        local_name = argv[1];
+    }
 
     try
     {
