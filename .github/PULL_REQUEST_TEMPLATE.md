@@ -1,8 +1,8 @@
-## Description
+### Description
 
 What does this pull request do?
 
-## Tasklist
+### Tasklist
 
 - [ ] YOUR TASK(S)
 - [ ] Add test case(s)
@@ -10,7 +10,7 @@ What does this pull request do?
 - [ ] Adjust for comments
 - [ ] All CI builds and checks have passed
 
-## Environment
+### Environment
 
 All relevant information like:
 
@@ -18,4 +18,4 @@ All relevant information like:
 - Compiler version:
 - Build settings:
 
-## References (eg. other issues, pull requests)
+### References (eg. other issues, pull requests)
