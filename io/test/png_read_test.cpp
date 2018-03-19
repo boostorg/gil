@@ -120,18 +120,18 @@ BOOST_AUTO_TEST_CASE( read_header_test )
 
 BOOST_AUTO_TEST_CASE( read_pixel_per_meter )
 {
-    //image_read_settings< png_tag > settings;
-    //settings.set_read_members_true();
+    image_read_settings< png_tag > settings;
+    settings.set_read_members_true();
 
-    //typedef get_reader_backend< const std::string
-    //                          , tag_t
-    //                          >::type backend_t;
+    typedef get_reader_backend< const std::string
+                             , tag_t
+                             >::type backend_t;
 
-    //backend_t backend = read_image_info( png_base_in + "EddDawson/36dpi.png"
-    //                                   , settings
-    //                                   );
+    backend_t backend = read_image_info( png_base_in + "EddDawson/36dpi.png"
+                                      , settings
+                                      );
 
-    //BOOST_CHECK_EQUAL( backend._info._pixels_per_meter, png_uint_32( 1417 ));
+    BOOST_CHECK_EQUAL( backend._info._pixels_per_meter, png_uint_32( 1417 ));
 }
 
 #endif // BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES
