@@ -1,10 +1,10 @@
-## Minimal Working Example (in C++)
+### Minimal Working Example (in C++)
 
-## Actual behavior
+### Actual behavior
 
-## Expected  behavior
+### Expected  behavior
 
-## Environment
+### Environment
 
 All relevant information like:
 
