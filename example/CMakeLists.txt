@@ -6,6 +6,8 @@
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 #
+message(STATUS "Configuring Boost.GIL examples tests")
+
 foreach(name affine convolution dynamic_image histogram interleaved_ptr mandelbrot packed_pixel resize x_gradient)
   add_executable(gil_example_${name} ${name}.cpp)
   target_compile_definitions(gil_example_${name} PRIVATE BOOST_GIL_USE_CONCEPT_CHECK=1)
