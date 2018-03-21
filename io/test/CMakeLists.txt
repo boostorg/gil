@@ -6,6 +6,8 @@
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 #
+message(STATUS "Configuring Boost.GIL IO tests")
+
 add_definitions(-DBOOST_GIL_IO_TEST_ALLOW_READING_IMAGES=1)
 add_definitions(-DBOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES=1)
 
