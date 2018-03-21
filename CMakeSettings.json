@@ -34,13 +34,7 @@
       "buildCommandArgs": "-v",
       "ctestCommandArgs": "",
       "variables": [
-        {
-          "name": "GIL_USE_CONAN",
-          "value": "ON"
-        },
-        {
-          "name": "GIL_ENABLE_IO", "value": "OFF"
-        }
+        { "name": "GIL_USE_CONAN", "value": "ON" }
       ]
     },
     {
@@ -54,7 +48,10 @@
       "buildCommandArgs": "-v",
       "ctestCommandArgs": "",
       "variables": [
-        { "name": "GIL_USE_CONAN", "value": "ON" }
+        {
+          "name": "GIL_USE_CONAN",
+          "value": "ON"
+        }
       ]
     },
     {
