@@ -209,6 +209,36 @@ private:
     std::size_t _num_colors;
 };
 
+// build an indexed_image_view from two views
+template<typename Index_View, typename Palette_View>
+indexed_image_view
+<
+    typename indexed_image_locator_type   
+    <
+        typename Index_View::locator
+        , typename Palette_View::locator
+    >::type
+>
+    view(Index_View iv, Palette_View pv)
+{
+    typedef indexed_image_view< 
+        typename indexed_image_locator_type<
+            typename Index_View::locator
+            , typename Palette_View::locator
+        >::type
+    > view_t;
+
+    typedef indexed_image_deref_fn< 
+        typename Index_View::locator
+        , typename Palette_View::locator
+    > defer_fn_t;
+
+    return view_t(
+        iv.dimensions()
+        , pv.dimensions().x
+        , view_t::locator(point_t(0, 0), point_t(1, 1), defer_fn_t(iv.xy_at(0, 0), pv.xy_at(0, 0)))
+    );
+}
 
 template< typename Index
         , typename Pixel
