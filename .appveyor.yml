@@ -93,3 +93,10 @@ build_script:
 
 test_script:
   - if DEFINED GENERATOR ctest -V --output-on-failure -C Release
+
+notifications:
+  - provider: Webhook
+    url: https://webhooks.gitter.im/e/e9e4892cdeb7cbff2e5a
+    on_build_success: false
+    on_build_failure: true
+    on_build_status_changed: true
