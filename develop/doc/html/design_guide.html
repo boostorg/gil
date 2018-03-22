@@ -123,7 +123,9 @@ to write imaging algorithms that are both generic and efficient. In this section
 There are two common memory structures for an image. &lt;i&gt;Interleaved&lt;/i&gt; images are represented by grouping the pixels together in memory and
 interleaving all channels together, whereas &lt;i&gt;planar&lt;/i&gt; images keep the channels in separate color planes. Here is a 4x3 RGB image in
 which the second pixel of the first row is marked in red, in interleaved form:</p>
+<img alt="_images/interleaved.jpg" src="_images/interleaved.jpg" />
 <p>and in planar form:</p>
+<img alt="_images/planar.jpg" src="_images/planar.jpg" />
 <p>Note also that rows may optionally be aligned resulting in a potential padding at the end of rows.</p>
 <p>The Generic Image Library (GIL) provides models for images that vary in:
 - Structure (planar vs. interleaved)
@@ -2308,6 +2310,7 @@ be in any supported color space and channel depth. They could be either planar o
 </pre></div>
 </div>
 <p>The intermediate images are shown here:</p>
+<img alt="_images/monkey_steps.jpg" src="_images/monkey_steps.jpg" />
 <p>Notice that no pixels are ever copied. All the work is done inside <code class="docutils literal"><span class="pre">jpeg_write_view</span></code>.
 If we call our <code class="docutils literal"><span class="pre">luminosity_histogram</span></code> with <code class="docutils literal"><span class="pre">step5</span></code> it will do the right thing.</p>
 </div>

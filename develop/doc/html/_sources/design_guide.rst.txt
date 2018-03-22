@@ -18,11 +18,11 @@ There are two common memory structures for an image. <i>Interleaved</i> images a
 interleaving all channels together, whereas <i>planar</i> images keep the channels in separate color planes. Here is a 4x3 RGB image in 
 which the second pixel of the first row is marked in red, in interleaved form:
 
-.. image: interleaved.jpg
+.. image:: interleaved.jpg
 
 and in planar form:
 
-.. image: planar.jpg
+.. image:: planar.jpg
 
 Note also that rows may optionally be aligned resulting in a potential padding at the end of rows.
 
@@ -2299,7 +2299,7 @@ The following code illustrates the power of using image views::
 
 The intermediate images are shown here:
 
-.. image: monkey_steps.jpg
+.. image:: monkey_steps.jpg
 
 Notice that no pixels are ever copied. All the work is done inside ``jpeg_write_view``.
 If we call our ``luminosity_histogram`` with ``step5`` it will do the right thing.

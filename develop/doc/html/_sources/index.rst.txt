@@ -6,4 +6,4 @@ Boost Generic Image Library
 
    tutorial
    design_guide
-
+   API Reference <./reference/index.html#://>
