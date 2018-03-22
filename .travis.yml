@@ -309,3 +309,12 @@ script:
 notifications:
   email:
     on_success: always
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/f59b626f2ed08f3d30ab
+    # options: [always|never|change]
+    on_success: change # default: always
+    on_failure: always # default: always
+    on_start:   change # default: never
+    on_cancel:  always # default: always
+    on_error:   always # default: always
