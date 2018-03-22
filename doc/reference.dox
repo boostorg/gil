@@ -217,12 +217,7 @@ Since pixels model the ColorBaseConcept, all color-base related algorithms also 
         /// \brief Support for reading and writing PNG image files
 
 /*! 
-\mainpage Generic Image Library
-
-\section Documentation
-
-- A Quick, Hands-on  \ref GILTutorial "Tutorial".
-- A Detailed \ref GILDesignGuide "Design Guide".
+\mainpage API Reference
 
 \section Modules
 

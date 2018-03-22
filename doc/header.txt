@@ -21,16 +21,32 @@
 <head>
     <TITLE>$title</TITLE>
     <META HTTP-EQUIV="content-type" CONTENT="text/html;charset=ISO-8859-1"/>
-    <LINK TYPE="text/css" REL="stylesheet" HREF="adobe_source.css"/>
+    <link type="text/css" rel="stylesheet" href="../_static/style.css">
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="dynsections.js"></script>
 </head>
 <body>
+  <div class="header">
+  <table border="0" cellpadding="7" cellspacing="0" width="100%" summary="header">
+    <tr>
+      <td valign="top" width="300">
+        <h3><a href="../index.html"><img 
+        alt="C++ Boost" src="../_static/boost.png" border="0"></a></h3>
+      </td>
+
+      <td >
+        <h1 align="center"><a href="../index.html"></a></h1>
+      </td>
+	<td>
+	</td>
+    </tr>
+  </table>
+  </div>
+  <hr/>
 <table border="0" cellspacing="0" cellpadding="0" style='width: 100%; margin: 0; padding: 0'><tr>
 <td width="100%" valign="top" style='padding-left: 10px; padding-right: 10px; padding-bottom: 10px'>
 <div class="qindex"><a class="qindex" href="index.html">Modules</a> 
                   | <a class="qindex" href="classes.html">Alphabetical List</a> 
                   | <a class="qindex" href="annotated.html">Class List</a> 
-                  | <a class="qindex" href="dirs.html">Directories</a> 
-                  | <a class="qindex" href="files.html">File List</a> 
-                  | <a class="qindex" href="../index.html">GIL Home Page</a> 
 </div>
 <!-- End Header -->
