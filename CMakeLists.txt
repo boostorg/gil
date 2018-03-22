@@ -83,7 +83,8 @@ endif()
 #-----------------------------------------------------------------------------
 if(MSVC)
   string(REGEX REPLACE "/W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
-  add_compile_options(/W4)
+  string(REGEX REPLACE "-W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
+  add_compile_options(-W4 -FC) # We need absolute path in __FILE__
 else()
   add_compile_options(-Wall)
   add_compile_options(-pedantic)
