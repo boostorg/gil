@@ -236,7 +236,7 @@ indexed_image_view
     return view_t(
         iv.dimensions()
         , pv.dimensions().x
-        , view_t::locator(point_t(0, 0), point_t(1, 1), defer_fn_t(iv.xy_at(0, 0), pv.xy_at(0, 0)))
+        , typename view_t::locator(point_t(0, 0), point_t(1, 1), defer_fn_t(iv.xy_at(0, 0), pv.xy_at(0, 0)))
     );
 }
 
