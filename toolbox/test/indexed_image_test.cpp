@@ -158,9 +158,10 @@ BOOST_AUTO_TEST_CASE(index_image_view_test)
     int width = 640;
     int height = 480;
     int num_colors = 3;
+    int Index = 2;
 
     // indices
-    vector<uint8_t> indices(width * height, 2);
+    vector<uint8_t> indices(width * height, Index);
 
     // colors
     vector<rgb8_pixel_t> palette(num_colors);
