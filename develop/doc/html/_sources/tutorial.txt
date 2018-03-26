@@ -59,7 +59,7 @@ Here is how the interface to our algorithm looks like::
   }
 
 ``gray8c_view_t`` is the type of the source image view - an 8-bit grayscale view, whose pixels are read-only (denoted by the  "c"). The output
-is a grayscale view with a 8-bit signed (denoted by the "s") integer channel type. See Appendix 1 for the complete convension GIL uses to name concrete types.
+is a grayscale view with a 8-bit signed (denoted by the "s") integer channel type. See Appendix 1 for the complete convention GIL uses to name concrete types.
 
 GIL makes a distinction between an image and an image view. A GIL **image view**, is a shallow, lightweight view of a rectangular grid of pixels. It provides access to the pixels
 but does not own the pixels. Copy-constructing a view does not deep-copy the pixels. Image views do not propagate their constness to the pixels and should
@@ -70,7 +70,7 @@ performs deep-copy of the pixels and its operator== performs deep-compare of the
 allow for modifying its pixels.
 
 Most GIL algorithms operate on image views; images are rarely needed. GIL's design is very similar to that of the STL. The STL equivalent of GIL's image is a container, like ``std::vector``, whereas
-GIL's image view corresponds to STL's range, which is often represented with a pair of iterators. STL algorithms operate on ranges, just like GIL algorithms operate on image views.
+GIL's image view corresponds to STL range, which is often represented with a pair of iterators. STL algorithms operate on ranges, just like GIL algorithms operate on image views.
 
 GIL's image views can be constructed from raw data - the dimensions, the number of bytes per row and the pixels, which for chunky views are represented with one pointer. Here is how to provide 
 the glue between your code and GIL::
@@ -297,7 +297,7 @@ Having an explicit loop for each channel could be a performance problem. GIL all
   }
 
 ``static_transform`` is an example of a channel-level GIL algorithm. Other such algorithms are ``static_generate``, ``static_fill`` and ``static_for_each``. They are the channel-level equivalents
-of STL's ``generate``, ``transform``, ``fill`` and ``for_each`` respectively. GIL channel algorithms use static recursion to unroll the loops; they never loop over the channels explicitly.
+of STL ``generate``, ``transform``, ``fill`` and ``for_each`` respectively. GIL channel algorithms use static recursion to unroll the loops; they never loop over the channels explicitly.
 Note that sometimes modern compilers (at least Visual Studio 8) already unroll channel-level loops, such as the one above. However, another advantage of using 
 GIL's channel-level algorithms is that they pair the channels semantically, not based on their order in memory. For example, the above example will properly match an RGB source 
 with a BGR destination.
@@ -440,7 +440,7 @@ If we abstract that operation in a function object, we can use GIL's ``transform
     transform_pixel_positions(src, dst, half_x_difference());
   }
 
-GIL provides the algorithms ``for_each_pixel`` and ``transform_pixels`` which are image view equivalents of STL's ``std::for_each`` and ``std::transform``. It also provides 
+GIL provides the algorithms ``for_each_pixel`` and ``transform_pixels`` which are image view equivalents of STL ``std::for_each`` and ``std::transform``. It also provides 
 ``for_each_pixel_position`` and ``transform_pixel_positions``, which instead of references to pixels, pass to the generic function pixel locators. This allows for more powerful functions
 that can use the pixel neighbors through the passed locators.
 GIL algorithms iterate through the pixels using the more efficient two nested loops (as opposed to the single loop using 1-D iterators)
@@ -508,14 +508,14 @@ Creating a generic version of the above is a bit trickier::
   }
 
 First we use the ``channel_type`` metafunction to get the channel type of the destination view. A metafunction is a function operating on types. In GIL metafunctions
-are structs which take their parameters as template parameters and return their result in a nested typedef called ``type``. In this case, ``channel_type`` is
+are class templates (declared with ``struct`` type specifier) which take their parameters as template parameters and return their result in a nested typedef called ``type``. In this case, ``channel_type`` is
 a unary metafunction which in this example is called with the type of an image view and returns the type of the channel associated with that image view. 
 
 GIL constructs that have an associated pixel type, such as pixels, pixel iterators, locators, views and images, all model ``PixelBasedConcept``, which means
 that they provide a set of metafunctions to query the pixel properties, such as ``channel_type``, ``color_space_type``, ``channel_mapping_type``, and ``num_channels``. 
 
 After we get the channel type of the destination view, we use another metafunction to remove its sign (if it is a signed integral type) and then use it
-to generate the type of a grayscale pixel. From the pixel type we create the image type. GIL's image class is templated over the pixel type and a boolean 
+to generate the type of a grayscale pixel. From the pixel type we create the image type. GIL's image class is specialized over the pixel type and a boolean 
 indicating whether the image should be planar or interleaved.
 Single-channel (grayscale) images in GIL must always be interleaved. There are multiple ways of constructing types in GIL. Instead of instantiating the classes
 directly we could have used type factory metafunctions. The following code is equivalent::
@@ -616,7 +616,7 @@ Here is what the two files look like:
 Run-Time Specified Images and Image Views
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-So far we have created a generic function that computes the image gradient of a templated image view.
+So far we have created a generic function that computes the image gradient of an image view template specialization.
 Sometimes, however, the properties of an image view, such as its color space and channel depth, may not be available at compile time.
 GIL's ``dynamic_image`` extension allows for working with GIL constructs that are specified at run time, also called _variants_. GIL provides
 models of a run-time instantiated image, ``any_image``, and a run-time instantiated image view, ``any_image_view``. The mechanisms are in place to create 
@@ -705,7 +705,7 @@ in such cases. For example, \p channel_convert converts between channels by line
 
 There is a lot to be done in improving the performance as well. Channel-level operations, such as the half-difference, could be abstracted out into atomic 
 channel-level algorithms and performance overloads could be provided for concrete channel types. Processor-specific operations could be used, for example, 
-to perform the operation over an entire row of pixels simultaneously, or the data could be prefetched. All of these optimizations can be realized as performance 
+to perform the operation over an entire row of pixels simultaneously, or the data could be pre-fetched. All of these optimizations can be realized as performance 
 specializations of the generic algorithm. Finally, compilers, while getting better over time, are still failing to fully optimize generic code in some cases, such
 as failing to inline some functions or put some variables into registers. If performance is an issue, it might be worth trying your code with different compilers.
 

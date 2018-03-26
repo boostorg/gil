@@ -142,7 +142,7 @@ It is recommended to read the sections in order.</p>
 <div class="section" id="about-concepts">
 <h2><a class="toc-backref" href="#id2">About Concepts</a></h2>
 <p>All constructs in GIL are models of GIL concepts. A em concept is a set of requirements that a type (or a set of related types) must fulfill to
-be used correctly in generic algorithms. The requirements include syntactic and algorithming guarantees.
+be used correctly in generic algorithms. The requirements include syntactic and algorithmic guarantees.
 For example, GIL&#8217;s class <tt class="docutils literal"><span class="pre">pixel</span></tt> is a model of GIL&#8217;s <tt class="docutils literal"><span class="pre">PixelConcept</span></tt>. The user may substitute the pixel class with one of their own, and, as long as
 it satisfies the requirements of <tt class="docutils literal"><span class="pre">PixelConcept</span></tt>, all other GIL classes and algorithms can be used with it. See more about concepts here:
 <a class="reference external" href="http://www.generic-programming.org/languages/conceptcpp/">http://www.generic-programming.org/languages/conceptcpp/</a></p>
@@ -299,10 +299,10 @@ are defined in <tt class="docutils literal"><span class="pre">channel_traits</sp
 <p>Note that <tt class="docutils literal"><span class="pre">ChannelConcept</span></tt> and <tt class="docutils literal"><span class="pre">MutableChannelConcept</span></tt> do not require a default constructor. Channels that also
 support default construction (and thus are regular types) model <tt class="docutils literal"><span class="pre">ChannelValueConcept</span></tt>. To understand the motivation
 for this distinction, consider a 16-bit RGB pixel in a &#8220;565&#8221; bit pattern. Its channels correspond to bit ranges. To support
-such channels, we need to create a custom proxy class corresponding to a reference to a subbyte channel.
+such channels, we need to create a custom proxy class corresponding to a reference to a sub-byte channel.
 Such a proxy reference class models only <tt class="docutils literal"><span class="pre">ChannelConcept</span></tt>, because, similar to native C++ references, it
 may not have a default constructor.</p>
-<p>Note also that algorithms may impose additional requirements on channels, such as support for arithmentic operations.</p>
+<p>Note also that algorithms may impose additional requirements on channels, such as support for arithmetic operations.</p>
 <p>&lt;b&gt;Related Concepts:&lt;/b&gt;</p>
 <ul class="simple">
 <li>ChannelConcept&lt;T&gt;</li>
@@ -312,7 +312,7 @@ may not have a default constructor.</p>
 <li>ChannelConvertibleConcept&lt;SrcChannel,DstChannel&gt;</li>
 </ul>
 <p>&lt;b&gt;Models:&lt;/b&gt;</p>
-<p>All built-in integral and floating point types are valid channels. GIL provides standard typedefs for some integral channels:</p>
+<p>All built-in integral and floating point types are valid channels. GIL provides standard type aliases for some integral channels:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="k">typedef</span> <span class="n">boost</span><span class="o">::</span><span class="kt">uint8_t</span>  <span class="n">bits8</span><span class="p">;</span>
 <span class="k">typedef</span> <span class="n">boost</span><span class="o">::</span><span class="kt">uint16_t</span> <span class="n">bits16</span><span class="p">;</span>
 <span class="k">typedef</span> <span class="n">boost</span><span class="o">::</span><span class="kt">uint32_t</span> <span class="n">bits32</span><span class="p">;</span>
@@ -347,7 +347,7 @@ channel adapter that allows for specifying a custom range. We use it to define a
 </div>
 <p>Note that there are two models of a reference proxy which differ based on whether the offset of the channel range is
 specified as a template or a run-time parameter. The first model is faster and more compact while the second model is more
-flexible. For example, the second model allows us to construct an iterator over bitrange channels.</p>
+flexible. For example, the second model allows us to construct an iterator over bit range channels.</p>
 <p>&lt;b&gt;Algorithms:&lt;/b&gt;</p>
 <p>Here is how to construct the three channels of a 16-bit &#8220;565&#8221; pixel and set them to their maximum value:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="k">typedef</span> <span class="n">packed_channel_reference</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="nb">true</span><span class="o">&gt;</span> <span class="kt">channel16_0_5_reference_t</span><span class="p">;</span>
@@ -385,7 +385,7 @@ It maps precisely the minimum to the minimum and the maximum to the maximum. (Fo
 because it will not properly match the maximum values. Instead GIL multiplies the source by 257).</p>
 <p>All channel models that GIL provides are convertible from/to an integral or floating point type. Thus they support arithmetic operations.
 Here are the channel-level algorithms that GIL provides:</p>
-<div class="highlight-c++"><div class="highlight"><pre><span class="c1">// Converts a source channel value into a destrination channel. Linearly maps the value of the source</span>
+<div class="highlight-c++"><div class="highlight"><pre><span class="c1">// Converts a source channel value into a destination channel. Linearly maps the value of the source</span>
 <span class="c1">// into the range of the destination</span>
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">DstChannel</span><span class="p">,</span> <span class="k">typename</span> <span class="n">SrcChannel</span><span class="o">&gt;</span>
 <span class="k">typename</span> <span class="n">channel_traits</span><span class="o">&lt;</span><span class="n">DstChannel</span><span class="o">&gt;::</span><span class="n">value_type</span> <span class="n">channel_convert</span><span class="p">(</span><span class="n">SrcChannel</span> <span class="n">src</span><span class="p">);</span>
@@ -719,7 +719,7 @@ their color space, channel mapping, number of channels, and (for homogeneous pix
 </pre></div>
 </div>
 <p>A pixel is <em>convertible</em> to a second pixel if it is possible to approximate its color in the form of the second pixel. Conversion is an explicit,
-non-symmetric and often lossy operation (due to both channel and color space approximation). Convertability requires modeling the following concept:</p>
+non-symmetric and often lossy operation (due to both channel and color space approximation). Convertibility requires modeling the following concept:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="k">template</span> <span class="o">&lt;</span><span class="n">PixelConcept</span> <span class="n">SrcPixel</span><span class="p">,</span> <span class="n">MutablePixelConcept</span> <span class="n">DstPixel</span><span class="o">&gt;</span>
 <span class="n">concept</span> <span class="n">PixelConvertibleConcept</span>
 <span class="p">{</span>
@@ -781,7 +781,7 @@ reference type is a proxy class containing references to each of the channels. T
 </pre></div>
 </div>
 <p>Note that, unlike the <tt class="docutils literal"><span class="pre">pixel</span></tt> struct, planar pixel references are templated over the color space, not over the pixel layout. They always
-use a cannonical channel ordering. Ordering of their elements is unnecessary because their elements are references to the channels.</p>
+use a canonical channel ordering. Ordering of their elements is unnecessary because their elements are references to the channels.</p>
 <p>Sometimes the channels of a pixel may not be byte-aligned. For example an RGB pixel in &#8216;5-5-6&#8217; format is a 16-bit pixel whose red, green and blue
 channels occupy bits [0..4],[5..9] and [10..15] respectively. GIL provides a model for such packed pixel formats:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="c1">// define an rgb565 pixel</span>
@@ -1227,7 +1227,7 @@ conversion when dereferenced.</p>
 <p>Then we can instantiate <tt class="docutils literal"><span class="pre">memory_based_2d_locator&lt;memory_based_step_iterator&lt;XIterator&gt;</span> <span class="pre">&gt;</span></tt> to obtain a 2D pixel locator, as the diagram indicates:
 .. image:: step_iterator.gif</p>
 <p><tt class="docutils literal"><span class="pre">virtual_2d_locator</span></tt> is a locator that is instantiated with a function object invoked upon dereferencing a pixel. It returns the value of a pixel
-given its X,Y coordiantes. Virtual locators can be used to implement virtual image views that can model any user-defined function. See the GIL
+given its X,Y coordinates. Virtual locators can be used to implement virtual image views that can model any user-defined function. See the GIL
 tutorial for an example of using virtual locators to create a view of the Mandelbrot set.</p>
 <p>Both the virtual and the memory-based locators subclass from <tt class="docutils literal"><span class="pre">pixel_2d_locator_base</span></tt>, a base class that provides most of the interface required
 by <tt class="docutils literal"><span class="pre">PixelLocatorConcept</span></tt>. Users may find this base class useful if they need to provide other models of <tt class="docutils literal"><span class="pre">PixelLocatorConcept</span></tt>.</p>
@@ -1280,7 +1280,7 @@ adds about 15% performance delay (measured for interleaved images on Intel platf
 </div>
 <div class="section" id="image-view">
 <h2><a class="toc-backref" href="#id15">Image View</a></h2>
-<p>An image view is a generalization of STL&#8217;s range concept to multiple dimensions. Similar to ranges (and iterators), image views are shallow, don&#8217;t
+<p>An image view is a generalization of STL range concept to multiple dimensions. Similar to ranges (and iterators), image views are shallow, don&#8217;t
 own the underlying data and don&#8217;t propagate their constness over the data. For example, a constant image view cannot be resized, but may allow
 modifying the pixels. For pixel-immutable operations, use constant-value image view (also called non-mutable image view).
 Most general N-dimensional views satisfy the following concept:</p>
@@ -1612,7 +1612,7 @@ When image views are 1D-traversable, the algorithms use a single loop and run mo
 <p>The algorithms typically delegate the work to their corresponding STL algorithms. For example, <tt class="docutils literal"><span class="pre">copy_pixels</span></tt> calls <tt class="docutils literal"><span class="pre">std::copy</span></tt> either for each
 row, or, when the images are 1D-traversable, once for all pixels.</p>
 <p>In addition, overloads are sometimes provided for the STL algorithms. For example, <tt class="docutils literal"><span class="pre">std::copy</span></tt> for planar iterators is overloaded to perform
-<tt class="docutils literal"><span class="pre">std::copy</span></tt> for each of the planes. <tt class="docutils literal"><span class="pre">std::copy</span></tt> over bitwise-copiable pixels results in <tt class="docutils literal"><span class="pre">std::copy</span></tt> over unsigned char, which STL typically
+<tt class="docutils literal"><span class="pre">std::copy</span></tt> for each of the planes. <tt class="docutils literal"><span class="pre">std::copy</span></tt> over bitwise-copyable pixels results in <tt class="docutils literal"><span class="pre">std::copy</span></tt> over unsigned char, which STL typically
 implements via p memmove.</p>
 <p>As a result <tt class="docutils literal"><span class="pre">copy_pixels</span></tt> may result in a single call to <tt class="docutils literal"><span class="pre">memmove</span></tt> for interleaved 1D-traversable views, or one per each plane of planar
 1D-traversable views, or one per each row of interleaved non-1D-traversable images, etc.</p>
@@ -1809,7 +1809,7 @@ of MPL Random Access Sequence enumerating the allowed types. Having a single int
 <span class="p">};</span>
 
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">ImageTypes</span><span class="o">&gt;</span>
-<span class="n">cleass</span> <span class="n">any_image</span> <span class="o">:</span> <span class="k">public</span> <span class="n">variant</span><span class="o">&lt;</span><span class="n">ImageTypes</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">any_image</span> <span class="o">:</span> <span class="k">public</span> <span class="n">variant</span><span class="o">&lt;</span><span class="n">ImageTypes</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="k">typedef</span> <span class="n">variant</span><span class="o">&lt;</span><span class="n">ImageTypes</span><span class="o">&gt;</span> <span class="kt">parent_t</span><span class="p">;</span>
 <span class="nl">public:</span>
@@ -1843,7 +1843,7 @@ at least linear on the number of pixels, the single switch statement of image vi
 to templated image views.</p>
 <p>Variants behave like the underlying type. Their copy constructor will invoke the copy constructor of the underlying instance. Equality operator will
 check if the two instances are of the same type and then invoke their operator==, etc. The default constructor of a variant will default-construct the
-first type. That means that <tt class="docutils literal"><span class="pre">any_image_view</span></tt> has shallow default-constructor, copy-constructor, assigment and equaty comparison, whereas <tt class="docutils literal"><span class="pre">any_image</span></tt>
+first type. That means that <tt class="docutils literal"><span class="pre">any_image_view</span></tt> has shallow default-constructor, copy-constructor, assignment and equality comparison, whereas <tt class="docutils literal"><span class="pre">any_image</span></tt>
 has deep ones.</p>
 <p>It is important to note that even though <tt class="docutils literal"><span class="pre">any_image_view</span></tt> and <tt class="docutils literal"><span class="pre">any_image</span></tt> resemble the static <tt class="docutils literal"><span class="pre">image_view</span></tt> and <tt class="docutils literal"><span class="pre">image</span></tt>, they do not model the full
 requirements of <tt class="docutils literal"><span class="pre">ImageViewConcept</span></tt> and <tt class="docutils literal"><span class="pre">ImageConcept</span></tt>. In particular they don&#8217;t provide access to the pixels. There is no &#8220;any_pixel&#8221; or
@@ -2457,7 +2457,7 @@ See the GIL tutorial for an example of creating a virtual image view that define
 <div class="section" id="creating-a-reference-proxy">
 <h3><a class="toc-backref" href="#id34">Creating a reference proxy</a></h3>
 <p>Sometimes it is necessary to create a proxy class that represents a reference to a given object. Examples of these are GIL&#8217;s reference
-to a planar pixel (<tt class="docutils literal"><span class="pre">planar_pixel_reference</span></tt>) and GIL&#8217;s subbyte channel references. Writing a reference proxy class can be tricky. One
+to a planar pixel (<tt class="docutils literal"><span class="pre">planar_pixel_reference</span></tt>) and GIL&#8217;s sub-byte channel references. Writing a reference proxy class can be tricky. One
 problem is that the proxy reference is constructed as a temporary object and returned by value upon dereferencing the iterator:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="k">struct</span> <span class="n">rgb_planar_pixel_iterator</span>
 <span class="p">{</span>
@@ -2499,7 +2499,7 @@ problem is that the proxy reference is constructed as a temporary object and ret
 </ul>
 <p>A second important issue is providing an overload for <tt class="docutils literal"><span class="pre">swap</span></tt> for your reference class. The default <tt class="docutils literal"><span class="pre">std::swap</span></tt> will not
 work correctly. You must use a real value type as the temporary.
-A further complication is that in some implementations of the STL the <tt class="docutils literal"><span class="pre">swap</span></tt> function is incorreclty called qualified, as <tt class="docutils literal"><span class="pre">std::swap</span></tt>.
+A further complication is that in some implementations of the STL the <tt class="docutils literal"><span class="pre">swap</span></tt> function is incorrectly called qualified, as <tt class="docutils literal"><span class="pre">std::swap</span></tt>.
 The only way for these STL algorithms to use your overload is if you define it in the <tt class="docutils literal"><span class="pre">std</span></tt> namespace:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="k">namespace</span> <span class="n">std</span>
 <span class="p">{</span>

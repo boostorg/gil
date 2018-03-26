@@ -44,7 +44,7 @@ About Concepts
 --------------
 
 All constructs in GIL are models of GIL concepts. A \em concept is a set of requirements that a type (or a set of related types) must fulfill to
-be used correctly in generic algorithms. The requirements include syntactic and algorithming guarantees.
+be used correctly in generic algorithms. The requirements include syntactic and algorithmic guarantees.
 For example, GIL's class ``pixel`` is a model of GIL's ``PixelConcept``. The user may substitute the pixel class with one of their own, and, as long as
 it satisfies the requirements of ``PixelConcept``, all other GIL classes and algorithms can be used with it. See more about concepts here: 
 http://www.generic-programming.org/languages/conceptcpp/
@@ -194,11 +194,11 @@ A channel may be *convertible* to another channel::
 Note that ``ChannelConcept`` and ``MutableChannelConcept`` do not require a default constructor. Channels that also
 support default construction (and thus are regular types) model ``ChannelValueConcept``. To understand the motivation
 for this distinction, consider a 16-bit RGB pixel in a "565" bit pattern. Its channels correspond to bit ranges. To support
-such channels, we need to create a custom proxy class corresponding to a reference to a subbyte channel.
+such channels, we need to create a custom proxy class corresponding to a reference to a sub-byte channel.
 Such a proxy reference class models only ``ChannelConcept``, because, similar to native C++ references, it 
 may not have a default constructor.
 
-Note also that algorithms may impose additional requirements on channels, such as support for arithmentic operations.
+Note also that algorithms may impose additional requirements on channels, such as support for arithmetic operations.
 
 <b>Related Concepts:</b>
 
@@ -210,7 +210,7 @@ Note also that algorithms may impose additional requirements on channels, such a
 
 <b>Models:</b>
 
-All built-in integral and floating point types are valid channels. GIL provides standard typedefs for some integral channels::
+All built-in integral and floating point types are valid channels. GIL provides standard type aliases for some integral channels::
 
   typedef boost::uint8_t  bits8;
   typedef boost::uint16_t bits16;
@@ -245,7 +245,7 @@ GIL also provides models for channels corresponding to ranges of bits::
 
 Note that there are two models of a reference proxy which differ based on whether the offset of the channel range is
 specified as a template or a run-time parameter. The first model is faster and more compact while the second model is more
-flexible. For example, the second model allows us to construct an iterator over bitrange channels.
+flexible. For example, the second model allows us to construct an iterator over bit range channels.
 
 <b>Algorithms:</b>
 
@@ -287,7 +287,7 @@ because it will not properly match the maximum values. Instead GIL multiplies th
 All channel models that GIL provides are convertible from/to an integral or floating point type. Thus they support arithmetic operations.
 Here are the channel-level algorithms that GIL provides::
 
-  // Converts a source channel value into a destrination channel. Linearly maps the value of the source
+  // Converts a source channel value into a destination channel. Linearly maps the value of the source
   // into the range of the destination
   template <typename DstChannel, typename SrcChannel>
   typename channel_traits<DstChannel>::value_type channel_convert(SrcChannel src);
@@ -302,7 +302,6 @@ Here are the channel-level algorithms that GIL provides::
 
 Color Space and Layout
 ----------------------
-
 
 A color space captures the set and interpretation of channels comprising a pixel. It is an MPL random access sequence containing the types 
 of all elements in the color space. Two color spaces are considered *compatible* if they are equal (i.e. have the same set of colors in the same order).
@@ -552,7 +551,6 @@ on their physical order in memory. For example, here is the implementation of ``
 This algorithm is used when invoking ``operator==`` on two pixels, for example. By using semantic accessors we are properly comparing an RGB pixel 
 to a BGR pixel. Notice also that all of the above algorithms taking more than one color base require that they all have the same color space.
 
-
 Pixel
 -----
 
@@ -635,7 +633,7 @@ Pixels model the following concepts::
   };
 
 A pixel is *convertible* to a second pixel if it is possible to approximate its color in the form of the second pixel. Conversion is an explicit,
-non-symmetric and often lossy operation (due to both channel and color space approximation). Convertability requires modeling the following concept::
+non-symmetric and often lossy operation (due to both channel and color space approximation). Convertibility requires modeling the following concept::
 
   template <PixelConcept SrcPixel, MutablePixelConcept DstPixel>
   concept PixelConvertibleConcept
@@ -691,7 +689,7 @@ reference type is a proxy class containing references to each of the channels. T
   typedef planar_pixel_reference<const bits8&,rgb_t> rgb8c_planar_ref_t;
 
 Note that, unlike the ``pixel`` struct, planar pixel references are templated over the color space, not over the pixel layout. They always 
-use a cannonical channel ordering. Ordering of their elements is unnecessary because their elements are references to the channels.
+use a canonical channel ordering. Ordering of their elements is unnecessary because their elements are references to the channels.
 
 Sometimes the channels of a pixel may not be byte-aligned. For example an RGB pixel in '5-5-6' format is a 16-bit pixel whose red, green and blue
 channels occupy bits [0..4],[5..9] and [10..15] respectively. GIL provides a model for such packed pixel formats::
@@ -1164,7 +1162,7 @@ Then we can instantiate ``memory_based_2d_locator<memory_based_step_iterator<XIt
 .. image:: step_iterator.gif
 
 ``virtual_2d_locator`` is a locator that is instantiated with a function object invoked upon dereferencing a pixel. It returns the value of a pixel 
-given its X,Y coordiantes. Virtual locators can be used to implement virtual image views that can model any user-defined function. See the GIL 
+given its X,Y coordinates. Virtual locators can be used to implement virtual image views that can model any user-defined function. See the GIL 
 tutorial for an example of using virtual locators to create a view of the Mandelbrot set.
 
 Both the virtual and the memory-based locators subclass from ``pixel_2d_locator_base``, a base class that provides most of the interface required 
@@ -1221,7 +1219,7 @@ adds about 15% performance delay (measured for interleaved images on Intel platf
 Image View
 ----------
 
-An image view is a generalization of STL's range concept to multiple dimensions. Similar to ranges (and iterators), image views are shallow, don't 
+An image view is a generalization of STL range concept to multiple dimensions. Similar to ranges (and iterators), image views are shallow, don't 
 own the underlying data and don't propagate their constness over the data. For example, a constant image view cannot be resized, but may allow 
 modifying the pixels. For pixel-immutable operations, use constant-value image view (also called non-mutable image view).
 Most general N-dimensional views satisfy the following concept::
@@ -1563,7 +1561,7 @@ The algorithms typically delegate the work to their corresponding STL algorithms
 row, or, when the images are 1D-traversable, once for all pixels.
 
 In addition, overloads are sometimes provided for the STL algorithms. For example, ``std::copy`` for planar iterators is overloaded to perform 
-``std::copy`` for each of the planes. ``std::copy`` over bitwise-copiable pixels results in ``std::copy`` over unsigned char, which STL typically 
+``std::copy`` for each of the planes. ``std::copy`` over bitwise-copyable pixels results in ``std::copy`` over unsigned char, which STL typically 
 implements via \p memmove.
 
 As a result ``copy_pixels`` may result in a single call to ``memmove`` for interleaved 1D-traversable views, or one per each plane of planar 
@@ -1769,7 +1767,7 @@ GIL's ``any_image_view`` and ``any_image`` are subclasses of ``variant``::
   };
 
   template <typename ImageTypes>
-  cleass any_image : public variant<ImageTypes>
+  class any_image : public variant<ImageTypes>
   {
     typedef variant<ImageTypes> parent_t;
   public:
@@ -1803,7 +1801,7 @@ to templated image views.
 
 Variants behave like the underlying type. Their copy constructor will invoke the copy constructor of the underlying instance. Equality operator will
 check if the two instances are of the same type and then invoke their operator==, etc. The default constructor of a variant will default-construct the
-first type. That means that ``any_image_view`` has shallow default-constructor, copy-constructor, assigment and equaty comparison, whereas ``any_image``
+first type. That means that ``any_image_view`` has shallow default-constructor, copy-constructor, assignment and equality comparison, whereas ``any_image``
 has deep ones.
 
 It is important to note that even though ``any_image_view`` and ``any_image`` resemble the static ``image_view`` and ``image``, they do not model the full
@@ -2435,7 +2433,7 @@ Creating a reference proxy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Sometimes it is necessary to create a proxy class that represents a reference to a given object. Examples of these are GIL's reference
-to a planar pixel (``planar_pixel_reference``) and GIL's subbyte channel references. Writing a reference proxy class can be tricky. One
+to a planar pixel (``planar_pixel_reference``) and GIL's sub-byte channel references. Writing a reference proxy class can be tricky. One
 problem is that the proxy reference is constructed as a temporary object and returned by value upon dereferencing the iterator::
 
   struct rgb_planar_pixel_iterator
@@ -2474,7 +2472,7 @@ C++ does not allow for matching a temporary object against a non-constant refere
 
 A second important issue is providing an overload for ``swap`` for your reference class. The default ``std::swap`` will not
 work correctly. You must use a real value type as the temporary.
-A further complication is that in some implementations of the STL the ``swap`` function is incorreclty called qualified, as ``std::swap``.
+A further complication is that in some implementations of the STL the ``swap`` function is incorrectly called qualified, as ``std::swap``.
 The only way for these STL algorithms to use your overload is if you define it in the ``std`` namespace::
 
   namespace std

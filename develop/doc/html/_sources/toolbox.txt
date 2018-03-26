@@ -37,7 +37,7 @@ This extension will hopefully be added on by the community.
 
 This extension is header-only. To use the toolbox just include the boost/gil/extension/toolbox.hpp.
 
-Folder Srtucture
+Folder Structure
 ----------------
 
 The toolbox tries to structure the small boost::gil extension into various folders. There is a folder for color_spaces, metafunctions, image_types, and color converters.
@@ -47,8 +47,8 @@ Acknowledgements
 
 Thanks to all the people who have reviewed this library and made suggestions for improvements.
 
-Referece
---------
+Reference
+---------
 
 The Reference_ section.
 
