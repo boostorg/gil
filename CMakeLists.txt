@@ -27,6 +27,15 @@ if(GIL_USE_BOOST_STAGE AND NOT DEFINED BOOST_ROOT AND NOT DEFINED ENV{BOOST_ROOT
   if(EXISTS ${_boost_root}/boost-build.jam)
     set(BOOST_ROOT ${_boost_root})
     message(STATUS "Using Boost libraries from stage directory in BOOST_ROOT=${BOOST_ROOT}")
+
+    # Latest FindBoost.cmake has likely been updated to detect Boost version not yet released
+    if (NOT EXISTS "${CMAKE_BINARY_DIR}/cmake/FindBoost.cmake")
+      message(STATUS "Downloading FindBoost.cmake from https://gitlab.kitware.com/cmake/ master branch")
+      file(DOWNLOAD
+        "https://gitlab.kitware.com/cmake/cmake/raw/master/Modules/FindBoost.cmake"
+        "${CMAKE_BINARY_DIR}/cmake/FindBoost.cmake")
+    endif()
+    list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_BINARY_DIR}/cmake)
   endif()
 endif()
 
