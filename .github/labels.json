@@ -12,7 +12,6 @@
   { "name": "Type:bug", "color": "#FC2929", "description": "Bug in existing code" },
   { "name": "Type:duplicate", "color": "#E6E6E6", "description": "Search existing issues next time" },
   { "name": "Type:feature", "color": "#009800", "description": "Proposal of new functionality" },
-  { "name": "Type:maintenance", "color": "#FEF2C0", "description": "All boring tasks good janitors do" },
   { "name": "Type:performance", "color": "#CC317C", "description": "Run-time performance issues" },
   { "name": "Type:question", "color": "#5753BA", "description": "Post to  mailing list next time" }
 ]
