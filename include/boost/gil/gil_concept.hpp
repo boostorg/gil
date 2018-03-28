@@ -33,6 +33,9 @@
 
 namespace boost { namespace gil {
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-local-typedefs"
+
 #if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
 #pragma warning(push) 
 #pragma warning(disable:4510) //default constructor could not be generated
@@ -2195,6 +2198,7 @@ struct ImageConcept {
 #pragma warning(pop) 
 #endif 
 
+#pragma GCC diagnostic pop
 
 } }  // namespace boost::gil
 
