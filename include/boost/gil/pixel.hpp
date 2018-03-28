@@ -22,6 +22,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include <functional>
+#include <boost/core/ignore_unused.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/front.hpp>
@@ -123,9 +124,10 @@ public:
     pixel&                       operator=(const pixel& p)       { static_copy(p,*this); return *this; }
 
     // Construct from another compatible pixel type
-    template <typename Pixel>    pixel(const Pixel& p, typename enable_if_c<is_pixel<Pixel>::value>::type* dummy = 0) : parent_t(p) { 
+    template <typename Pixel>    pixel(const Pixel& p, typename enable_if_c<is_pixel<Pixel>::value>::type* dummy = 0) : parent_t(p) {
         check_compatible<Pixel>();
-    }   
+        boost::ignore_unused(dummy);
+    }
 
     template <typename P> pixel& operator=(const P& p)           { assign(p, mpl::bool_<is_pixel<P>::value>()); return *this; } 
     template <typename P> bool   operator==(const P& p)    const { return equal(p, mpl::bool_<is_pixel<P>::value>()); } 

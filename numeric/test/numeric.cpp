@@ -111,7 +111,6 @@ BOOST_AUTO_TEST_CASE( pixel_numeric_operations_divide )
                       > op;
         rgb32f_pixel_t c = op( a, b );
 
-        float epsilon = 1e-6f;
         BOOST_ASSERT( get_color( c,   red_t() ) ==  5 );
         BOOST_ASSERT( get_color( c, green_t() ) == 10 );
         BOOST_ASSERT( get_color( c,  blue_t() ) == 15 );
