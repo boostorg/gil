@@ -351,7 +351,6 @@ protected:
 
 private:
     void set(integer_t value) const {     // can this be done faster??
-        const integer_t num_values = max_val+1;
         this->derived().set_unsafe(((value % num_values) + num_values) % num_values); 
     }
     integer_t get() const { return derived().get(); }
