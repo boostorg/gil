@@ -44,6 +44,7 @@ if(GIL_BUILD_TESTS)
   list(APPEND BOOST_COMPONENTS unit_test_framework filesystem)
 endif()
 
+set(Boost_ADDITIONAL_VERSIONS "1.67.0" "1.67" "1.66.0" "1.66")
 set(Boost_DETAILED_FAILURE_MSG ON)
 if(MSVC)
   set(Boost_USE_STATIC_LIBS ON)
