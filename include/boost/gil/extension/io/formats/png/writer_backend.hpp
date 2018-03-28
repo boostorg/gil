@@ -355,7 +355,7 @@ protected:
 
         if( _info._valid_transparency_factors )
         {
-            int sample_max = ( 1 << _info._bit_depth );
+            int sample_max = ( 1u << _info._bit_depth );
 
             /* libpng doesn't reject a tRNS chunk with out-of-range samples */
             if( !(  (  _info._color_type == PNG_COLOR_TYPE_GRAY 
