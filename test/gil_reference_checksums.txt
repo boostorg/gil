@@ -1,12 +1,12 @@
-#bgr121_basic_red_x 7f6e24e
-#bgr121_basic_white_x e4aaa1d3
+bgr121_basic_red_x 7f6e24e
+bgr121_basic_white_x e4aaa1d3
 bgr121_histogram_histogram ca580192
 bgr121_views_0th_k_channel daa9f7e3
 bgr121_views_90ccw c64d6d20
-#bgr121_views_90cw 8565efd8
+bgr121_views_90cw 8565efd8
 bgr121_views_cropped 43305e15
 bgr121_views_flipped_lr 2d68e448
-#bgr121_views_flipped_ud 8f7f7d00
+bgr121_views_flipped_ud 8f7f7d00
 bgr121_views_gray8 bbabe219
 bgr121_views_my_gray8 3086d22f
 bgr121_views_original 7e5bb87d
