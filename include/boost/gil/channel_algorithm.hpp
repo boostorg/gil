@@ -329,7 +329,7 @@ template <> struct channel_convert_to_unsigned<bits16s> : public std::unary_func
 
 template <> struct channel_convert_to_unsigned<bits32s> : public std::unary_function<bits32s,bits32> {
     typedef bits32 type;
-    type operator()(bits32s x) const { return static_cast<bits32>(x+(1<<31)); }
+    type operator()(bits32s x) const { return static_cast<bits32>(x)+(1u<<31); }
 };
 
 
@@ -352,7 +352,7 @@ template <> struct channel_convert_from_unsigned<bits16s> : public std::unary_fu
 
 template <> struct channel_convert_from_unsigned<bits32s> : public std::unary_function<bits32,bits32s> {
     typedef bits32s type;
-    type operator()(bits32 x) const { return static_cast<bits32s>(x-(1<<31)); }
+    type operator()(bits32 x) const { return static_cast<bits32s>(x-(1u<<31)); }
 };
 
 }   // namespace detail

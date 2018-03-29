@@ -189,7 +189,7 @@ public:
 
         if( entries == 0 )
         {
-            entries = 1 << this->_info._bits_per_pixel;
+            entries = 1u << this->_info._bits_per_pixel;
         }
 
         _palette.resize( entries, rgba8_pixel_t(0, 0, 0, 0));
