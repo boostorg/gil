@@ -246,7 +246,6 @@ private:
     {        
         typedef detail::row_buffer_helper_view< ImagePixel > row_buffer_helper_t;
 
-        typedef typename row_buffer_helper_t::buffer_t   buffer_t;
         typedef typename row_buffer_helper_t::iterator_t it_t;
 
         typedef typename is_same< ConversionPolicy
