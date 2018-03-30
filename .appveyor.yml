@@ -1,3 +1,5 @@
+# AppVeyor for Boost.GIL
+#
 # Copyright 2016, 2017 Peter Dimov
 # Copyright 2018 Mateusz Loskot <mateusz at loskot dot net>
 # Distributed under the Boost Software License, Version 1.0.
@@ -21,17 +23,29 @@ environment:
   matrix:
     - TOOLSET: msvc-14.1
       ARCH: x86_64
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    - TOOLSET: msvc-14.1
-      ARCH: x86
+      VARIANT: debug
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     - TOOLSET: msvc-14.1
       ARCH: x86_64
+      VARIANT: release
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - TOOLSET: msvc-14.1
+      ARCH: x86
+      VARIANT: debug
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - TOOLSET: msvc-14.1
+      ARCH: x86
+      VARIANT: release
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - TOOLSET: msvc-14.1
+      ARCH: x86_64
+      VARIANT: Debug
       GENERATOR: "Visual Studio 15 2017 Win64"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
       APPVEYOR_SAVE_CACHE_ON_ERROR: true
     - TOOLSET: msvc-14.1
       ARCH: x86
+      VARIANT: Debug
       GENERATOR: "Visual Studio 15 2017"
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
       APPVEYOR_SAVE_CACHE_ON_ERROR: true
@@ -77,22 +91,22 @@ before_build:
   - python tools/boostdep/depinst/depinst.py gil
   - cmd /c bootstrap
   - .\b2 headers
-  - if DEFINED GENERATOR .\b2 address-model=%AM% toolset=%TOOLSET% variant=release --with-filesystem --with-test stage
+  - if DEFINED GENERATOR .\b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% --with-filesystem --with-test stage
 
 build: off
 
 build_script:
   - cd c:\projects\boost
-  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=release libs/gil/test
-  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=release libs/gil/toolbox/test
-  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=release libs/gil/numeric/test
-  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=release include=%VCPKG_I% library-path=%VCPKG_L% libs/gil/io/test//simple
+  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% libs/gil/test
+  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% libs/gil/toolbox/test
+  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% libs/gil/numeric/test
+  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% include=%VCPKG_I% library-path=%VCPKG_L% libs/gil/io/test//simple
   - if DEFINED GENERATOR cd libs\gil && md build && cd build
   - if DEFINED GENERATOR cmake -G "%GENERATOR%" -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake ..
-  - if DEFINED GENERATOR cmake --build . --config Release
+  - if DEFINED GENERATOR cmake --build . --config %VARIANT%
 
 test_script:
-  - if DEFINED GENERATOR ctest -V --output-on-failure -C Release
+  - if DEFINED GENERATOR ctest -V --output-on-failure -C %VARIANT%
 
 notifications:
   - provider: Webhook
