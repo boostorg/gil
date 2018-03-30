@@ -448,7 +448,6 @@ private:
        /// read_stripped_data IS working.
        typedef detail::row_buffer_helper_view< View > row_buffer_helper_t;
 
-       typedef typename row_buffer_helper_t::buffer_t   buffer_t;
        typedef typename row_buffer_helper_t::iterator_t it_t;
 
        tiff_image_width::type  image_width  = this->_info._width;
@@ -572,7 +571,6 @@ private:
        /// read_stripped_data IS working.
        typedef detail::row_buffer_helper_view< View > row_buffer_helper_t;
 
-       typedef typename row_buffer_helper_t::buffer_t   buffer_t;
        typedef typename row_buffer_helper_t::iterator_t it_t;
 
        tiff_image_width::type  image_width  = this->_info._width;
@@ -634,7 +632,6 @@ private:
       //typedef detail::row_buffer_helper_view< View > row_buffer_helper_t;
       typedef Buffer row_buffer_helper_t;
 
-      typedef typename row_buffer_helper_t::buffer_t   buffer_t;
       typedef typename row_buffer_helper_t::iterator_t it_t;
 
       std::size_t size_to_allocate = buffer_size< typename View::value_type >( dst_view.width()
