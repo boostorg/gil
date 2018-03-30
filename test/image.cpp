@@ -34,8 +34,8 @@ namespace fs = boost::filesystem;
 extern rgb8c_planar_view_t sample_view;
 void error_if(bool condition);
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
-#pragma warning(push) 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(push)
 #pragma warning(disable:4127) //conditional expression is constant
 #endif
 
