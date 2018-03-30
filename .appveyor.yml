@@ -55,14 +55,12 @@ matrix:
   allow_failures:
     - TOOLSET: msvc-14.1
       ARCH: x86_64
-      GENERATOR: "Visual Studio 15 2017 Win64"
+      VARIANT: release
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-      APPVEYOR_SAVE_CACHE_ON_ERROR: true
     - TOOLSET: msvc-14.1
       ARCH: x86
-      GENERATOR: "Visual Studio 15 2017"
+      VARIANT: release
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-      APPVEYOR_SAVE_CACHE_ON_ERROR: true
 
 cache:
   - c:\tools\vcpkg\installed\
