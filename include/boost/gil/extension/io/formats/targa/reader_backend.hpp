@@ -46,9 +46,9 @@ public:
                   , const image_read_settings< targa_tag >& settings
                   )
     : _io_dev  ( io_dev   )
+    , _scanline_length(0)
     , _settings( settings )
     , _info()
-    , _scanline_length(0)
     {
         read_header();    
 

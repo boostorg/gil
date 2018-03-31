@@ -34,8 +34,8 @@ namespace fs = boost::filesystem;
 extern rgb8c_planar_view_t sample_view;
 void error_if(bool condition);
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
-#pragma warning(push) 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(push)
 #pragma warning(disable:4127) //conditional expression is constant
 #endif
 
@@ -393,12 +393,17 @@ private:
 
 // Load the checksums from the reference file and create the start image
 void checksum_image_test::initialize() {
-    string crc_name;
     boost::crc_32_type::value_type crc_result;
     fstream checksum_ref(_filename,ios::in);
     while (true) {
+        string crc_name;
         checksum_ref >> crc_name >> std::hex >> crc_result;
         if(checksum_ref.fail()) break;
+        if (crc_name.front() == '#') //
+        {
+            crc_result = 0; // skip test case
+            crc_name = crc_name.substr(1);
+        }
         _crc_map[crc_name]=crc_result;
     }
     checksum_ref.close();
@@ -408,14 +413,20 @@ void checksum_image_test::initialize() {
 void checksum_image_test::check_view_impl(const rgb8c_view_t& img_view, const string& name) {
     boost::crc_32_type checksum_acumulator;
     checksum_acumulator.process_bytes(img_view.row_begin(0),img_view.size()*3);
+    unsigned int const crc_expect = _crc_map[name];
+    if (crc_expect == 0)
+    {
+        cerr << "Skipping checksum check for " << name << " (crc=0)" << endl;
+        return;
+    }
 
     boost::crc_32_type::value_type const crc = checksum_acumulator.checksum();
-    if (crc==_crc_map[name]) {
-        cerr << "Checksum checksum for " << name << " (crc=" << std::hex << crc << ")" << endl;
+    if (crc==crc_expect) {
+        cerr << "Checking checksum for " << name << " (crc=" << std::hex << crc << ")" << endl;
     }
     else {
         cerr << "Checksum error in " << name
-             << " (crc=" << std::hex << crc << " != " << std::hex << _crc_map[name] << ")" << endl;
+             << " (crc=" << std::hex << crc << " != " << std::hex << crc_expect << ")" << endl;
         error_if(true);
     }
 }

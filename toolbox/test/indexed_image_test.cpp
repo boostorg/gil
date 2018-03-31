@@ -152,4 +152,50 @@ BOOST_AUTO_TEST_CASE( index_image_test )
     }
 }
 
+BOOST_AUTO_TEST_CASE(index_image_view_test)
+{
+    // generate some data
+    int width = 640;
+    int height = 480;
+    int num_colors = 3;
+    int Index = 2;
+
+    // indices
+    vector<uint8_t> indices(width * height, Index);
+
+    // colors
+    vector<rgb8_pixel_t> palette(num_colors);
+    palette[0] = rgb8_pixel_t(10, 20, 30);
+    palette[1] = rgb8_pixel_t(40, 50, 60);
+    palette[2] = rgb8_pixel_t(70, 80, 90);
+
+    // create image views from raw memory
+    typedef gray8_image_t::view_t::locator indices_loc_t;
+    typedef rgb8_image_t::view_t::locator palette_loc_t;
+
+
+    auto indices_view = interleaved_view(width, height
+        , (gray8_image_t::view_t::x_iterator) indices.data()
+        , width // row size in bytes
+    );
+
+    auto palette_view = interleaved_view(100, 1
+        , (rgb8_image_t::view_t::x_iterator) palette.data()
+        , num_colors * 3 // row size in bytes
+    );
+
+    auto ii_view = view(indices_view, palette_view);
+
+    auto p = ii_view(point_t(0, 0));
+    auto q = *ii_view.at(point_t(0, 0));
+
+    assert(get_color(p, red_t()) == 70);
+    assert(get_color(p, green_t()) == 80);
+    assert(get_color(p, blue_t()) == 90);
+
+    assert(get_color(q, red_t()) == 70);
+    assert(get_color(q, green_t()) == 80);
+    assert(get_color(q, blue_t()) == 90);
+}
+
 BOOST_AUTO_TEST_SUITE_END()

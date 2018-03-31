@@ -88,10 +88,10 @@ private:
     template< typename View >
     void write( const View& view )
     {
-        typedef typename channel_type<
-                    typename get_pixel_type< View >::type >::type channel_t;
+        // typedef typename channel_type<
+        //             typename get_pixel_type< View >::type >::type channel_t;
 
-        typedef typename color_space_type< View >::type color_space_t;
+        // typedef typename color_space_type< View >::type color_space_t;
 
         // check if supported
 /*
@@ -111,7 +111,7 @@ private:
         ///        in this context.
         if( bpp <= 8 )
         {
-            entries = 1 << bpp;
+            entries = 1u << bpp;
         }
 */
 

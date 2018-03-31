@@ -66,7 +66,7 @@ struct default_color_converter_impl< rgb_t, hsl_t >
       bits32f min_color = (std::min)( temp_red, (std::min)( temp_green, temp_blue ));
       bits32f max_color = (std::max)( temp_red, (std::max)( temp_green, temp_blue ));
 
-      if( abs( min_color - max_color ) < 0.001 )
+      if( std::abs( min_color - max_color ) < 0.001 )
       {
          // rgb color is gray
 
@@ -100,14 +100,14 @@ struct default_color_converter_impl< rgb_t, hsl_t >
          }
 
          // hue calculation
-         if( abs( max_color - temp_red ) < 0.0001f )
+         if( std::abs( max_color - temp_red ) < 0.0001f )
          {
             // max_color is red
             hue = ( temp_green - temp_blue ) 
                 / diff;
 
          }
-         else if( abs( max_color - temp_green) < 0.0001f )
+         else if( std::abs( max_color - temp_green) < 0.0001f )
          {
             // max_color is green
             // 2.0 + (b - r) / (maxColor - minColor);
@@ -150,7 +150,7 @@ struct default_color_converter_impl<hsl_t,rgb_t>
 
       bits32f red, green, blue;
 
-      if( abs( get_color( src, saturation_t() )) < 0.0001  )
+      if( std::abs( get_color( src, saturation_t() )) < 0.0001  )
       {
          // If saturation is 0, the color is a shade of gray
          red   = get_color( src, lightness_t() );

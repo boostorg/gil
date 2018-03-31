@@ -1,10 +1,15 @@
+# AppVeyor for Boost.GIL
+#
 # Copyright 2016, 2017 Peter Dimov
+# Copyright 2018 Mateusz Loskot <mateusz at loskot dot net>
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at http://boost.org/LICENSE_1_0.txt)
-
+#
 version: 1.0.{build}-{branch}
 
-shallow_clone: true
+image: Visual Studio 2017
+
+platform: x64
 
 branches:
   only:
@@ -12,75 +17,98 @@ branches:
     - develop
     - ci
 
+shallow_clone: true
+
 environment:
   matrix:
-    #- APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
-    #  TOOLSET: msvc-9.0
-    #- APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
-    #  TOOLSET: msvc-10.0
-    #- APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
-    #  TOOLSET: msvc-11.0
-    #- APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
-    #  TOOLSET: msvc-12.0
-    #- APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
-    #  ADDPATH: C:\cygwin\bin;
-    #  TOOLSET: gcc
-    #  CXXFLAGS: cxxflags=-std=c++03
-    #- APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
-    #  ADDPATH: C:\cygwin\bin;
-    #  TOOLSET: gcc
-    #  CXXFLAGS: cxxflags=-std=c++11
-    #- APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
-    #  ADDPATH: C:\mingw\bin;
-    #  TOOLSET: gcc
-    #  CXXFLAGS: cxxflags=-std=c++03
-    #- APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
-    #  ADDPATH: C:\mingw\bin;
-    #  TOOLSET: gcc
-    #  CXXFLAGS: cxxflags=-std=c++11
-    #- APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
-    #  ADDPATH: C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin;
-    #  TOOLSET: gcc
-    #  CXXFLAGS: cxxflags=-std=c++03
-    #- APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
-    #  ADDPATH: C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin;
-    #  TOOLSET: gcc
-    #  CXXFLAGS: cxxflags=-std=c++11
-    #- APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-    #  TOOLSET: msvc-14.0
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-      TOOLSET: msvc-14.1
+    - TOOLSET: msvc-14.1
       ARCH: x86_64
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-      TOOLSET: msvc-14.1
+      VARIANT: debug
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - TOOLSET: msvc-14.1
+      ARCH: x86_64
+      VARIANT: release
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - TOOLSET: msvc-14.1
       ARCH: x86
+      VARIANT: debug
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - TOOLSET: msvc-14.1
+      ARCH: x86
+      VARIANT: release
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - TOOLSET: msvc-14.1
+      ARCH: x86_64
+      VARIANT: Debug
+      GENERATOR: "Visual Studio 15 2017 Win64"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      APPVEYOR_SAVE_CACHE_ON_ERROR: true
+    - TOOLSET: msvc-14.1
+      ARCH: x86
+      VARIANT: Debug
+      GENERATOR: "Visual Studio 15 2017"
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      APPVEYOR_SAVE_CACHE_ON_ERROR: true
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - TOOLSET: msvc-14.1
+      ARCH: x86_64
+      VARIANT: release
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - TOOLSET: msvc-14.1
+      ARCH: x86
+      VARIANT: release
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
 
 cache:
   - c:\tools\vcpkg\installed\
 
 install:
+  - ps: 'Write-Host "Installing CMake module FindBoost.cmake for Boost 1.67+" -ForegroundColor Magenta'
+  - appveyor DownloadFile https://raw.githubusercontent.com/Kitware/CMake/master/Modules/FindBoost.cmake -FileName "C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindBoost.cmake"
+  # FIXME: To be removed https://help.appveyor.com/discussions/problems/13000-cmake_toolchain_filevcpkgcmake-conflicts-with-cmake-native-findboostcmake"
+  - ps: 'Write-Host "Installing latest vcpkg.cmake module" -ForegroundColor Magenta'
+  - appveyor DownloadFile https://raw.githubusercontent.com/Microsoft/vcpkg/master/scripts/buildsystems/vcpkg.cmake -FileName "c:\tools\vcpkg\scripts\buildsystems\vcpkg.cmake"
   - if %ARCH% == x86 ( set "TRIPLET=x86-windows" ) else ( set "TRIPLET=x64-windows" )
   - if %ARCH% == x86 ( set AM=32 ) else ( set AM=64 )
   - vcpkg --triplet %TRIPLET% install libjpeg-turbo libpng tiff
-  - cd ..
-  - git clone -b develop --depth 1 https://github.com/boostorg/boost.git boost-root
-  - cd boost-root
-  - git submodule update --init tools/build
-  - git submodule update --init libs/config
-  - git submodule update --init tools/boostdep
+  - if NOT DEFINED GENERATOR set PATH=c:\Tools\vcpkg\installed\%TRIPLET%\bin;%PATH%
+  - if NOT DEFINED GENERATOR set VCPKG_I=C:\Tools\vcpkg\installed\%TRIPLET%\include
+  - if NOT DEFINED GENERATOR set VCPKG_L=C:\Tools\vcpkg\installed\%TRIPLET%\lib
+  - if NOT DEFINED GENERATOR set LIBPNG_NAME=libpng16
+
+before_build:
+  - git clone --quiet -b develop --depth 1 https://github.com/boostorg/boost.git c:\projects\boost
+  - cd c:\projects\boost
+  - git submodule --quiet update --init tools/build
+  - git submodule --quiet update --init libs/config
+  - git submodule --quiet update --init tools/boostdep
   - xcopy /s /e /q %APPVEYOR_BUILD_FOLDER% libs\gil
   - python tools/boostdep/depinst/depinst.py gil
   - cmd /c bootstrap
-  - b2 address-model=64 headers
+  - .\b2 headers
+  - if DEFINED GENERATOR .\b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% --with-filesystem --with-test stage
 
 build: off
 
+build_script:
+  - cd c:\projects\boost
+  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% libs/gil/test
+  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% libs/gil/toolbox/test
+  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% libs/gil/numeric/test
+  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% include=%VCPKG_I% library-path=%VCPKG_L% libs/gil/io/test//simple
+  - if DEFINED GENERATOR cd libs\gil && md build && cd build
+  - if DEFINED GENERATOR cmake -G "%GENERATOR%" -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+  - if DEFINED GENERATOR cmake --build . --config %VARIANT%
+
 test_script:
-  - set PATH=c:\Tools\vcpkg\installed\%TRIPLET%\bin;%PATH%
-  - set I=C:\Tools\vcpkg\installed\%TRIPLET%\include
-  - set L=C:\Tools\vcpkg\installed\%TRIPLET%\lib
-  - set LIBPNG_NAME=libpng16
-  - b2 address-model=%AM% libs/gil/test toolset=%TOOLSET% %CXXFLAGS%
-  - b2 address-model=%AM% libs/gil/toolbox/test toolset=%TOOLSET% %CXXFLAGS%
-  - b2 address-model=%AM% libs/gil/numeric/test toolset=%TOOLSET% %CXXFLAGS%
-  - b2 address-model=%AM% libs/gil/io/test//simple toolset=%TOOLSET% %CXXFLAGS% include=%I% library-path=%L%
+  - if DEFINED GENERATOR ctest -V --output-on-failure -C %VARIANT%
+
+notifications:
+  - provider: Webhook
+    url: https://webhooks.gitter.im/e/e9e4892cdeb7cbff2e5a
+    on_build_success: false
+    on_build_failure: true
+    on_build_status_changed: true

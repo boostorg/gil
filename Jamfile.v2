@@ -1,0 +1,19 @@
+# Boost.GIL (Generic Image Library)
+#
+# Copyright (c) 2018 Mateusz Loskot <mateusz@loskot.net>
+#
+# Use, modification and distribution is subject to the Boost Software License,
+# Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+# http://www.boost.org/LICENSE_1_0.txt)
+
+project boost-gil
+    :
+    requirements
+        <toolset>msvc:<asynch-exceptions>on
+    ;
+
+build-project example ;
+build-project test ;
+build-project numeric/test ;
+build-project toolbox/test ;
+build-project io/test ;

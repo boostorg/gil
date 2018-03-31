@@ -544,7 +544,7 @@ void uninitialized_fill_pixels(const View& img_view, const Value& val) {
         detail::uninitialized_fill_aux(img_view.begin().x(), img_view.end().x(),
                                        val,is_planar<View>());
     else {
-        typename View::y_coord_t y;
+        typename View::y_coord_t y = 0;
         try {
             for (y=0; y<img_view.height(); ++y)
                 detail::uninitialized_fill_aux(img_view.row_begin(y),img_view.row_end(y),
@@ -638,7 +638,7 @@ void default_construct_pixels_impl( const View& img_view
     }
     else
     {
-        typename View::y_coord_t y;
+        typename View::y_coord_t y = 0;
         try
         {
             for( y = 0; y < img_view.height(); ++y )
@@ -730,7 +730,7 @@ void uninitialized_copy_pixels(const View1& view1, const View2& view2) {
                                        view2.begin().x(),
                                        is_planar());
     else {
-        typename View1::y_coord_t y;
+        typename View1::y_coord_t y = 0;
         try {
             for (y=0; y<view1.height(); ++y)
                 detail::uninitialized_copy_aux(view1.row_begin(y), view1.row_end(y),
