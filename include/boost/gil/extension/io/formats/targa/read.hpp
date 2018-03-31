@@ -127,7 +127,7 @@ public:
                     {
                         this->_scanline_length = this->_info._width * ( this->_info._bits_per_pixel / 8 );
 
-                        if( this->_info._descriptor & 0x20 )
+                        if( this->_info._screen_origin_bit )
                         {
                             read_data< bgr8_view_t >( flipped_up_down_view( dst_view ) );
                         }
@@ -142,7 +142,7 @@ public:
                     {
                         this->_scanline_length = this->_info._width * ( this->_info._bits_per_pixel / 8 );
 
-                        if( this->_info._descriptor & 0x20 )
+                        if( this->_info._screen_origin_bit )
                         {
                             read_data< bgra8_view_t >( flipped_up_down_view( dst_view ) );
                         }
@@ -178,7 +178,7 @@ public:
                 {
                     case 24:
                     {
-                        if( this->_info._descriptor & 0x20 )
+                        if( this->_info._screen_origin_bit )
                         {
                             read_rle_data< bgr8_view_t >( flipped_up_down_view( dst_view ) );
                         }
@@ -190,7 +190,7 @@ public:
                     }
                     case 32:
                     {
-                        if( this->_info._descriptor & 0x20 )
+                        if( this->_info._screen_origin_bit )
                         {
                             read_rle_data< bgra8_view_t >( flipped_up_down_view( dst_view ) );
                         }
