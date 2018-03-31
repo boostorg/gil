@@ -10,13 +10,8 @@ import testing ;
 
 project
     : requirements
-        <toolset>intel:<debug-symbols>off
-        <toolset>msvc-7.1:<debug-symbols>off
-        <toolset>msvc-8.0:<define>_SCL_SECURE_NO_DEPRECATE <define>_CRT_SECURE_NO_DEPRECATE <define>_CRT_NONSTDC_NO_DEPRECATE
-        <toolset>msvc-9.0:<define>_SCL_SECURE_NO_DEPRECATE <define>_CRT_SECURE_NO_WARNINGS <define>_CRT_NONSTDC_NO_DEPRECATE
-        <toolset>msvc-10.0:<define>_SCL_SECURE_NO_DEPRECATE <define>_CRT_SECURE_NO_WARNINGS <define>_CRT_NONSTDC_NO_DEPRECATE
-	<include>$(BOOST_ROOT)
-	<library>/boost/filesystem//boost_filesystem
+    <include>$(BOOST_ROOT)
+    <library>/boost/filesystem//boost_filesystem
     ;
 
 test-suite gil :
@@ -24,4 +19,4 @@ test-suite gil :
     [ run channel.cpp error_if.cpp ]
     [ run pixel.cpp error_if.cpp ]
     [ run pixel_iterator.cpp error_if.cpp ]
-;
+    ;
