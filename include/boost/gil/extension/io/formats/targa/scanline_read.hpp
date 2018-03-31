@@ -120,6 +120,11 @@ private:
                 {
                     io_error( "Non-indexed targa files containing a palette are not supported." );
                 }
+
+                if( this->_info._screen_origin_bit )
+                {
+                    io_error( "scanline reader cannot read targa files which have screen origin bit set." );
+                }
                 
                 switch( this->_info._bits_per_pixel )
                 {

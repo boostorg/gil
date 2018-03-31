@@ -75,10 +75,17 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // 24BPP_compressed.tga
     {
         rgb8_image_t img;
-        
         read_image( targa_in + "24BPP_compressed.tga", img, tag_t() );
-        BOOST_CHECK_EQUAL( view( img ).width() , 124 );
-        BOOST_CHECK_EQUAL( view( img ).height(), 124 );
+
+        typename rgb8_image_t::x_coord_t width  = view( img ).width();
+        typename rgb8_image_t::y_coord_t height = view( img ).height();
+
+        BOOST_CHECK_EQUAL( width , 124 );
+        BOOST_CHECK_EQUAL( height, 124 );
+        BOOST_CHECK( view( img )(0, 0) == rgb8_pixel_t(248, 0, 248) );
+        BOOST_CHECK( view( img )(width-1, 0) == rgb8_pixel_t(0, 0, 248) );
+        BOOST_CHECK( view( img )(0, height-1) == rgb8_pixel_t(248, 0, 0) );
+        BOOST_CHECK( view( img )(width-1, height-1) == rgb8_pixel_t(248, 0, 248) );
 
         write( img, "24BPP_compressed_out.tga" );
     }
@@ -86,10 +93,17 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // 24BPP_uncompressed.tga
     {
         rgb8_image_t img;
-        
         read_image( targa_in + "24BPP_uncompressed.tga", img, tag_t() );
-        BOOST_CHECK_EQUAL( view( img ).width() , 124 );
-        BOOST_CHECK_EQUAL( view( img ).height(), 124 );
+
+        typename rgb8_image_t::x_coord_t width  = view( img ).width();
+        typename rgb8_image_t::y_coord_t height = view( img ).height();
+
+        BOOST_CHECK_EQUAL( width , 124 );
+        BOOST_CHECK_EQUAL( height, 124 );
+        BOOST_CHECK( view( img )(0, 0) == rgb8_pixel_t(248, 0, 248) );
+        BOOST_CHECK( view( img )(width-1, 0) == rgb8_pixel_t(0, 0, 248) );
+        BOOST_CHECK( view( img )(0, height-1) == rgb8_pixel_t(248, 0, 0) );
+        BOOST_CHECK( view( img )(width-1, height-1) == rgb8_pixel_t(248, 0, 248) );
 
         write( img, "24BPP_uncompressed_out.tga" );
 
@@ -99,10 +113,17 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // 32BPP_compressed.tga
     {
         rgba8_image_t img;
-        
         read_image( targa_in + "32BPP_compressed.tga", img, tag_t() );
-        BOOST_CHECK_EQUAL( view( img ).width() , 124 );
-        BOOST_CHECK_EQUAL( view( img ).height(), 124 );
+
+        typename rgba8_image_t::x_coord_t width  = view( img ).width();
+        typename rgba8_image_t::y_coord_t height = view( img ).height();
+
+        BOOST_CHECK_EQUAL( width , 124 );
+        BOOST_CHECK_EQUAL( height, 124 );
+        BOOST_CHECK( view( img )(0, 0) == rgba8_pixel_t(248, 0, 248, 255) );
+        BOOST_CHECK( view( img )(width-1, 0) == rgba8_pixel_t(0, 0, 248, 255) );
+        BOOST_CHECK( view( img )(0, height-1) == rgba8_pixel_t(0, 0, 0, 0) );
+        BOOST_CHECK( view( img )(width-1, height-1) == rgba8_pixel_t(248, 0, 248, 255) );
 
         write( img, "32BPP_compressed_out.tga" );
     }
@@ -110,14 +131,93 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // 32BPP_uncompressed.tga
     {
         rgba8_image_t img;
-        
         read_image( targa_in + "32BPP_uncompressed.tga", img, tag_t() );
-        BOOST_CHECK_EQUAL( view( img ).width() , 124 );
-        BOOST_CHECK_EQUAL( view( img ).height(), 124 );
+
+        typename rgba8_image_t::x_coord_t width  = view( img ).width();
+        typename rgba8_image_t::y_coord_t height = view( img ).height();
+
+        BOOST_CHECK_EQUAL( width , 124 );
+        BOOST_CHECK_EQUAL( height, 124 );
+        BOOST_CHECK( view( img )(0, 0) == rgba8_pixel_t(248, 0, 248, 255) );
+        BOOST_CHECK( view( img )(width-1, 0) == rgba8_pixel_t(0, 0, 248, 255) );
+        BOOST_CHECK( view( img )(0, height-1) == rgba8_pixel_t(0, 0, 0, 0) );
+        BOOST_CHECK( view( img )(width-1, height-1) == rgba8_pixel_t(248, 0, 248, 255) );
 
         write( img, "32BPP_uncompressed_out.tga" );
 
         test_targa_scanline_reader< bgra8_image_t >( "32BPP_uncompressed.tga" );
+    }
+
+    // 24BPP_compressed_ul_origin.tga
+    {
+        rgb8_image_t img;
+        read_image( targa_in + "24BPP_compressed_ul_origin.tga", img, tag_t() );
+
+        typename rgb8_image_t::x_coord_t width  = view( img ).width();
+        typename rgb8_image_t::y_coord_t height = view( img ).height();
+
+        BOOST_CHECK_EQUAL( width , 124 );
+        BOOST_CHECK_EQUAL( height, 124 );
+        BOOST_CHECK( view( img )(0, 0) == rgb8_pixel_t(248, 0, 248) );
+        BOOST_CHECK( view( img )(width-1, 0) == rgb8_pixel_t(0, 0, 248) );
+        BOOST_CHECK( view( img )(0, height-1) == rgb8_pixel_t(248, 0, 0) );
+        BOOST_CHECK( view( img )(width-1, height-1) == rgb8_pixel_t(248, 0, 248) );
+
+        write( img, "24BPP_compressed_ul_origin_out.tga" );
+    }
+
+    // 24BPP_uncompressed_ul_origin.tga
+    {
+        rgb8_image_t img;
+        read_image( targa_in + "24BPP_uncompressed_ul_origin.tga", img, tag_t() );
+
+        typename rgb8_image_t::x_coord_t width  = view( img ).width();
+        typename rgb8_image_t::y_coord_t height = view( img ).height();
+
+        BOOST_CHECK_EQUAL( width , 124 );
+        BOOST_CHECK_EQUAL( height, 124 );
+        BOOST_CHECK( view( img )(0, 0) == rgb8_pixel_t(248, 0, 248) );
+        BOOST_CHECK( view( img )(width-1, 0) == rgb8_pixel_t(0, 0, 248) );
+        BOOST_CHECK( view( img )(0, height-1) == rgb8_pixel_t(248, 0, 0) );
+        BOOST_CHECK( view( img )(width-1, height-1) == rgb8_pixel_t(248, 0, 248) );
+
+        write( img, "24BPP_uncompressed_ul_origin_out.tga" );
+    }
+
+    // 32BPP_compressed_ul_origin.tga
+    {
+        rgba8_image_t img;
+        read_image( targa_in + "32BPP_compressed_ul_origin.tga", img, tag_t() );
+
+        typename rgba8_image_t::x_coord_t width  = view( img ).width();
+        typename rgba8_image_t::y_coord_t height = view( img ).height();
+
+        BOOST_CHECK_EQUAL( width , 124 );
+        BOOST_CHECK_EQUAL( height, 124 );
+        BOOST_CHECK( view( img )(0, 0) == rgba8_pixel_t(248, 0, 248, 255) );
+        BOOST_CHECK( view( img )(width-1, 0) == rgba8_pixel_t(0, 0, 248, 255) );
+        BOOST_CHECK( view( img )(0, height-1) == rgba8_pixel_t(0, 0, 0, 0) );
+        BOOST_CHECK( view( img )(width-1, height-1) == rgba8_pixel_t(248, 0, 248, 255) );
+
+        write( img, "32BPP_compressed_ul_origin_out.tga" );
+    }
+
+    // 32BPP_uncompressed_ul_origin.tga
+    {
+        rgba8_image_t img;
+        read_image( targa_in + "32BPP_uncompressed_ul_origin.tga", img, tag_t() );
+
+        typename rgba8_image_t::x_coord_t width  = view( img ).width();
+        typename rgba8_image_t::y_coord_t height = view( img ).height();
+
+        BOOST_CHECK_EQUAL( width , 124 );
+        BOOST_CHECK_EQUAL( height, 124 );
+        BOOST_CHECK( view( img )(0, 0) == rgba8_pixel_t(248, 0, 248, 255) );
+        BOOST_CHECK( view( img )(width-1, 0) == rgba8_pixel_t(0, 0, 248, 255) );
+        BOOST_CHECK( view( img )(0, height-1) == rgba8_pixel_t(0, 0, 0, 0) );
+        BOOST_CHECK( view( img )(width-1, height-1) == rgba8_pixel_t(248, 0, 248, 255) );
+
+        write( img, "32BPP_uncompressed_ul_origin_out.tga" );
     }
 }
 
