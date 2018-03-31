@@ -364,7 +364,7 @@ void test_channel() {
     do_test<reference_core<const channel_archetype&> >();
 }
 
-int main(int argc, char *argv[])
+int main()
 {
     try
     {

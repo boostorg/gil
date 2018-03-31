@@ -11,6 +11,7 @@
 #include <exception>
 #include <iostream>
 #include <iterator>
+#include <boost/core/ignore_unused.hpp>
 #include <boost/type_traits.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/size.hpp>
@@ -186,7 +187,7 @@ struct for_each_impl {
 
 template <typename Vector, typename Fun>
 struct for_each_impl<Vector,Fun,-1> {
-    static void apply(Fun fun) {}
+    static void apply(Fun fun) { boost::ignore_unused(fun); }
 };
 
 template <typename Vector, typename Fun>
@@ -327,7 +328,7 @@ void test_pixel() {
 }
 
 
-int main(int argc, char *argv[])
+int main()
 {
     try
     {

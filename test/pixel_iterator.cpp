@@ -332,7 +332,7 @@ ignore_unused_variable_warning(rgb8_const_ptr_err);
 }
 */
 
-int main(int argc, char *argv[])
+int main()
 {
     try
     {
