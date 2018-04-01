@@ -103,13 +103,6 @@ matrix:
     - os: osx
       env: TOOLSET=clang COMPILER=clang++ CXXSTD=c++11 VARIANT=release
 
-  allow_failures:
-    - env: TOOLSET=gcc COMPILER=g++-5 CXXSTD=c++11 VARIANT=release
-    - env: TOOLSET=gcc COMPILER=g++-6 CXXSTD=c++11 VARIANT=release
-    - env: TOOLSET=gcc COMPILER=g++-7 CXXSTD=c++11 VARIANT=release
-    - env: TOOLSET=clang COMPILER=clang++-3.9 CXXSTD=c++11 VARIANT=release
-    - env: TOOLSET=clang COMPILER=clang++ CXXSTD=c++11 VARIANT=release
-
 install:
   - cd ..
   - git clone -b master --depth 1 https://github.com/boostorg/boost.git boost-root
