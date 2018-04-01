@@ -10,25 +10,15 @@ import testing ;
 
 project
     : requirements
-        <library>/boost/test//boost_unit_test_framework
-        <link>static
-        <include>../../../..
-        <toolset>intel:<debug-symbols>off
-        <toolset>msvc-7.1:<debug-symbols>off
-        <toolset>msvc-8.0:<define>_SCL_SECURE_NO_DEPRECATE <define>_CRT_SECURE_NO_DEPRECATE <define>_CRT_NONSTDC_NO_DEPRECATE
-        <toolset>msvc-9.0:<define>_SCL_SECURE_NO_DEPRECATE <define>_CRT_SECURE_NO_WARNINGS <define>_CRT_NONSTDC_NO_DEPRECATE
-        <toolset>msvc-10.0:<define>_SCL_SECURE_NO_DEPRECATE <define>_CRT_SECURE_NO_WARNINGS <define>_CRT_NONSTDC_NO_DEPRECATE
-        <link>static
-        <library>/boost/test//boost_unit_test_framework
-#		<library>/boost/system//boost_system
+    <include>$(BOOST_ROOT)
+    <library>/boost/test//boost_unit_test_framework
     ;
 
 test-suite "gil::numeric"
-	:
-	[ run
+    :
+    [ run
         # sources
         test.cpp
         numeric.cpp
-	]
-
+    ]
     ;
