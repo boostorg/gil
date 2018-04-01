@@ -118,17 +118,16 @@ public:
             {
                 io_error("Unsupported descriptor for targa file");
             }
-
-            if (_info._descriptor & 32)
-            {
-                _info._screen_origin_bit = true;
-            }
         }
         else
         {
             io_error("Unsupported descriptor for targa file");
         }
 
+        if (_info._descriptor & 32)
+        {
+            _info._screen_origin_bit = true;
+        }
        
         _info._valid = true;
     }
