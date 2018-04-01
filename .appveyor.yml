@@ -39,14 +39,9 @@ environment:
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     - TOOLSET: msvc-14.1
       ARCH: x86_64
-      VARIANT: Debug
+      VARIANT: debug
       GENERATOR: "Visual Studio 15 2017 Win64"
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-      APPVEYOR_SAVE_CACHE_ON_ERROR: true
-    - TOOLSET: msvc-14.1
-      ARCH: x86
-      VARIANT: Debug
-      GENERATOR: "Visual Studio 15 2017"
+      CMAKE_CONFIG: Debug
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
       APPVEYOR_SAVE_CACHE_ON_ERROR: true
 
@@ -101,7 +96,7 @@ build_script:
   - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% include=%VCPKG_I% library-path=%VCPKG_L% libs/gil/io/test//simple
   - if DEFINED GENERATOR cd libs\gil && md build && cd build
   - if DEFINED GENERATOR cmake -G "%GENERATOR%" -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake ..
-  - if DEFINED GENERATOR cmake --build . --config %VARIANT%
+  - if DEFINED GENERATOR cmake --build . --config %CMAKE_CONFIG %
 
 test_script:
   - if DEFINED GENERATOR ctest -V --output-on-failure -C %VARIANT%
