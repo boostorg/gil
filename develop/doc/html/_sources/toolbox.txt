@@ -1,26 +1,6 @@
 ToolBox extension
 =================
 
-:authors:
-   Christian Henning
-
-.. comment
-    [library Boost.GIL.ToolBox
-    [quickbook 1.5]
-    [id toolbox]
-    [dirname gil/extension/toolbox]
-    [purpose An mixed bag of some small extension for boost::gil]
-    [category Image Processing]
-    [authors [Henning, Christian]]
-    [copyright 2012 Christian Henning]
-    [source-mode c++]
-    [license
-		Distributed under the Boost Software License, Version 1.0.
-		(See accompanying file LICENSE_1_0.txt or copy at
-		[@http://www.boost.org/LICENSE_1_0.txt])
-    ]
-    ]
-
 .. _Reference: reference.html
 
 Overview
