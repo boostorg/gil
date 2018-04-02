@@ -27,8 +27,10 @@
 }
 
 .admonition-title { font-weight: bold;}
-.toctree-wrapper
+.toctree-wrapper,
+.contents
 {
+  display: inline-block;
   border: 1px solid #dcdcdc;
   padding: 1em;
   margin: 0 2em;
