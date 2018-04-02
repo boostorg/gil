@@ -75,15 +75,19 @@
 </table>
 <div class="section" id="overview">
 <h2>Overview</h2>
-<p>This extension to boost::gil provides an easy to use interface for reading and writing
-various image formats. It also includes a framework for adding new formats.</p>
-<p>Please see section 3.3 for all supported image formats. A basic tutorial is provided
-in section [link gil.io.tutorial Tutorial]. Also, this extension requires Boost version 1.42 and up. Furthermore the gil
-extension Toolbox is used.</p>
-<p>For adding new image formats please refer to section [link gil.io.using_io.extending_gil__io_with_new_formats Extending GIL::IO with new Formats].
-[h2 Supported Platforms]
-All platforms supported by boost which have a decent C++ compiler. Depending on the
-image format one or more of the following image libraries might be needed:</p>
+<p>This extension to boost::gil provides an easy to use interface for reading
+and writing various image formats. It also includes a framework for adding
+new formats.</p>
+<p>Please see section 3.3 for all supported image formats. A basic tutorial is
+provided in section [link gil.io.tutorial Tutorial]. Also, this extension
+requires Boost version 1.42 and up.
+Furthermore the gil extension Toolbox is used.</p>
+<p>For adding new image formats please refer to section
+[link gil.io.using_io.extending_gil__io_with_new_formats Extending GIL::IO with new Formats].</p>
+<p>[h2 Supported Platforms]</p>
+<p>All platforms supported by boost which have a decent C++ compiler.
+Depending on the image format one or more of the following image libraries
+might be needed:</p>
 <ul class="simple">
 <li>libtiff</li>
 <li>libjpeg</li>
@@ -94,25 +98,30 @@ image format one or more of the following image libraries might be needed:</p>
 <p>The library is designed to support as many formats as required by the user.
 For instance, if the user only needs bmp support none of the above mentioned
 dependencies are required.</p>
-<p>There are more details available in this documentation on the image format dependencies.
-Please see section [link gil.io.using_io.supported_image_formats Supported Image Formats].
+<p>There are more details available in this documentation on the image format
+dependencies. Please see section
+[link gil.io.using_io.supported_image_formats Supported Image Formats].
 [endsect]</p>
 </div>
 <div class="section" id="tutorial">
 <h2>Tutorial</h2>
 <p>Thanks to modern C++ programming techniques the interface for this library
-is rather small and easy to use. In this tutorial I&#8217;ll give you a short walk-around
-on how to use this boost::gil extension. For more details please refer to section 3.</p>
-<p>Since this is an extension to boost::gil I expect the user to have some very basic
-understanding of the gil ( generic image library ). Please see here for the help.</p>
-<p>[h2 Header Files]
-The header files to be included all have the same format. For instance, tiff_all.hpp will
-allow to read and write. Whereas, tiff_read.hpp only allows for reading. If the user only
-wants to write jpeg&#8217;s include jpeg_write.hpp. All formats provide these three types of header files:</p>
+is rather small and easy to use. In this tutorial I&#8217;ll give you a short
+walk-around on how to use this boost::gil extension.
+For more details please refer to section 3.</p>
+<p>Since this is an extension to <tt class="docutils literal"><span class="pre">boost::gil</span></tt> I expect the user to have
+some very basic understanding of the gil (generic image library).
+Please see here for the help.</p>
+<p>[h2 Header Files]</p>
+<p>The header files to be included all have the same format.</p>
+<p>For instance, <tt class="docutils literal"><span class="pre">tiff_all.hpp</span></tt> will allow to read and write.
+Whereas, <tt class="docutils literal"><span class="pre">tiff_read.hpp</span></tt> only allows for reading.
+If the user only wants to write JPEG images include <tt class="docutils literal"><span class="pre">jpeg_write.hpp</span></tt>.
+All formats provide these three types of header files:</p>
 <ul class="simple">
-<li>xxx_all.hpp</li>
-<li>xxx_read.hpp</li>
-<li>xxx_write.hpp</li>
+<li><tt class="docutils literal"><span class="pre">xxx_all.hpp</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">xxx_read.hpp</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">xxx_write.hpp</span></tt></li>
 </ul>
 <p>xxx stands for image format.</p>
 <div class="section" id="reading-an-image">
@@ -123,60 +132,65 @@ wants to write jpeg&#8217;s include jpeg_write.hpp. All formats provide these th
 <span class="n">read_image</span><span class="p">(</span> <span class="n">filename</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">tiff_tag</span><span class="p">()</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>The code would be same for all other image formats. The only thing that needs to
-change is the tag type ( tiff_tag ) in the read_image call.
-The read_image() expects the supplied image type to be compatible with the
-image stored in the file. If the user doesn&#8217;t know what format an image has he/she
-can use read_and_convert_image().
-Another important fact is that read_image() will allocate the appropriate
-memory needed for the read operation. There are read_view or read_and_convert_view
-counterparts, if the memory is already allocated.</p>
-<p>Sometimes the user only wants to read a sub-part of an image, then the above call
-would look as follows:</p>
-<div class="highlight-c++"><div class="highlight"><pre><span class="n">read_image</span><span class="p">(</span> <span class="n">filename</span>
-          <span class="p">,</span> <span class="n">img</span>
-          <span class="p">,</span> <span class="n">image_read_settings</span><span class="o">&lt;</span> <span class="n">tiff_tag</span> <span class="o">&gt;</span><span class="p">(</span> <span class="kt">point_t</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span> <span class="p">),</span> <span class="kt">point_t</span><span class="p">(</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">50</span> <span class="p">)</span> <span class="p">)</span>
-          <span class="p">);</span>
+<p>The code would be same for all other image formats.
+The only thing that needs to change is the tag type (<tt class="docutils literal"><span class="pre">tiff_tag</span></tt>) in the
+<tt class="docutils literal"><span class="pre">read_image</span></tt> call. The <tt class="docutils literal"><span class="pre">read_image</span></tt> expects the supplied image type to
+be compatible with the image stored in the file. If the user doesn&#8217;t know
+what format an image has she can use <tt class="docutils literal"><span class="pre">read_and_convert_image</span></tt>.</p>
+<p>Another important fact is that <tt class="docutils literal"><span class="pre">read_image</span></tt> will allocate the appropriate
+memory needed for the read operation. There are <tt class="docutils literal"><span class="pre">read_view</span></tt> or
+<tt class="docutils literal"><span class="pre">read_and_convert_view</span></tt> counterparts, if the memory is already allocated.</p>
+<p>Sometimes the user only wants to read a sub-part of an image,
+then the above call would look as follows:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">read_image</span><span class="p">(</span><span class="n">filename</span>
+         <span class="p">,</span> <span class="n">img</span>
+         <span class="p">,</span> <span class="n">image_read_settings</span><span class="o">&lt;</span><span class="n">tiff_tag</span><span class="o">&gt;</span><span class="p">(</span><span class="kt">point_t</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="kt">point_t</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+         <span class="p">);</span>
 </pre></div>
 </div>
-<p>The image_read_settings class will provide the user with image format independent
-reading setting but can also serves as a pointer for format dependent settings. Please
-see the specific image format sections [link gil.io.using_io.supported_image_formats Supported Image Formats] for more details.</p>
+<p>The <tt class="docutils literal"><span class="pre">image_read_settings</span></tt> class will provide the user with image format
+independent reading setting but can also serves as a pointer for format
+dependent settings. Please see the specific image format sections
+[link gil.io.using_io.supported_image_formats Supported Image Formats]
+for more details.</p>
 </div>
 <div class="section" id="writing-an-image">
 <h3>Writing An Image</h3>
-<p>Besides reading the information also writing is the second part of this boost::gil extension.
-Writing is a lot simpler than reading since an existing image view contains all the information.
+<p>Besides reading the information also writing is the second part of this
+<tt class="docutils literal"><span class="pre">boost::gil</span></tt> extension. Writing is a lot simpler than reading since an
+existing image view contains all the information.
 For instance writing an image can be done as follows:</p>
-<div class="highlight-c++"><div class="highlight"><pre><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">filename</span><span class="p">(</span> <span class="s">&quot;image.tif&quot;</span> <span class="p">);</span>
-<span class="kt">rgb8_image_t</span> <span class="nf">img</span><span class="p">(</span> <span class="mi">640</span><span class="p">,</span> <span class="mi">480</span> <span class="p">);</span>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">filename</span><span class="p">(</span><span class="s">&quot;image.tif&quot;</span><span class="p">);</span>
+<span class="kt">rgb8_image_t</span> <span class="nf">img</span><span class="p">(</span><span class="mi">640</span><span class="p">,</span> <span class="mi">480</span><span class="p">);</span>
 
 <span class="c1">// write data into image</span>
+<span class="n">write_view</span><span class="p">(</span><span class="n">filename</span>
+         <span class="p">,</span> <span class="n">view</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+         <span class="p">,</span> <span class="n">tiff_tag</span><span class="p">()</span>
+         <span class="p">);</span>
+</pre></div>
+</div>
+<p>The interface is similar to reading an image.
+To add image format specific parameter the user can use <tt class="docutils literal"><span class="pre">image_write_info</span></tt>
+class. For instance, a user can specify the jpeg quality when writing
+like this:</p>
+<div class="highlight-c++"><div class="highlight"><pre><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">filename</span><span class="p">(</span><span class="s">&quot;image.jpg&quot;</span><span class="p">);</span>
+<span class="kt">rgb8_image_t</span> <span class="nf">img</span><span class="p">(</span><span class="mi">640</span><span class="p">,</span> <span class="mi">480</span><span class="p">);</span>
 
-<span class="n">write_view</span><span class="p">(</span> <span class="n">filename</span>
-          <span class="p">,</span> <span class="n">view</span><span class="p">(</span> <span class="n">img</span> <span class="p">)</span>
-          <span class="p">,</span> <span class="n">tiff_tag</span><span class="p">()</span>
+<span class="c1">// write data into image</span>
+<span class="n">write_view</span><span class="p">(</span><span class="n">filename</span>
+         <span class="p">,</span> <span class="n">view</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+         <span class="p">,</span> <span class="n">image_write_info</span><span class="o">&lt;</span><span class="n">jpeg_tag</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">95</span><span class="p">)</span>
           <span class="p">);</span>
 </pre></div>
 </div>
-<p>The interface is similar to reading an image. To add image format specific parameter the user can use
-image_write_info class. For instance, a user can specify the jpeg quality when writing like this:</p>
-<div class="highlight-c++"><div class="highlight"><pre><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">filename</span><span class="p">(</span> <span class="s">&quot;image.jpg&quot;</span> <span class="p">);</span>
-<span class="kt">rgb8_image_t</span> <span class="nf">img</span><span class="p">(</span> <span class="mi">640</span><span class="p">,</span> <span class="mi">480</span> <span class="p">);</span>
-
-<span class="c1">// write data into image</span>
-
-<span class="n">write_view</span><span class="p">(</span> <span class="n">filename</span>
-          <span class="p">,</span> <span class="n">view</span><span class="p">(</span> <span class="n">img</span> <span class="p">)</span>
-          <span class="p">,</span> <span class="n">image_write_info</span><span class="o">&lt;</span> <span class="n">jpeg_tag</span> <span class="o">&gt;</span><span class="p">(</span> <span class="mi">95</span> <span class="p">)</span>
-          <span class="p">);</span>
-</pre></div>
-</div>
-<p>The above example will write an image where the jpeg quality is set to 95 percent.</p>
+<p>The above example will write an image where the jpeg quality is
+set to 95 percent.</p>
 </div>
 <div class="section" id="reading-and-writing-in-memory-buffers">
 <h3>Reading And Writing In-Memory Buffers</h3>
-<p>Reading and writing in-memory buffers are supported as well. See as follows:</p>
+<p>Reading and writing in-memory buffers are supported as well.</p>
+<p>See as follows:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="c1">// 1. Read an image.</span>
 <span class="n">ifstream</span> <span class="nf">in</span><span class="p">(</span> <span class="s">&quot;test.tif&quot;</span><span class="p">,</span> <span class="n">ios</span><span class="o">::</span><span class="n">binary</span> <span class="p">);</span>
 
@@ -203,18 +217,21 @@ image_write_info class. For instance, a user can specify the jpeg quality when w
 <span class="n">write_view</span><span class="p">(</span> <span class="n">out</span><span class="p">,</span> <span class="n">view</span><span class="p">(</span> <span class="n">dst</span> <span class="p">),</span> <span class="n">tiff_tag</span><span class="p">()</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>In case the user is using his own stream classes he has to make sure it has the common interface read,
-write, seek, close, etc. Interface.</p>
+<p>In case the user is using his own stream classes he has to make sure
+it has the common interface read, write, seek, close, etc. Interface.</p>
 </div>
 </div>
 <div class="section" id="using-io">
 <h2>Using IO</h2>
 <div class="section" id="general-overview">
 <h3>General Overview</h3>
-<p>The tutorial pointed out some use cases for reading and writing images in various image formats. This section will provide a more thorough overview.</p>
-<p>The next sections will introduce the Read and Write interface. But it might be worth poiting out that by using some advanced metaprogramming techniques
-the interface is rather small and hopefully easy to understand.</p>
-<p>Besides the general interface the user also has the ability to interface directly with the underlying image format. For that each reader or writer
+<p>The tutorial pointed out some use cases for reading and writing images in
+various image formats. This section will provide a more thorough overview.</p>
+<p>The next sections will introduce the Read and Write interface.
+But it might be worth poiting out that by using some advanced metaprogramming
+techniques the interface is rather small and hopefully easy to understand.</p>
+<p>Besides the general interface the user also has the ability to interface
+directly with the underlying image format. For that each reader or writer
 provides access to the so-called backend. For instance:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="k">typedef</span> <span class="n">get_reader_backend</span><span class="o">&lt;</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span>
                           <span class="p">,</span> <span class="kt">tag_t</span>
@@ -228,47 +245,68 @@ provides access to the so-called backend. For instance:</p>
 <span class="n">BOOST_CHECK_EQUAL</span><span class="p">(</span> <span class="n">backend</span><span class="p">.</span><span class="n">_info</span><span class="p">.</span><span class="n">_height</span><span class="p">,</span> <span class="mi">64</span> <span class="p">);</span>
 </pre></div>
 </div>
-<p>Of course, the typedef can be removed when using c++11&#8217;s auto feature.</p>
+<p>Of course, the typedef can be removed when using C++11 <tt class="docutils literal"><span class="pre">auto</span></tt> feature.</p>
 </div>
 <div class="section" id="read-interface">
 <h3>Read Interface</h3>
-<p>As the Tutorial demonstrated there are a few ways to read images. Here is an enumeration of
-all read functions with a short description:</p>
-<ul class="simple">
-<li>read_image - read into a gil image with no conversion. Memory is allocated.</li>
-<li>read_view  - read into a gil view with no conversion.</li>
-<li>read_and_convert_image - read and convert into a gil image. Memory is allocated.</li>
-<li>read_and_convert_view  - read and convert into a gil view.</li>
-<li>read_image_info - read the image header.</li>
+<p>As the Tutorial demonstrated there are a few ways to read images.</p>
+<p>Here is an enumeration of  all read functions with a short description:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">read_image</span></tt> - read into a gil image with no conversion.</dt>
+<dd><p class="first last">Memory is allocated.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">read_view</span></tt> - read into a gil view with no conversion.</p>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">read_and_convert_image</span></tt> - read and convert into a gil image.</dt>
+<dd><p class="first last">Memory is allocated.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">read_and_convert_view</span></tt> - read and convert into a gil view.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">read_image_info</span></tt> - read the image header.</p>
+</li>
 </ul>
-<p>Conversion in this context is necessary if the source ( file ) has an incompatible color space
-with the destination ( gil image type ). If that&#8217;s the case the user has to use the xxx_and_convert_xxx
-variants.</p>
-<p>All functions take the filename or a device as the first parameter. The filename can be anything from
-a c string, std::string, std::wstring, and a boost::filesystem path. When using the path object the
-user needs to define the ADD_FS_PATH_SUPPORT compiler symbol to include the boost::filesystem
-dependency. Devices could be a FILE*, std::ifstream, and a TIFF* for TIFF images.</p>
-<p>The second parameter is either an image or view type depending on the read_xxx function.
-The third and last parameter is either an instance of the image_read_settings&lt;FormatTag&gt; or just the
-FormatTag. The settings can be various depending on the format which is being read. But the all
-share settings for reading a partial image area. The first point describes the top left image
-coordinate whereas the second are the dimensions in x and y directions. Here an example of
-setting up partial read:</p>
+<p>Conversion in this context is necessary if the source (file) has
+an incompatible color space with the destination (gil image type).
+If that&#8217;s the case the user has to use the <tt class="docutils literal"><span class="pre">xxx_and_convert_xxx</span></tt> variants.</p>
+<p>All functions take the filename or a device as the first parameter.
+The filename can be anything from a C-string, <tt class="docutils literal"><span class="pre">std::string</span></tt>,
+<tt class="docutils literal"><span class="pre">std::wstring</span></tt>, and a <tt class="docutils literal"><span class="pre">boost::filesystem</span></tt> path.
+When using the path object the user needs to define the <tt class="docutils literal"><span class="pre">ADD_FS_PATH_SUPPORT</span></tt>
+compiler symbol to include the boost::filesystem dependency.
+Devices could be a <tt class="docutils literal"><span class="pre">FILE*</span></tt>, <tt class="docutils literal"><span class="pre">std::ifstream</span></tt>, and a <tt class="docutils literal"><span class="pre">TIFF*</span></tt>
+for TIFF images.</p>
+<p>The second parameter is either an image or view type depending on the
+<tt class="docutils literal"><span class="pre">read_xxx</span></tt> function. The third and last parameter is either an instance
+of the <tt class="docutils literal"><span class="pre">image_read_settings&lt;FormatTag&gt;</span></tt> or just the <tt class="docutils literal"><span class="pre">FormatTag</span></tt>.
+The settings can be various depending on the format which is being read.
+But the all share settings for reading a partial image area.
+The first point describes the top left image coordinate whereas the second
+are the dimensions in x and y directions. Here an example of setting up
+partial read:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="n">read_image</span><span class="p">(</span> <span class="n">filename</span>
           <span class="p">,</span> <span class="n">img</span>
           <span class="p">,</span> <span class="n">image_read_settings</span><span class="o">&lt;</span> <span class="n">tiff_tag</span> <span class="o">&gt;</span><span class="p">(</span> <span class="kt">point_t</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span> <span class="p">),</span> <span class="kt">point_t</span><span class="p">(</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">50</span> <span class="p">)</span> <span class="p">)</span>
           <span class="p">);</span>
 </pre></div>
 </div>
-<p>Each format supports reading just the header information, using read_image_info(). Please
-refer to the format specific sections under 3.3. A basic example follows:</p>
+<p>Each format supports reading just the header information,
+using <tt class="docutils literal"><span class="pre">read_image_info</span></tt>. Please refer to the format specific sections
+under 3.3. A basic example follows:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="n">image_read_info</span><span class="o">&lt;</span> <span class="kt">tiff_t</span> <span class="o">&gt;</span> <span class="n">info</span> <span class="o">=</span> <span class="n">read_image_info</span><span class="p">(</span> <span class="n">filename</span>
                                                 <span class="p">,</span> <span class="kt">tiff_t</span><span class="p">()</span>
                                                 <span class="p">);</span>
 </pre></div>
 </div>
-<p>GIL also comes with a dynamic image extension. In the context of GIL.IO a user can define an any_image type based
-on several image types. The IO extension would then pick the matching image type to the current image file.
+<p>Boost.GIL also comes with a dynamic image extension.
+In the context of GIL.IO a user can define an any_image type based on several
+image types. The IO extension would then pick the matching image type
+to the current image file.
 The following example shows this feature:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="k">typedef</span> <span class="n">mpl</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">gray8_image_t</span>
                    <span class="p">,</span> <span class="kt">gray16_image_t</span>
@@ -284,9 +322,11 @@ The following example shows this feature:</p>
           <span class="p">);</span>
 </pre></div>
 </div>
-<p>During the review it became clear that there is a need to read big images scanline by scanline. To support such use case
-a scanline_reader is implemented for all supported image formats. The scanline_read_iterators will then allow to traverse
-through the image. The following code sample shows the usage:</p>
+<p>During the review it became clear that there is a need to read big images
+scanline by scanline. To support such use case a scanline_reader is
+implemented for all supported image formats. The scanline_read_iterators
+will then allow to traverse through the image. The following code sample
+shows the usage:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="k">typedef</span> <span class="n">tiff_tag</span> <span class="kt">tag_t</span><span class="p">;</span>
 
 <span class="k">typedef</span> <span class="n">scanline_reader</span><span class="o">&lt;</span> <span class="k">typename</span> <span class="n">get_read_device</span><span class="o">&lt;</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span>
@@ -324,17 +364,25 @@ through the image. The following code sample shows the usage:</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>There are many ways to travese an image but for as of now only by scanline is supported.</p>
+<p>There are many ways to traverse an image but for as of now only by
+scanline is supported.</p>
 </div>
 <div class="section" id="write-interface">
 <h3>Write Interface</h3>
-<p>There is only one function for writing out images, write_view. Similar to reading the first parameter is either
-a filename or a device. The filename can be anything from a c string, std::string, std::wstring, and a
-boost::filesystem path. When using the path object the user needs to define the ADD_FS_PATH_SUPPORT compiler symbol
-to include the boost::filesystem dependency. Devices could be a FILE*, std::ifstream, and a TIFF* for TIFF images.</p>
-<p>The second parameter is an view object to image being written. The third and last parameter is either a tag or
-an image_write_info&lt; FormatTag &gt; object containing more settings. One example for instance is the jpeg quality.
-Refer to the format specific sections under 3.3. to have a list of all the possible settings.</p>
+<p>There is only one function for writing out images, write_view.
+Similar to reading the first parameter is either a filename or a device.
+The filename can be anything from a C-string, <tt class="docutils literal"><span class="pre">std::string</span></tt>,
+<tt class="docutils literal"><span class="pre">std::wstring</span></tt>, and a <tt class="docutils literal"><span class="pre">boost::filesystem</span></tt> path. When using the path
+object the user needs to define the <tt class="docutils literal"><span class="pre">ADD_FS_PATH_SUPPORT</span></tt> compiler
+symbol to include the <tt class="docutils literal"><span class="pre">boost::filesystem</span></tt> dependency.
+Devices could be a <tt class="docutils literal"><span class="pre">FILE*</span></tt>, <tt class="docutils literal"><span class="pre">std::ifstream</span></tt>,
+and a <tt class="docutils literal"><span class="pre">TIFF*</span></tt> for TIFF images.</p>
+<p>The second parameter is an view object to image being written.
+The third and last parameter is either a tag or an
+<tt class="docutils literal"><span class="pre">image_write_info&lt;FormatTag&gt;</span></tt> object containing more settings.
+One example for instance is the jpeg quality.
+Refer to the format specific sections under 3.3. to have a list of
+all the possible settings.</p>
 <p>Writing an any_image&lt;...&gt; is supported. See the following example:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="k">typedef</span> <span class="n">mpl</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="kt">gray8_image_t</span>
                    <span class="p">,</span> <span class="kt">gray16_image_t</span>
@@ -346,7 +394,6 @@ Refer to the format specific sections under 3.3. to have a list of all the possi
 <span class="n">any_image</span><span class="o">&lt;</span> <span class="n">my_img_types</span> <span class="o">&gt;</span> <span class="n">runtime_image</span><span class="p">;</span>
 
 <span class="c1">// fill any_image</span>
-
 <span class="n">write_view</span><span class="p">(</span> <span class="n">filename</span>
           <span class="p">,</span> <span class="n">view</span><span class="p">(</span> <span class="n">runtime_image</span> <span class="p">)</span>
           <span class="p">,</span> <span class="n">tiff_tag</span><span class="p">()</span>
@@ -356,7 +403,8 @@ Refer to the format specific sections under 3.3. to have a list of all the possi
 </div>
 <div class="section" id="compiler-symbols">
 <h3>Compiler Symbols</h3>
-<p>The following table gives an overview of all supported compiler symbols that can be set by the user:</p>
+<p>The following table gives an overview of all supported compiler
+symbols that can be set by the user:</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="34%" />
@@ -432,7 +480,8 @@ Refer to the format specific sections under 3.3. to have a list of all the possi
 <h3>Supported Image Formats</h3>
 <div class="section" id="bmp">
 <h4>BMP</h4>
-<p>For a general overview of the BMP image file format go to the following <a class="reference external" href="http://en.wikipedia.org/wiki/BMP_file_format">BMP_Wiki</a>.</p>
+<p>For a general overview of the BMP image file format go to
+the following <a class="reference external" href="http://en.wikipedia.org/wiki/BMP_file_format">BMP_Wiki</a>.</p>
 <p>Please note, the code has not been tested on X Windows System variations
 of the BMP format which are usually referred to XBM and XPM formats.</p>
 <p>Here, only the MS Windows and OS/2 format is relevant.</p>
@@ -447,16 +496,20 @@ of the BMP format which are usually referred to XBM and XPM formats.</p>
 </tr>
 </tbody>
 </table>
-<p>The lack of having an indexed image type in gil restricts the current interface to only
-write out non-indexed images. This is subject to change soon.</p>
+<p>The lack of having an indexed image type in gil restricts the current
+interface to only write out non-indexed images. This is subject to
+change soon.</p>
 </div>
 <div class="section" id="jpeg">
 <h4>JPEG</h4>
-<p>For a general overview of the JPEG image file format go to the following <a class="reference external" href="http://en.wikipedia.org/wiki/JPEG">JPEG_Wiki</a>.</p>
-<p>This jpeg extension is based on the libjpeg library which can be found here, <a class="reference external" href="http://www.ijg.org/">JPEG_Lib</a>.</p>
+<p>For a general overview of the JPEG image file format go to
+the following <a class="reference external" href="http://en.wikipedia.org/wiki/JPEG">JPEG_Wiki</a>.</p>
+<p>This jpeg extension is based on the libjpeg library which can be
+found here, <a class="reference external" href="http://www.ijg.org/">JPEG_Lib</a>.</p>
 <p>All versions starting from 8x are supported.</p>
-<p>The user has to make sure this library is properly installed. I strongly recommend the user
-to build the library yourself. It could potentially save you a lot of trouble.</p>
+<p>The user has to make sure this library is properly installed.
+I strongly recommend the user to build the library yourself.
+It could potentially save you a lot of trouble.</p>
 <p>Currently the code is able to read and write the following image types:</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -468,17 +521,20 @@ to build the library yourself. It could potentially save you a lot of trouble.</
 </tr>
 </tbody>
 </table>
-<p>Reading YCbCr or YCCK images is possible but might result in inaccuracies since both color spaces
-aren&#8217;t available yet for gil. For now these color space are read as rgb images.
+<p>Reading YCbCr or YCCK images is possible but might result in inaccuracies
+since both color spaces aren&#8217;t available yet for gil.
+For now these color space are read as rgb images.
 This is subject to change soon.</p>
 </div>
 <div class="section" id="png">
 <h4>PNG</h4>
-<p>For a general overview of the PNG image file format go to the following <a class="reference external" href="http://en.wikipedia.org/wiki/Portable_Network_Graphics">PNG_Wiki</a>.</p>
+<p>For a general overview of the PNG image file format go to the
+following <a class="reference external" href="http://en.wikipedia.org/wiki/Portable_Network_Graphics">PNG_Wiki</a>.</p>
 <p>This png extension is based on the libpng, which can be found here, <a class="reference external" href="http://libpng.org/pub/png/libpng.html">PNG_Lib</a>.</p>
 <p>All versions starting from 1.5.x are supported.</p>
-<p>The user has to make sure this library is properly installed. I strongly recommend the user
-to build the library yourself. It could potentially save you a lot of trouble.</p>
+<p>The user has to make sure this library is properly installed.
+I strongly recommend the user to build the library yourself.
+It could potentially save you a lot of trouble.</p>
 <p>Currently the code is able to read and write the following image types:</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -490,13 +546,16 @@ to build the library yourself. It could potentially save you a lot of trouble.</
 </tr>
 </tbody>
 </table>
-<p>For reading gray_alpha images the user has to enable the ENABLE_GRAY_ALPHA compiler switch. This color
-space is defined in the toolbox by using gray_alpha.hpp.</p>
+<p>For reading gray_alpha images the user has to enable the <tt class="docutils literal"><span class="pre">ENABLE_GRAY_ALPHA</span></tt>
+compiler switch. This color space is defined in the toolbox by
+using <tt class="docutils literal"><span class="pre">gray_alpha.hpp</span></tt>.</p>
 </div>
 <div class="section" id="pnm">
 <h4>PNM</h4>
-<p>For a general overview of the PNM image file format go to the following <a class="reference external" href="http://en.wikipedia.org/wiki/Portable_anymap">PNM_Wiki</a>.</p>
-<p>No external library is needed for the pnm format. Both ascii and binary formats are supported.</p>
+<p>For a general overview of the PNM image file format go to the
+following <a class="reference external" href="http://en.wikipedia.org/wiki/Portable_anymap">PNM_Wiki</a>.</p>
+<p>No external library is needed for the pnm format. Both ascii and binary
+formats are supported.</p>
 <p>Currently the code is able to read and write the following image types:</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -529,25 +588,31 @@ space is defined in the toolbox by using gray_alpha.hpp.</p>
 </tr>
 </tbody>
 </table>
-<p>The lack of having an indexed image type in gil restricts the current interface to only
-write out non-indexed images. This is subject to change soon.</p>
+<p>The lack of having an indexed image type in gil restricts the current
+interface to only write out non-indexed images.
+This is subject to change soon.</p>
 </div>
 <div class="section" id="tiff">
 <h4>TIFF</h4>
-<p>For a general overview of the TIFF image file format go to the following <a class="reference external" href="http://en.wikipedia.org/wiki/Tagged_Image_File_Format">TIFF_Wiki</a>.</p>
+<p>For a general overview of the TIFF image file format go to the
+following <a class="reference external" href="http://en.wikipedia.org/wiki/Tagged_Image_File_Format">TIFF_Wiki</a>.</p>
 <p>This tiff extension is based on the libtiff, which can be found, <a class="reference external" href="http://www.remotesensing.org/libtiff/">TIFF_Lib</a>.</p>
 <p>All versions starting from 3.9.x are supported.</p>
-<p>The user has to make sure this library is properly installed. I strongly recommend the user
-to build the library yourself. It could potentially save you a lot of trouble.</p>
-<p>TIFF images can virtually encode all kinds of channel sizes representing various color spaces. Even
-planar images are possible. For instance, rbg323 or gray7. The channels also can have specific formats, like
-integer values or floating point values. For a complete set of options please consult the following websites:</p>
+<p>The user has to make sure this library is properly installed.
+I strongly recommend the user to build the library yourself.
+It could potentially save you a lot of trouble.</p>
+<p>TIFF images can virtually encode all kinds of channel sizes representing
+various color spaces. Even planar images are possible.
+For instance, rbg323 or gray7. The channels also can have specific formats,
+like integer values or floating point values.
+For a complete set of options please consult the following websites:</p>
 <ul class="simple">
 <li><a class="reference external" href="http://www.awaresystems.be/imaging/tiff/tifftags/baseline.html">TIFF_Base_Tags</a></li>
 <li><a class="reference external" href="http://www.awaresystems.be/imaging/tiff/tifftags/extension.html">TIFF_Extension_Tags</a></li>
 </ul>
-<p>The author of this extension is not claiming all tiff formats are supported. This extension is
-likely to be a moving target adding new features with each new milestone. Here is an incomplete lists:</p>
+<p>The author of this extension is not claiming all tiff formats are supported
+This extension is likely to be a moving target adding new features with
+each new milestone. Here is an incomplete lists:</p>
 <ul class="simple">
 <li>Multi-page tiffs - read only</li>
 <li>Strip tiffs - read and write support</li>
@@ -557,41 +622,43 @@ likely to be a moving target adding new features with each new milestone. Here i
 <li>floating point tiffs - fully supported</li>
 <li>palette tiffs - supported but no indexed image type is available as of now</li>
 </ul>
-<p>This gil extension uses two different test image suites to test read and write capabilities. See test_image folder.
+<p>This gil extension uses two different test image suites to test read and
+write capabilities. See test_image folder.
 It&#8217;s advisable to use ImageMagick&#8217;s test viewer to display images.</p>
 </div>
 </div>
 <div class="section" id="extending-gil-io-with-new-formats">
 <h3>Extending GIL::IO with new Formats</h3>
-<p>Extending the gil::io with new formats is meant to be simple and straightforward. Before adding I would
-recommend to have a look at existing implementations and then trying to follow a couple of guidelines:</p>
+<p>Extending the gil::io with new formats is meant to be simple and
+straightforward. Before adding I would recommend to have a look at existing
+implementations and then trying to follow a couple of guidelines:</p>
 <ul>
 <li><dl class="first docutils">
 <dt>Create the following files for your new xxx format</dt>
 <dd><ul class="first last simple">
-<li>xxx_read.hpp // Only includes read code</li>
-<li>xxx_write.hpp // Only includes write code</li>
-<li>xxx_all.hpp // includes xxx_read.hpp and xxx_write.hpp</li>
+<li><tt class="docutils literal"><span class="pre">xxx_read.hpp</span></tt> - Only includes read code</li>
+<li><tt class="docutils literal"><span class="pre">xxx_write.hpp</span></tt> - Only includes write code</li>
+<li><tt class="docutils literal"><span class="pre">xxx_all.hpp</span></tt> - includes xxx_read.hpp and xxx_write.hpp</li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><p class="first">Add the code to the boost::gil::detail namespace</p>
+<li><p class="first">Add the code to the <tt class="docutils literal"><span class="pre">boost::gil::detail</span></tt> namespace</p>
 </li>
 <li><p class="first">Create a tag type for the new format. Like this:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="k">struct</span> <span class="n">xxx_tag</span> <span class="o">:</span> <span class="n">format_tag</span> <span class="p">{};</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Create the image_read_info for the new format. It contains all the information that are
-necessary to read an image. It should be filled and returned by the get_info() member of
-the reader class. See below:</p>
+<li><p class="first">Create the image_read_info for the new format. It contains all the
+information that are necessary to read an image. It should be filled
+and returned by the get_info() member of the reader class. See below:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="k">template</span><span class="o">&lt;&gt;</span> <span class="k">struct</span> <span class="n">image_read_info</span><span class="o">&lt;</span> <span class="n">xxx_tag</span> <span class="o">&gt;</span> <span class="p">{};</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Create the image_write_info for the new format. It contains all the information that are
-necessary to write an image:</p>
+<li><p class="first">Create the image_write_info for the new format. It contains all the
+information that are necessary to write an image:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="k">template</span><span class="o">&lt;&gt;</span> <span class="k">struct</span> <span class="n">image_write_info</span><span class="o">&lt;</span> <span class="n">xxx_tag</span> <span class="o">&gt;</span> <span class="p">{};</span>
 </pre></div>
 </div>
@@ -674,9 +741,15 @@ necessary to write an image:</p>
 </div>
 <div class="section" id="running-gil-io-tests">
 <h2>Running gil::io tests</h2>
-<p>gil::io comes with a large suite of test cases which reads and writes various file formats. It uses some test image suites which can be found online or which can be demanded from me by sending me an email.</p>
-<p>There are some test images created by me in the test folder. To enable unit tests which make use of them set the following compiler options BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES and BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES.</p>
-<p>The following list provides all links to the image suites the compiler symbol to enable the tests:</p>
+<p>The gil::io comes with a large suite of test cases which reads and writes
+various file formats. It uses some test image suites which can be found
+online or which can be demanded from me by sending me an email.</p>
+<p>There are some test images created by me in the test folder.
+To enable unit tests which make use of them set the following compiler options
+<tt class="docutils literal"><span class="pre">BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES</span></tt> and
+<tt class="docutils literal"><span class="pre">BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES</span></tt>.</p>
+<p>The following list provides all links to the image suites the compiler
+symbol to enable the tests:</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
