@@ -354,11 +354,12 @@ operations.  Here are the channel-level algorithms that GIL provides::
 Color Space and Layout
 ----------------------
 
-A color space captures the set and interpretation of channels
-comprising a pixel. It is an MPL random access sequence containing the
-types of all elements in the color space. Two color spaces are
-considered *compatible* if they are equal (i.e. have the same set of
-colors in the same order).
+A color space captures the set and interpretation of channels comprising
+a pixel. In Boost.GIL, color space is defined as an MPL random access
+sequence containing the types of all elements in the color space.
+
+Two color spaces are considered *compatible* if they are equal
+(i.e. have the same set of colors in the same order).
 
 Related Concepts
 ~~~~~~~~~~~~~~~~
@@ -370,12 +371,26 @@ Related Concepts
 Models
 ~~~~~~
 
-GIL currently provides the following color spaces: ``gray_t``,
-``rgb_t``, ``rgba_t``, and ``cmyk_t``. It also provides unnamed
-N-channel color spaces of two to five channels, ``devicen_t<2>``,
-``devicen_t<3>``, ``devicen_t<4>``, ``devicen_t<5>``. Besides the
-standard layouts, it provides ``bgr_layout_t``, ``bgra_layout_t``,
-``abgr_layout_t`` and ``argb_layout_t``.
+GIL currently provides the following color spaces:
+
+- ``gray_t``
+- ``rgb_t``
+- ``rgba_t``
+- ``cmyk_t``
+
+It also provides unnamed N-channel color spaces of two to five channels:
+
+- ``devicen_t<2>``
+- ``devicen_t<3>``
+- ``devicen_t<4>``
+- ``devicen_t<5>``
+
+Besides the standard layouts, it also provides:
+
+- ``bgr_layout_t``
+- ``bgra_layout_t``
+- ``abgr_layout_t``
+- ``argb_layout_t``
 
 As an example, here is how GIL defines the RGBA color space::
 
@@ -389,10 +404,13 @@ The ordering of the channels in the color space definition specifies
 their semantic order. For example, ``red_t`` is the first semantic
 channel of ``rgba_t``.  While there is a unique semantic ordering of
 the channels in a color space, channels may vary in their physical
-ordering in memory. The mapping of channels is specified by
-``ChannelMappingConcept``, which is an MPL random access sequence of
-integral types. A color space and its associated mapping are often
-used together.  Thus they are grouped in GIL's layout::
+ordering in memory
+
+The mapping of channels is specified by ``ChannelMappingConcept``,
+which is an MPL random access sequence of integral types.
+A color space and its associated mapping are often used together.
+
+Thus they are grouped in GIL's layout::
 
   template <typename ColorSpace, 
           typename ChannelMapping = mpl::range_c<int,0,mpl::size<ColorSpace>::value> >
@@ -408,7 +426,6 @@ Here is how to create layouts for the RGBA color space::
   typedef layout<rgba_t, mpl::vector4_c<int,2,1,0,3> > bgra_layout_t;
   typedef layout<rgba_t, mpl::vector4_c<int,1,2,3,0> > argb_layout_t;
   typedef layout<rgba_t, mpl::vector4_c<int,3,2,1,0> > abgr_layout_t;
-
 
 Color Base
 ----------
