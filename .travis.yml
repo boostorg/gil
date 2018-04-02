@@ -13,9 +13,13 @@ branches:
   only:
     - master
     - develop
+    - doc
     - ci
 
 env:
+  global:
+    - secure: "UHit2f6Hq2pkHvx8rfrQvFacYiQKVO3vrCbNuDi/VSAIzQjRnqCqE06y4vpXLMsXf62TvBeCBStIuI8g+HP8B+f39oGb/9Om+yIgN/yes47R4sLFKFbRiOS6sfCIefJp7Kx7GSFf81xWxStpIU4QaSsk8Dlt5xyurTWXFSde+lQ="
+
   matrix:
     - BOGUS_JOB=true
 
@@ -103,6 +107,13 @@ matrix:
     - os: osx
       env: TOOLSET=clang COMPILER=clang++ CXXSTD=c++11 VARIANT=release
 
+    - env: DOC=1
+      addons:
+        apt:
+          packages:
+            - python-sphinx
+            - doxygen
+
 install:
   - cd ..
   - git clone -b master --depth 1 https://github.com/boostorg/boost.git boost-root
@@ -111,17 +122,35 @@ install:
   - git submodule update --init libs/config
   - git submodule update --init tools/boostdep
   - cp -r $TRAVIS_BUILD_DIR/* libs/gil
+  - cp -r $TRAVIS_BUILD_DIR/.ci libs/gil
   - python tools/boostdep/depinst/depinst.py gil
   - ./bootstrap.sh
   - ./b2 headers
 
 script:
   - |-
-    echo "using $TOOLSET : : $COMPILER : <cxxflags>-std=$CXXSTD ;" > ~/user-config.jam
-  - ./b2 libs/gil/test toolset=$TOOLSET variant=$VARIANT
-  - ./b2 libs/gil/toolbox/test toolset=$TOOLSET variant=$VARIANT
-  - ./b2 libs/gil/numeric/test toolset=$TOOLSET variant=$VARIANT
-  - ./b2 libs/gil/io/test//simple toolset=$TOOLSET variant=$VARIANT
+    if [ "$DOC" ]; then
+      echo "using doxygen ;" > ~/user-config.jam
+      ./b2 libs/gil/doc
+    else
+      echo "using $TOOLSET : : $COMPILER : <cxxflags>-std=$CXXSTD ;" > ~/user-config.jam
+      ./b2 libs/gil/test toolset=$TOOLSET variant=$VARIANT
+      ./b2 libs/gil/toolbox/test toolset=$TOOLSET variant=$VARIANT
+      ./b2 libs/gil/numeric/test toolset=$TOOLSET variant=$VARIANT
+      ./b2 libs/gil/io/test//simple toolset=$TOOLSET variant=$VARIANT
+    fi
+
+after_success:
+# Upload docs only when building upstream.
+- |
+   if [ "$DOC" -a \
+        "$TRAVIS_REPO_SLUG" = "boostorg/gil" -a \
+        "$TRAVIS_PULL_REQUEST" = "false" ]; then
+     export GH_TOKEN
+     cd libs/gil
+     .ci/upload_docs.sh
+   fi
+
 
 notifications:
   email:
