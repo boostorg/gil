@@ -7,9 +7,14 @@ Tutorial
 Installation
 ------------
 
-The latest version of GIL can be downloaded from http://boostorg.github.com/gilGIL's web page, at http://stlab.adobe.com/gil.
-GIL is approved for integration into Boost and in the future will be installed simply by installing Boost from http://www.boost.org.
-GIL consists of header files only and does not require any libraries to link against. It does not require Boost to be built.
+The latest version of GIL can be downloaded from
+http://boostorg.github.com/gilGIL's web page,
+at http://stlab.adobe.com/gil.
+
+The GIL is approved for integration into Boost and in the future will be
+installed simply by installing Boost from http://www.boost.org.
+GIL consists of header files only and does not require any libraries to
+link against. It does not require Boost to be built.
 Including ``boost/gil/gil_all.hpp`` will be sufficient for most projects.
 
 Example - Computing the Image Gradient
@@ -31,8 +36,8 @@ create a good gradient generation algorithm.
 Interface and Glue Code
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Let us first start with 8-bit unsigned grayscale image as the input and 8-bit
-signed grayscale image as the output.
+Let us first start with 8-bit unsigned grayscale image as the input and
+8-bit signed grayscale image as the output.
 Here is how the interface to our algorithm looks like::
 
   #include <boost/gil/gil_all.hpp>
@@ -94,7 +99,8 @@ number of bytes per row.
 First Implementation
 ~~~~~~~~~~~~~~~~~~~~
 
-Focusing on simplicity at the expense of speed, we can compute the horizontal gradient like this::
+Focusing on simplicity at the expense of speed, we can compute the horizontal
+gradient like this::
 
   void x_gradient(const gray8c_view_t& src, const gray8s_view_t& dst)
   {

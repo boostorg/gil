@@ -57,4 +57,3 @@ Reference
 ---------
 
 The Reference_ section.
-

@@ -27,13 +27,13 @@ Overview
 This extension to boost::gil provides an easy to use interface for reading and writing
 various image formats. It also includes a framework for adding new formats.
 
-Please see section 3.3 for all supported image formats. A basic tutorial is provided 
+Please see section 3.3 for all supported image formats. A basic tutorial is provided
 in section [link gil.io.tutorial Tutorial]. Also, this extension requires Boost version 1.42 and up. Furthermore the gil
 extension Toolbox is used.
 
 For adding new image formats please refer to section [link gil.io.using_io.extending_gil__io_with_new_formats Extending GIL::IO with new Formats].
 [h2 Supported Platforms]
-All platforms supported by boost which have a decent C++ compiler. Depending on the  
+All platforms supported by boost which have a decent C++ compiler. Depending on the
 image format one or more of the following image libraries might be needed:
 
 * libtiff
@@ -43,10 +43,10 @@ image format one or more of the following image libraries might be needed:
 * zlib
 
 The library is designed to support as many formats as required by the user.
-For instance, if the user only needs bmp support none of the above mentioned 
+For instance, if the user only needs bmp support none of the above mentioned
 dependencies are required.
 
-There are more details available in this documentation on the image format dependencies. 
+There are more details available in this documentation on the image format dependencies.
 Please see section [link gil.io.using_io.supported_image_formats Supported Image Formats].
 [endsect]
 
@@ -54,15 +54,15 @@ Tutorial
 --------
 
 Thanks to modern C++ programming techniques the interface for this library
-is rather small and easy to use. In this tutorial I'll give you a short walk-around 
+is rather small and easy to use. In this tutorial I'll give you a short walk-around
 on how to use this boost::gil extension. For more details please refer to section 3.
 
 Since this is an extension to boost::gil I expect the user to have some very basic
 understanding of the gil ( generic image library ). Please see here for the help.
 
 [h2 Header Files]
-The header files to be included all have the same format. For instance, tiff_all.hpp will 
-allow to read and write. Whereas, tiff_read.hpp only allows for reading. If the user only 
+The header files to be included all have the same format. For instance, tiff_all.hpp will
+allow to read and write. Whereas, tiff_read.hpp only allows for reading. If the user only
 wants to write jpeg's include jpeg_write.hpp. All formats provide these three types of header files:
 
 * xxx_all.hpp
@@ -82,7 +82,7 @@ Probably the most common case to read a tiff image can be done as follows::
 
 The code would be same for all other image formats. The only thing that needs to
 change is the tag type ( tiff_tag ) in the read_image call.
-The read_image() expects the supplied image type to be compatible with the 
+The read_image() expects the supplied image type to be compatible with the
 image stored in the file. If the user doesn't know what format an image has he/she
 can use read_and_convert_image().
 Another important fact is that read_image() will allocate the appropriate
@@ -97,7 +97,7 @@ would look as follows::
               , image_read_settings< tiff_tag >( point_t( 0, 0 ), point_t( 50, 50 ) )
               );
 
-The image_read_settings class will provide the user with image format independent 
+The image_read_settings class will provide the user with image format independent
 reading setting but can also serves as a pointer for format dependent settings. Please
 see the specific image format sections [link gil.io.using_io.supported_image_formats Supported Image Formats] for more details.
 
@@ -110,7 +110,7 @@ For instance writing an image can be done as follows::
 
     std::string filename( "image.tif" );
     rgb8_image_t img( 640, 480 );
-    
+
     // write data into image
 
     write_view( filename
@@ -179,7 +179,7 @@ The tutorial pointed out some use cases for reading and writing images in variou
 The next sections will introduce the Read and Write interface. But it might be worth poiting out that by using some advanced metaprogramming techniques
 the interface is rather small and hopefully easy to understand.
 
-Besides the general interface the user also has the ability to interface directly with the underlying image format. For that each reader or writer 
+Besides the general interface the user also has the ability to interface directly with the underlying image format. For that each reader or writer
 provides access to the so-called backend. For instance::
 
     typedef get_reader_backend< const std::string
@@ -198,7 +198,7 @@ Of course, the typedef can be removed when using c++11's auto feature.
 Read Interface
 ~~~~~~~~~~~~~~
 
-As the Tutorial demonstrated there are a few ways to read images. Here is an enumeration of 
+As the Tutorial demonstrated there are a few ways to read images. Here is an enumeration of
 all read functions with a short description:
 
 * read_image - read into a gil image with no conversion. Memory is allocated.
@@ -211,13 +211,13 @@ Conversion in this context is necessary if the source ( file ) has an incompatib
 with the destination ( gil image type ). If that's the case the user has to use the xxx_and_convert_xxx
 variants.
 
-All functions take the filename or a device as the first parameter. The filename can be anything from 
-a c string, std::string, std::wstring, and a boost::filesystem path. When using the path object the 
-user needs to define the ADD_FS_PATH_SUPPORT compiler symbol to include the boost::filesystem 
+All functions take the filename or a device as the first parameter. The filename can be anything from
+a c string, std::string, std::wstring, and a boost::filesystem path. When using the path object the
+user needs to define the ADD_FS_PATH_SUPPORT compiler symbol to include the boost::filesystem
 dependency. Devices could be a FILE*, std::ifstream, and a TIFF* for TIFF images.
 
 The second parameter is either an image or view type depending on the read_xxx function.
-The third and last parameter is either an instance of the image_read_settings<FormatTag> or just the 
+The third and last parameter is either an instance of the image_read_settings<FormatTag> or just the
 FormatTag. The settings can be various depending on the format which is being read. But the all
 share settings for reading a partial image area. The first point describes the top left image
 coordinate whereas the second are the dimensions in x and y directions. Here an example of
@@ -253,8 +253,8 @@ The following example shows this feature::
               );
 
 
-During the review it became clear that there is a need to read big images scanline by scanline. To support such use case 
-a scanline_reader is implemented for all supported image formats. The scanline_read_iterators will then allow to traverse 
+During the review it became clear that there is a need to read big images scanline by scanline. To support such use case
+a scanline_reader is implemented for all supported image formats. The scanline_read_iterators will then allow to traverse
 through the image. The following code sample shows the usage::
 
     typedef tiff_tag tag_t;
@@ -300,12 +300,12 @@ Write Interface
 ~~~~~~~~~~~~~~~
 
 There is only one function for writing out images, write_view. Similar to reading the first parameter is either
-a filename or a device. The filename can be anything from a c string, std::string, std::wstring, and a 
-boost::filesystem path. When using the path object the user needs to define the ADD_FS_PATH_SUPPORT compiler symbol 
+a filename or a device. The filename can be anything from a c string, std::string, std::wstring, and a
+boost::filesystem path. When using the path object the user needs to define the ADD_FS_PATH_SUPPORT compiler symbol
 to include the boost::filesystem dependency. Devices could be a FILE*, std::ifstream, and a TIFF* for TIFF images.
 
-The second parameter is an view object to image being written. The third and last parameter is either a tag or 
-an image_write_info< FormatTag > object containing more settings. One example for instance is the jpeg quality. 
+The second parameter is an view object to image being written. The third and last parameter is either a tag or
+an image_write_info< FormatTag > object containing more settings. One example for instance is the jpeg quality.
 Refer to the format specific sections under 3.3. to have a list of all the possible settings.
 
 Writing an any_image<...> is supported. See the following example::
@@ -319,7 +319,7 @@ Writing an any_image<...> is supported. See the following example::
 
     any_image< my_img_types > runtime_image;
 
-    // fill any_image 
+    // fill any_image
 
     write_view( filename
               , view( runtime_image )
@@ -381,9 +381,9 @@ write out non-indexed images. This is subject to change soon.
 JPEG
 ++++
 
-For a general overview of the JPEG image file format go to the following JPEG_Wiki_. 
+For a general overview of the JPEG image file format go to the following JPEG_Wiki_.
 
-This jpeg extension is based on the libjpeg library which can be found here, JPEG_Lib_. 
+This jpeg extension is based on the libjpeg library which can be found here, JPEG_Lib_.
 
 All versions starting from 8x are supported.
 
@@ -494,9 +494,9 @@ Extending the gil::io with new formats is meant to be simple and straightforward
 recommend to have a look at existing implementations and then trying to follow a couple of guidelines:
 
 * Create the following files for your new xxx format
-	* xxx_read.hpp // Only includes read code
-	* xxx_write.hpp // Only includes write code
-	* xxx_all.hpp // includes xxx_read.hpp and xxx_write.hpp
+    * xxx_read.hpp // Only includes read code
+    * xxx_write.hpp // Only includes write code
+    * xxx_all.hpp // includes xxx_read.hpp and xxx_write.hpp
 * Add the code to the boost::gil::detail namespace
 * Create a tag type for the new format. Like this::
 
@@ -521,7 +521,7 @@ recommend to have a look at existing implementations and then trying to follow a
     class reader< Device
                 , xxx_tag
                 , ConversionPolicy
-                > 
+                >
                 : public reader_base< xxx_tag
                                     , ConversionPolicy
                                     >
@@ -562,7 +562,7 @@ recommend to have a look at existing implementations and then trying to follow a
     template< typename Device >
     class writer< Device
                 , xxx_tag
-                > 
+                >
     {
     public:
 
