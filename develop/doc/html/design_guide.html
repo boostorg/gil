@@ -63,29 +63,68 @@
       
   <div class="section" id="design-guide">
 <h1>Design Guide</h1>
+<p>This document describes the design of the Generic Image Library, a C++
+image-processing library that abstracts image representation from
+algorithms on images.  It covers more than you need to know for a
+causal use of GIL. You can find a quick, jump-start GIL tutorial on
+the main GIL page at <a class="reference external" href="http://stlab.adobe.com/gil">http://stlab.adobe.com/gil</a></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#overview" id="id24">Overview</a></li>
-<li><a class="reference internal" href="#about-concepts" id="id25">About Concepts</a></li>
-<li><a class="reference internal" href="#point" id="id26">Point</a></li>
-<li><a class="reference internal" href="#channel" id="id27">Channel</a></li>
-<li><a class="reference internal" href="#color-space-and-layout" id="id28">Color Space and Layout</a></li>
-<li><a class="reference internal" href="#color-base" id="id29">Color Base</a></li>
-<li><a class="reference internal" href="#pixel" id="id30">Pixel</a></li>
-<li><a class="reference internal" href="#pixel-iterator" id="id31">Pixel Iterator</a></li>
-<li><a class="reference internal" href="#image-view" id="id32">Image View</a></li>
-<li><a class="reference internal" href="#image" id="id33">Image</a></li>
-<li><a class="reference internal" href="#run-time-specified-images-and-image-views" id="id34">Run-time specified images and image views</a></li>
-<li><a class="reference internal" href="#useful-metafunctions-and-typedefs" id="id35">Useful Metafunctions and Typedefs</a></li>
-<li><a class="reference internal" href="#i-o-extension" id="id36">I/O Extension</a></li>
-<li><a class="reference internal" href="#sample-code" id="id37">Sample Code</a></li>
-<li><a class="reference internal" href="#extending-the-generic-image-library" id="id38">Extending the Generic Image Library</a></li>
-<li><a class="reference internal" href="#technicalities" id="id39">Technicalities</a></li>
-<li><a class="reference internal" href="#conclusion" id="id40">Conclusion</a></li>
+<li><a class="reference internal" href="#overview" id="id2">Overview</a></li>
+<li><a class="reference internal" href="#about-concepts" id="id3">About Concepts</a></li>
+<li><a class="reference internal" href="#point" id="id4">Point</a></li>
+<li><a class="reference internal" href="#channel" id="id5">Channel</a><ul>
+<li><a class="reference internal" href="#algorithms" id="id6">Algorithms</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#color-space-and-layout" id="id7">Color Space and Layout</a></li>
+<li><a class="reference internal" href="#color-base" id="id8">Color Base</a><ul>
+<li><a class="reference internal" href="#id1" id="id9">Algorithms</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pixel" id="id10">Pixel</a></li>
+<li><a class="reference internal" href="#pixel-iterator" id="id11">Pixel Iterator</a><ul>
+<li><a class="reference internal" href="#fundamental-iterator" id="id12">Fundamental Iterator</a></li>
+<li><a class="reference internal" href="#iterator-adaptor" id="id13">Iterator Adaptor</a></li>
+<li><a class="reference internal" href="#pixel-dereference-adaptor" id="id14">Pixel Dereference Adaptor</a></li>
+<li><a class="reference internal" href="#step-iterator" id="id15">Step Iterator</a></li>
+<li><a class="reference internal" href="#pixel-locator" id="id16">Pixel Locator</a></li>
+<li><a class="reference internal" href="#iterator-over-2d-image" id="id17">Iterator over 2D image</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#image-view" id="id18">Image View</a><ul>
+<li><a class="reference internal" href="#creating-views-from-raw-pixels" id="id19">Creating Views from Raw Pixels</a></li>
+<li><a class="reference internal" href="#creating-image-views-from-other-image-views" id="id20">Creating Image Views from Other Image Views</a></li>
+<li><a class="reference internal" href="#stl-style-algorithms-on-image-views" id="id21">STL-Style Algorithms on Image Views</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#image" id="id22">Image</a></li>
+<li><a class="reference internal" href="#run-time-specified-images-and-image-views" id="id23">Run-time specified images and image views</a></li>
+<li><a class="reference internal" href="#useful-metafunctions-and-typedefs" id="id24">Useful Metafunctions and Typedefs</a></li>
+<li><a class="reference internal" href="#i-o-extension" id="id25">I/O Extension</a></li>
+<li><a class="reference internal" href="#sample-code" id="id26">Sample Code</a><ul>
+<li><a class="reference internal" href="#pixel-level-sample-code" id="id27">Pixel-level Sample Code</a></li>
+<li><a class="reference internal" href="#creating-a-copy-of-an-image-with-a-safe-buffer" id="id28">Creating a Copy of an Image with a Safe Buffer</a></li>
+<li><a class="reference internal" href="#histogram" id="id29">Histogram</a></li>
+<li><a class="reference internal" href="#using-image-views" id="id30">Using Image Views</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#extending-the-generic-image-library" id="id31">Extending the Generic Image Library</a><ul>
+<li><a class="reference internal" href="#defining-new-color-spaces" id="id32">Defining New Color Spaces</a></li>
+<li><a class="reference internal" href="#defining-new-channel-types" id="id33">Defining New Channel Types</a></li>
+<li><a class="reference internal" href="#overloading-color-conversion" id="id34">Overloading Color Conversion</a></li>
+<li><a class="reference internal" href="#defining-new-image-views" id="id35">Defining New Image Views</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#technicalities" id="id36">Technicalities</a><ul>
+<li><a class="reference internal" href="#creating-a-reference-proxy" id="id37">Creating a reference proxy</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#conclusion" id="id38">Conclusion</a></li>
 </ul>
 </div>
 <div class="section" id="overview">
-<h2><a class="toc-backref" href="#id24">Overview</a></h2>
+<h2><a class="toc-backref" href="#id2">Overview</a></h2>
 <p>Images are essential in any image processing, vision and video
 project, and yet the variability in image representations makes it
 difficult to write imaging algorithms that are both generic and
@@ -105,14 +144,12 @@ red, in interleaved form:</p>
 <img alt="_images/planar.jpg" src="_images/planar.jpg" />
 <p>Note also that rows may optionally be aligned resulting in a potential
 padding at the end of rows.</p>
-<p>The Generic Image Library (GIL) provides models for images that vary in:</p>
-<ul class="simple">
-<li>Structure (planar vs. interleaved)</li>
-<li>Color space and presence of alpha (RGB, RGBA, CMYK, etc.)</li>
-<li>Channel depth (8-bit, 16-bit, etc.)</li>
-<li>Order of channels (RGB vs. BGR, etc.)</li>
-<li>Row alignment policy (no alignment, word-alignment, etc.)</li>
-</ul>
+<p>The Generic Image Library (GIL) provides models for images that vary in:
+- Structure (planar vs. interleaved)
+- Color space and presence of alpha (RGB, RGBA, CMYK, etc.)
+- Channel depth (8-bit, 16-bit, etc.)
+- Order of channels (RGB vs. BGR, etc.)
+- Row alignment policy (no alignment, word-alignment, etc.)</p>
 <p>It also supports user-defined models of images, and images whose
 parameters are specified at run-time.  GIL abstracts image
 representation from algorithms applied on images and allows us to
@@ -124,7 +161,7 @@ that build on top of concepts defined in previous sections.  It is
 recommended to read the sections in order.</p>
 </div>
 <div class="section" id="about-concepts">
-<h2><a class="toc-backref" href="#id25">About Concepts</a></h2>
+<h2><a class="toc-backref" href="#id3">About Concepts</a></h2>
 <p>All constructs in GIL are models of GIL concepts. A em concept is a
 set of requirements that a type (or a set of related types) must
 fulfill to be used correctly in generic algorithms. The requirements
@@ -184,7 +221,7 @@ are defined here:
 </div>
 </div>
 <div class="section" id="point">
-<h2><a class="toc-backref" href="#id26">Point</a></h2>
+<h2><a class="toc-backref" href="#id4">Point</a></h2>
 <p>A point defines the location of a pixel inside an image. It can also
 be used to describe the dimensions of an image.  In most general
 terms, points are N-dimensional and model the following concept:</p>
@@ -217,21 +254,26 @@ terms, points are N-dimensional and model the following concept:</p>
 <span class="p">};</span>
 </pre></div>
 </div>
-<div class="section" id="related-concepts">
-<h3>Related Concepts</h3>
-<ul class="simple">
-<li><cite>PointNDConcept</cite></li>
-<li><cite>Point2DConcept</cite></li>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Related Concepts:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"><ul class="first simple">
+<li><tt class="docutils literal"><span class="pre">PointNDConcept</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">Point2DConcept</span></tt></li>
 </ul>
-</div>
-<div class="section" id="models">
-<h3>Models</h3>
-<p>GIL provides a model of <tt class="docutils literal"><span class="pre">Point2DConcept</span></tt>, <tt class="docutils literal"><span class="pre">point2&lt;T&gt;</span></tt> where
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Models:</th><td class="field-body"><p class="first last">GIL provides a model of <tt class="docutils literal"><span class="pre">Point2DConcept</span></tt>, <tt class="docutils literal"><span class="pre">point2&lt;T&gt;</span></tt> where
 <tt class="docutils literal"><span class="pre">T</span></tt> is the coordinate type.</p>
-</div>
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="section" id="channel">
-<h2><a class="toc-backref" href="#id27">Channel</a></h2>
+<h2><a class="toc-backref" href="#id5">Channel</a></h2>
 <p>A channel indicates the intensity of a color component (for example,
 the red channel in an RGB pixel).  Typical channel operations are
 getting, comparing and setting the channel values. Channels have
@@ -301,18 +343,22 @@ sub-byte channel.  Such a proxy reference class models only
 not have a default constructor.</p>
 <p>Note also that algorithms may impose additional requirements on
 channels, such as support for arithmetic operations.</p>
-<div class="section" id="id1">
-<h3>Related Concepts</h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Related Concepts:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
 <ul class="simple">
-<li><cite>ChannelConcept&lt;T&gt;</cite></li>
-<li><cite>ChannelValueConcept&lt;T&gt;</cite></li>
-<li><cite>MutableChannelConcept&lt;T&gt;</cite></li>
-<li><cite>ChannelsCompatibleConcept&lt;T1,T2&gt;</cite></li>
-<li><cite>ChannelConvertibleConcept&lt;SrcChannel,DstChannel&gt;</cite></li>
+<li>ChannelConcept&lt;T&gt;</li>
+<li>ChannelValueConcept&lt;T&gt;</li>
+<li>MutableChannelConcept&lt;T&gt;</li>
+<li>ChannelsCompatibleConcept&lt;T1,T2&gt;</li>
+<li>ChannelConvertibleConcept&lt;SrcChannel,DstChannel&gt;</li>
 </ul>
-</div>
-<div class="section" id="id2">
-<h3>Models</h3>
 <p>All built-in integral and floating point types are valid channels. GIL
 provides standard type aliases for some integral channels:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="k">typedef</span> <span class="n">boost</span><span class="o">::</span><span class="kt">uint8_t</span>  <span class="n">bits8</span><span class="p">;</span>
@@ -356,9 +402,8 @@ on whether the offset of the channel range is specified as a template
 or a run-time parameter. The first model is faster and more compact
 while the second model is more flexible. For example, the second model
 allows us to construct an iterator over bit range channels.</p>
-</div>
 <div class="section" id="algorithms">
-<h3>Algorithms</h3>
+<h3><a class="toc-backref" href="#id6">Algorithms</a></h3>
 <p>Here is how to construct the three channels of a 16-bit &#8220;565&#8221; pixel
 and set them to their maximum value:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="k">typedef</span> <span class="n">packed_channel_reference</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="nb">true</span><span class="o">&gt;</span> <span class="kt">channel16_0_5_reference_t</span><span class="p">;</span>
@@ -418,28 +463,47 @@ operations.  Here are the channel-level algorithms that GIL provides:</p>
 </div>
 </div>
 <div class="section" id="color-space-and-layout">
-<h2><a class="toc-backref" href="#id28">Color Space and Layout</a></h2>
-<p>A color space captures the set and interpretation of channels
-comprising a pixel. It is an MPL random access sequence containing the
-types of all elements in the color space. Two color spaces are
-considered <em>compatible</em> if they are equal (i.e. have the same set of
-colors in the same order).</p>
-<div class="section" id="id3">
-<h3>Related Concepts</h3>
+<h2><a class="toc-backref" href="#id7">Color Space and Layout</a></h2>
+<p>A color space captures the set and interpretation of channels comprising
+a pixel. In Boost.GIL, color space is defined as an MPL random access
+sequence containing the types of all elements in the color space.</p>
+<p>Two color spaces are considered <em>compatible</em> if they are equal
+(i.e. have the same set of colors in the same order).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Related Concepts:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
 <ul class="simple">
-<li><cite>ColorSpaceConcept&lt;ColorSpace&gt;</cite></li>
-<li><cite>ColorSpacesCompatibleConcept&lt;ColorSpace1,ColorSpace2&gt;</cite></li>
-<li><cite>ChannelMappingConcept&lt;Mapping&gt;</cite></li>
+<li>ColorSpaceConcept&lt;ColorSpace&gt;</li>
+<li>ColorSpacesCompatibleConcept&lt;ColorSpace1,ColorSpace2&gt;</li>
+<li>ChannelMappingConcept&lt;Mapping&gt;</li>
 </ul>
-</div>
-<div class="section" id="id4">
-<h3>Models</h3>
-<p>GIL currently provides the following color spaces: <tt class="docutils literal"><span class="pre">gray_t</span></tt>,
-<tt class="docutils literal"><span class="pre">rgb_t</span></tt>, <tt class="docutils literal"><span class="pre">rgba_t</span></tt>, and <tt class="docutils literal"><span class="pre">cmyk_t</span></tt>. It also provides unnamed
-N-channel color spaces of two to five channels, <tt class="docutils literal"><span class="pre">devicen_t&lt;2&gt;</span></tt>,
-<tt class="docutils literal"><span class="pre">devicen_t&lt;3&gt;</span></tt>, <tt class="docutils literal"><span class="pre">devicen_t&lt;4&gt;</span></tt>, <tt class="docutils literal"><span class="pre">devicen_t&lt;5&gt;</span></tt>. Besides the
-standard layouts, it provides <tt class="docutils literal"><span class="pre">bgr_layout_t</span></tt>, <tt class="docutils literal"><span class="pre">bgra_layout_t</span></tt>,
-<tt class="docutils literal"><span class="pre">abgr_layout_t</span></tt> and <tt class="docutils literal"><span class="pre">argb_layout_t</span></tt>.</p>
+<p>GIL currently provides the following color spaces:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">gray_t</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">rgb_t</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">rgba_t</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">cmyk_t</span></tt></li>
+</ul>
+<p>It also provides unnamed N-channel color spaces of two to five channels:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">devicen_t&lt;2&gt;</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">devicen_t&lt;3&gt;</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">devicen_t&lt;4&gt;</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">devicen_t&lt;5&gt;</span></tt></li>
+</ul>
+<p>Besides the standard layouts, it also provides:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">bgr_layout_t</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">bgra_layout_t</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">abgr_layout_t</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">argb_layout_t</span></tt></li>
+</ul>
 <p>As an example, here is how GIL defines the RGBA color space:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="k">struct</span> <span class="kt">red_t</span><span class="p">{};</span>
 <span class="k">struct</span> <span class="kt">green_t</span><span class="p">{};</span>
@@ -452,10 +516,11 @@ standard layouts, it provides <tt class="docutils literal"><span class="pre">bgr
 their semantic order. For example, <tt class="docutils literal"><span class="pre">red_t</span></tt> is the first semantic
 channel of <tt class="docutils literal"><span class="pre">rgba_t</span></tt>.  While there is a unique semantic ordering of
 the channels in a color space, channels may vary in their physical
-ordering in memory. The mapping of channels is specified by
-<tt class="docutils literal"><span class="pre">ChannelMappingConcept</span></tt>, which is an MPL random access sequence of
-integral types. A color space and its associated mapping are often
-used together.  Thus they are grouped in GIL&#8217;s layout:</p>
+ordering in memory</p>
+<p>The mapping of channels is specified by <tt class="docutils literal"><span class="pre">ChannelMappingConcept</span></tt>,
+which is an MPL random access sequence of integral types.
+A color space and its associated mapping are often used together.</p>
+<p>Thus they are grouped in GIL&#8217;s layout:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">ColorSpace</span><span class="p">,</span>
         <span class="k">typename</span> <span class="n">ChannelMapping</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">::</span><span class="n">range_c</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">mpl</span><span class="o">::</span><span class="n">size</span><span class="o">&lt;</span><span class="n">ColorSpace</span><span class="o">&gt;::</span><span class="n">value</span><span class="o">&gt;</span> <span class="o">&gt;</span>
 <span class="k">struct</span> <span class="n">layout</span>
@@ -473,9 +538,8 @@ used together.  Thus they are grouped in GIL&#8217;s layout:</p>
 </pre></div>
 </div>
 </div>
-</div>
 <div class="section" id="color-base">
-<h2><a class="toc-backref" href="#id29">Color Base</a></h2>
+<h2><a class="toc-backref" href="#id8">Color Base</a></h2>
 <p>A color base is a container of color elements. The most common use of
 color base is in the implementation of a pixel, in which case the
 color elements are channel values. The color base concept, however,
@@ -565,8 +629,6 @@ operate on any model of ColorBaseConcept and returns the corresponding
 semantic element.</p>
 <p>Two color bases are <em>compatible</em> if they have the same color space and
 their elements (paired semantically) are convertible to each other.</p>
-<div class="section" id="id5">
-<h3>Models</h3>
 <p>GIL provides a model for a homogeneous color base (a color base whose
 elements all have the same type).</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="k">namespace</span> <span class="n">detail</span>
@@ -579,9 +641,8 @@ elements all have the same type).</p>
 reference and planar pixel iterator.  Another model of
 <tt class="docutils literal"><span class="pre">ColorBaseConcept</span></tt> is <tt class="docutils literal"><span class="pre">packed_pixel</span></tt> - it is a pixel whose
 channels are bit ranges. See the ref PixelSectionDG section for more.</p>
-</div>
-<div class="section" id="id6">
-<h3>Algorithms</h3>
+<div class="section" id="id1">
+<h3><a class="toc-backref" href="#id9">Algorithms</a></h3>
 <p>GIL provides the following functions and metafunctions operating on
 color bases:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="c1">// Metafunction returning an mpl::int_ equal to the number of elements in the color base</span>
@@ -695,7 +756,7 @@ color space.</p>
 </div>
 </div>
 <div class="section" id="pixel">
-<h2><a class="toc-backref" href="#id30">Pixel</a></h2>
+<h2><a class="toc-backref" href="#id10">Pixel</a></h2>
 <p>A pixel is a set of channels defining the color at a given point in an
 image. Conceptually, a pixel is little more than a color base whose
 elements model <tt class="docutils literal"><span class="pre">ChannelConcept</span></tt>.  All properties of pixels inherit
@@ -797,22 +858,26 @@ modeling the following concept:</p>
 <p>The distinction between <tt class="docutils literal"><span class="pre">PixelConcept</span></tt> and <tt class="docutils literal"><span class="pre">PixelValueConcept</span></tt> is
 analogous to that for channels and color bases - pixel reference
 proxies model both, but only pixel values model the latter.</p>
-<div class="section" id="id7">
-<h3>Related Concepts</h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Related Concepts:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
 <ul class="simple">
-<li><cite>PixelBasedConcept&lt;P&gt;</cite></li>
-<li><cite>PixelConcept&lt;Pixel&gt;</cite></li>
-<li><cite>MutablePixelConcept&lt;Pixel&gt;</cite></li>
-<li><cite>PixelValueConcept&lt;Pixel&gt;</cite></li>
-<li><cite>HomogeneousPixelConcept&lt;Pixel&gt;</cite></li>
-<li><cite>MutableHomogeneousPixelConcept&lt;Pixel&gt;</cite></li>
-<li><cite>HomogeneousPixelValueConcept&lt;Pixel&gt;</cite></li>
-<li><cite>PixelsCompatibleConcept&lt;Pixel1, Pixel2&gt;</cite></li>
-<li><cite>PixelConvertibleConcept&lt;SrcPixel, DstPixel&gt;</cite></li>
+<li>PixelBasedConcept</li>
+<li>PixelConcept</li>
+<li>MutablePixelConcept</li>
+<li>PixelValueConcept</li>
+<li>HomogeneousPixelConcept</li>
+<li>MutableHomogeneousPixelConcept</li>
+<li>HomogeneousPixelValueConcept</li>
+<li>PixelsCompatibleConcept</li>
+<li>PixelConvertibleConcept</li>
 </ul>
-</div>
-<div class="section" id="id8">
-<h3>Models</h3>
 <p>The most commonly used pixel is a homogeneous pixel whose values are
 together in memory.  For this purpose GIL provides the struct
 <tt class="docutils literal"><span class="pre">pixel</span></tt>, templated over the channel value and layout:</p>
@@ -907,9 +972,6 @@ pixels and pixel iterators:</p>
 <span class="c1">// Result: 0x60 0x30 0x11 0x0C 0x06 0x83 0xC1</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="id9">
-<h3>Algorithms</h3>
 <p>Since pixels model <tt class="docutils literal"><span class="pre">ColorBaseConcept</span></tt> and <tt class="docutils literal"><span class="pre">PixelBasedConcept</span></tt> all
 algorithms and metafunctions of color bases can work with them as
 well:</p>
@@ -955,11 +1017,10 @@ pixels of different color spaces and channel types:</p>
 </pre></div>
 </div>
 </div>
-</div>
 <div class="section" id="pixel-iterator">
-<h2><a class="toc-backref" href="#id31">Pixel Iterator</a></h2>
+<h2><a class="toc-backref" href="#id11">Pixel Iterator</a></h2>
 <div class="section" id="fundamental-iterator">
-<h3>Fundamental Iterator</h3>
+<h3><a class="toc-backref" href="#id12">Fundamental Iterator</a></h3>
 <p>Pixel iterators are random traversal iterators whose <tt class="docutils literal"><span class="pre">value_type</span>
 <span class="pre">models</span></tt> <tt class="docutils literal"><span class="pre">PixelValueConcept</span></tt>.  Pixel iterators provide metafunctions
 to determine whether they are mutable (i.e. whether they allow for
@@ -979,15 +1040,19 @@ iterators or adaptors over another pixel iterator:</p>
 <span class="n">concept</span> <span class="n">MutablePixelIteratorConcept</span> <span class="o">:</span> <span class="n">PixelIteratorConcept</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">MutableRandomAccessIteratorConcept</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;</span> <span class="p">{};</span>
 </pre></div>
 </div>
-<div class="section" id="id10">
-<h4>Related Concepts</h4>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Related Concepts:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
 <ul class="simple">
-<li><cite>PixelIteratorConcept&lt;Iterator&gt;</cite></li>
-<li><cite>MutablePixelIteratorConcept&lt;Iterator&gt;</cite></li>
+<li>PixelIteratorConcept&lt;Iterator&gt;</li>
+<li>MutablePixelIteratorConcept&lt;Iterator&gt;</li>
 </ul>
-</div>
-<div class="section" id="id11">
-<h4>Models</h4>
 <p>A built-in pointer to pixel, <tt class="docutils literal"><span class="pre">pixel&lt;ChannelValue,Layout&gt;*</span></tt>, is GIL&#8217;s
 model for pixel iterator over interleaved homogeneous pixels.
 Similarly, <tt class="docutils literal"><span class="pre">packed_pixel&lt;PixelData,ChannelRefVec,Layout&gt;*</span></tt> is GIL&#8217;s
@@ -1029,9 +1094,8 @@ increments.  GIL also uses the class <tt class="docutils literal"><span class="p
 a model for a pixel iterator over bit-aligned pixels. Internally it
 keeps track of the current byte and the bit offset.</p>
 </div>
-</div>
 <div class="section" id="iterator-adaptor">
-<h3>Iterator Adaptor</h3>
+<h3><a class="toc-backref" href="#id13">Iterator Adaptor</a></h3>
 <p>Iterator adaptor is an iterator that wraps around another
 iterator. Its <tt class="docutils literal"><span class="pre">is_iterator_adaptor</span></tt> metafunction must evaluate to
 true, and it needs to provide a member method to return the base
@@ -1057,32 +1121,36 @@ to another base iterator:</p>
 <span class="n">concept</span> <span class="n">MutableIteratorAdaptorConcept</span> <span class="o">:</span> <span class="n">IteratorAdaptorConcept</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;</span> <span class="p">{};</span>
 </pre></div>
 </div>
-<div class="section" id="id12">
-<h4>Related Concepts</h4>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Related Concepts:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
 <ul class="simple">
-<li><cite>IteratorAdaptorConcept&lt;Iterator&gt;</cite></li>
-<li><cite>MutableIteratorAdaptorConcept&lt;Iterator&gt;</cite></li>
+<li>IteratorAdaptorConcept&lt;Iterator&gt;</li>
+<li>MutableIteratorAdaptorConcept&lt;Iterator&gt;</li>
 </ul>
-</div>
-<div class="section" id="id13">
-<h4>Models</h4>
-<p>GIL provides several models of <tt class="docutils literal"><span class="pre">IteratorAdaptorConcept</span></tt>:</p>
+<p>GIL provides several models of <tt class="docutils literal"><span class="pre">IteratorAdaptorConcept</span></tt>:
+- <tt class="docutils literal"><span class="pre">memory_based_step_iterator&lt;Iterator&gt;</span></tt>: An iterator adaptor that</p>
+<blockquote>
+<div>changes the fundamental step of the base iterator (see ref
+StepIteratorDG)</div></blockquote>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">memory_based_step_iterator&lt;Iterator&gt;</span></tt>: An iterator adaptor that
-changes the fundamental step of the base iterator (see ref
-StepIteratorDG)</li>
-<li><tt class="docutils literal"><span class="pre">dereference_iterator_adaptor&lt;Iterator,Fn&gt;</span></tt>: An iterator that
-applies a unary function <tt class="docutils literal"><span class="pre">Fn</span></tt> upon dereferencing. It is used, for
+<li><tt class="docutils literal"><span class="pre">dereference_iterator_adaptor&lt;Iterator,Fn&gt;</span></tt>: An iterator that</li>
+</ul>
+<p>applies a unary function <tt class="docutils literal"><span class="pre">Fn</span></tt> upon dereferencing. It is used, for
 example, for on-the-fly color conversion. It can be used to construct
 a shallow image &#8220;view&#8221; that pretends to have a different color space
 or channel depth. See ref ImageViewFrowImageViewDG for more. The
 unary function <tt class="docutils literal"><span class="pre">Fn</span></tt> must model <tt class="docutils literal"><span class="pre">PixelDereferenceAdaptorConcept</span></tt>
-(see below).</li>
-</ul>
-</div>
+(see below).</p>
 </div>
 <div class="section" id="pixel-dereference-adaptor">
-<h3>Pixel Dereference Adaptor</h3>
+<h3><a class="toc-backref" href="#id14">Pixel Dereference Adaptor</a></h3>
 <p>Pixel dereference adaptor is a unary function that can be applied upon
 dereferencing a pixel iterator. Its argument type could be anything
 (usually a <tt class="docutils literal"><span class="pre">PixelConcept</span></tt>) and the result type must be convertible
@@ -1100,12 +1168,11 @@ to <tt class="docutils literal"><span class="pre">PixelConcept</span></tt></p>
 <span class="p">};</span>
 </pre></div>
 </div>
-<div class="section" id="id14">
-<h4>Models</h4>
-<p>GIL provides several models of <tt class="docutils literal"><span class="pre">PixelDereferenceAdaptorConcept</span></tt>:</p>
+<p>GIL provides several models of <tt class="docutils literal"><span class="pre">PixelDereferenceAdaptorConcept</span></tt>:
+- <tt class="docutils literal"><span class="pre">color_convert_deref_fn</span></tt>: a function object that performs color</p>
+<blockquote>
+<div>conversion</div></blockquote>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">color_convert_deref_fn</span></tt>: a function object that performs color
-conversion</li>
 <li><tt class="docutils literal"><span class="pre">detail::nth_channel_deref_fn</span></tt>: a function object that returns a
 grayscale pixel corresponding to the n-th channel of a given pixel</li>
 <li><tt class="docutils literal"><span class="pre">deref_compose</span></tt>: a function object that composes two models of
@@ -1122,19 +1189,16 @@ set. <tt class="docutils literal"><span class="pre">dereference_iterator_adaptor
 wrapper over a pixel iterator <tt class="docutils literal"><span class="pre">Iterator</span></tt> that invokes the given
 dereference iterator adaptor <tt class="docutils literal"><span class="pre">Fn</span></tt> upon dereferencing.</p>
 </div>
-</div>
 <div class="section" id="step-iterator">
-<h3>Step Iterator</h3>
+<h3><a class="toc-backref" href="#id15">Step Iterator</a></h3>
 <p>Sometimes we want to traverse pixels with a unit step other than the
 one provided by the fundamental pixel iterators.  Examples where this
-would be useful:</p>
-<ul class="simple">
-<li>a single-channel view of the red channel of an RGB interleaved image</li>
-<li>left-to-right flipped image (step = -fundamental_step)</li>
-<li>subsampled view, taking every N-th pixel (step = N*fundamental_step)</li>
-<li>traversal in vertical direction (step = number of bytes per row)</li>
-<li>any combination of the above (steps are multiplied)</li>
-</ul>
+would be useful:
+- a single-channel view of the red channel of an RGB interleaved image
+- left-to-right flipped image (step = -fundamental_step)
+- subsampled view, taking every N-th pixel (step = N*fundamental_step)
+- traversal in vertical direction (step = number of bytes per row)
+- any combination of the above (steps are multiplied)</p>
 <p>Step iterators are forward traversal iterators that allow changing the
 step between adjacent values:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="n">concept</span> <span class="n">StepIteratorConcept</span><span class="o">&lt;</span><span class="n">boost_concepts</span><span class="o">::</span><span class="n">ForwardTraversalConcept</span> <span class="n">Iterator</span><span class="o">&gt;</span>
@@ -1185,17 +1249,21 @@ horizontal step:</p>
 </div>
 <p>All models of pixel iterators, locators and image views that GIL
 provides support <tt class="docutils literal"><span class="pre">HasDynamicXStepTypeConcept</span></tt>.</p>
-<div class="section" id="id15">
-<h4>Related Concepts</h4>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Related Concepts:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
 <ul class="simple">
-<li><cite>StepIteratorConcept&lt;Iterator&gt;</cite></li>
-<li><cite>MutableStepIteratorConcept&lt;Iterator&gt;</cite></li>
-<li><cite>MemoryBasedIteratorConcept&lt;Iterator&gt;</cite></li>
-<li><cite>HasDynamicXStepTypeConcept&lt;T&gt;</cite></li>
+<li>StepIteratorConcept&lt;Iterator&gt;</li>
+<li>MutableStepIteratorConcept&lt;Iterator&gt;</li>
+<li>MemoryBasedIteratorConcept&lt;Iterator&gt;</li>
+<li>HasDynamicXStepTypeConcept&lt;T&gt;</li>
 </ul>
-</div>
-<div class="section" id="id16">
-<h4>Models</h4>
 <p>All standard memory-based iterators GIL currently provides model
 <tt class="docutils literal"><span class="pre">MemoryBasedIteratorConcept</span></tt>.  GIL provides the class
 <tt class="docutils literal"><span class="pre">memory_based_step_iterator</span></tt> which models <tt class="docutils literal"><span class="pre">PixelIteratorConcept</span></tt>,
@@ -1217,9 +1285,8 @@ of the pixel position and invokes a function object to get the value
 of the pixel upon dereferencing. It models <tt class="docutils literal"><span class="pre">PixelIteratorConcept</span></tt>
 and <tt class="docutils literal"><span class="pre">StepIteratorConcept</span></tt> but not <tt class="docutils literal"><span class="pre">MemoryBasedIteratorConcept</span></tt>.</p>
 </div>
-</div>
 <div class="section" id="pixel-locator">
-<h3>Pixel Locator</h3>
+<h3><a class="toc-backref" href="#id16">Pixel Locator</a></h3>
 <p>A Locator allows for navigation in two or more dimensions. Locators
 are N-dimensional iterators in spirit, but we use a different name
 because they don&#8217;t satisfy all the requirements of iterators. For
@@ -1356,21 +1423,25 @@ concept:</p>
 <span class="n">concept</span> <span class="n">MutablePixelLocatorConcept</span><span class="o">&lt;</span><span class="n">PixelLocatorConcept</span> <span class="n">Loc</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">MutableRandomAccess2DLocatorConcept</span><span class="o">&lt;</span><span class="n">Loc</span><span class="o">&gt;</span> <span class="p">{};</span>
 </pre></div>
 </div>
-<div class="section" id="id17">
-<h4>Related Concepts</h4>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Related Concepts:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
 <ul class="simple">
-<li><cite>HasDynamicYStepTypeConcept&lt;T&gt;</cite></li>
-<li><cite>HasTransposedTypeConcept&lt;T&gt;</cite></li>
-<li><cite>RandomAccessNDLocatorConcept&lt;Locator&gt;</cite></li>
-<li><cite>MutableRandomAccessNDLocatorConcept&lt;Locator&gt;</cite></li>
-<li><cite>RandomAccess2DLocatorConcept&lt;Locator&gt;</cite></li>
-<li><cite>MutableRandomAccess2DLocatorConcept&lt;Locator&gt;</cite></li>
-<li><cite>PixelLocatorConcept&lt;Locator&gt;</cite></li>
-<li><cite>MutablePixelLocatorConcept&lt;Locator&gt;</cite></li>
+<li>HasDynamicYStepTypeConcept&lt;T&gt;</li>
+<li>HasTransposedTypeConcept&lt;T&gt;</li>
+<li>RandomAccessNDLocatorConcept&lt;Locator&gt;</li>
+<li>MutableRandomAccessNDLocatorConcept&lt;Locator&gt;</li>
+<li>RandomAccess2DLocatorConcept&lt;Locator&gt;</li>
+<li>MutableRandomAccess2DLocatorConcept&lt;Locator&gt;</li>
+<li>PixelLocatorConcept&lt;Locator&gt;</li>
+<li>MutablePixelLocatorConcept&lt;Locator&gt;</li>
 </ul>
-</div>
-<div class="section" id="id18">
-<h4>Models</h4>
 <p>GIL provides two models of <tt class="docutils literal"><span class="pre">PixelLocatorConcept</span></tt> - a memory-based
 locator, <tt class="docutils literal"><span class="pre">memory_based_2d_locator</span></tt> and a virtual locator
 <tt class="docutils literal"><span class="pre">virtual_2d_locator</span></tt>.</p>
@@ -1392,13 +1463,11 @@ navigate horizontally.</p>
 that describe complex pixel memory organizations. First, we have a
 choice of iterator to use for horizontal direction, i.e. for iterating
 over the pixels on the same row.  Using the fundamental and step
-iterators gives us four choices:</p>
-<ul class="simple">
-<li><tt class="docutils literal"><span class="pre">pixel&lt;T,C&gt;*</span></tt>                                    (for interleaved images)</li>
-<li><tt class="docutils literal"><span class="pre">planar_pixel_iterator&lt;T*,C&gt;</span></tt>                    (for planar images)</li>
-<li><tt class="docutils literal"><span class="pre">memory_based_step_iterator&lt;pixel&lt;T,C&gt;*&gt;</span></tt>    (for interleaved images with non-standard step)</li>
-<li><tt class="docutils literal"><span class="pre">memory_based_step_iterator&lt;planar_pixel_iterator&lt;T*,C&gt;</span> <span class="pre">&gt;</span></tt> (for planar images with non-standard step)</li>
-</ul>
+iterators gives us four choices:
+- <tt class="docutils literal"><span class="pre">pixel&lt;T,C&gt;*</span></tt>                                    (for interleaved images)
+- <tt class="docutils literal"><span class="pre">planar_pixel_iterator&lt;T*,C&gt;</span></tt>                    (for planar images)
+- <tt class="docutils literal"><span class="pre">memory_based_step_iterator&lt;pixel&lt;T,C&gt;*&gt;</span></tt>    (for interleaved images with non-standard step)
+- <tt class="docutils literal"><span class="pre">memory_based_step_iterator&lt;planar_pixel_iterator&lt;T*,C&gt;</span> <span class="pre">&gt;</span></tt> (for planar images with non-standard step)</p>
 <p>Of course, one could provide their own custom x-iterator. One such
 example described later is an iterator adaptor that performs color
 conversion when dereferenced.</p>
@@ -1445,9 +1514,8 @@ byte difference using <tt class="docutils literal"><span class="pre">cache_locat
 <tt class="docutils literal"><span class="pre">loc[above]</span></tt> for simple interleaved images amounts to a raw array
 index operator.</p>
 </div>
-</div>
 <div class="section" id="iterator-over-2d-image">
-<h3>Iterator over 2D image</h3>
+<h3><a class="toc-backref" href="#id17">Iterator over 2D image</a></h3>
 <p>Sometimes we want to perform the same, location-independent operation
 over all pixels of an image. In such a case it is useful to represent
 the pixels as a one-dimensional array. GIL&#8217;s <tt class="docutils literal"><span class="pre">iterator_from_2d</span></tt> is a
@@ -1487,7 +1555,7 @@ simply iterate using the x-iterators directly.</p>
 </div>
 </div>
 <div class="section" id="image-view">
-<h2><a class="toc-backref" href="#id32">Image View</a></h2>
+<h2><a class="toc-backref" href="#id18">Image View</a></h2>
 <p>An image view is a generalization of STL range concept to multiple
 dimensions. Similar to ranges (and iterators), image views are
 shallow, don&#8217;t own the underlying data and don&#8217;t propagate their
@@ -1619,20 +1687,24 @@ same number of dimensions:</p>
 <p>Compatible views must also have the same dimensions (i.e. the same
 width and height). Many algorithms taking multiple views require that
 they be pairwise compatible.</p>
-<div class="section" id="id19">
-<h3>Related Concepts</h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Related Concepts:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
 <ul class="simple">
-<li><cite>RandomAccessNDImageViewConcept&lt;View&gt;</cite></li>
-<li><cite>MutableRandomAccessNDImageViewConcept&lt;View&gt;</cite></li>
-<li><cite>RandomAccess2DImageViewConcept&lt;View&gt;</cite></li>
-<li><cite>MutableRandomAccess2DImageViewConcept&lt;View&gt;</cite></li>
-<li><cite>ImageViewConcept&lt;View&gt;</cite></li>
-<li><cite>MutableImageViewConcept&lt;View&gt;</cite></li>
-<li><cite>ViewsCompatibleConcept&lt;View1,View2&gt;</cite></li>
+<li>RandomAccessNDImageViewConcept&lt;View&gt;</li>
+<li>MutableRandomAccessNDImageViewConcept&lt;View&gt;</li>
+<li>RandomAccess2DImageViewConcept&lt;View&gt;</li>
+<li>MutableRandomAccess2DImageViewConcept&lt;View&gt;</li>
+<li>ImageViewConcept&lt;View&gt;</li>
+<li>MutableImageViewConcept&lt;View&gt;</li>
+<li>ViewsCompatibleConcept&lt;View1,View2&gt;</li>
 </ul>
-</div>
-<div class="section" id="id20">
-<h3>Models</h3>
 <p>GIL provides a model for <tt class="docutils literal"><span class="pre">ImageViewConcept</span></tt> called
 <tt class="docutils literal"><span class="pre">image_view</span></tt>. It is templated over a model of
 <tt class="docutils literal"><span class="pre">PixelLocatorConcept</span></tt>.  (If instantiated with a model of
@@ -1656,11 +1728,8 @@ typically 16 bytes long - two integers for the width and height
 (inside dimensions) one for the number of bytes between adjacent rows
 (inside the locator) and one pointer to the beginning of the pixel
 block.</p>
-</div>
-<div class="section" id="id21">
-<h3>Algorithms</h3>
 <div class="section" id="creating-views-from-raw-pixels">
-<h4>Creating Views from Raw Pixels</h4>
+<h3><a class="toc-backref" href="#id19">Creating Views from Raw Pixels</a></h3>
 <p>Standard image views can be constructed from raw data of any supported
 color space, bit depth, channel ordering or planar vs. interleaved
 structure.  Interleaved views are constructed using
@@ -1682,7 +1751,7 @@ separately. Here is the RGB one:</p>
 (immutable) view.</p>
 </div>
 <div class="section" id="creating-image-views-from-other-image-views">
-<h4>Creating Image Views from Other Image Views</h4>
+<h3><a class="toc-backref" href="#id20">Creating Image Views from Other Image Views</a></h3>
 <p>It is possible to construct one image view from another by changing
 some policy of how image data is interpreted. The result could be a
 view whose type is derived from the type of the source. GIL uses the
@@ -1779,7 +1848,7 @@ views over the pixel data. The above code does not copy any pixels; it
 operates on the pixel data allocated when <tt class="docutils literal"><span class="pre">img</span></tt> was created.</p>
 </div>
 <div class="section" id="stl-style-algorithms-on-image-views">
-<h4>STL-Style Algorithms on Image Views</h4>
+<h3><a class="toc-backref" href="#id21">STL-Style Algorithms on Image Views</a></h3>
 <p>Image views provide 1D iteration of their pixels via begin() and end()
 methods, which makes it possible to use STL algorithms with
 them. However, using nested loops over X and Y is in many cases more
@@ -1882,9 +1951,8 @@ on <a class="reference external" href="http://stlab.adobe.com/gil/download.html"
 stage of development and is not optimized for speed</p>
 </div>
 </div>
-</div>
 <div class="section" id="image">
-<h2><a class="toc-backref" href="#id33">Image</a></h2>
+<h2><a class="toc-backref" href="#id22">Image</a></h2>
 <p>An image is a container that owns the pixels of a given image view. It
 allocates them in its constructor and deletes them in the
 destructor. It has a deep assignment operator and copy
@@ -1941,16 +2009,20 @@ following concept:</p>
 </div>
 <p>Images, unlike locators and image views, don&#8217;t have &#8216;mutable&#8217; set of
 concepts because immutable images are not very useful.</p>
-<div class="section" id="id22">
-<h3>Related Concepts</h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Related Concepts:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
 <ul class="simple">
-<li><cite>RandomAccessNDImageConcept&lt;Image&gt;</cite></li>
-<li><cite>RandomAccess2DImageConcept&lt;Image&gt;</cite></li>
-<li><cite>ImageConcept&lt;Image&gt;</cite></li>
+<li>RandomAccessNDImageConcept&lt;Image&gt;</li>
+<li>RandomAccess2DImageConcept&lt;Image&gt;</li>
+<li>ImageConcept&lt;Image&gt;</li>
 </ul>
-</div>
-<div class="section" id="id23">
-<h3>Models</h3>
 <p>GIL provides a class, <tt class="docutils literal"><span class="pre">image</span></tt>, which is templated over the value
 type (the pixel) and models <tt class="docutils literal"><span class="pre">ImageConcept</span></tt>:</p>
 <div class="highlight-c++"><div class="highlight"><pre>template &lt;typename Pixel, \\ Models PixelValueConcept
@@ -1969,9 +2041,8 @@ of the more complicated <tt class="docutils literal"><span class="pre">image_vie
 alignment is 0, packed images are aligned to the bit - i.e. there are
 no padding bits at the end of rows of packed images.</p>
 </div>
-</div>
 <div class="section" id="run-time-specified-images-and-image-views">
-<h2><a class="toc-backref" href="#id34">Run-time specified images and image views</a></h2>
+<h2><a class="toc-backref" href="#id23">Run-time specified images and image views</a></h2>
 <p>The color space, channel depth, channel ordering, and
 interleaved/planar structure of an image are defined by the type of
 its template argument, which makes them compile-time bound. Often some
@@ -2227,7 +2298,7 @@ resolution. It allows us to treat images of different parameters
 uniformly as a collection and store them in the same container.</p>
 </div>
 <div class="section" id="useful-metafunctions-and-typedefs">
-<h2><a class="toc-backref" href="#id35">Useful Metafunctions and Typedefs</a></h2>
+<h2><a class="toc-backref" href="#id24">Useful Metafunctions and Typedefs</a></h2>
 <p>Flexibility comes at a price. GIL types can be very long and hard to
 read.  To address this problem, GIL provides typedefs to refer to any
 standard image, pixel iterator, pixel locator, pixel reference or
@@ -2421,7 +2492,7 @@ or non-step RGB image view is basic, but a color converted view or a
 virtual view is not.</p>
 </div>
 <div class="section" id="i-o-extension">
-<h2><a class="toc-backref" href="#id36">I/O Extension</a></h2>
+<h2><a class="toc-backref" href="#id25">I/O Extension</a></h2>
 <p>GIL&#8217;s I/O extension provides low level image i/o utilities. It
 supports loading and saving several image formats, each of which
 requires linking against the corresponding library:</p>
@@ -2524,9 +2595,9 @@ dynamic images:</p>
 of <tt class="docutils literal"><span class="pre">const</span> <span class="pre">char*</span></tt></p>
 </div>
 <div class="section" id="sample-code">
-<h2><a class="toc-backref" href="#id37">Sample Code</a></h2>
+<h2><a class="toc-backref" href="#id26">Sample Code</a></h2>
 <div class="section" id="pixel-level-sample-code">
-<h3>Pixel-level Sample Code</h3>
+<h3><a class="toc-backref" href="#id27">Pixel-level Sample Code</a></h3>
 <p>Here are some operations you can do with pixel values, pointers and references:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="kt">rgb8_pixel_t</span> <span class="nf">p1</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>     <span class="c1">// make a red RGB pixel</span>
 <span class="kt">bgr8_pixel_t</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">p1</span><span class="p">;</span>         <span class="c1">// RGB and BGR are compatible and the channels will be properly mapped.</span>
@@ -2589,7 +2660,7 @@ references or values, planar or interleaved, as long as they model
 <tt class="docutils literal"><span class="pre">PixelConcept</span></tt> and <tt class="docutils literal"><span class="pre">MutablePixelConcept</span></tt> respectively.</p>
 </div>
 <div class="section" id="creating-a-copy-of-an-image-with-a-safe-buffer">
-<h3>Creating a Copy of an Image with a Safe Buffer</h3>
+<h3><a class="toc-backref" href="#id28">Creating a Copy of an Image with a Safe Buffer</a></h3>
 <p>Suppose we want to convolve an image with multiple kernels, the
 largest of which is 2K+1 x 2K+1 pixels. It may be worth creating a
 margin of K pixels around the image borders. Here is how to do it:</p>
@@ -2636,7 +2707,7 @@ choses the fastest method, taking into account both static and
 run-time parameters.</p>
 </div>
 <div class="section" id="histogram">
-<h3>Histogram</h3>
+<h3><a class="toc-backref" href="#id29">Histogram</a></h3>
 <p>The histogram can be computed by counting the number of pixel values
 that fall in each bin.  The following method takes a grayscale
 (one-dimensional) image view, since only grayscale pixels are
@@ -2686,7 +2757,7 @@ supported color space and channel depth. They could be either planar
 or interleaved.</p>
 </div>
 <div class="section" id="using-image-views">
-<h3>Using Image Views</h3>
+<h3><a class="toc-backref" href="#id30">Using Image Views</a></h3>
 <p>The following code illustrates the power of using image views:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="n">jpeg_read_image</span><span class="p">(</span><span class="s">&quot;monkey.jpg&quot;</span><span class="p">,</span> <span class="n">img</span><span class="p">);</span>
 <span class="n">step1</span><span class="o">=</span><span class="n">view</span><span class="p">(</span><span class="n">img</span><span class="p">);</span>
@@ -2705,7 +2776,7 @@ or interleaved.</p>
 </div>
 </div>
 <div class="section" id="extending-the-generic-image-library">
-<h2><a class="toc-backref" href="#id38">Extending the Generic Image Library</a></h2>
+<h2><a class="toc-backref" href="#id31">Extending the Generic Image Library</a></h2>
 <p>You can define your own pixel iterators, locators, image views,
 images, channel types, color spaces and algorithms.  You can make
 virtual images that live on the disk, inside a jpeg file, somewhere on
@@ -2714,7 +2785,7 @@ set.  As long as they properly model the corresponding concepts, they
 will work with any existing GIL code.  Most such extensions require no
 changes to the library and can thus be supplied in another module.</p>
 <div class="section" id="defining-new-color-spaces">
-<h3>Defining New Color Spaces</h3>
+<h3><a class="toc-backref" href="#id32">Defining New Color Spaces</a></h3>
 <p>Each color space is in a separate file. To add a new color space, just
 copy one of the existing ones (like rgb.hpp) and change it
 accordingly. If you want color conversion support, you will have to
@@ -2724,7 +2795,7 @@ typedefs for pixels, pointers, references and images with the new
 color space (see typedefs.h).</p>
 </div>
 <div class="section" id="defining-new-channel-types">
-<h3>Defining New Channel Types</h3>
+<h3><a class="toc-backref" href="#id33">Defining New Channel Types</a></h3>
 <p>Most of the time you don&#8217;t need to do anything special to use a new
 channel type. You can just use it:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="k">typedef</span> <span class="n">pixel</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span><span class="kt">rgb_layout_t</span><span class="o">&gt;</span>   <span class="kt">rgb64_pixel_t</span><span class="p">;</span>    <span class="c1">// 64 bit RGB pixel</span>
@@ -2738,7 +2809,7 @@ want to do conversion between your and existing channel types, you
 will need to provide an overload of <tt class="docutils literal"><span class="pre">channel_convert</span></tt>.</p>
 </div>
 <div class="section" id="overloading-color-conversion">
-<h3>Overloading Color Conversion</h3>
+<h3><a class="toc-backref" href="#id34">Overloading Color Conversion</a></h3>
 <p>Suppose you want to provide your own color conversion. For example,
 you may want to implement higher quality color conversion using color
 profiles.  Typically you may want to redefine color conversion only in
@@ -2784,7 +2855,7 @@ optional parameter. You can pass your own color converter:</p>
 </div>
 </div>
 <div class="section" id="defining-new-image-views">
-<h3>Defining New Image Views</h3>
+<h3><a class="toc-backref" href="#id35">Defining New Image Views</a></h3>
 <p>You can provide your own pixel iterators, locators and views,
 overriding either the mechanism for getting from one pixel to the next
 or doing an arbitrary pixel transformation on dereference. For
@@ -2850,9 +2921,9 @@ defines the Mandelbrot set.</p>
 </div>
 </div>
 <div class="section" id="technicalities">
-<h2><a class="toc-backref" href="#id39">Technicalities</a></h2>
+<h2><a class="toc-backref" href="#id36">Technicalities</a></h2>
 <div class="section" id="creating-a-reference-proxy">
-<h3>Creating a reference proxy</h3>
+<h3><a class="toc-backref" href="#id37">Creating a reference proxy</a></h3>
 <p>Sometimes it is necessary to create a proxy class that represents a
 reference to a given object. Examples of these are GIL&#8217;s reference to
 a planar pixel (<tt class="docutils literal"><span class="pre">planar_pixel_reference</span></tt>) and GIL&#8217;s sub-byte channel
@@ -2876,9 +2947,8 @@ function that takes a mutable pixel:</p>
 </pre></div>
 </div>
 <p>C++ does not allow for matching a temporary object against a
-non-constant reference. The solution is to:</p>
-<ul>
-<li><p class="first">Use const qualifier on all members of the reference proxy object:</p>
+non-constant reference. The solution is to:
+- Use const qualifier on all members of the reference proxy object:</p>
 <div class="highlight-c++"><div class="highlight"><pre><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
 <span class="k">struct</span> <span class="n">my_reference_proxy</span>
 <span class="p">{</span>
@@ -2888,7 +2958,7 @@ non-constant reference. The solution is to:</p>
 <span class="p">};</span>
 </pre></div>
 </div>
-</li>
+<ul>
 <li><p class="first">Use different classes to denote mutable and constant reference
 (maybe based on the constness of the template parameter)</p>
 </li>
@@ -2927,7 +2997,7 @@ suggesting the above solution.</p>
 </div>
 </div>
 <div class="section" id="conclusion">
-<h2><a class="toc-backref" href="#id40">Conclusion</a></h2>
+<h2><a class="toc-backref" href="#id38">Conclusion</a></h2>
 <p>The Generic Image Library is designed with the following five goals in
 mind:</p>
 <table class="docutils field-list" frame="void" rules="none">

@@ -1,9 +1,14 @@
 Design Guide
 ============
 
+This document describes the design of the Generic Image Library, a C++
+image-processing library that abstracts image representation from
+algorithms on images.  It covers more than you need to know for a
+causal use of GIL. You can find a quick, jump-start GIL tutorial on
+the main GIL page at http://stlab.adobe.com/gil
+
 .. contents::
    :local:
-   :depth: 1
 
 Overview
 --------
@@ -23,22 +28,21 @@ together in memory and interleaving all channels together, whereas
 4x3 RGB image in which the second pixel of the first row is marked in
 red, in interleaved form:
 
-.. image:: images/interleaved.jpg
+.. image:: interleaved.jpg
 
 and in planar form:
 
-.. image:: images/planar.jpg
+.. image:: planar.jpg
 
 Note also that rows may optionally be aligned resulting in a potential
 padding at the end of rows.
 
 The Generic Image Library (GIL) provides models for images that vary in:
-
-* Structure (planar vs. interleaved)
-* Color space and presence of alpha (RGB, RGBA, CMYK, etc.)
-* Channel depth (8-bit, 16-bit, etc.)
-* Order of channels (RGB vs. BGR, etc.)
-* Row alignment policy (no alignment, word-alignment, etc.)
+- Structure (planar vs. interleaved)
+- Color space and presence of alpha (RGB, RGBA, CMYK, etc.)
+- Channel depth (8-bit, 16-bit, etc.)
+- Order of channels (RGB vs. BGR, etc.)
+- Row alignment policy (no alignment, word-alignment, etc.)
 
 It also supports user-defined models of images, and images whose
 parameters are specified at run-time.  GIL abstracts image
@@ -149,17 +153,13 @@ GIL uses a two-dimensional point, which is a refinement of
     value_type x,y;
   };
 
-Related Concepts
-~~~~~~~~~~~~~~~~
+:Related Concepts:
+   - ``PointNDConcept``
+   - ``Point2DConcept``
 
-- `PointNDConcept`
-- `Point2DConcept`
-
-Models
-~~~~~~
-
-GIL provides a model of ``Point2DConcept``, ``point2<T>`` where
-``T`` is the coordinate type.
+:Models:
+   GIL provides a model of ``Point2DConcept``, ``point2<T>`` where
+   ``T`` is the coordinate type.
 
 Channel
 -------
@@ -235,17 +235,13 @@ not have a default constructor.
 Note also that algorithms may impose additional requirements on
 channels, such as support for arithmetic operations.
 
-Related Concepts
-~~~~~~~~~~~~~~~~
+:Related Concepts:
 
-- `ChannelConcept<T>`
-- `ChannelValueConcept<T>`
-- `MutableChannelConcept<T>`
-- `ChannelsCompatibleConcept<T1,T2>`
-- `ChannelConvertibleConcept<SrcChannel,DstChannel>`
-
-Models
-~~~~~~
+- ChannelConcept\<T>
+- ChannelValueConcept\<T>
+- MutableChannelConcept\<T>
+- ChannelsCompatibleConcept\<T1,T2>
+- ChannelConvertibleConcept\<SrcChannel,DstChannel>
 
 All built-in integral and floating point types are valid channels. GIL
 provides standard type aliases for some integral channels::
@@ -354,28 +350,39 @@ operations.  Here are the channel-level algorithms that GIL provides::
 Color Space and Layout
 ----------------------
 
-A color space captures the set and interpretation of channels
-comprising a pixel. It is an MPL random access sequence containing the
-types of all elements in the color space. Two color spaces are
-considered *compatible* if they are equal (i.e. have the same set of
-colors in the same order).
+A color space captures the set and interpretation of channels comprising
+a pixel. In Boost.GIL, color space is defined as an MPL random access
+sequence containing the types of all elements in the color space.
 
-Related Concepts
-~~~~~~~~~~~~~~~~
+Two color spaces are considered *compatible* if they are equal
+(i.e. have the same set of colors in the same order).
 
-- `ColorSpaceConcept<ColorSpace>`
-- `ColorSpacesCompatibleConcept<ColorSpace1,ColorSpace2>`
-- `ChannelMappingConcept<Mapping>`
+:Related Concepts:
 
-Models
-~~~~~~
+- ColorSpaceConcept\<ColorSpace>
+- ColorSpacesCompatibleConcept\<ColorSpace1,ColorSpace2>
+- ChannelMappingConcept\<Mapping>
 
-GIL currently provides the following color spaces: ``gray_t``,
-``rgb_t``, ``rgba_t``, and ``cmyk_t``. It also provides unnamed
-N-channel color spaces of two to five channels, ``devicen_t<2>``,
-``devicen_t<3>``, ``devicen_t<4>``, ``devicen_t<5>``. Besides the
-standard layouts, it provides ``bgr_layout_t``, ``bgra_layout_t``,
-``abgr_layout_t`` and ``argb_layout_t``.
+GIL currently provides the following color spaces:
+
+- ``gray_t``
+- ``rgb_t``
+- ``rgba_t``
+- ``cmyk_t``
+
+It also provides unnamed N-channel color spaces of two to five channels:
+
+- ``devicen_t<2>``
+- ``devicen_t<3>``
+- ``devicen_t<4>``
+- ``devicen_t<5>``
+
+Besides the standard layouts, it also provides:
+
+- ``bgr_layout_t``
+- ``bgra_layout_t``
+- ``abgr_layout_t``
+- ``argb_layout_t``
 
 As an example, here is how GIL defines the RGBA color space::
 
@@ -389,10 +396,13 @@ The ordering of the channels in the color space definition specifies
 their semantic order. For example, ``red_t`` is the first semantic
 channel of ``rgba_t``.  While there is a unique semantic ordering of
 the channels in a color space, channels may vary in their physical
-ordering in memory. The mapping of channels is specified by
-``ChannelMappingConcept``, which is an MPL random access sequence of
-integral types. A color space and its associated mapping are often
-used together.  Thus they are grouped in GIL's layout::
+ordering in memory
+
+The mapping of channels is specified by ``ChannelMappingConcept``,
+which is an MPL random access sequence of integral types.
+A color space and its associated mapping are often used together.
+
+Thus they are grouped in GIL's layout::
 
   template <typename ColorSpace, 
           typename ChannelMapping = mpl::range_c<int,0,mpl::size<ColorSpace>::value> >
@@ -408,7 +418,6 @@ Here is how to create layouts for the RGBA color space::
   typedef layout<rgba_t, mpl::vector4_c<int,2,1,0,3> > bgra_layout_t;
   typedef layout<rgba_t, mpl::vector4_c<int,1,2,3,0> > argb_layout_t;
   typedef layout<rgba_t, mpl::vector4_c<int,3,2,1,0> > abgr_layout_t;
-
 
 Color Base
 ----------
@@ -504,9 +513,6 @@ semantic element.
 
 Two color bases are *compatible* if they have the same color space and
 their elements (paired semantically) are convertible to each other.
-
-Models
-~~~~~~
 
 GIL provides a model for a homogeneous color base (a color base whose
 elements all have the same type). ::
@@ -741,21 +747,18 @@ The distinction between ``PixelConcept`` and ``PixelValueConcept`` is
 analogous to that for channels and color bases - pixel reference
 proxies model both, but only pixel values model the latter.
 
-Related Concepts
-~~~~~~~~~~~~~~~~
+:Related Concepts:
 
-- `PixelBasedConcept<P>`
-- `PixelConcept<Pixel>`
-- `MutablePixelConcept<Pixel>`
-- `PixelValueConcept<Pixel>`
-- `HomogeneousPixelConcept<Pixel>`
-- `MutableHomogeneousPixelConcept<Pixel>`
-- `HomogeneousPixelValueConcept<Pixel>`
-- `PixelsCompatibleConcept<Pixel1, Pixel2>`
-- `PixelConvertibleConcept<SrcPixel, DstPixel>`
+- PixelBasedConcept
+- PixelConcept
+- MutablePixelConcept
+- PixelValueConcept
+- HomogeneousPixelConcept
+- MutableHomogeneousPixelConcept
+- HomogeneousPixelValueConcept
+- PixelsCompatibleConcept
+- PixelConvertibleConcept
 
-Models
-~~~~~~
 
 The most commonly used pixel is a homogeneous pixel whose values are
 together in memory.  For this purpose GIL provides the struct
@@ -852,9 +855,6 @@ pixels and pixel iterators::
   }
   // Result: 0x60 0x30 0x11 0x0C 0x06 0x83 0xC1
 
-Algorithms
-~~~~~~~~~~
-
 Since pixels model ``ColorBaseConcept`` and ``PixelBasedConcept`` all
 algorithms and metafunctions of color bases can work with them as
 well::
@@ -925,14 +925,10 @@ iterators or adaptors over another pixel iterator::
   template <typename Iterator>
   concept MutablePixelIteratorConcept : PixelIteratorConcept<Iterator>, MutableRandomAccessIteratorConcept<Iterator> {};
 
-Related Concepts
-++++++++++++++++
+:Related Concepts:
 
-- `PixelIteratorConcept<Iterator>`
-- `MutablePixelIteratorConcept<Iterator>`
-
-Models
-++++++
+- PixelIteratorConcept\<Iterator>
+- MutablePixelIteratorConcept\<Iterator>
 
 A built-in pointer to pixel, ``pixel<ChannelValue,Layout>*``, is GIL's
 model for pixel iterator over interleaved homogeneous pixels.
@@ -1004,27 +1000,22 @@ to another base iterator::
   template <boost_concepts::Mutable_ForwardIteratorConcept Iterator>
   concept MutableIteratorAdaptorConcept : IteratorAdaptorConcept<Iterator> {};
 
-Related Concepts
-++++++++++++++++
+:Related Concepts:
 
-- `IteratorAdaptorConcept<Iterator>`
-- `MutableIteratorAdaptorConcept<Iterator>`
-
-Models
-++++++
+- IteratorAdaptorConcept\<Iterator>
+- MutableIteratorAdaptorConcept\<Iterator>
 
 GIL provides several models of ``IteratorAdaptorConcept``:
-
-* ``memory_based_step_iterator<Iterator>``: An iterator adaptor that
+- ``memory_based_step_iterator<Iterator>``: An iterator adaptor that
   changes the fundamental step of the base iterator (see \ref
   StepIteratorDG)
-* ``dereference_iterator_adaptor<Iterator,Fn>``: An iterator that
-  applies a unary function ``Fn`` upon dereferencing. It is used, for
-  example, for on-the-fly color conversion. It can be used to construct
-  a shallow image "view" that pretends to have a different color space
-  or channel depth. See \ref ImageViewFrowImageViewDG for more. The
-  unary function ``Fn`` must model ``PixelDereferenceAdaptorConcept``
-  (see below).
+- ``dereference_iterator_adaptor<Iterator,Fn>``: An iterator that
+applies a unary function ``Fn`` upon dereferencing. It is used, for
+example, for on-the-fly color conversion. It can be used to construct
+a shallow image "view" that pretends to have a different color space
+or channel depth. See \ref ImageViewFrowImageViewDG for more. The
+unary function ``Fn`` must model ``PixelDereferenceAdaptorConcept``
+(see below).
 
 Pixel Dereference Adaptor
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1046,16 +1037,12 @@ to ``PixelConcept`` ::
     where Convertible<value_type, result_type>;
   };
 
-Models
-++++++
-
 GIL provides several models of ``PixelDereferenceAdaptorConcept``:
-
-* ``color_convert_deref_fn``: a function object that performs color
+- ``color_convert_deref_fn``: a function object that performs color
   conversion
-* ``detail::nth_channel_deref_fn``: a function object that returns a
+- ``detail::nth_channel_deref_fn``: a function object that returns a
   grayscale pixel corresponding to the n-th channel of a given pixel
-* ``deref_compose``: a function object that composes two models of
+- ``deref_compose``: a function object that composes two models of
   ``PixelDereferenceAdaptorConcept``. Similar to
   ``std::unary_compose``, except it needs to pull the additional
   typedefs required by ``PixelDereferenceAdaptorConcept``
@@ -1075,12 +1062,11 @@ Step Iterator
 Sometimes we want to traverse pixels with a unit step other than the
 one provided by the fundamental pixel iterators.  Examples where this
 would be useful:
-
-* a single-channel view of the red channel of an RGB interleaved image
-* left-to-right flipped image (step = -fundamental_step)
-* subsampled view, taking every N-th pixel (step = N*fundamental_step)
-* traversal in vertical direction (step = number of bytes per row)
-* any combination of the above (steps are multiplied)
+- a single-channel view of the red channel of an RGB interleaved image
+- left-to-right flipped image (step = -fundamental_step)
+- subsampled view, taking every N-th pixel (step = N*fundamental_step)
+- traversal in vertical direction (step = number of bytes per row)
+- any combination of the above (steps are multiplied)
 
 Step iterators are forward traversal iterators that allow changing the
 step between adjacent values::
@@ -1134,16 +1120,12 @@ horizontal step::
 All models of pixel iterators, locators and image views that GIL
 provides support ``HasDynamicXStepTypeConcept``.
 
-Related Concepts
-++++++++++++++++
+:Related Concepts:
 
-- `StepIteratorConcept<Iterator>`
-- `MutableStepIteratorConcept<Iterator>`
-- `MemoryBasedIteratorConcept<Iterator>`
-- `HasDynamicXStepTypeConcept<T>`
-
-Models
-++++++
+- StepIteratorConcept\<Iterator>
+- MutableStepIteratorConcept\<Iterator>
+- MemoryBasedIteratorConcept\<Iterator>
+- HasDynamicXStepTypeConcept\<T>
 
 All standard memory-based iterators GIL currently provides model
 ``MemoryBasedIteratorConcept``.  GIL provides the class
@@ -1307,20 +1289,16 @@ concept::
 
   concept MutablePixelLocatorConcept<PixelLocatorConcept Loc> : MutableRandomAccess2DLocatorConcept<Loc> {};
 
-Related Concepts
-++++++++++++++++
+:Related Concepts:
 
-- `HasDynamicYStepTypeConcept<T>`
-- `HasTransposedTypeConcept<T>`
-- `RandomAccessNDLocatorConcept<Locator>`
-- `MutableRandomAccessNDLocatorConcept<Locator>`
-- `RandomAccess2DLocatorConcept<Locator>`
-- `MutableRandomAccess2DLocatorConcept<Locator>`
-- `PixelLocatorConcept<Locator>`
-- `MutablePixelLocatorConcept<Locator>`
-
-Models
-++++++
+- HasDynamicYStepTypeConcept\<T>
+- HasTransposedTypeConcept\<T>
+- RandomAccessNDLocatorConcept\<Locator>
+- MutableRandomAccessNDLocatorConcept\<Locator>
+- RandomAccess2DLocatorConcept\<Locator>
+- MutableRandomAccess2DLocatorConcept\<Locator>
+- PixelLocatorConcept\<Locator>
+- MutablePixelLocatorConcept\<Locator>
 
 GIL provides two models of ``PixelLocatorConcept`` - a memory-based
 locator, ``memory_based_2d_locator`` and a virtual locator
@@ -1346,7 +1324,6 @@ that describe complex pixel memory organizations. First, we have a
 choice of iterator to use for horizontal direction, i.e. for iterating
 over the pixels on the same row.  Using the fundamental and step
 iterators gives us four choices:
-
 - ``pixel<T,C>*``                                    (for interleaved images)
 - ``planar_pixel_iterator<T*,C>``                    (for planar images)
 - ``memory_based_step_iterator<pixel<T,C>*>``    (for interleaved images with non-standard step)
@@ -1366,7 +1343,7 @@ Then we can instantiate
 ``memory_based_2d_locator<memory_based_step_iterator<XIterator> >`` to
 obtain a 2D pixel locator, as the diagram indicates:
 
-.. image:: images/step_iterator.gif
+.. image:: step_iterator.gif
 
 ``virtual_2d_locator`` is a locator that is instantiated with a
 function object invoked upon dereferencing a pixel. It returns the
@@ -1580,19 +1557,15 @@ Compatible views must also have the same dimensions (i.e. the same
 width and height). Many algorithms taking multiple views require that
 they be pairwise compatible.
 
-Related Concepts
-~~~~~~~~~~~~~~~~
+:Related Concepts:
 
-- `RandomAccessNDImageViewConcept<View>`
-- `MutableRandomAccessNDImageViewConcept<View>`
-- `RandomAccess2DImageViewConcept<View>`
-- `MutableRandomAccess2DImageViewConcept<View>`
-- `ImageViewConcept<View>`
-- `MutableImageViewConcept<View>`
-- `ViewsCompatibleConcept<View1,View2>`
-
-Models
-~~~~~~
+- RandomAccessNDImageViewConcept\<View>
+- MutableRandomAccessNDImageViewConcept\<View>
+- RandomAccess2DImageViewConcept\<View>
+- MutableRandomAccess2DImageViewConcept\<View>
+- ImageViewConcept\<View>
+- MutableImageViewConcept\<View>
+- ViewsCompatibleConcept\<View1,View2>
 
 GIL provides a model for ``ImageViewConcept`` called
 ``image_view``. It is templated over a model of
@@ -1618,11 +1591,8 @@ typically 16 bytes long - two integers for the width and height
 (inside the locator) and one pointer to the beginning of the pixel
 block.
 
-Algorithms
-~~~~~~~~~~
-
 Creating Views from Raw Pixels
-++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Standard image views can be constructed from raw data of any supported
 color space, bit depth, channel ordering or planar vs. interleaved
@@ -1645,7 +1615,7 @@ Note that the supplied pixel/channel iterators could be constant
 (immutable) view.
 
 Creating Image Views from Other Image Views
-+++++++++++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 It is possible to construct one image view from another by changing
 some policy of how image data is interpreted. The result could be a
@@ -1744,7 +1714,7 @@ views over the pixel data. The above code does not copy any pixels; it
 operates on the pixel data allocated when ``img`` was created.
 
 STL-Style Algorithms on Image Views
-+++++++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Image views provide 1D iteration of their pixels via begin() and end()
 methods, which makes it possible to use STL algorithms with
@@ -1913,15 +1883,11 @@ GIL's images have views that model ``ImageViewConcept`` and operate on pixels.::
 Images, unlike locators and image views, don't have 'mutable' set of
 concepts because immutable images are not very useful.
 
-Related Concepts
-~~~~~~~~~~~~~~~~
+:Related Concepts:
 
-- `RandomAccessNDImageConcept<Image>`
-- `RandomAccess2DImageConcept<Image>`
-- `ImageConcept<Image>`
-
-Models
-~~~~~~
+- RandomAccessNDImageConcept\<Image>
+- RandomAccess2DImageConcept\<Image>
+- ImageConcept\<Image>
 
 GIL provides a class, ``image``, which is templated over the value
 type (the pixel) and models ``ImageConcept``::
@@ -2679,7 +2645,7 @@ The following code illustrates the power of using image views::
 
 The intermediate images are shown here:
 
-.. image:: images/monkey_steps.jpg
+.. image:: monkey_steps.jpg
 
 Notice that no pixels are ever copied. All the work is done inside
 ``jpeg_write_view``.  If we call our ``luminosity_histogram`` with
@@ -2865,8 +2831,7 @@ function that takes a mutable pixel::
 
 C++ does not allow for matching a temporary object against a
 non-constant reference. The solution is to:
-
-* Use const qualifier on all members of the reference proxy object::
+- Use const qualifier on all members of the reference proxy object::
 
     template <typename T>
     struct my_reference_proxy
@@ -2876,10 +2841,10 @@ non-constant reference. The solution is to:
       ...
     };
 
-* Use different classes to denote mutable and constant reference
+- Use different classes to denote mutable and constant reference
   (maybe based on the constness of the template parameter)
 
-* Define the reference type of your iterator with const qualifier::
+- Define the reference type of your iterator with const qualifier::
 
     struct iterator_traits<rgb_planar_pixel_iterator>
     {
