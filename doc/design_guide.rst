@@ -76,7 +76,7 @@ http://www.generic-programming.org/languages/conceptcpp/concept_web.php
 
   auto concept DefaultConstructible<typename T>
   {
-    T::T();    
+    T::T();
   };
 
   auto concept CopyConstructible<typename T>
@@ -88,12 +88,12 @@ http://www.generic-programming.org/languages/conceptcpp/concept_web.php
   auto concept Assignable<typename T, typename U = T>
   {
     typename result_type;
-    result_type operator=(T&, U);    
+    result_type operator=(T&, U);
   };
 
   auto concept EqualityComparable<typename T, typename U = T>
   {
-    bool operator==(T x, T y);    
+    bool operator==(T x, T y);
     bool operator!=(T x, T y) { return !(x==y); }
   };
 
@@ -122,12 +122,12 @@ be used to describe the dimensions of an image.  In most general
 terms, points are N-dimensional and model the following concept::
 
   concept PointNDConcept<typename T> : Regular<T>
-  {    
+  {
     // the type of a coordinate along each axis
     template <size_t K> struct axis; where Metafunction<axis>;
-            
+
     const size_t num_dimensions;
-    
+
     // accessor/modifier of the value of each axis.
     template <size_t K> const typename axis<K>::type& T::axis_value() const;
     template <size_t K>       typename axis<K>::type& T::axis_value();
@@ -137,7 +137,7 @@ GIL uses a two-dimensional point, which is a refinement of
 ``PointNDConcept`` in which both dimensions are of the same type::
 
   concept Point2DConcept<typename T> : PointNDConcept<T>
-  {    
+  {
     where num_dimensions == 2;
     where SameType<axis<0>::type, axis<1>::type>;
 
@@ -186,7 +186,7 @@ concept::
 
   concept MutableChannelConcept<ChannelConcept T> : Swappable<T>, Assignable<T> {};
 
-  concept ChannelValueConcept<ChannelConcept T> : Regular<T> {}; 
+  concept ChannelValueConcept<ChannelConcept T> : Regular<T> {};
 
 GIL allows built-in integral and floating point types to be
 channels. Therefore the associated types and range information are
@@ -201,12 +201,12 @@ implementation::
     typedef T*        pointer;
     typedef T& const  const_reference;
     typedef T* const  const_pointer;
-    
+
     static value_type min_value() { return std::numeric_limits<T>::min(); }
     static value_type max_value() { return std::numeric_limits<T>::max(); }
   };
 
-Two channel types are *compatible* if they have the same value type:: 
+Two channel types are *compatible* if they have the same value type::
 
   concept ChannelsCompatibleConcept<ChannelConcept T1, ChannelConcept T2>
   {
@@ -275,14 +275,14 @@ GIL also provides models for channels corresponding to ranges of bits::
   template <int NumBits> class packed_channel_value;
 
   // Reference to a channel defined over NumBits bits. Models ChannelConcept
-  template <int FirstBit, 
-          int NumBits,       // Defines the sequence of bits in the data value that contain the channel 
-          bool Mutable>      // true if the reference is mutable 
+  template <int FirstBit,
+          int NumBits,       // Defines the sequence of bits in the data value that contain the channel
+          bool Mutable>      // true if the reference is mutable
   class packed_channel_reference;
 
   // Reference to a channel defined over NumBits bits. Its FirstBit is a run-time parameter. Models ChannelConcept
-  template <int NumBits,       // Defines the sequence of bits in the data value that contain the channel 
-          bool Mutable>      // true if the reference is mutable 
+  template <int NumBits,       // Defines the sequence of bits in the data value that contain the channel
+          bool Mutable>      // true if the reference is mutable
   class packed_dynamic_channel_reference;
 
 Note that there are two models of a reference proxy which differ based
@@ -338,8 +338,8 @@ All channel models that GIL provides are convertible from/to an
 integral or floating point type. Thus they support arithmetic
 operations.  Here are the channel-level algorithms that GIL provides::
 
-  // Converts a source channel value into a destination channel. Linearly maps the value of the source
-  // into the range of the destination
+  // Converts a source channel value into a destination channel.
+  // Linearly maps the value of the source into the range of the destination.
   template <typename DstChannel, typename SrcChannel>
   typename channel_traits<DstChannel>::value_type channel_convert(SrcChannel src);
 
@@ -412,7 +412,7 @@ A color space and its associated mapping are often used together.
 
 Thus they are grouped in GIL's layout::
 
-  template <typename ColorSpace, 
+  template <typename ColorSpace,
           typename ChannelMapping = mpl::range_c<int,0,mpl::size<ColorSpace>::value> >
   struct layout
   {
@@ -445,22 +445,22 @@ Color base models must satisfy the following concepts::
   {
     // a GIL layout (the color space and element permutation)
     typename layout_t;
-        
+
     // The type of K-th element
     template <int K> struct kth_element_type;
         where Metafunction<kth_element_type>;
-    
+
     // The result of at_c
     template <int K> struct kth_element_const_reference_type;
-        where Metafunction<kth_element_const_reference_type>;        
-    
+        where Metafunction<kth_element_const_reference_type>;
+
     template <int K> kth_element_const_reference_type<T,K>::type at_c(T);
-    
-    template <ColorBaseConcept T2> where { ColorBasesCompatibleConcept<T,T2> } 
+
+    template <ColorBaseConcept T2> where { ColorBasesCompatibleConcept<T,T2> }
         T::T(T2);
-    template <ColorBaseConcept T2> where { ColorBasesCompatibleConcept<T,T2> } 
+    template <ColorBaseConcept T2> where { ColorBasesCompatibleConcept<T,T2> }
         bool operator==(const T&, const T2&);
-    template <ColorBaseConcept T2> where { ColorBasesCompatibleConcept<T,T2> } 
+    template <ColorBaseConcept T2> where { ColorBasesCompatibleConcept<T,T2> }
         bool operator!=(const T&, const T2&);
 
   };
@@ -471,8 +471,8 @@ Color base models must satisfy the following concepts::
         where Metafunction<kth_element_reference_type>;
 
     template <int K> kth_element_reference_type<T,K>::type at_c(T);
-    
-    template <ColorBaseConcept T2> where { ColorBasesCompatibleConcept<T,T2> } 
+
+    template <ColorBaseConcept T2> where { ColorBasesCompatibleConcept<T,T2> }
         T& operator=(T&, const T2&);
   };
 
@@ -483,7 +483,7 @@ Color base models must satisfy the following concepts::
   concept HomogeneousColorBaseConcept<ColorBaseConcept CB>
   {
     // For all K in [0 ... size<C1>::value-1):
-    //     where SameType<kth_element_type<K>::type, kth_element_type<K+1>::type>;    
+    //     where SameType<kth_element_type<K>::type, kth_element_type<K+1>::type>;
     kth_element_const_reference_type<0>::type dynamic_at_c(const CB&, std::size_t n) const;
   };
 
@@ -552,21 +552,21 @@ color bases::
   template <class ColorBase, int K> struct kth_semantic_element_const_reference_type;
 
   // Returns a reference to the element with K-th semantic index.
-  template <class ColorBase, int K> 
-  typename kth_semantic_element_reference_type<ColorBase,K>::type       semantic_at_c(ColorBase& p) 
-  template <class ColorBase, int K> 
-  typename kth_semantic_element_const_reference_type<ColorBase,K>::type semantic_at_c(const ColorBase& p) 
+  template <class ColorBase, int K>
+  typename kth_semantic_element_reference_type<ColorBase,K>::type       semantic_at_c(ColorBase& p)
+  template <class ColorBase, int K>
+  typename kth_semantic_element_const_reference_type<ColorBase,K>::type semantic_at_c(const ColorBase& p)
 
   // Returns the type of the return value of get_color<Color>(color_base)
   template <typename Color, typename ColorBase> struct color_reference_t;
   template <typename Color, typename ColorBase> struct color_const_reference_t;
 
   // Returns a reference to the element corresponding to the given color
-  template <typename ColorBase, typename Color> 
+  template <typename ColorBase, typename Color>
   typename color_reference_t<Color,ColorBase>::type get_color(ColorBase& cb, Color=Color());
-  template <typename ColorBase, typename Color> 
+  template <typename ColorBase, typename Color>
   typename color_const_reference_t<Color,ColorBase>::type get_color(const ColorBase& cb, Color=Color());
-  
+
   // Returns the element type of the color base. Defined for homogeneous color bases only
   template <typename ColorBase> struct element_type;
   template <typename ColorBase> struct element_reference_type;
@@ -581,29 +581,29 @@ bases. Note that they all pair the elements semantically::
   template <typename CB, typename Op>    void static_generate(CB& dst,Op op);
 
   // Equivalents to std::transform
-  template <typename CB ,             typename Dst,typename Op> Op static_transform(      CB&,Dst&,Op); 
-  template <typename CB ,             typename Dst,typename Op> Op static_transform(const CB&,Dst&,Op); 
-  template <typename CB1,typename CB2,typename Dst,typename Op> Op static_transform(      CB1&,      CB2&,Dst&,Op); 
-  template <typename CB1,typename CB2,typename Dst,typename Op> Op static_transform(const CB1&,      CB2&,Dst&,Op); 
-  template <typename CB1,typename CB2,typename Dst,typename Op> Op static_transform(      CB1&,const CB2&,Dst&,Op); 
-  template <typename CB1,typename CB2,typename Dst,typename Op> Op static_transform(const CB1&,const CB2&,Dst&,Op); 
+  template <typename CB ,             typename Dst,typename Op> Op static_transform(      CB&,Dst&,Op);
+  template <typename CB ,             typename Dst,typename Op> Op static_transform(const CB&,Dst&,Op);
+  template <typename CB1,typename CB2,typename Dst,typename Op> Op static_transform(      CB1&,      CB2&,Dst&,Op);
+  template <typename CB1,typename CB2,typename Dst,typename Op> Op static_transform(const CB1&,      CB2&,Dst&,Op);
+  template <typename CB1,typename CB2,typename Dst,typename Op> Op static_transform(      CB1&,const CB2&,Dst&,Op);
+  template <typename CB1,typename CB2,typename Dst,typename Op> Op static_transform(const CB1&,const CB2&,Dst&,Op);
 
   // Equivalents to std::for_each
-  template <typename CB1,                          typename Op> Op static_for_each(      CB1&,Op); 
-  template <typename CB1,                          typename Op> Op static_for_each(const CB1&,Op); 
-  template <typename CB1,typename CB2,             typename Op> Op static_for_each(      CB1&,      CB2&,Op); 
-  template <typename CB1,typename CB2,             typename Op> Op static_for_each(      CB1&,const CB2&,Op); 
-  template <typename CB1,typename CB2,             typename Op> Op static_for_each(const CB1&,      CB2&,Op); 
-  template <typename CB1,typename CB2,             typename Op> Op static_for_each(const CB1&,const CB2&,Op); 
-  template <typename CB1,typename CB2,typename CB3,typename Op> Op static_for_each(      CB1&,      CB2&,      CB3&,Op); 
-  template <typename CB1,typename CB2,typename CB3,typename Op> Op static_for_each(      CB1&,      CB2&,const CB3&,Op); 
-  template <typename CB1,typename CB2,typename CB3,typename Op> Op static_for_each(      CB1&,const CB2&,      CB3&,Op); 
-  template <typename CB1,typename CB2,typename CB3,typename Op> Op static_for_each(      CB1&,const CB2&,const CB3&,Op); 
-  template <typename CB1,typename CB2,typename CB3,typename Op> Op static_for_each(const CB1&,      CB2&,      CB3&,Op); 
-  template <typename CB1,typename CB2,typename CB3,typename Op> Op static_for_each(const CB1&,      CB2&,const CB3&,Op); 
-  template <typename CB1,typename CB2,typename CB3,typename Op> Op static_for_each(const CB1&,const CB2&,      CB3&,Op); 
-  template <typename CB1,typename CB2,typename CB3,typename Op> Op static_for_each(const CB1&,const CB2&,const CB3&,Op); 
-  
+  template <typename CB1,                          typename Op> Op static_for_each(      CB1&,Op);
+  template <typename CB1,                          typename Op> Op static_for_each(const CB1&,Op);
+  template <typename CB1,typename CB2,             typename Op> Op static_for_each(      CB1&,      CB2&,Op);
+  template <typename CB1,typename CB2,             typename Op> Op static_for_each(      CB1&,const CB2&,Op);
+  template <typename CB1,typename CB2,             typename Op> Op static_for_each(const CB1&,      CB2&,Op);
+  template <typename CB1,typename CB2,             typename Op> Op static_for_each(const CB1&,const CB2&,Op);
+  template <typename CB1,typename CB2,typename CB3,typename Op> Op static_for_each(      CB1&,      CB2&,      CB3&,Op);
+  template <typename CB1,typename CB2,typename CB3,typename Op> Op static_for_each(      CB1&,      CB2&,const CB3&,Op);
+  template <typename CB1,typename CB2,typename CB3,typename Op> Op static_for_each(      CB1&,const CB2&,      CB3&,Op);
+  template <typename CB1,typename CB2,typename CB3,typename Op> Op static_for_each(      CB1&,const CB2&,const CB3&,Op);
+  template <typename CB1,typename CB2,typename CB3,typename Op> Op static_for_each(const CB1&,      CB2&,      CB3&,Op);
+  template <typename CB1,typename CB2,typename CB3,typename Op> Op static_for_each(const CB1&,      CB2&,const CB3&,Op);
+  template <typename CB1,typename CB2,typename CB3,typename Op> Op static_for_each(const CB1&,const CB2&,      CB3&,Op);
+  template <typename CB1,typename CB2,typename CB3,typename Op> Op static_for_each(const CB1&,const CB2&,const CB3&,Op);
+
   // The following algorithms are only defined for homogeneous color bases:
   // Equivalent to std::fill
   template <typename HCB, typename Element> void static_fill(HCB& p, const Element& v);
@@ -627,9 +627,9 @@ memory. For example, here is the implementation of ``static_equal``::
     {
       template <typename P1,typename P2>
       static bool static_equal(const P1& p1, const P2& p2)
-      { 
+      {
         return element_recursion<K-1>::static_equal(p1,p2) &&
-               semantic_at_c<K-1>(p1)==semantic_at_c<N-1>(p2); 
+               semantic_at_c<K-1>(p1)==semantic_at_c<N-1>(p2);
       }
     };
     template <> struct element_recursion<0>
@@ -642,8 +642,8 @@ memory. For example, here is the implementation of ``static_equal``::
   template <typename P1,typename P2>
   bool static_equal(const P1& p1, const P2& p2)
   {
-    gil_function_requires<ColorSpacesCompatibleConcept<P1::layout_t::color_space_t,P2::layout_t::color_space_t> >(); 
-    return detail::element_recursion<size<P1>::value>::static_equal(p1,p2); 
+    gil_function_requires<ColorSpacesCompatibleConcept<P1::layout_t::color_space_t,P2::layout_t::color_space_t> >();
+    return detail::element_recursion<size<P1>::value>::static_equal(p1,p2);
   }
 
 This algorithm is used when invoking ``operator==`` on two pixels, for
@@ -677,11 +677,11 @@ access their color space, channel mapping, number of channels, and
 
   concept PixelBasedConcept<typename T>
   {
-    typename color_space_type<T>;     
+    typename color_space_type<T>;
         where Metafunction<color_space_type<T> >;
         where ColorSpaceConcept<color_space_type<T>::type>;
-    typename channel_mapping_type<T>; 
-        where Metafunction<channel_mapping_type<T> >;  
+    typename channel_mapping_type<T>;
+        where Metafunction<channel_mapping_type<T> >;
         where ChannelMappingConcept<channel_mapping_type<T>::type>;
     typename is_planar<T>;
         where Metafunction<is_planar<T> >;
@@ -690,7 +690,7 @@ access their color space, channel mapping, number of channels, and
 
   concept HomogeneousPixelBasedConcept<PixelBasedConcept T>
   {
-    typename channel_type<T>;         
+    typename channel_type<T>;
         where Metafunction<channel_type<T> >;
         where ChannelConcept<channel_type<T>::type>;
   };
@@ -702,19 +702,19 @@ Pixels model the following concepts::
     where is_pixel<P>::type::value==true;
     // where for each K [0..size<P>::value-1]:
     //      ChannelConcept<kth_element_type<K> >;
-        
+
     typename value_type;       where PixelValueConcept<value_type>;
     typename reference;        where PixelConcept<reference>;
     typename const_reference;  where PixelConcept<const_reference>;
     static const bool P::is_mutable;
 
-    template <PixelConcept P2> where { PixelConcept<P,P2> } 
+    template <PixelConcept P2> where { PixelConcept<P,P2> }
         P::P(P2);
-    template <PixelConcept P2> where { PixelConcept<P,P2> } 
+    template <PixelConcept P2> where { PixelConcept<P,P2> }
         bool operator==(const P&, const P2&);
-    template <PixelConcept P2> where { PixelConcept<P,P2> } 
+    template <PixelConcept P2> where { PixelConcept<P,P2> }
         bool operator!=(const P&, const P2&);
-  }; 
+  };
 
   concept MutablePixelConcept<typename P> : PixelConcept<P>, MutableColorBaseConcept<P>
   {
@@ -722,19 +722,19 @@ Pixels model the following concepts::
   };
 
   concept HomogeneousPixelConcept<PixelConcept P> : HomogeneousColorBaseConcept<P>, HomogeneousPixelBasedConcept<P>
-  { 
+  {
     P::template element_const_reference_type<P>::type operator[](P p, std::size_t i) const { return dynamic_at_c(P,i); }
   };
 
   concept MutableHomogeneousPixelConcept<MutablePixelConcept P> : MutableHomogeneousColorBaseConcept<P>
-  { 
+  {
     P::template element_reference_type<P>::type operator[](P p, std::size_t i) { return dynamic_at_c(p,i); }
   };
 
   concept PixelValueConcept<typename P> : PixelConcept<P>, Regular<P>
   {
     where SameType<value_type,P>;
-  };    
+  };
 
   concept PixelsCompatibleConcept<PixelConcept P1, PixelConcept P2> : ColorBasesCompatibleConcept<P1,P2>
   {
@@ -852,13 +852,13 @@ pixels and pixel iterators::
   typedef bit_aligned_pixel_iterator<bgr232_ref_t> bgr232_ptr_t;
 
   // BGR232 pixel value. It is a packed_pixel of size 1 byte. (The last bit is unused)
-  typedef std::iterator_traits<bgr232_ptr_t>::value_type bgr232_pixel_t; 
+  typedef std::iterator_traits<bgr232_ptr_t>::value_type bgr232_pixel_t;
   BOOST_STATIC_ASSERT((sizeof(bgr232_pixel_t)==1));
 
   bgr232_pixel_t red(0,0,3); // = 0RRGGGBB, = 01100000 = 0x60
 
   // a buffer of 7 bytes fits exactly 8 BGR232 pixels.
-  unsigned char pix_buffer[7];    
+  unsigned char pix_buffer[7];
   std::fill(pix_buffer,pix_buffer+7,0);
 
   // Fill the 8 pixels with red
@@ -907,7 +907,7 @@ well::
   get_color(r565,red_t())   = channel_convert<rgb565_channel0_t>(get_color(rgb_full,red_t()));
   get_color(r565,green_t()) = channel_convert<rgb565_channel1_t>(get_color(rgb_full,green_t()));
   get_color(r565,blue_t())  = channel_convert<rgb565_channel2_t>(get_color(rgb_full,blue_t()));
-  assert(r565 == rgb565_pixel_t((uint16_t)65535));    
+  assert(r565 == rgb565_pixel_t((uint16_t)65535));
 
 GIL also provides the ``color_convert`` algorithm to convert between
 pixels of different color spaces and channel types::
@@ -933,9 +933,9 @@ iterators or adaptors over another pixel iterator::
   concept PixelIteratorConcept<RandomAccessTraversalIteratorConcept Iterator> : PixelBasedConcept<Iterator>
   {
     where PixelValueConcept<value_type>;
-    typename const_iterator_type<It>::type;         
+    typename const_iterator_type<It>::type;
         where PixelIteratorConcept<const_iterator_type<It>::type>;
-    static const bool  iterator_is_mutable<It>::type::value;          
+    static const bool  iterator_is_mutable<It>::type::value;
     static const bool  is_iterator_adaptor<It>::type::value;   // is it an iterator adaptor
   };
 
@@ -980,7 +980,7 @@ planar iterators approximately like this::
   };
 
   template <typename ChannelPtr, typename ColorSpace>
-  planar_pixel_iterator<ChannelPtr,ColorSpace>& 
+  planar_pixel_iterator<ChannelPtr,ColorSpace>&
   planar_pixel_iterator<ChannelPtr,ColorSpace>::operator++()
   {
     static_transform(*this,*this,inc<ChannelPtr>());
@@ -1009,8 +1009,8 @@ to another base iterator::
     typename iterator_adaptor_get_base<Iterator>;
         where Metafunction<iterator_adaptor_get_base<Iterator> >;
         where boost_concepts::ForwardTraversalConcept<iterator_adaptor_get_base<Iterator>::type>;
-    
-    typename another_iterator; 
+
+    typename another_iterator;
     typename iterator_adaptor_rebind<Iterator,another_iterator>::type;
         where boost_concepts::ForwardTraversalConcept<another_iterator>;
         where IteratorAdaptorConcept<iterator_adaptor_rebind<Iterator,another_iterator>::type>;
@@ -1194,18 +1194,18 @@ it is unclear which dimension the operators should advance along.
 N-dimensional locators model the following concept::
 
   concept RandomAccessNDLocatorConcept<Regular Loc>
-  {    
+  {
     typename value_type;        // value over which the locator navigates
     typename reference;         // result of dereferencing
     typename difference_type; where PointNDConcept<difference_type>; // return value of operator-.
     typename const_t;           // same as Loc, but operating over immutable values
     typename cached_location_t; // type to store relative location (for efficient repeated access)
     typename point_t  = difference_type;
-    
+
     static const size_t num_dimensions; // dimensionality of the locator
     where num_dimensions = point_t::num_dimensions;
-    
-    // The difference_type and iterator type along each dimension. The iterators may only differ in 
+
+    // The difference_type and iterator type along each dimension. The iterators may only differ in
     // difference_type. Their value_type must be the same as Loc::value_type
     template <size_t D> struct axis {
         typename coord_t = point_t::axis<D>::coord_t;
@@ -1218,19 +1218,19 @@ N-dimensional locators model the following concept::
         typename type;        where RandomAccessNDLocatorConcept<type>;
         static type make(const Loc& loc, const Deref& deref);
     };
-    
+
     Loc& operator+=(Loc&, const difference_type&);
     Loc& operator-=(Loc&, const difference_type&);
     Loc operator+(const Loc&, const difference_type&);
     Loc operator-(const Loc&, const difference_type&);
-    
+
     reference operator*(const Loc&);
     reference operator[](const Loc&, const difference_type&);
- 
-    // Storing relative location for faster repeated access and accessing it   
+
+    // Storing relative location for faster repeated access and accessing it
     cached_location_t Loc::cache_location(const difference_type&) const;
     reference operator[](const Loc&,const cached_location_t&);
-    
+
     // Accessing iterators along a given dimension at the current location or at a given offset
     template <size_t D> axis<D>::iterator&       Loc::axis_iterator();
     template <size_t D> axis<D>::iterator const& Loc::axis_iterator() const;
@@ -1238,7 +1238,7 @@ N-dimensional locators model the following concept::
   };
 
   template <typename Loc>
-  concept MutableRandomAccessNDLocatorConcept : RandomAccessNDLocatorConcept<Loc> {    
+  concept MutableRandomAccessNDLocatorConcept : RandomAccessNDLocatorConcept<Loc> {
     where Mutable<reference>;
   };
 
@@ -1248,12 +1248,12 @@ Two-dimensional locators have additional requirements::
   {
     where num_dimensions==2;
     where Point2DConcept<point_t>;
-    
+
     typename x_iterator = axis<0>::iterator;
     typename y_iterator = axis<1>::iterator;
     typename x_coord_t  = axis<0>::coord_t;
     typename y_coord_t  = axis<1>::coord_t;
-    
+
     // Only available to locators that have dynamic step in Y
     //Loc::Loc(const Loc& loc, y_coord_t);
 
@@ -1261,14 +1261,14 @@ Two-dimensional locators have additional requirements::
     //Loc::Loc(const Loc& loc, x_coord_t, y_coord_t, bool transposed=false);
 
     x_iterator&       Loc::x();
-    x_iterator const& Loc::x() const;    
+    x_iterator const& Loc::x() const;
     y_iterator&       Loc::y();
-    y_iterator const& Loc::y() const;    
-    
+    y_iterator const& Loc::y() const;
+
     x_iterator Loc::x_at(const difference_type&) const;
     y_iterator Loc::y_at(const difference_type&) const;
     Loc Loc::xy_at(const difference_type&) const;
-    
+
     // x/y versions of all methods that can take difference type
     x_iterator        Loc::x_at(x_coord_t, y_coord_t) const;
     y_iterator        Loc::y_at(x_coord_t, y_coord_t) const;
@@ -1438,7 +1438,7 @@ when to do a "carriage return". Synopsis::
   {
   public:
     iterator_from_2d(const Locator& loc, int x, int width);
-    
+
     iterator_from_2d& operator++(); // if (++_x<_width) ++_p.x(); else _p+=point_t(-_width,1);
 
     ...
@@ -1483,7 +1483,7 @@ concept::
     typename point_t;  where PointNDConcept<point_t>; // N-dimensional point
     typename locator;  where RandomAccessNDLocatorConcept<locator>; // N-dimensional locator.
     typename iterator; where RandomAccessTraversalConcept<iterator>; // 1-dimensional iterator over all values
-    typename reverse_iterator; where RandomAccessTraversalConcept<reverse_iterator>; 
+    typename reverse_iterator; where RandomAccessTraversalConcept<reverse_iterator>;
     typename size_type;       // the return value of size()
 
     // Equivalent to RandomAccessNDLocatorConcept::axis
@@ -1501,10 +1501,10 @@ concept::
     };
 
     static const size_t num_dimensions = point_t::num_dimensions;
-    
+
     // Create from a locator at the top-left corner and dimensions
     View::View(const locator&, const point_type&);
-    
+
     size_type        View::size()       const; // total number of elements
     reference        operator[](View, const difference_type&) const; // 1-dimensional reference
     iterator         View::begin()      const;
@@ -1537,10 +1537,10 @@ Two-dimensional image views have the following extra requirements::
     typename x_coord_t  = axis<0>::coord_t;
     typename y_coord_t  = axis<1>::coord_t;
     typename xy_locator = locator;
-    
+
     x_coord_t View::width()  const;
     y_coord_t View::height() const;
-    
+
     // X-navigation
     x_iterator View::x_at(const point_t&) const;
     x_iterator View::row_begin(y_coord_t) const;
@@ -1550,11 +1550,11 @@ Two-dimensional image views have the following extra requirements::
     y_iterator View::y_at(const point_t&) const;
     y_iterator View::col_begin(x_coord_t) const;
     y_iterator View::col_end  (x_coord_t) const;
-       
+
     // navigating in 2D
     xy_locator View::xy_at(const point_t&) const;
 
-    // (x,y) versions of all methods taking point_t    
+    // (x,y) versions of all methods taking point_t
     View::View(x_coord_t,y_coord_t,const locator&);
     iterator View::at(x_coord_t,y_coord_t) const;
     reference operator()(View,x_coord_t,y_coord_t) const;
@@ -1572,10 +1572,10 @@ Image views that GIL typically uses operate on value types that model
   concept ImageViewConcept<RandomAccess2DImageViewConcept View>
   {
     where PixelValueConcept<value_type>;
-    where PixelIteratorConcept<x_iterator>;        
+    where PixelIteratorConcept<x_iterator>;
     where PixelIteratorConcept<y_iterator>;
     where x_coord_t == y_coord_t;
-    
+
     typename coord_t = x_coord_t;
 
     std::size_t View::num_channels() const;
@@ -1670,16 +1670,16 @@ view whose type is derived from the type of the source. GIL uses the
 following metafunctions to get the derived types::
 
   // Some result view types
-  template <typename View> 
+  template <typename View>
   struct dynamic_xy_step_type : public dynamic_y_step_type<typename dynamic_x_step_type<View>::type> {};
 
-  template <typename View> 
+  template <typename View>
   struct dynamic_xy_step_transposed_type : public dynamic_xy_step_type<typename transposed_type<View>::type> {};
 
   // color and bit depth converted view to match pixel type P
   template <typename SrcView, // Models ImageViewConcept
           typename DstP,    // Models PixelConcept
-          typename ColorConverter=gil::default_color_converter>    
+          typename ColorConverter=gil::default_color_converter>
   struct color_converted_view_type
   {
     typedef ... type;     // image view adaptor with value type DstP, over SrcView
@@ -1705,19 +1705,19 @@ GIL Provides the following view transformations::
   template <typename View> typename dynamic_xy_step_transposed_type<View>::type rotated90ccw_view(const View& src);
 
   // view of an axis-aligned rectangular area within an image
-  template <typename View> View                                                 subimage_view(const View& src, 
+  template <typename View> View                                                 subimage_view(const View& src,
              const View::point_t& top_left, const View::point_t& dimensions);
 
   // subsampled view (skipping pixels in X and Y)
-  template <typename View> typename dynamic_xy_step_type<View>::type            subsampled_view(const View& src, 
+  template <typename View> typename dynamic_xy_step_type<View>::type            subsampled_view(const View& src,
              const View::point_t& step);
 
-  template <typename View, typename P> 
+  template <typename View, typename P>
   color_converted_view_type<View,P>::type                                       color_converted_view(const View& src);
   template <typename View, typename P, typename CCV> // with a custom color converter
   color_converted_view_type<View,P,CCV>::type                                   color_converted_view(const View& src);
 
-  template <typename View> 
+  template <typename View>
   nth_channel_view_type<View>::view_t                                           nth_channel_view(const View& view, int n);
 
 The implementations of most of these view factory methods are
@@ -1728,7 +1728,7 @@ is the negated step of the source. ::
 
   template <typename View>
   typename dynamic_y_step_type<View>::type flipped_up_down_view(const View& src)
-  { 
+  {
     gil_function_requires<ImageViewConcept<View> >();
     typedef typename dynamic_y_step_type<View>::type RView;
     return RView(src.dimensions(),typename RView::xy_locator(src.xy_at(0,src.height()-1),-1));
@@ -1893,7 +1893,7 @@ following concept::
 
     Img::Img(point_t dims, std::size_t alignment=0);
     Img::Img(point_t dims, value_type fill_value, std::size_t alignment);
-    
+
     void Img::recreate(point_t new_dims, std::size_t alignment=0);
     void Img::recreate(point_t new_dims, value_type fill_value, std::size_t alignment);
 
@@ -1908,18 +1908,19 @@ Two-dimensional images have additional requirements::
   {
     typename x_coord_t = const_view_t::x_coord_t;
     typename y_coord_t = const_view_t::y_coord_t;
-    
+
     Img::Img(x_coord_t width, y_coord_t height, std::size_t alignment=0);
     Img::Img(x_coord_t width, y_coord_t height, value_type fill_value, std::size_t alignment);
 
     x_coord_t Img::width() const;
     y_coord_t Img::height() const;
-    
+
     void Img::recreate(x_coord_t width, y_coord_t height, std::size_t alignment=1);
     void Img::recreate(x_coord_t width, y_coord_t height, value_type fill_value, std::size_t alignment);
   };
 
-GIL's images have views that model ``ImageViewConcept`` and operate on pixels.::
+GIL's images have views that model ``ImageViewConcept`` and
+operate on pixels.::
 
   concept ImageConcept<RandomAccess2DImageConcept Img>
   {
@@ -1945,7 +1946,7 @@ type (the pixel) and models ``ImageConcept``::
 
   template <typename Pixel, \\ Models PixelValueConcept
           bool IsPlanar,  \\ planar or interleaved image
-          typename A=std::allocator<unsigned char> >    
+          typename A=std::allocator<unsigned char> >
   class image;
 
 The image constructor takes an alignment parameter which allows for
@@ -2030,7 +2031,7 @@ code. Synopsis::
     variant();
     variant(const variant& v);
     virtual ~variant();
-    
+
     variant& operator=(const variant& v);
     template <typename TS> friend bool operator==(const variant<TS>& x, const variant<TS>& y);
     template <typename TS> friend bool operator!=(const variant<TS>& x, const variant<TS>& y);
@@ -2047,22 +2048,22 @@ code. Synopsis::
 
     template <typename T> const T& _dynamic_cast() const;
     template <typename T>       T& _dynamic_cast();
-    
+
     template <typename T> bool current_type_is() const;
   };
 
-  template <typename UOP, typename Types> 
+  template <typename UOP, typename Types>
    UOP::result_type apply_operation(variant<Types>& v, UOP op);
-  template <typename UOP, typename Types> 
+  template <typename UOP, typename Types>
    UOP::result_type apply_operation(const variant<Types>& v, UOP op);
 
-  template <typename BOP, typename Types1, typename Types2> 
+  template <typename BOP, typename Types1, typename Types2>
    BOP::result_type apply_operation(      variant<Types1>& v1,       variant<Types2>& v2, UOP op);
 
-  template <typename BOP, typename Types1, typename Types2> 
+  template <typename BOP, typename Types1, typename Types2>
    BOP::result_type apply_operation(const variant<Types1>& v1,       variant<Types2>& v2, UOP op);
 
-  template <typename BOP, typename Types1, typename Types2> 
+  template <typename BOP, typename Types1, typename Types2>
    BOP::result_type apply_operation(const variant<Types1>& v1, const variant<Types2>& v2, UOP op);
 
 GIL's ``any_image_view`` and ``any_image`` are subclasses of ``variant``::
@@ -2154,8 +2155,8 @@ have overloads operating on ``any_image_view``, as illustrated with
   bgr8_view_t v2(...);  // concrete image view compatible with v1 and of the same size
   any_image_view<Types>  av(...);  // run-time specified image view
 
-  // Copies the pixels from v1 into v2. 
-  // If the pixels are incompatible triggers compile error 
+  // Copies the pixels from v1 into v2.
+  // If the pixels are incompatible triggers compile error
   copy_pixels(v1,v2);
 
   // The source or destination (or both) may be run-time instantiated.
@@ -2186,7 +2187,7 @@ constructs.  For example, here is how ``rotated180_view`` is
 implemented::
 
   // implementation using templated view
-  template <typename View> 
+  template <typename View>
   typename dynamic_xy_step_type<View>::type rotated180_view(const View& src) { ... }
 
   namespace detail
@@ -2196,8 +2197,8 @@ implemented::
     {
         typedef Result result_type;
         template <typename View> result_type operator()(const View& src) const
-	{ 
-            return result_type(rotated180_view(src)); 
+  {
+            return result_type(rotated180_view(src));
         }
     };
   }
@@ -2206,8 +2207,8 @@ implemented::
   // The returned view has a dynamic step
   template <typename ViewTypes> inline // Models MPL Random Access Container of models of ImageViewConcept
   typename dynamic_xy_step_type<any_image_view<ViewTypes> >::type rotated180_view(const any_image_view<ViewTypes>& src)
-  { 
-    return apply_operation(src,detail::rotated180_view_fn<typename dynamic_xy_step_type<any_image_view<ViewTypes> >::type>()); 
+  {
+    return apply_operation(src,detail::rotated180_view_fn<typename dynamic_xy_step_type<any_image_view<ViewTypes> >::type>());
   }
 
 Variants should be used with caution (especially algorithms that take
@@ -2253,10 +2254,10 @@ homogeneous memory-based GIL constructs given a channel type, a
 layout, and whether the construct is planar, has a step along the X
 direction, and is mutable::
 
-  template <typename ChannelValue, typename Layout, bool IsPlanar=false,                     bool IsMutable=true>
+  template <typename ChannelValue, typename Layout, bool IsPlanar=false, bool IsMutable=true>
   struct pixel_reference_type { typedef ... type; };
 
-  template <typename Channel, typename Layout> 
+  template <typename Channel, typename Layout>
   struct pixel_value_type { typedef ... type; };
 
   template <typename ChannelValue, typename Layout, bool IsPlanar=false, bool IsStep=false,  bool IsMutable=true>
@@ -2280,27 +2281,27 @@ direction, and is mutable::
 There are also helper metafunctions to construct packed and
 bit-aligned images with up to five channels::
 
-  template <typename BitField, unsigned Size1, 
+  template <typename BitField, unsigned Size1,
           typename Layout, typename Alloc=std::allocator<unsigned char> >
   struct packed_image1_type { typedef ... type; };
 
-  template <typename BitField, unsigned Size1, unsigned Size2, 
+  template <typename BitField, unsigned Size1, unsigned Size2,
           typename Layout, typename Alloc=std::allocator<unsigned char> >
   struct packed_image2_type { typedef ... type; };
 
-  template <typename BitField, unsigned Size1, unsigned Size2, unsigned Size3, 
+  template <typename BitField, unsigned Size1, unsigned Size2, unsigned Size3,
           typename Layout, typename Alloc=std::allocator<unsigned char> >
   struct packed_image3_type { typedef ... type; };
 
-  template <typename BitField, unsigned Size1, unsigned Size2, unsigned Size3, unsigned Size4, 
+  template <typename BitField, unsigned Size1, unsigned Size2, unsigned Size3, unsigned Size4,
           typename Layout, typename Alloc=std::allocator<unsigned char> >
   struct packed_image4_type { typedef ... type; };
 
-  template <typename BitField, unsigned Size1, unsigned Size2, unsigned Size3, unsigned Size4, unsigned Size5, 
+  template <typename BitField, unsigned Size1, unsigned Size2, unsigned Size3, unsigned Size4, unsigned Size5,
           typename Layout, typename Alloc=std::allocator<unsigned char> >
   struct packed_image5_type { typedef ... type; };
 
-  template <unsigned Size1, 
+  template <unsigned Size1,
           typename Layout, typename Alloc=std::allocator<unsigned char> >
   struct bit_aligned_image1_type { typedef ... type; };
 
@@ -2308,15 +2309,15 @@ bit-aligned images with up to five channels::
           typename Layout, typename Alloc=std::allocator<unsigned char> >
   struct bit_aligned_image2_type { typedef ... type; };
 
-  template <unsigned Size1, unsigned Size2, unsigned Size3, 
+  template <unsigned Size1, unsigned Size2, unsigned Size3,
           typename Layout, typename Alloc=std::allocator<unsigned char> >
   struct bit_aligned_image3_type { typedef ... type; };
 
-  template <unsigned Size1, unsigned Size2, unsigned Size3, unsigned Size4, 
+  template <unsigned Size1, unsigned Size2, unsigned Size3, unsigned Size4,
           typename Layout, typename Alloc=std::allocator<unsigned char> >
   struct bit_aligned_image4_type { typedef ... type; };
 
-  template <unsigned Size1, unsigned Size2, unsigned Size3, unsigned Size4, unsigned Size5, 
+  template <unsigned Size1, unsigned Size2, unsigned Size3, unsigned Size4, unsigned Size5,
           typename Layout, typename Alloc=std::allocator<unsigned char> >
   struct bit_aligned_image5_type { typedef ... type; };
 
@@ -2325,49 +2326,49 @@ Here ``ChannelValue`` models ``ChannelValueConcept``. We don't need
 the vertical step to be specified dynamically. Iterators and views can
 be constructed from a pixel type::
 
-  template <typename Pixel, bool IsPlanar=false, bool IsStep=false, bool IsMutable=true> 
+  template <typename Pixel, bool IsPlanar=false, bool IsStep=false, bool IsMutable=true>
   struct iterator_type_from_pixel { typedef ... type; };
 
-  template <typename Pixel, bool IsPlanar=false, bool IsStepX=false, bool IsMutable=true> 
+  template <typename Pixel, bool IsPlanar=false, bool IsStepX=false, bool IsMutable=true>
   struct view_type_from_pixel { typedef ... type; };
 
 Using a heterogeneous pixel type will result in heterogeneous
 iterators and views. Types can also be constructed from horizontal
 iterator::
 
-  template <typename XIterator> 
+  template <typename XIterator>
   struct type_from_x_iterator
   {
     typedef ... step_iterator_t;
     typedef ... xy_locator_t;
     typedef ... view_t;
   };
- 
+
 There are metafunctions to construct the type of a construct from an
 existing type by changing one or more of its properties::
 
-  template <typename PixelReference, 
+  template <typename PixelReference,
           typename ChannelValue, typename Layout, typename IsPlanar, typename IsMutable>
   struct derived_pixel_reference_type
   {
     typedef ... type;  // Models PixelConcept
   };
 
-  template <typename Iterator, 
+  template <typename Iterator,
           typename ChannelValue, typename Layout, typename IsPlanar, typename IsStep, typename IsMutable>
   struct derived_iterator_type
   {
     typedef ... type;  // Models PixelIteratorConcept
   };
 
-  template <typename View, 
+  template <typename View,
           typename ChannelValue, typename Layout, typename IsPlanar, typename IsXStep, typename IsMutable>
   struct derived_view_type
   {
     typedef ... type;  // Models ImageViewConcept
   };
 
-  template <typename Image, 
+  template <typename Image,
           typename ChannelValue, typename Layout, typename IsPlanar>
   struct derived_image_type
   {
@@ -2456,7 +2457,7 @@ or "png" for the APIs of the other libraries)::
 
   // Allocates a new image whose dimensions are determined by the given jpeg image file, and loads the pixels into it.
   // Triggers a compile assert if the image color space or channel depth are not supported by the JPEG library or by the I/O extension.
-  // Throws std::ios_base::failure if the file is not a valid JPEG file, or if its color space or channel depth are not 
+  // Throws std::ios_base::failure if the file is not a valid JPEG file, or if its color space or channel depth are not
   // compatible with the ones specified by Image
   template <typename Img> void jpeg_read_image(const char*, Img&);
 
@@ -2469,7 +2470,7 @@ or "png" for the APIs of the other libraries)::
 
   // Loads the image specified by the given jpeg image file name into the given view.
   // Triggers a compile assert if the view color space and channel depth are not supported by the JPEG library or by the I/O extension.
-  // Throws std::ios_base::failure if the file is not a valid JPEG file, or if its color space or channel depth are not 
+  // Throws std::ios_base::failure if the file is not a valid JPEG file, or if its color space or channel depth are not
   // compatible with the ones specified by View, or if its dimensions don't match the ones of the view.
   template <typename View> void jpeg_read_view(const char*, const View&);
 
@@ -2478,7 +2479,7 @@ or "png" for the APIs of the other libraries)::
   // Throws std::ios_base::failure if the file is not a valid JPEG file, or if its dimensions don't match the ones of the view.
   template <typename View>               void jpeg_read_and_convert_view(const char*, const View&);
   template <typename View, typename CCV> void jpeg_read_and_convert_view(const char*, const View&, CCV color_converter);
-  
+
   // Saves the view to a jpeg file specified by the given jpeg image file name.
   // Triggers a compile assert if the view color space and channel depth are not supported by the JPEG library or by the I/O extension.
   // Throws std::ios_base::failure if it fails to create the file.
@@ -2507,7 +2508,7 @@ dynamic images::
   template <typename Images> void jpeg_read_image(const char*, any_image<Images>&);
 
   // Saves the currently instantiated view to a jpeg file specified by the given jpeg image file name.
-  // Throws std::ios_base::failure if the currently instantiated view type is not supported for writing by the I/O extension 
+  // Throws std::ios_base::failure if the currently instantiated view type is not supported for writing by the I/O extension
   // or if it fails to create the file.
   template <typename Views>  void jpeg_write_view(const char*, any_image_view<Views>&);
 
@@ -2520,10 +2521,11 @@ Sample Code
 Pixel-level Sample Code
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Here are some operations you can do with pixel values, pointers and references::
+Here are some operations you can do with pixel values,
+pointers and references::
 
   rgb8_pixel_t p1(255,0,0);     // make a red RGB pixel
-  bgr8_pixel_t p2 = p1;         // RGB and BGR are compatible and the channels will be properly mapped. 
+  bgr8_pixel_t p2 = p1;         // RGB and BGR are compatible and the channels will be properly mapped.
   assert(p1==p2);               // p2 will also be red.
   assert(p2[0]!=p1[0]);         // operator[] gives physical channel order (as laid down in memory)
   assert(semantic_at_c<0>(p1)==semantic_at_c<0>(p2)); // this is how to compare the two red channels
@@ -2550,7 +2552,7 @@ Here is how to use pixels in generic code::
   template <typename GrayPixel, typename RGBPixel>
   void gray_to_rgb(const GrayPixel& src, RGBPixel& dst)
   {
-    gil_function_requires<PixelConcept<GrayPixel> >();    
+    gil_function_requires<PixelConcept<GrayPixel> >();
     gil_function_requires<MutableHomogeneousPixelConcept<RGBPixel> >();
 
     typedef typename color_space_type<GrayPixel>::type gray_cs_t;
@@ -2596,7 +2598,7 @@ margin of K pixels around the image borders. Here is how to do it::
     gil_function_requires<ImageViewConcept<SrcView> >();
     gil_function_requires<ImageConcept<DstImage> >();
     gil_function_requires<ViewsCompatibleConcept<SrcView, typename DstImage::view_t> >();
-    
+
     result=DstImage(src.width()+2*k, src.height()+2*k);
     typename DstImage::view_t centerImg=subimage_view(view(result), k,k,src.width(),src.height());
     std::copy(src.begin(), src.end(), centerImg.begin());
@@ -2731,7 +2733,7 @@ Defining New Channel Types
 Most of the time you don't need to do anything special to use a new
 channel type. You can just use it::
 
-  typedef pixel<double,rgb_layout_t>   rgb64_pixel_t;    // 64 bit RGB pixel 
+  typedef pixel<double,rgb_layout_t>   rgb64_pixel_t;    // 64 bit RGB pixel
   typedef rgb64_pixel*                 rgb64_pixel_ptr_t;// pointer to 64-bit interleaved data
   typedef image_type<double,rgb_layout_t>::type rgb64_image_t;    // 64-bit interleaved image
 
@@ -2774,7 +2776,7 @@ remains the same::
   {
     template <typename SrcP, typename DstP>  // Model PixelConcept
     void operator()(const SrcP& src,DstP& dst) const
-    { 
+    {
         typedef typename color_space_type<SrcP>::type SrcColorSpace;
         typedef typename color_space_type<DstP>::type DstColorSpace;
         my_color_converter_impl<SrcColorSpace,DstColorSpace>()(src,dst);
@@ -2935,21 +2937,21 @@ The Generic Image Library is designed with the following five goals in
 mind:
 
 :Generality: Abstracts image representations from algorithms on
-	     images. It allows for writing code once and have it work for any
-	     image type.
+       images. It allows for writing code once and have it work for any
+       image type.
 :Performance: Speed has been instrumental to the design of the
-	      library. The generic algorithms provided in the library are in many
-	      cases comparable in speed to hand-coding the algorithm for a
-	      specific image type.
+        library. The generic algorithms provided in the library are in many
+        cases comparable in speed to hand-coding the algorithm for a
+        specific image type.
 :Flexibility: Compile-type parameter resolution results in faster
-	      code, but severely limits code flexibility. The library allows for
-	      any image parameter to be specified at run time, at a minor
-	      performance cost.
+        code, but severely limits code flexibility. The library allows for
+        any image parameter to be specified at run time, at a minor
+        performance cost.
 :Extensibility: Virtually every construct in GIL can be extended - new
-		channel types, color spaces, layouts, iterators, locators, image
-		views and images can be provided by modeling the corresponding GIL
-		concepts.
+    channel types, color spaces, layouts, iterators, locators, image
+    views and images can be provided by modeling the corresponding GIL
+    concepts.
 :Compatibility: The library is designed as an STL complement. Generic
-		STL algorithms can be used for pixel manipulation, and they are
-		specifically targeted for optimization. The library works with
-		existing raw pixel data from another image library.
+    STL algorithms can be used for pixel manipulation, and they are
+    specifically targeted for optimization. The library works with
+    existing raw pixel data from another image library.

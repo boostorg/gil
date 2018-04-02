@@ -22,7 +22,8 @@ Sample files
 * :download:`x_gradient.cpp <../example/x_gradient.cpp>`:
   Writing an algorithm that operates on generic images
 * :download:`dynamic_image.cpp <../example/dynamic_image.cpp>`:
-  Using images whose properties (color space, channel type) are specified at run time
+  Using images whose properties (color space, channel type) are specified
+  at run time
 * :download:`histogram.cpp <../example/histogram.cpp>`: Creating a histogram
 * :download:`interleaved_ptr.cpp <../example/interleaved_ptr.cpp>`,
   :download:`interleaved_ptr.hpp <../example/interleaved_ptr.hpp>`,
@@ -33,8 +34,10 @@ Sample files
 * :download:`packed_pixel.cpp <../example/packed_pixel.cpp>`:
   Defining bitmasks and images whose channels or pixels are not byte-aligned
 * :download:`resize.cpp <../example/resize.cpp>`:
-  Rescaling an image using bilinear sampling (requires the optional Numeric extension)
+  Rescaling an image using bilinear sampling (requires the optional
+  Numeric extension)
 * :download:`affine.cpp <../example/affine.cpp>`:
-  Applying an affine transformation to an image (requires the optional Numeric extension)
+  Applying an affine transformation to an image (requires the optional
+  Numeric extension)
 * :download:`convolution.cpp <../example/convolution.cpp>`:
   Blurring images (requires the optional Numeric extension)
