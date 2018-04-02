@@ -1,4 +1,4 @@
-![logo](https://raw.githubusercontent.com/boostorg/gil/doc/doc/_static/gil.png)
+![logo](https://raw.githubusercontent.com/boostorg/gil/develop/doc/_static/gil.png)
 
 Boost.GIL is a part of the [Boost C++ Libraries](http://github.com/boostorg).
 
