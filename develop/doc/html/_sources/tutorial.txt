@@ -769,7 +769,7 @@ and the result::
 
 Here is what the two files look like:
 
-.. image:: mandel.jpg
+.. image:: images/mandel.jpg
 
 Run-Time Specified Images and Image Views
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

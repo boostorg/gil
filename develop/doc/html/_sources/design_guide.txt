@@ -23,11 +23,11 @@ together in memory and interleaving all channels together, whereas
 4x3 RGB image in which the second pixel of the first row is marked in
 red, in interleaved form:
 
-.. image:: interleaved.jpg
+.. image:: images/interleaved.jpg
 
 and in planar form:
 
-.. image:: planar.jpg
+.. image:: images/planar.jpg
 
 Note also that rows may optionally be aligned resulting in a potential
 padding at the end of rows.
@@ -1366,7 +1366,7 @@ Then we can instantiate
 ``memory_based_2d_locator<memory_based_step_iterator<XIterator> >`` to
 obtain a 2D pixel locator, as the diagram indicates:
 
-.. image:: step_iterator.gif
+.. image:: images/step_iterator.gif
 
 ``virtual_2d_locator`` is a locator that is instantiated with a
 function object invoked upon dereferencing a pixel. It returns the
@@ -2679,7 +2679,7 @@ The following code illustrates the power of using image views::
 
 The intermediate images are shown here:
 
-.. image:: monkey_steps.jpg
+.. image:: images/monkey_steps.jpg
 
 Notice that no pixels are ever copied. All the work is done inside
 ``jpeg_write_view``.  If we call our ``luminosity_histogram`` with
