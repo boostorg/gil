@@ -8,7 +8,7 @@
 //#define BOOST_TEST_MODULE jpeg_write_test_module
 #include <boost/test/unit_test.hpp>
 
-#include <boost/gil/gil_all.hpp>
+#include <boost/gil.hpp>
 #include <boost/gil/extension/io/jpeg_all.hpp>
 
 #include "color_space_write_test.hpp"

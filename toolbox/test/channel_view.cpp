@@ -9,7 +9,7 @@
 
 #include <boost/type_traits/is_same.hpp>
 
-#include <boost/gil/gil_all.hpp>
+#include <boost/gil.hpp>
 #include <boost/gil/extension/toolbox/metafunctions/channel_view.hpp>
 
 using namespace boost;

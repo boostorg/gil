@@ -10,7 +10,7 @@
 
 #include <string>
 
-#include <boost/gil/gil_all.hpp>
+#include <boost/gil.hpp>
 
 #include "cmp_view.hpp"
 

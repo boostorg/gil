@@ -8,7 +8,7 @@
 #ifndef BOOST_GIL_IO_UNIT_TEST_SUBIMAGE_TEST_HPP
 #define BOOST_GIL_IO_UNIT_TEST_SUBIMAGE_TEST_HPP
 
-#include <boost/gil/gil_all.hpp>
+#include <boost/gil.hpp>
 
 using namespace std;
 using namespace boost;

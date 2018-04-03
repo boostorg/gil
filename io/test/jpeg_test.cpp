@@ -12,7 +12,7 @@
 
 #include <fstream>
 
-#include <boost/gil/gil_all.hpp>
+#include <boost/gil.hpp>
 
 #define BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
 #include <boost/gil/extension/io/jpeg_all.hpp>
