@@ -8,7 +8,7 @@
 //#define BOOST_TEST_MODULE pnm_old_test_module
 #include <boost/test/unit_test.hpp>
 
-#include <boost/gil/gil_all.hpp>
+#include <boost/gil.hpp>
 #include <boost/gil/extension/io/pnm_io_old.hpp>
 
 #include "paths.hpp"
