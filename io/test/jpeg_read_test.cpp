@@ -9,7 +9,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include <boost/gil.hpp>
-#include <boost/gil/extension/io/jpeg_all.hpp>
+#include <boost/gil/extension/io/jpeg.hpp>
 
 #include "paths.hpp"
 #include "scanline_read_test.hpp"

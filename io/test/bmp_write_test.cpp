@@ -11,7 +11,7 @@
 #include <boost/gil.hpp>
 
 #include <boost/gil/extension/io/detail/typedefs.hpp>
-#include <boost/gil/extension/io/bmp_all.hpp>
+#include <boost/gil/extension/io/bmp.hpp>
 
 #include "cmp_view.hpp"
 #include "color_space_write_test.hpp"

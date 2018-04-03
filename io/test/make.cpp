@@ -15,7 +15,7 @@
 #include <boost/filesystem/convenience.hpp>
 
 #include <boost/gil.hpp>
-#include <boost/gil/extension/io/bmp_all.hpp>
+#include <boost/gil/extension/io/bmp.hpp>
 
 #include "paths.hpp"
 
