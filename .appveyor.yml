@@ -56,13 +56,20 @@ matrix:
       ARCH: x86
       VARIANT: release
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - TOOLSET: msvc-14.1
+      ARCH: x86_64
+      VARIANT: debug
+      GENERATOR: "Visual Studio 15 2017 Win64"
+      CMAKE_CONFIG: Debug
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      APPVEYOR_SAVE_CACHE_ON_ERROR: true
 
 cache:
   - c:\tools\vcpkg\installed\
 
 install:
   - ps: 'Write-Host "Installing CMake module FindBoost.cmake for Boost 1.67+" -ForegroundColor Magenta'
-  - appveyor DownloadFile https://raw.githubusercontent.com/Kitware/CMake/master/Modules/FindBoost.cmake -FileName "C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindBoost.cmake"
+  - appveyor DownloadFile https://raw.githubusercontent.com/Kitware/CMake/master/Modules/FindBoost.cmake -FileName "C:\Program Files (x86)\CMake\share\cmake-3.11\Modules\FindBoost.cmake"
   # FIXME: To be removed https://help.appveyor.com/discussions/problems/13000-cmake_toolchain_filevcpkgcmake-conflicts-with-cmake-native-findboostcmake"
   - ps: 'Write-Host "Installing latest vcpkg.cmake module" -ForegroundColor Magenta'
   - appveyor DownloadFile https://raw.githubusercontent.com/Microsoft/vcpkg/master/scripts/buildsystems/vcpkg.cmake -FileName "c:\tools\vcpkg\scripts\buildsystems\vcpkg.cmake"
