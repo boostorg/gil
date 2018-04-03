@@ -7,7 +7,7 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include <boost/gil/gil_all.hpp>
+#include <boost/gil.hpp>
 #include <boost/gil/extension/toolbox/metafunctions/is_homogeneous.hpp>
 
 using namespace boost;

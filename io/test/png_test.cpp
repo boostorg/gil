@@ -10,7 +10,7 @@
 
 #include <fstream>
 
-#include <boost/gil/gil_all.hpp>
+#include <boost/gil.hpp>
 
 //#define BOOST_GIL_IO_PNG_FLOATING_POINT_SUPPORTED
 //#define BOOST_GIL_IO_PNG_FIXED_POINT_SUPPORTED

@@ -9,7 +9,7 @@
 #define BOOST_GIL_TIFF_TILED_WRITE_MACROS_HPP
 
 #include <boost/mpl/vector.hpp>
-#include <boost/gil/gil_all.hpp>
+#include <boost/gil.hpp>
 #include <boost/gil/extension/io/tiff_all.hpp>
 
 #include "paths.hpp"

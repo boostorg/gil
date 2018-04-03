@@ -18,7 +18,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 
-#include <boost/gil/gil_all.hpp>
+#include <boost/gil.hpp>
 
 template< typename View_1, typename View_2 >
 void cmp_view( const View_1& v1
