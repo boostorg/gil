@@ -7,8 +7,8 @@
 
 /*************************************************************************************************/
 
-#ifndef boost_gil_io_typedefs_hpp_
-#define boost_gil_io_typedefs_hpp_
+#ifndef BOOST_GIL_IO_TYPEDEFS_HPP
+#define BOOST_GIL_IO_TYPEDEFS_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file

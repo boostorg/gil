@@ -9,8 +9,8 @@
 */
 /*************************************************************************************************/
 
-#ifndef boost_gil_io_dynamic_io_new_hpp_
-#define boost_gil_io_dynamic_io_new_hpp_
+#ifndef BOOST_GIL_IO_DYNAMIC_IO_NEW_HPP
+#define BOOST_GIL_IO_DYNAMIC_IO_NEW_HPP
 
 /// \file
 /// \brief  Generic io functions for dealing with dynamic images

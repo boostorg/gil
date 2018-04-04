@@ -7,8 +7,8 @@
 
 /*************************************************************************************************/
 
-#ifndef boost_gil_extension_io_raw_hpp_
-#define boost_gil_extension_io_raw_hpp_
+#ifndef BOOST_GIL_EXTENSION_IO_RAW_HPP
+#define BOOST_GIL_EXTENSION_IO_RAW_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file

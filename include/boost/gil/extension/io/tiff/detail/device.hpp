@@ -7,8 +7,8 @@
 
 /*************************************************************************************************/
 
-#ifndef boost_gil_extension_io_tiff_detail_device_hpp_
-#define boost_gil_extension_io_tiff_detail_device_hpp_
+#ifndef BOOST_GIL_EXTENSION_IO_TIFF_DETAIL_DEVICE_HPP
+#define BOOST_GIL_EXTENSION_IO_TIFF_DETAIL_DEVICE_HPP
 
 #include <algorithm>
 

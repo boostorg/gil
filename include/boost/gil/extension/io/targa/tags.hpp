@@ -7,8 +7,8 @@
 
 /*************************************************************************************************/
 
-#ifndef boost_gil_extension_io_targa_tags_hpp_
-#define boost_gil_extension_io_targa_tags_hpp_
+#ifndef BOOST_GIL_EXTENSION_IO_TARGA_TAGS_HPP
+#define BOOST_GIL_EXTENSION_IO_TARGA_TAGS_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file               

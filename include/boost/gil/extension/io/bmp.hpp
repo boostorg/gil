@@ -7,8 +7,8 @@
 
 /*************************************************************************************************/
 
-#ifndef boost_gil_extension_io_bmp_hpp_
-#define boost_gil_extension_io_bmp_hpp_
+#ifndef BOOST_GIL_EXTENSION_IO_BMP_HPP
+#define BOOST_GIL_EXTENSION_IO_BMP_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file               

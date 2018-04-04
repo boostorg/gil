@@ -7,8 +7,8 @@
 
 /*************************************************************************************************/
 
-#ifndef boost_gil_extension_io_tiff_detail_log_hpp_
-#define boost_gil_extension_io_tiff_detail_log_hpp_
+#ifndef BOOST_GIL_EXTENSION_IO_TIFF_DETAIL_LOG_HPP
+#define BOOST_GIL_EXTENSION_IO_TIFF_DETAIL_LOG_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file

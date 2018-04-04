@@ -5,8 +5,8 @@
     http://www.boost.org/LICENSE_1_0.txt).
 */
 
-#ifndef boost_gil_extension_io_png_detail_base_hpp_
-#define boost_gil_extension_io_png_detail_base_hpp_
+#ifndef BOOST_GIL_EXTENSION_IO_PNG_DETAIL_BASE_HPP
+#define BOOST_GIL_EXTENSION_IO_PNG_DETAIL_BASE_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file

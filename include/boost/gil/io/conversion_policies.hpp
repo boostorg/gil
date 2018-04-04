@@ -7,8 +7,8 @@
 
 /*************************************************************************************************/
 
-#ifndef boost_gil_io_conversion_policies_hpp_
-#define boost_gil_io_conversion_policies_hpp_
+#ifndef BOOST_GIL_IO_CONVERSION_POLICIES_HPP
+#define BOOST_GIL_IO_CONVERSION_POLICIES_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file

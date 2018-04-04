@@ -7,8 +7,8 @@
 
 /*************************************************************************************************/
 
-#ifndef boost_gil_extension_io_detail_reader_backend_hpp_
-#define boost_gil_extension_io_detail_reader_backend_hpp_
+#ifndef BOOST_GIL_EXTENSION_IO_DETAIL_READER_BACKEND_HPP
+#define BOOST_GIL_EXTENSION_IO_DETAIL_READER_BACKEND_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file

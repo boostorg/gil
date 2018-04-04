@@ -7,8 +7,8 @@
 
 /*************************************************************************************************/
 
-#ifndef boost_gil_io_error_hpp_
-#define boost_gil_io_error_hpp_
+#ifndef BOOST_GIL_IO_ERROR_HPP
+#define BOOST_GIL_IO_ERROR_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file

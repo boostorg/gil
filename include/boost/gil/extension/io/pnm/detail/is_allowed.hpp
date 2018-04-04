@@ -7,8 +7,8 @@
 
 /*************************************************************************************************/
 
-#ifndef boost_gil_extension_io_pnm_detail_is_allowed_hpp_
-#define boost_gil_extension_io_pnm_detail_is_allowed_hpp_
+#ifndef BOOST_GIL_EXTENSION_IO_PNM_DETAIL_IS_ALLOWED_HPP
+#define BOOST_GIL_EXTENSION_IO_PNM_DETAIL_IS_ALLOWED_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file

@@ -7,8 +7,8 @@
 
 /*************************************************************************************************/
 
-#ifndef boost_gil_io_make_dynamic_image_writer_hpp_
-#define boost_gil_io_make_dynamic_image_writer_hpp_
+#ifndef BOOST_GIL_IO_MAKE_DYNAMIC_IMAGE_WRITER_HPP
+#define BOOST_GIL_IO_MAKE_DYNAMIC_IMAGE_WRITER_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file

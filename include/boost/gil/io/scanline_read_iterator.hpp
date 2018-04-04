@@ -7,8 +7,8 @@
 
 /*************************************************************************************************/
 
-#ifndef boost_gil_io_scanline_read_iterator_hpp_
-#define boost_gil_io_scanline_read_iterator_hpp_
+#ifndef BOOST_GIL_IO_SCANLINE_READ_ITERATOR_HPP
+#define BOOST_GIL_IO_SCANLINE_READ_ITERATOR_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file

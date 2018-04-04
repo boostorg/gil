@@ -7,8 +7,8 @@
 
 /*************************************************************************************************/
 
-#ifndef boost_gil_io_bit_operations_hpp_
-#define boost_gil_io_bit_operations_hpp_
+#ifndef BOOST_GIL_IO_BIT_OPERATIONS_HPP
+#define BOOST_GIL_IO_BIT_OPERATIONS_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file

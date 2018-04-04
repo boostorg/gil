@@ -7,8 +7,8 @@
 
 /*************************************************************************************************/
 
-#ifndef boost_gil_extension_io_png_read_hpp_
-#define boost_gil_extension_io_png_read_hpp_
+#ifndef BOOST_GIL_EXTENSION_IO_PNG_READ_HPP
+#define BOOST_GIL_EXTENSION_IO_PNG_READ_HPP
 
 #define BOOST_GIL_EXTENSION_IO_PNG_READ_ENABLED
 

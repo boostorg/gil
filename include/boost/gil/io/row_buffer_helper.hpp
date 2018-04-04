@@ -7,8 +7,8 @@
 
 /*************************************************************************************************/
 
-#ifndef boost_gil_io_row_buffer_helper_hpp_
-#define boost_gil_io_row_buffer_helper_hpp_
+#ifndef BOOST_GIL_IO_ROW_BUFFER_HELPER_HPP
+#define BOOST_GIL_IO_ROW_BUFFER_HELPER_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file

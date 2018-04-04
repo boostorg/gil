@@ -7,8 +7,8 @@
 
 /*************************************************************************************************/
 
-#ifndef boost_gil_io_read_image_hpp_
-#define boost_gil_io_read_image_hpp_
+#ifndef BOOST_GIL_IO_READ_IMAGE_HPP
+#define BOOST_GIL_IO_READ_IMAGE_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file
