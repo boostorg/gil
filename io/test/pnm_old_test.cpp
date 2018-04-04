@@ -9,7 +9,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include <boost/gil.hpp>
-#include <boost/gil/extension/io/pnm_io_old.hpp>
+#include <boost/gil/extension/io/pnm/old.hpp>
 
 #include "paths.hpp"
 

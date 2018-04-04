@@ -9,7 +9,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include <boost/gil.hpp>
-#include <boost/gil/extension/io/targa_io_old.hpp>
+#include <boost/gil/extension/io/targa/old.hpp>
 
 #include "mandel_view.hpp"
 #include "paths.hpp"

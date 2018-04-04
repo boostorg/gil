@@ -11,7 +11,7 @@
 #include <fstream>
 
 #include <boost/gil.hpp>
-#include <boost/gil/extension/io/pnm_all.hpp>
+#include <boost/gil/extension/io/pnm.hpp>
 
 #include <boost/type_traits/is_same.hpp>
 

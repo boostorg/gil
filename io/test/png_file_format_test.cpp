@@ -14,7 +14,7 @@
 #define BOOST_FILESYSTEM_VERSION 3
 #include <boost/filesystem/convenience.hpp>
 
-#include <boost/gil/extension/io/png_all.hpp>
+#include <boost/gil/extension/io/png.hpp>
 
 #include "paths.hpp"
 

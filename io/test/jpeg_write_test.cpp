@@ -9,7 +9,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include <boost/gil.hpp>
-#include <boost/gil/extension/io/jpeg_all.hpp>
+#include <boost/gil/extension/io/jpeg.hpp>
 
 #include "color_space_write_test.hpp"
 #include "mandel_view.hpp"
