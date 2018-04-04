@@ -8,8 +8,9 @@ Installation
 ------------
 
 The latest version of GIL can be downloaded from http://boostorg.github.com/gil.
-GIL consists of header files only and does not require any libraries to link against. It does not require Boost to be built.
-Including ``boost/gil.hpp`` will be sufficient for most projects.
+GIL consists of header files only and does not require any libraries to
+link against. It does not require Boost to be built and including
+``boost/gil.hpp`` will be sufficient for most projects.
 
 Example - Computing the Image Gradient
 --------------------------------------
