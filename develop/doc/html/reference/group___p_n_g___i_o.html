@@ -39,8 +39,6 @@
   </div>
 </div><!-- top -->
 <div class="header">
-  <div class="summary">
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">PNG I/O<div class="ingroups"><a class="el" href="group___i_o.html">I/O</a></div></div>  </div>
 </div><!--header-->
@@ -48,51 +46,6 @@
 
 <p>Support for reading and writing PNG image files.  
 <a href="#details">More...</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gaad396d373d47b0b6dfbc6470c547d88c"><td class="memTemplParams" colspan="2"><a class="anchor" id="gaad396d373d47b0b6dfbc6470c547d88c"></a>
-template&lt;typename String &gt; </td></tr>
-<tr class="memitem:gaad396d373d47b0b6dfbc6470c547d88c"><td class="memTemplItemLeft" align="right" valign="top">point2&lt; std::ptrdiff_t &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___p_n_g___i_o.html#gaad396d373d47b0b6dfbc6470c547d88c">png_read_dimensions</a> (const String &amp;filename)</td></tr>
-<tr class="memdesc:gaad396d373d47b0b6dfbc6470c547d88c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the width and height of the PNG file at the specified location. Throws std::ios_base::failure if the location does not correspond to a valid PNG file. <br/></td></tr>
-<tr class="separator:gaad396d373d47b0b6dfbc6470c547d88c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6cb0493bcd0bf00114afbdddbfb094bf"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga6cb0493bcd0bf00114afbdddbfb094bf"></a>
-template&lt;typename String , typename View &gt; </td></tr>
-<tr class="memitem:ga6cb0493bcd0bf00114afbdddbfb094bf"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___p_n_g___i_o.html#ga6cb0493bcd0bf00114afbdddbfb094bf">png_read_view</a> (const String &amp;filename, const View &amp;view)</td></tr>
-<tr class="memdesc:ga6cb0493bcd0bf00114afbdddbfb094bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the image specified by the given png image file name into the given view. Triggers a compile assert if the view color space and channel depth are not supported by the PNG library or by the I/O extension. Throws std::ios_base::failure if the file is not a valid PNG file, or if its color space or channel depth are not compatible with the ones specified by View, or if its dimensions don't match the ones of the view. <br/></td></tr>
-<tr class="separator:ga6cb0493bcd0bf00114afbdddbfb094bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga48e3401ab76ed52abae373a3209469a7"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga48e3401ab76ed52abae373a3209469a7"></a>
-template&lt;typename String , typename Image &gt; </td></tr>
-<tr class="memitem:ga48e3401ab76ed52abae373a3209469a7"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___p_n_g___i_o.html#ga48e3401ab76ed52abae373a3209469a7">png_read_image</a> (const String &amp;filename, Image &amp;img)</td></tr>
-<tr class="memdesc:ga48e3401ab76ed52abae373a3209469a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a new image whose dimensions are determined by the given png image file, and loads the pixels into it. Triggers a compile assert if the image color space or channel depth are not supported by the PNG library or by the I/O extension. Throws std::ios_base::failure if the file is not a valid PNG file, or if its color space or channel depth are not compatible with the ones specified by Image. <br/></td></tr>
-<tr class="separator:ga48e3401ab76ed52abae373a3209469a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga74d0fa40f1fd6dec703b4187b6dc99f2"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga74d0fa40f1fd6dec703b4187b6dc99f2"></a>
-template&lt;typename String , typename View , typename CC &gt; </td></tr>
-<tr class="memitem:ga74d0fa40f1fd6dec703b4187b6dc99f2"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___p_n_g___i_o.html#ga74d0fa40f1fd6dec703b4187b6dc99f2">png_read_and_convert_view</a> (const String &amp;filename, const View &amp;view, CC cc)</td></tr>
-<tr class="memdesc:ga74d0fa40f1fd6dec703b4187b6dc99f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the image specified by the given png image file name and color-converts it into the given view. Throws std::ios_base::failure if the file is not a valid PNG file, or if its dimensions don't match the ones of the view. <br/></td></tr>
-<tr class="separator:ga74d0fa40f1fd6dec703b4187b6dc99f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaedc9449091a37ae1d06df993c618d190"><td class="memTemplParams" colspan="2"><a class="anchor" id="gaedc9449091a37ae1d06df993c618d190"></a>
-template&lt;typename String , typename View &gt; </td></tr>
-<tr class="memitem:gaedc9449091a37ae1d06df993c618d190"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___p_n_g___i_o.html#gaedc9449091a37ae1d06df993c618d190">png_read_and_convert_view</a> (const String &amp;filename, const View &amp;view)</td></tr>
-<tr class="memdesc:gaedc9449091a37ae1d06df993c618d190"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the image specified by the given png image file name and color-converts it into the given view. Throws std::ios_base::failure if the file is not a valid PNG file, or if its dimensions don't match the ones of the view. <br/></td></tr>
-<tr class="separator:gaedc9449091a37ae1d06df993c618d190"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa26431baf86313b86c478d8605a751ec"><td class="memTemplParams" colspan="2"><a class="anchor" id="gaa26431baf86313b86c478d8605a751ec"></a>
-template&lt;typename String , typename Image , typename CC &gt; </td></tr>
-<tr class="memitem:gaa26431baf86313b86c478d8605a751ec"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___p_n_g___i_o.html#gaa26431baf86313b86c478d8605a751ec">png_read_and_convert_image</a> (const String &amp;filename, Image &amp;img, CC cc)</td></tr>
-<tr class="memdesc:gaa26431baf86313b86c478d8605a751ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a new image whose dimensions are determined by the given png image file, loads and color-converts the pixels into it. Throws std::ios_base::failure if the file is not a valid PNG file. <br/></td></tr>
-<tr class="separator:gaa26431baf86313b86c478d8605a751ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9f891b2d97d06be4eb2f5688f0fea062"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga9f891b2d97d06be4eb2f5688f0fea062"></a>
-template&lt;typename String , typename Image &gt; </td></tr>
-<tr class="memitem:ga9f891b2d97d06be4eb2f5688f0fea062"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___p_n_g___i_o.html#ga9f891b2d97d06be4eb2f5688f0fea062">png_read_and_convert_image</a> (const String filename, Image &amp;img)</td></tr>
-<tr class="memdesc:ga9f891b2d97d06be4eb2f5688f0fea062"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a new image whose dimensions are determined by the given png image file, loads and color-converts the pixels into it. Throws std::ios_base::failure if the file is not a valid PNG file. <br/></td></tr>
-<tr class="separator:ga9f891b2d97d06be4eb2f5688f0fea062"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga17cce627ff143dbf7ea334a5c05d5c95"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga17cce627ff143dbf7ea334a5c05d5c95"></a>
-template&lt;typename String , typename View &gt; </td></tr>
-<tr class="memitem:ga17cce627ff143dbf7ea334a5c05d5c95"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___p_n_g___i_o.html#ga17cce627ff143dbf7ea334a5c05d5c95">png_write_view</a> (const String &amp;filename, const View &amp;view)</td></tr>
-<tr class="memdesc:ga17cce627ff143dbf7ea334a5c05d5c95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves the view to a png file specified by the given png image file name. Triggers a compile assert if the view color space and channel depth are not supported by the PNG library or by the I/O extension. Throws std::ios_base::failure if it fails to create the file. <br/></td></tr>
-<tr class="separator:ga17cce627ff143dbf7ea334a5c05d5c95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Support for reading and writing PNG image files. </p>
 </div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
@@ -100,7 +53,7 @@ template&lt;typename String , typename View &gt; </td></tr>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Apr 4 2018 11:23:37 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Wed Apr 4 2018 16:56:03 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
