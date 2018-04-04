@@ -1,26 +1,6 @@
 IO extensions
 =============
 
-.. _BMP_Wiki: http://en.wikipedia.org/wiki/BMP_file_format
-.. _JPEG_Wiki: http://en.wikipedia.org/wiki/JPEG
-.. _JPEG_lib: http://www.ijg.org/
-.. _PNG_Wiki: http://en.wikipedia.org/wiki/Portable_Network_Graphics
-.. _PNG_Lib: http://libpng.org/pub/png/libpng.html
-.. _PNM_Wiki: http://en.wikipedia.org/wiki/Portable_anymap
-.. _RAW_Wiki: http://en.wikipedia.org/wiki/Raw_image_format
-.. _TARGA_Wiki: http://en.wikipedia.org/wiki/Truevision_TGA
-.. _RAW_lib: http://www.libraw.org/
-.. _RAW_Wiki: http://en.wikipedia.org/wiki/Raw_image_format
-.. _TIFF_Wiki: http://en.wikipedia.org/wiki/Tagged_Image_File_Format
-.. _TIFF_Lib: http://www.remotesensing.org/libtiff/
-.. _TIFF_Base_Tags: http://www.awaresystems.be/imaging/tiff/tifftags/baseline.html
-.. _TIFF_Extension_Tags: http://www.awaresystems.be/imaging/tiff/tifftags/extension.html
-.. _BMP_TEST_FILES: http://entropymine.com/jason/bmpsuite/
-.. _PNG_TEST_FILES: http://www.schaik.com/pngsuite/pngsuite.html
-.. _TARGA_TEST_FILES: http://www.fileformat.info/format/tga/sample/index.htm
-.. _TIFF_LIB_TIFF_TEST_FILES: http://www.remotesensing.org/libtiff/images.html
-.. _TIFF_GRAPHICSMAGICK_TEST_FILES: ftp://ftp.graphicsmagick.org/pub/tiff-samples/tiff-sample-images-be.tar.gz
-
 Overview
 --------
 
@@ -673,3 +653,24 @@ to enable the tests:
 :TARGA: TARGA_TEST_FILES_               -- BOOST_GIL_IO_USE_TARGA_FILEFORMAT_TEST_SUITE_IMAGES
 :TIFF:  TIFF_LIB_TIFF_TEST_FILES_       -- BOOST_GIL_IO_USE_TIFF_LIBTIFF_TEST_SUITE_IMAGES
 :TIFF:  TIFF_GRAPHICSMAGICK_TEST_FILES_ -- BOOST_GIL_IO_USE_TIFF_GRAPHICSMAGICK_TEST_SUITE_IMAGES
+
+
+.. _BMP_Wiki: http://en.wikipedia.org/wiki/BMP_file_format
+.. _JPEG_Wiki: http://en.wikipedia.org/wiki/JPEG
+.. _JPEG_lib: http://www.ijg.org/
+.. _PNG_Wiki: http://en.wikipedia.org/wiki/Portable_Network_Graphics
+.. _PNG_Lib: http://libpng.org/pub/png/libpng.html
+.. _PNM_Wiki: http://en.wikipedia.org/wiki/Portable_anymap
+.. _RAW_Wiki: http://en.wikipedia.org/wiki/Raw_image_format
+.. _TARGA_Wiki: http://en.wikipedia.org/wiki/Truevision_TGA
+.. _RAW_lib: http://www.libraw.org/
+.. _RAW_Wiki: http://en.wikipedia.org/wiki/Raw_image_format
+.. _TIFF_Wiki: http://en.wikipedia.org/wiki/Tagged_Image_File_Format
+.. _TIFF_Lib: http://www.remotesensing.org/libtiff/
+.. _TIFF_Base_Tags: http://www.awaresystems.be/imaging/tiff/tifftags/baseline.html
+.. _TIFF_Extension_Tags: http://www.awaresystems.be/imaging/tiff/tifftags/extension.html
+.. _BMP_TEST_FILES: http://entropymine.com/jason/bmpsuite/
+.. _PNG_TEST_FILES: http://www.schaik.com/pngsuite/pngsuite.html
+.. _TARGA_TEST_FILES: http://www.fileformat.info/format/tga/sample/index.htm
+.. _TIFF_LIB_TIFF_TEST_FILES: http://www.remotesensing.org/libtiff/images.html
+.. _TIFF_GRAPHICSMAGICK_TEST_FILES: ftp://ftp.graphicsmagick.org/pub/tiff-samples/tiff-sample-images-be.tar.gz
