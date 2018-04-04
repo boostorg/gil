@@ -10,7 +10,7 @@
 #include <boost/type_traits/is_same.hpp>
 
 #include <boost/gil.hpp>
-#include <boost/gil/extension/io/targa_all.hpp>
+#include <boost/gil/extension/io/targa.hpp>
 
 #include "paths.hpp"
 #include "scanline_read_test.hpp"

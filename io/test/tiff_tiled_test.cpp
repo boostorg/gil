@@ -14,7 +14,7 @@
 //#define BOOST_TEST_MODULE tiff_tiled_test_module
 #include <boost/test/unit_test.hpp>
 
-#include <boost/gil/extension/io/tiff_read.hpp>
+#include <boost/gil/extension/io/tiff.hpp>
 #include "paths.hpp"
 
 using namespace std;

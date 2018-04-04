@@ -17,7 +17,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include <boost/gil.hpp>
-#include <boost/gil/extension/io/tiff_io_old.hpp>
+#include <boost/gil/extension/io/tiff/old.hpp>
 
 #include "paths.hpp"
 

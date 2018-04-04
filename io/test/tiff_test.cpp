@@ -21,7 +21,7 @@
 #define BOOST_FILESYSTEM_VERSION 3
 #include <boost/filesystem/convenience.hpp>
 
-#include <boost/gil/extension/io/tiff_all.hpp>
+#include <boost/gil/extension/io/tiff.hpp>
 
 #include <fstream>
 #include <sstream>
