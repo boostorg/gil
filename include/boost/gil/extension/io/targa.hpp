@@ -7,8 +7,8 @@
 
 /*************************************************************************************************/
 
-#ifndef BOOST_GIL_EXTENSION_IO_TARGA_ALL_HPP
-#define BOOST_GIL_EXTENSION_IO_TARGA_ALL_HPP
+#ifndef boost_gil_extension_io_targa_hpp_
+#define boost_gil_extension_io_targa_hpp_
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file               
@@ -19,7 +19,7 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include "targa_read.hpp"
-#include "targa_write.hpp"
+#include <boost/gil/extension/io/targa/read.hpp>
+#include <boost/gil/extension/io/targa/write.hpp>
 
-#endif // BOOST_GIL_EXTENSION_IO_TARGA_ALL_HPP
+#endif

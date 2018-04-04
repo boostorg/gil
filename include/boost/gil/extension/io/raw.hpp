@@ -7,8 +7,8 @@
 
 /*************************************************************************************************/
 
-#ifndef BOOST_GIL_EXTENSION_IO_RAW_ALL_HPP
-#define BOOST_GIL_EXTENSION_IO_RAW_ALL_HPP
+#ifndef boost_gil_extension_io_raw_hpp_
+#define boost_gil_extension_io_raw_hpp_
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file
@@ -19,6 +19,6 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include "raw_read.hpp"
+#include <boost/gil/extension/io/raw/read.hpp>
 
-#endif // BOOST_GIL_EXTENSION_IO_RAW_ALL_HPP
+#endif

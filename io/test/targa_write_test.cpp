@@ -10,7 +10,7 @@
 
 #include <boost/gil.hpp>
 
-#include <boost/gil/extension/io/detail/typedefs.hpp>
+#include <boost/gil/io/typedefs.hpp>
 #include <boost/gil/extension/io/targa.hpp>
 
 #include "color_space_write_test.hpp"

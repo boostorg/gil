@@ -7,8 +7,8 @@
 
 /*************************************************************************************************/
 
-#ifndef BOOST_GIL_EXTENSION_IO_JPEG_ALL_HPP
-#define BOOST_GIL_EXTENSION_IO_JPEG_ALL_HPP
+#ifndef boost_gil_extension_io_jpeg_hpp_
+#define boost_gil_extension_io_jpeg_hpp_
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file               
@@ -19,7 +19,7 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include "jpeg_read.hpp"
-#include "jpeg_write.hpp"
+#include <boost/gil/extension/io/jpeg/read.hpp>
+#include <boost/gil/extension/io/jpeg/write.hpp>
 
-#endif // BOOST_GIL_EXTENSION_IO_JPEG_ALL_HPP
+#endif

@@ -7,8 +7,8 @@
 
 /*************************************************************************************************/
 
-#ifndef BOOST_GIL_EXTENSION_IO_PNG_ALL_HPP
-#define BOOST_GIL_EXTENSION_IO_PNG_ALL_HPP
+#ifndef boost_gil_extension_io_png_hpp_
+#define boost_gil_extension_io_png_hpp_
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file               
@@ -19,7 +19,7 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include "png_read.hpp"
-#include "png_write.hpp"
+#include <boost/gil/extension/io/png/read.hpp>
+#include <boost/gil/extension/io/png/write.hpp>
 
-#endif // BOOST_GIL_EXTENSION_IO_PNG_ALL_HPP
+#endif
