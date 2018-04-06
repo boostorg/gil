@@ -530,7 +530,7 @@ elements all have the same type). ::
 It is used in the implementation of GIL's pixel, planar pixel
 reference and planar pixel iterator.  Another model of
 ``ColorBaseConcept`` is ``packed_pixel`` - it is a pixel whose
-channels are bit ranges. See the :ref:`Pixel` section for more.
+channels are bit ranges. See the :ref:`design_guide:Pixel` section for more.
 
 Algorithms
 ~~~~~~~~~~
@@ -1024,12 +1024,12 @@ Models
 GIL provides several models of ``IteratorAdaptorConcept``:
 
 * ``memory_based_step_iterator<Iterator>``: An iterator adaptor that
-  changes the fundamental step of the base iterator (see :ref:`Step Iterator`)
+  changes the fundamental step of the base iterator (see :ref:`design_guide:Step Iterator`)
 * ``dereference_iterator_adaptor<Iterator,Fn>``: An iterator that
   applies a unary function ``Fn`` upon dereferencing. It is used, for
   example, for on-the-fly color conversion. It can be used to construct
   a shallow image "view" that pretends to have a different color space
-  or channel depth. See :ref:`Image View` for more. The
+  or channel depth. See :ref:`design_guide:Image View` for more. The
   unary function ``Fn`` must model ``PixelDereferenceAdaptorConcept``
   (see below).
 
@@ -1735,7 +1735,7 @@ because there is a significant increase in compile time when using
 concept checks. We will skip ``gil_function_requires`` in the code
 examples in this guide for the sake of succinctness.
 
-Image views can be freely composed (see section :ref:`Useful Metafunctions and Typedefs`
+Image views can be freely composed (see section :ref:`design_guide:Useful Metafunctions and Typedefs`
 for the typedefs ``rgb16_image_t`` and ``gray16_step_view_t)``::
 
   rgb16_image_t img(100,100);    // an RGB interleaved image
