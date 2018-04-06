@@ -482,6 +482,9 @@ workflows:
   build-and-test:
     jobs:
       - bootstrap_checkout
+          filters:
+            branches:
+              only: develop
       - bootstrap_gcc:
           requires:
             - bootstrap_checkout
