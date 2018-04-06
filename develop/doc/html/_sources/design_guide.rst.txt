@@ -54,7 +54,7 @@ recommended to read the sections in order.
 About Concepts
 --------------
 
-All constructs in GIL are models of GIL concepts. A \em concept is a
+All constructs in GIL are models of GIL concepts. A *concept* is a
 set of requirements that a type (or a set of related types) must
 fulfill to be used correctly in generic algorithms. The requirements
 include syntactic and algorithmic guarantees.  For example, GIL's
@@ -149,11 +149,9 @@ GIL uses a two-dimensional point, which is a refinement of
     value_type x,y;
   };
 
-Related Concepts
-~~~~~~~~~~~~~~~~
-
-- `PointNDConcept`
-- `Point2DConcept`
+.. seealso::
+   - `PointNDConcept <reference/structboost_1_1gil_1_1_point_n_d_concept.html>`_
+   - `Point2DConcept <reference/structboost_1_1gil_1_1_point2_d_concept.html>`_
 
 Models
 ~~~~~~
@@ -235,14 +233,12 @@ not have a default constructor.
 Note also that algorithms may impose additional requirements on
 channels, such as support for arithmetic operations.
 
-Related Concepts
-~~~~~~~~~~~~~~~~
-
-- `ChannelConcept<T>`
-- `ChannelValueConcept<T>`
-- `MutableChannelConcept<T>`
-- `ChannelsCompatibleConcept<T1,T2>`
-- `ChannelConvertibleConcept<SrcChannel,DstChannel>`
+.. seealso::
+   - `ChannelConcept<T> <reference/structboost_1_1gil_1_1_channel_concept.html>`_
+   - `ChannelValueConcept<T> <reference/structboost_1_1gil_1_1_channel_value_concept.html>`_
+   - `MutableChannelConcept<T> <reference/structboost_1_1gil_1_1_mutable_channel_concept.html>`_
+   - `ChannelsCompatibleConcept<T1,T2> <reference/structboost_1_1gil_1_1_channels_compatible_concept.html>`_
+   - `ChannelConvertibleConcept<SrcChannel,DstChannel> <reference/structboost_1_1gil_1_1_channel_convertible_concept.html>`_
 
 Models
 ~~~~~~
@@ -361,12 +357,10 @@ sequence containing the types of all elements in the color space.
 Two color spaces are considered *compatible* if they are equal
 (i.e. have the same set of colors in the same order).
 
-Related Concepts
-~~~~~~~~~~~~~~~~
-
-- `ColorSpaceConcept<ColorSpace>`
-- `ColorSpacesCompatibleConcept<ColorSpace1,ColorSpace2>`
-- `ChannelMappingConcept<Mapping>`
+.. seealso::
+   - `ColorSpaceConcept<ColorSpace> <reference/structboost_1_1gil_1_1_color_space_concept.html>`_
+   - `ColorSpacesCompatibleConcept<ColorSpace1,ColorSpace2> <reference/structboost_1_1gil_1_1_color_spaces_compatible_concept.html>`_
+   - `ChannelMappingConcept<Mapping> <reference/structboost_1_1gil_1_1_channel_mapping_concept.html>`_
 
 Models
 ~~~~~~
@@ -536,7 +530,7 @@ elements all have the same type). ::
 It is used in the implementation of GIL's pixel, planar pixel
 reference and planar pixel iterator.  Another model of
 ``ColorBaseConcept`` is ``packed_pixel`` - it is a pixel whose
-channels are bit ranges. See the \ref PixelSectionDG section for more.
+channels are bit ranges. See the :ref:`design_guide:Pixel` section for more.
 
 Algorithms
 ~~~~~~~~~~
@@ -758,18 +752,17 @@ The distinction between ``PixelConcept`` and ``PixelValueConcept`` is
 analogous to that for channels and color bases - pixel reference
 proxies model both, but only pixel values model the latter.
 
-Related Concepts
-~~~~~~~~~~~~~~~~
+.. seealso::
 
-- `PixelBasedConcept<P>`
-- `PixelConcept<Pixel>`
-- `MutablePixelConcept<Pixel>`
-- `PixelValueConcept<Pixel>`
-- `HomogeneousPixelConcept<Pixel>`
-- `MutableHomogeneousPixelConcept<Pixel>`
-- `HomogeneousPixelValueConcept<Pixel>`
-- `PixelsCompatibleConcept<Pixel1, Pixel2>`
-- `PixelConvertibleConcept<SrcPixel, DstPixel>`
+   - `PixelBasedConcept<P> <reference/structboost_1_1gil_1_1_pixel_based_concept.html>`_
+   - `PixelConcept<Pixel> <reference/structboost_1_1gil_1_1_pixel_concept.html>`_
+   - `MutablePixelConcept<Pixel> <reference/structboost_1_1gil_1_1_mutable_pixel_concept.html>`_
+   - `PixelValueConcept<Pixel> <reference/structboost_1_1gil_1_1_pixel_value_concept.html>`_
+   - `HomogeneousPixelConcept<Pixel> <reference/structboost_1_1gil_1_1_homogeneous_pixel_based_concept.html>`_
+   - `MutableHomogeneousPixelConcept<Pixel> <reference/structboost_1_1gil_1_1_mutable_homogeneous_pixel_concept.html>`_
+   - `HomogeneousPixelValueConcept<Pixel> <reference/structboost_1_1gil_1_1_homogeneous_pixel_value_concept.html>`_
+   - `PixelsCompatibleConcept<Pixel1, Pixel2> <reference/structboost_1_1gil_1_1_pixels_compatible_concept.html>`_
+   - `PixelConvertibleConcept<SrcPixel, DstPixel> <reference/structboost_1_1gil_1_1_pixel_convertible_concept.html>`_
 
 Models
 ~~~~~~
@@ -942,11 +935,10 @@ iterators or adaptors over another pixel iterator::
   template <typename Iterator>
   concept MutablePixelIteratorConcept : PixelIteratorConcept<Iterator>, MutableRandomAccessIteratorConcept<Iterator> {};
 
-Related Concepts
-++++++++++++++++
+.. seealso::
 
-- `PixelIteratorConcept<Iterator>`
-- `MutablePixelIteratorConcept<Iterator>`
+   - `PixelIteratorConcept<Iterator> <reference/group___pixel_iterator_concept_pixel_iterator.html>`_
+   - `MutablePixelIteratorConcept<Iterator> <reference/structboost_1_1gil_1_1_mutable_pixel_iterator_concept.html>`_
 
 Models
 ++++++
@@ -970,7 +962,7 @@ iterators over unsigned char are defined::
 ``planar_pixel_iterator`` also models ``HomogeneousColorBaseConcept``
 (it subclasses from ``homogeneous_color_base``) and, as a result, all
 color base algorithms apply to it. The element type of its color base
-is a channel iterator. For example, GIL implements \p operator++ of
+is a channel iterator. For example, GIL implements ``operator++`` of
 planar iterators approximately like this::
 
   template <typename T>
@@ -1021,11 +1013,10 @@ to another base iterator::
   template <boost_concepts::Mutable_ForwardIteratorConcept Iterator>
   concept MutableIteratorAdaptorConcept : IteratorAdaptorConcept<Iterator> {};
 
-Related Concepts
-++++++++++++++++
-
-- `IteratorAdaptorConcept<Iterator>`
-- `MutableIteratorAdaptorConcept<Iterator>`
+.. seealso::
+   
+   - `IteratorAdaptorConcept<Iterator> <reference/structboost_1_1gil_1_1_iterator_adaptor_concept.html>`_
+   - `MutableIteratorAdaptorConcept<Iterator> <reference/structboost_1_1gil_1_1_mutable_iterator_adaptor_concept.html>`_
 
 Models
 ++++++
@@ -1033,13 +1024,12 @@ Models
 GIL provides several models of ``IteratorAdaptorConcept``:
 
 * ``memory_based_step_iterator<Iterator>``: An iterator adaptor that
-  changes the fundamental step of the base iterator (see \ref
-  StepIteratorDG)
+  changes the fundamental step of the base iterator (see :ref:`design_guide:Step Iterator`)
 * ``dereference_iterator_adaptor<Iterator,Fn>``: An iterator that
   applies a unary function ``Fn`` upon dereferencing. It is used, for
   example, for on-the-fly color conversion. It can be used to construct
   a shallow image "view" that pretends to have a different color space
-  or channel depth. See \ref ImageViewFrowImageViewDG for more. The
+  or channel depth. See :ref:`design_guide:Image View` for more. The
   unary function ``Fn`` must model ``PixelDereferenceAdaptorConcept``
   (see below).
 
@@ -1151,13 +1141,12 @@ horizontal step::
 All models of pixel iterators, locators and image views that GIL
 provides support ``HasDynamicXStepTypeConcept``.
 
-Related Concepts
-++++++++++++++++
+.. seealso::
 
-- `StepIteratorConcept<Iterator>`
-- `MutableStepIteratorConcept<Iterator>`
-- `MemoryBasedIteratorConcept<Iterator>`
-- `HasDynamicXStepTypeConcept<T>`
+   - `StepIteratorConcept<Iterator> <reference/structboost_1_1gil_1_1_step_iterator_concept.html>`_
+   - `MutableStepIteratorConcept<Iterator> <reference/structboost_1_1gil_1_1_mutable_step_iterator_concept.html>`_
+   - `MemoryBasedIteratorConcept<Iterator> <reference/structboost_1_1gil_1_1_memory_based_iterator_concept.html>`_
+   - `HasDynamicXStepTypeConcept<T> <reference/structboost_1_1gil_1_1_has_dynamic_x_step_type_concept.html>`_
 
 Models
 ++++++
@@ -1283,7 +1272,7 @@ Two-dimensional locators have additional requirements::
   concept MutableRandomAccess2DLocatorConcept<RandomAccess2DLocatorConcept Loc> : MutableRandomAccessNDLocatorConcept<Loc> {};
 
 2D locators can have a dynamic step not just horizontally, but also
-vertically. This gives rise to the Y equivalent of \p
+vertically. This gives rise to the Y equivalent of
 HasDynamicXStepTypeConcept::
 
   concept HasDynamicYStepTypeConcept<typename T>
@@ -1325,17 +1314,16 @@ concept::
 
   concept MutablePixelLocatorConcept<PixelLocatorConcept Loc> : MutableRandomAccess2DLocatorConcept<Loc> {};
 
-Related Concepts
-++++++++++++++++
+.. seealso::
 
-- `HasDynamicYStepTypeConcept<T>`
-- `HasTransposedTypeConcept<T>`
-- `RandomAccessNDLocatorConcept<Locator>`
-- `MutableRandomAccessNDLocatorConcept<Locator>`
-- `RandomAccess2DLocatorConcept<Locator>`
-- `MutableRandomAccess2DLocatorConcept<Locator>`
-- `PixelLocatorConcept<Locator>`
-- `MutablePixelLocatorConcept<Locator>`
+   - `HasDynamicYStepTypeConcept<T> <reference/structboost_1_1gil_1_1_has_dynamic_y_step_type_concept.html>`_
+   - `HasTransposedTypeConcept<T> <reference/structboost_1_1gil_1_1_has_transposed_type_concept.html>`_
+   - `RandomAccessNDLocatorConcept<Locator> <reference/structboost_1_1gil_1_1_random_access_n_d_locator_concept.html>`_
+   - `MutableRandomAccessNDLocatorConcept<Locator> <reference/structboost_1_1gil_1_1_mutable_random_access_n_d_locator_concept.html>`_
+   - `RandomAccess2DLocatorConcept<Locator> <reference/structboost_1_1gil_1_1_random_access2_d_locator_concept.html>`_
+   - `MutableRandomAccess2DLocatorConcept<Locator> <reference/structboost_1_1gil_1_1_mutable_random_access2_d_locator_concept.html>`_
+   - `PixelLocatorConcept<Locator> <reference/structboost_1_1gil_1_1_pixel_locator_concept.html>`_
+   - `MutablePixelLocatorConcept<Locator> <reference/structboost_1_1gil_1_1_mutable_pixel_locator_concept.html>`_
 
 Models
 ++++++
@@ -1458,7 +1446,7 @@ inside ``iterator_from_2d::operator++`` to determine whether we are at
 the end of a row. For fast operations, such as pixel copy, this second
 check adds about 15% performance delay (measured for interleaved
 images on Intel platform). GIL overrides some STL algorithms, such as
-\p std::copy and ``std::fill``, when invoked with
+ ``std::copy`` and ``std::fill``, when invoked with
 ``iterator_from_2d``-s, to go through each row using their base
 x-iterators, and, if the image has no padding
 (i.e. ``iterator_from_2d::is_1d_traversable()`` returns true) to
@@ -1600,16 +1588,15 @@ Compatible views must also have the same dimensions (i.e. the same
 width and height). Many algorithms taking multiple views require that
 they be pairwise compatible.
 
-Related Concepts
-~~~~~~~~~~~~~~~~
+.. seealso::
 
-- `RandomAccessNDImageViewConcept<View>`
-- `MutableRandomAccessNDImageViewConcept<View>`
-- `RandomAccess2DImageViewConcept<View>`
-- `MutableRandomAccess2DImageViewConcept<View>`
-- `ImageViewConcept<View>`
-- `MutableImageViewConcept<View>`
-- `ViewsCompatibleConcept<View1,View2>`
+   - `RandomAccessNDImageViewConcept<View> <reference/structboost_1_1gil_1_1_random_access_n_d_image_view_concept.html>`_
+   - `MutableRandomAccessNDImageViewConcept<View> <reference/structboost_1_1gil_1_1_mutable_random_access_n_d_image_view_concept.html>`_
+   - `RandomAccess2DImageViewConcept<View> <reference/structboost_1_1gil_1_1_random_access2_d_image_view_concept.html>`_
+   - `MutableRandomAccess2DImageViewConcept<View> <reference/structboost_1_1gil_1_1_mutable_random_access2_d_image_view_concept.html>`_
+   - `ImageViewConcept<View> <reference/structboost_1_1gil_1_1_image_view_concept.html>`_
+   - `MutableImageViewConcept<View> <reference/structboost_1_1gil_1_1_mutable_image_view_concept.html>`_
+   - `ViewsCompatibleConcept<View1,View2> <reference/structboost_1_1gil_1_1_views_compatible_concept.html>`_
 
 Models
 ~~~~~~
@@ -1748,7 +1735,7 @@ because there is a significant increase in compile time when using
 concept checks. We will skip ``gil_function_requires`` in the code
 examples in this guide for the sake of succinctness.
 
-Image views can be freely composed (see section \ref MetafunctionsDG
+Image views can be freely composed (see section :ref:`design_guide:Useful Metafunctions and Typedefs`
 for the typedefs ``rgb16_image_t`` and ``gray16_step_view_t)``::
 
   rgb16_image_t img(100,100);    // an RGB interleaved image
@@ -1860,7 +1847,7 @@ algorithms. For example, ``std::copy`` for planar iterators is
 overloaded to perform ``std::copy`` for each of the
 planes. ``std::copy`` over bitwise-copyable pixels results in
 ``std::copy`` over unsigned char, which STL typically implements via
-\p memmove.
+``memmove``.
 
 As a result ``copy_pixels`` may result in a single call to ``memmove``
 for interleaved 1D-traversable views, or one per each plane of planar
@@ -1934,12 +1921,11 @@ operate on pixels.::
 Images, unlike locators and image views, don't have 'mutable' set of
 concepts because immutable images are not very useful.
 
-Related Concepts
-~~~~~~~~~~~~~~~~
+.. seealso::
 
-- `RandomAccessNDImageConcept<Image>`
-- `RandomAccess2DImageConcept<Image>`
-- `ImageConcept<Image>`
+   - `RandomAccessNDImageConcept<Image> <reference/structboost_1_1gil_1_1_random_access_n_d_image_concept.html>`_
+   - `RandomAccess2DImageConcept<Image> <reference/structboost_1_1gil_1_1_random_access2_d_image_concept.html>`_
+   - `ImageConcept<Image> <reference/structboost_1_1gil_1_1_image_concept.html>`_
 
 Models
 ~~~~~~
@@ -2405,7 +2391,7 @@ be evaluated like this::
   BOOST_STATIC_ASSERT(is_planar<rgb8_planar_view_t>::value == true);
 
 GIL also supports type analysis metafunctions of the form:
-[pixel_reference/iterator/locator/view/image] + \p "_is_" +
+[pixel_reference/iterator/locator/view/image] + "_is_" +
 [basic/mutable/step]. For example::
 
   if (view_is_mutable<View>::value)
