@@ -397,7 +397,7 @@ void checksum_image_test::initialize() {
         string crc_name;
         checksum_ref >> crc_name >> std::hex >> crc_result;
         if(checksum_ref.fail()) break;
-        if (crc_name.front() == '#') //
+        if (!crc_name.empty() && crc_name[0] == '#')
         {
             crc_result = 0; // skip test case
             crc_name = crc_name.substr(1);
