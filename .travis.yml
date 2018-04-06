@@ -111,10 +111,13 @@ matrix:
       addons:
         apt:
           packages:
-            - python-sphinx
             - doxygen
 
 install:
+  - |-
+    if [ "$DOC" ]; then
+      pip install --user sphinx
+    fi
   - cd ..
   - git clone -b master --depth 1 https://github.com/boostorg/boost.git boost-root
   - cd boost-root
