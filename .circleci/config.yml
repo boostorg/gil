@@ -481,7 +481,7 @@ workflows:
   version: 2
   build-and-test:
     jobs:
-      - bootstrap_checkout
+      - bootstrap_checkout:
           filters:
             branches:
               only: develop
