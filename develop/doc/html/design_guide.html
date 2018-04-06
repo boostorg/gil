@@ -1342,7 +1342,8 @@ HasDynamicXStepTypeConcept:</p>
 <span class="p">};</span>
 </pre></div>
 </div>
-<p>All locators and image views that GIL provides model <tt class="docutils literal"><span class="pre">HasDynamicYStepTypeConcept</span></tt>.</p>
+<p>All locators and image views that GIL provides model
+<tt class="docutils literal"><span class="pre">HasDynamicYStepTypeConcept</span></tt>.</p>
 <p>Sometimes it is necessary to swap the meaning of X and Y for a given
 locator or image view type (for example, GIL provides a function to
 transpose an image view).  Such locators and views must be
@@ -1410,10 +1411,12 @@ choice of iterator to use for horizontal direction, i.e. for iterating
 over the pixels on the same row.  Using the fundamental and step
 iterators gives us four choices:</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">pixel&lt;T,C&gt;*</span></tt>                                    (for interleaved images)</li>
-<li><tt class="docutils literal"><span class="pre">planar_pixel_iterator&lt;T*,C&gt;</span></tt>                    (for planar images)</li>
-<li><tt class="docutils literal"><span class="pre">memory_based_step_iterator&lt;pixel&lt;T,C&gt;*&gt;</span></tt>    (for interleaved images with non-standard step)</li>
-<li><tt class="docutils literal"><span class="pre">memory_based_step_iterator&lt;planar_pixel_iterator&lt;T*,C&gt;</span> <span class="pre">&gt;</span></tt> (for planar images with non-standard step)</li>
+<li><tt class="docutils literal"><span class="pre">pixel&lt;T,C&gt;*</span></tt> - for interleaved images</li>
+<li><tt class="docutils literal"><span class="pre">planar_pixel_iterator&lt;T*,C&gt;</span></tt> - for planar images</li>
+<li><tt class="docutils literal"><span class="pre">memory_based_step_iterator&lt;pixel&lt;T,C&gt;*&gt;</span></tt> - for interleaved images with
+non-standard step)</li>
+<li><tt class="docutils literal"><span class="pre">memory_based_step_iterator&lt;planar_pixel_iterator&lt;T*,C&gt;</span> <span class="pre">&gt;</span></tt> - for planar
+images with non-standard step</li>
 </ul>
 <p>Of course, one could provide their own custom x-iterator. One such
 example described later is an iterator adaptor that performs color

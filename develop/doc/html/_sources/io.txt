@@ -311,7 +311,7 @@ The following code sample shows the usage::
                     );
     }
 
-There are many ways to travese an image but for as of now only by
+There are many ways to traverse an image but for as of now only by
 scanline is supported.
 
 

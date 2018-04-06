@@ -200,7 +200,7 @@ relative access can be done with GIL locators::
         gray8s_view_t::x_iterator dst_it  = dst.row_begin(y);
 
         for (int x=0; x<src.width(); ++x)
-	{
+    {
             (*dst_it) = (src_loc(0,-1) - src_loc(0,1)) / 2;
             ++dst_it;
             ++src_loc.x(); // each dimension can be advanced separately
@@ -243,7 +243,7 @@ reuse this offset::
         gray8s_view_t::x_iterator dst_it = dst.row_begin(y);
 
         for (int x=0; x<src.width(); ++x)
-	{
+    {
             (*dst_it) = (src_loc[above] - src_loc[below])/2;
             ++dst_it;
             ++src_loc.x();
@@ -735,7 +735,7 @@ location (x,y) in the image::
     {
         point2<double> Z(0,0);
         for (int i=0; i<100; ++i)  // 100 iterations
-	{
+    {
             Z = point2<double>(Z.x*Z.x - Z.y*Z.y + p.x, 2*Z.x*Z.y + p.y);
             if (Z.x*Z.x + Z.y*Z.y > 4)
                 return i/(double)100;
