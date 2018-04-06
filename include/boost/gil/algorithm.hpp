@@ -127,7 +127,7 @@ private:
 
     // function with distinct name - it can be overloaded by subclasses
     template <typename V1, typename V2>
-    BOOST_FORCEINLINE result_type apply_incompatible(const V1& v1, const V2& v2) const {
+    BOOST_FORCEINLINE result_type apply_incompatible(const V1&, const V2&) const {
         throw std::bad_cast();
     }
 };
@@ -199,7 +199,6 @@ struct copier_n<iterator_from_2d<IL>,O> {
         gil_function_requires<PixelLocatorConcept<IL> >();
         gil_function_requires<MutablePixelIteratorConcept<O> >();
         while (n>0) {
-            typedef typename iterator_from_2d<IL>::difference_type diff_t;
             diff_t l=src.width()-src.x_pos();
             diff_t numToCopy=(n<l ? n:l);
             detail::copy_n(src.x(), numToCopy, dst);
