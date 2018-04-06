@@ -8,7 +8,7 @@
 //#define BOOST_TEST_MODULE bmp_write_test_module
 #include <boost/test/unit_test.hpp>
 
-#include <boost/gil/gil_all.hpp>
+#include <boost/gil.hpp>
 
 #include <boost/gil/extension/io/detail/typedefs.hpp>
 #include <boost/gil/extension/io/bmp_all.hpp>

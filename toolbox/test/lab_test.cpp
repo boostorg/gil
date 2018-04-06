@@ -15,7 +15,7 @@
     BOOST_CHECK_CLOSE(a, b, 0.0005f)
 
 #include <iostream>
-#include <boost/gil/gil_all.hpp>
+#include <boost/gil.hpp>
 #include <boost/gil/extension/toolbox/color_spaces/lab.hpp>
 
 using namespace boost;

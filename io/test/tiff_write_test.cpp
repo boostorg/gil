@@ -8,7 +8,7 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include <boost/gil/gil_all.hpp>
+#include <boost/gil.hpp>
 
 #include <boost/gil/extension/io/detail/typedefs.hpp>
 #include <boost/gil/extension/io/tiff_all.hpp>

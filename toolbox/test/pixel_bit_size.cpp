@@ -7,7 +7,7 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include <boost/gil/gil_all.hpp>
+#include <boost/gil.hpp>
 #include <boost/gil/extension/toolbox/metafunctions/pixel_bit_size.hpp>
 
 using namespace boost;

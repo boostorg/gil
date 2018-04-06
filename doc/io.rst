@@ -60,16 +60,9 @@ on how to use this boost::gil extension. For more details please refer to sectio
 Since this is an extension to boost::gil I expect the user to have some very basic
 understanding of the gil ( generic image library ). Please see here for the help.
 
-[h2 Header Files]
-The header files to be included all have the same format. For instance, tiff_all.hpp will
-allow to read and write. Whereas, tiff_read.hpp only allows for reading. If the user only
-wants to write jpeg's include jpeg_write.hpp. All formats provide these three types of header files:
-
-* xxx_all.hpp
-* xxx_read.hpp
-* xxx_write.hpp
-
-xxx stands for image format.
+For each supported IO format a single top-level header file is provided.
+For instance, include `boost/gil/extension/io/tiff.hpp` to be able
+to read or write TIFF files.
 
 Reading An Image
 ~~~~~~~~~~~~~~~~
