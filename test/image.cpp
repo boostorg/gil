@@ -24,12 +24,10 @@
 #include <boost/mpl/vector.hpp>
 #include <boost/gil/extension/dynamic_image/dynamic_image_all.hpp>
 #include <boost/crc.hpp>
-#include <boost/filesystem.hpp>
 
 using namespace boost::gil;
 using namespace std;
 using namespace boost;
-namespace fs = boost::filesystem;
 
 extern rgb8c_planar_view_t sample_view;
 void error_if(bool condition);
@@ -535,32 +533,18 @@ void test_image(const char* ref_checksum) {
 
 int main(int argc, char* argv[])
 {
-    std::string here = fs::absolute(fs::path(__FILE__)).parent_path().string() + "/";
-    std::string local_name = here + "gil_reference_checksums.txt";
-    const char* name_from_status = "../libs/gil/test/gil_reference_checksums.txt";
-
-    if (argc == 2 && argv[1])
-    {
-        local_name = argv[1];
-    }
-
     try
     {
+        if (argc != 2)
+            throw std::runtime_error("No file with reference checksums specified");
+
+        std::string local_name = argv[1];
         std::ifstream file_is_there(local_name.c_str());
-        if (file_is_there)
-        {
-            test_image(local_name.c_str());
-        }
-        else
-        {
-            std::ifstream file_is_there(name_from_status);
-            if (file_is_there)
-                test_image(name_from_status);
-            else
-            {
-                throw std::runtime_error("Unable to open gil_reference_checksums.txt");
-            }
-        }
+        if (!file_is_there)
+            throw std::runtime_error("Unable to open gil_reference_checksums.txt");
+        
+        test_image(local_name.c_str());
+
         return EXIT_SUCCESS;
     }
     catch (std::exception const& e)
