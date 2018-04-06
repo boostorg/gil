@@ -1281,7 +1281,8 @@ HasDynamicXStepTypeConcept::
         where Metafunction<dynamic_y_step_type<T> >;
   };
 
-All locators and image views that GIL provides model ``HasDynamicYStepTypeConcept``.
+All locators and image views that GIL provides model
+``HasDynamicYStepTypeConcept``.
 
 Sometimes it is necessary to swap the meaning of X and Y for a given
 locator or image view type (for example, GIL provides a function to
@@ -1352,10 +1353,12 @@ choice of iterator to use for horizontal direction, i.e. for iterating
 over the pixels on the same row.  Using the fundamental and step
 iterators gives us four choices:
 
-- ``pixel<T,C>*``                                    (for interleaved images)
-- ``planar_pixel_iterator<T*,C>``                    (for planar images)
-- ``memory_based_step_iterator<pixel<T,C>*>``    (for interleaved images with non-standard step)
-- ``memory_based_step_iterator<planar_pixel_iterator<T*,C> >`` (for planar images with non-standard step)
+- ``pixel<T,C>*`` - for interleaved images
+- ``planar_pixel_iterator<T*,C>`` - for planar images
+- ``memory_based_step_iterator<pixel<T,C>*>`` - for interleaved images with
+  non-standard step)
+- ``memory_based_step_iterator<planar_pixel_iterator<T*,C> >`` - for planar
+  images with non-standard step
 
 Of course, one could provide their own custom x-iterator. One such
 example described later is an iterator adaptor that performs color

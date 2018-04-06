@@ -13,7 +13,7 @@
 #include <fstream>
 
 #include <boost/gil.hpp>
-#include <boost/gil/extension/io/raw_all.hpp>
+#include <boost/gil/extension/io/raw.hpp>
 
 #define BOOST_FILESYSTEM_VERSION 3
 #include <boost/filesystem/convenience.hpp>

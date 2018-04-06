@@ -10,7 +10,7 @@
 
 #include <boost/mpl/vector.hpp>
 #include <boost/gil.hpp>
-#include <boost/gil/extension/io/tiff_all.hpp>
+#include <boost/gil/extension/io/tiff.hpp>
 
 #include "paths.hpp"
 

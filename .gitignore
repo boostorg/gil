@@ -1,4 +1,5 @@
-/.vs*
+.vs*
 /*build*
 /doc/*build*
 /io/output
+*~

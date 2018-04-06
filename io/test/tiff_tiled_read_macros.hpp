@@ -16,7 +16,7 @@
 
 #include <boost/mpl/vector.hpp>
 #include <boost/gil.hpp>
-#include <boost/gil/extension/io/tiff_read.hpp>
+#include <boost/gil/extension/io/tiff/read.hpp>
 
 #include "paths.hpp"
 

@@ -8,8 +8,9 @@ Installation
 ------------
 
 The latest version of GIL can be downloaded from http://boostorg.github.com/gil.
-GIL consists of header files only and does not require any libraries to link against. It does not require Boost to be built.
-Including ``boost/gil.hpp`` will be sufficient for most projects.
+GIL consists of header files only and does not require any libraries to
+link against. It does not require Boost to be built and including
+``boost/gil.hpp`` will be sufficient for most projects.
 
 Example - Computing the Image Gradient
 --------------------------------------
@@ -199,7 +200,7 @@ relative access can be done with GIL locators::
         gray8s_view_t::x_iterator dst_it  = dst.row_begin(y);
 
         for (int x=0; x<src.width(); ++x)
-	{
+    {
             (*dst_it) = (src_loc(0,-1) - src_loc(0,1)) / 2;
             ++dst_it;
             ++src_loc.x(); // each dimension can be advanced separately
@@ -242,7 +243,7 @@ reuse this offset::
         gray8s_view_t::x_iterator dst_it = dst.row_begin(y);
 
         for (int x=0; x<src.width(); ++x)
-	{
+    {
             (*dst_it) = (src_loc[above] - src_loc[below])/2;
             ++dst_it;
             ++src_loc.x();
@@ -734,7 +735,7 @@ location (x,y) in the image::
     {
         point2<double> Z(0,0);
         for (int i=0; i<100; ++i)  // 100 iterations
-	{
+    {
             Z = point2<double>(Z.x*Z.x - Z.y*Z.y + p.x, 2*Z.x*Z.y + p.y);
             if (Z.x*Z.x + Z.y*Z.y > 4)
                 return i/(double)100;

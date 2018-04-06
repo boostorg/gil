@@ -1,40 +1,27 @@
 IO extensions
 =============
 
-.. _BMP_Wiki: http://en.wikipedia.org/wiki/BMP_file_format
-.. _JPEG_Wiki: http://en.wikipedia.org/wiki/JPEG
-.. _JPEG_lib: http://www.ijg.org/
-.. _PNG_Wiki: http://en.wikipedia.org/wiki/Portable_Network_Graphics
-.. _PNG_Lib: http://libpng.org/pub/png/libpng.html
-.. _PNM_Wiki: http://en.wikipedia.org/wiki/Portable_anymap
-.. _RAW_Wiki: http://en.wikipedia.org/wiki/Raw_image_format
-.. _TARGA_Wiki: http://en.wikipedia.org/wiki/Truevision_TGA
-.. _RAW_lib: http://www.libraw.org/
-.. _RAW_Wiki: http://en.wikipedia.org/wiki/Raw_image_format
-.. _TIFF_Wiki: http://en.wikipedia.org/wiki/Tagged_Image_File_Format
-.. _TIFF_Lib: http://www.remotesensing.org/libtiff/
-.. _TIFF_Base_Tags: http://www.awaresystems.be/imaging/tiff/tifftags/baseline.html
-.. _TIFF_Extension_Tags: http://www.awaresystems.be/imaging/tiff/tifftags/extension.html
-.. _BMP_TEST_FILES: http://entropymine.com/jason/bmpsuite/
-.. _PNG_TEST_FILES: http://www.schaik.com/pngsuite/pngsuite.html
-.. _TARGA_TEST_FILES: http://www.fileformat.info/format/tga/sample/index.htm
-.. _TIFF_LIB_TIFF_TEST_FILES: http://www.remotesensing.org/libtiff/images.html
-.. _TIFF_GRAPHICSMAGICK_TEST_FILES: ftp://ftp.graphicsmagick.org/pub/tiff-samples/tiff-sample-images-be.tar.gz
-
 Overview
 --------
 
-This extension to boost::gil provides an easy to use interface for reading and writing
-various image formats. It also includes a framework for adding new formats.
+This extension to boost::gil provides an easy to use interface for reading and
+writing various image formats. It also includes a framework for adding
+new formats.
 
-Please see section 3.3 for all supported image formats. A basic tutorial is provided
-in section [link gil.io.tutorial Tutorial]. Also, this extension requires Boost version 1.42 and up. Furthermore the gil
-extension Toolbox is used.
+Please see section 3.3 for all supported image formats. A basic tutorial is
+provided in section [link gil.io.tutorial Tutorial].
+Also, this extension requires Boost version 1.42 and up.
+Furthermore the GIL extension Toolbox is used.
 
-For adding new image formats please refer to section [link gil.io.using_io.extending_gil__io_with_new_formats Extending GIL::IO with new Formats].
-[h2 Supported Platforms]
-All platforms supported by boost which have a decent C++ compiler. Depending on the
-image format one or more of the following image libraries might be needed:
+For adding new image formats please refer to section
+[link gil.io.using_io.extending_gil__io_with_new_formats Extending GIL::IO with new Formats].
+
+Supported Platforms
+-------------------
+
+All platforms supported by Boost which have a decent C++ compiler.
+Depending on the image format one or more of the following image
+libraries might be needed:
 
 * libtiff
 * libjpeg
@@ -46,19 +33,24 @@ The library is designed to support as many formats as required by the user.
 For instance, if the user only needs bmp support none of the above mentioned
 dependencies are required.
 
-There are more details available in this documentation on the image format dependencies.
-Please see section [link gil.io.using_io.supported_image_formats Supported Image Formats].
-[endsect]
+There are more details available in this documentation on the image format
+dependencies. Please see section
+[link gil.io.using_io.supported_image_formats Supported Image Formats].
 
 Tutorial
 --------
 
 Thanks to modern C++ programming techniques the interface for this library
-is rather small and easy to use. In this tutorial I'll give you a short walk-around
-on how to use this boost::gil extension. For more details please refer to section 3.
+is rather small and easy to use. In this tutorial I'll give you a short
+walk-around on how to use this boost::gil extension.
+For more details please refer to section 3.
 
-Since this is an extension to boost::gil I expect the user to have some very basic
-understanding of the gil ( generic image library ). Please see here for the help.
+Since this is an extension to boost::gil I expect the user to have some
+very basic understanding of the gil ( generic image library ).
+Please see here for the help.
+
+Header Files
+~~~~~~~~~~~~
 
 For each supported IO format a single top-level header file is provided.
 For instance, include `boost/gil/extension/io/tiff.hpp` to be able
@@ -73,32 +65,37 @@ Probably the most common case to read a tiff image can be done as follows::
     rgb8_image_t img;
     read_image( filename, img, tiff_tag() );
 
-The code would be same for all other image formats. The only thing that needs to
-change is the tag type ( tiff_tag ) in the read_image call.
+The code would be same for all other image formats. The only thing that needs
+to change is the tag type ( tiff_tag ) in the read_image call.
 The read_image() expects the supplied image type to be compatible with the
-image stored in the file. If the user doesn't know what format an image has he/she
+image stored in the file. If the user doesn't know what format an image has she
 can use read_and_convert_image().
 Another important fact is that read_image() will allocate the appropriate
-memory needed for the read operation. There are read_view or read_and_convert_view
-counterparts, if the memory is already allocated.
+memory needed for the read operation. There are ``read_view`` or
+``read_and_convert_view`` counterparts, if the memory is already allocated.
 
-Sometimes the user only wants to read a sub-part of an image, then the above call
-would look as follows::
+Sometimes the user only wants to read a sub-part of an image,
+then the above call would look as follows::
 
     read_image( filename
               , img
               , image_read_settings< tiff_tag >( point_t( 0, 0 ), point_t( 50, 50 ) )
               );
 
-The image_read_settings class will provide the user with image format independent
-reading setting but can also serves as a pointer for format dependent settings. Please
-see the specific image format sections [link gil.io.using_io.supported_image_formats Supported Image Formats] for more details.
+The image_read_settings class will provide the user with image format
+independent reading setting but can also serves as a pointer for format
+dependent settings.
+Please see the specific image format sections
+[link gil.io.using_io.supported_image_formats Supported Image Formats]
+for more details.
 
 Writing An Image
 ~~~~~~~~~~~~~~~~
 
-Besides reading the information also writing is the second part of this boost::gil extension.
-Writing is a lot simpler than reading since an existing image view contains all the information.
+Besides reading the information also writing is the second part of this
+Boost.GIL extension. Writing is a lot simpler than reading since an existing
+image view contains all the information.
+
 For instance writing an image can be done as follows::
 
     std::string filename( "image.tif" );
@@ -112,8 +109,9 @@ For instance writing an image can be done as follows::
               );
 
 
-The interface is similar to reading an image. To add image format specific parameter the user can use
-image_write_info class. For instance, a user can specify the jpeg quality when writing like this::
+The interface is similar to reading an image. To add image format specific
+parameter the user can use ``image_write_info`` class.
+For instance, a user can specify the JPEG quality when writing like this::
 
     std::string filename( "image.jpg" );
     rgb8_image_t img( 640, 480 );
@@ -126,7 +124,8 @@ image_write_info class. For instance, a user can specify the jpeg quality when w
               );
 
 
-The above example will write an image where the jpeg quality is set to 95 percent.
+The above example will write an image where the jpeg quality is
+set to 95 percent.
 
 Reading And Writing In-Memory Buffers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -158,8 +157,8 @@ Reading and writing in-memory buffers are supported as well. See as follows::
     ofstream out( filename.c_str(), ios_base::binary );
     write_view( out, view( dst ), tiff_tag() );
 
-In case the user is using his own stream classes he has to make sure it has the common interface read,
-write, seek, close, etc. Interface.
+In case the user is using his own stream classes he has to make sure it
+has the common interface read, write, seek, close, etc. Interface.
 
 Using IO
 --------
@@ -167,13 +166,18 @@ Using IO
 General Overview
 ~~~~~~~~~~~~~~~~
 
-The tutorial pointed out some use cases for reading and writing images in various image formats. This section will provide a more thorough overview.
+The tutorial pointed out some use cases for reading and writing images in
+various image formats. This section will provide a more thorough overview.
 
-The next sections will introduce the Read and Write interface. But it might be worth poiting out that by using some advanced metaprogramming techniques
-the interface is rather small and hopefully easy to understand.
+The next sections will introduce the Read and Write interface. But it might be
+worth pointing out that by using some advanced metaprogramming techniques the
+interface is rather small and hopefully easy to understand.
 
-Besides the general interface the user also has the ability to interface directly with the underlying image format. For that each reader or writer
-provides access to the so-called backend. For instance::
+Besides the general interface the user also has the ability to interface
+directly with the underlying image format. For that each reader or writer
+provides access to the so-called backend.
+
+For instance::
 
     typedef get_reader_backend< const std::string
                               , tag_t
@@ -191,45 +195,56 @@ Of course, the typedef can be removed when using c++11's auto feature.
 Read Interface
 ~~~~~~~~~~~~~~
 
-As the Tutorial demonstrated there are a few ways to read images. Here is an enumeration of
-all read functions with a short description:
+As the Tutorial demonstrated there are a few ways to read images.
+Here is an enumeration of all read functions with a short description:
 
-* read_image - read into a gil image with no conversion. Memory is allocated.
-* read_view  - read into a gil view with no conversion.
-* read_and_convert_image - read and convert into a gil image. Memory is allocated.
-* read_and_convert_view  - read and convert into a gil view.
-* read_image_info - read the image header.
+* ``read_image`` - read into a gil image with no conversion.
+  Memory is allocated.
+* ``read_view`` - read into a gil view with no conversion.
+* ``read_and_convert_image`` - read and convert into a gil image.
+  Memory is allocated.
+* ``read_and_convert_view`` - read and convert into a gil view.
+* ``read_image_info`` - read the image header.
 
-Conversion in this context is necessary if the source ( file ) has an incompatible color space
-with the destination ( gil image type ). If that's the case the user has to use the xxx_and_convert_xxx
-variants.
+Conversion in this context is necessary if the source (file) has an
+incompatible color space with the destination (gil image type).
+If that's the case the user has to use the xxx_and_convert_xxx variants.
 
-All functions take the filename or a device as the first parameter. The filename can be anything from
-a c string, std::string, std::wstring, and a boost::filesystem path. When using the path object the
-user needs to define the ADD_FS_PATH_SUPPORT compiler symbol to include the boost::filesystem
-dependency. Devices could be a FILE*, std::ifstream, and a TIFF* for TIFF images.
+All functions take the filename or a device as the first parameter.
+The filename can be anything from a C-string, ``std::string``,
+``std::wstring`` and ``boost::filesystem`` path. When using the path
+object the user needs to define the ADD_FS_PATH_SUPPORT compiler symbol to
+include the boost::filesystem dependency.
+Devices could be a ``FILE*``, ``std::ifstream``, and ``TIFF*`` for TIFF images.
 
-The second parameter is either an image or view type depending on the read_xxx function.
-The third and last parameter is either an instance of the image_read_settings<FormatTag> or just the
-FormatTag. The settings can be various depending on the format which is being read. But the all
-share settings for reading a partial image area. The first point describes the top left image
-coordinate whereas the second are the dimensions in x and y directions. Here an example of
-setting up partial read::
+The second parameter is either an image or view type depending on the
+``read_xxx`` function.
+The third and last parameter is either an instance of the
+``image_read_settings<FormatTag>`` or just the ``FormatTag``.
+The settings can be various depending on the format which is being read.
+But the all share settings for reading a partial image area.
+The first point describes the top left image coordinate whereas the second
+are the dimensions in x and y directions.
+
+Here an example of setting up partial read::
 
     read_image( filename
               , img
               , image_read_settings< tiff_tag >( point_t( 0, 0 ), point_t( 50, 50 ) )
               );
 
-Each format supports reading just the header information, using read_image_info(). Please
-refer to the format specific sections under 3.3. A basic example follows::
+Each format supports reading just the header information,
+using ``read_image_info``. Please refer to the format specific sections
+under 3.3. A basic example follows::
 
     image_read_info< tiff_t > info = read_image_info( filename
                                                     , tiff_t()
                                                     );
 
-GIL also comes with a dynamic image extension. In the context of GIL.IO a user can define an any_image type based
-on several image types. The IO extension would then pick the matching image type to the current image file.
+GIL also comes with a dynamic image extension.
+In the context of GIL.IO a user can define an ``any_image`` type based on
+several image types. The IO extension would then pick the matching image type
+to the current image file.
 The following example shows this feature::
 
     typedef mpl::vector< gray8_image_t
@@ -245,10 +260,11 @@ The following example shows this feature::
               , tiff_tag()
               );
 
-
-During the review it became clear that there is a need to read big images scanline by scanline. To support such use case
-a scanline_reader is implemented for all supported image formats. The scanline_read_iterators will then allow to traverse
-through the image. The following code sample shows the usage::
+During the review it became clear that there is a need to read big images
+scanline by scanline. To support such use case a ``scanline_reader`` is
+implemented for all supported image formats.
+The ``scanline_read_iterators`` will then allow to traverse through the image.
+The following code sample shows the usage::
 
     typedef tiff_tag tag_t;
 
@@ -286,20 +302,27 @@ through the image. The following code sample shows the usage::
                     );
     }
 
-There are many ways to travese an image but for as of now only by scanline is supported.
+There are many ways to traverse an image but for as of now only by
+scanline is supported.
 
 
 Write Interface
 ~~~~~~~~~~~~~~~
 
-There is only one function for writing out images, write_view. Similar to reading the first parameter is either
-a filename or a device. The filename can be anything from a c string, std::string, std::wstring, and a
-boost::filesystem path. When using the path object the user needs to define the ADD_FS_PATH_SUPPORT compiler symbol
-to include the boost::filesystem dependency. Devices could be a FILE*, std::ifstream, and a TIFF* for TIFF images.
+There is only one function for writing out images, write_view.
+Similar to reading the first parameter is either a filename or a device.
+The filename can be anything from a C-string, ``std::string``,
+``std::wstring``, and ``boost::filesystem`` path. When using the path object
+the user needs to define the ``ADD_FS_PATH_SUPPORT`` compiler symbol to
+include the ``boost::filesystem`` dependency.
+Devices could be ``FILE*``, ``std::ifstream``, and ``TIFF*`` for TIFF images.
 
-The second parameter is an view object to image being written. The third and last parameter is either a tag or
-an image_write_info< FormatTag > object containing more settings. One example for instance is the jpeg quality.
-Refer to the format specific sections under 3.3. to have a list of all the possible settings.
+The second parameter is an view object to image being written.
+The third and last parameter is either a tag or an
+``image_write_info<FormatTag>`` object containing more settings.
+One example for instance is the JPEG quality.
+Refer to the format specific sections under 3.3. to have a list of all
+the possible settings.
 
 Writing an any_image<...> is supported. See the following example::
 
@@ -322,7 +345,8 @@ Writing an any_image<...> is supported. See the following example::
 Compiler Symbols
 ~~~~~~~~~~~~~~~~
 
-The following table gives an overview of all supported compiler symbols that can be set by the user:
+The following table gives an overview of all supported compiler symbols
+that can be set by the user:
 
 .. comment [table Compiler Symbols
 
@@ -356,7 +380,8 @@ Supported Image Formats
 BMP
 +++
 
-For a general overview of the BMP image file format go to the following BMP_Wiki_.
+For a general overview of the BMP image file format go to the
+following BMP_Wiki_.
 
 Please note, the code has not been tested on X Windows System variations
 of the BMP format which are usually referred to XBM and XPM formats.
@@ -368,56 +393,67 @@ Currently the code is able to read and write the following image types:
 :Read: ``gray1_image_t``, ``gray4_image_t``, ``gray8_image_t``, ``rgb8_image_t`` and, ``rgba8_image_t``
 :Write: ``rgb8_image_t`` and, ``rgba8_image_t``
 
-The lack of having an indexed image type in gil restricts the current interface to only
-write out non-indexed images. This is subject to change soon.
+The lack of having an indexed image type in gil restricts the current
+interface to only write out non-indexed images.
+This is subject to change soon.
 
 JPEG
 ++++
 
-For a general overview of the JPEG image file format go to the following JPEG_Wiki_.
+For a general overview of the JPEG image file format go to the
+following JPEG_Wiki_.
 
-This jpeg extension is based on the libjpeg library which can be found here, JPEG_Lib_.
+This jpeg extension is based on the libjpeg library which can be
+found here, JPEG_Lib_.
 
 All versions starting from 8x are supported.
 
-The user has to make sure this library is properly installed. I strongly recommend the user
-to build the library yourself. It could potentially save you a lot of trouble.
+The user has to make sure this library is properly installed.
+I strongly recommend the user to build the library yourself.
+It could potentially save you a lot of trouble.
 
 Currently the code is able to read and write the following image types:
 
 :Read: ``gray8_image_t``, ``rgb8_image_t``, ``cmyk8_image_t``
 :Write: ``gray8_image_t``, ``rgb8_image_t``, ``cmyk8_image_t``
 
-Reading YCbCr or YCCK images is possible but might result in inaccuracies since both color spaces
-aren't available yet for gil. For now these color space are read as rgb images.
+Reading YCbCr or YCCK images is possible but might result in inaccuracies since
+both color spaces aren't available yet for gil.
+For now these color space are read as rgb images.
 This is subject to change soon.
 
 PNG
 +++
 
-For a general overview of the PNG image file format go to the following PNG_Wiki_.
+For a general overview of the PNG image file format go to the
+following PNG_Wiki_.
 
-This png extension is based on the libpng, which can be found here, PNG_Lib_.
+This png extension is based on the libpng, which can be found
+here, PNG_Lib_.
 
 All versions starting from 1.5.x are supported.
 
-The user has to make sure this library is properly installed. I strongly recommend the user
-to build the library yourself. It could potentially save you a lot of trouble.
+The user has to make sure this library is properly installed.
+I strongly recommend the user to build the library yourself.
+It could potentially save you a lot of trouble.
 
 Currently the code is able to read and write the following image types:
 
 :Read: gray1, gray2, gray4, gray8, gray16, gray_alpha_8, gray_alpha_16, rgb8, rgb16, rgba8, rgba16
 :Write: gray1, gray2, gray4, gray8, gray16, gray_alpha_8, gray_alpha_16, rgb8, rgb16, rgba8, rgba16
 
-For reading gray_alpha images the user has to enable the ENABLE_GRAY_ALPHA compiler switch. This color
-space is defined in the toolbox by using gray_alpha.hpp.
+For reading gray_alpha images the user has to enable the ``ENABLE_GRAY_ALPHA``
+compiler switch. This color space is defined in the toolbox by
+using ``gray_alpha.hpp``.
 
 PNM
 +++
 
-For a general overview of the PNM image file format go to the following PNM_Wiki_.
+For a general overview of the PNM image file format go to the
+following PNM_Wiki_.
 
-No external library is needed for the pnm format. Both ascii and binary formats are supported.
+No external library is needed for the pnm format.
+Both ascii and binary formats are supported.
 
 Currently the code is able to read and write the following image types:
 
@@ -436,73 +472,83 @@ Currently the extension is only able to read rgb8 images.
 TARGA
 +++++
 
-For a general overview of the BMP image file format go to the following TARGA_Wiki_.
+For a general overview of the BMP image file format go to the
+following TARGA_Wiki_.
 
 Currently the code is able to read and write the following image types:
 
 :Read: rgb8_image_t and rgba8_image_t
 :Write: rgb8_image_t and rgba8_image_t
 
-The lack of having an indexed image type in gil restricts the current interface to only
-write out non-indexed images. This is subject to change soon.
+The lack of having an indexed image type in gil restricts the current
+interface to only write out non-indexed images.
+This is subject to change soon.
 
 TIFF
 ++++
 
-For a general overview of the TIFF image file format go to the following TIFF_Wiki_.
+For a general overview of the TIFF image file format go to the
+following TIFF_Wiki_.
 
 This tiff extension is based on the libtiff, which can be found, TIFF_Lib_.
 
 All versions starting from 3.9.x are supported.
 
-The user has to make sure this library is properly installed. I strongly recommend the user
-to build the library yourself. It could potentially save you a lot of trouble.
+The user has to make sure this library is properly installed. I strongly
+recommend the user to build the library yourself. It could potentially
+save you a lot of trouble.
 
-TIFF images can virtually encode all kinds of channel sizes representing various color spaces. Even
-planar images are possible. For instance, rbg323 or gray7. The channels also can have specific formats, like
-integer values or floating point values. For a complete set of options please consult the following websites:
+TIFF images can virtually encode all kinds of channel sizes representing
+various color spaces. Even planar images are possible.
+For instance, ``rbg323`` or ``gray7``. The channels also can have specific
+formats, like integer values or floating point values.
+
+For a complete set of options please consult the following websites:
 
 * TIFF_Base_Tags_
 * TIFF_Extension_Tags_
 
-The author of this extension is not claiming all tiff formats are supported. This extension is
-likely to be a moving target adding new features with each new milestone. Here is an incomplete lists:
+The author of this extension is not claiming all tiff formats are supported.
+This extension is likely to be a moving target adding new features with each
+new milestone. Here is an incomplete lists:
 
-* Multi-page tiffs - read only
-* Strip tiffs - read and write support
-* Tiled tiffs - read and write support with user defined tiled sizes
-* bit images tiffs - fully supported, like gray1_image_t ( minisblack )
-* planar tiffs - fully supported
-* floating point tiffs - fully supported
-* palette tiffs - supported but no indexed image type is available as of now
+* Multi-page TIFF - read only
+* Strip TIFF - read and write support
+* Tiled TIFF - read and write support with user defined tiled sizes
+* Bit images TIFF - fully supported, like ``gray1_image_t`` (minisblack)
+* Planar TIFF - fully supported
+* Floating-point TIFF - fully supported
+* Palette TIFF - supported but no indexed image type is available as of now
 
-This gil extension uses two different test image suites to test read and write capabilities. See test_image folder.
-It's advisable to use ImageMagick's test viewer to display images.
+This gil extension uses two different test image suites to test read and
+write capabilities. See ``test_image`` folder.
+It's advisable to use ImageMagick test viewer to display images.
 
 
 Extending GIL::IO with new Formats
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Extending the gil::io with new formats is meant to be simple and straightforward. Before adding I would
-recommend to have a look at existing implementations and then trying to follow a couple of guidelines:
+Extending the gil::io with new formats is meant to be simple and
+straightforward. Before adding I would recommend to have a look at existing
+implementations and then trying to follow a couple of guidelines:
 
 * Create the following files for your new xxx format
-    * xxx_read.hpp // Only includes read code
-    * xxx_write.hpp // Only includes write code
-    * xxx_all.hpp // includes xxx_read.hpp and xxx_write.hpp
-* Add the code to the boost::gil::detail namespace
+    * ``xxx_read.hpp`` - Only includes read code
+    * ``xxx_write.hpp`` - Only includes write code
+    * ``xxx_all.hpp`` - includes xxx_read.hpp and xxx_write.hpp
+* Add the code to the ``boost::gil::detail`` namespace
 * Create a tag type for the new format. Like this::
 
     struct xxx_tag : format_tag {};
 
-* Create the image_read_info for the new format. It contains all the information that are
-  necessary to read an image. It should be filled and returned by the get_info() member of
-  the reader class. See below::
+* Create the image_read_info for the new format. It contains all the
+  information that are necessary to read an image. It should be filled
+  and returned by the ``get_info`` member of the reader class. See below::
 
     template<> struct image_read_info< xxx_tag > {};
 
-* Create the image_write_info for the new format. It contains all the information that are
-  necessary to write an image::
+* Create the image_write_info for the new format. It contains all the
+  information that are necessary to write an image::
 
     template<> struct image_write_info< xxx_tag > {};
 
@@ -580,11 +626,17 @@ recommend to have a look at existing implementations and then trying to follow a
 Running gil::io tests
 ---------------------
 
-gil::io comes with a large suite of test cases which reads and writes various file formats. It uses some test image suites which can be found online or which can be demanded from me by sending me an email.
+gil::io comes with a large suite of test cases which reads and writes various
+file formats. It uses some test image suites which can be found online or
+which can be demanded from me by sending me an email.
 
-There are some test images created by me in the test folder. To enable unit tests which make use of them set the following compiler options BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES and BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES.
+There are some test images created by me in the test folder.
+To enable unit tests which make use of them set the following compiler options
+``BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES`` and
+``BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES``.
 
-The following list provides all links to the image suites the compiler symbol to enable the tests:
+The following list provides all links to the image suites the compiler symbol
+to enable the tests:
 
 :BMP:   BMP_TEST_FILES_                 -- BOOST_GIL_IO_USE_BMP_TEST_SUITE_IMAGES
 :PNG:   PNG_TEST_FILES_                 -- BOOST_GIL_IO_USE_PNG_TEST_SUITE_IMAGES
@@ -592,3 +644,24 @@ The following list provides all links to the image suites the compiler symbol to
 :TARGA: TARGA_TEST_FILES_               -- BOOST_GIL_IO_USE_TARGA_FILEFORMAT_TEST_SUITE_IMAGES
 :TIFF:  TIFF_LIB_TIFF_TEST_FILES_       -- BOOST_GIL_IO_USE_TIFF_LIBTIFF_TEST_SUITE_IMAGES
 :TIFF:  TIFF_GRAPHICSMAGICK_TEST_FILES_ -- BOOST_GIL_IO_USE_TIFF_GRAPHICSMAGICK_TEST_SUITE_IMAGES
+
+
+.. _BMP_Wiki: http://en.wikipedia.org/wiki/BMP_file_format
+.. _JPEG_Wiki: http://en.wikipedia.org/wiki/JPEG
+.. _JPEG_lib: http://www.ijg.org/
+.. _PNG_Wiki: http://en.wikipedia.org/wiki/Portable_Network_Graphics
+.. _PNG_Lib: http://libpng.org/pub/png/libpng.html
+.. _PNM_Wiki: http://en.wikipedia.org/wiki/Portable_anymap
+.. _RAW_Wiki: http://en.wikipedia.org/wiki/Raw_image_format
+.. _TARGA_Wiki: http://en.wikipedia.org/wiki/Truevision_TGA
+.. _RAW_lib: http://www.libraw.org/
+.. _RAW_Wiki: http://en.wikipedia.org/wiki/Raw_image_format
+.. _TIFF_Wiki: http://en.wikipedia.org/wiki/Tagged_Image_File_Format
+.. _TIFF_Lib: http://www.remotesensing.org/libtiff/
+.. _TIFF_Base_Tags: http://www.awaresystems.be/imaging/tiff/tifftags/baseline.html
+.. _TIFF_Extension_Tags: http://www.awaresystems.be/imaging/tiff/tifftags/extension.html
+.. _BMP_TEST_FILES: http://entropymine.com/jason/bmpsuite/
+.. _PNG_TEST_FILES: http://www.schaik.com/pngsuite/pngsuite.html
+.. _TARGA_TEST_FILES: http://www.fileformat.info/format/tga/sample/index.htm
+.. _TIFF_LIB_TIFF_TEST_FILES: http://www.remotesensing.org/libtiff/images.html
+.. _TIFF_GRAPHICSMAGICK_TEST_FILES: ftp://ftp.graphicsmagick.org/pub/tiff-samples/tiff-sample-images-be.tar.gz
