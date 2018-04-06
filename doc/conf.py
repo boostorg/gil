@@ -24,7 +24,7 @@ import sys, os
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = []
+extensions = ['sphinx.ext.autosectionlabel']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -64,6 +64,10 @@ release = '1.0'
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 exclude_patterns = ['_build']
+
+# disambiguate auto-generated section anchors by prefixing
+# them with the document name
+autosectionlabel_prefix_document = True
 
 # The reST default role (used for this markup: `text`) to use for all documents.
 #default_role = None
