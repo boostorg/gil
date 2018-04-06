@@ -14,7 +14,7 @@ variety of images with performance similar to hand-writing for a specific image 
 
 ## Test results
 
- Branch     | Linux         | Windows       | Regression
-------------|---------------|---------------|------------
-**develop** | [![Travis](https://travis-ci.org/boostorg/gil.svg?branch=develop)](https://travis-ci.org/boostorg/gil) | [![AppVeyor](https://ci.appveyor.com/api/projects/status/w4k19d8io2af168h/branch/develop?svg=true)](https://ci.appveyor.com/project/stefanseefeld/gil/branch/develop) | [![gil](https://img.shields.io/badge/gil-develop-4480cc.png)](http://www.boost.org/development/tests/develop/developer/gil.html)
-**master**  | [![Travis](https://travis-ci.org/boostorg/gil.svg?branch=master)](https://travis-ci.org/boostorg/gil)  | [![AppVeyor](https://ci.appveyor.com/api/projects/status/w4k19d8io2af168h?svg=true)](https://ci.appveyor.com/project/stefanseefeld/gil/branch/master) | [![gil](https://img.shields.io/badge/gil-master-4480cc.png)](http://www.boost.org/development/tests/master/developer/gil.html)
+ Branch     | Travis (gcc/clang) | AppVeyor (VS2017) | CircleCI (gcc/clang) | Regression
+------------|--------------------|-------------------|----------------------|-----------
+**develop** | [![Travis](https://travis-ci.org/boostorg/gil.svg?branch=develop)](https://travis-ci.org/boostorg/gil) | [![AppVeyor](https://ci.appveyor.com/api/projects/status/w4k19d8io2af168h/branch/develop?svg=true)](https://ci.appveyor.com/project/stefanseefeld/gil/branch/develop) | [![CircleCI](https://circleci.com/gh/boostorg/gil/tree/develop.svg?style=svg)](https://circleci.com/gh/boostorg/gil/tree/develop) | [![gil](https://img.shields.io/badge/gil-develop-4480cc.png)](http://www.boost.org/development/tests/develop/developer/gil.html)
+**master**  | [![Travis](https://travis-ci.org/boostorg/gil.svg?branch=master)](https://travis-ci.org/boostorg/gil)  | [![AppVeyor](https://ci.appveyor.com/api/projects/status/w4k19d8io2af168h?svg=true)](https://ci.appveyor.com/project/stefanseefeld/gil/branch/master) | - | [![gil](https://img.shields.io/badge/gil-master-4480cc.png)](http://www.boost.org/development/tests/master/developer/gil.html)
