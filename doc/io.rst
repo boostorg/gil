@@ -45,13 +45,6 @@ is rather small and easy to use. In this tutorial I'll give you a short
 walk-around on how to use this boost::gil extension.
 For more details please refer to section 3.
 
-Since this is an extension to boost::gil I expect the user to have some
-very basic understanding of the gil ( generic image library ).
-Please see here for the help.
-
-Header Files
-~~~~~~~~~~~~
-
 For each supported IO format a single top-level header file is provided.
 For instance, include `boost/gil/extension/io/tiff.hpp` to be able
 to read or write TIFF files.
