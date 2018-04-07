@@ -6,7 +6,7 @@
     http://www.boost.org/LICENSE_1_0.txt).
 
     See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
+    */
 
 #ifdef _MSC_VER
 #pragma warning(disable : 4244)     // conversion from 'gil::image<V,Alloc>::coord_t' to 'int', possible loss of data (visual studio compiler doesn't realize that the two types are the same)
@@ -19,6 +19,7 @@
 #include <iostream>
 #include <fstream>
 #include <map>
+#include <stdexcept>
 #include <boost/lambda/lambda.hpp>
 #include <boost/lambda/bind.hpp>
 #include <boost/mpl/vector.hpp>
