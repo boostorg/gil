@@ -333,14 +333,14 @@ template <> struct channel_convert_to_unsigned<bits8s> {
     typedef bits8s argument_type;
     typedef bits8 result_type;
     typedef bits8 type;
-    type operator()(bits8s  val) const { return val+128; }
+    type operator()(bits8s  val) const { return static_cast<bits8>(val+128); }
 };
 
 template <> struct channel_convert_to_unsigned<bits16s> {
     typedef bits16s argument_type;
     typedef bits16 result_type;
     typedef bits16 type;
-    type operator()(bits16s  val) const { return val+32768; }
+    type operator()(bits16s  val) const { return static_cast<bits16>(val+32768); }
 };
 
 template <> struct channel_convert_to_unsigned<bits32s> {
@@ -362,14 +362,14 @@ template <> struct channel_convert_from_unsigned<bits8s> {
     typedef bits8 argument_type;
     typedef bits8s result_type;
     typedef bits8s type;
-    type  operator()(bits8  val) const { return val-128; }
+    type  operator()(bits8  val) const { return static_cast<bits8s>(val-128); }
 };
 
 template <> struct channel_convert_from_unsigned<bits16s> {
     typedef bits16 argument_type;
     typedef bits16s result_type;
     typedef bits16s type;
-    type operator()(bits16 val) const { return val-32768; }
+    type operator()(bits16 val) const { return static_cast<bits16s>(val-32768); }
 };
 
 template <> struct channel_convert_from_unsigned<bits32s> {

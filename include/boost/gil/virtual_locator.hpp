@@ -72,7 +72,7 @@ public:
     y_iterator const& y()                         const { return _p; }
 
     // Returns the y distance between two x_iterators given the difference of their x positions
-    y_coord_t y_distance_to(const this_t& it2, x_coord_t xDiff) const { return (it2.pos()[1-IsTransposed] - pos()[1-IsTransposed])/step()[1-IsTransposed]; }
+    y_coord_t y_distance_to(const this_t& it2, x_coord_t) const { return (it2.pos()[1-IsTransposed] - pos()[1-IsTransposed])/step()[1-IsTransposed]; }
     bool      is_1d_traversable(x_coord_t)        const { return false; }   // is there no gap at the end of each row? I.e. can we use x_iterator to visit every pixel instead of nested loops?
 
     // Methods specific for virtual 2D locator
