@@ -115,7 +115,7 @@
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <a class="code" href="structboost_1_1gil_1_1position__iterator.html">y_iterator</a> <span class="keyword">const</span>&amp; y()<span class="keyword">                         const </span>{ <span class="keywordflow">return</span> _p; }</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="comment">// Returns the y distance between two x_iterators given the difference of their x positions</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    y_coord_t y_distance_to(<span class="keyword">const</span> <a class="code" href="classboost_1_1gil_1_1virtual__2d__locator.html">this_t</a>&amp; it2, x_coord_t xDiff)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> (it2.pos()[1-IsTransposed] - pos()[1-IsTransposed])/step()[1-IsTransposed]; }</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    y_coord_t y_distance_to(<span class="keyword">const</span> <a class="code" href="classboost_1_1gil_1_1virtual__2d__locator.html">this_t</a>&amp; it2, x_coord_t)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> (it2.pos()[1-IsTransposed] - pos()[1-IsTransposed])/step()[1-IsTransposed]; }</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordtype">bool</span>      is_1d_traversable(x_coord_t)<span class="keyword">        const </span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }   <span class="comment">// is there no gap at the end of each row? I.e. can we use x_iterator to visit every pixel instead of nested loops?</span></div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="comment">// Methods specific for virtual 2D locator</span></div>
@@ -181,7 +181,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Fri Apr 6 2018 20:11:44 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Apr 7 2018 05:37:59 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

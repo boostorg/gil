@@ -318,14 +318,14 @@
 <div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    <span class="keyword">typedef</span> bits8s argument_type;</div>
 <div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    <span class="keyword">typedef</span> bits8 result_type;</div>
 <div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;    <span class="keyword">typedef</span> bits8 type;</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    type operator()(bits8s  val)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> val+128; }</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    type operator()(bits8s  val)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>bits8<span class="keyword">&gt;</span>(val+128); }</div>
 <div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;};</div>
 <div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;</div>
 <div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;<span class="keyword">template</span> &lt;&gt; <span class="keyword">struct </span>channel_convert_to_unsigned&lt;bits16s&gt; {</div>
 <div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    <span class="keyword">typedef</span> bits16s argument_type;</div>
 <div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    <span class="keyword">typedef</span> bits16 result_type;</div>
 <div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    <span class="keyword">typedef</span> bits16 type;</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    type operator()(bits16s  val)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> val+32768; }</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    type operator()(bits16s  val)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>bits16<span class="keyword">&gt;</span>(val+32768); }</div>
 <div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;};</div>
 <div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;</div>
 <div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;<span class="keyword">template</span> &lt;&gt; <span class="keyword">struct </span>channel_convert_to_unsigned&lt;bits32s&gt; {</div>
@@ -347,14 +347,14 @@
 <div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    <span class="keyword">typedef</span> bits8 argument_type;</div>
 <div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;    <span class="keyword">typedef</span> bits8s result_type;</div>
 <div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;    <span class="keyword">typedef</span> bits8s type;</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    type  operator()(bits8  val)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> val-128; }</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    type  operator()(bits8  val)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>bits8s<span class="keyword">&gt;</span>(val-128); }</div>
 <div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;};</div>
 <div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;</div>
 <div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;<span class="keyword">template</span> &lt;&gt; <span class="keyword">struct </span>channel_convert_from_unsigned&lt;bits16s&gt; {</div>
 <div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    <span class="keyword">typedef</span> bits16 argument_type;</div>
 <div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    <span class="keyword">typedef</span> bits16s result_type;</div>
 <div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    <span class="keyword">typedef</span> bits16s type;</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    type operator()(bits16 val)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> val-32768; }</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    type operator()(bits16 val)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>bits16s<span class="keyword">&gt;</span>(val-32768); }</div>
 <div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;};</div>
 <div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;</div>
 <div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;<span class="keyword">template</span> &lt;&gt; <span class="keyword">struct </span>channel_convert_from_unsigned&lt;bits32s&gt; {</div>
@@ -480,7 +480,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Fri Apr 6 2018 20:11:43 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Apr 7 2018 05:37:58 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
