@@ -628,6 +628,7 @@ workflows:
 ##############################################################################
 # Notifications
 ##############################################################################
-notify:
-  webhooks:
-    - url: https://webhooks.gitter.im/e/9538066016dc0f9b6511
+# TODO: Waiting for notifications for workflow
+# notify:
+#   webhooks:
+#     - url: https://webhooks.gitter.im/e/9538066016dc0f9b6511
