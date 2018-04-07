@@ -109,7 +109,7 @@ template <typename T> struct transposed_type;
 
 namespace detail {
 template <typename T>
-void initialize_it(T& x) {}
+void initialize_it(T&) {}
 } // namespace detail
 
 template <typename T>
@@ -1127,7 +1127,7 @@ struct PixelDereferenceAdaptorArchetype {
     typedef typename add_reference<P>::type reference;
     typedef reference const_reference;
     static const bool is_mutable=false;
-    P operator()(P x) const { throw; }
+    P operator()(P) const { throw; }
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////
