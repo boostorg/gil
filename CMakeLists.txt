@@ -9,6 +9,10 @@
 cmake_minimum_required(VERSION 3.10)
 project(Boost.GIL CXX)
 
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 include(CMakeDependentOption)
 option(GIL_BUILD_TESTS "Build GIL tests" ON)
 option(GIL_BUILD_EXAMPLES "Build GIL examples" OFF) # FIXME: Switch to ON after https://github.com/boostorg/gil/issues/40
