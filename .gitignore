@@ -1,5 +1,19 @@
-.vs*
-/*build*
+*~
+*.swp
+
+# Boost.Build
+stdcerr
 /doc/*build*
 /io/output
-*~
+
+# Visual Studio (Code)
+/.vs
+.vscode
+
+# CMake
+/*build*
+/cmake-build-debug/
+/cmake-build-release/
+
+# JetBrains
+/.idea
