@@ -85,14 +85,25 @@ endif()
 
 #-----------------------------------------------------------------------------
 # Compiler
+#
+# Follows https://svn.boost.org/trac10/wiki/Guidelines/WarningsGuidelines
 #-----------------------------------------------------------------------------
 if(MSVC)
   string(REGEX REPLACE "/W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
   string(REGEX REPLACE "-W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
-  add_compile_options(-W4 -FC) # We need absolute path in __FILE__
+  add_compile_options(-W4)
+  add_compile_options(-FC) # We need absolute path in __FILE__
 else()
-  add_compile_options(-Wall)
   add_compile_options(-pedantic)
+  add_compile_options(-Wall)
+  add_compile_options(-Wextra)
+  add_compile_options(-Wstrict-aliasing)
+  add_compile_options(-fstrict-aliasing)
+  add_compile_options(-Wconversion )
+  add_compile_options(-Wsign-promo)
+  add_compile_options(-Wfloat-equal)
+  add_compile_options(-Wunused-parameter)
+  add_compile_options(-Wshadow)
 endif()
 
 if(MSVC)
@@ -104,10 +115,16 @@ if(MSVC)
 endif()
 
 #-----------------------------------------------------------------------------
+# Headers
+#-----------------------------------------------------------------------------
+file(GLOB _boost_gil_headers
+     ${PROJECT_SOURCE_DIR}/include/boost/gil/*.hpp
+     ${PROJECT_SOURCE_DIR}/include/boost/gil.hpp)
+
+#-----------------------------------------------------------------------------
 # Tests
 #-----------------------------------------------------------------------------
 if(GIL_BUILD_TESTS)
-  message(STATUS "Configuring Boost.GIL tests")
   enable_testing()
   add_subdirectory(test)
   if (GIL_ENABLE_IO)

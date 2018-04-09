@@ -6,7 +6,16 @@
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 #
-add_executable(gil_test_ext_toolbox
+message(STATUS "Configuring Boost.GIL Toolbox tests")
+
+file(GLOB_RECURSE _headers
+  ${PROJECT_SOURCE_DIR}/include/boost/gil/extension/toolbox/*.hpp)
+list(APPEND _headers ${_boost_gil_headers})
+
+add_executable(gil_test_ext_toolbox)
+target_sources(gil_test_ext_toolbox
+  PRIVATE
+  ${_headers}
   test.cpp
   channel_type.cpp
   channel_view.cpp
@@ -25,7 +34,7 @@ add_executable(gil_test_ext_toolbox
   rgb_to_luminance.cpp
   xyz_test.cpp)
 target_link_libraries(gil_test_ext_toolbox
-    PRIVATE
-    Boost::disable_autolinking
-    Boost::unit_test_framework)
+  PRIVATE
+  Boost::disable_autolinking
+  Boost::unit_test_framework)
 add_test(gil.tests.ext.toolbox gil_test_ext_toolbox)

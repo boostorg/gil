@@ -6,8 +6,15 @@
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 #
+message(STATUS "Configuring Boost.GIL core tests")
+
 foreach(name channel pixel pixel_iterator)
-  add_executable(gil_test_core_${name} ${name}.cpp error_if.cpp)
+  add_executable(gil_test_core_${name})
+  target_sources(gil_test_core_${name}
+    PRIVATE
+    ${_boost_gil_headers}
+    ${name}.cpp
+    error_if.cpp)
   target_link_libraries(gil_test_core_${name}
     PRIVATE
     Boost::disable_autolinking
@@ -16,10 +23,18 @@ foreach(name channel pixel pixel_iterator)
   add_test(gil.tests.core.${name} gil_test_core_${name})
 endforeach()
 
-add_executable(gil_test_core_image image.cpp sample_image.cpp error_if.cpp)
+add_executable(gil_test_core_image)
+target_sources(gil_test_core_image
+  PRIVATE
+  ${_boost_gil_headers}
+  error_if.cpp
+  image.cpp
+  sample_image.cpp)
 target_link_libraries(gil_test_core_image
-    PRIVATE
-    Boost::disable_autolinking
-    Boost::filesystem
-    Boost::unit_test_framework)
-add_test(gil.tests.core.image gil_test_core_image ${CMAKE_CURRENT_SOURCE_DIR}/gil_reference_checksums.txt)
+  PRIVATE
+  Boost::disable_autolinking
+  Boost::filesystem
+  Boost::unit_test_framework)
+add_test(gil.tests.core.image
+  gil_test_core_image
+  ${CMAKE_CURRENT_SOURCE_DIR}/gil_reference_checksums.txt)
