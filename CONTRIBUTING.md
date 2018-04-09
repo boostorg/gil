@@ -36,14 +36,20 @@ The preparation involves the following steps:
 1. Download the Boost super-project and switch the local repository to
    `develop` branch.
 2. Run `bootstrap` to build `b2` driver program for Boost.Build engine.
-3. Create content of `/boost` virtual directory with headers linked from the
-   individual modular Boost libraries.
 
 ```shell
 git clone --recursive https://github.com/boostorg/boost.git
 cd boost
 git checkout develop
 ./bootstrap.sh
+```
+
+3. Optionally, create full content of `/boost` virtual directory with
+   all Boost headers linked from the individual modular Boost libraries.
+   If you skip this step, executing `b2` to run tests will automatically
+   create the directory with all headers required by Boost.GIL and tests.
+
+```
 ./b2 headers
 ```
 
@@ -51,7 +57,6 @@ git checkout develop
 
 1. Go to the Boost.GIL library submodule.
 2. Checkout the `develop` branch.
-3. Ensure the `develop` is up to date against the upstream.
 
 ```shell
 cd libs/gil
