@@ -8,10 +8,19 @@
 #
 message(STATUS "Configuring Boost.GIL IO tests")
 
+file(GLOB_RECURSE _headers
+  ${PROJECT_SOURCE_DIR}/include/boost/gil/extension/io/*.hpp)
+list(APPEND _headers ${_boost_gil_headers})
+
 add_definitions(-DBOOST_GIL_IO_TEST_ALLOW_READING_IMAGES=1)
 add_definitions(-DBOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES=1)
 
-add_executable(gil_test_ext_io_simple all_formats_test.cpp)
+add_executable(gil_test_ext_io_simple)
+target_sources(gil_test_ext_io_simple
+  PRIVATE
+  ${_headers}
+  all_formats_test.cpp)
+
 # Unfortunately, ALIAS of imported target is not supported
 # see https://github.com/conan-io/conan/issues/2125
 if (GIL_USE_CONAN)
