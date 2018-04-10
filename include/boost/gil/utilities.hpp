@@ -81,7 +81,7 @@ public:
     point2        operator>>(std::ptrdiff_t shift)         const   { return point2(x>>shift,y>>shift); }
     point2& operator+=(const point2& p)           { x+=p.x; y+=p.y; return *this; }
     point2& operator-=(const point2& p)           { x-=p.x; y-=p.y; return *this; }
-    point2& operator/=(double t)                  { x/=t; y/=t; return *this; }
+    point2& operator/=(double t)                  { if (t<0 || 0<t) { x/=t; y/=t; } return *this; }
 
     const T& operator[](std::size_t i)          const   { return this->*mem_array[i]; }
           T& operator[](std::size_t i)                  { return this->*mem_array[i]; }
@@ -112,7 +112,7 @@ template <typename T> BOOST_FORCEINLINE
 point2<T> operator-(const point2<T>& p1, const point2<T>& p2) { return point2<T>(p1.x-p2.x,p1.y-p2.y); }
 /// \ingroup PointModel
 template <typename T> BOOST_FORCEINLINE
-point2<double> operator/(const point2<T>& p, double t)      { return t==0 ? point2<double>(0,0):point2<double>(p.x/t,p.y/t); }
+point2<double> operator/(const point2<T>& p, double t)      { return (t<0 || 0<t) ? point2<double>(p.x/t,p.y/t) : point2<double>(0,0); }
 /// \ingroup PointModel
 template <typename T> BOOST_FORCEINLINE
 point2<T> operator*(const point2<T>& p, std::ptrdiff_t t)      { return point2<T>(p.x*t,p.y*t); }
