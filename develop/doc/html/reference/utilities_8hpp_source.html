@@ -107,7 +107,7 @@
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    point2        operator&gt;&gt;(std::ptrdiff_t shift)<span class="keyword">         const   </span>{ <span class="keywordflow">return</span> point2(x&gt;&gt;shift,y&gt;&gt;shift); }</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    point2&amp; operator+=(<span class="keyword">const</span> point2&amp; p)           { x+=p.x; y+=p.y; <span class="keywordflow">return</span> *<span class="keyword">this</span>; }</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    point2&amp; operator-=(<span class="keyword">const</span> point2&amp; p)           { x-=p.x; y-=p.y; <span class="keywordflow">return</span> *<span class="keyword">this</span>; }</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    point2&amp; operator/=(<span class="keywordtype">double</span> t)                  { x/=t; y/=t; <span class="keywordflow">return</span> *<span class="keyword">this</span>; }</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    point2&amp; operator/=(<span class="keywordtype">double</span> t)                  { <span class="keywordflow">if</span> (t&lt;0 || 0&lt;t) { x/=t; y/=t; } <span class="keywordflow">return</span> *<span class="keyword">this</span>; }</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keyword">const</span> T&amp; operator[](std::size_t i)<span class="keyword">          const   </span>{ <span class="keywordflow">return</span> this-&gt;*mem_array[i]; }</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;          T&amp; operator[](std::size_t i)                  { <span class="keywordflow">return</span> this-&gt;*mem_array[i]; }</div>
@@ -132,7 +132,7 @@
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; BOOST_FORCEINLINE</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;point2&lt;T&gt; operator-(<span class="keyword">const</span> point2&lt;T&gt;&amp; p1, <span class="keyword">const</span> point2&lt;T&gt;&amp; p2) { <span class="keywordflow">return</span> point2&lt;T&gt;(p1.x-p2.x,p1.y-p2.y); }</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; BOOST_FORCEINLINE</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;point2&lt;double&gt; operator/(<span class="keyword">const</span> point2&lt;T&gt;&amp; p, <span class="keywordtype">double</span> t)      { <span class="keywordflow">return</span> t==0 ? point2&lt;double&gt;(0,0):point2&lt;double&gt;(p.x/t,p.y/t); }</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;point2&lt;double&gt; operator/(<span class="keyword">const</span> point2&lt;T&gt;&amp; p, <span class="keywordtype">double</span> t)      { <span class="keywordflow">return</span> (t&lt;0 || 0&lt;t) ? point2&lt;double&gt;(p.x/t,p.y/t) : point2&lt;double&gt;(0,0); }</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; BOOST_FORCEINLINE</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;point2&lt;T&gt; operator*(<span class="keyword">const</span> point2&lt;T&gt;&amp; p, std::ptrdiff_t t)      { <span class="keywordflow">return</span> point2&lt;T&gt;(p.x*t,p.y*t); }</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; BOOST_FORCEINLINE</div>
@@ -326,7 +326,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Tue Apr 10 2018 13:30:30 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Tue Apr 10 2018 14:04:14 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
