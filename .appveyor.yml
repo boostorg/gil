@@ -70,8 +70,6 @@ cache:
   - c:\tools\vcpkg\installed\
 
 install:
-  - ps: 'Write-Host "Installing CMake module FindBoost.cmake for Boost 1.67+" -ForegroundColor Magenta'
-  - if DEFINED GENERATOR appveyor DownloadFile https://raw.githubusercontent.com/Kitware/CMake/master/Modules/FindBoost.cmake -FileName "C:\Program Files (x86)\CMake\share\cmake-3.11\Modules\FindBoost.cmake"
   # FIXME: To be removed https://help.appveyor.com/discussions/problems/13000-cmake_toolchain_filevcpkgcmake-conflicts-with-cmake-native-findboostcmake"
   - ps: 'Write-Host "Installing latest vcpkg.cmake module" -ForegroundColor Magenta'
   - appveyor DownloadFile https://raw.githubusercontent.com/Microsoft/vcpkg/master/scripts/buildsystems/vcpkg.cmake -FileName "c:\tools\vcpkg\scripts\buildsystems\vcpkg.cmake"
@@ -104,7 +102,7 @@ build_script:
   - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% libs/gil/numeric/test
   - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% include=%VCPKG_I% library-path=%VCPKG_L% libs/gil/io/test//simple
   - if DEFINED GENERATOR cd libs\gil && md build && cd build
-  - if DEFINED GENERATOR cmake -G "%GENERATOR%" -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+  - if DEFINED GENERATOR cmake -G "%GENERATOR%" -DBoost_DETAILED_FAILURE_MSG=ON -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake ..
   - if DEFINED GENERATOR cmake --build . --config %CMAKE_CONFIG %
 
 test_script:
