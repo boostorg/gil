@@ -133,8 +133,9 @@ Finally, sign in to your GitHub account and
 [create a pull request](https://help.github.com/articles/creating-a-pull-request/).
 
 Your pull request will be automatically built and tests will run on Travis CI
-and AppVeyor. Please, keep an eye on those CI builds and correct any problems
-detected in your contribution by updating your pull request.
+and AppVeyor (see [README](README.md) for builds status). Please, keep an eye
+on those CI builds and correct any problems detected in your contribution
+by updating your pull request.
 
 ### 6. Update your pull request
 
