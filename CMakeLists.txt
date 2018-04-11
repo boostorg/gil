@@ -26,6 +26,17 @@ option(GIL_USE_CONAN "Use Conan to install dependencies" OFF)
 # - look for default installation location
 # - look for location specified with BOOST_ROOT
 #-----------------------------------------------------------------------------
+if (CMAKE_VERSION VERSION_LESS 3.11)
+  # Latest FindBoost.cmake has likely been updated to detect Boost version not yet released
+  if (NOT EXISTS "${CMAKE_BINARY_DIR}/cmake/FindBoost.cmake")
+    message(STATUS "Downloading FindBoost.cmake from https://gitlab.kitware.com/cmake/ release branch")
+    file(DOWNLOAD
+      "https://gitlab.kitware.com/cmake/cmake/raw/release/Modules/FindBoost.cmake"
+      "${CMAKE_BINARY_DIR}/cmake/FindBoost.cmake")
+  endif()
+  list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_BINARY_DIR}/cmake)
+endif()
+
 if(GIL_USE_BOOST_STAGE AND NOT DEFINED BOOST_ROOT AND NOT DEFINED ENV{BOOST_ROOT})
   get_filename_component(_boost_root ../../ ABSOLUTE)
   if(EXISTS ${_boost_root}/boost-build.jam)
@@ -39,14 +50,13 @@ if(GIL_BUILD_TESTS)
   list(APPEND BOOST_COMPONENTS unit_test_framework filesystem)
 endif()
 
-set(Boost_ADDITIONAL_VERSIONS "1.67.0" "1.67" "1.66.0" "1.66")
 set(Boost_DETAILED_FAILURE_MSG ON)
 if(MSVC)
   set(Boost_USE_STATIC_LIBS ON)
   set(Boost_USE_STATIC_RUNTIME OFF)
 endif()
 
-find_package(Boost 1.66.0 REQUIRED COMPONENTS ${BOOST_COMPONENTS})
+find_package(Boost 1.67.0 REQUIRED COMPONENTS ${BOOST_COMPONENTS})
 
 # The boostorg/gil repository includes must come first,
 # before Boost includes from cloned Boost superproject or installed distribution.
