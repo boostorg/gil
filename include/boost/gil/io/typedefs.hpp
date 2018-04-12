@@ -35,8 +35,6 @@ namespace boost { namespace gil {
 struct double_zero { static double apply() { return 0.0; } };
 struct double_one  { static double apply() { return 1.0; } };
 
-typedef scoped_channel_value< double, double_zero, double_one > bits64f;
-
 typedef unsigned char byte_t;
 typedef std::vector< byte_t > byte_vector_t;
 
@@ -47,8 +45,8 @@ typedef point2< std::ptrdiff_t > point_t;
 
 namespace boost { 
 
-template<> struct is_floating_point< gil::bits32f > : mpl::true_ {};
-template<> struct is_floating_point< gil::bits64f > : mpl::true_ {};
+template<> struct is_floating_point<gil::float32_t> : mpl::true_ {};
+template<> struct is_floating_point<gil::float64_t> : mpl::true_ {};
 
 } // namespace boost
 

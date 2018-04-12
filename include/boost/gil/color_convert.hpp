@@ -73,10 +73,10 @@ namespace detail {
 template <typename RedChannel, typename GreenChannel, typename BlueChannel, typename GrayChannelValue>
 struct rgb_to_luminance_fn {
     GrayChannelValue operator()(const RedChannel& red, const GreenChannel& green, const BlueChannel& blue) const {
-        return channel_convert<GrayChannelValue>( bits32f(
-            channel_convert<bits32f>(red  )*0.30f + 
-            channel_convert<bits32f>(green)*0.59f + 
-            channel_convert<bits32f>(blue )*0.11f) );
+        return channel_convert<GrayChannelValue>(float32_t(
+            channel_convert<float32_t>(red  )*0.30f +
+            channel_convert<float32_t>(green)*0.59f +
+            channel_convert<float32_t>(blue )*0.11f) );
     }
 };
 

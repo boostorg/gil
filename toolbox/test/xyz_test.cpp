@@ -9,9 +9,9 @@
 /// \brief Unit test for XYZ Colorspace
 /// \author Davide Anastasia <davideanastasia@users.sourceforge.net>
 
+#include <cstdint>
 #include <iostream>
 #include <limits>
-#include <boost/cstdint.hpp>
 #include <boost/gil.hpp>
 #include <boost/gil/extension/toolbox/color_spaces/xyz.hpp>
 

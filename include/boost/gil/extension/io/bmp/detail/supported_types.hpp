@@ -70,7 +70,7 @@ struct bmp_read_support< packed_dynamic_channel_reference< BitField
 
 
 template<>
-struct bmp_read_support< bits8
+struct bmp_read_support<uint8_t
                        , gray_t
                        > : read_support_true
 {
@@ -80,7 +80,7 @@ struct bmp_read_support< bits8
 
 
 template<>
-struct bmp_read_support< bits8
+struct bmp_read_support<uint8_t
                        , rgb_t
                        > : read_support_true
 {
@@ -89,7 +89,7 @@ struct bmp_read_support< bits8
 
 
 template<>
-struct bmp_read_support< bits8
+struct bmp_read_support<uint8_t
                        , rgba_t
                        > : read_support_true
 {
@@ -106,12 +106,12 @@ struct bmp_write_support : write_support_false
 {};
 
 template<>
-struct bmp_write_support< bits8
+struct bmp_write_support<uint8_t
                         , rgb_t
                         > : write_support_true {};
 
 template<>
-struct bmp_write_support< bits8
+struct bmp_write_support<uint8_t
                         , rgba_t
                         > : write_support_true {};
 

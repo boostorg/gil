@@ -40,7 +40,7 @@ struct targa_read_support : read_support_false
 };
 
 template<>
-struct targa_read_support< bits8
+struct targa_read_support<uint8_t
                          , rgb_t
                          > : read_support_true
 {
@@ -49,7 +49,7 @@ struct targa_read_support< bits8
 
 
 template<>
-struct targa_read_support< bits8
+struct targa_read_support<uint8_t
                          , rgba_t
                          > : read_support_true
 {
@@ -66,12 +66,12 @@ struct targa_write_support : write_support_false
 {};
 
 template<>
-struct targa_write_support< bits8
+struct targa_write_support<uint8_t
                           , rgb_t
                           > : write_support_true {};
 
 template<>
-struct targa_write_support< bits8
+struct targa_write_support<uint8_t
                           , rgba_t
                           > : write_support_true {};
 

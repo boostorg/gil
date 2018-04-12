@@ -514,7 +514,7 @@ struct ChannelValueConcept {
 Example:
 
 \code
-BOOST_STATIC_ASSERT((channels_are_compatible<bits8, const bits8&>::value));
+BOOST_STATIC_ASSERT((channels_are_compatible<uint8_t, const uint8_t&>::value));
 \endcode
 */
 template <typename T1, typename T2>  // Models GIL Pixel

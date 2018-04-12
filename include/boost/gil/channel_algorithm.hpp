@@ -32,6 +32,7 @@
 
 #include "gil_config.hpp"
 #include "channel.hpp"
+#include "typedefs.hpp"
 
 namespace boost { namespace gil {
 
@@ -99,12 +100,12 @@ and \p detail::channel_convert_from_unsigned to convert between the signed and u
 
 Example:
 \code
-// bits32f is a floating point channel with range [0.0f ... 1.0f]
-bits32f src_channel = channel_traits<bits32f>::max_value();
+// float32_t is a floating point channel with range [0.0f ... 1.0f]
+float32_t src_channel = channel_traits<float32_t>::max_value();
 assert(src_channel == 1);
 
-// bits8 is 8-bit unsigned integral channel (typedef-ed from unsigned char)
-bits8 dst_channel = channel_convert<bits8>(src_channel);
+// uint8_t is 8-bit unsigned integral channel (typedef-ed from unsigned char)
+uint8_t dst_channel = channel_convert<uint8_t>(src_channel);
 assert(dst_channel == 255);     // max value goes to max value
 \endcode
 */
@@ -206,7 +207,7 @@ struct channel_converter_unsigned_integral_impl<SrcChannelV,DstChannelV,false,tr
 template <typename DstChannelV> 
 struct channel_converter_unsigned_integral_impl<uintmax_t,DstChannelV,false,true> {
     DstChannelV operator()(uintmax_t src) const { 
-        static const uintmax_t div = unsigned_integral_max_value<bits32>::value / unsigned_integral_max_value<DstChannelV>::value;
+        static const uintmax_t div = unsigned_integral_max_value<uint32_t>::value / unsigned_integral_max_value<DstChannelV>::value;
         static const uintmax_t div2 = div/2;
         if (src > unsigned_integral_max_value<uintmax_t>::value - div2)
             return unsigned_integral_max_value<DstChannelV>::value;
@@ -272,50 +273,50 @@ struct channel_converter_unsigned_integral_nondivisible<SrcChannelV,DstChannelV,
 } // namespace detail
 
 /////////////////////////////////////////////////////
-///  bits32f conversion
+///  float32_t conversion
 /////////////////////////////////////////////////////
 
-template <typename DstChannelV> struct channel_converter_unsigned<bits32f,DstChannelV> {
-    typedef bits32f argument_type;
+template <typename DstChannelV> struct channel_converter_unsigned<float32_t,DstChannelV> {
+    typedef float32_t argument_type;
     typedef DstChannelV result_type;
-    DstChannelV operator()(bits32f x) const
+    DstChannelV operator()(float32_t x) const
     {
         typedef typename detail::unsigned_integral_max_value< DstChannelV >::value_type dst_integer_t;
         return DstChannelV( static_cast< dst_integer_t >(x*channel_traits<DstChannelV>::max_value()+0.5f ));
     }
 };
 
-template <typename SrcChannelV> struct channel_converter_unsigned<SrcChannelV,bits32f> {
-    typedef bits32f argument_type;
+template <typename SrcChannelV> struct channel_converter_unsigned<SrcChannelV,float32_t> {
+    typedef float32_t argument_type;
     typedef SrcChannelV result_type;
-    bits32f operator()(SrcChannelV   x) const { return bits32f(x/float(channel_traits<SrcChannelV>::max_value())); }
+    float32_t operator()(SrcChannelV   x) const { return float32_t(x/float(channel_traits<SrcChannelV>::max_value())); }
 };
 
-template <> struct channel_converter_unsigned<bits32f,bits32f> {
-    typedef bits32f argument_type;
-    typedef bits32f result_type;
-    bits32f operator()(bits32f   x) const { return x; }
+template <> struct channel_converter_unsigned<float32_t,float32_t> {
+    typedef float32_t argument_type;
+    typedef float32_t result_type;
+    float32_t operator()(float32_t   x) const { return x; }
 };
 
 
 /// \brief 32 bit <-> float channel conversion
-template <> struct channel_converter_unsigned<bits32,bits32f> {
-    typedef bits32 argument_type;
-    typedef bits32f result_type;
-    bits32f operator()(bits32 x) const {
-        // unfortunately without an explicit check it is possible to get a round-off error. We must ensure that max_value of bits32 matches max_value of bits32f
-        if (x>=channel_traits<bits32>::max_value()) return channel_traits<bits32f>::max_value();
-        return float(x) / float(channel_traits<bits32>::max_value());
+template <> struct channel_converter_unsigned<uint32_t,float32_t> {
+    typedef uint32_t argument_type;
+    typedef float32_t result_type;
+    float32_t operator()(uint32_t x) const {
+        // unfortunately without an explicit check it is possible to get a round-off error. We must ensure that max_value of uint32_t matches max_value of float32_t
+        if (x>=channel_traits<uint32_t>::max_value()) return channel_traits<float32_t>::max_value();
+        return float(x) / float(channel_traits<uint32_t>::max_value());
     }
 };
 /// \brief 32 bit <-> float channel conversion
-template <> struct channel_converter_unsigned<bits32f,bits32> {
-    typedef bits32f argument_type;
-    typedef bits32 result_type;
-    bits32 operator()(bits32f x) const {
-        // unfortunately without an explicit check it is possible to get a round-off error. We must ensure that max_value of bits32 matches max_value of bits32f
-        if (x>=channel_traits<bits32f>::max_value()) return channel_traits<bits32>::max_value();
-        return bits32(x * channel_traits<bits32>::max_value() + 0.5f);
+template <> struct channel_converter_unsigned<float32_t,uint32_t> {
+    typedef float32_t argument_type;
+    typedef uint32_t result_type;
+    uint32_t operator()(float32_t x) const {
+        // unfortunately without an explicit check it is possible to get a round-off error. We must ensure that max_value of uint32_t matches max_value of float32_t
+        if (x>=channel_traits<float32_t>::max_value()) return channel_traits<uint32_t>::max_value();
+        return uint32_t(x * channel_traits<uint32_t>::max_value() + 0.5f);
     }
 };
 
@@ -329,30 +330,30 @@ struct channel_convert_to_unsigned : public detail::identity<ChannelValue> {
     typedef ChannelValue type;
 };
 
-template <> struct channel_convert_to_unsigned<bits8s> {
-    typedef bits8s argument_type;
-    typedef bits8 result_type;
-    typedef bits8 type;
-    type operator()(bits8s val) const {
-        return static_cast<bits8>(static_cast<bits32>(val) + 128u);
+template <> struct channel_convert_to_unsigned<int8_t> {
+    typedef int8_t argument_type;
+    typedef uint8_t result_type;
+    typedef uint8_t type;
+    type operator()(int8_t val) const {
+        return static_cast<uint8_t>(static_cast<uint32_t>(val) + 128u);
     }
 };
 
-template <> struct channel_convert_to_unsigned<bits16s> {
-    typedef bits16s argument_type;
-    typedef bits16 result_type;
-    typedef bits16 type;
-    type operator()(bits16s val) const {
-        return static_cast<bits16>(static_cast<bits32>(val) + 32768u);
+template <> struct channel_convert_to_unsigned<int16_t> {
+    typedef int16_t argument_type;
+    typedef uint16_t result_type;
+    typedef uint16_t type;
+    type operator()(int16_t val) const {
+        return static_cast<uint16_t>(static_cast<uint32_t>(val) + 32768u);
     }
 };
 
-template <> struct channel_convert_to_unsigned<bits32s> {
-    typedef bits32s argument_type;
-    typedef bits32 result_type;
-    typedef bits32 type;
-    type operator()(bits32s val) const {
-        return static_cast<bits32>(val)+(1u<<31);
+template <> struct channel_convert_to_unsigned<int32_t> {
+    typedef int32_t argument_type;
+    typedef uint32_t result_type;
+    typedef uint32_t type;
+    type operator()(int32_t val) const {
+        return static_cast<uint32_t>(val)+(1u<<31);
     }
 };
 
@@ -364,30 +365,30 @@ struct channel_convert_from_unsigned : public detail::identity<ChannelValue> {
     typedef ChannelValue type;
 };
 
-template <> struct channel_convert_from_unsigned<bits8s> {
-    typedef bits8 argument_type;
-    typedef bits8s result_type;
-    typedef bits8s type;
-    type  operator()(bits8 val) const {
-        return static_cast<bits8s>(static_cast<bits32s>(val) - 128);
+template <> struct channel_convert_from_unsigned<int8_t> {
+    typedef uint8_t argument_type;
+    typedef int8_t result_type;
+    typedef int8_t type;
+    type  operator()(uint8_t val) const {
+        return static_cast<int8_t>(static_cast<int32_t>(val) - 128);
     }
 };
 
-template <> struct channel_convert_from_unsigned<bits16s> {
-    typedef bits16 argument_type;
-    typedef bits16s result_type;
-    typedef bits16s type;
-    type operator()(bits16 val) const {
-        return static_cast<bits16s>(static_cast<bits32s>(val) - 32768);
+template <> struct channel_convert_from_unsigned<int16_t> {
+    typedef uint16_t argument_type;
+    typedef int16_t result_type;
+    typedef int16_t type;
+    type operator()(uint16_t val) const {
+        return static_cast<int16_t>(static_cast<int32_t>(val) - 32768);
     }
 };
 
-template <> struct channel_convert_from_unsigned<bits32s> {
-    typedef bits32 argument_type;
-    typedef bits32s result_type;
-    typedef bits32s type;
-    type operator()(bits32 val) const {
-        return static_cast<bits32s>(val - (1u<<31));
+template <> struct channel_convert_from_unsigned<int32_t> {
+    typedef uint32_t argument_type;
+    typedef int32_t result_type;
+    typedef int32_t type;
+    type operator()(uint32_t val) const {
+        return static_cast<int32_t>(val - (1u<<31));
     }
 };
 
@@ -441,9 +442,9 @@ namespace detail {
 
 Example:
 \code
-bits8 x=128;
-bits8 y=128;
-bits8 mul = channel_multiply(x,y);
+uint8_t x=128;
+uint8_t y=128;
+uint8_t mul = channel_multiply(x,y);
 assert(mul == 64);    // 64 = 128 * 128 / 255
 \endcode
 */
@@ -461,27 +462,27 @@ struct channel_multiplier_unsigned {
 };
 
 /// \brief Specialization of channel_multiply for 8-bit unsigned channels
-template<> struct channel_multiplier_unsigned<bits8> {
-    typedef bits8 first_argument_type;
-    typedef bits8 second_argument_type;
-    typedef bits8 result_type;
-    bits8 operator()(bits8 a, bits8 b) const { return bits8(detail::div255(uint32_t(a) * uint32_t(b))); }
+template<> struct channel_multiplier_unsigned<uint8_t> {
+    typedef uint8_t first_argument_type;
+    typedef uint8_t second_argument_type;
+    typedef uint8_t result_type;
+    uint8_t operator()(uint8_t a, uint8_t b) const { return uint8_t(detail::div255(uint32_t(a) * uint32_t(b))); }
 };
 
 /// \brief Specialization of channel_multiply for 16-bit unsigned channels
-template<> struct channel_multiplier_unsigned<bits16> {
-    typedef bits16 first_argument_type;
-    typedef bits16 second_argument_type;
-    typedef bits16 result_type;
-    bits16 operator()(bits16 a, bits16 b) const { return bits16((uint32_t(a) * uint32_t(b))/65535); }
+template<> struct channel_multiplier_unsigned<uint16_t> {
+    typedef uint16_t first_argument_type;
+    typedef uint16_t second_argument_type;
+    typedef uint16_t result_type;
+    uint16_t operator()(uint16_t a, uint16_t b) const { return uint16_t((uint32_t(a) * uint32_t(b))/65535); }
 };
 
 /// \brief Specialization of channel_multiply for float 0..1 channels
-template<> struct channel_multiplier_unsigned<bits32f> {
-    typedef bits32f first_argument_type;
-    typedef bits32f second_argument_type;
-    typedef bits32f result_type;
-    bits32f operator()(bits32f a, bits32f b) const { return a*b; }
+template<> struct channel_multiplier_unsigned<float32_t> {
+    typedef float32_t first_argument_type;
+    typedef float32_t second_argument_type;
+    typedef float32_t result_type;
+    float32_t operator()(float32_t a, float32_t b) const { return a*b; }
 };
 
 /// \brief A function object to multiply two channels. result = a * b / max_value
@@ -512,9 +513,9 @@ inline typename channel_traits<Channel>::value_type channel_multiply(Channel a, 
 
 Example:
 \code
-// bits8 == uint8_t == unsigned char
-bits8 x=255;
-bits8 inv = channel_invert(x);
+// uint8_t == uint8_t == unsigned char
+uint8_t x=255;
+uint8_t inv = channel_invert(x);
 assert(inv == 0);
 \endcode
 */

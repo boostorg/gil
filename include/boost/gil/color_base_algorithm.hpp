@@ -207,7 +207,7 @@ typename color_element_const_reference_type<ColorBase,Color>::type get_color(con
 Example:
 \code
 typedef element_type<rgb8c_planar_ptr_t>::type element_t;
-BOOST_STATIC_ASSERT((boost::is_same<element_t, const bits8*>::value));
+BOOST_STATIC_ASSERT((boost::is_same<element_t, const uint8_t*>::value));
 \endcode
 */
 /// \brief Specifies the element type of a homogeneous color base
@@ -637,7 +637,7 @@ void increment_elements(ColorBase& cb) {
     static_for_each(cb, increment());
 }
 
-bits8 red[2], green[2], blue[2];
+uint8_t red[2], green[2], blue[2];
 rgb8c_planar_ptr_t p1(red,green,blue);
 rgb8c_planar_ptr_t p2=p1;
 increment_elements(p1);

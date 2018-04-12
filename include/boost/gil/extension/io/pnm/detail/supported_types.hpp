@@ -58,7 +58,7 @@ struct pnm_read_support< packed_dynamic_channel_reference< BitField
                                               > {};
 
 template<>
-struct pnm_read_support< bits8
+struct pnm_read_support<uint8_t
                        , gray_t
                        > : read_support_true
                          , pnm_rw_support_base< pnm_image_type::gray_asc_t::value
@@ -67,7 +67,7 @@ struct pnm_read_support< bits8
 
 
 template<>
-struct pnm_read_support< bits8
+struct pnm_read_support<uint8_t
                        , rgb_t
                        > : read_support_true
                          , pnm_rw_support_base< pnm_image_type::color_asc_t::value
@@ -95,7 +95,7 @@ struct pnm_write_support< packed_dynamic_channel_reference< BitField
 
 
 template<>
-struct pnm_write_support< bits8
+struct pnm_write_support<uint8_t
                         , gray_t
                         > : write_support_true
                           , pnm_rw_support_base< pnm_image_type::gray_asc_t::value
@@ -104,7 +104,7 @@ struct pnm_write_support< bits8
 
 
 template<>
-struct pnm_write_support< bits8
+struct pnm_write_support<uint8_t
                         , rgb_t
                         > : write_support_true
                           , pnm_rw_support_base< pnm_image_type::color_asc_t::value

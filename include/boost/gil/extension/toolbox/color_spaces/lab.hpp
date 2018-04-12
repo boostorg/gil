@@ -19,7 +19,7 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/gil/gil_all.hpp>
+#include <boost/gil/gil_all.hpp> // FIXME: Include what you use, not everything, even in extensions!
 #include <boost/gil/extension/toolbox/color_spaces/xyz.hpp>
 
 namespace boost{ namespace gil {
@@ -46,7 +46,7 @@ typedef mpl::vector3< lab_color_space::luminance_t
 /// \ingroup LayoutModel
 typedef layout<lab_t> lab_layout_t;
 
-GIL_DEFINE_ALL_TYPEDEFS( 32f, lab );
+GIL_DEFINE_ALL_TYPEDEFS(32f, float32_t, lab)
 
 /// \ingroup ColorConvert
 /// \brief LAB to XYZ
@@ -59,7 +59,7 @@ struct default_color_converter_impl< lab_t, xyz_t >
         using namespace lab_color_space;
         using namespace xyz_color_space;
 
-        bits32f p = ((get_color(src, luminance_t()) + 16.f)/116.f);
+        float32_t p = ((get_color(src, luminance_t()) + 16.f)/116.f);
 
         get_color(dst, y_t()) =
                 1.f * powf(p, 3.f);
@@ -84,7 +84,7 @@ struct default_color_converter_impl< xyz_t, lab_t >
 private:
     /// \ref http://www.brucelindbloom.com/index.html?Eqn_XYZ_to_Lab.html
     BOOST_FORCEINLINE
-    bits32f forward_companding(bits32f value) const
+    float32_t forward_companding(float32_t value) const
     {
         if (value > 216.f/24389.f)
         {
@@ -102,26 +102,26 @@ public:
     {
         using namespace lab_color_space;
 
-        bits32f f_y =
+        float32_t f_y =
                 forward_companding(
-                    channel_convert<bits32f>(
+                    channel_convert<float32_t>(
                         get_color(src, xyz_color_space::y_t())
                         )
                     // / 1.f
                     );
 
-        bits32f f_x =
+        float32_t f_x =
                 forward_companding(
-                    channel_convert<bits32f>(
+                    channel_convert<float32_t>(
                         get_color(src, xyz_color_space::x_t())
                         )
                     * (1.f / 0.95047f)  // if the compiler is smart, it should
                                         // precalculate this, no?
                     );
 
-        bits32f f_z =
+        float32_t f_z =
                 forward_companding(
-                    channel_convert<bits32f>(
+                    channel_convert<float32_t>(
                         get_color(src, xyz_color_space::z_t())
                         )
                     * (1.f / 1.08883f)  // if the compiler is smart, it should

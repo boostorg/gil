@@ -496,7 +496,7 @@ void static_checks() {
     BOOST_STATIC_ASSERT(view_is_mutable<rgb8_planar_view_t>::value);
 
     BOOST_STATIC_ASSERT((boost::is_same<derived_view_type<cmyk8c_planar_step_view_t>::type, cmyk8c_planar_step_view_t>::value));
-    BOOST_STATIC_ASSERT((boost::is_same<derived_view_type<cmyk8c_planar_step_view_t, bits16, rgb_layout_t>::type,  rgb16c_planar_step_view_t>::value));
+    BOOST_STATIC_ASSERT((boost::is_same<derived_view_type<cmyk8c_planar_step_view_t, std::uint16_t, rgb_layout_t>::type,  rgb16c_planar_step_view_t>::value));
     BOOST_STATIC_ASSERT((boost::is_same<derived_view_type<cmyk8c_planar_step_view_t, use_default, rgb_layout_t, mpl::false_, use_default, mpl::false_>::type,  rgb8c_step_view_t>::value));
 
     // test view get raw data (mostly compile-time test)
