@@ -33,21 +33,21 @@ typedef mpl::vector2<gray_color_t,alpha_t> gray_alpha_t;
 typedef layout<gray_alpha_t> gray_alpha_layout_t;
 typedef layout<gray_alpha_layout_t, mpl::vector2_c<int,1,0> > alpha_gray_layout_t;
 
-GIL_DEFINE_BASE_TYPEDEFS(8,  alpha_gray)
-GIL_DEFINE_BASE_TYPEDEFS(8s, alpha_gray)
-GIL_DEFINE_BASE_TYPEDEFS(16, alpha_gray)
-GIL_DEFINE_BASE_TYPEDEFS(16s,alpha_gray)
-GIL_DEFINE_BASE_TYPEDEFS(32 ,alpha_gray)
-GIL_DEFINE_BASE_TYPEDEFS(32s,alpha_gray)
-GIL_DEFINE_BASE_TYPEDEFS(32f,alpha_gray)
+GIL_DEFINE_BASE_TYPEDEFS(8, uint8_t, alpha_gray)
+GIL_DEFINE_BASE_TYPEDEFS(8s, int8_t, alpha_gray)
+GIL_DEFINE_BASE_TYPEDEFS(16, uint16_t, alpha_gray)
+GIL_DEFINE_BASE_TYPEDEFS(16s, int16_t, alpha_gray)
+GIL_DEFINE_BASE_TYPEDEFS(32, uint32_t, alpha_gray)
+GIL_DEFINE_BASE_TYPEDEFS(32s, int32_t, alpha_gray)
+GIL_DEFINE_BASE_TYPEDEFS(32f, float32_t, alpha_gray)
 
-GIL_DEFINE_ALL_TYPEDEFS(8,  gray_alpha)
-GIL_DEFINE_ALL_TYPEDEFS(8s, gray_alpha)
-GIL_DEFINE_ALL_TYPEDEFS(16, gray_alpha)
-GIL_DEFINE_ALL_TYPEDEFS(16s,gray_alpha)
-GIL_DEFINE_ALL_TYPEDEFS(32 ,gray_alpha)
-GIL_DEFINE_ALL_TYPEDEFS(32s,gray_alpha)
-GIL_DEFINE_ALL_TYPEDEFS(32f,gray_alpha)
+GIL_DEFINE_ALL_TYPEDEFS(8, uint8_t, gray_alpha)
+GIL_DEFINE_ALL_TYPEDEFS(8s, int8_t, gray_alpha)
+GIL_DEFINE_ALL_TYPEDEFS(16, uint16_t, gray_alpha)
+GIL_DEFINE_ALL_TYPEDEFS(16s, int16_t, gray_alpha)
+GIL_DEFINE_ALL_TYPEDEFS(32, uint32_t, gray_alpha)
+GIL_DEFINE_ALL_TYPEDEFS(32s, int32_t, gray_alpha)
+GIL_DEFINE_ALL_TYPEDEFS(32f, float32_t, gray_alpha)
 
 /// \ingroup ColorConvert
 /// \brief Gray Alpha to RGBA

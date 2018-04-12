@@ -37,22 +37,22 @@ template< typename Channel
 struct raw_read_support : read_support_false {};
 
 template<>
-struct raw_read_support< bits8
+struct raw_read_support<uint8_t
                        , gray_t
                        > : read_support_true {};
 
 template<>
-struct raw_read_support< bits16
+struct raw_read_support<uint16_t
                        , gray_t
                        > : read_support_true {};
 
 template<>
-struct raw_read_support< bits8
+struct raw_read_support<uint8_t
                        , rgb_t
                        > : read_support_true {};
 
 template<>
-struct raw_read_support< bits16
+struct raw_read_support<uint16_t
                        , rgb_t
                        > : read_support_true {};
 

@@ -349,7 +349,7 @@ private:
                                                    , red
                                                    , green
                                                    , blue
-                                                   , sizeof( bits16 ) * num_colors );
+                                                   , sizeof(uint16_t) * num_colors );
 
       for( typename rgb16_view_t::y_coord_t y = 0; y < dst_view.height(); ++y )
       {
@@ -360,7 +360,7 @@ private:
 
          for( ; it != end; ++it, ++indices_it )
          {
-            bits16 i = gil::at_c<0>( *indices_it );
+            uint16_t i = gil::at_c<0>( *indices_it );
 
             *it = palette[i];
          }

@@ -32,7 +32,6 @@
 
 namespace boost { namespace gil {
 
-
 /// \addtogroup ColorNameModel
 /// \{
 
