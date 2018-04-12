@@ -468,11 +468,11 @@ BOOST_AUTO_TEST_CASE(performance_test)
 
     // for_each()
     std::cout<<"test for_each_pixel() on rgb8_image_t"<<std::endl;
-    test_for_each<rgb8_view_t,rgb_fr_t<bits8> >(num_trials);
+    test_for_each<rgb8_view_t,rgb_fr_t<uint8_t> >(num_trials);
     std::cout<<std::endl;
 
     std::cout<<"test for_each_pixel() on rgb8_planar_image_t"<<std::endl;
-    test_for_each<rgb8_planar_view_t,rgb_fr_t<bits8> >(num_trials);
+    test_for_each<rgb8_planar_view_t,rgb_fr_t<uint8_t> >(num_trials);
     std::cout<<std::endl;
 
     // copy()
@@ -498,19 +498,19 @@ BOOST_AUTO_TEST_CASE(performance_test)
 
     // transform()
     std::cout<<"test transform_pixels() between rgb8_image_t and rgb8_image_t"<<std::endl;
-    test_transform<rgb8_view_t,rgb8_view_t,bgr_to_rgb_t<bits8,pixel<bits8,rgb_layout_t> > >(num_trials);
+    test_transform<rgb8_view_t,rgb8_view_t,bgr_to_rgb_t<uint8_t,pixel<uint8_t,rgb_layout_t> > >(num_trials);
     std::cout<<std::endl;
 
     std::cout<<"test transform_pixels() between rgb8_planar_image_t and rgb8_planar_image_t"<<std::endl;
-    test_transform<rgb8_planar_view_t,rgb8_planar_view_t,bgr_to_rgb_t<bits8,planar_pixel_reference<bits8,rgb_t> > >(num_trials);
+    test_transform<rgb8_planar_view_t,rgb8_planar_view_t,bgr_to_rgb_t<uint8_t,planar_pixel_reference<uint8_t,rgb_t> > >(num_trials);
     std::cout<<std::endl;
 
     std::cout<<"test transform_pixels() between rgb8_image_t and rgb8_planar_image_t"<<std::endl;
-    test_transform<rgb8_view_t,rgb8_planar_view_t,bgr_to_rgb_t<bits8,pixel<bits8,rgb_layout_t> > >(num_trials);
+    test_transform<rgb8_view_t,rgb8_planar_view_t,bgr_to_rgb_t<uint8_t,pixel<uint8_t,rgb_layout_t> > >(num_trials);
     std::cout<<std::endl;
 
     std::cout<<"test transform_pixels() between rgb8_planar_image_t and rgb8_image_t"<<std::endl;
-    test_transform<rgb8_planar_view_t,rgb8_view_t,bgr_to_rgb_t<bits8,planar_pixel_reference<bits8,rgb_t> > >(num_trials);
+    test_transform<rgb8_planar_view_t,rgb8_view_t,bgr_to_rgb_t<uint8_t,planar_pixel_reference<uint8_t,rgb_t> > >(num_trials);
     std::cout<<std::endl;
 }
 

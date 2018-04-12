@@ -11,13 +11,13 @@
 #define BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
 #define BOOST_GIL_IO_ENABLE_GRAY_ALPHA
 
-#include <boost/cstdint.hpp>
 
 #define BOOST_FILESYSTEM_VERSION 3
 #include <boost/filesystem/convenience.hpp>
 
 #include <boost/gil/extension/io/png.hpp>
 
+#include <cstdint>
 #include <iostream>
 
 #include "color_space_write_test.hpp"

@@ -699,11 +699,11 @@ namespace detail {
     struct any_type_get_num_channels;
     template <typename View> struct reduce_view_basic<any_type_get_num_channels,View,true> { 
         typedef typename View::color_space_t::base Cs;
-        typedef typename view_type<bits8,typename reduce_color_space<Cs>::type>::type type; 
+        typedef typename view_type<uint8_t,typename reduce_color_space<Cs>::type>::type type;
     };
     template <typename Img>  struct reduce_image_basic<any_type_get_num_channels,Img,true> { 
         typedef typename Img::color_space_t::base Cs;
-        typedef typename image_type<bits8,typename reduce_color_space<Cs>::type>::type type; 
+        typedef typename image_type<uint8_t,typename reduce_color_space<Cs>::type>::type type;
     };
 
     ////////////////////////////////////////////////////////

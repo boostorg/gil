@@ -14,7 +14,7 @@
 //#define BOOST_TEST_MODULE tiff_tiled_miniblack_test_21_31_32_64_module
 #include <boost/test/unit_test.hpp>
 
-#include <boost/cstdint.hpp>
+#include <cstdint>
 #include "tiff_tiled_read_macros.hpp"
 
 BOOST_AUTO_TEST_SUITE( gil_io_tiff_tests )

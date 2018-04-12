@@ -57,7 +57,7 @@ assert(r565 == rgb565_pixel_t((uint16_t)0xFFFF));
 /// \ingroup ColorBaseModelPackedPixel PixelModelPackedPixel PixelBasedModel
 /// \brief Heterogeneous pixel value whose channel references can be constructed from the pixel bitfield and their index. Models ColorBaseValueConcept, PixelValueConcept, PixelBasedConcept
 /// Typical use for this is a model of a packed pixel (like 565 RGB)
-template <typename BitField,      // A type that holds the bits of the pixel. Typically an integral type, like boost::uint16_t
+template <typename BitField,      // A type that holds the bits of the pixel. Typically an integral type, like std::uint16_t
           typename ChannelRefVec, // An MPL vector whose elements are packed channels. They must be constructible from BitField. GIL uses packed_channel_reference
           typename Layout>        // Layout defining the color space and ordering of the channels. Example value: rgb_layout_t
 struct packed_pixel {

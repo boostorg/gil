@@ -19,8 +19,8 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
+#include <cstdint>
 #include <boost/algorithm/clamp.hpp>
-#include <boost/cast.hpp>
 #include <boost/mpl/range_c.hpp>
 #include <boost/mpl/vector_c.hpp>
 #include <boost/gil/gil_all.hpp>
@@ -61,8 +61,8 @@ typedef boost::gil::layout<ycbcr_601__t> ycbcr_601__layout_t;
 typedef boost::gil::layout<ycbcr_709__t> ycbcr_709__layout_t;
 
 //The channel depth is ALWAYS 8bits ofr YCbCr!
-GIL_DEFINE_ALL_TYPEDEFS(8,  ycbcr_601_)
-GIL_DEFINE_ALL_TYPEDEFS(8,  ycbcr_709_)
+GIL_DEFINE_ALL_TYPEDEFS(8, uint8_t, ycbcr_601_)
+GIL_DEFINE_ALL_TYPEDEFS(8, uint8_t, ycbcr_709_)
 
 /*
  * 601 Source: http://en.wikipedia.org/wiki/YCbCr#ITU-R_BT.601_conversion
@@ -77,7 +77,7 @@ GIL_DEFINE_ALL_TYPEDEFS(8,  ycbcr_709_)
 template<>
 struct default_color_converter_impl<ycbcr_601__t, rgb_t>
 {
-	// Note: the RGB_t channels range can be set later on by the users. We dont want to cast to bits8 or anything here.
+	// Note: the RGB_t channels range can be set later on by the users. We dont want to cast to uint8_t or anything here.
 	template < typename SRCP, typename DSTP >
 	void operator()( const SRCP& src, DSTP& dst ) const
 	{
@@ -111,12 +111,12 @@ private:
 		src_channel_t cr = channel_convert<src_channel_t>( get_color(src, cr_t()));
 
 		// The intermediate results of the formulas require at least 16bits of precission.
-		boost::int_fast16_t c = y  - 16;
-		boost::int_fast16_t d = cb - 128;
-		boost::int_fast16_t e = cr - 128;
-		boost::int_fast16_t red   = clamp((( 298 * c + 409 * e + 128) >> 8), 0, 255);
-		boost::int_fast16_t green = clamp((( 298 * c - 100 * d - 208 * e + 128) >> 8), 0, 255);
-		boost::int_fast16_t blue  = clamp((( 298 * c + 516 * d + 128) >> 8), 0, 255);
+		std::int_fast16_t c = y  - 16;
+		std::int_fast16_t d = cb - 128;
+		std::int_fast16_t e = cr - 128;
+		std::int_fast16_t red   = clamp((( 298 * c + 409 * e + 128) >> 8), 0, 255);
+		std::int_fast16_t green = clamp((( 298 * c - 100 * d - 208 * e + 128) >> 8), 0, 255);
+		std::int_fast16_t blue  = clamp((( 298 * c + 516 * d + 128) >> 8), 0, 255);
 
 		get_color( dst,  red_t() )  = (dst_channel_t) red;
 		get_color( dst, green_t() ) = (dst_channel_t) green;
