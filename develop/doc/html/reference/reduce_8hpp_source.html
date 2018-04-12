@@ -591,11 +591,11 @@
 <div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;    <span class="keyword">struct </span>any_type_get_num_channels;</div>
 <div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> View&gt; <span class="keyword">struct </span>reduce_view_basic&lt;any_type_get_num_channels,View,true&gt; { </div>
 <div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> View::color_space_t::base Cs;</div>
-<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> view_type&lt;bits8,typename reduce_color_space&lt;Cs&gt;::type&gt;::type type; </div>
+<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> view_type&lt;uint8_t,typename reduce_color_space&lt;Cs&gt;::type&gt;::type type;</div>
 <div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;    };</div>
 <div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Img&gt;  <span class="keyword">struct </span>reduce_image_basic&lt;any_type_get_num_channels,Img,true&gt; { </div>
 <div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> Img::color_space_t::base Cs;</div>
-<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> image_type&lt;bits8,typename reduce_color_space&lt;Cs&gt;::type&gt;::type type; </div>
+<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> image_type&lt;uint8_t,typename reduce_color_space&lt;Cs&gt;::type&gt;::type type;</div>
 <div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;    };</div>
 <div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;</div>
 <div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;    </div>
@@ -676,7 +676,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Tue Apr 10 2018 18:27:03 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Thu Apr 12 2018 23:20:51 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

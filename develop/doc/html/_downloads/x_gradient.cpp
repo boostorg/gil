@@ -53,7 +53,7 @@ int main() {
     jpeg_read_image("test.jpg",img);
     
     gray8s_image_t img_out(img.dimensions());
-    fill_pixels(view(img_out),bits8s(0));
+    fill_pixels(view(img_out),int8_t(0));
 
     x_luminosity_gradient(const_view(img), view(img_out));
     jpeg_write_view("out-x_gradient.jpg",color_converted_view<gray8_pixel_t>(const_view(img_out)));

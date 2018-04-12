@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=9"/>
     <meta name="generator" content="Doxygen 1.8.6"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Generic Image Library: channel_converter_unsigned&lt; bits32, bits32f &gt; Struct Template Reference</title>
+    <title>Generic Image Library: channel_multiplier_unsigned&lt; uint8_t &gt; Struct Template Reference</title>
     <link href="tabs.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript" src="dynsections.js"></script>
@@ -47,44 +47,47 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespaceboost.html">boost</a></li><li class="navelem"><b>gil</b></li><li class="navelem"><a class="el" href="structboost_1_1gil_1_1channel__converter__unsigned_3_01bits32_00_01bits32f_01_4.html">channel_converter_unsigned< bits32, bits32f ></a></li>  </ul>
+<li class="navelem"><a class="el" href="namespaceboost.html">boost</a></li><li class="navelem"><b>gil</b></li><li class="navelem"><a class="el" href="structboost_1_1gil_1_1channel__multiplier__unsigned_3_01uint8__t_01_4.html">channel_multiplier_unsigned< uint8_t ></a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="structboost_1_1gil_1_1channel__converter__unsigned_3_01bits32_00_01bits32f_01_4-members.html">List of all members</a>  </div>
+<a href="structboost_1_1gil_1_1channel__multiplier__unsigned_3_01uint8__t_01_4-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">channel_converter_unsigned&lt; bits32, bits32f &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group___channel_convert_unsigned_algorithm.html">channel_converter_unsigned</a></div></div>  </div>
+<div class="title">channel_multiplier_unsigned&lt; uint8_t &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group___channel_multiply_algorithm.html">channel_multiply</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>32 bit &lt;-&gt; float channel conversion  
- <a href="structboost_1_1gil_1_1channel__converter__unsigned_3_01bits32_00_01bits32f_01_4.html#details">More...</a></p>
+<p>Specialization of channel_multiply for 8-bit unsigned channels.  
+ <a href="structboost_1_1gil_1_1channel__multiplier__unsigned_3_01uint8__t_01_4.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="channel__algorithm_8hpp_source.html">channel_algorithm.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a620ebe5c0dcd0a5d5e7c12c8c88a03cb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a620ebe5c0dcd0a5d5e7c12c8c88a03cb"></a>
-typedef bits32&#160;</td><td class="memItemRight" valign="bottom"><b>argument_type</b></td></tr>
-<tr class="separator:a620ebe5c0dcd0a5d5e7c12c8c88a03cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d8523533344559a39522b5b95f4daa0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2d8523533344559a39522b5b95f4daa0"></a>
-typedef <a class="el" href="structboost_1_1gil_1_1scoped__channel__value.html">bits32f</a>&#160;</td><td class="memItemRight" valign="bottom"><b>result_type</b></td></tr>
-<tr class="separator:a2d8523533344559a39522b5b95f4daa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a78ef0f504cb651db5f96fabf319e33"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5a78ef0f504cb651db5f96fabf319e33"></a>
+typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>first_argument_type</b></td></tr>
+<tr class="separator:a5a78ef0f504cb651db5f96fabf319e33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af057b5aac867b79fdf95d6ca263bcec8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af057b5aac867b79fdf95d6ca263bcec8"></a>
+typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>second_argument_type</b></td></tr>
+<tr class="separator:af057b5aac867b79fdf95d6ca263bcec8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7eeb0851dd68f017984dad75c1be0c7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af7eeb0851dd68f017984dad75c1be0c7"></a>
+typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>result_type</b></td></tr>
+<tr class="separator:af7eeb0851dd68f017984dad75c1be0c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0142f52596798da6aa9039a910300bb9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0142f52596798da6aa9039a910300bb9"></a>
-<a class="el" href="structboost_1_1gil_1_1scoped__channel__value.html">bits32f</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator()</b> (bits32 x) const </td></tr>
-<tr class="separator:a0142f52596798da6aa9039a910300bb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf0dcc3adab02ea11247cfd0cd46e911"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acf0dcc3adab02ea11247cfd0cd46e911"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>operator()</b> (uint8_t a, uint8_t b) const </td></tr>
+<tr class="separator:acf0dcc3adab02ea11247cfd0cd46e911"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;&gt;<br/>
-struct boost::gil::channel_converter_unsigned&lt; bits32, bits32f &gt;</h3>
+struct boost::gil::channel_multiplier_unsigned&lt; uint8_t &gt;</h3>
 
-<p>32 bit &lt;-&gt; float channel conversion </p>
+<p>Specialization of channel_multiply for 8-bit unsigned channels. </p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
 <li><a class="el" href="channel__algorithm_8hpp_source.html">channel_algorithm.hpp</a></li>
 </ul>
@@ -94,7 +97,7 @@ struct boost::gil::channel_converter_unsigned&lt; bits32, bits32f &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Tue Apr 10 2018 18:27:03 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Thu Apr 12 2018 23:20:51 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

@@ -67,6 +67,7 @@
 <code>#include &lt;boost/type_traits.hpp&gt;</code><br/>
 <code>#include &quot;<a class="el" href="gil__config_8hpp_source.html">gil_config.hpp</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="channel_8hpp_source.html">channel.hpp</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="typedefs_8hpp_source.html">typedefs.hpp</a>&quot;</code><br/>
 </div>
 <p><a href="channel__algorithm_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -81,14 +82,14 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1detail_1_1channel__converter__unsigned__impl.html">channel_converter_unsigned_impl&lt; SrcChannelV, DstChannelV, SrcIsIntegral, DstIsIntegral &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the default implementation. Performance specializatons are provided.  <a href="structboost_1_1gil_1_1detail_1_1channel__converter__unsigned__impl.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1channel__converter__unsigned_3_01bits32f_00_01_dst_channel_v_01_4.html">channel_converter_unsigned&lt; bits32f, DstChannelV &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">bits32f conversion  <a href="structboost_1_1gil_1_1channel__converter__unsigned_3_01bits32f_00_01_dst_channel_v_01_4.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1channel__converter__unsigned_3_01float32__t_00_01_dst_channel_v_01_4.html">channel_converter_unsigned&lt; float32_t, DstChannelV &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">float32_t conversion  <a href="structboost_1_1gil_1_1channel__converter__unsigned_3_01float32__t_00_01_dst_channel_v_01_4.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1channel__converter__unsigned_3_01bits32_00_01bits32f_01_4.html">channel_converter_unsigned&lt; bits32, bits32f &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">32 bit &lt;-&gt; float channel conversion  <a href="structboost_1_1gil_1_1channel__converter__unsigned_3_01bits32_00_01bits32f_01_4.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1channel__converter__unsigned_3_01uint32__t_00_01float32__t_01_4.html">channel_converter_unsigned&lt; uint32_t, float32_t &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">32 bit &lt;-&gt; float channel conversion  <a href="structboost_1_1gil_1_1channel__converter__unsigned_3_01uint32__t_00_01float32__t_01_4.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1channel__converter__unsigned_3_01bits32f_00_01bits32_01_4.html">channel_converter_unsigned&lt; bits32f, bits32 &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">32 bit &lt;-&gt; float channel conversion  <a href="structboost_1_1gil_1_1channel__converter__unsigned_3_01bits32f_00_01bits32_01_4.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1channel__converter__unsigned_3_01float32__t_00_01uint32__t_01_4.html">channel_converter_unsigned&lt; float32_t, uint32_t &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">32 bit &lt;-&gt; float channel conversion  <a href="structboost_1_1gil_1_1channel__converter__unsigned_3_01float32__t_00_01uint32__t_01_4.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1channel__converter.html">channel_converter&lt; SrcChannelV, DstChannelV &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A unary function object converting between channel types.  <a href="structboost_1_1gil_1_1channel__converter.html#details">More...</a><br/></td></tr>
@@ -99,14 +100,14 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1channel__multiplier__unsigned.html">channel_multiplier_unsigned&lt; ChannelValue &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the default implementation. Performance specializatons are provided.  <a href="structboost_1_1gil_1_1channel__multiplier__unsigned.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1channel__multiplier__unsigned_3_01bits8_01_4.html">channel_multiplier_unsigned&lt; bits8 &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization of channel_multiply for 8-bit unsigned channels.  <a href="structboost_1_1gil_1_1channel__multiplier__unsigned_3_01bits8_01_4.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1channel__multiplier__unsigned_3_01uint8__t_01_4.html">channel_multiplier_unsigned&lt; uint8_t &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization of channel_multiply for 8-bit unsigned channels.  <a href="structboost_1_1gil_1_1channel__multiplier__unsigned_3_01uint8__t_01_4.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1channel__multiplier__unsigned_3_01bits16_01_4.html">channel_multiplier_unsigned&lt; bits16 &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization of channel_multiply for 16-bit unsigned channels.  <a href="structboost_1_1gil_1_1channel__multiplier__unsigned_3_01bits16_01_4.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1channel__multiplier__unsigned_3_01uint16__t_01_4.html">channel_multiplier_unsigned&lt; uint16_t &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization of channel_multiply for 16-bit unsigned channels.  <a href="structboost_1_1gil_1_1channel__multiplier__unsigned_3_01uint16__t_01_4.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1channel__multiplier__unsigned_3_01bits32f_01_4.html">channel_multiplier_unsigned&lt; bits32f &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization of channel_multiply for float 0..1 channels.  <a href="structboost_1_1gil_1_1channel__multiplier__unsigned_3_01bits32f_01_4.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1channel__multiplier__unsigned_3_01float32__t_01_4.html">channel_multiplier_unsigned&lt; float32_t &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization of channel_multiply for float 0..1 channels.  <a href="structboost_1_1gil_1_1channel__multiplier__unsigned_3_01float32__t_01_4.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1channel__multiplier.html">channel_multiplier&lt; ChannelValue &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function object to multiply two channels. result = a * b / max_value.  <a href="structboost_1_1gil_1_1channel__multiplier.html#details">More...</a><br/></td></tr>
@@ -158,7 +159,7 @@ template&lt;typename Channel &gt; </td></tr>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Tue Apr 10 2018 18:27:03 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Thu Apr 12 2018 23:20:51 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

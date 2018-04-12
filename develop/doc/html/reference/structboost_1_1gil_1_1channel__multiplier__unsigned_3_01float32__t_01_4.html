@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=9"/>
     <meta name="generator" content="Doxygen 1.8.6"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Generic Image Library: channel_converter_unsigned&lt; bits32f, DstChannelV &gt; Struct Template Reference</title>
+    <title>Generic Image Library: channel_multiplier_unsigned&lt; float32_t &gt; Struct Template Reference</title>
     <link href="tabs.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript" src="dynsections.js"></script>
@@ -47,44 +47,47 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespaceboost.html">boost</a></li><li class="navelem"><b>gil</b></li><li class="navelem"><a class="el" href="structboost_1_1gil_1_1channel__converter__unsigned_3_01bits32f_00_01_dst_channel_v_01_4.html">channel_converter_unsigned< bits32f, DstChannelV ></a></li>  </ul>
+<li class="navelem"><a class="el" href="namespaceboost.html">boost</a></li><li class="navelem"><b>gil</b></li><li class="navelem"><a class="el" href="structboost_1_1gil_1_1channel__multiplier__unsigned_3_01float32__t_01_4.html">channel_multiplier_unsigned< float32_t ></a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="structboost_1_1gil_1_1channel__converter__unsigned_3_01bits32f_00_01_dst_channel_v_01_4-members.html">List of all members</a>  </div>
+<a href="structboost_1_1gil_1_1channel__multiplier__unsigned_3_01float32__t_01_4-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">channel_converter_unsigned&lt; bits32f, DstChannelV &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group___channel_convert_unsigned_algorithm.html">channel_converter_unsigned</a></div></div>  </div>
+<div class="title">channel_multiplier_unsigned&lt; float32_t &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group___channel_multiply_algorithm.html">channel_multiply</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>bits32f conversion  
- <a href="structboost_1_1gil_1_1channel__converter__unsigned_3_01bits32f_00_01_dst_channel_v_01_4.html#details">More...</a></p>
+<p>Specialization of channel_multiply for float 0..1 channels.  
+ <a href="structboost_1_1gil_1_1channel__multiplier__unsigned_3_01float32__t_01_4.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="channel__algorithm_8hpp_source.html">channel_algorithm.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:af0e473e7029821b23a392c828eff09c2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af0e473e7029821b23a392c828eff09c2"></a>
-typedef <a class="el" href="structboost_1_1gil_1_1scoped__channel__value.html">bits32f</a>&#160;</td><td class="memItemRight" valign="bottom"><b>argument_type</b></td></tr>
-<tr class="separator:af0e473e7029821b23a392c828eff09c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a412715f395c959d28e32c5821bff8415"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a412715f395c959d28e32c5821bff8415"></a>
-typedef DstChannelV&#160;</td><td class="memItemRight" valign="bottom"><b>result_type</b></td></tr>
-<tr class="separator:a412715f395c959d28e32c5821bff8415"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58d18c692a369222ada69364ddb8ae00"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a58d18c692a369222ada69364ddb8ae00"></a>
+typedef <a class="el" href="group___channel_model.html#ga32c4e40456064bfdceb82d846fd2177a">float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>first_argument_type</b></td></tr>
+<tr class="separator:a58d18c692a369222ada69364ddb8ae00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac07fd085b428b060aa677a2b04de010b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac07fd085b428b060aa677a2b04de010b"></a>
+typedef <a class="el" href="group___channel_model.html#ga32c4e40456064bfdceb82d846fd2177a">float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>second_argument_type</b></td></tr>
+<tr class="separator:ac07fd085b428b060aa677a2b04de010b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2be1f22f3d3b8b0e319adb8c0dbb92f8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2be1f22f3d3b8b0e319adb8c0dbb92f8"></a>
+typedef <a class="el" href="group___channel_model.html#ga32c4e40456064bfdceb82d846fd2177a">float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>result_type</b></td></tr>
+<tr class="separator:a2be1f22f3d3b8b0e319adb8c0dbb92f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a3d1d6c95cbd8cc49a52ba5aa1c8c98f7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3d1d6c95cbd8cc49a52ba5aa1c8c98f7"></a>
-DstChannelV&#160;</td><td class="memItemRight" valign="bottom"><b>operator()</b> (<a class="el" href="structboost_1_1gil_1_1scoped__channel__value.html">bits32f</a> x) const </td></tr>
-<tr class="separator:a3d1d6c95cbd8cc49a52ba5aa1c8c98f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32e0b15181c5c58a7b7c5c7fc3668eac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a32e0b15181c5c58a7b7c5c7fc3668eac"></a>
+<a class="el" href="group___channel_model.html#ga32c4e40456064bfdceb82d846fd2177a">float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator()</b> (<a class="el" href="group___channel_model.html#ga32c4e40456064bfdceb82d846fd2177a">float32_t</a> a, <a class="el" href="group___channel_model.html#ga32c4e40456064bfdceb82d846fd2177a">float32_t</a> b) const </td></tr>
+<tr class="separator:a32e0b15181c5c58a7b7c5c7fc3668eac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename DstChannelV&gt;<br/>
-struct boost::gil::channel_converter_unsigned&lt; bits32f, DstChannelV &gt;</h3>
+<div class="textblock"><h3>template&lt;&gt;<br/>
+struct boost::gil::channel_multiplier_unsigned&lt; float32_t &gt;</h3>
 
-<p>bits32f conversion </p>
+<p>Specialization of channel_multiply for float 0..1 channels. </p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
 <li><a class="el" href="channel__algorithm_8hpp_source.html">channel_algorithm.hpp</a></li>
 </ul>
@@ -94,7 +97,7 @@ struct boost::gil::channel_converter_unsigned&lt; bits32f, DstChannelV &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Tue Apr 10 2018 18:27:03 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Thu Apr 12 2018 23:20:51 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

@@ -80,12 +80,12 @@ template&lt;typename DstChannel , typename SrcChannel &gt; </td></tr>
 <p>Conversion is done as a simple linear mapping of one channel range to the other, such that the minimum/maximum value of the source maps to the minimum/maximum value of the destination. One implication of this is that the value 0 of signed channels may not be preserved! </p>
 <p>When creating new channel models, it is often a good idea to provide specializations for the channel conversion algorithms, for example, for performance optimizations. If the new model is an integral type that can be signed, it is easier to define the conversion only for the unsigned type (<code>channel_converter_unsigned</code>) and provide specializations of <code>detail::channel_convert_to_unsigned</code> and <code>detail::channel_convert_from_unsigned</code> to convert between the signed and unsigned type.</p>
 <p>Example: </p>
-<div class="fragment"><div class="line"><span class="comment">// bits32f is a floating point channel with range [0.0f ... 1.0f]</span></div>
-<div class="line">bits32f src_channel = channel_traits&lt;bits32f&gt;::max_value();</div>
+<div class="fragment"><div class="line"><span class="comment">// float32_t is a floating point channel with range [0.0f ... 1.0f]</span></div>
+<div class="line"><a class="code" href="group___channel_model.html#ga32c4e40456064bfdceb82d846fd2177a">float32_t</a> src_channel = channel_traits&lt;float32_t&gt;::max_value();</div>
 <div class="line">assert(src_channel == 1);</div>
 <div class="line"></div>
-<div class="line"><span class="comment">// bits8 is 8-bit unsigned integral channel (typedef-ed from unsigned char)</span></div>
-<div class="line">bits8 dst_channel = channel_convert&lt;bits8&gt;(src_channel);</div>
+<div class="line"><span class="comment">// uint8_t is 8-bit unsigned integral channel (typedef-ed from unsigned char)</span></div>
+<div class="line">uint8_t dst_channel = channel_convert&lt;uint8_t&gt;(src_channel);</div>
 <div class="line">assert(dst_channel == 255);     <span class="comment">// max value goes to max value</span></div>
 </div><!-- fragment --> </div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
@@ -93,7 +93,7 @@ template&lt;typename DstChannel , typename SrcChannel &gt; </td></tr>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Tue Apr 10 2018 18:27:03 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Thu Apr 12 2018 23:20:51 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
