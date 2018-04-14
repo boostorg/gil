@@ -309,7 +309,7 @@ jobs:
             git submodule update --init libs/config
             git submodule update --init tools/boostdep
             rm -rf libs/gil && mkdir -p libs/gil
-            mv -t libs/gil/ ../example ../include ../io ../numeric ../test ../toolbox
+            mv -t libs/gil/ ../Jamfile ../example ../include ../io ../numeric ../test ../toolbox
             python tools/boostdep/depinst/depinst.py gil
       - persist_to_workspace:
           root: ~/project
