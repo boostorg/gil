@@ -315,8 +315,12 @@ template <> struct channel_converter_unsigned<float32_t,uint32_t> {
     typedef uint32_t result_type;
     uint32_t operator()(float32_t x) const {
         // unfortunately without an explicit check it is possible to get a round-off error. We must ensure that max_value of uint32_t matches max_value of float32_t
-        if (x>=channel_traits<float32_t>::max_value()) return channel_traits<uint32_t>::max_value();
-        return uint32_t(x * channel_traits<uint32_t>::max_value() + 0.5f);
+        if (x>=channel_traits<float32_t>::max_value())
+            return channel_traits<uint32_t>::max_value();
+
+        auto const max_value = channel_traits<uint32_t>::max_value();
+        auto const result = x * static_cast<float32_t::base_channel_t>(max_value) + 0.5f;
+        return static_cast<uint32_t>(result);
     }
 };
 
