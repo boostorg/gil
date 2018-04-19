@@ -58,6 +58,18 @@ git checkout develop
 ./bootstrap.sh
 ```
 
+**TIP:** [Modular Boost Library Maintenance](https://svn.boost.org/trac10/wiki/StartModMaint)
+guide, for more realistic test environment, recommends to develop and test
+individual Boost library against other Boost libraries as defined by
+the Boost super-project `master` branch:
+
+```shell
+cd boost
+git checkout master
+git pull
+git submodule update
+```
+
 Optionally, create full content of `/boost` virtual directory with all
 Boost headers linked from the individual modular Boost libraries.
 If you skip this step, executing `b2` to run tests will automatically
@@ -71,6 +83,10 @@ create the directory with all headers required by Boost.GIL and tests.
 program to a location in your `PATH`.
 
 ### 2. Checkout Boost.GIL development branch
+
+Regardless if you decide to develop again `master` (recommended) or `develop`
+branch of the Boost super-project, you should always base your work
+(ie. topic branches) on Boost.GIL `develop` branch.
 
 1. Go to the Boost.GIL library submodule.
 2. Checkout the `develop` branch.
