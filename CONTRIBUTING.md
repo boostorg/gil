@@ -7,6 +7,20 @@ Boost.GIL is a member of [Boost](https://www.boost.org) libraries.
 If you wish to contribute a new feature or a bug fix,
 please follow the workflow explained in this document.
 
+## Table of Content
+
+* [Prerequisites](#prerequisites)
+* [Getting Started](#getting-started)
+  - [1. Clone Boost super-project](#1-clone-boost-super-project)
+  - [2. Checkout Boost.GIL development branch](#2-checkout-boostgil-development-branch)
+  - [3. Run tests](#3-run-tests)
+  - [4. Fork Boost.GIL repository on GitHub](#4-fork-boostgil-repository-on-github)
+  - [5. Submit a pull request](#5-submit-a-pull-request)
+  - [6. Update your pull request](#6-update-your-pull-request)
+* [Development environment](#development-environment)
+  - [Building with Boost.Build](#building-with-boostbuild)
+  - [Building with CMake](#building-with-cmake)
+
 ## Prerequisites
 
 - Experience with `git` command line basics.
