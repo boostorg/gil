@@ -75,12 +75,25 @@ Boost headers linked from the individual modular Boost libraries.
 If you skip this step, executing `b2` to run tests will automatically
 create the directory with all headers required by Boost.GIL and tests.
 
-```
+```shell
 ./b2 headers
 ```
 
 **TIP:** For more convenient path-less invocation, you can copy the `b2`
 program to a location in your `PATH`.
+
+**TIP:** If something goes wrong, you end up with incomplete or accidentally
+modified files in your clone of the super-project repository, or you simply
+wish to start fresh, then you can clean and reset the whole repository and
+its modules:
+
+```shell
+git clean -xfd
+git submodule foreach --recursive git clean -xfd
+git reset --hard
+git submodule foreach --recursive git reset --hard
+git submodule update --init --recursive
+```
 
 ### 2. Checkout Boost.GIL development branch
 
