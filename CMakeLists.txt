@@ -63,6 +63,9 @@ find_package(Boost 1.67.0 REQUIRED COMPONENTS ${BOOST_COMPONENTS})
 # GIL headers from installed Boost instead of this clone of boostog/gil).
 include_directories(include)
 
+# GIL header gil_test_common.hpp shared between tests
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/test)
+
 #-----------------------------------------------------------------------------
 # Dependency: libpng, libjpeg, libtiff via Vcpkg or Conan
 #-----------------------------------------------------------------------------
@@ -101,6 +104,7 @@ if(MSVC)
   string(REGEX REPLACE "/W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
   string(REGEX REPLACE "-W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
   add_compile_options(-W4)
+  add_compile_options(-bigobj)
   add_compile_options(-FC) # Need absolute path for __FILE__ used in tests
 
   add_definitions(-D_CRT_NONSTDC_NO_DEPRECATE=1)
@@ -134,6 +138,9 @@ file(GLOB _boost_gil_headers
 # Tests
 #-----------------------------------------------------------------------------
 if(GIL_BUILD_TESTS)
+  file(GLOB _boost_gil_test_headers
+    ${PROJECT_SOURCE_DIR}/test/gil_test_common.hpp)
+
   enable_testing()
   add_subdirectory(test)
   if (GIL_ENABLE_IO)
