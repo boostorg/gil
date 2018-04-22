@@ -3,7 +3,8 @@
 # (C) Copyright 2008: Lubomir Bourdev and Hailin Jin
 #
 # Distributed under the Boost Software License, Version 1.0.
-# (See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+# (See accompanying file LICENSE_1_0.txt or
+# copy at http://www.boost.org/LICENSE_1_0.txt)
 
 # bring in rules for testing
 import testing ;
@@ -11,10 +12,11 @@ import testing ;
 project
     : requirements
     <include>$(BOOST_ROOT)
+    <include>.
     <library>/boost/filesystem//boost_filesystem
     ;
 
-test-suite gil :
+test-suite "boost-gil-test" :
     [ run image.cpp sample_image.cpp error_if.cpp
         :
         : gil_reference_checksums.txt
@@ -24,3 +26,5 @@ test-suite gil :
     [ run pixel.cpp error_if.cpp ]
     [ run pixel_iterator.cpp error_if.cpp ]
     ;
+
+build-project channel ;
