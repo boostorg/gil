@@ -38,9 +38,9 @@
 
 namespace boost { namespace gil {
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
-#pragma warning(push) 
-#pragma warning(disable:4512) //assignment operator could not be generated 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(push)
+#pragma warning(disable:4512) //assignment operator could not be generated
 #endif
 
 ///
@@ -478,18 +478,22 @@ private:
         Buf_type::iterator dst_it  = buf.begin();
         Buf_type::iterator dst_end = buf.end();
 
-        //
+        // If height is positive, the bitmap is a bottom-up DIB.
+        // If height is negative, the bitmap is a top-down DIB.
+        // The origin of a bottom-up DIB is the bottom left corner of the bitmap image,
+        // which is the first pixel of the first row of bitmap data.
+        // The origin of a top-down DIB is also the bottom left corner of the bitmap image,
+        // but in this case the bottom left corner is the first pixel of the last row of bitmap data.
+        // - "Programming Windows", 5th Ed. by Charles Petzold explains Windows docs ambiguities.
         std::ptrdiff_t ybeg = 0;
         std::ptrdiff_t yend = this->_settings._dim.y;
         std::ptrdiff_t yinc = 1;
-
         if( this->_info._height > 0 )
         {
             ybeg = this->_settings._dim.y - 1;
             yend = -1;
             yinc = -1;
         }
-        //
 
         std::ptrdiff_t y = ybeg;
         bool finished = false;
@@ -744,9 +748,9 @@ public:
     }
 };
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
-#pragma warning(pop) 
-#endif 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(pop)
+#endif
 
 } // gil
 } // boost
