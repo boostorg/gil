@@ -112,7 +112,6 @@ if(MSVC)
 else()
   # Assumes compilers which recognize GCC and clang speak
   add_compile_options(-pedantic)
-  add_compile_options(-fsanitize=undefined)
   add_compile_options(-fstrict-aliasing)
   add_compile_options(-Wall)
   add_compile_options(-Wextra)
