@@ -1,6 +1,5 @@
 #
 # Copyright (c) 2017 Mateusz Loskot <mateusz at loskot dot net>
-# All rights reserved.
 #
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
@@ -102,7 +101,7 @@ if(MSVC)
   string(REGEX REPLACE "/W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
   string(REGEX REPLACE "-W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
   add_compile_options(-W4)
-  add_compile_options(-FC) # We need absolute path in __FILE__
+  add_compile_options(-FC) # Need absolute path for __FILE__ used in tests
 
   add_definitions(-D_CRT_NONSTDC_NO_DEPRECATE=1)
   add_definitions(-D_SCL_SECURE_NO_DEPRECATE=1)
