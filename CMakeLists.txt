@@ -103,6 +103,13 @@ if(MSVC)
   string(REGEX REPLACE "-W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
   add_compile_options(-W4)
   add_compile_options(-FC) # We need absolute path in __FILE__
+
+  add_definitions(-D_CRT_NONSTDC_NO_DEPRECATE=1)
+  add_definitions(-D_SCL_SECURE_NO_DEPRECATE=1)
+  add_definitions(-D_CRT_SECURE_NO_WARNINGS=1)
+  add_definitions(-D_SCL_SECURE_NO_WARNINGS=1)
+  add_definitions(-DNOMINMAX=1)
+  add_definitions(-DBOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE=1)
 else()
   add_compile_options(-pedantic)
   add_compile_options(-Wall)
@@ -114,14 +121,6 @@ else()
   add_compile_options(-Wfloat-equal)
   add_compile_options(-Wunused-parameter)
   add_compile_options(-Wshadow)
-endif()
-
-if(MSVC)
-  add_definitions(-D_CRT_NONSTDC_NO_DEPRECATE=1)
-  add_definitions(-D_SCL_SECURE_NO_DEPRECATE=1)
-  add_definitions(-D_CRT_SECURE_NO_WARNINGS=1)
-  add_definitions(-D_SCL_SECURE_NO_WARNINGS=1)
-  add_definitions(-DBOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE=1)
 endif()
 
 #-----------------------------------------------------------------------------
