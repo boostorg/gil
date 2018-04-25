@@ -51,12 +51,12 @@ The preparation involves the following steps:
    `develop` branch.
 2. Run `bootstrap` to build `b2` driver program for Boost.Build engine.
 
-```shell
-git clone --recursive https://github.com/boostorg/boost.git
-cd boost
-git checkout develop
-./bootstrap.sh
-```
+    ```shell
+    git clone --recursive https://github.com/boostorg/boost.git
+    cd boost
+    git checkout develop
+    ./bootstrap.sh
+    ```
 
 **TIP:** [Modular Boost Library Maintenance](https://svn.boost.org/trac10/wiki/StartModMaint)
 guide, for more realistic test environment, recommends to develop and test
@@ -70,14 +70,14 @@ git pull
 git submodule update
 ```
 
-Optionally, create full content of `/boost` virtual directory with all
+3. Optionally, create full content of `/boost` virtual directory with all
 Boost headers linked from the individual modular Boost libraries.
 If you skip this step, executing `b2` to run tests will automatically
 create the directory with all headers required by Boost.GIL and tests.
 
-```shell
-./b2 headers
-```
+    ```shell
+    ./b2 headers
+    ```
 
 **TIP:** For more convenient path-less invocation, you can copy the `b2`
 program to a location in your `PATH`.
@@ -104,12 +104,12 @@ branch of the Boost super-project, you should always base your work
 1. Go to the Boost.GIL library submodule.
 2. Checkout the `develop` branch.
 
-```shell
-cd libs/gil
-git checkout develop
-git branch -vv
-git pull origin develop
-```
+    ```shell
+    cd libs/gil
+    git checkout develop
+    git branch -vv
+    git pull origin develop
+    ```
 
 ### 3. Run tests
 
