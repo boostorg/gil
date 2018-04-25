@@ -14,9 +14,9 @@ project boost-gil
         <toolset>msvc:<cxxflags>"/W4"
         <toolset>msvc:<define>_SCL_SECURE_NO_DEPRECATE <define>_CRT_SECURE_NO_WARNINGS <define>_CRT_NONSTDC_NO_DEPRECATE <define>NOMINMAX
         <toolset>intel:<debug-symbols>off
-        <toolset>gcc:<cxxflags>"-std=c++11 -pedantic -Wstrict-aliasing -fstrict-aliasing -Wextra -Wsign-promo -Wunused-parameter -Wconversion -Wfloat-equal -Wshadow"
-        <toolset>darwin:<cxxflags>"-std=c++11 -pedantic -Wstrict-aliasing -fstrict-aliasing -Wextra -Wsign-promo -Wunused-parameter -Wconversion -Wfloat-equal -Wshadow"
-        <toolset>clang:<cxxflags>"-std=c++11 -pedantic -Wstrict-aliasing -fstrict-aliasing -Wextra -Wsign-promo -Wunused-parameter -Wsign-conversion -Wconversion -Wfloat-equal -Wshadow"
+        <toolset>gcc:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter "
+        <toolset>darwin:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter "
+        <toolset>clang:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter -Wsign-conversion"
     ;
 
 build-project example ;
