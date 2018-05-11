@@ -8,10 +8,21 @@
 #define BOOST_TEST_MODULE test_channel_test_fixture
 #include <gil_test_common.hpp>
 #include "channel_test_fixture.hpp"
+#include <limits>
 
 namespace fixture = boost::gil::test::fixture;
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(channel_minmax_value, Channel, fixture::channel_byte_types)
+BOOST_AUTO_TEST_CASE_TEMPLATE(channel_minmax_value_integral, Channel, fixture::channel_integer_types)
+{
+    fixture::channel_minmax_value<Channel> fix;
+    fixture::channel_minmax_value<Channel> exp;
+    BOOST_TEST(fix.min_v_ == exp.min_v_);
+    BOOST_TEST(fix.max_v_ == exp.max_v_);
+    BOOST_TEST(fix.min_v_ == std::numeric_limits<Channel>::min());
+    BOOST_TEST(fix.max_v_ == std::numeric_limits<Channel>::max());
+}
+
+BOOST_AUTO_TEST_CASE_TEMPLATE(channel_minmax_value_float, Channel, fixture::channel_float_types)
 {
     fixture::channel_minmax_value<Channel> fix;
     fixture::channel_minmax_value<Channel> exp;
