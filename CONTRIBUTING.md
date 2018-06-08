@@ -52,7 +52,7 @@ The preparation involves the following steps:
 2. Run `bootstrap` to build `b2` driver program for Boost.Build engine.
 
     ```shell
-    git clone --recursive https://github.com/boostorg/boost.git
+    git clone --recursive --jobs 8 https://github.com/boostorg/boost.git
     cd boost
     git checkout develop
     ./bootstrap.sh
@@ -92,7 +92,7 @@ git clean -xfd
 git submodule foreach --recursive git clean -xfd
 git reset --hard
 git submodule foreach --recursive git reset --hard
-git submodule update --init --recursive
+git submodule update --init --recursive --jobs 8
 ```
 
 ### 2. Checkout Boost.GIL development branch
