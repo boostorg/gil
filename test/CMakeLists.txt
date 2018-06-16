@@ -7,7 +7,7 @@
 #
 message(STATUS "Configuring Boost.GIL core tests")
 
-foreach(name channel pixel pixel_iterator)
+foreach(name channel pixel pixel_iterator promote_integral)
   add_executable(gil_test_${name})
   target_sources(gil_test_${name}
     PRIVATE
