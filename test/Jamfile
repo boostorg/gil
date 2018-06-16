@@ -17,6 +17,7 @@ project
     ;
 
 test-suite "boost-gil-test" :
+    [ run promote_integral.cpp ]
     [ run image.cpp sample_image.cpp error_if.cpp
         :
         : gil_reference_checksums.txt
