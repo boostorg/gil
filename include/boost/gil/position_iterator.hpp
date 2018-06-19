@@ -10,8 +10,8 @@
 
 /*************************************************************************************************/
 
-#ifndef GIL_POSITION_ITERATOR_HPP
-#define GIL_POSITION_ITERATOR_HPP
+#ifndef BOOST_GIL_POSITION_ITERATOR_HPP
+#define BOOST_GIL_POSITION_ITERATOR_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file               
@@ -22,8 +22,9 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
+#include <boost/gil/locator.hpp>
+
 #include <boost/iterator/iterator_facade.hpp>
-#include "locator.hpp"
 
 namespace boost { namespace gil {
 

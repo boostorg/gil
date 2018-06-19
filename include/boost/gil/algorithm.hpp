@@ -10,8 +10,19 @@
 
 /*************************************************************************************************/
 
-#ifndef GIL_ALGORITHM_HPP
-#define GIL_ALGORITHM_HPP
+#ifndef BOOST_GIL_ALGORITHM_HPP
+#define BOOST_GIL_ALGORITHM_HPP
+
+#include <boost/gil/config.hpp>
+#include <boost/gil/bit_aligned_pixel_iterator.hpp>
+#include <boost/gil/color_base_algorithm.hpp>
+#include <boost/gil/concept.hpp>
+#include <boost/gil/image_view.hpp>
+#include <boost/gil/image_view_factory.hpp>
+
+#include <boost/utility/enable_if.hpp>
+#include <boost/mpl/and.hpp>
+#include <boost/mpl/or.hpp>
 
 #include <cassert>
 #include <cstddef>
@@ -20,18 +31,6 @@
 #include <iterator>
 #include <memory>
 #include <typeinfo>
-
-#include <boost/config.hpp>
-#include <boost/utility/enable_if.hpp>
-#include <boost/mpl/and.hpp>
-#include <boost/mpl/or.hpp>
-
-#include "gil_config.hpp"
-#include "gil_concept.hpp"
-#include "color_base_algorithm.hpp"
-#include "image_view.hpp"
-#include "image_view_factory.hpp"
-#include "bit_aligned_pixel_iterator.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file

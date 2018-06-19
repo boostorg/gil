@@ -10,8 +10,8 @@
 
 /*************************************************************************************************/
 
-#ifndef GIL_DEPRECATED_HPP
-#define GIL_DEPRECATED_HPP
+#ifndef BOOST_GIL_DEPRECATED_HPP
+#define BOOST_GIL_DEPRECATED_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file               

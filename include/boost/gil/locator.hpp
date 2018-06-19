@@ -10,8 +10,8 @@
 
 /*************************************************************************************************/
 
-#ifndef GIL_LOCATOR_H
-#define GIL_LOCATOR_H
+#ifndef BOOST_GIL_LOCATOR_HPP
+#define BOOST_GIL_LOCATOR_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file
@@ -22,9 +22,10 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <cstddef>
+#include <boost/gil/pixel_iterator.hpp>
+
 #include <cassert>
-#include "pixel_iterator.hpp"
+#include <cstddef>
 
 ////////////////////////////////////////////////////////////////////////////////////////
 ///                 Pixel 2D LOCATOR

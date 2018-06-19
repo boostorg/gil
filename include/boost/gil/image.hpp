@@ -9,8 +9,8 @@
 */
 /*************************************************************************************************/
 
-#ifndef GIL_IMAGE_H
-#define GIL_IMAGE_H
+#ifndef BOOST_GIL_IMAGE_HPP
+#define BOOST_GIL_IMAGE_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file
@@ -21,18 +21,17 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <cstddef>
-#include <memory>
+#include <boost/gil/config.hpp>
+#include <boost/gil/algorithm.hpp>
+#include <boost/gil/image_view.hpp>
+#include <boost/gil/metafunctions.hpp>
 
+#include <boost/mpl/arithmetic.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/if.hpp>
-#include <boost/mpl/arithmetic.hpp>
 
-
-#include "gil_config.hpp"
-#include "image_view.hpp"
-#include "metafunctions.hpp"
-#include "algorithm.hpp"
+#include <cstddef>
+#include <memory>
 
 namespace boost { namespace gil {
 

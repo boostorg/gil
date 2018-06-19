@@ -10,8 +10,8 @@
 
 /*************************************************************************************************/
 
-#ifndef GIL_GRAY_H
-#define GIL_GRAY_H
+#ifndef BOOST_GIL_GRAY_HPP
+#define BOOST_GIL_GRAY_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file
@@ -21,11 +21,12 @@
 /// \date 2005-2007 \n Last updated on March 8, 2006
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include "gil_config.hpp"
-#include "utilities.hpp"
-#include <boost/type_traits.hpp>
+#include <boost/gil/config.hpp>
+#include <boost/gil/utility.hpp>
+
 #include <boost/mpl/range_c.hpp>
 #include <boost/mpl/vector_c.hpp>
+#include <boost/type_traits.hpp>
 
 namespace boost { namespace gil {
 

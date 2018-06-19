@@ -10,8 +10,8 @@
 
 /*************************************************************************************************/
 
-#ifndef GIL_CMYK_H
-#define GIL_CMYK_H
+#ifndef BOOST_GIL_CMYK_HPP
+#define BOOST_GIL_CMYK_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file
@@ -21,14 +21,13 @@
 /// \date 2005-2007 \n Last updated on October 10, 2007
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <cstddef>
+#include <boost/gil/config.hpp>
+#include <boost/gil/metafunctions.hpp>
 
-#include <boost/config.hpp>
 #include <boost/mpl/range_c.hpp>
 #include <boost/mpl/vector_c.hpp>
 
-#include "gil_config.hpp"
-#include "metafunctions.hpp"
+#include <cstddef>
 
 namespace boost { namespace gil {
 
