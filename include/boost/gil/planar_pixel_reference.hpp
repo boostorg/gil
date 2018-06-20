@@ -10,8 +10,8 @@
 
 /*************************************************************************************************/
 
-#ifndef BOOST_GIL_PLANAR_REF_HPP
-#define BOOST_GIL_PLANAR_REF_HPP
+#ifndef GIL_PLANAR_REF_H
+#define GIL_PLANAR_REF_H
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file               
@@ -22,14 +22,13 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/gil/config.hpp>
-#include <boost/gil/channel.hpp>
-#include <boost/gil/color_base.hpp>
-#include <boost/gil/concept.hpp>
-#include <boost/gil/pixel.hpp>
-#include <boost/gil/planar_pixel_iterator.hpp>
-
 #include <boost/mpl/range_c.hpp>
+#include "gil_config.hpp"
+#include "gil_concept.hpp"
+#include "color_base.hpp"
+#include "channel.hpp"
+#include "pixel.hpp"
+#include "planar_pixel_iterator.hpp"
 
 namespace boost { namespace gil {
 

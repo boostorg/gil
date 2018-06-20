@@ -14,15 +14,16 @@
 /// \author Lubomir Bourdev and Hailin Jin \n
 ///         Adobe Systems Incorporated
 
-#include <boost/gil/config.hpp>
-#include <boost/gil/cmyk.hpp>
-#include <boost/gil/device_n.hpp>
-#include <boost/gil/gray.hpp>
-#include <boost/gil/rgb.hpp>
-#include <boost/gil/rgba.hpp>
+#include "gil_config.hpp"
 
 #include <cstdint>
 #include <memory>
+
+#include "cmyk.hpp"
+#include "device_n.hpp"
+#include "gray.hpp"
+#include "rgb.hpp"
+#include "rgba.hpp"
 
 // B - bits size/signedness, CM - channel model, CS - colour space, LAYOUT - pixel layout
 // Example: B = '8', CM = 'uint8_t', CS = 'bgr,  LAYOUT='bgr_layout_t'

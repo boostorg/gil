@@ -10,8 +10,8 @@
 
 /*************************************************************************************************/
 
-#ifndef BOOST_GIL_METAFUNCTIONS_HPP
-#define BOOST_GIL_METAFUNCTIONS_HPP
+#ifndef GIL_METAFUNCTIONS_HPP
+#define GIL_METAFUNCTIONS_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file               
@@ -23,10 +23,7 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/gil/config.hpp>
-#include <boost/gil/concept.hpp>
-#include <boost/gil/channel.hpp>
-
+#include <iterator>
 #include <boost/mpl/accumulate.hpp>
 #include <boost/mpl/back.hpp>
 #include <boost/mpl/bool.hpp>
@@ -34,11 +31,12 @@
 #include <boost/mpl/pop_back.hpp>
 #include <boost/mpl/push_back.hpp>
 #include <boost/mpl/transform.hpp>
-#include <boost/mpl/vector_c.hpp>
 #include <boost/mpl/vector.hpp>
+#include <boost/mpl/vector_c.hpp>
 #include <boost/type_traits.hpp>
-
-#include <iterator>
+#include "gil_config.hpp"
+#include "gil_concept.hpp"
+#include "channel.hpp"
 
 namespace boost { namespace gil {
 
@@ -489,6 +487,9 @@ public:
     typedef typename image_type<channel_t, layout_t, planar>::type type;
 };
 
-}}  // namespace boost::gil
+
+
+
+} }  // namespace boost::gil
 
 #endif

@@ -10,8 +10,8 @@
 
 /*************************************************************************************************/
 
-#ifndef BOOST_GIL_RGB_HPP
-#define BOOST_GIL_RGB_HPP
+#ifndef GIL_RGB_H
+#define GIL_RGB_H
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file
@@ -21,14 +21,12 @@
 /// \date 2005-2007 \n Last updated on October 10, 2007
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/gil/config.hpp>
-#include <boost/gil/metafunctions.hpp>
-#include <boost/gil/planar_pixel_iterator.hpp>
-
+#include <cstddef>
 #include <boost/mpl/range_c.hpp>
 #include <boost/mpl/vector_c.hpp>
-
-#include <cstddef>
+#include "gil_config.hpp"
+#include "metafunctions.hpp"
+#include "planar_pixel_iterator.hpp"
 
 namespace boost { namespace gil {
 

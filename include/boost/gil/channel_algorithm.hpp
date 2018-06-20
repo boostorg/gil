@@ -9,8 +9,8 @@
 */
 /*************************************************************************************************/
 
-#ifndef BOOST_GIL_CHANNEL_ALGORITHM_HPP
-#define BOOST_GIL_CHANNEL_ALGORITHM_HPP
+#ifndef GIL_CHANNEL_ALGORITHM_HPP
+#define GIL_CHANNEL_ALGORITHM_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file
@@ -23,15 +23,16 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/gil/config.hpp>
-#include <boost/gil/channel.hpp>
-#include <boost/gil/promote_integral.hpp>
-#include <boost/gil/typedefs.hpp>
-
-#include <boost/mpl/greater.hpp>
-#include <boost/mpl/integral_c.hpp>
+#include <boost/config.hpp>
 #include <boost/mpl/less.hpp>
+#include <boost/mpl/integral_c.hpp>
+#include <boost/mpl/greater.hpp>
 #include <boost/type_traits.hpp>
+
+#include "gil_config.hpp"
+#include "channel.hpp"
+#include "promote_integral.hpp"
+#include "typedefs.hpp"
 
 #include <limits>
 

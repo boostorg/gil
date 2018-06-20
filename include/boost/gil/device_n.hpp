@@ -9,8 +9,8 @@
 */
 /*************************************************************************************************/
 
-#ifndef BOOST_GIL_DEVICE_N_HPP
-#define BOOST_GIL_DEVICE_N_HPP
+#ifndef GIL_DEVICE_N_H
+#define GIL_DEVICE_N_H
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -21,15 +21,16 @@
 /// \date 2005-2009 \n Last updated on February 20, 2009
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/gil/config.hpp>
-#include <boost/gil/metafunctions.hpp>
-#include <boost/gil/utility.hpp>
+#include <cstddef>
 
+#include <boost/type_traits.hpp>
+#include <boost/config.hpp>
 #include <boost/mpl/range_c.hpp>
 #include <boost/mpl/vector_c.hpp>
-#include <boost/type_traits.hpp>
 
-#include <cstddef>
+#include "gil_config.hpp"
+#include "utilities.hpp"
+#include "metafunctions.hpp"
 
 namespace boost { namespace gil {
 

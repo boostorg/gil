@@ -10,8 +10,8 @@
 
 /*************************************************************************************************/
 
-#ifndef BOOST_GIL_PLANAR_PTR_HPP
-#define BOOST_GIL_PLANAR_PTR_HPP
+#ifndef GIL_PLANAR_PTR_H
+#define GIL_PLANAR_PTR_H
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file
@@ -22,14 +22,12 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/gil/config.hpp>
-#include <boost/gil/pixel.hpp>
-#include <boost/gil/step_iterator.hpp>
-
-#include <boost/iterator/iterator_facade.hpp>
-
 #include <cassert>
 #include <iterator>
+#include <boost/iterator/iterator_facade.hpp>
+#include "gil_config.hpp"
+#include "pixel.hpp"
+#include "step_iterator.hpp"
 
 namespace boost { namespace gil {
 //forward declaration (as this file is included in planar_pixel_reference.hpp)
