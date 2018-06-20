@@ -10,8 +10,8 @@
 
 /*************************************************************************************************/
 
-#ifndef GIL_VIRTUAL_LOCATOR_HPP
-#define GIL_VIRTUAL_LOCATOR_HPP
+#ifndef BOOST_GIL_VIRTUAL_LOCATOR_HPP
+#define BOOST_GIL_VIRTUAL_LOCATOR_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file               
@@ -22,8 +22,9 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
+#include <boost/gil/position_iterator.hpp>
+
 #include <boost/iterator/iterator_facade.hpp>
-#include "position_iterator.hpp"
 
 namespace boost { namespace gil {
 

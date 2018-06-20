@@ -10,10 +10,11 @@
 #ifndef BOOST_GIL_PREMULTIPLY_HPP
 #define BOOST_GIL_PREMULTIPLY_HPP
 
-#include <iostream>
-
 #include <boost/gil/rgba.hpp>
+
 #include <boost/mpl/remove.hpp>
+
+#include <iostream>
 
 namespace boost { namespace gil {
 

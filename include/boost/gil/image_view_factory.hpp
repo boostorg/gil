@@ -10,8 +10,8 @@
 
 /*************************************************************************************************/
 
-#ifndef GIL_IMAGE_VIEW_FACTORY_HPP
-#define GIL_IMAGE_VIEW_FACTORY_HPP
+#ifndef BOOST_GIL_IMAGE_VIEW_FACTORY_HPP
+#define BOOST_GIL_IMAGE_VIEW_FACTORY_HPP
 
 /*!
 /// \file               
@@ -24,12 +24,13 @@
 /// or n-th channel image view. Derived image views are shallow copies and are fast to construct.
 */
 
+#include <boost/gil/config.hpp>
+#include <boost/gil/color_convert.hpp>
+#include <boost/gil/gray.hpp>
+#include <boost/gil/metafunctions.hpp>
+
 #include <cassert>
 #include <cstddef>
-#include "gil_config.hpp"
-#include "metafunctions.hpp"
-#include "gray.hpp"
-#include "color_convert.hpp"
 
 /// \defgroup ImageViewConstructors Image View From Raw Data
 /// \ingroup ImageViewAlgorithm
@@ -40,6 +41,7 @@
 /// \brief Methods for constructing one image view from another
 
 namespace boost { namespace gil {
+
 struct default_color_converter;
 
 template <typename T> struct dynamic_x_step_type;

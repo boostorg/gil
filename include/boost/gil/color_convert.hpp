@@ -9,8 +9,8 @@
 */
 /*************************************************************************************************/
 
-#ifndef GIL_COLOR_CONVERT_HPP
-#define GIL_COLOR_CONVERT_HPP
+#ifndef BOOST_GIL_COLOR_CONVERT_HPP
+#define BOOST_GIL_COLOR_CONVERT_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file               
@@ -24,20 +24,18 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
+#include <boost/gil/config.hpp>
+#include <boost/gil/channel_algorithm.hpp>
+#include <boost/gil/cmyk.hpp>
+#include <boost/gil/color_base_algorithm.hpp>
+#include <boost/gil/gray.hpp>
+#include <boost/gil/metafunctions.hpp>
+#include <boost/gil/pixel.hpp>
+#include <boost/gil/rgb.hpp>
+#include <boost/gil/rgba.hpp>
+#include <boost/gil/utility.hpp>
+
 #include <functional>
-
-#include <boost/config.hpp>
-
-#include "gil_config.hpp"
-#include "channel_algorithm.hpp"
-#include "pixel.hpp"
-#include "gray.hpp"
-#include "rgb.hpp"
-#include "rgba.hpp"
-#include "cmyk.hpp"
-#include "metafunctions.hpp"
-#include "utilities.hpp"
-#include "color_base_algorithm.hpp"
 
 namespace boost { namespace gil {
 

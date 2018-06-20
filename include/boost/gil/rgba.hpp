@@ -9,8 +9,8 @@
 */
 /*************************************************************************************************/
 
-#ifndef GIL_RGBA_H
-#define GIL_RGBA_H
+#ifndef BOOST_GIL_RGBA_HPP
+#define BOOST_GIL_RGBA_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file
@@ -20,11 +20,13 @@
 /// \date   2005-2007 \n Last updated on October 10, 2007
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <cstddef>
-#include "gil_config.hpp"
+#include <boost/gil/config.hpp>
+#include <boost/gil/planar_pixel_iterator.hpp>
+#include <boost/gil/rgb.hpp>
+
 #include <boost/mpl/contains.hpp>
-#include "rgb.hpp"
-#include "planar_pixel_iterator.hpp"
+
+#include <cstddef>
 
 namespace boost { namespace gil {
 

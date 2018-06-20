@@ -10,8 +10,8 @@
 
 /*************************************************************************************************/
 
-#ifndef GIL_PACKED_PIXEL_H
-#define GIL_PACKED_PIXEL_H
+#ifndef BOOST_GIL_PACKED_PIXEL_HPP
+#define BOOST_GIL_PACKED_PIXEL_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file               
@@ -22,13 +22,15 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <functional>
+#include <boost/gil/config.hpp>
+#include <boost/gil/pixel.hpp>
+
 #include <boost/core/ignore_unused.hpp>
-#include <boost/utility/enable_if.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/front.hpp>
-#include "gil_config.hpp"
-#include "pixel.hpp"
+#include <boost/utility/enable_if.hpp>
+
+#include <functional>
 
 namespace boost { namespace gil {
 

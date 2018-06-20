@@ -9,8 +9,8 @@
 */
 /*************************************************************************************************/
 
-#ifndef GIL_IMAGE_VIEW_H
-#define GIL_IMAGE_VIEW_H
+#ifndef BOOST_GIL_IMAGE_VIEW_HPP
+#define BOOST_GIL_IMAGE_VIEW_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file               
@@ -21,10 +21,11 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
+#include <boost/gil/config.hpp>
+#include <boost/gil/iterator_from_2d.hpp>
+
 #include <cstddef>
 #include <iterator>
-#include "gil_config.hpp"
-#include "iterator_from_2d.hpp"
 
 //#ifdef _MSC_VER
 //#pragma warning(push)

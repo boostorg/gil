@@ -10,25 +10,29 @@
 
 /*************************************************************************************************/
 
-#ifndef GIL_UTILITIES_H
-#define GIL_UTILITIES_H
+#ifndef BOOST_GIL_UTILITY_HPP
+#define BOOST_GIL_UTILITY_HPP
 
-#include "gil_config.hpp"
-#include <functional>
+#include <boost/gil/config.hpp>
+#include <boost/gil/channel.hpp>
+#include <boost/gil/pixel.hpp>
+
 #include <boost/config/no_tr1/cmath.hpp>
-#include <cstddef>
-#include <algorithm>
-#include <utility>
-#include <iterator>
-#include <boost/static_assert.hpp>
-#include <boost/type_traits.hpp>
-#include <boost/mpl/size.hpp>
-#include <boost/mpl/distance.hpp>
-#include <boost/mpl/begin.hpp>
-#include <boost/mpl/find.hpp>
-#include <boost/mpl/range_c.hpp>
 #include <boost/iterator/iterator_adaptor.hpp>
 #include <boost/iterator/iterator_facade.hpp>
+#include <boost/mpl/begin.hpp>
+#include <boost/mpl/distance.hpp>
+#include <boost/mpl/find.hpp>
+#include <boost/mpl/range_c.hpp>
+#include <boost/mpl/size.hpp>
+#include <boost/static_assert.hpp>
+#include <boost/type_traits.hpp>
+
+#include <cstddef>
+#include <algorithm>
+#include <functional>
+#include <iterator>
+#include <utility>
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file               

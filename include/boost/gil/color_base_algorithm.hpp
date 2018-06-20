@@ -10,8 +10,8 @@
 
 /*************************************************************************************************/
 
-#ifndef GIL_COLOR_BASE_ALGORITHM_HPP
-#define GIL_COLOR_BASE_ALGORITHM_HPP
+#ifndef BOOST_GIL_COLOR_BASE_ALGORITHM_HPP
+#define BOOST_GIL_COLOR_BASE_ALGORITHM_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file               
@@ -22,17 +22,16 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <algorithm>
+#include <boost/gil/config.hpp>
+#include <boost/gil/concept.hpp>
+#include <boost/gil/utility.hpp>
 
-#include <boost/config.hpp>
+#include <boost/mpl/at.hpp>
+#include <boost/mpl/contains.hpp>
 #include <boost/type_traits.hpp>
 #include <boost/utility/enable_if.hpp>
-#include <boost/mpl/contains.hpp>
-#include <boost/mpl/at.hpp>
 
-#include "gil_config.hpp"
-#include "gil_concept.hpp"
-#include "utilities.hpp"
+#include <algorithm>
 
 namespace boost { namespace gil {
 

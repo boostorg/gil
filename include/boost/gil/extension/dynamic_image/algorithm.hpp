@@ -9,11 +9,12 @@
 */
 /*************************************************************************************************/
 
-#ifndef GIL_DYNAMICIMAGE_ALGORITHM_HPP
-#define GIL_DYNAMICIMAGE_ALGORITHM_HPP
+#ifndef BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_ALGORITHM_HPP
+#define BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_ALGORITHM_HPP
 
-#include "../../algorithm.hpp"
-#include "any_image.hpp"
+#include <boost/gil/extension/dynamic_image/algorithm.hpp>
+#include <boost/gil/extension/dynamic_image/any_image.hpp>
+
 #include <boost/bind.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////////////
