@@ -59,23 +59,22 @@
 
 <p>Some basic STL-style algorithms when applied to image views.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;cassert&gt;</code><br/>
+<div class="textblock"><code>#include &lt;<a class="el" href="config_8hpp_source.html">boost/gil/config.hpp</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="bit__aligned__pixel__iterator_8hpp_source.html">boost/gil/bit_aligned_pixel_iterator.hpp</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="color__base__algorithm_8hpp_source.html">boost/gil/color_base_algorithm.hpp</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="concept_8hpp_source.html">boost/gil/concept.hpp</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="image__view_8hpp_source.html">boost/gil/image_view.hpp</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="image__view__factory_8hpp_source.html">boost/gil/image_view_factory.hpp</a>&gt;</code><br/>
+<code>#include &lt;boost/utility/enable_if.hpp&gt;</code><br/>
+<code>#include &lt;boost/mpl/and.hpp&gt;</code><br/>
+<code>#include &lt;boost/mpl/or.hpp&gt;</code><br/>
+<code>#include &lt;cassert&gt;</code><br/>
 <code>#include &lt;cstddef&gt;</code><br/>
 <code>#include &lt;cstring&gt;</code><br/>
 <code>#include &lt;algorithm&gt;</code><br/>
 <code>#include &lt;iterator&gt;</code><br/>
 <code>#include &lt;memory&gt;</code><br/>
 <code>#include &lt;typeinfo&gt;</code><br/>
-<code>#include &lt;boost/config.hpp&gt;</code><br/>
-<code>#include &lt;boost/utility/enable_if.hpp&gt;</code><br/>
-<code>#include &lt;boost/mpl/and.hpp&gt;</code><br/>
-<code>#include &lt;boost/mpl/or.hpp&gt;</code><br/>
-<code>#include &quot;<a class="el" href="gil__config_8hpp_source.html">gil_config.hpp</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="gil__concept_8hpp_source.html">gil_concept.hpp</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="color__base__algorithm_8hpp_source.html">color_base_algorithm.hpp</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="image__view_8hpp_source.html">image_view.hpp</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="image__view__factory_8hpp_source.html">image_view_factory.hpp</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="bit__aligned__pixel__iterator_8hpp_source.html">bit_aligned_pixel_iterator.hpp</a>&quot;</code><br/>
 </div>
 <p><a href="algorithm_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -334,7 +333,7 @@ template&lt;typename View1 , typename View2 , typename View3 , typename F &gt; <
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Mon Jun 18 2018 21:51:37 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Wed Jun 20 2018 12:45:38 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
