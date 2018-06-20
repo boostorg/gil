@@ -10,8 +10,8 @@
 
 /*************************************************************************************************/
 
-#ifndef BOOST_GIL_CHANNEL_HPP
-#define BOOST_GIL_CHANNEL_HPP
+#ifndef GIL_CHANNEL_HPP
+#define GIL_CHANNEL_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file               
@@ -24,15 +24,17 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/gil/config.hpp>
-#include <boost/gil/utilities.hpp>
+#include <limits>
+#include <cassert>
+#include <cstdint>
 
+#include <boost/config.hpp>
 #include <boost/integer/integer_mask.hpp>
 #include <boost/type_traits/remove_cv.hpp>
 
-#include <cassert>
-#include <cstdint>
-#include <limits>
+#include "gil_config.hpp"
+#include "utilities.hpp"
+
 
 namespace boost { namespace gil {
 

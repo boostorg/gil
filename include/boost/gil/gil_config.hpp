@@ -10,36 +10,25 @@
 
 /*************************************************************************************************/
 
-#ifndef GIL_GRAY_H
-#define GIL_GRAY_H
+#ifndef GIL_CONFIG_HPP
+#define GIL_CONFIG_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief Support for grayscale color space and variants
+/// \file               
+/// \brief GIL configuration file
 /// \author Lubomir Bourdev and Hailin Jin \n
 ///         Adobe Systems Incorporated
-/// \date 2005-2007 \n Last updated on March 8, 2006
+///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include "gil_config.hpp"
-#include "utilities.hpp"
-#include <boost/type_traits.hpp>
-#include <boost/mpl/range_c.hpp>
-#include <boost/mpl/vector_c.hpp>
+#include <boost/config.hpp>
 
-namespace boost { namespace gil {
+#define GIL_VERSION "2.1.2"
 
-/// \ingroup ColorNameModel
-/// \brief Gray
-struct gray_color_t {};
-
-/// \ingroup ColorSpaceModel
-typedef mpl::vector1<gray_color_t> gray_t;
-
-/// \ingroup LayoutModel
-typedef layout<gray_t> gray_layout_t;
-
-} }  // namespace boost::gil
-
+// Enable GIL_NONWORD_POINTER_ALIGNMENT_SUPPORTED if your platform supports dereferencing on non-word memory boundary.
+// Enabling the flag results in performance improvement
+#if !defined(__hpux) && !defined(sun) && !defined(__sun) && !defined(__osf__)
+    #define GIL_NONWORD_POINTER_ALIGNMENT_SUPPORTED
 #endif
 
+#endif

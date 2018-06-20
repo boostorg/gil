@@ -9,8 +9,8 @@
 */
 /*************************************************************************************************/
 
-#ifndef BOOST_GIL_ITERATOR_FROM_2D_HPP
-#define BOOST_GIL_ITERATOR_FROM_2D_HPP
+#ifndef GIL_ITERATOR_FROM_2D_H
+#define GIL_ITERATOR_FROM_2D_H
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file               
@@ -21,14 +21,12 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/gil/config.hpp>
-#include <boost/gil/concept.hpp>
-#include <boost/gil/locator.hpp>
-#include <boost/gil/pixel_iterator.hpp>
-
-#include <boost/iterator/iterator_facade.hpp>
-
 #include <cassert>
+#include <boost/iterator/iterator_facade.hpp>
+#include "gil_concept.hpp"
+#include "gil_config.hpp"
+#include "pixel_iterator.hpp"
+#include "locator.hpp"
 
 namespace boost { namespace gil {
 

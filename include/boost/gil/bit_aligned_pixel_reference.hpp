@@ -10,8 +10,8 @@
 
 /*************************************************************************************************/
 
-#ifndef BOOST_GIL_BIT_ALIGNED_PIXEL_REFERENCE_HPP
-#define BOOST_GIL_BIT_ALIGNED_PIXEL_REFERENCE_HPP
+#ifndef GIL_BIT_ALIGNED_PIXEL_REFERENCE_HPP
+#define GIL_BIT_ALIGNED_PIXEL_REFERENCE_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file               
@@ -22,10 +22,9 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/gil/config.hpp>
-#include <boost/gil/channel.hpp>
-#include <boost/gil/pixel.hpp>
+#include <functional>
 
+#include <boost/config.hpp>
 #include <boost/mpl/accumulate.hpp>
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/bool.hpp>
@@ -34,7 +33,9 @@
 #include <boost/mpl/push_back.hpp>
 #include <boost/mpl/vector.hpp>
 
-#include <functional>
+#include "gil_config.hpp"
+#include "pixel.hpp"
+#include "channel.hpp"
 
 namespace boost { namespace gil {
 

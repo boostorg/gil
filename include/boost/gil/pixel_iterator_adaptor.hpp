@@ -10,8 +10,8 @@
 
 /*************************************************************************************************/
 
-#ifndef BOOST_GIL_PIXEL_ITERATOR_ADAPTOR_HPP
-#define BOOST_GIL_PIXEL_ITERATOR_ADAPTOR_HPP
+#ifndef GIL_PIXEL_ITERATOR_ADAPTOR_H
+#define GIL_PIXEL_ITERATOR_ADAPTOR_H
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file               
@@ -22,13 +22,11 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/gil/config.hpp>
-#include <boost/gil/concept.hpp>
-#include <boost/gil/pixel_iterator.hpp>
-
-#include <boost/iterator/iterator_facade.hpp>
-
 #include <iterator>
+#include <boost/iterator/iterator_facade.hpp>
+#include "gil_config.hpp"
+#include "gil_concept.hpp"
+#include "pixel_iterator.hpp"
 
 namespace boost { namespace gil {
 

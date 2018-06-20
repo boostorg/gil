@@ -10,8 +10,8 @@
 
 /*************************************************************************************************/
 
-#ifndef BOOST_GIL_BIT_ALIGNED_PIXEL_ITERATOR_HPP
-#define BOOST_GIL_BIT_ALIGNED_PIXEL_ITERATOR_HPP
+#ifndef GIL_BIT_ALIGNED_PIXEL_ITERATOR_HPP
+#define GIL_BIT_ALIGNED_PIXEL_ITERATOR_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file               
@@ -22,15 +22,14 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/gil/config.hpp>
-#include <boost/gil/bit_aligned_pixel_iterator.hpp>
-#include <boost/gil/pixel_iterator.hpp>
+#include <functional>
 
+#include <boost/config.hpp>
 #include <boost/iterator/iterator_facade.hpp>
 
-#include <cstddef>
-#include <algorithm>
-#include <functional>
+#include "gil_config.hpp"
+#include "bit_aligned_pixel_reference.hpp"
+#include "pixel_iterator.hpp"
 
 namespace boost { namespace gil {
 

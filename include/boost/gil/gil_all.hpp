@@ -10,23 +10,37 @@
 
 /*************************************************************************************************/
 
-#ifndef BOOST_GIL_CONFIG_HPP
-#define BOOST_GIL_CONFIG_HPP
+#ifndef GIL_ALL_HPP
+#define GIL_ALL_HPP
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file               
-/// \brief GIL configuration file
+/// \brief  Includes all GIL files for convenience
 /// \author Lubomir Bourdev and Hailin Jin \n
 ///         Adobe Systems Incorporated
 ///
+///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/config.hpp>
-
-// Enable GIL_NONWORD_POINTER_ALIGNMENT_SUPPORTED if your platform supports dereferencing on non-word memory boundary.
-// Enabling the flag results in performance improvement
-#if !defined(__hpux) && !defined(sun) && !defined(__sun) && !defined(__osf__)
-    #define GIL_NONWORD_POINTER_ALIGNMENT_SUPPORTED
-#endif
+#include "gil_config.hpp"
+#include "channel_algorithm.hpp"
+#include "algorithm.hpp"
+#include "pixel.hpp"
+#include "packed_pixel.hpp"
+#include "planar_pixel_reference.hpp"
+#include "planar_pixel_iterator.hpp"
+#include "pixel_iterator_adaptor.hpp"
+#include "step_iterator.hpp"
+#include "iterator_from_2d.hpp"
+#include "image.hpp"
+#include "image_view_factory.hpp"
+#include "typedefs.hpp"
+#include "metafunctions.hpp"
+#include "color_convert.hpp"
+#include "device_n.hpp"
+#include "virtual_locator.hpp"
+#include "bit_aligned_pixel_iterator.hpp"
+// Uncomment this line to help in porting your code from an older version of GIL
+//#include "deprecated.hpp"
 
 #endif
