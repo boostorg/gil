@@ -9,6 +9,7 @@
 project boost-gil
     :
     requirements
+        <implicit-dependency>/boost//headers
         # MSVC: Since VS2017, default is -std:c++14, so no explicit switch is required.
         <toolset>msvc:<asynch-exceptions>on
         <toolset>msvc:<cxxflags>/W4
