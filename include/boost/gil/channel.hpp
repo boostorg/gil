@@ -344,7 +344,7 @@ protected:
     static const num_value_t num_values = static_cast< num_value_t >( 1 ) << NumBits ;
     static const max_value_t max_val    = static_cast< max_value_t >( num_values - 1 );
     
-#ifdef GIL_NONWORD_POINTER_ALIGNMENT_SUPPORTED
+#if defined(BOOST_GIL_CONFIG_HAS_UNALIGNED_ACCESS)
     const bitfield_t& get_data()                      const { return *static_cast<const bitfield_t*>(_data_ptr); }
     void              set_data(const bitfield_t& val) const {        *static_cast<      bitfield_t*>(_data_ptr) = val; }
 #else
