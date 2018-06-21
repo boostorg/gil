@@ -18,7 +18,7 @@ foreach(name
   algorithm_channel_multiply
   algorithm_channel_relation)
 
-  add_executable(gil_test_${name})
+  add_executable(gil_test_${name} "")
   target_sources(gil_test_${name}
     PRIVATE
     ${_boost_gil_headers}
