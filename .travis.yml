@@ -170,15 +170,15 @@ script:
   - travis_retry libs/gil/.ci/build-and-test.sh
 
 after_success:
-  # Upload docs only when building upstream.
-  - |
+# Upload docs only when building upstream.
+  - |-
     if [ "$DOC" -a \
           "$TRAVIS_REPO_SLUG" = "boostorg/gil" -a \
           "$TRAVIS_PULL_REQUEST" = "false" ]; then
       export GH_TOKEN
       cd libs/gil
       .ci/upload_docs.sh
-   fi
+    fi
 
 notifications:
   email:
