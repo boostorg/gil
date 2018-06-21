@@ -52,3 +52,6 @@ CMakeLists.txt      text eol=lf
 *.html              text
 *.txt               text
 *.yml               text
+
+# sanitizers suppression
+*.supp              text eol=lf
