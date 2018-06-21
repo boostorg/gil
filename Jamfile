@@ -45,11 +45,11 @@ project boost-gil
         <toolset>msvc:<cxxflags>/bigobj
         <toolset>msvc:<define>_SCL_SECURE_NO_DEPRECATE <define>_CRT_SECURE_NO_WARNINGS <define>_CRT_NONSTDC_NO_DEPRECATE <define>NOMINMAX
         <toolset>intel:<debug-symbols>off
-        <toolset>gcc:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter "
-        <toolset>darwin:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter "
+        <toolset>gcc:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wcast-align -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter "
+        <toolset>darwin:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wcast-align -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter "
         # variant filter for clang is necessary to allow ubsan_* variants declare distinct set of <cxxflags>
-        <toolset>clang,<variant>debug:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter -Wsign-conversion"
-        <toolset>clang,<variant>release:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter -Wsign-conversion"
+        <toolset>clang,<variant>debug:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wcast-align -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter -Wsign-conversion"
+        <toolset>clang,<variant>release:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wcast-align -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter -Wsign-conversion"
     ;
 
 build-project example ;
