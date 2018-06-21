@@ -12,7 +12,7 @@ file(GLOB_RECURSE _headers
   ${PROJECT_SOURCE_DIR}/include/boost/gil/extension/toolbox/*.hpp)
 list(APPEND _headers ${_boost_gil_headers})
 
-add_executable(gil_test_ext_toolbox)
+add_executable(gil_test_ext_toolbox "")
 target_sources(gil_test_ext_toolbox
   PRIVATE
   ${_headers}

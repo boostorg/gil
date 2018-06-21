@@ -8,7 +8,7 @@
 message(STATUS "Configuring Boost.GIL core tests")
 
 foreach(name channel pixel pixel_iterator promote_integral)
-  add_executable(gil_test_${name})
+  add_executable(gil_test_${name} "")
   target_sources(gil_test_${name}
     PRIVATE
     ${_boost_gil_headers}
@@ -23,7 +23,7 @@ foreach(name channel pixel pixel_iterator promote_integral)
   add_test(gil.tests.core.${name} gil_test_${name})
 endforeach()
 
-add_executable(gil_test_image)
+add_executable(gil_test_image "")
 target_sources(gil_test_image
   PRIVATE
   ${_boost_gil_headers}

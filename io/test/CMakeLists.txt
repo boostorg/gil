@@ -15,7 +15,7 @@ list(APPEND _headers ${_boost_gil_headers})
 add_definitions(-DBOOST_GIL_IO_TEST_ALLOW_READING_IMAGES=1)
 add_definitions(-DBOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES=1)
 
-add_executable(gil_test_ext_io_simple)
+add_executable(gil_test_ext_io_simple "")
 target_sources(gil_test_ext_io_simple
   PRIVATE
   ${_headers}
