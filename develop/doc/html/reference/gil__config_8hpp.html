@@ -40,6 +40,7 @@
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
       <li><a href="files.html"><span>File&#160;List</span></a></li>
+      <li><a href="globals.html"><span>File&#160;Members</span></a></li>
     </ul>
   </div>
 <div id="nav-path" class="navpath">
@@ -58,6 +59,7 @@
 <p>GIL configuration file.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;boost/config.hpp&gt;</code><br/>
+<code>#include &lt;boost/config/pragma_message.hpp&gt;</code><br/>
 </div>
 <p><a href="gil__config_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -66,21 +68,37 @@ Macros</h2></td></tr>
 <tr class="memitem:a154a62efd64b602001fb86c6d53560b3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a154a62efd64b602001fb86c6d53560b3"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>GIL_VERSION</b>&#160;&#160;&#160;&quot;2.1.2&quot;</td></tr>
 <tr class="separator:a154a62efd64b602001fb86c6d53560b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af6d0058c6a827be8671fc9a800568ddb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af6d0058c6a827be8671fc9a800568ddb"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>GIL_NONWORD_POINTER_ALIGNMENT_SUPPORTED</b></td></tr>
-<tr class="separator:af6d0058c6a827be8671fc9a800568ddb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba81a066620602fddaf547ddafd4ae15"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gil__config_8hpp.html#aba81a066620602fddaf547ddafd4ae15">BOOST_GIL_CONFIG_HAS_UNALIGNED_ACCESS</a></td></tr>
+<tr class="memdesc:aba81a066620602fddaf547ddafd4ae15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define to allow unaligned memory access Theoretically (or historically?) on platforms which support dereferencing on non-word memory boundary, unaligned access may result in performance improvement.  <a href="#aba81a066620602fddaf547ddafd4ae15">More...</a><br/></td></tr>
+<tr class="separator:aba81a066620602fddaf547ddafd4ae15"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>GIL configuration file. </p>
 <dl class="section author"><dt>Author</dt><dd>Lubomir Bourdev and Hailin Jin <br/>
  Adobe Systems Incorporated </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="aba81a066620602fddaf547ddafd4ae15"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BOOST_GIL_CONFIG_HAS_UNALIGNED_ACCESS</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Define to allow unaligned memory access Theoretically (or historically?) on platforms which support dereferencing on non-word memory boundary, unaligned access may result in performance improvement. </p>
+<dl class="section warning"><dt>Warning</dt><dd>Unfortunately, this optimization may be a C/C++ strict aliasing rules violation, if accessed data buffer has effective type that cannot be aliased without leading to undefined behaviour. </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
      <!-- start footer part -->
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Fri Jun 22 2018 22:31:27 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Fri Jun 22 2018 23:55:45 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
