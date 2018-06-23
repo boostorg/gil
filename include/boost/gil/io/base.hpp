@@ -23,7 +23,6 @@
 #include <istream>
 #include <vector>
 
-#include <boost/array.hpp>
 #include <boost/bind.hpp>
 #include <boost/type_traits/is_base_of.hpp>
 
