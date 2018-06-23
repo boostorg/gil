@@ -21,6 +21,8 @@
 
 #include <boost/bind.hpp>
 
+#include <array>
+
 namespace boost { namespace gil { namespace detail {
 
 // 1110 1100 -> 0011 0111
@@ -110,7 +112,7 @@ private:
 
     bool _apply_operation;
 
-    array< byte_t, 256 > _lookup;
+    std::array< byte_t, 256 > _lookup;
 };
 
 
