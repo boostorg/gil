@@ -45,7 +45,7 @@ typedef mpl::vector3< xyz_color_space::x_t
 /// \ingroup LayoutModel
 typedef layout<xyz_t> xyz_layout_t;
 
-GIL_DEFINE_ALL_TYPEDEFS(32f, float32_t, xyz);
+GIL_DEFINE_ALL_TYPEDEFS(32f, float32_t, xyz)
 
 /// \ingroup ColorConvert
 /// \brief RGB to XYZ
