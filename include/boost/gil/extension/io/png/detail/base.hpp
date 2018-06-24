@@ -19,6 +19,8 @@
 
 #include <boost/gil/extension/io/png/tags.hpp>
 
+#include <memory>
+
 namespace boost { namespace gil { namespace detail {
 
 struct png_ptr_wrapper
@@ -39,7 +41,7 @@ struct png_struct_info_wrapper
 {
 protected:
 
-    typedef boost::shared_ptr< png_ptr_wrapper > png_ptr_t;
+    using png_ptr_t = std::shared_ptr<png_ptr_wrapper>;
 
 protected:
 

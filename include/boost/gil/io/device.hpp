@@ -21,10 +21,10 @@
 
 #include <cstdio>
 
-#include <boost/shared_ptr.hpp>
-
 #include <boost/utility/enable_if.hpp>
 #include <boost/gil/io/base.hpp>
+
+#include <memory>
 
 namespace boost { namespace gil {
 
@@ -342,7 +342,7 @@ private:
 
 private:
 
-    typedef boost::shared_ptr< FILE > file_ptr_t;
+    using file_ptr_t = std::shared_ptr<FILE> ;
     file_ptr_t _file;
 };
 
