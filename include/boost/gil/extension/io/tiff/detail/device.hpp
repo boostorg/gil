@@ -36,32 +36,33 @@
 #include <tiffio.hxx>
 
 #include <boost/mpl/size.hpp>
-#include <boost/shared_ptr.hpp>
 #include <boost/utility/enable_if.hpp>
 
 #include <boost/gil/io/base.hpp>
 #include <boost/gil/io/device.hpp>
 #include <boost/gil/extension/io/tiff/detail/log.hpp>
 
+#include <memory>
+
 namespace boost { namespace gil { namespace detail {
 
 template <int n_args>
 struct get_property_f {
 	template <typename Property>
-	bool call_me(typename Property:: type& value, shared_ptr <TIFF> & file);
+	bool call_me(typename Property:: type& value, std::shared_ptr<TIFF>& file);
 };
 
 template <int n_args>
 struct set_property_f {
 	template <typename Property>
-	bool call_me(const typename Property:: type& value, shared_ptr <TIFF> & file) const;
+	bool call_me(const typename Property:: type& value, std::shared_ptr<TIFF>& file) const;
 };
 
 template <> struct get_property_f <1> 
 {
 	// For single-valued properties
 	template <typename Property>
-	bool call_me(typename Property::type & value, shared_ptr <TIFF> & file) const
+	bool call_me(typename Property::type & value, std::shared_ptr<TIFF>& file) const
 	{
 		// @todo: defaulted, really?
 		return (1 == TIFFGetFieldDefaulted( file.get()
@@ -75,7 +76,7 @@ template <> struct get_property_f <2>
 	// Specialisation for multi-valued properties. @todo: add one of
 	// these for the three-parameter fields too.
 	template <typename Property>
-	bool call_me(typename Property:: type & vs, shared_ptr <TIFF> & file) const
+	bool call_me(typename Property:: type & vs, std::shared_ptr<TIFF>& file) const
 	{
 		typename mpl:: at <typename Property:: arg_types, mpl::int_<0> >:: type length;
 		typename mpl:: at <typename Property:: arg_types, mpl::int_<1> >:: type pointer;
@@ -95,7 +96,7 @@ template <> struct set_property_f <1>
 	// For single-valued properties
 	template <typename Property>
 	inline
-	bool call_me(typename Property:: type const & value, shared_ptr <TIFF> & file) const
+	bool call_me(typename Property:: type const & value, std::shared_ptr<TIFF>& file) const
 	{
 		return (1 == TIFFSetField( file.get()
 				, Property:: tag
@@ -113,7 +114,7 @@ template <> struct set_property_f <2>
 	// )
 	template <typename Property>
 	inline
-	bool call_me(typename Property:: type const & values, shared_ptr <TIFF> & file) const
+	bool call_me(typename Property:: type const & values, std::shared_ptr<TIFF>& file) const
 	{
 		typename mpl:: at <typename Property:: arg_types, mpl::int_<0> >:: type const length = values. size ();
 		typename mpl:: at <typename Property:: arg_types, mpl::int_<1> >:: type const pointer = & (values. front ()); 
@@ -128,7 +129,7 @@ template< typename Log >
 class tiff_device_base
 {
 public:
-   typedef shared_ptr<TIFF> tiff_file_t;
+    using tiff_file_t = std::shared_ptr<TIFF>;
 
     tiff_device_base()
     {}

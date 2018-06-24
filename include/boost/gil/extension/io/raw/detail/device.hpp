@@ -19,11 +19,12 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/shared_ptr.hpp>
 #include <boost/utility/enable_if.hpp>
 
 #include <boost/gil/io/base.hpp>
 #include <boost/gil/io/io_device.hpp>
+
+#include <memory>
 
 namespace boost { namespace gil { namespace detail {
 
@@ -84,7 +85,7 @@ public:
 
 protected:
 
-    typedef boost::shared_ptr< LibRaw > libraw_ptr_t;
+    using libraw_ptr_t = std::shared_ptr<LibRaw>;
     libraw_ptr_t _processor_ptr;
 };
 
