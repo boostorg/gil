@@ -27,6 +27,8 @@
 #include <boost/gil/pixel_iterator.hpp>
 #include "interleaved_ref.hpp"
 
+#include <type_traits>
+
 namespace boost { namespace gil {
 /////////////////////////////////////////////////////////////////////////
 ///
@@ -118,12 +120,12 @@ public:
 };
 
 template <typename ChannelPtr, typename Layout>
-struct iterator_is_mutable<interleaved_ptr<ChannelPtr,Layout> > : public boost::mpl::true_ {};
+struct iterator_is_mutable<interleaved_ptr<ChannelPtr,Layout> > : public std::true_type {};
 template <typename Channel, typename Layout>
-struct iterator_is_mutable<interleaved_ptr<const Channel*,Layout> > : public boost::mpl::false_ {};
+struct iterator_is_mutable<interleaved_ptr<const Channel*,Layout> > : public std::false_type {};
 
 template <typename ChannelPtr, typename Layout>
-struct is_iterator_adaptor<interleaved_ptr<ChannelPtr,Layout> > : public boost::mpl::false_ {};
+struct is_iterator_adaptor<interleaved_ptr<ChannelPtr,Layout> > : public std::false_type {};
 
 /////////////////////////////
 //  PixelBasedConcept
@@ -140,7 +142,7 @@ struct channel_mapping_type<interleaved_ptr<ChannelPtr,Layout> > {
 };
 
 template <typename ChannelPtr, typename Layout>
-struct is_planar<interleaved_ptr<ChannelPtr,Layout> > : public mpl::false_ {};
+struct is_planar<interleaved_ptr<ChannelPtr,Layout> > : public std::false_type {};
 
 /////////////////////////////
 //  HomogeneousPixelBasedConcept

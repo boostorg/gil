@@ -7,7 +7,6 @@
 
 //#define BOOST_TEST_MODULE targa_read_test_module
 #include <boost/test/unit_test.hpp>
-#include <boost/type_traits/is_same.hpp>
 
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/targa.hpp>

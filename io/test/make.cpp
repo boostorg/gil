@@ -19,6 +19,8 @@
 
 #include "paths.hpp"
 
+#include <type_traits>
+
 using namespace std;
 using namespace boost;
 using namespace gil;
@@ -31,7 +33,7 @@ BOOST_AUTO_TEST_SUITE( gil_io_tests )
 BOOST_AUTO_TEST_CASE( make_reader_backend_test )
 {
     {
-        BOOST_STATIC_ASSERT(( boost::is_same< gil::detail::is_supported_path_spec< char* >::type, mpl::true_ >::value ));
+        BOOST_STATIC_ASSERT(( boost::is_same< gil::detail::is_supported_path_spec< char* >::type, std::true_type>::value ));
 
         get_reader_backend< const char*, bmp_tag >::type backend_char   = make_reader_backend( bmp_filename.c_str(), bmp_tag() );
         get_reader_backend< std::string, bmp_tag >::type backend_string = make_reader_backend( bmp_filename, bmp_tag() );
@@ -136,7 +138,7 @@ BOOST_AUTO_TEST_CASE( make_writer_test )
                           , bmp_tag
                           >::type writer_t;
 
-        BOOST_STATIC_ASSERT(( boost::is_same< gil::detail::is_writer< writer_t >::type, boost::mpl::true_ >::value ));
+        BOOST_STATIC_ASSERT(( boost::is_same< gil::detail::is_writer< writer_t >::type, std::true_type>::value ));
     }
 
     {

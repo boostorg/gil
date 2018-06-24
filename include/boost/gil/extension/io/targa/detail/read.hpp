@@ -19,6 +19,7 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
+#include <type_traits>
 #include <vector>
 
 #include <boost/gil/extension/io/targa/tags.hpp>
@@ -99,7 +100,7 @@ public:
     template< typename View >
     void apply( const View& dst_view )
     {
-        typedef typename is_same< ConversionPolicy
+        typedef typename std::is_same< ConversionPolicy
                                 , detail::read_and_no_convert
                                 >::type is_read_and_convert_t;
 

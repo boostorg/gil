@@ -22,9 +22,9 @@
 #include <boost/gil/channel.hpp>
 
 #include <boost/mpl/int.hpp>
-#include <boost/type_traits/is_integral.hpp>
-#include <boost/type_traits/is_class.hpp>
 #include <boost/utility/enable_if.hpp>
+
+#include <type_traits>
 
 namespace boost{ namespace gil {
 
@@ -60,8 +60,8 @@ struct get_num_bits< const packed_channel_value< N > > : mpl::int_< N >
 
 template< typename T >
 struct get_num_bits< T
-                   , typename enable_if< mpl::and_< is_integral< T > 
-                                                  , mpl::not_< is_class< T > >
+                   , typename enable_if< mpl::and_< std::is_integral< T >
+                                                  , mpl::not_< std::is_class< T > >
                                                   >
                                        >::type
                    > : mpl::int_< sizeof(T) * 8 >

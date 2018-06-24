@@ -59,4 +59,14 @@ BOOST_PRAGMA_MESSAGE("CAUTION: Unaligned access tolerated on little-endian may c
 #endif
 #endif // defined(BOOST_GIL_CONFIG_HAS_UNALIGNED_ACCESS)
 
+
+// TODO: Review and remove once GIL switched to C++17
+#if (__cplusplus <= 201402L)
+#include <type_traits>
+namespace std {
+    template <bool V>
+    using bool_constant = integral_constant<bool, V>;
+} // namespace std
+#endif
+
 #endif

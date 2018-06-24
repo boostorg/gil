@@ -20,13 +20,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/gil/io/base.hpp>
-#include <iostream>
+
+#include <type_traits>
 
 namespace boost { namespace gil { namespace detail {
 
 template< typename View >
 bool is_allowed( const image_read_info< raw_tag >& info
-               , mpl::true_   // is read_and_no_convert
+               , std::true_type   // is read_and_no_convert
                )
 {
     typedef typename get_pixel_type< View >::type pixel_t;
@@ -35,7 +36,7 @@ bool is_allowed( const image_read_info< raw_tag >& info
 
     const num_channel_t dst_samples_per_pixel = num_channels< pixel_t >::value;
     const unsigned int  dst_bits_per_pixel    = detail::unsigned_integral_num_bits< channel_t >::value;
-    const bool          is_type_signed        = boost::is_signed< channel_t >::value;
+    const bool          is_type_signed        = std::is_signed< channel_t >::value;
 
     return( dst_samples_per_pixel == info._samples_per_pixel &&
             dst_bits_per_pixel    == static_cast<unsigned int>(info._bits_per_pixel) &&
@@ -44,7 +45,7 @@ bool is_allowed( const image_read_info< raw_tag >& info
 
 template< typename View >
 bool is_allowed( const image_read_info< raw_tag >& /* info */
-               , mpl::false_  // is read_and_convert
+               , std::false_type  // is read_and_convert
                )
 {
     return true;

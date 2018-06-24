@@ -35,6 +35,8 @@
 #include <boost/gil/extension/io/raw/detail/device.hpp>
 #include <boost/gil/extension/io/raw/detail/reader_backend.hpp>
 
+#include <type_traits>
+
 namespace boost { namespace gil {
 
 #if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
@@ -115,7 +117,7 @@ public:
             io_error( "Image header was not read." );
         }
 
-        typedef typename is_same< ConversionPolicy
+        typedef typename std::is_same< ConversionPolicy
                                 , detail::read_and_no_convert
                                 >::type is_read_and_convert_t;
 
@@ -180,7 +182,7 @@ struct raw_type_format_checker
         typedef typename Image::view_t view_t;
 
         return is_allowed< view_t >( _info
-                                   , mpl::true_()
+                                   , std::true_type()
                                    );
     }
 

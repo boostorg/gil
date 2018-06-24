@@ -7,8 +7,6 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include <boost/type_traits/is_same.hpp>
-
 #include <boost/gil.hpp>
 #include <boost/gil/extension/toolbox/metafunctions/channel_view.hpp>
 
@@ -29,7 +27,7 @@ BOOST_AUTO_TEST_CASE( channel_view_test )
     typedef channel_view_type< red_t, rgb8_view_t::const_t >::type channel_view_t;
     channel_view_t red_ = channel_view< red_t >( const_view( img ));
 
-    BOOST_STATIC_ASSERT(( is_same< kth_channel_view_type< 0, const rgb8_view_t>::type
+    BOOST_STATIC_ASSERT(( std::is_same< kth_channel_view_type< 0, const rgb8_view_t>::type
                                  , channel_view_type< red_t, const rgb8_view_t>::type
                                  >::value
                        ));

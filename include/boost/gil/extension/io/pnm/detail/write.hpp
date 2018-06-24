@@ -29,6 +29,8 @@
 
 #include <boost/gil/extension/io/pnm/detail/writer_backend.hpp>
 
+#include <type_traits>
+
 namespace boost { namespace gil { 
 
 #if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
@@ -118,7 +120,7 @@ public:
 private:
 
     template< int Channels >
-    unsigned int get_type( mpl::true_  /* is_bit_aligned */ )
+    unsigned int get_type( std::true_type /* is_bit_aligned */ )
     {
         return boost::mpl::if_c< Channels == 1
                                , pnm_image_type::mono_bin_t
@@ -127,7 +129,7 @@ private:
     }
 
     template< int Channels >
-    unsigned int get_type( mpl::false_ /* is_bit_aligned */ )
+    unsigned int get_type( std::false_type /* is_bit_aligned */ )
     {
         return boost::mpl::if_c< Channels == 1
                                , pnm_image_type::gray_bin_t
@@ -138,10 +140,10 @@ private:
     template< typename View >
     void write_data( const View&   src
                    , std::size_t   pitch
-                   , const mpl::true_&    // bit_aligned
+                   , const std::true_type&    // bit_aligned
                    )
     {
-        BOOST_STATIC_ASSERT(( is_same< View
+        BOOST_STATIC_ASSERT(( std::is_same< View
                                      , typename gray1_image_t::view_t
                                      >::value
                            ));
@@ -152,11 +154,11 @@ private:
         x_it_t row_it = x_it_t( &( *row.begin() ));
 
         detail::negate_bits< byte_vector_t
-                           , mpl::true_
+                           , std::true_type
                            > neg;
 
         detail::mirror_bits< byte_vector_t
-                           , mpl::true_
+                           , std::true_type
                            > mirror;
 
 
@@ -179,7 +181,7 @@ private:
     template< typename View >
     void write_data( const View&   src
                    , std::size_t   pitch
-                   , const mpl::false_&    // bit_aligned
+                   , const std::false_type&    // bit_aligned
                    )
     {
         std::vector< pixel< typename channel_type< View >::type

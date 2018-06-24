@@ -22,11 +22,12 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include <functional>
+
 #include <boost/core/ignore_unused.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/front.hpp>
-#include <boost/type_traits.hpp>
+
 #include "gil_config.hpp"
 #include "color_base.hpp"
 #include "gil_concept.hpp"
@@ -34,6 +35,8 @@
 #include "metafunctions.hpp"
 #include "utilities.hpp"
 #include "color_base_algorithm.hpp"
+
+#include <type_traits>
 
 namespace boost { namespace gil {
 
@@ -49,11 +52,10 @@ template <typename PixelBased> struct color_space_type<const PixelBased> : publi
 template <typename PixelBased> struct channel_mapping_type<const PixelBased> : public channel_mapping_type<PixelBased> {};
 template <typename PixelBased> struct channel_type<const PixelBased> : public channel_type<PixelBased> {};
 
-template <typename PixelBased> struct is_planar : mpl::false_ {};
+template <typename PixelBased> struct is_planar : std::false_type {};
 template <typename PixelBased> struct is_planar<const PixelBased> : public is_planar<PixelBased> {};
 
-
-template <typename T> struct is_pixel : public mpl::false_{};
+template <typename T> struct is_pixel : public std::false_type {};
 template <typename T> struct is_pixel<const T> : public is_pixel<T> {};
 
 /// \ingroup PixelBasedAlgorithm
@@ -70,10 +72,10 @@ BOOST_STATIC_ASSERT((num_channels<rgb8_view_t>::value==3));
 BOOST_STATIC_ASSERT((num_channels<cmyk16_planar_ptr_t>::value==4));
 
 BOOST_STATIC_ASSERT((is_planar<rgb16_planar_image_t>::value));
-BOOST_STATIC_ASSERT((is_same<color_space_type<rgb8_planar_ref_t>::type, rgb_t>::value));
-BOOST_STATIC_ASSERT((is_same<channel_mapping_type<cmyk8_pixel_t>::type, 
+BOOST_STATIC_ASSERT((std::is_same<color_space_type<rgb8_planar_ref_t>::type, rgb_t>::value));
+BOOST_STATIC_ASSERT((std::is_same<channel_mapping_type<cmyk8_pixel_t>::type,
                              channel_mapping_type<rgba8_pixel_t>::type>::value));
-BOOST_STATIC_ASSERT((is_same<channel_type<bgr8_pixel_t>::type, uint8_t>::value));
+BOOST_STATIC_ASSERT((std::is_same<channel_type<bgr8_pixel_t>::type, uint8_t>::value));
 \endcode
 */
 
@@ -129,8 +131,8 @@ public:
         boost::ignore_unused(dummy);
     }
 
-    template <typename P> pixel& operator=(const P& p)           { assign(p, mpl::bool_<is_pixel<P>::value>()); return *this; } 
-    template <typename P> bool   operator==(const P& p)    const { return equal(p, mpl::bool_<is_pixel<P>::value>()); } 
+    template <typename P> pixel& operator=(const P& p)           { assign(p, std::bool_constant<is_pixel<P>::value>()); return *this; } 
+    template <typename P> bool   operator==(const P& p)    const { return equal(p, std::bool_constant<is_pixel<P>::value>()); } 
 
     template <typename P> bool   operator!=(const P& p)    const { return !(*this==p); }
 
@@ -138,17 +140,17 @@ public:
     typename channel_traits<channel_t>::reference       operator[](std::size_t i)       { return dynamic_at_c(*this,i); }
     typename channel_traits<channel_t>::const_reference operator[](std::size_t i) const { return dynamic_at_c(*this,i); }
 private:
-    template <typename Pixel> void assign(const Pixel& p, mpl::true_)       { check_compatible<Pixel>(); static_copy(p,*this); } 
-    template <typename Pixel> bool  equal(const Pixel& p, mpl::true_) const { check_compatible<Pixel>(); return static_equal(*this,p); } 
+    template <typename Pixel> void assign(const Pixel& p, std::true_type)       { check_compatible<Pixel>(); static_copy(p,*this); } 
+    template <typename Pixel> bool  equal(const Pixel& p, std::true_type) const { check_compatible<Pixel>(); return static_equal(*this,p); } 
 
     template <typename Pixel> void check_compatible() const { gil_function_requires<PixelsCompatibleConcept<Pixel,pixel> >(); }
 
 // Support for assignment/equality comparison of a channel with a grayscale pixel
 
 private:
-    static void check_gray() {  BOOST_STATIC_ASSERT((is_same<typename Layout::color_space_t, gray_t>::value)); }
-    template <typename Channel> void assign(const Channel& chan, mpl::false_)       { check_gray(); gil::at_c<0>(*this)=chan; }
-    template <typename Channel> bool equal (const Channel& chan, mpl::false_) const { check_gray(); return gil::at_c<0>(*this)==chan; }
+    static void check_gray() {  BOOST_STATIC_ASSERT((std::is_same<typename Layout::color_space_t, gray_t>::value)); }
+    template <typename Channel> void assign(const Channel& chan, std::false_type)       { check_gray(); gil::at_c<0>(*this)=chan; }
+    template <typename Channel> bool equal (const Channel& chan, std::false_type) const { check_gray(); return gil::at_c<0>(*this)==chan; }
 public:
     pixel&  operator= (channel_t chan)       { check_gray(); gil::at_c<0>(*this)=chan; return *this; }
     bool    operator==(channel_t chan) const { check_gray(); return gil::at_c<0>(*this)==chan; }
@@ -183,7 +185,7 @@ struct kth_element_const_reference_type<pixel<ChannelValue,Layout>, K> {
 /////////////////////////////
 
 template <typename ChannelValue, typename Layout> 
-struct is_pixel<pixel<ChannelValue,Layout> > : public mpl::true_{};
+struct is_pixel<pixel<ChannelValue,Layout> > : public std::true_type {};
 
 /////////////////////////////
 //  HomogeneousPixelBasedConcept
@@ -200,7 +202,7 @@ struct channel_mapping_type<pixel<ChannelValue,Layout> > {
 }; 
 
 template <typename ChannelValue, typename Layout>
-struct is_planar<pixel<ChannelValue,Layout> > : public mpl::false_ {};
+struct is_planar<pixel<ChannelValue,Layout> > : public std::false_type {};
 
 template <typename ChannelValue, typename Layout>
 struct channel_type<pixel<ChannelValue,Layout> > {
@@ -209,8 +211,9 @@ struct channel_type<pixel<ChannelValue,Layout> > {
 
 } }  // namespace boost::gil
 
-namespace boost {
+// TODO: Replace with std::is_trivially_constructible
+namespace std {
     template <typename ChannelValue, typename Layout> 
-    struct has_trivial_constructor<gil::pixel<ChannelValue,Layout> > : public has_trivial_constructor<ChannelValue> {};
+    struct is_trivially_constructible<boost::gil::pixel<ChannelValue,Layout>> : public std::is_trivially_constructible<ChannelValue> {};
 }
 #endif

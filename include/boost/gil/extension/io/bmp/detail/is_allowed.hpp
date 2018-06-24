@@ -19,11 +19,13 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
+#include <type_traits>
+
 namespace boost { namespace gil { namespace detail {
 
 template< typename View >
 bool is_allowed( const image_read_info< bmp_tag >& info
-               , mpl::true_   // is read_and_no_convert
+               , std::true_type   // is read_and_no_convert
                )
 {
     bmp_bits_per_pixel::type src_bits_per_pixel = 0;
@@ -79,7 +81,7 @@ bool is_allowed( const image_read_info< bmp_tag >& info
 
 template< typename View >
 bool is_allowed( const image_read_info< bmp_tag >& /* info */
-               , mpl::false_  // is read_and_convert
+               , std::false_type  // is read_and_convert
                )
 {
     return true;

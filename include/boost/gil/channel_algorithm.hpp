@@ -27,7 +27,6 @@
 #include <boost/mpl/less.hpp>
 #include <boost/mpl/integral_c.hpp>
 #include <boost/mpl/greater.hpp>
-#include <boost/type_traits.hpp>
 
 #include "gil_config.hpp"
 #include "channel.hpp"
@@ -35,6 +34,7 @@
 #include "typedefs.hpp"
 
 #include <limits>
+#include <type_traits>
 
 namespace boost { namespace gil {
 
@@ -125,7 +125,7 @@ assert(dst_channel == 255);     // max value goes to max value
 
 template <typename SrcChannelV, typename DstChannelV>     // Model ChannelValueConcept
 struct channel_converter_unsigned
-    : public detail::channel_converter_unsigned_impl<SrcChannelV,DstChannelV,is_integral<SrcChannelV>::value,is_integral<DstChannelV>::value> {};
+    : public detail::channel_converter_unsigned_impl<SrcChannelV,DstChannelV,std::is_integral<SrcChannelV>::value,std::is_integral<DstChannelV>::value> {};
 
 
 /// \brief Converting a channel to itself - identity operation

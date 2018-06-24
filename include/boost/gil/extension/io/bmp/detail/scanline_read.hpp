@@ -35,6 +35,8 @@
 #include <boost/gil/extension/io/bmp/detail/reader_backend.hpp>
 #include <boost/gil/extension/io/bmp/detail/is_allowed.hpp>
 
+#include <type_traits>
+
 namespace boost { namespace gil {
 
 ///
@@ -413,8 +415,8 @@ private:
     int _pitch;
 
     std::vector< byte_t > _buffer;
-    detail::mirror_bits    < std::vector< byte_t >, mpl::true_ > _mirror_bits;
-    detail::swap_half_bytes< std::vector< byte_t >, mpl::true_ > _swap_half_bytes;
+    detail::mirror_bits    < std::vector< byte_t >, std::true_type> _mirror_bits;
+    detail::swap_half_bytes< std::vector< byte_t >, std::true_type> _swap_half_bytes;
 
     boost::function< void ( this_t*, byte_t* ) > _read_function;
 };

@@ -50,6 +50,7 @@
 #include <boost/gil/extension/io/tiff/detail/device.hpp>
 #include <boost/gil/extension/io/tiff/detail/is_allowed.hpp>
 
+#include <type_traits>
 
 namespace boost { namespace gil {
 
@@ -454,7 +455,7 @@ private:
 
     std::vector< byte_t > _buffer;
 
-    detail::mirror_bits< std::vector< byte_t >, mpl::true_ > _mirror_bites;
+    detail::mirror_bits< std::vector< byte_t >, std::true_type> _mirror_bites;
 
     boost::function< void ( this_t*, byte_t*, int ) > _read_function;
 };

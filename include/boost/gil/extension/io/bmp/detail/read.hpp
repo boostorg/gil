@@ -22,7 +22,6 @@
 #include <vector>
 
 #include <boost/mpl/and.hpp>
-#include <boost/type_traits/is_same.hpp>
 #include <boost/utility/enable_if.hpp>
 
 #include <boost/gil/io/base.hpp>
@@ -35,6 +34,8 @@
 
 #include <boost/gil/extension/io/bmp/detail/reader_backend.hpp>
 #include <boost/gil/extension/io/bmp/detail/is_allowed.hpp>
+
+#include <type_traits>
 
 namespace boost { namespace gil {
 
@@ -113,7 +114,7 @@ public:
             io_error( "Image header was not read." );
         }
 
-        typedef typename is_same< ConversionPolicy
+        typedef typename std::is_same< ConversionPolicy
                                 , detail::read_and_no_convert
                                 >::type is_read_and_convert_t;
 
@@ -143,7 +144,7 @@ public:
 
                 read_palette_image< gray1_image_t::view_t
                                   , detail::mirror_bits< byte_vector_t
-                                                       , mpl::true_
+                                                       , std::true_type
                                                        >
                                   > ( dst_view );
                 break;
@@ -169,7 +170,7 @@ public:
 
                         read_palette_image< gray4_image_t::view_t
                                           , detail::swap_half_bytes< byte_vector_t
-                                                                   , mpl::true_
+                                                                   , std::true_type
                                                                    >
                                           > ( dst_view );
                         break;

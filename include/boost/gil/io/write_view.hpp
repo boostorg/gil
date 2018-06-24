@@ -10,8 +10,6 @@
 #ifndef BOOST_GIL_IO_WRITE_VIEW_HPP
 #define BOOST_GIL_IO_WRITE_VIEW_HPP
 
-#include <boost/type_traits/is_base_and_derived.hpp>
-#include <boost/type_traits/is_base_and_derived.hpp>
 #include <boost/mpl/and.hpp>
 #include <boost/utility/enable_if.hpp>
 

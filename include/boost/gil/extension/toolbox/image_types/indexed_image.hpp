@@ -19,12 +19,12 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/type_traits/is_integral.hpp>
 #include <boost/utility/enable_if.hpp>
 
 #include <boost/gil/image.hpp>
 #include <boost/gil/extension/toolbox/metafunctions/is_bit_aligned.hpp>
 
+#include <type_traits>
 
 namespace boost{ namespace gil {
 
@@ -115,7 +115,7 @@ template< typename IndicesLoc
         >
 struct indexed_image_deref_fn< IndicesLoc
                              , PaletteLoc
-                             , typename boost::enable_if< boost::is_integral< typename IndicesLoc::value_type > >::type
+                             , typename boost::enable_if< std::is_integral< typename IndicesLoc::value_type > >::type
                              > : indexed_image_deref_fn_base< IndicesLoc
                                                             , PaletteLoc
                                                             >

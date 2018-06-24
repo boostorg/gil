@@ -21,11 +21,13 @@
 
 #include <boost/mpl/for_each.hpp>
 
+#include <type_traits>
+
 namespace boost { namespace gil { namespace detail {
 
 template< typename View >
 bool is_allowed( const image_read_info< png_tag >& info
-               , mpl::true_   // is read_and_no_convert
+               , std::true_type   // is read_and_no_convert
                )
 {
     typedef typename get_pixel_type< View >::type pixel_t;
@@ -42,7 +44,7 @@ bool is_allowed( const image_read_info< png_tag >& info
 
 template< typename View >
 bool is_allowed( const image_read_info< png_tag >& /* info */
-               , mpl::false_  // is read_and_convert
+               , std::false_type  // is read_and_convert
                )
 {
     return true;

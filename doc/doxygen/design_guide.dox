@@ -1126,7 +1126,7 @@ template <boost::UnaryFunctionConcept D>
 concept PixelDereferenceAdaptorConcept : DefaultConstructibleConcept<D>, CopyConstructibleConcept<D>, AssignableConcept<D>  {
     typename const_t;         where PixelDereferenceAdaptorConcept<const_t>;
     typename value_type;      where PixelValueConcept<value_type>;
-    typename reference;       where PixelConcept<remove_reference<reference>::type>;  // may be mutable
+    typename reference;       where PixelConcept<std::remove_reference<reference>::type>;  // may be mutable
     typename const_reference;   // must not be mutable
     static const bool D::is_mutable;
 

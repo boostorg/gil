@@ -23,6 +23,7 @@
 
 #include <boost/gil/pixel.hpp>
 
+#include <type_traits>
 
 namespace boost{ namespace gil {
 
@@ -32,26 +33,26 @@ namespace boost{ namespace gil {
 template<typename C,typename CMP, int Next, int Last> struct is_homogeneous_impl;
 
 template<typename C,typename CMP, int Last>
-struct is_homogeneous_impl<C,CMP,Last,Last> : mpl::true_{};
+struct is_homogeneous_impl<C,CMP,Last,Last> : std::true_type {};
 
 template<typename C,typename CMP, int Next, int Last>
 struct is_homogeneous_impl : mpl::and_< is_homogeneous_impl< C, CMP,Next + 1, Last >
-                                      , is_same< CMP, typename mpl::at_c<C,Next>::type
+                                      , std::is_same< CMP, typename mpl::at_c<C,Next>::type
                                       > > {};
 
-template < typename P > struct is_homogeneous : mpl::false_ {};
+template < typename P > struct is_homogeneous : std::false_type {};
 
 // pixel
-template < typename C, typename L > struct is_homogeneous< pixel<C,L> > : mpl::true_ {};
-template < typename C, typename L > struct is_homogeneous<const pixel<C,L> > : mpl::true_ {};
-template < typename C, typename L > struct is_homogeneous< pixel<C,L>& > : mpl::true_ {};
-template < typename C, typename L > struct is_homogeneous<const pixel<C,L>& > : mpl::true_ {};
+template < typename C, typename L > struct is_homogeneous< pixel<C,L> > : std::true_type {};
+template < typename C, typename L > struct is_homogeneous<const pixel<C,L> > : std::true_type {};
+template < typename C, typename L > struct is_homogeneous< pixel<C,L>& > : std::true_type {};
+template < typename C, typename L > struct is_homogeneous<const pixel<C,L>& > : std::true_type {};
 
 // planar pixel reference
 template <typename Channel, typename ColorSpace>
-struct is_homogeneous< planar_pixel_reference< Channel, ColorSpace > > : mpl::true_ {};
+struct is_homogeneous< planar_pixel_reference< Channel, ColorSpace > > : std::true_type {};
 template <typename Channel, typename ColorSpace>
-struct is_homogeneous< const planar_pixel_reference< Channel, ColorSpace > > : mpl::true_ {};
+struct is_homogeneous< const planar_pixel_reference< Channel, ColorSpace > > : std::true_type {};
 
 template<typename C,typename CMP, int I,int Last>
 struct is_homogeneous_impl_p {};

@@ -7,8 +7,6 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include <boost/type_traits/is_same.hpp>
-
 #include <boost/gil/extension/toolbox/color_spaces/gray_alpha.hpp>
 
 using namespace boost;

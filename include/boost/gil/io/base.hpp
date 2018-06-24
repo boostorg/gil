@@ -24,7 +24,6 @@
 #include <vector>
 
 #include <boost/bind.hpp>
-#include <boost/type_traits/is_base_of.hpp>
 
 #include <boost/gil/utilities.hpp>
 #include <boost/gil/color_convert.hpp>
@@ -36,6 +35,8 @@
 #include <boost/gil/io/typedefs.hpp>
 #include <boost/gil/io/error.hpp>
 
+#include <type_traits>
+
 namespace boost { namespace gil {
 
 struct format_tag {};
@@ -46,7 +47,7 @@ struct property_base
     typedef Property type;
 };
 
-template<typename FormatTag> struct is_format_tag : is_base_and_derived< format_tag
+template<typename FormatTag> struct is_format_tag : std::is_base_of< format_tag
                                                                        , FormatTag
                                                                        > {};
 
@@ -84,7 +85,7 @@ public:
 };
 
 /**
- * Boolean meta function, mpl::true_ if the pixel type \a PixelType is supported 
+ * Boolean meta function, std::true_type if the pixel type \a PixelType is supported 
  * by the image format identified with \a FormatTag.
  * \todo the name is_supported is to generic, pick something more IO realted.
  */

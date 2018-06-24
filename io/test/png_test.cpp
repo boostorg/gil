@@ -16,8 +16,6 @@
 //#define BOOST_GIL_IO_PNG_FIXED_POINT_SUPPORTED
 #include <boost/gil/extension/io/png.hpp>
 
-#include <boost/type_traits/is_same.hpp>
-
 #include "mandel_view.hpp"
 #include "paths.hpp"
 #include "subimage_test.hpp"

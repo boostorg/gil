@@ -19,7 +19,6 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <boost/type_traits/is_base_and_derived.hpp>
 #include <boost/mpl/and.hpp>
 #include <boost/utility/enable_if.hpp>
 

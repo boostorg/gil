@@ -24,10 +24,14 @@
 
 #include <cassert>
 #include <iterator>
+
 #include <boost/iterator/iterator_facade.hpp>
+
 #include "gil_config.hpp"
 #include "pixel.hpp"
 #include "step_iterator.hpp"
+
+#include <type_traits>
 
 namespace boost { namespace gil {
 //forward declaration (as this file is included in planar_pixel_reference.hpp)
@@ -126,8 +130,8 @@ private:
 };
 
 namespace detail {
-    template <typename IC> struct channel_iterator_is_mutable : public mpl::true_ {};
-    template <typename T>  struct channel_iterator_is_mutable<const T*> : public mpl::false_ {};
+    template <typename IC> struct channel_iterator_is_mutable : public std::true_type {};
+    template <typename T>  struct channel_iterator_is_mutable<const T*> : public std::false_type {};
 }
 
 template <typename IC, typename C>
@@ -152,10 +156,10 @@ struct kth_element_type<planar_pixel_iterator<IC,C>, K> {
 };
 
 template <typename IC, typename C, int K>
-struct kth_element_reference_type<planar_pixel_iterator<IC,C>, K> : public add_reference<IC> {};
+struct kth_element_reference_type<planar_pixel_iterator<IC,C>, K> : public std::add_lvalue_reference<IC> {};
 
 template <typename IC, typename C, int K>
-struct kth_element_const_reference_type<planar_pixel_iterator<IC,C>, K> : public add_reference<typename add_const<IC>::type> {};
+struct kth_element_const_reference_type<planar_pixel_iterator<IC,C>, K> : public std::add_lvalue_reference<typename std::add_const<IC>::type> {};
 
 /////////////////////////////
 //  HomogeneousPixelBasedConcept
@@ -170,7 +174,7 @@ template <typename IC, typename C>
 struct channel_mapping_type<planar_pixel_iterator<IC,C> > : public channel_mapping_type<typename planar_pixel_iterator<IC,C>::value_type> {};
 
 template <typename IC, typename C>
-struct is_planar<planar_pixel_iterator<IC,C> > : public mpl::true_ {};
+struct is_planar<planar_pixel_iterator<IC,C> > : public std::true_type {};
 
 template <typename IC, typename C>
 struct channel_type<planar_pixel_iterator<IC,C> > {

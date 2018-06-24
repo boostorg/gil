@@ -29,6 +29,8 @@
 
 #include <boost/test/unit_test.hpp>
 
+#include <type_traits>
+
 using namespace boost::gil;
 using namespace std;
 using namespace boost;
@@ -37,7 +39,7 @@ using namespace boost;
 
 std::size_t is_planar_impl( const std::size_t size_in_units
                             , const std::size_t channels_in_image
-                            , mpl::true_
+                            , std::true_type
                             )
 {
     return size_in_units * channels_in_image;
@@ -45,7 +47,7 @@ std::size_t is_planar_impl( const std::size_t size_in_units
 
 std::size_t is_planar_impl( const std::size_t size_in_units
                           , const std::size_t
-                          , mpl::false_
+                          , std::false_type
                           )
 {
     return size_in_units;
@@ -76,7 +78,7 @@ std::size_t total_allocated_size_in_bytes( const typename View::point_t& dimensi
 
     std::size_t size_in_units = is_planar_impl( get_row_size_in_memunits< View >( dimensions.x ) * dimensions.y
                                                 , _channels_in_image
-                                                , typename boost::conditional< IsPlanar, mpl::true_, mpl::false_ >::type()
+                                                , typename boost::conditional< IsPlanar, std::true_type, std::false_type>::type()
                                                 );
 
     // return the size rounded up to the nearest byte

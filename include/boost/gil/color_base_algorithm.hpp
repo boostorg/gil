@@ -23,9 +23,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include <algorithm>
+#include <type_traits>
 
 #include <boost/config.hpp>
-#include <boost/type_traits.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/mpl/contains.hpp>
 #include <boost/mpl/at.hpp>
@@ -118,7 +118,7 @@ template <typename ColorBase, int K> struct kth_semantic_element_const_reference
 /// \brief A mutable accessor to the K-th semantic element of a color base
 /// \ingroup ColorBaseAlgorithmSemanticAtC
 template <int K, typename ColorBase> inline
-typename disable_if<is_const<ColorBase>,typename kth_semantic_element_reference_type<ColorBase,K>::type>::type
+typename disable_if<std::is_const<ColorBase>,typename kth_semantic_element_reference_type<ColorBase,K>::type>::type
 semantic_at_c(ColorBase& p) { 
     return kth_semantic_element_reference_type<ColorBase,K>::get(p); 
 }
@@ -207,7 +207,7 @@ typename color_element_const_reference_type<ColorBase,Color>::type get_color(con
 Example:
 \code
 typedef element_type<rgb8c_planar_ptr_t>::type element_t;
-BOOST_STATIC_ASSERT((boost::is_same<element_t, const uint8_t*>::value));
+BOOST_STATIC_ASSERT((std::is_same<element_t, const uint8_t*>::value));
 \endcode
 */
 /// \brief Specifies the element type of a homogeneous color base

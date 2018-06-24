@@ -29,6 +29,8 @@
 #include "utilities.hpp"
 #include "pixel.hpp"
 
+#include <type_traits>
+
 namespace boost { namespace gil {
 
 //forwarded declaration (as this file is included in step_iterator.hpp)
@@ -40,7 +42,7 @@ template <typename Iterator> struct dynamic_x_step_type;
 /// \brief metafunction predicate determining whether the given iterator is a plain one or an adaptor over another iterator.
 /// Examples of adaptors are the step iterator and the dereference iterator adaptor.
 template <typename It>
-struct is_iterator_adaptor : public mpl::false_{};
+struct is_iterator_adaptor : public std::false_type {};
 
 /// \brief returns the base iterator for a given iterator adaptor. Provide an specialization when introducing new iterator adaptors
 template <typename It>
@@ -64,8 +66,8 @@ template <typename It>
 struct iterator_is_mutable{};
 
 // The default implementation when the iterator is a C pointer is to use the standard constness semantics
-template <typename T> struct iterator_is_mutable<      T*> : public mpl::true_{};
-template <typename T> struct iterator_is_mutable<const T*> : public mpl::false_{};
+template <typename T> struct iterator_is_mutable<      T*> : public std::true_type {};
+template <typename T> struct iterator_is_mutable<const T*> : public std::false_type {};
 
 /// \defgroup PixelIteratorModelInterleavedPtr C pointer to a pixel
 /// \ingroup PixelIteratorModel

@@ -26,6 +26,8 @@
 
 #include <cassert>
 #include <cstddef>
+#include <type_traits>
+
 #include "gil_config.hpp"
 #include "metafunctions.hpp"
 #include "gray.hpp"
@@ -100,7 +102,7 @@ namespace detail {
 template <typename HomogeneousView>
 typename detail::channel_pointer_type<HomogeneousView>::type interleaved_view_get_raw_data(const HomogeneousView& view) {
     BOOST_STATIC_ASSERT((!is_planar<HomogeneousView>::value && view_is_basic<HomogeneousView>::value));
-    BOOST_STATIC_ASSERT((boost::is_pointer<typename HomogeneousView::x_iterator>::value));
+    BOOST_STATIC_ASSERT((std::is_pointer<typename HomogeneousView::x_iterator>::value));
 
     return &gil::at_c<0>(view(0,0));
 }
@@ -347,7 +349,7 @@ namespace detail {
     struct nth_channel_deref_fn {
         BOOST_STATIC_CONSTANT(bool, is_mutable=pixel_is_reference<SrcP>::value && pixel_reference_is_mutable<SrcP>::value);
     private:
-        typedef typename remove_reference<SrcP>::type src_pixel_t;
+        typedef typename std::remove_reference<SrcP>::type src_pixel_t;
         typedef typename channel_type<src_pixel_t>::type channel_t;
         typedef typename src_pixel_t::const_reference const_ref_t;
         typedef typename pixel_reference_type<channel_t,gray_layout_t,false,is_mutable>::type ref_t;
@@ -478,7 +480,7 @@ namespace detail {
     struct kth_channel_deref_fn {
         BOOST_STATIC_CONSTANT(bool, is_mutable=pixel_is_reference<SrcP>::value && pixel_reference_is_mutable<SrcP>::value);
     private:
-        typedef typename remove_reference<SrcP>::type src_pixel_t;
+        typedef typename std::remove_reference<SrcP>::type src_pixel_t;
         typedef typename kth_element_type<src_pixel_t, K>::type channel_t;
         typedef typename src_pixel_t::const_reference const_ref_t;
         typedef typename pixel_reference_type<channel_t,gray_layout_t,false,is_mutable>::type ref_t;

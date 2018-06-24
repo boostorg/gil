@@ -20,12 +20,15 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include <cstdint>
+
 #include <boost/algorithm/clamp.hpp>
 #include <boost/mpl/range_c.hpp>
 #include <boost/mpl/vector_c.hpp>
 #include <boost/gil/gil_all.hpp>
 
 #include <boost/gil/extension/toolbox/metafunctions/get_num_bits.hpp>
+
+#include <type_traits>
 
 namespace boost{ namespace gil {
 
@@ -83,7 +86,7 @@ struct default_color_converter_impl<ycbcr_601__t, rgb_t>
 	{
         typedef typename channel_type< DSTP >::type dst_channel_t;
         convert( src, dst
-               , typename boost::is_same< typename mpl::int_< sizeof( dst_channel_t ) >::type
+               , typename std::is_same< typename mpl::int_< sizeof( dst_channel_t ) >::type
                                         , typename mpl::int_<1>::type
                                         >::type()
                );
@@ -97,7 +100,7 @@ private:
             >
     void convert( const Src_Pixel& src
                 ,       Dst_Pixel& dst
-                , mpl::true_ // is 8 bit channel
+                , std::true_type // is 8 bit channel
                 ) const
     {
 		using namespace boost::algorithm;
@@ -129,7 +132,7 @@ private:
             >
     void convert( const Src_Pixel& src
                 ,       Dst_Pixel& dst
-                , mpl::false_ // is 8 bit channel
+                , std::false_type // is 8 bit channel
                 ) const
     {
         using namespace boost::algorithm;

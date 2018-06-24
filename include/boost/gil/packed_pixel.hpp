@@ -23,12 +23,15 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include <functional>
+
 #include <boost/core/ignore_unused.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/front.hpp>
 #include "gil_config.hpp"
 #include "pixel.hpp"
+
+#include <type_traits>
 
 namespace boost { namespace gil {
 
@@ -100,20 +103,20 @@ struct packed_pixel {
 
     packed_pixel& operator=(const packed_pixel& p)     { _bitfield=p._bitfield; return *this; }
 
-    template <typename P> packed_pixel& operator=(const P& p)        { assign(p, mpl::bool_<is_pixel<P>::value>()); return *this; } 
-    template <typename P> bool          operator==(const P& p) const { return equal(p, mpl::bool_<is_pixel<P>::value>()); } 
+    template <typename P> packed_pixel& operator=(const P& p)        { assign(p, std::bool_constant<is_pixel<P>::value>()); return *this; } 
+    template <typename P> bool          operator==(const P& p) const { return equal(p, std::bool_constant<is_pixel<P>::value>()); } 
 
     template <typename P> bool operator!=(const P& p) const { return !(*this==p); }
 
 private:
     template <typename Pixel> static void check_compatible() { gil_function_requires<PixelsCompatibleConcept<Pixel,packed_pixel> >(); }
-    template <typename Pixel> void assign(const Pixel& p, mpl::true_)       { check_compatible<Pixel>(); static_copy(p,*this); } 
-    template <typename Pixel> bool  equal(const Pixel& p, mpl::true_) const { check_compatible<Pixel>(); return static_equal(*this,p); } 
+    template <typename Pixel> void assign(const Pixel& p, std::true_type)       { check_compatible<Pixel>(); static_copy(p,*this); } 
+    template <typename Pixel> bool  equal(const Pixel& p, std::true_type) const { check_compatible<Pixel>(); return static_equal(*this,p); } 
 
 // Support for assignment/equality comparison of a channel with a grayscale pixel
-    static void check_gray() {  BOOST_STATIC_ASSERT((is_same<typename Layout::color_space_t, gray_t>::value)); }
-    template <typename Channel> void assign(const Channel& chan, mpl::false_)       { check_gray(); gil::at_c<0>(*this)=chan; }
-    template <typename Channel> bool equal (const Channel& chan, mpl::false_) const { check_gray(); return gil::at_c<0>(*this)==chan; }
+    static void check_gray() {  BOOST_STATIC_ASSERT((std::is_same<typename Layout::color_space_t, gray_t>::value)); }
+    template <typename Channel> void assign(const Channel& chan, std::false_type)       { check_gray(); gil::at_c<0>(*this)=chan; }
+    template <typename Channel> bool equal (const Channel& chan, std::false_type) const { check_gray(); return gil::at_c<0>(*this)==chan; }
 public:
     packed_pixel&  operator= (int chan)       { check_gray(); gil::at_c<0>(*this)=chan; return *this; }
     bool           operator==(int chan) const { check_gray(); return gil::at_c<0>(*this)==chan; }
@@ -152,7 +155,7 @@ at_c(const packed_pixel<P,C,L>& p) {
 
 // Metafunction predicate that flags packed_pixel as a model of PixelConcept. Required by PixelConcept
 template <typename BitField, typename ChannelRefVec, typename Layout>  
-struct is_pixel<packed_pixel<BitField,ChannelRefVec,Layout> > : public mpl::true_{};
+struct is_pixel<packed_pixel<BitField,ChannelRefVec,Layout> > : public std::true_type {};
 
 /////////////////////////////
 //  PixelBasedConcept
@@ -169,7 +172,7 @@ struct channel_mapping_type<packed_pixel<P,C,Layout> > {
 }; 
 
 template <typename P, typename C, typename Layout>
-struct is_planar<packed_pixel<P,C,Layout> > : mpl::false_ {}; 
+struct is_planar<packed_pixel<P,C,Layout> > : std::false_type {}; 
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -184,16 +187,16 @@ struct is_planar<packed_pixel<P,C,Layout> > : mpl::false_ {};
 /// The pointer packed_pixel<P,CR,Layout>* is used as an iterator over interleaved pixels of packed format. Models PixelIteratorConcept, HasDynamicXStepTypeConcept, MemoryBasedIteratorConcept
 
 template <typename P, typename C, typename L>  
-struct iterator_is_mutable<packed_pixel<P,C,L>*> : public mpl::bool_<packed_pixel<P,C,L>::is_mutable> {};
+struct iterator_is_mutable<packed_pixel<P,C,L>*> : public std::bool_constant<packed_pixel<P,C,L>::is_mutable> {};
 template <typename P, typename C, typename L>  
-struct iterator_is_mutable<const packed_pixel<P,C,L>*> : public mpl::false_ {};
+struct iterator_is_mutable<const packed_pixel<P,C,L>*> : public std::false_type {};
 
 
 
 } }  // namespace boost::gil
 
-namespace boost {
+namespace std {
     template <typename P, typename C, typename L>
-    struct has_trivial_constructor<gil::packed_pixel<P,C,L> > : public has_trivial_constructor<P> {};
+    struct is_trivially_constructible<boost::gil::packed_pixel<P,C,L>> : public std::is_trivially_constructible<P> {};
 }
 #endif

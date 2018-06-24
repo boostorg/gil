@@ -27,6 +27,8 @@
 #include "../../typedefs.hpp"
 #include "dynamic_at_c.hpp"
 
+#include <type_traits>
+
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file               
 /// \brief Constructs for static-to-dynamic integer convesion
@@ -640,7 +642,7 @@ namespace detail {
         typedef typename reduce_color_space<typename View::color_space_t>::type Cs;    // reduce the color space
         typedef layout<Cs, typename View::channel_mapping_t> layout_t;
     public:
-        typedef typename derived_view_type<View, use_default, layout_t, use_default, use_default, mpl::true_>::type type;
+        typedef typename derived_view_type<View, use_default, layout_t, use_default, use_default, std::true_type>::type type;
     };
 */
     // Incompatible views cannot be used in copy_pixels - will throw std::bad_cast
@@ -659,8 +661,8 @@ namespace detail {
         typedef typename reduce_color_layouts<layout1,layout2>::first_t L1;
         typedef typename reduce_color_layouts<layout1,layout2>::second_t L2;
 
-        typedef typename derived_view_type<V1, use_default, L1, use_default, use_default, use_default, mpl::false_>::type DV1;
-        typedef typename derived_view_type<V2, use_default, L2, use_default, use_default, use_default, mpl::true_ >::type DV2;
+        typedef typename derived_view_type<V1, use_default, L1, use_default, use_default, use_default, std::false_type>::type DV1;
+        typedef typename derived_view_type<V2, use_default, L2, use_default, use_default, use_default, std::true_type>::type DV2;
         
         typedef std::pair<const DV1*, const DV2*> type;
     };
@@ -733,21 +735,21 @@ namespace detail {
     // the only thing for 1D reduce is making them all mutable...
     template <typename CC, typename View, bool IsBasic> 
     struct reduce_view_basic<copy_and_convert_pixels_fn<CC>, View, IsBasic> 
-        : public derived_view_type<View, use_default, use_default, use_default, use_default, mpl::true_> {
+        : public derived_view_type<View, use_default, use_default, use_default, use_default, std::true_type> {
     };
 
     // For 2D reduce, if they have the same channels and color spaces (i.e. the same pixels) then copy_and_convert is just copy.
     // In this case, reduce their common color space. In general make the first immutable and the second mutable
     template <typename CC, typename V1, typename V2, bool AreBasic> 
     struct reduce_views_basic<copy_and_convert_pixels_fn<CC>, V1, V2, AreBasic> {
-        typedef is_same<typename V1::pixel_t, typename V2::pixel_t> Same;
+        typedef std::is_same<typename V1::pixel_t, typename V2::pixel_t> Same;
 
         typedef reduce_color_space<typename V1::color_space_t::base> CsR;
         typedef typename mpl::if_<Same, typename CsR::type, typename V1::color_space_t>::type Cs1;
         typedef typename mpl::if_<Same, typename CsR::type, typename V2::color_space_t>::type Cs2;
 
-        typedef typename derived_view_type<V1, use_default, layout<Cs1, typename V1::channel_mapping_t>, use_default, use_default, mpl::false_>::type DV1;
-        typedef typename derived_view_type<V2, use_default, layout<Cs2, typename V2::channel_mapping_t>, use_default, use_default, mpl::true_ >::type DV2;
+        typedef typename derived_view_type<V1, use_default, layout<Cs1, typename V1::channel_mapping_t>, use_default, use_default, std::false_type>::type DV1;
+        typedef typename derived_view_type<V2, use_default, layout<Cs2, typename V2::channel_mapping_t>, use_default, use_default, std::true_type>::type DV2;
         
         typedef std::pair<const DV1*, const DV2*> type;
     };

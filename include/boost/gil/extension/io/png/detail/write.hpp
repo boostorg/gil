@@ -29,6 +29,8 @@
 
 #include <boost/gil/extension/io/png/detail/writer_backend.hpp>
 
+#include <type_traits>
+
 namespace boost { namespace gil {
 
 #if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
@@ -93,7 +95,7 @@ private:
 
     template<typename View>
     void write_view( const View& view
-                   ,  mpl::false_       // is bit aligned
+                   ,  std::false_type // is bit aligned
                    )
     {
         typedef typename get_pixel_type< View >::type pixel_t;
@@ -131,7 +133,7 @@ private:
 
     template<typename View>
     void write_view( const View& view
-                   , mpl::true_         // is bit aligned
+                   , std::true_type // is bit aligned
                    )
     {
         typedef detail::png_write_support< typename kth_semantic_element_type< typename View::value_type

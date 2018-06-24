@@ -25,6 +25,7 @@
 #include <boost/gil/io/io_device.hpp>
 
 #include <memory>
+#include <type_traits>
 
 namespace boost { namespace gil { namespace detail {
 
@@ -107,7 +108,7 @@ public:
                       , read_tag   = read_tag()
                       )
     {
-        io_error_if( _processor_ptr.get()->open_file( file_name.c_str() ) != LIBRAW_SUCCESS 
+        io_error_if( _processor_ptr.get()->open_file( file_name.c_str() ) != LIBRAW_SUCCESS
                    , "file_stream_device: failed to open file"
                    );
     }
@@ -119,7 +120,7 @@ public:
                       , read_tag   = read_tag()
                       )
     {
-        io_error_if( _processor_ptr.get()->open_file( file_name ) != LIBRAW_SUCCESS 
+        io_error_if( _processor_ptr.get()->open_file( file_name ) != LIBRAW_SUCCESS
                    , "file_stream_device: failed to open file"
                    );
     }
@@ -130,7 +131,7 @@ struct is_adaptable_input_device< FormatTag
                                 , LibRaw
                                 , void
                                 >
-    : mpl::true_
+    : std::true_type
 {
     typedef file_stream_device< FormatTag > device_type;
 };

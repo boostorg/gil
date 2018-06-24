@@ -21,7 +21,7 @@
 
 #include <vector>
 
-#include <boost/type_traits/is_base_of.hpp>
+#include <boost/mpl/bool.hpp>
 
 #include <boost/gil/image.hpp>
 #include <boost/gil/utilities.hpp>
@@ -29,6 +29,8 @@
 #ifdef BOOST_GIL_IO_ENABLE_GRAY_ALPHA
 #include <boost/gil/extension/toolbox/color_spaces/gray_alpha.hpp>
 #endif // BOOST_GIL_IO_ENABLE_GRAY_ALPHA
+
+#include <type_traits>
 
 namespace boost { namespace gil { 
 
@@ -43,10 +45,11 @@ typedef point2< std::ptrdiff_t > point_t;
 } // namespace gil
 } // namespace boost
 
-namespace boost { 
+// TODO: Review these specializations
+namespace std {
 
-template<> struct is_floating_point<gil::float32_t> : mpl::true_ {};
-template<> struct is_floating_point<gil::float64_t> : mpl::true_ {};
+template<> struct is_floating_point<::boost::gil::float32_t> : std::true_type {};
+template<> struct is_floating_point<::boost::gil::float64_t> : std::true_type {};
 
 } // namespace boost
 

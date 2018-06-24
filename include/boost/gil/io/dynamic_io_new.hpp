@@ -25,6 +25,8 @@
 #include <boost/gil/io/error.hpp>
 #include <boost/gil/extension/dynamic_image/dynamic_image_all.hpp>
 
+#include <type_traits>
+
 namespace boost { namespace gil {
 
 // need this for various meta functions.
@@ -59,24 +61,24 @@ class dynamic_io_fnobj {
     OpClass* _op;
 
     template <typename View>
-    void apply(const View& view,mpl::true_ ) {_op->apply(view);}
+    void apply(const View& view, std::true_type) {_op->apply(view);}
 
     template <typename View, typename Info >
     void apply( const View& view
               , const Info& info
-              , const mpl::true_
+              , const std::true_type
               )
     {
         _op->apply( view, info );
     }
 
     template <typename View>
-    void apply(const View& /* view */ ,mpl::false_) {io_error("dynamic_io: unsupported view type for the given file format");}
+    void apply(const View& /* view */, std::false_type) {io_error("dynamic_io: unsupported view type for the given file format");}
 
     template <typename View, typename Info >
     void apply( const View& /* view */
               , const Info& /* info */
-              , const mpl::false_
+              , const std::false_type
               )
     {
         io_error( "dynamic_io: unsupported view type for the given file format" );

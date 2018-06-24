@@ -26,6 +26,8 @@
 #include <boost/gil/extension/dynamic_image/dynamic_image_all.hpp>
 #include <boost/crc.hpp>
 
+#include <type_traits>
+
 using namespace boost::gil;
 using namespace std;
 using namespace boost;
@@ -140,10 +142,10 @@ void x_gradient(const T& src, const gray8s_view_t& dst) {
 // A quick test whether a view is homogeneous
 
 template <typename Pixel>
-struct pixel_is_homogeneous : public mpl::true_ {};
+struct pixel_is_homogeneous : public std::true_type {};
 
 template <typename P, typename C, typename L>
-struct pixel_is_homogeneous<packed_pixel<P,C,L> > : public mpl::false_ {};
+struct pixel_is_homogeneous<packed_pixel<P,C,L> > : public std::false_type {};
 
 template <typename View>
 struct view_is_homogeneous : public pixel_is_homogeneous<typename View::value_type> {};
@@ -171,8 +173,8 @@ protected:
 private:
     template <typename Img> void basic_test(const string& prefix);
     template <typename View> void view_transformations_test(const View& img_view, const string& prefix);
-    template <typename View> void homogeneous_view_transformations_test(const View& img_view, const string& prefix, mpl::true_);
-    template <typename View> void homogeneous_view_transformations_test(const View& img_view, const string& prefix, mpl::false_) {}
+    template <typename View> void homogeneous_view_transformations_test(const View& img_view, const string& prefix, std::true_type);
+    template <typename View> void homogeneous_view_transformations_test(const View& img_view, const string& prefix, std::false_type) {}
     template <typename View> void histogram_test(const View& img_view, const string& prefix);
     void virtual_view_test();
     void packed_image_test();
@@ -267,7 +269,7 @@ void image_test::view_transformations_test(const View& img_view, const string& p
 }
 
 template <typename View>
-void image_test::homogeneous_view_transformations_test(const View& img_view, const string& prefix, mpl::true_) {
+void image_test::homogeneous_view_transformations_test(const View& img_view, const string& prefix, std::true_type) {
     check_view(nth_channel_view(img_view,0),prefix+"0th_n_channel");
 }
 
@@ -497,7 +499,7 @@ void static_checks() {
 
     BOOST_STATIC_ASSERT((boost::is_same<derived_view_type<cmyk8c_planar_step_view_t>::type, cmyk8c_planar_step_view_t>::value));
     BOOST_STATIC_ASSERT((boost::is_same<derived_view_type<cmyk8c_planar_step_view_t, std::uint16_t, rgb_layout_t>::type,  rgb16c_planar_step_view_t>::value));
-    BOOST_STATIC_ASSERT((boost::is_same<derived_view_type<cmyk8c_planar_step_view_t, use_default, rgb_layout_t, mpl::false_, use_default, mpl::false_>::type,  rgb8c_step_view_t>::value));
+    BOOST_STATIC_ASSERT((boost::is_same<derived_view_type<cmyk8c_planar_step_view_t, use_default, rgb_layout_t, std::false_type, use_default, std::false_type>::type,  rgb8c_step_view_t>::value));
 
     // test view get raw data (mostly compile-time test)
     {

@@ -31,6 +31,8 @@
 #include "bit_aligned_pixel_reference.hpp"
 #include "pixel_iterator.hpp"
 
+#include <type_traits>
+
 namespace boost { namespace gil {
 
 /// \defgroup PixelIteratorNonAlignedPixelIterator bit_aligned_pixel_iterator
@@ -99,10 +101,10 @@ struct const_iterator_type<bit_aligned_pixel_iterator<NonAlignedPixelReference> 
 };
 
 template <typename NonAlignedPixelReference> 
-struct iterator_is_mutable<bit_aligned_pixel_iterator<NonAlignedPixelReference> > : public mpl::bool_<NonAlignedPixelReference::is_mutable> {};
+struct iterator_is_mutable<bit_aligned_pixel_iterator<NonAlignedPixelReference> > : public std::bool_constant<NonAlignedPixelReference::is_mutable> {};
 
 template <typename NonAlignedPixelReference> 
-struct is_iterator_adaptor<bit_aligned_pixel_iterator<NonAlignedPixelReference> > : public mpl::false_ {};
+struct is_iterator_adaptor<bit_aligned_pixel_iterator<NonAlignedPixelReference> > : public std::false_type {};
 
 /////////////////////////////
 //  PixelBasedConcept

@@ -21,7 +21,6 @@
 #include <utility>
 #include <iterator>
 #include <boost/static_assert.hpp>
-#include <boost/type_traits.hpp>
 #include <boost/mpl/size.hpp>
 #include <boost/mpl/distance.hpp>
 #include <boost/mpl/begin.hpp>

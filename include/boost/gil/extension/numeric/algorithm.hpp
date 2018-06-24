@@ -34,7 +34,7 @@ namespace boost { namespace gil {
 ///
 /// The reference proxy is the reference type, but with stripped-out C++ reference. It models PixelConcept
 template <typename T>
-struct pixel_proxy : public remove_reference<typename T::reference> {};
+struct pixel_proxy : public std::remove_reference<typename T::reference> {};
 
 /// \brief std::for_each for a pair of iterators
 template <typename Iterator1,typename Iterator2,typename BinaryFunction>

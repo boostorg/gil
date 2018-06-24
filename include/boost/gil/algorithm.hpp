@@ -33,6 +33,8 @@
 #include "image_view_factory.hpp"
 #include "bit_aligned_pixel_iterator.hpp"
 
+#include <type_traits>
+
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file
 /// \brief Some basic STL-style algorithms when applied to image views
@@ -115,13 +117,13 @@ private:
 
     // dispatch from apply overload to a function with distinct name
     template <typename V1, typename V2>
-    BOOST_FORCEINLINE result_type apply(const V1& v1, const V2& v2, mpl::false_) const {
+    BOOST_FORCEINLINE result_type apply(const V1& v1, const V2& v2, std::false_type) const {
         return ((const Derived*)this)->apply_incompatible(v1,v2);
     }
 
     // dispatch from apply overload to a function with distinct name
     template <typename V1, typename V2>
-    BOOST_FORCEINLINE result_type apply(const V1& v1, const V2& v2, mpl::true_) const {
+    BOOST_FORCEINLINE result_type apply(const V1& v1, const V2& v2, std::true_type) const {
         return ((const Derived*)this)->apply_compatible(v1,v2);
     }
 
@@ -394,13 +396,13 @@ struct std_fill_t {
 /// std::fill for planar iterators
 template <typename It, typename P>
 BOOST_FORCEINLINE
-void fill_aux(It first, It last, const P& p, mpl::true_) {
+void fill_aux(It first, It last, const P& p, std::true_type) {
     static_for_each(first,last,p,std_fill_t());
 }
 /// std::fill for interleaved iterators
 template <typename It, typename P>
 BOOST_FORCEINLINE
-void fill_aux(It first, It last, const P& p,mpl::false_) {
+void fill_aux(It first, It last, const P& p, std::false_type) {
     std::fill(first,last,p);
 }
 } // namespace detail
@@ -432,8 +434,8 @@ namespace detail {
 template <typename It> BOOST_FORCEINLINE
 void destruct_range_impl( It first
                         , It last
-                        , typename enable_if< mpl::and_< is_pointer< It >
-                                                       , mpl::not_< boost::has_trivial_destructor< typename std::iterator_traits<It>::value_type > >
+                        , typename enable_if< mpl::and_< std::is_pointer< It >
+                                                       , mpl::not_< std::is_trivially_constructible< typename std::iterator_traits<It>::value_type > >
                                                        >
                                             >::type* /*ptr*/ = 0
                         )
@@ -447,8 +449,8 @@ void destruct_range_impl( It first
 template <typename It> BOOST_FORCEINLINE
 void destruct_range_impl( It
                         , It
-                        , typename enable_if< mpl::or_< mpl::not_< is_pointer< It > >
-                                                      , boost::has_trivial_destructor< typename std::iterator_traits< It >::value_type >
+                        , typename enable_if< mpl::or_< mpl::not_< std::is_pointer< It > >
+                                                      , std::is_trivially_constructible< typename std::iterator_traits< It >::value_type >
                                                       >
                                             >::type* /* ptr */ = 0)
 {}
@@ -467,13 +469,13 @@ struct std_destruct_t {
 /// destruct for planar iterators
 template <typename It>
 BOOST_FORCEINLINE
-void destruct_aux(It first, It last, mpl::true_) {
+void destruct_aux(It first, It last, std::true_type) {
     static_for_each(first,last,std_destruct_t());
 }
 /// destruct for interleaved iterators
 template <typename It>
 BOOST_FORCEINLINE
-void destruct_aux(It first, It last, mpl::false_) {
+void destruct_aux(It first, It last, std::false_type) {
     destruct_range(first,last);
 }
 } // namespace detail
@@ -507,7 +509,7 @@ namespace detail {
 template <typename It, typename P>
 BOOST_FORCEINLINE
 void uninitialized_fill_aux(It first, It last,
-                            const P& p, mpl::true_) {
+                            const P& p, std::true_type) {
     int channel=0;
     try {
         typedef typename std::iterator_traits<It>::value_type pixel_t;
@@ -528,7 +530,7 @@ void uninitialized_fill_aux(It first, It last,
 template <typename It, typename P>
 BOOST_FORCEINLINE
 void uninitialized_fill_aux(It first, It last,
-                            const P& p,mpl::false_) {
+                            const P& p, std::false_type) {
     std::uninitialized_fill(first,last,p);
 }
 } // namespace detail
@@ -568,7 +570,7 @@ void uninitialized_fill_pixels(const View& img_view, const Value& val) {
 
 namespace detail {
 template <typename It> BOOST_FORCEINLINE
-void default_construct_range_impl(It first, It last, mpl::true_) {
+void default_construct_range_impl(It first, It last, std::true_type) {
     typedef typename std::iterator_traits<It>::value_type value_t;
     It first1=first;
     try {
@@ -583,15 +585,15 @@ void default_construct_range_impl(It first, It last, mpl::true_) {
 }
 
 template <typename It> BOOST_FORCEINLINE
-void default_construct_range_impl(It, It, mpl::false_) {}
+void default_construct_range_impl(It, It, std::false_type) {}
 
 template <typename It> BOOST_FORCEINLINE
-void default_construct_range(It first, It last) { default_construct_range_impl(first, last, typename is_pointer<It>::type()); }
+void default_construct_range(It first, It last) { default_construct_range_impl(first, last, typename std::is_pointer<It>::type()); }
 
 /// uninitialized_default_construct for planar iterators
 template <typename It>
 BOOST_FORCEINLINE
-void default_construct_aux(It first, It last, mpl::true_) {
+void default_construct_aux(It first, It last, std::true_type) {
     int channel=0;
     try {
         typedef typename std::iterator_traits<It>::value_type pixel_t;
@@ -609,21 +611,21 @@ void default_construct_aux(It first, It last, mpl::true_) {
 /// uninitialized_default_construct for interleaved iterators
 template <typename It>
 BOOST_FORCEINLINE
-void default_construct_aux(It first, It last, mpl::false_) {
+void default_construct_aux(It first, It last, std::false_type) {
     default_construct_range(first,last);
 }
 
 template <typename View, bool IsPlanar>
-struct has_trivial_pixel_constructor : public boost::has_trivial_constructor<typename View::value_type> {};
+struct has_trivial_pixel_constructor : public std::is_trivially_constructible<typename View::value_type> {};
 template <typename View>
-struct has_trivial_pixel_constructor<View, true> : public boost::has_trivial_constructor<typename channel_type<View>::type> {};
+struct has_trivial_pixel_constructor<View, true> : public std::is_trivially_constructible<typename channel_type<View>::type> {};
 } // namespace detail
 
 namespace detail {
 template< typename View, bool B > BOOST_FORCEINLINE
 void default_construct_pixels_impl( const View& img_view
-                                  , boost::enable_if< is_same< mpl::bool_< B >
-                                                             , mpl::false_
+                                  , boost::enable_if< std::is_same< std::bool_constant< B >
+                                                             , std::false_type
                                                              >
                                                     >* /* ptr */ = 0
                                   )
@@ -691,7 +693,7 @@ namespace detail {
 template <typename It1, typename It2>
 BOOST_FORCEINLINE
 void uninitialized_copy_aux(It1 first1, It1 last1,
-                            It2 first2, mpl::true_) {
+                            It2 first2, std::true_type) {
     int channel=0;
     try {
         typedef typename std::iterator_traits<It1>::value_type pixel_t;
@@ -711,7 +713,7 @@ void uninitialized_copy_aux(It1 first1, It1 last1,
 template <typename It1, typename It2>
 BOOST_FORCEINLINE
 void uninitialized_copy_aux(It1 first1, It1 last1,
-                            It2 first2,mpl::false_) {
+                            It2 first2, std::false_type) {
     std::uninitialized_copy(first1,last1,first2);
 }
 } // namespace detail
@@ -722,7 +724,7 @@ void uninitialized_copy_aux(It1 first1, It1 last1,
 /// If an exception is thrown destructs any in-place copy-constructed objects
 template <typename View1, typename View2>
 void uninitialized_copy_pixels(const View1& view1, const View2& view2) {
-    typedef mpl::bool_<is_planar<View1>::value && is_planar<View2>::value> is_planar;
+    typedef std::bool_constant<is_planar<View1>::value && is_planar<View2>::value> is_planar;
     assert(view1.dimensions()==view2.dimensions());
     if (view1.is_1d_traversable() && view2.is_1d_traversable())
         detail::uninitialized_copy_aux(view1.begin().x(), view1.end().x(),

@@ -20,6 +20,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include <vector>
+
 #include <boost/bind.hpp>
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/pnm/tags.hpp>
@@ -34,6 +35,8 @@
 
 #include <boost/gil/extension/io/pnm/detail/reader_backend.hpp>
 #include <boost/gil/extension/io/pnm/detail/is_allowed.hpp>
+
+#include <type_traits>
 
 namespace boost { namespace gil {
 
@@ -101,7 +104,7 @@ public:
     template<typename View>
     void apply( const View& view )
     {
-        typedef typename is_same< ConversionPolicy
+        typedef typename std::is_same< ConversionPolicy
                                 , detail::read_and_no_convert
                                 >::type is_read_and_convert_t;
 
@@ -251,7 +254,7 @@ private:
                      , View_Src >( dst
                                  , src
                                  , y
-                                 , typename is_same< View_Dst
+                                 , typename std::is_same< View_Dst
                                                    , gray1_image_t::view_t
                                                    >::type()
                                  );
@@ -264,7 +267,7 @@ private:
     void copy_data( const View_Dst&              dst
                   , const View_Src&              src
                   , typename View_Dst::y_coord_t y
-                  , mpl::true_ // is gray1_view
+                  , std::true_type // is gray1_view
                   )
     {
         if(  this->_info._max_value == 1 )
@@ -284,7 +287,7 @@ private:
             copy_data( dst
                      , src
                      , y
-                     , mpl::false_()
+                     , std::false_type()
                      );
         }
     }
@@ -295,7 +298,7 @@ private:
     void copy_data( const View_Dst&              view
                   , const View_Src&              src
                   , typename View_Dst::y_coord_t y
-                  , mpl::false_ // is gray1_view
+                  , std::false_type // is gray1_view
                   )
     {
         typename View_Src::x_iterator beg = src.row_begin( 0 ) + this->_settings._top_left.x;

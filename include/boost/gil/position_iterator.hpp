@@ -88,7 +88,7 @@ struct const_iterator_type<position_iterator<Deref,Dim> > {
 };
 
 template <typename Deref,int Dim> 
-struct iterator_is_mutable<position_iterator<Deref,Dim> > : public mpl::bool_<Deref::is_mutable> {
+struct iterator_is_mutable<position_iterator<Deref,Dim> > : public std::bool_constant<Deref::is_mutable> {
 };
 
 /////////////////////////////
@@ -102,7 +102,7 @@ template <typename Deref,int Dim>
 struct channel_mapping_type<position_iterator<Deref,Dim> > : public channel_mapping_type<typename Deref::value_type> {};
 
 template <typename Deref,int Dim> 
-struct is_planar<position_iterator<Deref,Dim> > : public mpl::false_ {};
+struct is_planar<position_iterator<Deref,Dim> > : public std::false_type {};
 
 template <typename Deref,int Dim> 
 struct channel_type<position_iterator<Deref,Dim> > : public channel_type<typename Deref::value_type> {};

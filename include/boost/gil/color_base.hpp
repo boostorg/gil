@@ -23,12 +23,12 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include <cassert>
+#include <type_traits>
 
 #include <boost/config.hpp>
 #include <boost/mpl/range_c.hpp>
 #include <boost/mpl/size.hpp>
 #include <boost/mpl/vector_c.hpp>
-#include <boost/type_traits.hpp>
 #include <boost/utility/enable_if.hpp>
 
 #include "gil_config.hpp"
@@ -42,7 +42,7 @@ template <typename P> P* memunit_advanced(const P* p, std::ptrdiff_t diff);
 
 // Forward-declare semantic_at_c
 template <int K, typename ColorBase>
-typename disable_if<is_const<ColorBase>,typename kth_semantic_element_reference_type<ColorBase,K>::type>::type semantic_at_c(ColorBase& p);
+typename disable_if<std::is_const<ColorBase>,typename kth_semantic_element_reference_type<ColorBase,K>::type>::type semantic_at_c(ColorBase& p);
 template <int K, typename ColorBase>
 typename kth_semantic_element_const_reference_type<ColorBase,K>::type semantic_at_c(const ColorBase& p);
 
@@ -384,21 +384,21 @@ struct kth_element_type<detail::homogeneous_color_base<Element,Layout,K1>, K> {
 };
 
 template <typename Element, typename Layout, int K1, int K> 
-struct kth_element_reference_type<detail::homogeneous_color_base<Element,Layout,K1>, K> : public add_reference<Element> {};
+struct kth_element_reference_type<detail::homogeneous_color_base<Element,Layout,K1>, K> : public std::add_lvalue_reference<Element> {};
 
 template <typename Element, typename Layout, int K1, int K> 
-struct kth_element_const_reference_type<detail::homogeneous_color_base<Element,Layout,K1>, K> : public add_reference<typename add_const<Element>::type> {};
+struct kth_element_const_reference_type<detail::homogeneous_color_base<Element,Layout,K1>, K> : public std::add_lvalue_reference<typename std::add_const<Element>::type> {};
 
 /// \brief Provides mutable access to the K-th element, in physical order
 /// \ingroup ColorBaseModelHomogeneous
 template <int K, typename E, typename L, int N> inline
-typename add_reference<E>::type
+typename std::add_lvalue_reference<E>::type
 at_c(      detail::homogeneous_color_base<E,L,N>& p) { return p.at(mpl::int_<K>()); }
 
 /// \brief Provides constant access to the K-th element, in physical order
 /// \ingroup ColorBaseModelHomogeneous
 template <int K, typename E, typename L, int N> inline
-typename add_reference<typename add_const<E>::type>::type
+typename std::add_lvalue_reference<typename std::add_const<E>::type>::type
 at_c(const detail::homogeneous_color_base<E,L,N>& p) { return p.at(mpl::int_<K>()); }
 
 namespace detail {

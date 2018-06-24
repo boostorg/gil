@@ -24,6 +24,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include <iterator>
+
 #include <boost/mpl/accumulate.hpp>
 #include <boost/mpl/back.hpp>
 #include <boost/mpl/bool.hpp>
@@ -33,10 +34,11 @@
 #include <boost/mpl/transform.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/vector_c.hpp>
-#include <boost/type_traits.hpp>
 #include "gil_config.hpp"
 #include "gil_concept.hpp"
 #include "channel.hpp"
+
+#include <type_traits>
 
 namespace boost { namespace gil {
 
@@ -74,50 +76,50 @@ template <typename BitField, typename ChannelBitSizes, typename Layout, bool IsM
 /// \brief Determines if a given pixel reference is basic
 ///    Basic references must use gil::pixel& (if interleaved), gil::planar_pixel_reference (if planar). They must use the standard constness rules. 
 /// \ingroup GILIsBasic
-template <typename PixelRef>        struct pixel_reference_is_basic                     : public mpl::false_ {};
-template <typename T,  typename L>  struct pixel_reference_is_basic<      pixel<T,L>&>  : public mpl::true_ {};
-template <typename T,  typename L>  struct pixel_reference_is_basic<const pixel<T,L>&>  : public mpl::true_ {};
-template <typename TR, typename Cs> struct pixel_reference_is_basic<planar_pixel_reference<TR,Cs> > : public mpl::true_ {};
-template <typename TR, typename Cs> struct pixel_reference_is_basic<const planar_pixel_reference<TR,Cs> > : public mpl::true_ {};
+template <typename PixelRef>        struct pixel_reference_is_basic                     : public std::false_type {};
+template <typename T,  typename L>  struct pixel_reference_is_basic<      pixel<T,L>&>  : public std::true_type {};
+template <typename T,  typename L>  struct pixel_reference_is_basic<const pixel<T,L>&>  : public std::true_type {};
+template <typename TR, typename Cs> struct pixel_reference_is_basic<planar_pixel_reference<TR,Cs> > : public std::true_type {};
+template <typename TR, typename Cs> struct pixel_reference_is_basic<const planar_pixel_reference<TR,Cs> > : public std::true_type {};
 
 
 /// \brief Determines if a given pixel iterator is basic
 ///    Basic iterators must use gil::pixel (if interleaved), gil::planar_pixel_iterator (if planar) and gil::memory_based_step_iterator (if step). They must use the standard constness rules. 
 /// \ingroup GILIsBasic
 template <typename Iterator>
-struct iterator_is_basic : public mpl::false_ {};
+struct iterator_is_basic : public std::false_type {};
 template <typename T, typename L>  // mutable   interleaved
-struct iterator_is_basic<      pixel<T,L>*      > : public mpl::true_ {};
+struct iterator_is_basic<      pixel<T,L>*      > : public std::true_type {};
 template <typename T, typename L>  // immutable interleaved
-struct iterator_is_basic<const pixel<T,L>*      > : public mpl::true_ {};
+struct iterator_is_basic<const pixel<T,L>*      > : public std::true_type {};
 template <typename T, typename Cs>  // mutable   planar
-struct iterator_is_basic<planar_pixel_iterator<      T*,Cs> > : public mpl::true_ {};
+struct iterator_is_basic<planar_pixel_iterator<      T*,Cs> > : public std::true_type {};
 template <typename T, typename Cs>    // immutable planar
-struct iterator_is_basic<planar_pixel_iterator<const T*,Cs> > : public mpl::true_ {};
+struct iterator_is_basic<planar_pixel_iterator<const T*,Cs> > : public std::true_type {};
 template <typename T, typename L>  // mutable   interleaved step
-struct iterator_is_basic<memory_based_step_iterator<      pixel<T,L>*> > : public mpl::true_ {};
+struct iterator_is_basic<memory_based_step_iterator<      pixel<T,L>*> > : public std::true_type {};
 template <typename T, typename L>  // immutable interleaved step
-struct iterator_is_basic<memory_based_step_iterator<const pixel<T,L>*> > : public mpl::true_ {};
+struct iterator_is_basic<memory_based_step_iterator<const pixel<T,L>*> > : public std::true_type {};
 template <typename T, typename Cs>  // mutable   planar step
-struct iterator_is_basic<memory_based_step_iterator<planar_pixel_iterator<      T*,Cs> > > : public mpl::true_ {};
+struct iterator_is_basic<memory_based_step_iterator<planar_pixel_iterator<      T*,Cs> > > : public std::true_type {};
 template <typename T, typename Cs>    // immutable planar step
-struct iterator_is_basic<memory_based_step_iterator<planar_pixel_iterator<const T*,Cs> > > : public mpl::true_ {};
+struct iterator_is_basic<memory_based_step_iterator<planar_pixel_iterator<const T*,Cs> > > : public std::true_type {};
 
 
 /// \ingroup GILIsBasic
 /// \brief Determines if a given locator is basic. A basic locator is memory-based and has basic x_iterator and y_iterator
-template <typename Loc> struct locator_is_basic : public mpl::false_ {};
+template <typename Loc> struct locator_is_basic : public std::false_type {};
 template <typename Iterator> struct locator_is_basic<memory_based_2d_locator<memory_based_step_iterator<Iterator> > > : public iterator_is_basic<Iterator> {};
 
 /// \ingroup GILIsBasic
 /// \brief Basic views must be over basic locators
-template <typename View> struct view_is_basic : public mpl::false_ {};
+template <typename View> struct view_is_basic : public std::false_type {};
 template <typename Loc> struct view_is_basic<image_view<Loc> > : public locator_is_basic<Loc> {};
 
 /// \ingroup GILIsBasic
 /// \brief Basic images must use basic views and std::allocator of char
-template <typename Img> struct image_is_basic : public mpl::false_ {};
-template <typename Pixel, bool IsPlanar, typename Alloc> struct image_is_basic<image<Pixel,IsPlanar,Alloc> > : public mpl::true_ {};
+template <typename Img> struct image_is_basic : public std::false_type {};
+template <typename Pixel, bool IsPlanar, typename Alloc> struct image_is_basic<image<Pixel,IsPlanar,Alloc> > : public std::true_type {};
 
 
 /// \defgroup GILIsStep xxx_is_step
@@ -128,10 +130,10 @@ template <typename I> struct iterator_is_step;
 namespace detail {
     template <typename It, bool IsBase, bool EqualsStepType> struct iterator_is_step_impl;
     // iterator that has the same type as its dynamic_x_step_type must be a step iterator
-    template <typename It, bool IsBase> struct iterator_is_step_impl<It,IsBase,true> : public mpl::true_{};
+    template <typename It, bool IsBase> struct iterator_is_step_impl<It,IsBase,true> : public std::true_type {};
 
     // base iterator can never be a step iterator
-    template <typename It> struct iterator_is_step_impl<It,true,false> : public mpl::false_{};
+    template <typename It> struct iterator_is_step_impl<It,true,false> : public std::false_type {};
 
     // for an iterator adaptor, see if its base is step
     template <typename It> struct iterator_is_step_impl<It,false,false> 
@@ -143,7 +145,7 @@ namespace detail {
 template <typename I> struct iterator_is_step 
     : public detail::iterator_is_step_impl<I, 
         !is_iterator_adaptor<I>::type::value,
-        is_same<I,typename dynamic_x_step_type<I>::type>::value >{};
+        std::is_same<I,typename dynamic_x_step_type<I>::type>::value >{};
 
 /// \ingroup GILIsStep
 /// \brief Determines if the given locator has a horizontal step that could be set dynamically
@@ -165,13 +167,13 @@ template <typename V> struct view_is_step_in_y : public locator_is_step_in_y<typ
 /// \ingroup TypeAnalysis
 template <typename PixelReference>
 struct pixel_reference_is_proxy
-    : public mpl::not_<is_same<typename remove_const_and_reference<PixelReference>::type,
+    : public mpl::not_<std::is_same<typename remove_const_and_reference<PixelReference>::type,
                                typename remove_const_and_reference<PixelReference>::type::value_type> > {};
 
 /// \brief Given a model of a pixel, determines whether the model represents a pixel reference (as opposed to pixel value)
 /// \ingroup TypeAnalysis
 template <typename Pixel>
-struct pixel_is_reference : public mpl::or_<is_reference<Pixel>, pixel_reference_is_proxy<Pixel> > {};
+struct pixel_is_reference : public mpl::or_<std::is_reference<Pixel>, pixel_reference_is_proxy<Pixel> > {};
 
 /// \defgroup GILIsMutable xxx_is_mutable
 /// \ingroup TypeAnalysis
@@ -181,7 +183,7 @@ struct pixel_is_reference : public mpl::or_<is_reference<Pixel>, pixel_reference
 /// \brief Determines if the given pixel reference is mutable (i.e. its channels can be changed)
 ///
 /// Note that built-in C++ references obey the const qualifier but reference proxy classes do not.
-template <typename R> struct pixel_reference_is_mutable : public mpl::bool_<remove_reference<R>::type::is_mutable> {};
+template <typename R> struct pixel_reference_is_mutable : public std::bool_constant<std::remove_reference<R>::type::is_mutable> {};
 template <typename R> struct pixel_reference_is_mutable<const R&>
     : public mpl::and_<pixel_reference_is_proxy<R>, pixel_reference_is_mutable<R> > {};
 
@@ -433,12 +435,12 @@ struct view_type_from_pixel {
 ///  Use use_default for the properties of the source view that you want to keep
 template <typename Ref, typename T=use_default, typename L=use_default, typename IsPlanar=use_default, typename IsMutable=use_default>
 class derived_pixel_reference_type {
-    typedef typename remove_reference<Ref>::type pixel_t;
-    typedef typename  mpl::if_<is_same<T, use_default>, typename channel_type<pixel_t>::type,     T >::type channel_t;
-    typedef typename  mpl::if_<is_same<L, use_default>, 
+    typedef typename std::remove_reference<Ref>::type pixel_t;
+    typedef typename  mpl::if_<std::is_same<T, use_default>, typename channel_type<pixel_t>::type,     T >::type channel_t;
+    typedef typename  mpl::if_<std::is_same<L, use_default>,
         layout<typename color_space_type<pixel_t>::type, typename channel_mapping_type<pixel_t>::type>, L>::type           layout_t;
-    static const bool mut   =mpl::if_<is_same<IsMutable,use_default>, pixel_reference_is_mutable<Ref>, IsMutable>::type::value;
-    static const bool planar=mpl::if_<is_same<IsPlanar,use_default>,  is_planar<pixel_t>,  IsPlanar>::type::value;
+    static const bool mut   =mpl::if_<std::is_same<IsMutable,use_default>, pixel_reference_is_mutable<Ref>, IsMutable>::type::value;
+    static const bool planar=mpl::if_<std::is_same<IsPlanar,use_default>,  is_planar<pixel_t>,  IsPlanar>::type::value;
 public:
     typedef typename pixel_reference_type<channel_t, layout_t, planar, mut>::type type;
 };
@@ -448,13 +450,13 @@ public:
 ///  Use use_default for the properties of the source view that you want to keep
 template <typename Iterator, typename T=use_default, typename L=use_default, typename IsPlanar=use_default, typename IsStep=use_default, typename IsMutable=use_default>
 class derived_iterator_type {
-    typedef typename  mpl::if_<is_same<T ,use_default>, typename channel_type<Iterator>::type,     T >::type channel_t;
-    typedef typename  mpl::if_<is_same<L,use_default>, 
+    typedef typename  mpl::if_<std::is_same<T ,use_default>, typename channel_type<Iterator>::type,     T >::type channel_t;
+    typedef typename  mpl::if_<std::is_same<L,use_default>,
         layout<typename color_space_type<Iterator>::type, typename channel_mapping_type<Iterator>::type>, L>::type layout_t;
 
-    static const bool mut   =mpl::if_<is_same<IsMutable,use_default>, iterator_is_mutable<Iterator>, IsMutable>::type::value;
-    static const bool planar=mpl::if_<is_same<IsPlanar,use_default>,         is_planar<Iterator>,  IsPlanar>::type::value;
-    static const bool step  =mpl::if_<is_same<IsStep  ,use_default>,  iterator_is_step<Iterator>,    IsStep>::type::value;
+    static const bool mut   =mpl::if_<std::is_same<IsMutable,use_default>, iterator_is_mutable<Iterator>, IsMutable>::type::value;
+    static const bool planar=mpl::if_<std::is_same<IsPlanar,use_default>,         is_planar<Iterator>,  IsPlanar>::type::value;
+    static const bool step  =mpl::if_<std::is_same<IsStep  ,use_default>,  iterator_is_step<Iterator>,    IsStep>::type::value;
 public:
     typedef typename iterator_type<channel_t, layout_t, planar, step, mut>::type type;
 };
@@ -464,12 +466,12 @@ public:
 ///  Use use_default for the properties of the source view that you want to keep
 template <typename View, typename T=use_default, typename L=use_default, typename IsPlanar=use_default, typename StepX=use_default, typename IsMutable=use_default>
 class derived_view_type {
-    typedef typename  mpl::if_<is_same<T ,use_default>, typename channel_type<View>::type, T>::type channel_t;
-    typedef typename  mpl::if_<is_same<L,use_default>, 
+    typedef typename  mpl::if_<std::is_same<T ,use_default>, typename channel_type<View>::type, T>::type channel_t;
+    typedef typename  mpl::if_<std::is_same<L,use_default>,
         layout<typename color_space_type<View>::type, typename channel_mapping_type<View>::type>, L>::type layout_t;
-    static const bool mut   =mpl::if_<is_same<IsMutable,use_default>, view_is_mutable<View>, IsMutable>::type::value;
-    static const bool planar=mpl::if_<is_same<IsPlanar,use_default>,  is_planar<View>,  IsPlanar>::type::value;
-    static const bool step  =mpl::if_<is_same<StepX ,use_default>,  view_is_step_in_x<View>,StepX>::type::value;
+    static const bool mut   =mpl::if_<std::is_same<IsMutable,use_default>, view_is_mutable<View>, IsMutable>::type::value;
+    static const bool planar=mpl::if_<std::is_same<IsPlanar,use_default>,  is_planar<View>,  IsPlanar>::type::value;
+    static const bool step  =mpl::if_<std::is_same<StepX ,use_default>,  view_is_step_in_x<View>,StepX>::type::value;
 public:
     typedef typename view_type<channel_t, layout_t, planar, step, mut>::type type;
 };
@@ -479,10 +481,10 @@ public:
 ///  Use use_default for the properties of the source image that you want to keep
 template <typename Image, typename T=use_default, typename L=use_default, typename IsPlanar=use_default>
 class derived_image_type {
-    typedef typename  mpl::if_<is_same<T ,use_default>, typename channel_type<Image>::type,     T >::type channel_t;
-    typedef typename  mpl::if_<is_same<L,use_default>, 
+    typedef typename  mpl::if_<std::is_same<T ,use_default>, typename channel_type<Image>::type,     T >::type channel_t;
+    typedef typename  mpl::if_<std::is_same<L,use_default>,
         layout<typename color_space_type<Image>::type, typename channel_mapping_type<Image>::type>, L>::type layout_t;
-    static const bool planar=mpl::if_<is_same<IsPlanar,use_default>,  is_planar<Image>,  IsPlanar>::type::value;
+    static const bool planar=mpl::if_<std::is_same<IsPlanar,use_default>,  is_planar<Image>,  IsPlanar>::type::value;
 public:
     typedef typename image_type<channel_t, layout_t, planar>::type type;
 };

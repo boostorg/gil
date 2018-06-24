@@ -23,6 +23,8 @@
 #include <iterator>
 #include <boost/gil/image_view_factory.hpp>
 
+#include <type_traits>
+
 namespace boost{namespace gil{ namespace detail {
 
 struct read_and_no_convert 
@@ -103,10 +105,10 @@ public:
 /// is_read_only metafunction
 /// \brief Determines if reader type is read only ( no conversion ).
 template< typename Conversion_Policy >
-struct is_read_only : mpl::false_ {};
+struct is_read_only : std::false_type {};
 
 template<>
-struct is_read_only< detail::read_and_no_convert > : mpl::true_ {};
+struct is_read_only< detail::read_and_no_convert > : std::true_type {};
 
 } // namespace detail
 } // namespace gil

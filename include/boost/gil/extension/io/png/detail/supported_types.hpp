@@ -329,7 +329,7 @@ template< typename Pixel >
 struct is_read_supported< Pixel
                         , png_tag
                         >
-    : mpl::bool_< detail::png_read_support< typename channel_type< Pixel >::type
+    : std::bool_constant< detail::png_read_support< typename channel_type< Pixel >::type
                                           , typename color_space_type< Pixel >::type
                                           >::is_supported
                 >
@@ -346,7 +346,7 @@ template< typename Pixel >
 struct is_write_supported< Pixel
                          , png_tag
                          >
-    : mpl::bool_< detail::png_write_support< typename channel_type< Pixel >::type
+    : std::bool_constant< detail::png_write_support< typename channel_type< Pixel >::type
                                            , typename color_space_type< Pixel >::type
                                            >::is_supported
                 > 

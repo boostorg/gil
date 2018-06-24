@@ -20,7 +20,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/mpl/not.hpp>
-#include <boost/type_traits/is_same.hpp>
 
 #include <boost/gil/channel.hpp>
 #include <boost/gil/color_base.hpp>
@@ -91,7 +90,7 @@ template< typename Pixel >
 struct is_read_supported< Pixel
                         , jpeg_tag
                         > 
-    : mpl::bool_< detail::jpeg_read_support< typename channel_type< Pixel >::type
+    : std::bool_constant< detail::jpeg_read_support< typename channel_type< Pixel >::type
                                            , typename color_space_type< Pixel >::type
                                            >::is_supported
                 >
@@ -107,7 +106,7 @@ template< typename Pixel >
 struct is_write_supported< Pixel
                          , jpeg_tag
                          >
-    : mpl::bool_< detail::jpeg_write_support< typename channel_type< Pixel >::type
+    : std::bool_constant< detail::jpeg_write_support< typename channel_type< Pixel >::type
                                             , typename color_space_type< Pixel >::type
                                             >::is_supported
                 > 

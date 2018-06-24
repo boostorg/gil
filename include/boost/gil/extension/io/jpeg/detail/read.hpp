@@ -20,7 +20,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include <csetjmp>
+#include <type_traits>
 #include <vector>
+
 #include <boost/gil/extension/io/jpeg/tags.hpp>
 
 #include <boost/gil/io/base.hpp>
@@ -113,7 +115,7 @@ public:
 
         this->get()->dct_method = this->_settings._dct_method;
 
-        typedef typename is_same< ConversionPolicy
+        typedef typename std::is_same< ConversionPolicy
                                 , detail::read_and_no_convert
                                 >::type is_read_and_convert_t;
 

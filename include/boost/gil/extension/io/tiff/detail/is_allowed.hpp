@@ -19,9 +19,11 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
+#include <boost/gil/io/base.hpp>
+
 #include <boost/mpl/for_each.hpp>
 
-#include <boost/gil/io/base.hpp>
+#include <type_traits>
 
 namespace boost { namespace gil { namespace detail {
 
@@ -75,13 +77,13 @@ template< typename View, typename Channel > struct Format_Type< View
 };
 
 //template< typename Channel >
-//int format_value( mpl::true_ ) // is_bit_aligned
+//int format_value( std::true_type ) // is_bit_aligned
 //{
 //    return SAMPLEFORMAT_UINT;
 //}
 //
 //template< typename Channel >
-//int format_value( mpl::false_ ) // is_bit_aligned
+//int format_value( std::false_type ) // is_bit_aligned
 //{
 //    if( is_unsigned< Channel >::value )
 //    {
@@ -105,8 +107,8 @@ template< typename View, typename Channel > struct Format_Type< View
 // a pixel_t as template parameter whereas the other is using reference_t.
 template< typename View >
 bool compare_channel_sizes( const channel_sizes_t& channel_sizes // in bits
-                          , mpl::false_                          // is_bit_aligned
-                          , mpl::true_                           // is_homogeneous
+                          , std::false_type                      // is_bit_aligned
+                          , std::true_type                       // is_homogeneous
                           )
 {
     typedef typename View::value_type pixel_t;
@@ -121,8 +123,8 @@ bool compare_channel_sizes( const channel_sizes_t& channel_sizes // in bits
 
 template< typename View >
 bool compare_channel_sizes( const channel_sizes_t& channel_sizes // in bits
-                          , mpl::true_                           // is_bit_aligned
-                          , mpl::true_                           // is_homogeneous
+                          , std::true_type                       // is_bit_aligned
+                          , std::true_type                       // is_homogeneous
                           )
 {
     typedef typename View::reference ref_t;
@@ -166,8 +168,8 @@ struct channel_sizes_type< const bit_aligned_pixel_reference< B, C, L, M > > { t
 
 template< typename View >
 bool compare_channel_sizes( channel_sizes_t& channel_sizes // in bits
-                          , mpl::true_                     // is_bit_aligned
-                          , mpl::false_                    // is_homogeneous
+                          , std::true_type                 // is_bit_aligned
+                          , std::false_type                // is_homogeneous
                           )
 {
     // loop through all channels and compare
@@ -183,7 +185,7 @@ bool compare_channel_sizes( channel_sizes_t& channel_sizes // in bits
 
 template< typename View >
 bool is_allowed( const image_read_info< tiff_tag >& info
-               , mpl::true_ // is read_and_no_convert
+               , std::true_type // is read_and_no_convert
                )
 {
     channel_sizes_t channel_sizes( info._samples_per_pixel
@@ -213,7 +215,7 @@ bool is_allowed( const image_read_info< tiff_tag >& info
 
 template< typename View >
 bool is_allowed( const image_read_info< tiff_tag >& /* info */
-               , mpl::false_ // is read_and_no_convert
+               , std::false_type // is read_and_no_convert
                )
 {
     return true;

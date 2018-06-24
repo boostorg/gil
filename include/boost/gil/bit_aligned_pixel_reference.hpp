@@ -37,6 +37,8 @@
 #include "pixel.hpp"
 #include "channel.hpp"
 
+#include <type_traits>
+
 namespace boost { namespace gil {
 
 /////////////////////////////
@@ -153,9 +155,9 @@ struct bit_aligned_pixel_reference {
     }
 
     const bit_aligned_pixel_reference& operator=(const bit_aligned_pixel_reference& p) const { static_copy(p,*this); return *this; }
-    template <typename P> const bit_aligned_pixel_reference& operator=(const P& p) const { assign(p, mpl::bool_<is_pixel<P>::value>()); return *this; } 
+    template <typename P> const bit_aligned_pixel_reference& operator=(const P& p) const { assign(p, std::bool_constant<is_pixel<P>::value>()); return *this; } 
 
-    template <typename P> bool operator==(const P& p) const { return equal(p, mpl::bool_<is_pixel<P>::value>()); } 
+    template <typename P> bool operator==(const P& p) const { return equal(p, std::bool_constant<is_pixel<P>::value>()); } 
     template <typename P> bool operator!=(const P& p) const { return !(*this==p); }
 
     const bit_aligned_pixel_reference* operator->()    const { return this; }
@@ -167,13 +169,13 @@ private:
 
     template <typename Pixel> static void check_compatible() { gil_function_requires<PixelsCompatibleConcept<Pixel,bit_aligned_pixel_reference> >(); }
 
-    template <typename Pixel> void assign(const Pixel& p, mpl::true_) const { check_compatible<Pixel>(); static_copy(p,*this); } 
-    template <typename Pixel> bool  equal(const Pixel& p, mpl::true_) const { check_compatible<Pixel>(); return static_equal(*this,p); } 
+    template <typename Pixel> void assign(const Pixel& p, std::true_type) const { check_compatible<Pixel>(); static_copy(p,*this); } 
+    template <typename Pixel> bool  equal(const Pixel& p, std::true_type) const { check_compatible<Pixel>(); return static_equal(*this,p); } 
 
 private:
-    static void check_gray() {  BOOST_STATIC_ASSERT((is_same<typename Layout::color_space_t, gray_t>::value)); }
-    template <typename Channel> void assign(const Channel& chan, mpl::false_) const { check_gray(); gil::at_c<0>(*this)=chan; }
-    template <typename Channel> bool equal (const Channel& chan, mpl::false_) const { check_gray(); return gil::at_c<0>(*this)==chan; }
+    static void check_gray() {  BOOST_STATIC_ASSERT((std::is_same<typename Layout::color_space_t, gray_t>::value)); }
+    template <typename Channel> void assign(const Channel& chan, std::false_type) const { check_gray(); gil::at_c<0>(*this)=chan; }
+    template <typename Channel> bool equal (const Channel& chan, std::false_type) const { check_gray(); return gil::at_c<0>(*this)==chan; }
 };
 
 /////////////////////////////
@@ -223,7 +225,7 @@ at_c(const bit_aligned_pixel_reference<BitField,ChannelBitSizes,L,Mutable>& p) {
 
 /// Metafunction predicate that flags bit_aligned_pixel_reference as a model of PixelConcept. Required by PixelConcept
 template <typename B, typename C, typename L, bool M>  
-struct is_pixel<bit_aligned_pixel_reference<B,C,L,M> > : public mpl::true_{};
+struct is_pixel<bit_aligned_pixel_reference<B,C,L,M> > : public std::true_type {};
 
 /////////////////////////////
 //  PixelBasedConcept
@@ -240,7 +242,7 @@ struct channel_mapping_type<bit_aligned_pixel_reference<B,C,L,M> > {
 }; 
 
 template <typename B, typename C, typename L, bool M>
-struct is_planar<bit_aligned_pixel_reference<B,C,L,M> > : mpl::false_ {}; 
+struct is_planar<bit_aligned_pixel_reference<B,C,L,M> > : std::false_type {}; 
 
 /////////////////////////////
 //  pixel_reference_type

@@ -447,7 +447,7 @@ struct channel_mapping_type<  subchroma_image< Pixel, Factors, Alloc > >
 
 template < typename Pixel, typename Factors, typename Alloc >
 struct is_planar< subchroma_image< Pixel, Factors, Alloc > >
-    : public mpl::bool_< false > {};
+    : public std::bool_constant< false > {};
 
 
 /////////////////////////////////////////////////////////////////////////////////////////

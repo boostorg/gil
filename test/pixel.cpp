@@ -11,8 +11,8 @@
 #include <exception>
 #include <iostream>
 #include <iterator>
+
 #include <boost/core/ignore_unused.hpp>
-#include <boost/type_traits.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/size.hpp>
 #include <boost/mpl/at.hpp>
@@ -31,6 +31,8 @@
 #include <boost/gil/gil_concept.hpp>
 #include <boost/gil/metafunctions.hpp>
 #include <boost/gil/bit_aligned_pixel_reference.hpp>
+
+#include <type_traits>
 
 // Testing pixel references and values, pixel operations, color conversion
 
@@ -113,15 +115,15 @@ struct do_basic_test : public C1, public C2 {
 
         // Test swap if both are mutable and if their value type is the same
         // (We know the second one is mutable)
-        typedef typename boost::add_reference<typename C1::type>::type p1_ref;
+        typedef typename std::add_lvalue_reference<typename C1::type>::type p1_ref;
         test_swap(
-            boost::mpl::bool_<
+            std::bool_constant<
                 pixel_reference_is_mutable<p1_ref>::value && 
-                boost::is_same<pixel1_value_t,pixel2_value_t>::value> ());
+                std::is_same<pixel1_value_t,pixel2_value_t>::value>());
     }
      
-    void test_swap(boost::mpl::false_) {}
-    void test_swap(boost::mpl::true_) {
+    void test_swap(std::false_type) {}
+    void test_swap(std::true_type) {
         // test swap
         static_fill(C1::_pixel, 0);
         static_fill(C2::_pixel, 1);
@@ -198,7 +200,7 @@ void for_each(Fun fun) {
 template <typename Pixel1>
 struct ccv2 {
     template <typename P1, typename P2>
-    void color_convert_compatible(const P1& p1, P2& p2, mpl::true_) {
+    void color_convert_compatible(const P1& p1, P2& p2, std::true_type) {
         typedef typename P1::value_type value_t;
         p2 = p1;
         value_t converted;
@@ -207,13 +209,13 @@ struct ccv2 {
     }
 
     template <typename P1, typename P2>
-    void color_convert_compatible(const P1& p1, P2& p2, mpl::false_) {
+    void color_convert_compatible(const P1& p1, P2& p2, std::false_type) {
         color_convert(p1,p2);
     }
 
     template <typename P1, typename P2>
     void color_convert_impl(const P1& p1, P2& p2) {
-        color_convert_compatible(p1, p2, mpl::bool_<pixels_are_compatible<P1,P2>::value>());
+        color_convert_compatible(p1, p2, std::bool_constant<pixels_are_compatible<P1,P2>::value>());
     }
 
 

@@ -22,6 +22,7 @@
 #include <boost/bind.hpp>
 
 #include <array>
+#include <type_traits>
 
 namespace boost { namespace gil { namespace detail {
 
@@ -46,7 +47,7 @@ struct mirror_bits
 // mirror operation is quite costly.
 template< typename Buffer >
 struct mirror_bits< Buffer
-                  , mpl::true_
+                  , std::true_type
                   >
 {
    mirror_bits( bool apply_operation = true )
@@ -70,7 +71,7 @@ struct mirror_bits< Buffer
             for_each( buf.begin()
                     , buf.end()
                     , boost::bind( &mirror_bits< Buffer
-                                               , mpl::true_
+                                               , std::true_type
                                                >::lookup
                                  , *this
                                  , ::_1
@@ -107,7 +108,7 @@ private:
 
         return result;
     }
- 
+
 private:
 
     bool _apply_operation;
@@ -126,13 +127,13 @@ struct negate_bits
 };
 
 template< typename Buffer >
-struct negate_bits< Buffer, mpl::true_ >
+struct negate_bits< Buffer, std::true_type>
 {
     void operator() ( Buffer& buf )
     {
         for_each( buf.begin()
                 , buf.end()
-                , negate_bits< Buffer, mpl::true_ >::negate
+                , negate_bits< Buffer, std::true_type>::negate
                 );
     }
 
@@ -165,14 +166,14 @@ struct swap_half_bytes
 
 template< typename Buffer >
 struct swap_half_bytes< Buffer
-                      , mpl::true_
+                      , std::true_type
                       >
 {
     void operator() ( Buffer& buf )
     {
         for_each( buf.begin()
                 , buf.end()
-                , swap_half_bytes< Buffer, mpl::true_ >::swap
+                , swap_half_bytes< Buffer, std::true_type>::swap
                 );
     }
 

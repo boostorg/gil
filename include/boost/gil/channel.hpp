@@ -27,17 +27,15 @@
 #include <limits>
 #include <cassert>
 #include <cstdint>
+#include <type_traits>
 
 #include <boost/config.hpp>
 #include <boost/integer/integer_mask.hpp>
-#include <boost/type_traits/remove_cv.hpp>
 
 #include "gil_config.hpp"
 #include "utilities.hpp"
 
-
 namespace boost { namespace gil {
-
 
 ///////////////////////////////////////////
 ////  channel_traits
@@ -248,7 +246,7 @@ typedef packed_channel_value<4> bits4;
 assert(channel_traits<bits4>::min_value()==0);
 assert(channel_traits<bits4>::max_value()==15);
 assert(sizeof(bits4)==1);
-BOOST_STATIC_ASSERT((boost::is_integral<bits4>::value));
+BOOST_STATIC_ASSERT((std::is_integral<bits4>::value));
 \endcode
 */
 
@@ -605,21 +603,22 @@ void swap(const boost::gil::packed_dynamic_channel_reference<BF,NB,M> x, const b
 }
 }   // namespace std
 
-namespace boost {
+// TODO: Review these specializations
+namespace std {
 
 template <int NumBits>
-struct is_integral<gil::packed_channel_value<NumBits> > : public mpl::true_ {};
+struct is_integral<boost::gil::packed_channel_value<NumBits> > : public std::true_type {};
 
 template <typename BitField, int FirstBit, int NumBits, bool IsMutable>
-struct is_integral<gil::packed_channel_reference<BitField,FirstBit,NumBits,IsMutable> > : public mpl::true_ {};
+struct is_integral<boost::gil::packed_channel_reference<BitField,FirstBit,NumBits,IsMutable> > : public std::true_type {};
 
 template <typename BitField, int NumBits, bool IsMutable>
-struct is_integral<gil::packed_dynamic_channel_reference<BitField,NumBits,IsMutable> > : public mpl::true_ {};
+struct is_integral<boost::gil::packed_dynamic_channel_reference<BitField,NumBits,IsMutable> > : public std::true_type {};
 
 template <typename BaseChannelValue, typename MinVal, typename MaxVal> 
-struct is_integral<gil::scoped_channel_value<BaseChannelValue,MinVal,MaxVal> > : public is_integral<BaseChannelValue> {};
+struct is_integral<boost::gil::scoped_channel_value<BaseChannelValue,MinVal,MaxVal> > : public is_integral<BaseChannelValue> {};
 
-} // namespace boost
+} // namespace std
 
 // \brief Determines the fundamental type which may be used, e.g., to cast from larger to smaller channel types.
 namespace boost { namespace gil {
@@ -643,7 +642,7 @@ struct base_channel_type_impl<scoped_channel_value<ChannelValue, MinV, MaxV> >
 { typedef ChannelValue type; };
 
 template <typename T>
-struct base_channel_type : base_channel_type_impl<typename remove_cv<T>::type > {};
+struct base_channel_type : base_channel_type_impl<typename std::remove_cv<T>::type > {};
 
 }} //namespace boost::gil
 

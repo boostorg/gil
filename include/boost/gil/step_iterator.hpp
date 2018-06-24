@@ -30,6 +30,8 @@
 #include "pixel_iterator.hpp"
 #include "pixel_iterator_adaptor.hpp"
 
+#include <type_traits>
+
 namespace boost { namespace gil {
 
 /// \defgroup PixelIteratorModelStepPtr step iterators
@@ -188,7 +190,7 @@ struct iterator_is_mutable<memory_based_step_iterator<Iterator> > : public itera
 /////////////////////////////
 
 template <typename Iterator>
-struct is_iterator_adaptor<memory_based_step_iterator<Iterator> > : public mpl::true_{};
+struct is_iterator_adaptor<memory_based_step_iterator<Iterator> > : public std::true_type {};
 
 template <typename Iterator>
 struct iterator_adaptor_get_base<memory_based_step_iterator<Iterator> > {
@@ -280,19 +282,19 @@ namespace detail {
 
 // if the iterator is a plain base iterator (non-adaptor), wraps it in memory_based_step_iterator
 template <typename I> 
-typename dynamic_x_step_type<I>::type make_step_iterator_impl(const I& it, std::ptrdiff_t step, mpl::false_) {
+typename dynamic_x_step_type<I>::type make_step_iterator_impl(const I& it, std::ptrdiff_t step, std::false_type) {
     return memory_based_step_iterator<I>(it, step);
 }
 
 // If the iterator is compound, put the step in its base
 template <typename I> 
-typename dynamic_x_step_type<I>::type make_step_iterator_impl(const I& it, std::ptrdiff_t step, mpl::true_) {
+typename dynamic_x_step_type<I>::type make_step_iterator_impl(const I& it, std::ptrdiff_t step, std::true_type) {
     return make_step_iterator(it.base(), step);
 }
 
 // If the iterator is memory_based_step_iterator, change the step
 template <typename BaseIt> 
-memory_based_step_iterator<BaseIt> make_step_iterator_impl(const memory_based_step_iterator<BaseIt>& it, std::ptrdiff_t step, mpl::true_) {
+memory_based_step_iterator<BaseIt> make_step_iterator_impl(const memory_based_step_iterator<BaseIt>& it, std::ptrdiff_t step, std::true_type) {
     return memory_based_step_iterator<BaseIt>(it.base(), step);
 }
 }

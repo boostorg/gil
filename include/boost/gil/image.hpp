@@ -28,11 +28,12 @@
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/arithmetic.hpp>
 
-
 #include "gil_config.hpp"
 #include "image_view.hpp"
 #include "metafunctions.hpp"
 #include "algorithm.hpp"
+
+#include <type_traits>
 
 namespace boost { namespace gil {
 
@@ -178,7 +179,7 @@ public:
             destruct_pixels( _view );
 
             create_view( dims
-                       , typename mpl::bool_<IsPlanar>()
+                       , typename std::bool_constant<IsPlanar>()
                        );
 
             default_construct_pixels( _view );
@@ -210,7 +211,7 @@ public:
             destruct_pixels( _view );
 
             create_view( dims
-                       , typename mpl::bool_<IsPlanar>()
+                       , typename std::bool_constant<IsPlanar>()
                        );
 
             uninitialized_fill_pixels(_view, p_in);
@@ -246,7 +247,7 @@ public:
             destruct_pixels( _view );
 
             create_view( dims
-                       , typename mpl::bool_<IsPlanar>()
+                       , typename std::bool_constant<IsPlanar>()
                        );
 
             default_construct_pixels( _view );
@@ -280,7 +281,7 @@ public:
             destruct_pixels( _view );
 
             create_view( dims
-                       , typename mpl::bool_<IsPlanar>()
+                       , typename std::bool_constant<IsPlanar>()
                        );
 
             uninitialized_fill_pixels(_view, p_in);
@@ -310,14 +311,14 @@ private:
 
     void allocate_and_default_construct(const point_t& dimensions) {
         try {
-            allocate_(dimensions,mpl::bool_<IsPlanar>());
+            allocate_(dimensions,std::bool_constant<IsPlanar>());
             default_construct_pixels(_view);
         } catch(...) { deallocate(); throw; }
     }
 
     void allocate_and_fill(const point_t& dimensions, const Pixel& p_in) {
         try {
-            allocate_(dimensions,mpl::bool_<IsPlanar>());
+            allocate_(dimensions,std::bool_constant<IsPlanar>());
             uninitialized_fill_pixels(_view, p_in);
         } catch(...) { deallocate(); throw; }
     }
@@ -325,7 +326,7 @@ private:
     template <typename View>
     void allocate_and_copy(const point_t& dimensions, const View& v) {
         try {
-            allocate_(dimensions,mpl::bool_<IsPlanar>());
+            allocate_(dimensions,std::bool_constant<IsPlanar>());
             uninitialized_copy_pixels(v,_view);
         } catch(...) { deallocate(); throw; }
     }
@@ -339,7 +340,7 @@ private:
 
     std::size_t is_planar_impl( const std::size_t size_in_units
                               , const std::size_t channels_in_image
-                              , mpl::true_
+                              , std::true_type
                               ) const
     {
         return size_in_units * channels_in_image;
@@ -347,7 +348,7 @@ private:
 
     std::size_t is_planar_impl( const std::size_t size_in_units
                               , const std::size_t
-                              , mpl::false_
+                              , std::false_type
                               ) const
     {
         return size_in_units;
@@ -365,7 +366,7 @@ private:
 
         std::size_t size_in_units = is_planar_impl( get_row_size_in_memunits( dimensions.x ) * dimensions.y
                                                   , _channels_in_image
-                                                  , typename mpl::bool_<IsPlanar>()
+                                                  , typename std::bool_constant<IsPlanar>()
                                                   );
 
         // return the size rounded up to the nearest byte
@@ -383,7 +384,7 @@ private:
         return size_in_memunits;
     }
 
-    void allocate_(const point_t& dimensions, mpl::false_) {  // if it throws and _memory!=0 the client must deallocate _memory
+    void allocate_(const point_t& dimensions, std::false_type) {  // if it throws and _memory!=0 the client must deallocate _memory
 
         _allocated_bytes = total_allocated_size_in_bytes(dimensions);
         _memory=_alloc.allocate( _allocated_bytes );
@@ -392,7 +393,7 @@ private:
         _view=view_t(dimensions,typename view_t::locator(typename view_t::x_iterator(tmp),get_row_size_in_memunits(dimensions.x)));
     }
 
-    void allocate_(const point_t& dimensions, mpl::true_) {   // if it throws and _memory!=0 the client must deallocate _memory
+    void allocate_(const point_t& dimensions, std::true_type) {   // if it throws and _memory!=0 the client must deallocate _memory
         std::size_t row_size=get_row_size_in_memunits(dimensions.x);
         std::size_t plane_size=row_size*dimensions.y;
 
@@ -410,7 +411,7 @@ private:
     }
 
     void create_view( const point_t& dims
-                    , mpl::true_ // is planar
+                    , std::true_type // is planar
                     )
     {
         std::size_t row_size=get_row_size_in_memunits(dims.x);
@@ -439,7 +440,7 @@ private:
     }
 
     void create_view( const point_t& dims
-                    , mpl::false_ // is planar
+                    , std::false_type // is planar
                     )
     {
         unsigned char* tmp = ( _align_in_bytes > 0 ) ? ( unsigned char* ) align( (std::size_t) _memory
@@ -500,7 +501,7 @@ template <typename Pixel, bool IsPlanar, typename Alloc>
 struct channel_mapping_type<image<Pixel,IsPlanar,Alloc> > : public channel_mapping_type<Pixel> {};
 
 template <typename Pixel, bool IsPlanar, typename Alloc>
-struct is_planar<image<Pixel,IsPlanar,Alloc> > : public mpl::bool_<IsPlanar> {};
+struct is_planar<image<Pixel,IsPlanar,Alloc> > : public std::bool_constant<IsPlanar> {};
 
 //#ifdef _MSC_VER
 //#pragma warning(pop)

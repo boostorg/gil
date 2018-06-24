@@ -33,6 +33,8 @@
 #include <boost/gil/extension/io/png/detail/reader_backend.hpp>
 #include <boost/gil/extension/io/png/detail/is_allowed.hpp>
 
+#include <type_traits>
+
 namespace boost { namespace gil {
 
 #if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
@@ -248,7 +250,7 @@ private:
 
         typedef typename row_buffer_helper_t::iterator_t it_t;
 
-        typedef typename is_same< ConversionPolicy
+        typedef typename std::is_same< ConversionPolicy
                                 , detail::read_and_no_convert
                                 >::type is_read_and_convert_t;
 
