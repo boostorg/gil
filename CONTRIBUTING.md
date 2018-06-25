@@ -265,7 +265,7 @@ _TODO: Explain I/O dependencies (libjpeg, etc.)_
 
 ### Using CMake
 
-Maintainer: @mloskot
+Maintainer: [@mloskot](https://github.com/mloskot)
 
 **NOTE:** CMake configuration does not build any dependencies required by
 Boost.GIL like Boost.Test and Boost.Filesystem libraries or any
@@ -372,6 +372,6 @@ Here is an example of such lightweight workflow in Linux environment (Debian-bas
 
 ### Using Faber
 
-Maintainer: @stefanseefeld
+Maintainer: [@stefanseefeld](https://github.com/stefanseefeld)
 
 _TODO_
