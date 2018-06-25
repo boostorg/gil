@@ -21,6 +21,8 @@
 
 #include <boost/gil/extension/io/jpeg/tags.hpp>
 
+#include <memory>
+
 namespace boost { namespace gil {
 
 #if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
@@ -38,7 +40,7 @@ struct jpeg_decompress_wrapper
 {
 protected:
 
-    typedef boost::shared_ptr< jpeg_decompress_struct > jpeg_decompress_ptr_t;
+    using jpeg_decompress_ptr_t = std::shared_ptr<jpeg_decompress_struct> ;
 
 protected:
 

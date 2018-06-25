@@ -28,7 +28,6 @@ extern "C" {
 #include <string>
 #include <vector>
 #include <boost/static_assert.hpp>
-#include <boost/shared_ptr.hpp>
 
 #include <boost/gil/premultiply.hpp>
 

@@ -20,8 +20,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/gil/extension/io/jpeg/tags.hpp>
-
 #include <boost/gil/extension/io/jpeg/detail/base.hpp>
+
+#include <memory>
 
 namespace boost { namespace gil {
 
@@ -40,7 +41,7 @@ struct jpeg_compress_wrapper
 {
 protected:
 
-    typedef boost::shared_ptr< jpeg_compress_struct > jpeg_compress_ptr_t;
+    using jpeg_compress_ptr_t = std::shared_ptr<jpeg_compress_struct>;
 
 protected:
 
