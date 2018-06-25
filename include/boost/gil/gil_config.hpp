@@ -25,8 +25,6 @@
 #include <boost/config.hpp>
 #include <boost/config/pragma_message.hpp>
 
-#define GIL_VERSION "2.1.2"
-
 #if defined(BOOST_GIL_DOXYGEN_ONLY)
 /// \def BOOST_GIL_CONFIG_HAS_UNALIGNED_ACCESS
 /// \brief Define to allow unaligned memory access
