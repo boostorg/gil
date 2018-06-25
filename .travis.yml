@@ -111,7 +111,7 @@ matrix:
           - llvm-toolchain-trusty-5.0
 
     - os: linux
-      env: COMPILER=clang++-5.0 VARIANT=ubsan_undefined TOOLSET=clang CXXSTD=c++11 UBSAN_OPTIONS='print_stacktrace=1'
+      env: COMPILER=clang++-5.0 VARIANT=ubsan_nullability TOOLSET=clang CXXSTD=c++11 UBSAN_OPTIONS='print_stacktrace=1'
       addons:
         apt:
           packages:
@@ -121,7 +121,7 @@ matrix:
           - llvm-toolchain-trusty-5.0
 
     - os: linux
-      env: COMPILER=clang++-5.0 VARIANT=ubsan_nullability TOOLSET=clang CXXSTD=c++11 UBSAN_OPTIONS='print_stacktrace=1'
+      env: COMPILER=clang++-5.0 VARIANT=ubsan_undefined TOOLSET=clang CXXSTD=c++11 UBSAN_OPTIONS='print_stacktrace=1'
       addons:
         apt:
           packages:
@@ -141,6 +141,9 @@ matrix:
         apt:
           packages:
             - doxygen
+
+  allow_failures:
+    - env: COMPILER=clang++-5.0 VARIANT=ubsan_integer TOOLSET=clang CXXSTD=c++11 UBSAN_OPTIONS='print_stacktrace=1'
 
 install:
   - |-
