@@ -44,6 +44,7 @@ if [ "$TRAVIS_BRANCH" = develop -o "$TRAVIS_BRANCH" = doc ]; then
     cp -a html develop/doc/
     git add -A develop
 else
+    mkdir -p doc/
     cp ../index.html .
     cp ../doc/index.html doc/
     git add -A .
