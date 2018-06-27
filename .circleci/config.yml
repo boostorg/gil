@@ -485,7 +485,9 @@ workflows:
       - bootstrap_checkout:
           filters:
             branches:
-              only: develop
+              only:
+                - develop
+                - master
       - bootstrap_gcc:
           requires:
             - bootstrap_checkout
