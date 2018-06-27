@@ -392,8 +392,8 @@
 <div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;        <span class="comment">// when value_type is a non-pixel, like int or float, num_channels&lt; ... &gt; doesn&#39;t work.</span></div>
 <div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;        <span class="keyword">const</span> std::size_t _channels_in_image = mpl::eval_if&lt; is_pixel&lt; value_type &gt;</div>
 <div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;                                                           , <a class="code" href="structboost_1_1gil_1_1num__channels.html">num_channels&lt; view_t &gt;</a></div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;                                                           , mpl::int_&lt; 1 &gt;</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;                                                           &gt;::type::value;</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;                                                           , mpl::int_&lt; 1 &gt; </div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;                                                                                                                   &gt;::type::value;</div>
 <div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;</div>
 <div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;        std::size_t size_in_units = is_planar_impl( get_row_size_in_memunits( dimensions.x ) * dimensions.y</div>
 <div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;                                                  , _channels_in_image</div>
@@ -555,7 +555,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Mon Jun 25 2018 22:27:03 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Wed Jun 27 2018 15:13:32 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
