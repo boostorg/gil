@@ -68,23 +68,24 @@
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><a class="reference internal" href="#installation" id="id1">Installation</a></li>
-<li><a class="reference internal" href="#example-computing-the-image-gradient" id="id2">Example - Computing the Image Gradient</a><ul>
-<li><a class="reference internal" href="#interface-and-glue-code" id="id3">Interface and Glue Code</a></li>
-<li><a class="reference internal" href="#first-implementation" id="id4">First Implementation</a></li>
-<li><a class="reference internal" href="#using-locators" id="id5">Using Locators</a></li>
-<li><a class="reference internal" href="#creating-a-generic-version-of-gil-algorithms" id="id6">Creating a Generic Version of GIL Algorithms</a></li>
-<li><a class="reference internal" href="#image-view-transformations" id="id7">Image View Transformations</a></li>
-<li><a class="reference internal" href="#d-pixel-iterators" id="id8">1D pixel iterators</a></li>
-<li><a class="reference internal" href="#stl-equivalent-algorithms" id="id9">STL Equivalent Algorithms</a></li>
-<li><a class="reference internal" href="#color-conversion" id="id10">Color Conversion</a></li>
-<li><a class="reference internal" href="#image" id="id11">Image</a></li>
-<li><a class="reference internal" href="#virtual-image-views" id="id12">Virtual Image Views</a></li>
-<li><a class="reference internal" href="#run-time-specified-images-and-image-views" id="id13">Run-Time Specified Images and Image Views</a></li>
-<li><a class="reference internal" href="#conclusion" id="id14">Conclusion</a></li>
+<li><a class="reference internal" href="#video-lecture-by-lubomir-bourdev" id="id2">Video Lecture by Lubomir Bourdev</a></li>
+<li><a class="reference internal" href="#example-computing-the-image-gradient" id="id3">Example - Computing the Image Gradient</a><ul>
+<li><a class="reference internal" href="#interface-and-glue-code" id="id4">Interface and Glue Code</a></li>
+<li><a class="reference internal" href="#first-implementation" id="id5">First Implementation</a></li>
+<li><a class="reference internal" href="#using-locators" id="id6">Using Locators</a></li>
+<li><a class="reference internal" href="#creating-a-generic-version-of-gil-algorithms" id="id7">Creating a Generic Version of GIL Algorithms</a></li>
+<li><a class="reference internal" href="#image-view-transformations" id="id8">Image View Transformations</a></li>
+<li><a class="reference internal" href="#d-pixel-iterators" id="id9">1D pixel iterators</a></li>
+<li><a class="reference internal" href="#stl-equivalent-algorithms" id="id10">STL Equivalent Algorithms</a></li>
+<li><a class="reference internal" href="#color-conversion" id="id11">Color Conversion</a></li>
+<li><a class="reference internal" href="#image" id="id12">Image</a></li>
+<li><a class="reference internal" href="#virtual-image-views" id="id13">Virtual Image Views</a></li>
+<li><a class="reference internal" href="#run-time-specified-images-and-image-views" id="id14">Run-Time Specified Images and Image Views</a></li>
+<li><a class="reference internal" href="#conclusion" id="id15">Conclusion</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#appendix" id="id15">Appendix</a><ul>
-<li><a class="reference internal" href="#naming-convention-for-gil-concrete-types" id="id16">Naming convention for GIL concrete types</a></li>
+<li><a class="reference internal" href="#appendix" id="id16">Appendix</a><ul>
+<li><a class="reference internal" href="#naming-convention-for-gil-concrete-types" id="id17">Naming convention for GIL concrete types</a></li>
 </ul>
 </li>
 </ul>
@@ -96,8 +97,14 @@ GIL consists of header files only and does not require any libraries to
 link against. It does not require Boost to be built and including
 <code class="docutils literal notranslate"><span class="pre">boost/gil.hpp</span></code> will be sufficient for most projects.</p>
 </div>
+<div class="section" id="video-lecture-by-lubomir-bourdev">
+<h2><a class="toc-backref" href="#id2">Video Lecture by Lubomir Bourdev</a></h2>
+<div style="position: relative; overflow: hidden; max-width: 100%; height: auto;">
+    <iframe width="800" height="450" src="https://www.youtube.com/embed/sR8Wjg0pceE?rel=0" frameborder="0" allow="autoplay=false; encrypted-media" allowfullscreen></iframe>
+</div><p>Source link: <a class="reference external" href="https://www.youtube.com/watch?v=sR8Wjg0pceE">https://www.youtube.com/watch?v=sR8Wjg0pceE</a></p>
+</div>
 <div class="section" id="example-computing-the-image-gradient">
-<h2><a class="toc-backref" href="#id2">Example - Computing the Image Gradient</a></h2>
+<h2><a class="toc-backref" href="#id3">Example - Computing the Image Gradient</a></h2>
 <p>This tutorial will walk through an example of using GIL to compute the
 image gradients. We will start with some very simple and non-generic
 code and make it more generic as we go along.  Let us start with a
@@ -110,7 +117,7 @@ along the edges of the image for which one of the neighbors is not
 defined.  The focus of this document is how to use GIL, not how to
 create a good gradient generation algorithm.</p>
 <div class="section" id="interface-and-glue-code">
-<h3><a class="toc-backref" href="#id3">Interface and Glue Code</a></h3>
+<h3><a class="toc-backref" href="#id4">Interface and Glue Code</a></h3>
 <p>Let us first start with 8-bit unsigned grayscale image as the input and
 8-bit signed grayscale image as the output.
 Here is how the interface to our algorithm looks like:</p>
@@ -168,7 +175,7 @@ to the top left pixel and three integers - the width, height, and
 number of bytes per row.</p>
 </div>
 <div class="section" id="first-implementation">
-<h3><a class="toc-backref" href="#id4">First Implementation</a></h3>
+<h3><a class="toc-backref" href="#id5">First Implementation</a></h3>
 <p>Focusing on simplicity at the expense of speed, we can compute the horizontal
 gradient like this:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">x_gradient</span><span class="p">(</span><span class="k">const</span> <span class="n">gray8c_view_t</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">,</span> <span class="k">const</span> <span class="n">gray8s_view_t</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">)</span>
@@ -258,7 +265,7 @@ iterators - instead of <code class="docutils literal notranslate"><span class="p
 dereferences.</p>
 </div>
 <div class="section" id="using-locators">
-<h3><a class="toc-backref" href="#id5">Using Locators</a></h3>
+<h3><a class="toc-backref" href="#id6">Using Locators</a></h3>
 <p>Unfortunately this cache-friendly version requires the extra hassle of
 maintaining two separate iterators in the source view. For every
 pixel, we want to access its neighbors above and below it. Such
@@ -328,7 +335,7 @@ reuse this offset:</p>
 indexing operation and the code is efficient.</p>
 </div>
 <div class="section" id="creating-a-generic-version-of-gil-algorithms">
-<h3><a class="toc-backref" href="#id6">Creating a Generic Version of GIL Algorithms</a></h3>
+<h3><a class="toc-backref" href="#id7">Creating a Generic Version of GIL Algorithms</a></h3>
 <p>Let us make our <code class="docutils literal notranslate"><span class="pre">x_gradient</span></code> more generic. It should work with any
 image views, as long as they have the same number of channels.  The
 gradient operation is to be computed for each channel
@@ -475,7 +482,7 @@ algorithms apply to these images natively. See the design guide or
 sample files for more on using such images.</p>
 </div>
 <div class="section" id="image-view-transformations">
-<h3><a class="toc-backref" href="#id7">Image View Transformations</a></h3>
+<h3><a class="toc-backref" href="#id8">Image View Transformations</a></h3>
 <p>One way to compute the y-gradient is to rotate the image by 90
 degrees, compute the x-gradient and rotate the result back. Here is
 how to do this in GIL:</p>
@@ -526,7 +533,7 @@ represented as a single subsampled view whose step is the product of
 the steps of the two views.</p>
 </div>
 <div class="section" id="d-pixel-iterators">
-<h3><a class="toc-backref" href="#id8">1D pixel iterators</a></h3>
+<h3><a class="toc-backref" href="#id9">1D pixel iterators</a></h3>
 <p>Let’s go back to <code class="docutils literal notranslate"><span class="pre">x_gradient</span></code> one more time.  Many image view
 algorithms apply the same operation for each pixel and GIL provides an
 abstraction to handle them. However, our algorithm has an unusual
@@ -587,7 +594,7 @@ iterators to access the two neighbors properly, since they could
 reside outside the image view.</p>
 </div>
 <div class="section" id="stl-equivalent-algorithms">
-<h3><a class="toc-backref" href="#id9">STL Equivalent Algorithms</a></h3>
+<h3><a class="toc-backref" href="#id10">STL Equivalent Algorithms</a></h3>
 <p>GIL provides STL equivalents of many algorithms. For example,
 <code class="docutils literal notranslate"><span class="pre">std::transform</span></code> is an STL algorithm that sets each element in a
 destination range the result of a generic function taking the
@@ -621,7 +628,7 @@ through the pixels using the more efficient two nested loops (as
 opposed to the single loop using 1-D iterators)</p>
 </div>
 <div class="section" id="color-conversion">
-<h3><a class="toc-backref" href="#id10">Color Conversion</a></h3>
+<h3><a class="toc-backref" href="#id11">Color Conversion</a></h3>
 <p>Instead of computing the gradient of each color plane of an image, we
 often want to compute the gradient of the luminosity. In other words,
 we want to convert the color image to grayscale and compute the
@@ -659,7 +666,7 @@ this case and avoids calling the color conversion code at all -
 i.e. <code class="docutils literal notranslate"><span class="pre">color_converted_view</span></code> returns back the source view unchanged.</p>
 </div>
 <div class="section" id="image">
-<h3><a class="toc-backref" href="#id11">Image</a></h3>
+<h3><a class="toc-backref" href="#id12">Image</a></h3>
 <p>The above example has a performance problem - <code class="docutils literal notranslate"><span class="pre">x_gradient</span></code>
 dereferences most source pixels twice, which will cause the above code
 to perform color conversion twice.  Sometimes it may be more efficient
@@ -751,7 +758,7 @@ algorithm <code class="docutils literal notranslate"><span class="pre">copy_and_
 of <code class="docutils literal notranslate"><span class="pre">copy_pixels</span></code> with a color converted source view.</p>
 </div>
 <div class="section" id="virtual-image-views">
-<h3><a class="toc-backref" href="#id12">Virtual Image Views</a></h3>
+<h3><a class="toc-backref" href="#id13">Virtual Image Views</a></h3>
 <p>So far we have been dealing with images that have pixels stored in
 memory. GIL allows you to create an image view of an arbitrary image,
 including a synthetic function. To demonstrate this, let us create a
@@ -825,7 +832,7 @@ and the result:</p>
 <img alt="_images/mandel.jpg" src="_images/mandel.jpg" />
 </div>
 <div class="section" id="run-time-specified-images-and-image-views">
-<h3><a class="toc-backref" href="#id13">Run-Time Specified Images and Image Views</a></h3>
+<h3><a class="toc-backref" href="#id14">Run-Time Specified Images and Image Views</a></h3>
 <p>So far we have created a generic function that computes the image
 gradient of an image view template specialization.  Sometimes,
 however, the properties of an image view, such as its color space and
@@ -919,7 +926,7 @@ instantiated with every possible combination of the two input types!
 This can take a toll on both the compile time and the executable size.</p>
 </div>
 <div class="section" id="conclusion">
-<h3><a class="toc-backref" href="#id14">Conclusion</a></h3>
+<h3><a class="toc-backref" href="#id15">Conclusion</a></h3>
 <p>This tutorial provides a glimpse at the challenges associated with
 writing generic and efficient image processing algorithms in GIL.  We
 have taken a simple algorithm and shown how to make it work with image
@@ -963,9 +970,9 @@ code with different compilers.</p>
 </div>
 </div>
 <div class="section" id="appendix">
-<h2><a class="toc-backref" href="#id15">Appendix</a></h2>
+<h2><a class="toc-backref" href="#id16">Appendix</a></h2>
 <div class="section" id="naming-convention-for-gil-concrete-types">
-<h3><a class="toc-backref" href="#id16">Naming convention for GIL concrete types</a></h3>
+<h3><a class="toc-backref" href="#id17">Naming convention for GIL concrete types</a></h3>
 <p>Concrete (non-generic) GIL types follow this naming convention:</p>
 <p>_ColorSpace_ + _BitDepth_ + [<code class="docutils literal notranslate"><span class="pre">f</span></code> | <code class="docutils literal notranslate"><span class="pre">s</span></code>]+ [<code class="docutils literal notranslate"><span class="pre">c</span></code>] + [<code class="docutils literal notranslate"><span class="pre">_planar</span></code>] +
 [<code class="docutils literal notranslate"><span class="pre">_step</span></code>] + _ClassType_ + <code class="docutils literal notranslate"><span class="pre">_t</span></code></p>
