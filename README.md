@@ -7,7 +7,7 @@ representations from algorithms and allows writing code that can work on a
 variety of images with performance similar to hand-writing for a specific image type.
 
 [![Licence](https://img.shields.io/badge/license-boost-4480cc.png)](http://www.boost.org/LICENSE_1_0.txt)
-[![Documentation](https://img.shields.io/badge/gil-documentation-4480cc.png)](http://boostorg.github.com/gil/develop)
+[![Documentation](https://img.shields.io/badge/gil-documentation-4480cc.png)](http://boostorg.github.com/gil/)
 [![Wiki](https://img.shields.io/badge/gil-wiki-4480cc.png)](https://github.com/boostorg/gil/wiki)
 [![Mailing List](https://img.shields.io/badge/gil-mailing%20list-4eb899.png)](https://lists.boost.org/mailman/listinfo.cgi/boost-gil)
 [![Gitter](https://img.shields.io/badge/gil-chat%20on%20gitter-4eb899.png)](https://gitter.im/boostorg/gil)
