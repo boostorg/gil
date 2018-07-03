@@ -130,6 +130,8 @@ git remote add username https://github.com/username/gil.git
 All Boost.GIL contributions should be developed inside a topic branch created by
 branching off the `develop` branch of [boostorg/gil](https://github.com/boostorg/gil).
 
+**IMPORTANT:** Pull Requests must come from a branch based on `develop`, and **never** on `master`.
+
 **NOTE:** The branching workflow model
 [Boost recommends](https://svn.boost.org/trac10/wiki/StartModWorkflow)
 is called Git Flow.
