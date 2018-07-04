@@ -12,6 +12,17 @@ GIL consists of header files only and does not require any libraries to
 link against. It does not require Boost to be built and including
 ``boost/gil.hpp`` will be sufficient for most projects.
 
+Video Lecture by Lubomir Bourdev
+--------------------------------
+
+.. raw:: html
+
+    <div style="position: relative; overflow: hidden; max-width: 100%; height: auto;">
+        <iframe width="800" height="450" src="https://www.youtube.com/embed/sR8Wjg0pceE?rel=0" frameborder="0" allow="autoplay=false; encrypted-media" allowfullscreen></iframe>
+    </div>
+
+Source link: https://www.youtube.com/watch?v=sR8Wjg0pceE
+
 Example - Computing the Image Gradient
 --------------------------------------
 
