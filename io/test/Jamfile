@@ -16,6 +16,8 @@ using zlib ;
 using libpng : : : : true ;
 using libtiff : : : : true ;
 
+lib raw : : <name>raw ;
+
 project
     : requirements
     <include>$(BOOST_ROOT)
@@ -53,8 +55,14 @@ test-suite full :
           [ ac.check-library /libpng//libpng : <library>/libpng//libpng : <build>no ]
     ]
     [ run pnm_test.cpp pnm_old_test.cpp pnm_read_test.cpp pnm_write_test.cpp ]
-    #raw_test.cpp
-        [ run targa_test.cpp targa_old_test.cpp targa_read_test.cpp targa_write_test.cpp ]
+    [ run raw_test.cpp
+      : # args
+      : # input files
+      : # requirements
+        <define>BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES
+	<library>raw
+    ]
+    [ run targa_test.cpp targa_old_test.cpp targa_read_test.cpp targa_write_test.cpp ]
     [ run
           tiff_test.cpp
           tiff_old_test.cpp

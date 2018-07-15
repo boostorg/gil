@@ -28,7 +28,7 @@
 #include <boost/gil/io/conversion_policies.hpp>
 #include <boost/gil/io/row_buffer_helper.hpp>
 #include <boost/gil/io/reader_base.hpp>
-#include <boost/gil/io/io_device.hpp>
+#include <boost/gil/io/device.hpp>
 #include <boost/gil/io/typedefs.hpp>
 
 #include <boost/gil/extension/io/raw/detail/is_allowed.hpp>
@@ -128,7 +128,7 @@ public:
         // TODO: better error handling based on return code
         int return_code = this->_io_dev.unpack();
         io_error_if( return_code != LIBRAW_SUCCESS, "Unable to unpack image" );
-        this->_info._unpack_function_name = _io_dev.get_unpack_function_name();
+        this->_info._unpack_function_name = this->_io_dev.get_unpack_function_name();
 
         return_code = this->_io_dev.dcraw_process();
         io_error_if( return_code != LIBRAW_SUCCESS, "Unable to emulate dcraw behavior to process image" );
@@ -235,12 +235,8 @@ public:
         else
         {
             if( !this->_info._valid )
-            {
-                this->get_info();
-            }
-            init_image( images
-                       , this->_settings
-                       );
+	      this->read_header();
+            this->init_image(images, this->_settings);
 
             detail::dynamic_io_fnobj< detail::raw_read_is_supported
                                     , parent_t
