@@ -22,7 +22,7 @@
 #include <boost/utility/enable_if.hpp>
 
 #include <boost/gil/io/base.hpp>
-#include <boost/gil/io/io_device.hpp>
+#include <boost/gil/io/device.hpp>
 
 #include <memory>
 

@@ -13,12 +13,6 @@ image: Visual Studio 2017
 
 platform: x64
 
-branches:
-  only:
-    - master
-    - develop
-    - ci
-
 shallow_clone: true
 
 environment:
