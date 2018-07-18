@@ -121,7 +121,7 @@ public:
             png_set_palette_to_rgb( this->get_struct() );
         }
 
-        if( this->_info._num_trans > 0 )
+        if( png_get_valid( this->get_struct(), this->get_info(), PNG_INFO_tRNS ) )
         {
             png_set_tRNS_to_alpha( this->get_struct() );
         }
