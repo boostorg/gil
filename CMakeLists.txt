@@ -97,11 +97,13 @@ if (GIL_ENABLE_IO)
     find_package(JPEG)
     find_package(PNG)
     find_package(TIFF)
-  endif()
 
-  # C++ stream interface for TIFF
-  find_path(_tiffxx_include_dir NAMES tiffio.hxx)
-  find_library(_tiffxx_library NAMES tiffxx)
+    if (NOT MSVC)
+      # Typically, Linux packages provide C++ stream interface for TIFF
+      find_path(_tiffxx_include_dir NAMES tiffio.hxx)
+      find_library(_tiffxx_library NAMES tiffxx)
+    endif()
+  endif()
 endif()
 
 #-----------------------------------------------------------------------------

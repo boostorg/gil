@@ -8,7 +8,18 @@
 #
 message(STATUS "Configuring Boost.GIL examples tests")
 
-foreach(name affine convolution dynamic_image histogram interleaved_ptr mandelbrot packed_pixel resize x_gradient)
+# MWE is dedicated for GIL users and contributors, compiled source file is ignored by git
+if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/minimal_working_example.cpp)
+  configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/minimal_working_example.cpp.in
+    ${CMAKE_CURRENT_SOURCE_DIR}/minimal_working_example.cpp
+    COPYONLY)
+endif()
+
+file(GLOB _examples ${CMAKE_CURRENT_LIST_DIR}/*.cpp CONFIGURE_DEPEND)
+
+foreach(example ${_examples})
+  get_filename_component(name ${example} NAME_WE)
   add_executable(gil_example_${name} ${name}.cpp)
   target_compile_definitions(gil_example_${name} PRIVATE BOOST_GIL_USE_CONCEPT_CHECK=1)
   # Unfortunately, ALIAS of imported target is not supported
@@ -29,6 +40,9 @@ foreach(name affine convolution dynamic_image histogram interleaved_ptr mandelbr
       PNG::PNG
       TIFF::TIFF
       ${JPEG_LIBRARIES})
-    target_include_directories(gil_example_${name} ${JPEG_INCLUDE_DIR})
+    if (JPEG_LIBRARIES AND JPEG_INCLUDE_DIR)
+      target_include_directories(gil_example_${name} PRIVATE ${JPEG_INCLUDE_DIR})
+    endif()
   endif()
 endforeach()
+
