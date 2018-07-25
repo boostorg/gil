@@ -14,6 +14,7 @@ stdcerr
 /*build*
 /cmake-build-debug/
 /cmake-build-release/
+/example/minimal_working_example.cpp
 
 # JetBrains
 /.idea

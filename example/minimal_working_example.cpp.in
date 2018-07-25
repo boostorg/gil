@@ -1,0 +1,23 @@
+#include <boost/gil.hpp>
+#include <boost/gil/io/io.hpp>
+#include <iostream>
+// TODO: include any headers you may require
+namespace gil = boost::gil;
+
+int main(int argc, char* argv[])
+{
+    try
+    {
+        // TODO: Write your example below
+        gil::rgb8_pixel_t white{255, 255, 255};
+        gil::rgb8_image_t image(256, 256);
+        gil::fill_pixels(gil::view(image), white);
+
+        return EXIT_SUCCESS;
+    }
+    catch (std::exception const& e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
+    return EXIT_FAILURE;
+}

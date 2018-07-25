@@ -29,13 +29,17 @@ list(APPEND _headers ${_boost_gil_headers})
 
 add_definitions(-DBOOST_GIL_IO_TEST_ALLOW_READING_IMAGES=1)
 add_definitions(-DBOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES=1)
-add_definitions(-DBOOST_TEST_DYN_LINK)
+if(NOT MSVC)
+  add_definitions(-DBOOST_TEST_DYN_LINK)
+endif()
 
 add_executable(gil_test_ext_io_simple "")
 target_sources(gil_test_ext_io_simple PRIVATE ${_headers} all_formats_test.cpp)
 target_link_libraries(gil_test_ext_io_simple PRIVATE
   ${_boost_deps} ${_jpeg_deps} ${_png_deps} ${_tiff_deps})
-target_include_directories(gil_test_ext_io_simple PRIVATE ${JPEG_INCLUDE_DIR})
+if (JPEG_LIBRARIES AND JPEG_INCLUDE_DIR)
+  target_include_directories(gil_test_ext_io_simple PRIVATE ${JPEG_INCLUDE_DIR})
+endif()
 add_test(tests.ext.io.simple gil_test_ext_io_simple)
 
 add_executable(gil_test_ext_io_bmp "")
@@ -48,7 +52,9 @@ add_executable(gil_test_ext_io_jpeg "")
 target_sources(gil_test_ext_io_jpeg PRIVATE ${_headers}
   jpeg_test.cpp jpeg_old_test.cpp jpeg_read_test.cpp jpeg_write_test.cpp)
 target_link_libraries(gil_test_ext_io_jpeg PRIVATE ${_boost_deps} ${_jpeg_deps})
-target_include_directories(gil_test_ext_io_jpeg PRIVATE ${JPEG_INCLUDE_DIR})
+if (JPEG_LIBRARIES AND JPEG_INCLUDE_DIR)
+  target_include_directories(gil_test_ext_io_jpeg PRIVATE ${JPEG_INCLUDE_DIR})
+endif()
 add_test(tests.ext.io.jpeg gil_test_ext_io_jpeg)
 
 add_executable(gil_test_ext_io_png "")
