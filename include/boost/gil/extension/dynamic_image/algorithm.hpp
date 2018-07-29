@@ -144,7 +144,7 @@ template <bool COMPATIBLE> struct fill_pixels_fn1 {
 
 // copy_pixels invoked on incompatible images
 template <> struct fill_pixels_fn1<false> {
-    template <typename V, typename Value> static void apply(const V& src, const Value& val) { throw std::bad_cast();}
+    template <typename V, typename Value> static void apply(const V&, const Value&) { throw std::bad_cast();}
 };
 
 template <typename Value>
