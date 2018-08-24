@@ -1,20 +1,18 @@
-*(IMPORTANT: Pull Requests must come from topic branch based on `develop`, and **never** on `master`.)*
+**(IMPORTANT: Pull Requests *must* come from topic branch based on `develop`, and *never* on `master`.)**
 
-### Description
-
-*What does this pull request do?*
+*Here, describe what does this pull request do?*
 
 ### Environment
 
 All relevant information like:
 
-- Boost version (see `<boost/version.hpp>`):
+- Boost or GIL version (see `<boost/version.hpp>` or `<boost/gil/version.hpp>`):
 - Compiler version:
 - Build settings:
 
 ### References
 
-*Link related issues, pull requests here*
+*Link related issues, pull requests here, etc.*
 
 ### Tasklist
 
