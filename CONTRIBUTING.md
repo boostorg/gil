@@ -47,40 +47,49 @@ systems and you may need to tweak them for Windows systems.
 
 The preparation involves the following steps:
 
-1. Download the Boost super-project and switch the local repository to
-   `develop` branch.
-2. Run `bootstrap` to build `b2` driver program for Boost.Build engine.
+1. Clone the Boost super-project
 
     ```shell
     git clone --recursive --jobs 8 https://github.com/boostorg/boost.git
-    cd boost
-    git checkout develop
-    ./bootstrap.sh
     ```
 
-**TIP:** [Modular Boost Library Maintenance](https://svn.boost.org/trac10/wiki/StartModMaint)
-guide, for more realistic test environment, recommends to develop and test
-individual Boost library against other Boost libraries as defined by
-the Boost super-project `master` branch:
+2. Switch the Boost super-project to desired branch, `master` or `develop`
 
-```shell
-cd boost
-git checkout master
-git pull
-git submodule update
-```
+    ```shell
+    cd boost
+    git checkout master
+    ```
 
-3. Optionally, create full content of `/boost` virtual directory with all
-Boost headers linked from the individual modular Boost libraries.
+    **TIP:** [Modular Boost Library Maintenance](https://svn.boost.org/trac10/wiki/StartModMaint)
+    guide, for more realistic test environment, recommends to develop and test
+    individual Boost library against other Boost libraries as defined by
+    the Boost super-project `master` branch:
+
+    ```shell
+    cd boost
+    git checkout master
+    git pull
+    git submodule update
+    ```
+
+3. Build the `b2` driver program for Boost.Build engine.
+
+    ```shell
+    ./bootstrap.sh
+    ./b2 --version
+    ```
+
+    **TIP:** For more convenient path-less invocation, you can copy the `b2`
+    program to a location in your `PATH`.
+
+4. Optionally, create full content of `/boost` virtual directory with
+all Boost headers linked from the individual modular Boost libraries.
 If you skip this step, executing `b2` to run tests will automatically
 create the directory with all headers required by Boost.GIL and tests.
 
     ```shell
     ./b2 headers
     ```
-
-**TIP:** For more convenient path-less invocation, you can copy the `b2`
-program to a location in your `PATH`.
 
 **TIP:** If something goes wrong, you end up with incomplete or accidentally
 modified files in your clone of the super-project repository, or you simply
@@ -98,14 +107,18 @@ git submodule update --init --recursive --jobs 8
 ### 2. Checkout Boost.GIL development branch
 
 Regardless if you decide to develop again `master` (recommended) or `develop`
-branch of the Boost super-project, you should always base your work
+branch of the Boost super-project, you should *always* base your contributions
 (ie. topic branches) on Boost.GIL `develop` branch.
 
 1. Go to the Boost.GIL library submodule.
-2. Checkout the `develop` branch.
 
     ```shell
     cd libs/gil
+    ```
+
+2. Checkout the `develop` branch and bring it up to date
+
+    ```shell
     git checkout develop
     git branch -vv
     git pull origin develop
@@ -130,7 +143,7 @@ git remote add username https://github.com/username/gil.git
 All Boost.GIL contributions should be developed inside a topic branch created by
 branching off the `develop` branch of [boostorg/gil](https://github.com/boostorg/gil).
 
-**IMPORTANT:** Pull Requests must come from a branch based on `develop`, and **never** on `master`.
+**IMPORTANT:** Pull Requests *must* come from a branch based on `develop`, and *never* on `master`.
 
 **NOTE:** The branching workflow model
 [Boost recommends](https://svn.boost.org/trac10/wiki/StartModWorkflow)
