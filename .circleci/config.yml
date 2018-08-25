@@ -58,9 +58,9 @@ docker_gcc73: &docker_gcc73
   docker:
     - image: gcc:7.3
 
-docker_gcc81: &docker_gcc81
+docker_gcc82: &docker_gcc82
   docker:
-    - image: gcc:8.1
+    - image: gcc:8.2
 
 docker_clang39: &docker_clang39
   docker:
@@ -210,11 +210,11 @@ config_gcc73_cpp11_opt_speed: &config_gcc73_cpp11_opt_speed
   <<: *docker_gcc73
   <<: *env_gcc_cpp11_opt_speed
 
-config_gcc81_cpp11_dbg: &config_gcc81_cpp11_dbg
-  <<: *docker_gcc81
+config_gcc82_cpp11_dbg: &config_gcc82_cpp11_dbg
+  <<: *docker_gcc82
   <<: *env_gcc_cpp11_dbg
-config_gcc81_cpp11_opt_speed: &config_gcc81_cpp11_opt_speed
-  <<: *docker_gcc81
+config_gcc82_cpp11_opt_speed: &config_gcc82_cpp11_opt_speed
+  <<: *docker_gcc82
   <<: *env_gcc_cpp11_opt_speed
 
 config_clang39_cpp11_dbg: &config_clang39_cpp11_dbg
@@ -440,12 +440,12 @@ jobs:
     <<: *config_gcc73_cpp11_opt_speed
     <<: *steps_test_core
 
-  gcc81_11_core:
-    <<: *config_gcc81_cpp11_dbg
+  gcc82_11_core:
+    <<: *config_gcc82_cpp11_dbg
     <<: *steps_test_core
 
-  gcc81_11_core_speed:
-    <<: *config_gcc81_cpp11_opt_speed
+  gcc82_11_core_speed:
+    <<: *config_gcc82_cpp11_opt_speed
     <<: *steps_test_core
 
   ### clang 3.9 ################################################################
@@ -623,13 +623,13 @@ workflows:
             - gcc73_11_core
           filters: { branches: { only: [ develop, master ] } }
 
-      - gcc81_11_core:
+      - gcc82_11_core:
           requires:
             - bootstrap_gcc
           filters: { branches: { only: [ develop, master ] } }
-      - gcc81_11_core_speed:
+      - gcc82_11_core_speed:
           requires:
-            - gcc81_11_core
+            - gcc82_11_core
           filters: { branches: { only: [ develop, master ] } }
 
       ### clang 3.9 ##########################################################
