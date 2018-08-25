@@ -21,6 +21,7 @@
 
 #include <cstdio>
 
+#include <boost/core/ignore_unused.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/gil/io/base.hpp>
 
@@ -323,6 +324,7 @@ public:
                                          );
 
         assert( num_elements == line.size() );
+        boost::ignore_unused(num_elements);
     }
 
     int error()
