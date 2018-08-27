@@ -1,6 +1,6 @@
 /*
     Copyright 2005-2007 Adobe Systems Incorporated
-   
+
     Use, modification and distribution are subject to the Boost Software License,
     Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt).
@@ -13,7 +13,7 @@
 #define GIL_IMAGE_VIEW_H
 
 ////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
+/// \file
 /// \brief image view class
 /// \author Lubomir Bourdev and Hailin Jin \n
 ///         Adobe Systems Incorporated
@@ -45,8 +45,8 @@ namespace boost { namespace gil {
 /// that don't own the pixels. It is the user's responsibility that the underlying data remains
 /// valid for the lifetime of the image view.
 ///
-/// Similar to iterators and ranges, constness of views does not extend to constness of pixels. 
-/// A const \p image_view does not allow changing its location in memory (resizing, moving) but does 
+/// Similar to iterators and ranges, constness of views does not extend to constness of pixels.
+/// A const \p image_view does not allow changing its location in memory (resizing, moving) but does
 /// not prevent one from changing the pixels. The latter requires an image view whose value_type
 /// is const.
 ///
@@ -120,7 +120,7 @@ public:
 
     //\{@
     /// \name 1D navigation
-    size_type           size()               const { return width()*height(); }  
+    size_type           size()               const { return width()*height(); }
     iterator            begin()              const { return iterator(_pixels,_dimensions.x); }
     iterator            end()                const { return begin()+(difference_type)size(); }    // potential performance problem!
     reverse_iterator    rbegin()             const { return reverse_iterator(end()); }
@@ -136,7 +136,7 @@ public:
     /// \name 2-D navigation
     reference operator()(const point_t& p)        const { return _pixels(p.x,p.y); }
     reference operator()(x_coord_t x, y_coord_t y)const { return _pixels(x,y); }
-    template <std::size_t D> typename axis<D>::iterator axis_iterator(const point_t& p) const { return _pixels.axis_iterator<D>(p); }
+    template <std::size_t D> typename axis<D>::iterator axis_iterator(const point_t& p) const { return _pixels.template axis_iterator<D>(p); }
     xy_locator xy_at(x_coord_t x, y_coord_t y)    const { return _pixels+point_t(x_coord_t(x),y_coord_t(y)); }
     locator    xy_at(const point_t& p)            const { return _pixels+p; }
     //\}@
@@ -164,10 +164,10 @@ private:
     xy_locator _pixels;
 };
 
-template <typename L2> 
-inline void swap(image_view<L2>& x, image_view<L2>& y) { 
+template <typename L2>
+inline void swap(image_view<L2>& x, image_view<L2>& y) {
     using std::swap;
-    swap(x._dimensions,y._dimensions); 
+    swap(x._dimensions,y._dimensions);
     swap(x._pixels, y._pixels);            // TODO: Extend further
 }
 
@@ -176,16 +176,16 @@ inline void swap(image_view<L2>& x, image_view<L2>& y) {
 /////////////////////////////
 
 template <typename L>
-struct channel_type<image_view<L> > : public channel_type<L> {}; 
+struct channel_type<image_view<L> > : public channel_type<L> {};
 
 template <typename L>
-struct color_space_type<image_view<L> > : public color_space_type<L> {}; 
+struct color_space_type<image_view<L> > : public color_space_type<L> {};
 
 template <typename L>
-struct channel_mapping_type<image_view<L> > : public channel_mapping_type<L> {}; 
+struct channel_mapping_type<image_view<L> > : public channel_mapping_type<L> {};
 
 template <typename L>
-struct is_planar<image_view<L> > : public is_planar<L> {}; 
+struct is_planar<image_view<L> > : public is_planar<L> {};
 
 /////////////////////////////
 //  HasDynamicXStepTypeConcept
