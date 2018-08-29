@@ -9,7 +9,7 @@
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/typedefs.hpp>
 
-#include <boost/core/lightweight_test_trait.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 namespace gil = boost::gil;
 
