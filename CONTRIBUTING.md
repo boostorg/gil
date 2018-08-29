@@ -23,6 +23,7 @@ please follow the workflow explained in this document.
 
 ## Prerequisites
 
+* C++11 compiler
 * Experience with `git` command line basics.
 * Familiarity with build toolset and development environment of your choice.
 * Although this document tries to present all commands with necessary options,

@@ -6,6 +6,9 @@ The Boost Generic Image Library (GIL) is a C++ library that abstracts image
 representations from algorithms and allows writing code that can work on a
 variety of images with performance similar to hand-writing for a specific image type.
 
+NOTE: The Boost Generic Image Library (GIL) requires C++11 compiler and
+its source code is currently being modernized.
+
 [![Licence](https://img.shields.io/badge/license-boost-4480cc.png)](http://www.boost.org/LICENSE_1_0.txt)
 [![Documentation](https://img.shields.io/badge/gil-documentation-4480cc.png)](http://boostorg.github.com/gil/)
 [![Wiki](https://img.shields.io/badge/gil-wiki-4480cc.png)](https://github.com/boostorg/gil/wiki)
