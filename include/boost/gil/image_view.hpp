@@ -82,6 +82,9 @@ public:
         typedef typename Loc::template axis<D>::iterator iterator;       // 1D iterator type along each dimension
     };
     typedef iterator_from_2d<Loc>                    iterator;       // 1D iterator type for each pixel left-to-right inside top-to-bottom
+    typedef typename const_t::iterator               const_iterator;  // may be used to examine, but not to modify values
+    typedef typename const_t::reference              const_reference; // behaves as a const reference
+    typedef typename std::iterator_traits<iterator>::pointer pointer; // behaves as a pointer to the value type
     typedef std::reverse_iterator<iterator>          reverse_iterator;
     typedef std::size_t                              size_type;
 
@@ -110,6 +113,35 @@ public:
     template <typename View> bool operator!=(const View& v) const   { return !(*this==v); }
 
     template <typename L2> friend void swap(image_view<L2>& x, image_view<L2>& y);
+
+    /// \brief Exchanges the elements of the current view with those of \a other
+    ///       in constant time.
+    ///
+    /// \note Required by the Collection concept
+    /// \see  https://www.boost.org/libs/utility/Collection.html
+    void swap(image_view<Loc>& other)
+    {
+        using boost::gil::swap;
+        swap(*this, other);
+    }
+
+    /// \brief Returns true if the view has no elements, false otherwise.
+    ///
+    /// \note Required by the Collection concept
+    /// \see  https://www.boost.org/libs/utility/Collection.html
+    bool empty() const { return !(width() > 0 && height() > 0); }
+
+    /// \brief Returns a reference to the first element in raster order.
+    ///
+    /// \note Required by the ForwardCollection, since view model the concept.
+    /// \see  https://www.boost.org/libs/utility/Collection.html
+    reference front() const { return *begin(); }
+
+    /// \brief Returns a reference to the last element in raster order.
+    ///
+    /// \note Required by the ForwardCollection, since view model the concept.
+    /// \see  https://www.boost.org/libs/utility/Collection.html
+    reference back() const { return *rbegin(); }
 
     const point_t&   dimensions()            const { return _dimensions; }
     const locator&   pixels()                const { return _pixels; }
