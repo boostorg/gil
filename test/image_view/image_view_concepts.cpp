@@ -9,12 +9,13 @@
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/typedefs.hpp>
 
-#define BOOST_TEST_MODULE test_image_view_concepts
-#include <gil_test_common.hpp>
+#include <boost/core/lightweight_test_trait.hpp>
 
 namespace gil = boost::gil;
 
-BOOST_AUTO_TEST_CASE(RandomAccessND)
+int main()
 {
     boost::function_requires<gil::RandomAccessNDImageViewConcept<gil::gray8_view_t>>();
+
+     return boost::report_errors();
 }
