@@ -96,9 +96,9 @@ struct boost::gil::PixelIteratorConcept&lt; Iterator &gt;</h3>
 </ul>
 <div class="fragment"><div class="line">concept PixelIteratorConcept&lt;typename Iterator&gt; : boost_concepts::RandomAccessTraversalConcept&lt;Iterator&gt;, PixelBasedConcept&lt;Iterator&gt; {</div>
 <div class="line">    where PixelValueConcept&lt;value_type&gt;;</div>
-<div class="line">    <span class="keyword">typename</span> const_iterator_type&lt;It&gt;::type;         </div>
+<div class="line">    <span class="keyword">typename</span> const_iterator_type&lt;It&gt;::type;</div>
 <div class="line">        where PixelIteratorConcept&lt;const_iterator_type&lt;It&gt;::type&gt;;</div>
-<div class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">bool</span>  iterator_is_mutable&lt;It&gt;::type::value;          </div>
+<div class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">bool</span>  iterator_is_mutable&lt;It&gt;::type::value;</div>
 <div class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">bool</span>  is_iterator_adaptor&lt;It&gt;::type::value;   <span class="comment">// is it an iterator adaptor</span></div>
 <div class="line">};</div>
 </div><!-- fragment --> </div><hr/>The documentation for this struct was generated from the following file:<ul>
@@ -110,7 +110,7 @@ struct boost::gil::PixelIteratorConcept&lt; Iterator &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Aug 29 2018 17:43:36 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Thu Aug 30 2018 14:35:33 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

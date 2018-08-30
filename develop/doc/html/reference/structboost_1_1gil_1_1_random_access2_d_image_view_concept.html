@@ -90,10 +90,10 @@ struct boost::gil::RandomAccess2DImageViewConcept&lt; View &gt;</h3>
 <div class="line">    <span class="keyword">typename</span> x_coord_t  = axis&lt;0&gt;::coord_t;</div>
 <div class="line">    <span class="keyword">typename</span> y_coord_t  = axis&lt;1&gt;::coord_t;</div>
 <div class="line">    <span class="keyword">typename</span> xy_locator = locator;</div>
-<div class="line">    </div>
+<div class="line"></div>
 <div class="line">    x_coord_t View::width()  <span class="keyword">const</span>;</div>
 <div class="line">    y_coord_t View::height() <span class="keyword">const</span>;</div>
-<div class="line">    </div>
+<div class="line"></div>
 <div class="line">    <span class="comment">// X-navigation</span></div>
 <div class="line">    x_iterator View::x_at(<span class="keyword">const</span> point_t&amp;) <span class="keyword">const</span>;</div>
 <div class="line">    x_iterator View::row_begin(y_coord_t) <span class="keyword">const</span>;</div>
@@ -103,11 +103,11 @@ struct boost::gil::RandomAccess2DImageViewConcept&lt; View &gt;</h3>
 <div class="line">    y_iterator View::y_at(<span class="keyword">const</span> point_t&amp;) <span class="keyword">const</span>;</div>
 <div class="line">    y_iterator View::col_begin(x_coord_t) <span class="keyword">const</span>;</div>
 <div class="line">    y_iterator View::col_end  (x_coord_t) <span class="keyword">const</span>;</div>
-<div class="line">       </div>
+<div class="line"></div>
 <div class="line">    <span class="comment">// navigating in 2D</span></div>
 <div class="line">    xy_locator View::xy_at(<span class="keyword">const</span> point_t&amp;) <span class="keyword">const</span>;</div>
 <div class="line"></div>
-<div class="line">    <span class="comment">// (x,y) versions of all methods taking point_t    </span></div>
+<div class="line">    <span class="comment">// (x,y) versions of all methods taking point_t</span></div>
 <div class="line">    View::View(x_coord_t,y_coord_t,<span class="keyword">const</span> locator&amp;);</div>
 <div class="line">    iterator View::at(x_coord_t,y_coord_t) <span class="keyword">const</span>;</div>
 <div class="line">    reference operator()(View,x_coord_t,y_coord_t) <span class="keyword">const</span>;</div>
@@ -124,7 +124,7 @@ struct boost::gil::RandomAccess2DImageViewConcept&lt; View &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Aug 29 2018 17:43:36 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Thu Aug 30 2018 14:35:33 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

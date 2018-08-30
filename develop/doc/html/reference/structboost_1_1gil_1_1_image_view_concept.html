@@ -84,10 +84,10 @@ struct boost::gil::ImageViewConcept&lt; View &gt;</h3>
 <p>GIL's 2-dimensional view over immutable GIL pixels. </p>
 <div class="fragment"><div class="line">concept ImageViewConcept&lt;RandomAccess2DImageViewConcept View&gt; {</div>
 <div class="line">    where PixelValueConcept&lt;value_type&gt;;</div>
-<div class="line">    where PixelIteratorConcept&lt;x_iterator&gt;;        </div>
+<div class="line">    where PixelIteratorConcept&lt;x_iterator&gt;;</div>
 <div class="line">    where PixelIteratorConcept&lt;y_iterator&gt;;</div>
 <div class="line">    where x_coord_t == y_coord_t;</div>
-<div class="line">    </div>
+<div class="line"></div>
 <div class="line">    <span class="keyword">typename</span> coord_t = x_coord_t;</div>
 <div class="line"></div>
 <div class="line">    std::size_t View::num_channels() <span class="keyword">const</span>;</div>
@@ -101,7 +101,7 @@ struct boost::gil::ImageViewConcept&lt; View &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Aug 29 2018 17:43:36 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Thu Aug 30 2018 14:35:33 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

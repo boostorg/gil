@@ -82,12 +82,12 @@ P&#160;</td><td class="memItemRight" valign="bottom"><b>point</b></td></tr>
 struct boost::gil::PointNDConcept&lt; P &gt;</h3>
 
 <p>N-dimensional point concept. </p>
-<div class="fragment"><div class="line">concept PointNDConcept&lt;typename T&gt; : Regular&lt;T&gt; {    </div>
+<div class="fragment"><div class="line">concept PointNDConcept&lt;typename T&gt; : Regular&lt;T&gt; {</div>
 <div class="line">    <span class="comment">// the type of a coordinate along each axis</span></div>
 <div class="line">    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> K&gt; <span class="keyword">struct </span>axis; where Metafunction&lt;axis&gt;;</div>
-<div class="line">            </div>
+<div class="line"></div>
 <div class="line">    <span class="keyword">const</span> <span class="keywordtype">size_t</span> num_dimensions;</div>
-<div class="line">    </div>
+<div class="line"></div>
 <div class="line">    <span class="comment">// accessor/modifier of the value of each axis.</span></div>
 <div class="line">    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> K&gt; <span class="keyword">const</span> <span class="keyword">typename</span> axis&lt;K&gt;::type&amp; T::axis_value() <span class="keyword">const</span>;</div>
 <div class="line">    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> K&gt;       <span class="keyword">typename</span> axis&lt;K&gt;::type&amp; T::axis_value();</div>
@@ -101,7 +101,7 @@ struct boost::gil::PointNDConcept&lt; P &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Aug 29 2018 17:43:36 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Thu Aug 30 2018 14:35:33 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

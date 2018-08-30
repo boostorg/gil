@@ -85,12 +85,12 @@ struct boost::gil::RandomAccess2DLocatorConcept&lt; Loc &gt;</h3>
 <div class="fragment"><div class="line">concept RandomAccess2DLocatorConcept&lt;RandomAccessNDLocatorConcept Loc&gt; {</div>
 <div class="line">    where num_dimensions==2;</div>
 <div class="line">    where Point2DConcept&lt;point_t&gt;;</div>
-<div class="line">    </div>
+<div class="line"></div>
 <div class="line">    <span class="keyword">typename</span> x_iterator = axis&lt;0&gt;::iterator;</div>
 <div class="line">    <span class="keyword">typename</span> y_iterator = axis&lt;1&gt;::iterator;</div>
 <div class="line">    <span class="keyword">typename</span> x_coord_t  = axis&lt;0&gt;::coord_t;</div>
 <div class="line">    <span class="keyword">typename</span> y_coord_t  = axis&lt;1&gt;::coord_t;</div>
-<div class="line">    </div>
+<div class="line"></div>
 <div class="line">    <span class="comment">// Only available to locators that have dynamic step in Y</span></div>
 <div class="line">    <span class="comment">//Loc::Loc(const Loc&amp; loc, y_coord_t);</span></div>
 <div class="line"></div>
@@ -98,14 +98,14 @@ struct boost::gil::RandomAccess2DLocatorConcept&lt; Loc &gt;</h3>
 <div class="line">    <span class="comment">//Loc::Loc(const Loc&amp; loc, x_coord_t, y_coord_t, bool transposed=false);</span></div>
 <div class="line"></div>
 <div class="line">    x_iterator&amp;       Loc::x();</div>
-<div class="line">    x_iterator <span class="keyword">const</span>&amp; Loc::x() <span class="keyword">const</span>;    </div>
+<div class="line">    x_iterator <span class="keyword">const</span>&amp; Loc::x() <span class="keyword">const</span>;</div>
 <div class="line">    y_iterator&amp;       Loc::y();</div>
-<div class="line">    y_iterator <span class="keyword">const</span>&amp; Loc::y() <span class="keyword">const</span>;    </div>
-<div class="line">    </div>
+<div class="line">    y_iterator <span class="keyword">const</span>&amp; Loc::y() <span class="keyword">const</span>;</div>
+<div class="line"></div>
 <div class="line">    x_iterator Loc::x_at(<span class="keyword">const</span> difference_type&amp;) <span class="keyword">const</span>;</div>
 <div class="line">    y_iterator Loc::y_at(<span class="keyword">const</span> difference_type&amp;) <span class="keyword">const</span>;</div>
 <div class="line">    Loc Loc::xy_at(<span class="keyword">const</span> difference_type&amp;) <span class="keyword">const</span>;</div>
-<div class="line">    </div>
+<div class="line"></div>
 <div class="line">    <span class="comment">// x/y versions of all methods that can take difference type</span></div>
 <div class="line">    x_iterator        Loc::x_at(x_coord_t, y_coord_t) <span class="keyword">const</span>;</div>
 <div class="line">    y_iterator        Loc::y_at(x_coord_t, y_coord_t) <span class="keyword">const</span>;</div>
@@ -125,7 +125,7 @@ struct boost::gil::RandomAccess2DLocatorConcept&lt; Loc &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Aug 29 2018 17:43:36 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Thu Aug 30 2018 14:35:33 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

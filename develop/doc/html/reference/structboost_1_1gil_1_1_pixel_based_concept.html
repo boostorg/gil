@@ -77,11 +77,11 @@ struct boost::gil::PixelBasedConcept&lt; P &gt;</h3>
 <p>Concept for all pixel-based GIL constructs, such as pixels, iterators, locators, views and images whose value type is a pixel. </p>
 <p>PIXEL CONCEPTS </p>
 <div class="fragment"><div class="line">concept PixelBasedConcept&lt;typename T&gt; {</div>
-<div class="line">    <span class="keyword">typename</span> color_space_type&lt;T&gt;;     </div>
+<div class="line">    <span class="keyword">typename</span> color_space_type&lt;T&gt;;</div>
 <div class="line">        where Metafunction&lt;color_space_type&lt;T&gt; &gt;;</div>
 <div class="line">        where ColorSpaceConcept&lt;color_space_type&lt;T&gt;::type&gt;;</div>
-<div class="line">    <span class="keyword">typename</span> channel_mapping_type&lt;T&gt;; </div>
-<div class="line">        where Metafunction&lt;channel_mapping_type&lt;T&gt; &gt;;  </div>
+<div class="line">    <span class="keyword">typename</span> channel_mapping_type&lt;T&gt;;</div>
+<div class="line">        where Metafunction&lt;channel_mapping_type&lt;T&gt; &gt;;</div>
 <div class="line">        where ChannelMappingConcept&lt;channel_mapping_type&lt;T&gt;::type&gt;;</div>
 <div class="line">    <span class="keyword">typename</span> is_planar&lt;T&gt;;</div>
 <div class="line">        where Metafunction&lt;is_planar&lt;T&gt; &gt;;</div>
@@ -96,7 +96,7 @@ struct boost::gil::PixelBasedConcept&lt; P &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Aug 29 2018 17:43:36 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Thu Aug 30 2018 14:35:33 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

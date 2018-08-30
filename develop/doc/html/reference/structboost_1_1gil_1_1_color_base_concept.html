@@ -86,22 +86,22 @@ struct boost::gil::ColorBaseConcept&lt; ColorBase &gt;</h3>
 <p>A color base must have an associated layout (which consists of a color space, as well as an ordering of the channels). There are two ways to index the elements of a color base: A physical index corresponds to the way they are ordered in memory, and a semantic index corresponds to the way the elements are ordered in their color space. For example, in the RGB color space the elements are ordered as {<a class="el" href="structboost_1_1gil_1_1red__t.html" title="Red. ">red_t</a>, <a class="el" href="structboost_1_1gil_1_1green__t.html" title="Green. ">green_t</a>, <a class="el" href="structboost_1_1gil_1_1blue__t.html" title="Blue. ">blue_t</a>}. For a color base with a BGR layout, the first element in physical ordering is the blue element, whereas the first semantic element is the red one. Models of <code><a class="el" href="structboost_1_1gil_1_1_color_base_concept.html" title="A color base is a container of color elements (such as channels, channel references or channel pointe...">ColorBaseConcept</a></code> are required to provide the <code>at_c&lt;K&gt;(ColorBase)</code> function, which allows for accessing the elements based on their physical order. GIL provides a <code>semantic_at_c&lt;K&gt;(ColorBase)</code> function (described later) which can operate on any model of <a class="el" href="structboost_1_1gil_1_1_color_base_concept.html" title="A color base is a container of color elements (such as channels, channel references or channel pointe...">ColorBaseConcept</a> and returns the corresponding semantic element.</p>
 <div class="fragment"><div class="line">concept ColorBaseConcept&lt;typename T&gt; : CopyConstructible&lt;T&gt;, EqualityComparable&lt;T&gt; {</div>
 <div class="line">    <span class="comment">// a GIL layout (the color space and element permutation)</span></div>
-<div class="line">    <span class="keyword">typename</span> layout_t;     </div>
-<div class="line">        </div>
+<div class="line">    <span class="keyword">typename</span> layout_t;</div>
+<div class="line"></div>
 <div class="line">    <span class="comment">// The type of K-th element</span></div>
 <div class="line">    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K&gt; <span class="keyword">struct </span>kth_element_type;                 where Metafunction&lt;kth_element_type&gt;;</div>
-<div class="line">    </div>
+<div class="line"></div>
 <div class="line">    <span class="comment">// The result of at_c</span></div>
-<div class="line">    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K&gt; <span class="keyword">struct </span>kth_element_const_reference_type; where Metafunction&lt;kth_element_const_reference_type&gt;;        </div>
-<div class="line">    </div>
+<div class="line">    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K&gt; <span class="keyword">struct </span>kth_element_const_reference_type; where Metafunction&lt;kth_element_const_reference_type&gt;;</div>
+<div class="line"></div>
 <div class="line">    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K&gt; kth_element_const_reference_type&lt;T,K&gt;::type at_c(T);</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// Copy-constructible and equality comparable with other compatible color bases</span></div>
-<div class="line">    <span class="keyword">template</span> &lt;ColorBaseConcept T2&gt; where { ColorBasesCompatibleConcept&lt;T,T2&gt; } </div>
+<div class="line">    <span class="keyword">template</span> &lt;ColorBaseConcept T2&gt; where { ColorBasesCompatibleConcept&lt;T,T2&gt; }</div>
 <div class="line">        T::T(T2);</div>
-<div class="line">    <span class="keyword">template</span> &lt;ColorBaseConcept T2&gt; where { ColorBasesCompatibleConcept&lt;T,T2&gt; } </div>
+<div class="line">    <span class="keyword">template</span> &lt;ColorBaseConcept T2&gt; where { ColorBasesCompatibleConcept&lt;T,T2&gt; }</div>
 <div class="line">        <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> T&amp;, <span class="keyword">const</span> T2&amp;);</div>
-<div class="line">    <span class="keyword">template</span> &lt;ColorBaseConcept T2&gt; where { ColorBasesCompatibleConcept&lt;T,T2&gt; } </div>
+<div class="line">    <span class="keyword">template</span> &lt;ColorBaseConcept T2&gt; where { ColorBasesCompatibleConcept&lt;T,T2&gt; }</div>
 <div class="line">        <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> T&amp;, <span class="keyword">const</span> T2&amp;);</div>
 <div class="line"></div>
 <div class="line">};</div>
@@ -114,7 +114,7 @@ struct boost::gil::ColorBaseConcept&lt; ColorBase &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Aug 29 2018 17:43:36 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Thu Aug 30 2018 14:35:33 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
