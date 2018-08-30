@@ -1,6 +1,6 @@
 /*
     Copyright 2005-2007 Adobe Systems Incorporated
-   
+
     Use, modification and distribution are subject to the Boost Software License,
     Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt).
@@ -14,7 +14,7 @@
 #define GIL_CONCEPT_H
 
 ////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
+/// \file
 /// \brief Concept check classes for GIL concepts
 /// \author Lubomir Bourdev and Hailin Jin \n
 ///         Adobe Systems Incorporated
@@ -22,14 +22,19 @@
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include <functional>
-#include "gil_config.hpp"
-#include <boost/type_traits.hpp>
-#include <boost/utility/enable_if.hpp>
 #include <boost/concept_check.hpp>
+#include <boost/core/ignore_unused.hpp>
 #include <boost/iterator/iterator_concepts.hpp>
 #include <boost/mpl/and.hpp>
 #include <boost/mpl/size.hpp>
+#include <boost/type_traits.hpp>
+#include <boost/utility/enable_if.hpp>
+
+#include <cstdint>
+#include <iterator>
+#include <utility>
+
+#include "gil_config.hpp"
 
 namespace boost { namespace gil {
 
@@ -38,8 +43,8 @@ namespace boost { namespace gil {
 #pragma GCC diagnostic ignored "-Wunused-local-typedefs"
 #endif
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
-#pragma warning(push) 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(push)
 #pragma warning(disable:4510) //default constructor could not be generated
 #pragma warning(disable:4512) //assignment operator could not be generated
 #pragma warning(disable:4610) //can never be instantiated - user defined constructor required
@@ -82,11 +87,11 @@ typename add_reference<typename add_const<E>::type>::type at_c(const detail::hom
 
 template <typename P, typename C, typename L> struct packed_pixel;
 template <int K, typename P, typename C, typename L>
-typename kth_element_reference_type<packed_pixel<P,C,L>, K>::type 
+typename kth_element_reference_type<packed_pixel<P,C,L>, K>::type
 at_c(packed_pixel<P,C,L>& p);
 
 template <int K, typename P, typename C, typename L>
-typename kth_element_const_reference_type<packed_pixel<P,C,L>,K>::type 
+typename kth_element_const_reference_type<packed_pixel<P,C,L>,K>::type
 at_c(const packed_pixel<P,C,L>& p);
 
 template <typename B, typename C, typename L, bool M> struct bit_aligned_pixel_reference;
@@ -117,7 +122,7 @@ struct remove_const_and_reference : public remove_const<typename remove_referenc
     #define GIL_CLASS_REQUIRE(type_var, ns, concept) BOOST_CLASS_REQUIRE(type_var, ns, concept);
     template <typename C> void gil_function_requires() { function_requires<C>(); }
 #else
-    #define GIL_CLASS_REQUIRE(T,NS,C) 
+    #define GIL_CLASS_REQUIRE(T,NS,C)
     template <typename C> void gil_function_requires() {}
 #endif
 
@@ -125,7 +130,7 @@ struct remove_const_and_reference : public remove_const<typename remove_referenc
 /**
 \code
 auto concept DefaultConstructible<typename T> {
-    T::T();    
+    T::T();
 };
 \endcode
 */
@@ -156,7 +161,7 @@ struct CopyConstructible {
 \code
 auto concept Assignable<typename T, typename U = T> {
     typename result_type;
-    result_type operator=(T&, U);    
+    result_type operator=(T&, U);
 };
 \endcode
 */
@@ -170,7 +175,7 @@ struct Assignable {
 /**
 \code
 auto concept EqualityComparable<typename T, typename U = T> {
-    bool operator==(T x, T y);    
+    bool operator==(T x, T y);
     bool operator!=(T x, T y) { return !(x==y); }
 };
 \endcode
@@ -216,7 +221,7 @@ struct Swappable {
 /// \ingroup BasicConcepts
 /**
 \code
-auto concept Regular<typename T> : DefaultConstructible<T>, CopyConstructible<T>, EqualityComparable<T>, 
+auto concept Regular<typename T> : DefaultConstructible<T>, CopyConstructible<T>, EqualityComparable<T>,
                                    Assignable<T>, Swappable<T> {};
 \endcode
 */
@@ -225,7 +230,7 @@ template <typename T>
 struct Regular {
     void constraints() {
         gil_function_requires< boost::DefaultConstructibleConcept<T> >();
-        gil_function_requires< boost::CopyConstructibleConcept<T> >();              
+        gil_function_requires< boost::CopyConstructibleConcept<T> >();
         gil_function_requires< boost::EqualityComparableConcept<T> >(); // ==, !=
         gil_function_requires< boost::AssignableConcept<T> >();
         gil_function_requires< Swappable<T> >();
@@ -249,19 +254,19 @@ struct Metafunction {
 ////////////////////////////////////////////////////////////////////////////////////////
 //
 //          POINT CONCEPTS
-// 
+//
 ////////////////////////////////////////////////////////////////////////////////////////
 
 /// \brief N-dimensional point concept
 /// \ingroup PointConcept
 /**
 \code
-concept PointNDConcept<typename T> : Regular<T> {    
+concept PointNDConcept<typename T> : Regular<T> {
     // the type of a coordinate along each axis
     template <size_t K> struct axis; where Metafunction<axis>;
-            
+
     const size_t num_dimensions;
-    
+
     // accessor/modifier of the value of each axis.
     template <size_t K> const typename axis<K>::type& T::axis_value() const;
     template <size_t K>       typename axis<K>::type& T::axis_value();
@@ -282,7 +287,7 @@ struct PointNDConcept {
         axis_value<0>(point)=ft;
         LT lt=axis_value<N-1>(point);
         axis_value<N-1>(point)=lt;
-    
+
 //        value_type v=point[0];  ignore_unused_variable_warning(v);
     }
     P point;
@@ -292,7 +297,7 @@ struct PointNDConcept {
 /// \ingroup PointConcept
 /**
 \code
-concept Point2DConcept<typename T> : PointNDConcept<T> {    
+concept Point2DConcept<typename T> : PointNDConcept<T> {
     where num_dimensions == 2;
     where SameType<axis<0>::type, axis<1>::type>;
 
@@ -321,7 +326,7 @@ struct Point2DConcept {
 //
 //          ITERATOR MUTABILITY CONCEPTS
 //
-// Taken from boost's concept_check.hpp. Isolating mutability to result in faster compile time 
+// Taken from boost's concept_check.hpp. Isolating mutability to result in faster compile time
 //
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -421,12 +426,12 @@ struct ChannelMappingConcept {
 
 /// \ingroup ChannelConcept
 /// \brief A channel is the building block of a color. Color is defined as a mixture of primary colors and a channel defines the degree to which each primary color is used in the mixture.
-/**         
+/**
 For example, in the RGB color space, using 8-bit unsigned channels, the color red is defined as [255 0 0], which means maximum of Red, and no Green and Blue.
-    
+
 Built-in scalar types, such as \p int and \p float, are valid GIL channels. In more complex scenarios, channels may be represented as bit ranges or even individual bits.
 In such cases special classes are needed to represent the value and reference to a channel.
-    
+
 Channels have a traits class, \p channel_traits, which defines their associated types as well as their operating ranges.
 
 \code
@@ -446,8 +451,8 @@ concept ChannelConcept<typename T> : EqualityComparable<T> {
 template <typename T>
 struct ChannelConcept {
     void constraints() {
-        gil_function_requires< boost::EqualityComparableConcept<T> >(); 
-        
+        gil_function_requires< boost::EqualityComparableConcept<T> >();
+
         typedef typename channel_traits<T>::value_type v;
         typedef typename channel_traits<T>::reference r;
         typedef typename channel_traits<T>::pointer p;
@@ -490,11 +495,11 @@ struct MutableChannelConcept {
     }
 };
 
-/// \brief A channel that supports default construction. 
+/// \brief A channel that supports default construction.
 /// \ingroup ChannelConcept
 /**
 \code
-concept ChannelValueConcept<ChannelConcept T> : Regular<T> {}; 
+concept ChannelValueConcept<ChannelConcept T> : Regular<T> {};
 \endcode
 */
 template <typename T>
@@ -518,7 +523,7 @@ BOOST_STATIC_ASSERT((channels_are_compatible<uint8_t, const uint8_t&>::value));
 \endcode
 */
 template <typename T1, typename T2>  // Models GIL Pixel
-struct channels_are_compatible 
+struct channels_are_compatible
     : public is_same<typename channel_traits<T1>::value_type, typename channel_traits<T2>::value_type> {};
 
 /// \brief Channels are compatible if their associated value types (ignoring constness and references) are the same
@@ -571,7 +576,7 @@ struct ChannelConvertibleConcept {
 
 /// \ingroup ColorBaseConcept
 /// \brief A color base is a container of color elements (such as channels, channel references or channel pointers)
-/** 
+/**
 The most common use of color base is in the implementation of a pixel, in which case the color
 elements are channel values. The color base concept, however, can be used in other scenarios. For example, a planar pixel has channels that are not
 contiguous in memory. Its reference is a proxy class that uses a color base whose elements are channel references. Its iterator uses a color base
@@ -589,22 +594,22 @@ the corresponding semantic element.
 \code
 concept ColorBaseConcept<typename T> : CopyConstructible<T>, EqualityComparable<T> {
     // a GIL layout (the color space and element permutation)
-    typename layout_t;     
-        
+    typename layout_t;
+
     // The type of K-th element
     template <int K> struct kth_element_type;                 where Metafunction<kth_element_type>;
-    
+
     // The result of at_c
-    template <int K> struct kth_element_const_reference_type; where Metafunction<kth_element_const_reference_type>;        
-    
+    template <int K> struct kth_element_const_reference_type; where Metafunction<kth_element_const_reference_type>;
+
     template <int K> kth_element_const_reference_type<T,K>::type at_c(T);
 
     // Copy-constructible and equality comparable with other compatible color bases
-    template <ColorBaseConcept T2> where { ColorBasesCompatibleConcept<T,T2> } 
+    template <ColorBaseConcept T2> where { ColorBasesCompatibleConcept<T,T2> }
         T::T(T2);
-    template <ColorBaseConcept T2> where { ColorBasesCompatibleConcept<T,T2> } 
+    template <ColorBaseConcept T2> where { ColorBasesCompatibleConcept<T,T2> }
         bool operator==(const T&, const T2&);
-    template <ColorBaseConcept T2> where { ColorBasesCompatibleConcept<T,T2> } 
+    template <ColorBaseConcept T2> where { ColorBasesCompatibleConcept<T,T2> }
         bool operator!=(const T&, const T2&);
 
 };
@@ -641,15 +646,15 @@ struct ColorBaseConcept {
 
 /// \ingroup ColorBaseConcept
 /// \brief Color base which allows for modifying its elements
-/** 
+/**
 
 \code
 concept MutableColorBaseConcept<ColorBaseConcept T> : Assignable<T>, Swappable<T> {
     template <int K> struct kth_element_reference_type;       where Metafunction<kth_element_reference_type>;
 
     template <int K> kth_element_reference_type<kth_element_type<T,K>::type>::type at_c(T);
-    
-    template <ColorBaseConcept T2> where { ColorBasesCompatibleConcept<T,T2> } 
+
+    template <ColorBaseConcept T2> where { ColorBasesCompatibleConcept<T,T2> }
         T& operator=(T&, const T2&);
 };
 \endcode
@@ -661,7 +666,7 @@ struct MutableColorBaseConcept {
         gil_function_requires< Assignable<ColorBase> >();
         gil_function_requires< Swappable<ColorBase> >();
 
-        typedef typename kth_element_reference_type<ColorBase, 0>::type CR; 
+        typedef typename kth_element_reference_type<ColorBase, 0>::type CR;
 
         CR r=gil::at_c<0>(cb);
         gil::at_c<0>(cb)=r;
@@ -672,7 +677,7 @@ struct MutableColorBaseConcept {
 
 /// \ingroup ColorBaseConcept
 /// \brief Color base that also has a default-constructor. Refines Regular
-/** 
+/**
 \code
 concept ColorBaseValueConcept<typename T> : MutableColorBaseConcept<T>, Regular<T> {
 };
@@ -688,11 +693,11 @@ struct ColorBaseValueConcept {
 
 /// \ingroup ColorBaseConcept
 /// \brief Color base whose elements all have the same type
-/** 
+/**
 \code
 concept HomogeneousColorBaseConcept<ColorBaseConcept CB> {
     // For all K in [0 ... size<C1>::value-1):
-    //     where SameType<kth_element_type<CB,K>::type, kth_element_type<CB,K+1>::type>;    
+    //     where SameType<kth_element_type<CB,K>::type, kth_element_type<CB,K+1>::type>;
     kth_element_const_reference_type<CB,0>::type dynamic_at_c(const CB&, std::size_t n) const;
 };
 \endcode
@@ -705,11 +710,11 @@ struct HomogeneousColorBaseConcept {
 
         static const std::size_t num_elements = size<ColorBase>::value;
 
-        typedef typename kth_element_type<ColorBase,0>::type T0; 
-        typedef typename kth_element_type<ColorBase,num_elements-1>::type TN; 
+        typedef typename kth_element_type<ColorBase,0>::type T0;
+        typedef typename kth_element_type<ColorBase,num_elements-1>::type TN;
 
         BOOST_STATIC_ASSERT((is_same<T0,TN>::value));   // better than nothing
-        typedef typename kth_element_const_reference_type<ColorBase,0>::type CRef0; 
+        typedef typename kth_element_const_reference_type<ColorBase,0>::type CRef0;
         CRef0 e0=dynamic_at_c(cb,0);
     }
     ColorBase cb;
@@ -717,7 +722,7 @@ struct HomogeneousColorBaseConcept {
 
 /// \ingroup ColorBaseConcept
 /// \brief Homogeneous color base that allows for modifying its elements
-/** 
+/**
 
 \code
 concept MutableHomogeneousColorBaseConcept<ColorBaseConcept CB> : HomogeneousColorBaseConcept<CB> {
@@ -740,7 +745,7 @@ struct MutableHomogeneousColorBaseConcept {
 
 /// \ingroup ColorBaseConcept
 /// \brief Homogeneous color base that also has a default constructor. Refines Regular.
-/** 
+/**
 
 \code
 concept HomogeneousColorBaseValueConcept<typename T> : MutableHomogeneousColorBaseConcept<T>, Regular<T> {
@@ -759,7 +764,7 @@ struct HomogeneousColorBaseValueConcept {
 
 /// \ingroup ColorBaseConcept
 /// \brief Two color bases are compatible if they have the same color space and their elements are compatible, semantic-pairwise.
-/** 
+/**
 
 \code
 concept ColorBasesCompatibleConcept<ColorBaseConcept C1, ColorBaseConcept C2> {
@@ -773,7 +778,7 @@ concept ColorBasesCompatibleConcept<ColorBaseConcept C1, ColorBaseConcept C2> {
 template <typename ColorBase1, typename ColorBase2>
 struct ColorBasesCompatibleConcept {
     void constraints() {
-        BOOST_STATIC_ASSERT((is_same<typename ColorBase1::layout_t::color_space_t, 
+        BOOST_STATIC_ASSERT((is_same<typename ColorBase1::layout_t::color_space_t,
                                      typename ColorBase2::layout_t::color_space_t>::value));
 //        typedef typename kth_semantic_element_type<ColorBase1,0>::type e1;
 //        typedef typename kth_semantic_element_type<ColorBase2,0>::type e2;
@@ -813,11 +818,11 @@ struct ColorBasesCompatibleConcept {
 /**
 \code
 concept PixelBasedConcept<typename T> {
-    typename color_space_type<T>;     
+    typename color_space_type<T>;
         where Metafunction<color_space_type<T> >;
         where ColorSpaceConcept<color_space_type<T>::type>;
-    typename channel_mapping_type<T>; 
-        where Metafunction<channel_mapping_type<T> >;  
+    typename channel_mapping_type<T>;
+        where Metafunction<channel_mapping_type<T> >;
         where ChannelMappingConcept<channel_mapping_type<T>::type>;
     typename is_planar<T>;
         where Metafunction<is_planar<T> >;
@@ -847,7 +852,7 @@ struct PixelBasedConcept {
 /**
 \code
 concept HomogeneousPixelBasedConcept<PixelBasedConcept T> {
-    typename channel_type<T>;         
+    typename channel_type<T>;
         where Metafunction<channel_type<T> >;
         where ChannelConcept<channel_type<T>::type>;
 };
@@ -858,7 +863,7 @@ struct HomogeneousPixelBasedConcept {
     void constraints() {
         gil_function_requires<PixelBasedConcept<P> >();
         typedef typename channel_type<P>::type channel_t;
-        gil_function_requires<ChannelConcept<channel_t> >();        
+        gil_function_requires<ChannelConcept<channel_t> >();
     }
 };
 
@@ -867,23 +872,23 @@ struct HomogeneousPixelBasedConcept {
 /// \ingroup PixelConcept
 /**
 \code
-concept PixelConcept<typename P> : ColorBaseConcept<P>, PixelBasedConcept<P> {    
+concept PixelConcept<typename P> : ColorBaseConcept<P>, PixelBasedConcept<P> {
     where is_pixel<P>::type::value==true;
     // where for each K [0..size<P>::value-1]:
     //      ChannelConcept<kth_element_type<P,K> >;
-        
+
     typename P::value_type;       where PixelValueConcept<value_type>;
     typename P::reference;        where PixelConcept<reference>;
     typename P::const_reference;  where PixelConcept<const_reference>;
     static const bool P::is_mutable;
 
-    template <PixelConcept P2> where { PixelConcept<P,P2> } 
+    template <PixelConcept P2> where { PixelConcept<P,P2> }
         P::P(P2);
-    template <PixelConcept P2> where { PixelConcept<P,P2> } 
+    template <PixelConcept P2> where { PixelConcept<P,P2> }
         bool operator==(const P&, const P2&);
-    template <PixelConcept P2> where { PixelConcept<P,P2> } 
+    template <PixelConcept P2> where { PixelConcept<P,P2> }
         bool operator!=(const P&, const P2&);
-}; 
+};
 \endcode
 */
 
@@ -928,7 +933,7 @@ struct MutablePixelConcept {
 /// \ingroup PixelConcept
 /**
 \code
-concept HomogeneousPixelConcept<PixelConcept P> : HomogeneousColorBaseConcept<P>, HomogeneousPixelBasedConcept<P> { 
+concept HomogeneousPixelConcept<PixelConcept P> : HomogeneousColorBaseConcept<P>, HomogeneousPixelBasedConcept<P> {
     P::template element_const_reference_type<P>::type operator[](P p, std::size_t i) const { return dynamic_at_c(p,i); }
 };
 \endcode
@@ -948,7 +953,7 @@ struct HomogeneousPixelConcept {
 /// \ingroup PixelConcept
 /**
 \code
-concept MutableHomogeneousPixelConcept<HomogeneousPixelConcept P> : MutableHomogeneousColorBaseConcept<P> { 
+concept MutableHomogeneousPixelConcept<HomogeneousPixelConcept P> : MutableHomogeneousColorBaseConcept<P> {
     P::template element_reference_type<P>::type operator[](P p, std::size_t i) { return dynamic_at_c(p,i); }
 };
 \endcode
@@ -971,7 +976,7 @@ struct MutableHomogeneousPixelConcept {
 \code
 concept PixelValueConcept<PixelConcept P> : Regular<P> {
     where SameType<value_type,P>;
-};    
+};
 \endcode
 */
 template <typename P>
@@ -988,7 +993,7 @@ struct PixelValueConcept {
 \code
 concept HomogeneousPixelValueConcept<HomogeneousPixelConcept P> : Regular<P> {
     where SameType<value_type,P>;
-}; 
+};
 \endcode
 */
 template <typename P>
@@ -1002,11 +1007,11 @@ struct HomogeneousPixelValueConcept {
 
 namespace detail {
     template <typename P1, typename P2, int K>
-    struct channels_are_pairwise_compatible : public 
+    struct channels_are_pairwise_compatible : public
         mpl::and_<channels_are_pairwise_compatible<P1,P2,K-1>,
                          channels_are_compatible<typename kth_semantic_element_reference_type<P1,K>::type,
                                                  typename kth_semantic_element_reference_type<P2,K>::type> > {};
-                                                 
+
     template <typename P1, typename P2>
     struct channels_are_pairwise_compatible<P1,P2,-1> : public mpl::true_ {};
 }
@@ -1016,9 +1021,9 @@ namespace detail {
 /// Pixels are compatible if their channels and color space types are compatible. Compatible pixels can be assigned and copy constructed from one another.
 /// \ingroup PixelAlgorithm
 template <typename P1, typename P2>  // Models GIL Pixel
-struct pixels_are_compatible 
-    : public mpl::and_<typename color_spaces_are_compatible<typename color_space_type<P1>::type, 
-                                                            typename color_space_type<P2>::type>::type, 
+struct pixels_are_compatible
+    : public mpl::and_<typename color_spaces_are_compatible<typename color_space_type<P1>::type,
+                                                            typename color_space_type<P2>::type>::type,
                        detail::channels_are_pairwise_compatible<P1,P2,num_channels<P1>::value-1> > {};
 
 /// \brief  Concept for pixel compatibility
@@ -1091,11 +1096,11 @@ concept PixelDereferenceAdaptorConcept<boost::UnaryFunctionConcept D>
 template <typename D>
 struct PixelDereferenceAdaptorConcept {
     void constraints() {
-        gil_function_requires< boost::UnaryFunctionConcept<D, 
-            typename remove_const_and_reference<typename D::result_type>::type, 
+        gil_function_requires< boost::UnaryFunctionConcept<D,
+            typename remove_const_and_reference<typename D::result_type>::type,
             typename D::argument_type> >();
         gil_function_requires< boost::DefaultConstructibleConcept<D> >();
-        gil_function_requires< boost::CopyConstructibleConcept<D> >();              
+        gil_function_requires< boost::CopyConstructibleConcept<D> >();
         gil_function_requires< boost::AssignableConcept<D> >();
 
         gil_function_requires<PixelConcept<typename remove_const_and_reference<typename D::result_type>::type> >();
@@ -1141,7 +1146,7 @@ concept HasDynamicXStepTypeConcept<typename T> {
 \endcode
 */
 template <typename T>
-struct HasDynamicXStepTypeConcept {   
+struct HasDynamicXStepTypeConcept {
     void constraints() {
         typedef typename dynamic_x_step_type<T>::type type;
     }
@@ -1158,7 +1163,7 @@ concept HasDynamicYStepTypeConcept<typename T> {
 \endcode
 */
 template <typename T>
-struct HasDynamicYStepTypeConcept {   
+struct HasDynamicYStepTypeConcept {
     void constraints() {
         typedef typename dynamic_y_step_type<T>::type type;
     }
@@ -1176,7 +1181,7 @@ concept HasTransposedTypeConcept<typename T> {
 \endcode
 */
 template <typename T>
-struct HasTransposedTypeConcept {   
+struct HasTransposedTypeConcept {
     void constraints() {
         typedef typename transposed_type<T>::type type;
     }
@@ -1197,22 +1202,22 @@ GIL's iterators must also provide the following metafunctions:
  \code
 concept PixelIteratorConcept<typename Iterator> : boost_concepts::RandomAccessTraversalConcept<Iterator>, PixelBasedConcept<Iterator> {
     where PixelValueConcept<value_type>;
-    typename const_iterator_type<It>::type;         
+    typename const_iterator_type<It>::type;
         where PixelIteratorConcept<const_iterator_type<It>::type>;
-    static const bool  iterator_is_mutable<It>::type::value;          
+    static const bool  iterator_is_mutable<It>::type::value;
     static const bool  is_iterator_adaptor<It>::type::value;   // is it an iterator adaptor
 };
 \endcode
 */
 template <typename Iterator>
-struct PixelIteratorConcept {   
+struct PixelIteratorConcept {
     void constraints() {
         gil_function_requires<boost_concepts::RandomAccessTraversalConcept<Iterator> >();
         gil_function_requires<PixelBasedConcept<Iterator> >();
-        
+
         typedef typename std::iterator_traits<Iterator>::value_type value_type;
         gil_function_requires<PixelValueConcept<value_type> >();
- 
+
         typedef typename const_iterator_type<Iterator>::type const_t;
         static const bool is_mut = iterator_is_mutable<Iterator>::type::value; ignore_unused_variable_warning(is_mut);
 
@@ -1356,8 +1361,8 @@ concept IteratorAdaptorConcept<boost_concepts::ForwardTraversalConcept Iterator>
     typename iterator_adaptor_get_base<Iterator>;
         where Metafunction<iterator_adaptor_get_base<Iterator> >;
         where boost_concepts::ForwardTraversalConcept<iterator_adaptor_get_base<Iterator>::type>;
-    
-    typename another_iterator; 
+
+    typename another_iterator;
     typename iterator_adaptor_rebind<Iterator,another_iterator>::type;
         where boost_concepts::ForwardTraversalConcept<another_iterator>;
         where IteratorAdaptorConcept<iterator_adaptor_rebind<Iterator,another_iterator>::type>;
@@ -1419,18 +1424,18 @@ struct MutableIteratorAdaptorConcept {
 /// \brief N-dimensional locator over immutable values
 /**
 \code
-concept RandomAccessNDLocatorConcept<Regular Loc> {    
+concept RandomAccessNDLocatorConcept<Regular Loc> {
     typename value_type;        // value over which the locator navigates
     typename reference;         // result of dereferencing
     typename difference_type; where PointNDConcept<difference_type>; // return value of operator-.
     typename const_t;           // same as Loc, but operating over immutable values
     typename cached_location_t; // type to store relative location (for efficient repeated access)
     typename point_t  = difference_type;
-    
+
     static const size_t num_dimensions; // dimensionality of the locator
     where num_dimensions = point_t::num_dimensions;
-    
-    // The difference_type and iterator type along each dimension. The iterators may only differ in 
+
+    // The difference_type and iterator type along each dimension. The iterators may only differ in
     // difference_type. Their value_type must be the same as Loc::value_type
     template <size_t D> struct axis {
         typename coord_t = point_t::axis<D>::coord_t;
@@ -1443,19 +1448,19 @@ concept RandomAccessNDLocatorConcept<Regular Loc> {
         typename type;        where RandomAccessNDLocatorConcept<type>;
         static type make(const Loc& loc, const Deref& deref);
     };
-    
+
     Loc& operator+=(Loc&, const difference_type&);
     Loc& operator-=(Loc&, const difference_type&);
     Loc operator+(const Loc&, const difference_type&);
     Loc operator-(const Loc&, const difference_type&);
-    
+
     reference operator*(const Loc&);
     reference operator[](const Loc&, const difference_type&);
- 
-    // Storing relative location for faster repeated access and accessing it   
+
+    // Storing relative location for faster repeated access and accessing it
     cached_location_t Loc::cache_location(const difference_type&) const;
     reference operator[](const Loc&,const cached_location_t&);
-    
+
     // Accessing iterators along a given dimension at the current location or at a given offset
     template <size_t D> axis<D>::iterator&       Loc::axis_iterator();
     template <size_t D> axis<D>::iterator const& Loc::axis_iterator() const;
@@ -1475,7 +1480,7 @@ struct RandomAccessNDLocatorConcept {
         typedef typename Loc::const_t           const_t;         // same as this type, but over const values
         typedef typename Loc::point_t           point_t;         // same as difference_type
         static const std::size_t N=Loc::num_dimensions; ignore_unused_variable_warning(N);
-    
+
         typedef typename Loc::template axis<0>::iterator    first_it_type;
         typedef typename Loc::template axis<N-1>::iterator  last_it_type;
         gil_function_requires<boost_concepts::RandomAccessTraversalConcept<first_it_type> >();
@@ -1516,12 +1521,12 @@ struct RandomAccessNDLocatorConcept {
 concept RandomAccess2DLocatorConcept<RandomAccessNDLocatorConcept Loc> {
     where num_dimensions==2;
     where Point2DConcept<point_t>;
-    
+
     typename x_iterator = axis<0>::iterator;
     typename y_iterator = axis<1>::iterator;
     typename x_coord_t  = axis<0>::coord_t;
     typename y_coord_t  = axis<1>::coord_t;
-    
+
     // Only available to locators that have dynamic step in Y
     //Loc::Loc(const Loc& loc, y_coord_t);
 
@@ -1529,14 +1534,14 @@ concept RandomAccess2DLocatorConcept<RandomAccessNDLocatorConcept Loc> {
     //Loc::Loc(const Loc& loc, x_coord_t, y_coord_t, bool transposed=false);
 
     x_iterator&       Loc::x();
-    x_iterator const& Loc::x() const;    
+    x_iterator const& Loc::x() const;
     y_iterator&       Loc::y();
-    y_iterator const& Loc::y() const;    
-    
+    y_iterator const& Loc::y() const;
+
     x_iterator Loc::x_at(const difference_type&) const;
     y_iterator Loc::y_at(const difference_type&) const;
     Loc Loc::xy_at(const difference_type&) const;
-    
+
     // x/y versions of all methods that can take difference type
     x_iterator        Loc::x_at(x_coord_t, y_coord_t) const;
     y_iterator        Loc::y_at(x_coord_t, y_coord_t) const;
@@ -1658,7 +1663,7 @@ namespace detail {
 /// \brief N-dimensional locator over mutable pixels
 /**
 \code
-concept MutableRandomAccessNDLocatorConcept<RandomAccessNDLocatorConcept Loc> {    
+concept MutableRandomAccessNDLocatorConcept<RandomAccessNDLocatorConcept Loc> {
     where Mutable<reference>;
 };
 \endcode
@@ -1731,7 +1736,7 @@ concept RandomAccessNDImageViewConcept<Regular View> {
     typename point_t;  where PointNDConcept<point_t>; // N-dimensional point
     typename locator;  where RandomAccessNDLocatorConcept<locator>; // N-dimensional locator.
     typename iterator; where RandomAccessTraversalConcept<iterator>; // 1-dimensional iterator over all values
-    typename reverse_iterator; where RandomAccessTraversalConcept<reverse_iterator>; 
+    typename reverse_iterator; where RandomAccessTraversalConcept<reverse_iterator>;
     typename size_type;       // the return value of size()
 
     // Equivalent to RandomAccessNDLocatorConcept::axis
@@ -1749,10 +1754,10 @@ concept RandomAccessNDImageViewConcept<Regular View> {
     };
 
     static const size_t num_dimensions = point_t::num_dimensions;
-    
+
     // Create from a locator at the top-left corner and dimensions
     View::View(const locator&, const point_type&);
-    
+
     size_type        View::size()       const; // total number of elements
     reference        operator[](View, const difference_type&) const; // 1-dimensional reference
     iterator         View::begin()      const;
@@ -1777,15 +1782,17 @@ struct RandomAccessNDImageViewConcept {
 
         typedef typename View::value_type       value_type;
         typedef typename View::reference        reference;       // result of dereferencing
+        typedef typename View::pointer          pointer;
         typedef typename View::difference_type  difference_type; // result of operator-(1d_iterator,1d_iterator)
         typedef typename View::const_t          const_t;         // same as this type, but over const values
         typedef typename View::point_t          point_t;         // N-dimensional point
         typedef typename View::locator          locator;         // N-dimensional locator
         typedef typename View::iterator         iterator;
+        typedef typename View::const_iterator   const_iterator;
         typedef typename View::reverse_iterator reverse_iterator;
         typedef typename View::size_type        size_type;
         static const std::size_t N=View::num_dimensions;
-    
+
         gil_function_requires<RandomAccessNDLocatorConcept<locator> >();
         gil_function_requires<boost_concepts::RandomAccessTraversalConcept<iterator> >();
         gil_function_requires<boost_concepts::RandomAccessTraversalConcept<reverse_iterator> >();
@@ -1822,7 +1829,7 @@ struct RandomAccessNDImageViewConcept {
         rit=view.rbegin();
         rit=view.rend();
 
-        reference r1=view[d]; ignore_unused_variable_warning(r1);    // 1D access 
+        reference r1=view[d]; ignore_unused_variable_warning(r1);    // 1D access
         reference r2=view(p); ignore_unused_variable_warning(r2);    // 2D access
 
         // get 1-D iterator of any dimension at a given pixel location
@@ -1847,10 +1854,10 @@ concept RandomAccess2DImageViewConcept<RandomAccessNDImageViewConcept View> {
     typename x_coord_t  = axis<0>::coord_t;
     typename y_coord_t  = axis<1>::coord_t;
     typename xy_locator = locator;
-    
+
     x_coord_t View::width()  const;
     y_coord_t View::height() const;
-    
+
     // X-navigation
     x_iterator View::x_at(const point_t&) const;
     x_iterator View::row_begin(y_coord_t) const;
@@ -1860,11 +1867,11 @@ concept RandomAccess2DImageViewConcept<RandomAccessNDImageViewConcept View> {
     y_iterator View::y_at(const point_t&) const;
     y_iterator View::col_begin(x_coord_t) const;
     y_iterator View::col_end  (x_coord_t) const;
-       
+
     // navigating in 2D
     xy_locator View::xy_at(const point_t&) const;
 
-    // (x,y) versions of all methods taking point_t    
+    // (x,y) versions of all methods taking point_t
     View::View(x_coord_t,y_coord_t,const locator&);
     iterator View::at(x_coord_t,y_coord_t) const;
     reference operator()(View,x_coord_t,y_coord_t) const;
@@ -1921,6 +1928,92 @@ struct RandomAccess2DImageViewConcept {
     View view;
 };
 
+/// \brief GIL view as Collection.
+///
+/// \see https://www.boost.org/libs/utility/Collection.html
+template <typename View>
+struct CollectionImageViewConcept
+{
+    void constraints()
+    {
+        using value_type = typename View::value_type;
+        using iterator = typename View::iterator;
+        using const_iterator =  typename View::const_iterator;
+        using reference = typename View::reference;
+        using const_reference = typename View::const_reference;
+        using pointer = typename View::pointer;
+        using difference_type = typename View::difference_type;
+        using size_type=  typename View::size_type;
+
+        iterator i;
+        i = view1.begin();
+        i = view2.end();
+
+        const_iterator ci;
+        ci = view1.begin();
+        ci = view2.end();
+
+        size_type s;
+        s = view1.size();
+        s = view2.size();
+        boost::ignore_unused(s);
+
+        view1.empty();
+
+        view1.swap(view2);
+    }
+    View view1;
+    View view2;
+};
+
+/// \brief GIL view as ForwardCollection.
+///
+/// \see https://www.boost.org/libs/utility/Collection.html
+template <typename View>
+struct ForwardCollectionImageViewConcept
+{
+    void constraints()
+    {
+        gil_function_requires<CollectionImageViewConcept<View>>();
+
+        using reference = typename View::reference;
+        using const_reference = typename View::const_reference;
+
+        reference r = view.front();
+        boost::ignore_unused(r);
+
+        const_reference cr = view.front();
+        boost::ignore_unused(cr);
+    }
+    View view;
+};
+
+/// \brief GIL view as ReversibleCollection.
+///
+/// \see https://www.boost.org/libs/utility/Collection.html
+template <typename View>
+struct ReversibleCollectionImageViewConcept
+{
+    void constraints()
+    {
+        gil_function_requires<CollectionImageViewConcept<View>>();
+
+        using reverse_iterator = typename View::reverse_iterator;
+        using reference = typename View::reference;
+        using const_reference = typename View::const_reference;
+
+        reverse_iterator i;
+        i = view.rbegin();
+        i = view.rend();
+
+        reference r = view.back();
+        boost::ignore_unused(r);
+
+        const_reference cr = view.back();
+        boost::ignore_unused(cr);
+    }
+    View view;
+};
 
 /// \ingroup PixelImageViewConcept
 /// \brief GIL's 2-dimensional view over immutable GIL pixels
@@ -1928,10 +2021,10 @@ struct RandomAccess2DImageViewConcept {
 \code
 concept ImageViewConcept<RandomAccess2DImageViewConcept View> {
     where PixelValueConcept<value_type>;
-    where PixelIteratorConcept<x_iterator>;        
+    where PixelIteratorConcept<x_iterator>;
     where PixelIteratorConcept<y_iterator>;
     where x_coord_t == y_coord_t;
-    
+
     typename coord_t = x_coord_t;
 
     std::size_t View::num_channels() const;
@@ -1945,7 +2038,7 @@ struct ImageViewConcept {
 
         // TODO: This executes the requirements for RandomAccess2DLocatorConcept again. Fix it to improve compile time
         gil_function_requires<PixelLocatorConcept<typename View::xy_locator> >();
-        
+
         BOOST_STATIC_ASSERT((is_same<typename View::x_coord_t, typename View::y_coord_t>::value));
 
         typedef typename View::coord_t           coord_t;      // 1D difference type (same for all dimensions)
@@ -1978,7 +2071,7 @@ namespace detail {
 
     template <typename View>    // preconditions: View Models RandomAccessNDImageViewConcept
     struct RandomAccess2DImageViewIsMutableConcept {
-        void constraints() {        
+        void constraints() {
             gil_function_requires<detail::RandomAccessNDImageViewIsMutableConcept<View> >();
             typename View::x_coord_t xd=0; ignore_unused_variable_warning(xd);
             typename View::y_coord_t yd=0; ignore_unused_variable_warning(yd);
@@ -1990,7 +2083,7 @@ namespace detail {
 
     template <typename View>    // preconditions: View Models ImageViewConcept
     struct PixelImageViewIsMutableConcept {
-        void constraints() {        
+        void constraints() {
             gil_function_requires<detail::RandomAccess2DImageViewIsMutableConcept<View> >();
         }
     };
@@ -2065,7 +2158,6 @@ struct ViewsCompatibleConcept {
     }
 };
 
-
 ////////////////////////////////////////////////////////////////////////////////////////
 ///
 ///         IMAGE CONCEPTS
@@ -2086,7 +2178,7 @@ concept RandomAccessNDImageConcept<typename Img> : Regular<Img> {
 
     Img::Img(point_t dims, std::size_t alignment=1);
     Img::Img(point_t dims, value_type fill_value, std::size_t alignment);
-    
+
     void Img::recreate(point_t new_dims, std::size_t alignment=1);
     void Img::recreate(point_t new_dims, value_type fill_value, std::size_t alignment);
 
@@ -2133,13 +2225,13 @@ struct RandomAccessNDImageConcept {
 concept RandomAccess2DImageConcept<RandomAccessNDImageConcept Img> {
     typename x_coord_t = const_view_t::x_coord_t;
     typename y_coord_t = const_view_t::y_coord_t;
-    
+
     Img::Img(x_coord_t width, y_coord_t height, std::size_t alignment=1);
     Img::Img(x_coord_t width, y_coord_t height, value_type fill_value, std::size_t alignment);
 
     x_coord_t Img::width() const;
     y_coord_t Img::height() const;
-    
+
     void Img::recreate(x_coord_t width, y_coord_t height, std::size_t alignment=1);
     void Img::recreate(x_coord_t width, y_coord_t height, value_type fill_value, std::size_t alignment);
 };
@@ -2171,7 +2263,7 @@ struct RandomAccess2DImageConcept {
 /// \ingroup ImageConcept
 /// \brief 2-dimensional image whose value type models PixelValueConcept
 /**
-\code 
+\code
 concept ImageConcept<RandomAccess2DImageConcept Img> {
     where MutableImageViewConcept<view_t>;
     typename coord_t  = view_t::coord_t;
@@ -2192,9 +2284,9 @@ struct ImageConcept {
     Img img;
 };
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
-#pragma warning(pop) 
-#endif 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(pop)
+#endif
 
 #if defined(__GNUC__) && (__GNUC__ >= 4)
 #pragma GCC diagnostic pop

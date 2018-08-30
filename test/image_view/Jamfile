@@ -17,4 +17,5 @@ project
 test-suite "boost-gil-test-image-view"
     :
     [ compile image_view_concepts.cpp ]
+    [ run collection.cpp ]
     ;
