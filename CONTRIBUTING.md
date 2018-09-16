@@ -70,7 +70,7 @@ The preparation involves the following steps:
     cd boost
     git checkout master
     git pull
-    git submodule update
+    git submodule update --init --recursive --jobs 8
     ```
 
 3. Build the `b2` driver program for Boost.Build engine.
