@@ -95,7 +95,7 @@ struct default_color_converter_impl< rgb_t, hsv_t >
             hue = ( temp_green - temp_blue )
                 / diff;
          }
-         else if( temp_green == max_color )
+         else if( temp_green >= max_color ) // means == but >= avoids compiler warning; color is never greater than max
          {
             hue = 2.f + ( temp_blue - temp_red ) 
                 / diff;
