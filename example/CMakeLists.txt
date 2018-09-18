@@ -6,7 +6,7 @@
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 #
-message(STATUS "Configuring Boost.GIL examples tests")
+message(STATUS "Configuring Boost.GIL examples")
 
 if (CMAKE_VERSION VERSION_GREATER_EQUAL 3.12.0)
   file(GLOB_RECURSE _examples ${CMAKE_CURRENT_LIST_DIR}/*.cpp CONFIGURE_DEPEND)
