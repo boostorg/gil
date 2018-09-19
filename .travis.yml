@@ -185,7 +185,7 @@ matrix:
 install:
   - |-
     if [ "$DOC" ]; then
-      pip install --user sphinx
+      pip install --user sphinx==1.7.9
     fi
   - cd ..
   - git clone -b master --depth 1 https://github.com/boostorg/boost.git boost-root
