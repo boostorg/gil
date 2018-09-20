@@ -116,7 +116,7 @@ public:
         }
 
         _src._jsrc.bytes_in_buffer   = 0;
-        _src._jsrc.next_input_byte   = buffer;
+        _src._jsrc.next_input_byte   = buffer_;
         _src._jsrc.init_source       = reinterpret_cast< void(*)   ( j_decompress_ptr )>( &reader_backend< Device, jpeg_tag >::init_device );
         _src._jsrc.fill_input_buffer = reinterpret_cast< boolean(*)( j_decompress_ptr )>( &reader_backend< Device, jpeg_tag >::fill_buffer );
         _src._jsrc.skip_input_data   = reinterpret_cast< void(*)   ( j_decompress_ptr
@@ -257,23 +257,23 @@ private:
     {
         gil_jpeg_source_mgr* src = reinterpret_cast< gil_jpeg_source_mgr* >( cinfo->src );
         src->_jsrc.bytes_in_buffer = 0;
-        src->_jsrc.next_input_byte = src->_this->buffer;
+        src->_jsrc.next_input_byte = src->_this->buffer_;
     }
 
     static boolean fill_buffer( jpeg_decompress_struct* cinfo )
     {
         gil_jpeg_source_mgr* src = reinterpret_cast< gil_jpeg_source_mgr* >( cinfo->src );
-        size_t count = src->_this->_io_dev.read(src->_this->buffer, sizeof(src->_this->buffer) );
+        size_t count = src->_this->_io_dev.read(src->_this->buffer_, sizeof(src->_this->buffer_) );
 
         if( count <= 0 )
         {
             // libjpeg does that: adding an EOF marker
-            src->_this->buffer[0] = (JOCTET) 0xFF;
-            src->_this->buffer[1] = (JOCTET) JPEG_EOI;
+            src->_this->buffer_[0] = (JOCTET) 0xFF;
+            src->_this->buffer_[1] = (JOCTET) JPEG_EOI;
             count = 2;
         }
 
-        src->_jsrc.next_input_byte = src->_this->buffer;
+        src->_jsrc.next_input_byte = src->_this->buffer_;
         src->_jsrc.bytes_in_buffer = count;
 
         return TRUE;
@@ -316,7 +316,7 @@ public:
     gil_jpeg_source_mgr _src;
 
     // libjpeg default is 4096 - see jdatasrc.c
-    JOCTET buffer[4096];
+    JOCTET buffer_[4096];
 };
 
 #if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
