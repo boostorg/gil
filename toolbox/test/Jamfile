@@ -1,11 +1,11 @@
-# Boost.GIL.ToolBox
+# Boost.GIL (Generic Image Library) - Toolbox tests
 #
-# (C) Copyright 2012: Mateusz Loskot and Christian Henning
+# Copyright (c) 2012 Christian Henning
+# Copyright (c) 2012 Mateusz Loskot <mateusz@loskot.net>
 #
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-# bring in rules for testing
 import testing ;
 
 project
@@ -14,31 +14,22 @@ project
     <library>/boost/test//boost_unit_test_framework
     ;
 
-test-suite "gil::toolbox" :
-    [ run
-        # sources
-        test.cpp
-        channel_type.cpp
-        channel_view.cpp
-        cmyka.cpp
-        get_num_bits.cpp
-        get_pixel_type.cpp
-        gray_alpha.cpp
-        gray_to_rgba.cpp
-        hsl_hsv_test.cpp
-        indexed_image_test.cpp
-        is_bit_aligned.cpp
-        is_homogeneous.cpp
-        is_similar.cpp
-        lab_test.cpp
-        pixel_bit_size.cpp
-        rgb_to_luminance.cpp
-        xyz_test.cpp
-        : # args
-        : # input-files
-        :	# requirements
-        : # target-name
-        gil_io_new_tests
-        : # default-build
-    ]
+run
+    test.cpp
+    channel_type.cpp
+    channel_view.cpp
+    cmyka.cpp
+    get_num_bits.cpp
+    get_pixel_type.cpp
+    gray_alpha.cpp
+    gray_to_rgba.cpp
+    hsl_hsv_test.cpp
+    indexed_image_test.cpp
+    is_bit_aligned.cpp
+    is_homogeneous.cpp
+    is_similar.cpp
+    lab_test.cpp
+    pixel_bit_size.cpp
+    rgb_to_luminance.cpp
+    xyz_test.cpp
     ;
