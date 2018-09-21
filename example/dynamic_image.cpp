@@ -1,6 +1,6 @@
 /*
     Copyright 2005-2007 Adobe Systems Incorporated
-   
+
     Use, modification and distribution are subject to the Boost Software License,
     Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
     http://www.boost.org/LICENSE_1_0.txt).
@@ -22,12 +22,12 @@
 
 int main()
 {
-    namespace bg = boost::gil;
+    namespace gil = boost::gil;
 
-    using my_images_t = boost::mpl::vector<bg::gray8_image_t, bg::rgb8_image_t, bg::gray16_image_t, bg::rgb16_image_t>;
-    bg::any_image<my_images_t> dynamic_image;
-    bg::read_image("test.jpg", dynamic_image, bg::jpeg_tag());
+    using my_images_t = boost::mpl::vector<gil::gray8_image_t, gil::rgb8_image_t, gil::gray16_image_t, gil::rgb16_image_t>;
+    gil::any_image<my_images_t> dynamic_image;
+    gil::read_image("test.jpg", dynamic_image, gil::jpeg_tag());
     // Save the image upside down, preserving its native color space and channel depth
-    auto view = bg::flipped_up_down_view(bg::const_view(dynamic_image));
-    bg::write_view("out-dynamic_image.jpg", view, bg::jpeg_tag());
+    auto view = gil::flipped_up_down_view(gil::const_view(dynamic_image));
+    gil::write_view("out-dynamic_image.jpg", view, gil::jpeg_tag());
 }

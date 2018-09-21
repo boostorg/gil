@@ -55,7 +55,6 @@ variant ubsan_undefined
     <define>BOOST_USE_ASAN=1
     ;
 
-build-project example ;
 build-project test ;
 build-project numeric/test ;
 build-project toolbox/test ;
