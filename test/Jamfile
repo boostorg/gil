@@ -1,32 +1,30 @@
-# Boost.GIL
+# Boost.GIL (Generic Image Library) - tests
 #
-# (C) Copyright 2008: Lubomir Bourdev and Hailin Jin
+# Copyright (c) 2008 Lubomir Bourdev, Hailin Jin
+# Copyright (c) 2018 Mateusz Loskot <mateusz@loskot.net>
 #
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or
 # copy at http://www.boost.org/LICENSE_1_0.txt)
 
-# bring in rules for testing
 import testing ;
 
 project
     : requirements
     <include>$(BOOST_ROOT)
     <include>.
-    <library>/boost/filesystem//boost_filesystem
     ;
 
-test-suite "boost-gil-test" :
-    [ run promote_integral.cpp ]
-    [ run image.cpp sample_image.cpp error_if.cpp
-        :
-        : gil_reference_checksums.txt
-        :
-    ]
-    [ run channel.cpp error_if.cpp ]
-    [ run pixel.cpp error_if.cpp ]
-    [ run pixel_iterator.cpp error_if.cpp ]
+run promote_integral.cpp ;
+run image.cpp sample_image.cpp error_if.cpp : : gil_reference_checksums.txt ;
+run channel.cpp error_if.cpp ;
+run pixel.cpp error_if.cpp ;
+run pixel_iterator.cpp error_if.cpp ;
+
+alias perf :
+    [ run performance.cpp ]
     ;
+explicit perf ;
 
 build-project channel ;
 build-project image_view ;

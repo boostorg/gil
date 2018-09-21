@@ -1,13 +1,13 @@
-# Boost.GIL.IO
+# Boost.GIL (Generic Image Library) - IO tests
 #
-# (C) Copyright 2012: Mateusz Loskot and Christian Henning
-# (C) Copyright 2017: Stefan Seefeld
+# Copyright (c) 2012 Christian Henning
+# Copyright (c) 2017 Stefan Seefeld
+# Copyright (c) 2012-2018 Mateusz Loskot <mateusz@loskot.net>
+#
 # Distributed under the Boost Software License, Version 1.0.
-# (See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+# (See accompanying file LICENSE_1_0.txt or
+# copy at http://www.boost.org/LICENSE_1_0.txt)
 
-# Please make sure to read readme.txt!
-
-# bring in rules for testing
 import testing ;
 import ac ;
 
@@ -26,7 +26,7 @@ project
     <library>/boost/filesystem//boost_filesystem
     ;
 
-test-suite simple
+alias simple
   : [ run all_formats_test.cpp
       : # args
       : # input files
@@ -40,7 +40,7 @@ test-suite simple
     ]
 ;
 
-test-suite full :
+alias full :
     [ run bmp_test.cpp bmp_old_test.cpp bmp_read_test.cpp bmp_write_test.cpp ]
     [ run jpeg_test.cpp jpeg_old_test.cpp jpeg_read_test.cpp jpeg_write_test.cpp
       :

@@ -1,6 +1,6 @@
-# Boost.GIL
+# Boost.GIL (Generic Image Library) - tests
 #
-# Copyright (c) 2018 Mateusz Loskot <mateusz at loskot dot net>
+# Copyright (c) 2018 Mateusz Loskot <mateusz@loskot.net>
 #
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or
@@ -14,8 +14,5 @@ project
     <include>..
     ;
 
-test-suite "boost-gil-test-image-view"
-    :
-    [ compile image_view_concepts.cpp ]
-    [ run collection.cpp ]
-    ;
+compile image_view_concepts.cpp ;
+run collection.cpp ;

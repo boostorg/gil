@@ -13,6 +13,7 @@
 #include <boost/gil/extension/numeric/resample.hpp>
 #include <boost/gil/extension/numeric/sampler.hpp>
 
+#define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 
 using namespace boost;
