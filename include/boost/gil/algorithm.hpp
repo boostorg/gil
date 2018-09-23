@@ -765,7 +765,7 @@ F for_each_pixel(const V& img, F fun) {
         return std::for_each(img.begin().x(), img.end().x(), fun);
     } else {
         for (std::ptrdiff_t y=0; y<img.height(); ++y)
-            fun = std::for_each(img.row_begin(y),img.row_end(y),fun);
+            std::for_each(img.row_begin(y),img.row_end(y),fun);
         return fun;
     }
 }
