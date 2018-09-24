@@ -115,7 +115,7 @@ template <typename View> struct view_is_basic : public mpl::false_ {};
 template <typename Loc> struct view_is_basic<image_view<Loc> > : public locator_is_basic<Loc> {};
 
 /// \ingroup GILIsBasic
-/// \brief Basic images must use basic views and std::allocator of char
+/// \brief Basic images must use basic views and std::allocator
 template <typename Img> struct image_is_basic : public mpl::false_ {};
 template <typename Pixel, bool IsPlanar, typename Alloc> struct image_is_basic<image<Pixel,IsPlanar,Alloc> > : public mpl::true_ {};
 
