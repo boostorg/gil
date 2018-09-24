@@ -654,7 +654,7 @@
 <div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;        <span class="keywordflow">return</span> std::for_each(img.begin().x(), img.end().x(), fun);</div>
 <div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;    } <span class="keywordflow">else</span> {</div>
 <div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;        <span class="keywordflow">for</span> (std::ptrdiff_t y=0; y&lt;img.height(); ++y)</div>
-<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;            fun = std::for_each(img.row_begin(y),img.row_end(y),fun);</div>
+<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;            std::for_each(img.row_begin(y),img.row_end(y),fun);</div>
 <div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;        <span class="keywordflow">return</span> fun;</div>
 <div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;    }</div>
 <div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;}</div>
@@ -901,7 +901,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Sep 22 2018 09:12:25 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Mon Sep 24 2018 00:21:28 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
