@@ -12,11 +12,10 @@ file(GLOB _headers
   ${PROJECT_SOURCE_DIR}/include/boost/gil/extension/numeric/*.hpp)
 list(APPEND _headers ${_boost_gil_headers})
 
-add_executable(gil_test_ext_numeric test.cpp numeric.cpp)
+add_executable(gil_test_ext_numeric "")
 target_sources(gil_test_ext_numeric
   PRIVATE
   ${_headers}
-  test.cpp
   numeric.cpp)
 target_link_libraries(gil_test_ext_numeric
   PRIVATE
