@@ -29,7 +29,6 @@
 #include <boost/mpl/greater.hpp>
 #include <boost/type_traits.hpp>
 
-#include "gil_config.hpp"
 #include "channel.hpp"
 #include "promote_integral.hpp"
 #include "typedefs.hpp"

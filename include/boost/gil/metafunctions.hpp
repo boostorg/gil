@@ -34,7 +34,6 @@
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/vector_c.hpp>
 #include <boost/type_traits.hpp>
-#include "gil_config.hpp"
 #include "gil_concept.hpp"
 #include "channel.hpp"
 

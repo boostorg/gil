@@ -23,7 +23,6 @@
 
 #include <cstddef>
 #include <iterator>
-#include "gil_config.hpp"
 #include "iterator_from_2d.hpp"
 
 //#ifdef _MSC_VER

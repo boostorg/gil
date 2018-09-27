@@ -27,7 +27,6 @@
 #include <vector>
 #include <functional>
 
-#include <boost/gil/gil_config.hpp>
 #include <boost/gil/image_view_factory.hpp>
 #include <boost/gil/algorithm.hpp>
 #include <boost/gil/metafunctions.hpp>

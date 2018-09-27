@@ -29,7 +29,6 @@
 #include <boost/mpl/arithmetic.hpp>
 
 
-#include "gil_config.hpp"
 #include "image_view.hpp"
 #include "metafunctions.hpp"
 #include "algorithm.hpp"

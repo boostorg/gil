@@ -27,9 +27,6 @@
 
 #include <functional>
 
-#include <boost/gil/gil_config.hpp>
-#include <boost/gil/channel.hpp>
-
 namespace boost { namespace gil {
 
 /// \ingroup ChannelNumericOperations

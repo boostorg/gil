@@ -26,7 +26,6 @@
 
 #include <cassert>
 #include <cstddef>
-#include "gil_config.hpp"
 #include "metafunctions.hpp"
 #include "gray.hpp"
 #include "color_convert.hpp"

@@ -13,7 +13,6 @@
 #ifndef GIL_UTILITIES_H
 #define GIL_UTILITIES_H
 
-#include "gil_config.hpp"
 #include <functional>
 #include <boost/config/no_tr1/cmath.hpp>
 #include <cstddef>

@@ -14,8 +14,6 @@
 /// \author Lubomir Bourdev and Hailin Jin \n
 ///         Adobe Systems Incorporated
 
-#include "gil_config.hpp"
-
 #include <cstdint>
 #include <memory>
 

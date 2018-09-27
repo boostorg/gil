@@ -21,7 +21,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include <cstddef>
-#include "gil_config.hpp"
 #include <boost/mpl/contains.hpp>
 #include "rgb.hpp"
 #include "planar_pixel_iterator.hpp"

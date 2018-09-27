@@ -9,7 +9,6 @@
 #define boost_gil_hpp_
 
 #include <boost/gil/version.hpp>
-#include <boost/gil/gil_config.hpp>
 #include <boost/gil/channel_algorithm.hpp>
 #include <boost/gil/algorithm.hpp>
 #include <boost/gil/pixel.hpp>

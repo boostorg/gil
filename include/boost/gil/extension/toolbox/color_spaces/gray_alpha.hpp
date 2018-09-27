@@ -21,7 +21,6 @@
 
 #include <boost/mpl/contains.hpp>
 
-#include <boost/gil/gil_config.hpp>
 #include <boost/gil/color_convert.hpp>
 #include <boost/gil/gray.hpp>
 #include <boost/gil/typedefs.hpp>
