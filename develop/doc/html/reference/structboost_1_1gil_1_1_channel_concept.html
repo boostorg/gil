@@ -84,7 +84,7 @@ struct boost::gil::ChannelConcept&lt; T &gt;</h3>
 <p>A channel is the building block of a color. Color is defined as a mixture of primary colors and a channel defines the degree to which each primary color is used in the mixture. </p>
 <p>Channel CONCEPTS For example, in the RGB color space, using 8-bit unsigned channels, the color red is defined as [255 0 0], which means maximum of Red, and no Green and Blue.</p>
 <p>Built-in scalar types, such as <code>int</code> and <code>float</code>, are valid GIL channels. In more complex scenarios, channels may be represented as bit ranges or even individual bits. In such cases special classes are needed to represent the value and reference to a channel.</p>
-<p>Channels have a traits class, <code><a class="el" href="structboost_1_1gil_1_1channel__traits.html" title="Traits for channels. Contains the following members: ">channel_traits</a></code>, which defines their associated types as well as their operating ranges.</p>
+<p>Channels have a traits class, <code>channel_traits</code>, which defines their associated types as well as their operating ranges.</p>
 <div class="fragment"><div class="line">concept ChannelConcept&lt;typename T&gt; : EqualityComparable&lt;T&gt; {</div>
 <div class="line">    <span class="keyword">typename</span> value_type      = T;        <span class="comment">// use channel_traits&lt;T&gt;::value_type to access it</span></div>
 <div class="line">    <span class="keyword">typename</span> reference       = T&amp;;       <span class="comment">// use channel_traits&lt;T&gt;::reference to access it</span></div>
@@ -105,7 +105,7 @@ struct boost::gil::ChannelConcept&lt; T &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Mon Sep 24 2018 19:19:50 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Thu Sep 27 2018 23:39:40 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

@@ -52,6 +52,7 @@
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">channel.hpp File Reference</div>  </div>
@@ -60,34 +61,19 @@
 
 <p>Channel utilities.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;limits&gt;</code><br/>
-<code>#include &lt;cassert&gt;</code><br/>
-<code>#include &lt;cstdint&gt;</code><br/>
+<div class="textblock"><code>#include &quot;<a class="el" href="utilities_8hpp_source.html">utilities.hpp</a>&quot;</code><br/>
 <code>#include &lt;boost/config.hpp&gt;</code><br/>
+<code>#include &lt;boost/config/pragma_message.hpp&gt;</code><br/>
 <code>#include &lt;boost/integer/integer_mask.hpp&gt;</code><br/>
 <code>#include &lt;boost/type_traits/remove_cv.hpp&gt;</code><br/>
-<code>#include &quot;<a class="el" href="gil__config_8hpp_source.html">gil_config.hpp</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="utilities_8hpp_source.html">utilities.hpp</a>&quot;</code><br/>
+<code>#include &lt;limits&gt;</code><br/>
+<code>#include &lt;cassert&gt;</code><br/>
+<code>#include &lt;cstdint&gt;</code><br/>
 </div>
 <p><a href="channel_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1channel__traits.html">channel_traits&lt; T &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Traits for channels. Contains the following members:  <a href="structboost_1_1gil_1_1channel__traits.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1scoped__channel__value.html">scoped_channel_value&lt; BaseChannelValue, MinVal, MaxVal &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A channel adaptor that modifies the range of the source channel. Models: <a class="el" href="structboost_1_1gil_1_1_channel_value_concept.html" title="A channel that supports default construction. ">ChannelValueConcept</a>.  <a href="structboost_1_1gil_1_1scoped__channel__value.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1gil_1_1packed__channel__value.html">packed_channel_value&lt; NumBits &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The value of a subbyte channel. Models: <a class="el" href="structboost_1_1gil_1_1_channel_value_concept.html" title="A channel that supports default construction. ">ChannelValueConcept</a>.  <a href="classboost_1_1gil_1_1packed__channel__value.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1gil_1_1packed__channel__reference_3_01_bit_field_00_01_first_bit_00_01_num_bits_00_01false_01_4.html">packed_channel_reference&lt; BitField, FirstBit, NumBits, false &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A constant subbyte channel reference whose bit offset is fixed at compile time. Models <a class="el" href="structboost_1_1gil_1_1_channel_concept.html" title="A channel is the building block of a color. Color is defined as a mixture of primary colors and a cha...">ChannelConcept</a>.  <a href="classboost_1_1gil_1_1packed__channel__reference_3_01_bit_field_00_01_first_bit_00_01_num_bits_00_01false_01_4.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1gil_1_1packed__channel__reference_3_01_bit_field_00_01_first_bit_00_01_num_bits_00_01true_01_4.html">packed_channel_reference&lt; BitField, FirstBit, NumBits, true &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A mutable subbyte channel reference whose bit offset is fixed at compile time. Models <a class="el" href="structboost_1_1gil_1_1_channel_concept.html" title="A channel is the building block of a color. Color is defined as a mixture of primary colors and a cha...">ChannelConcept</a>.  <a href="classboost_1_1gil_1_1packed__channel__reference_3_01_bit_field_00_01_first_bit_00_01_num_bits_00_01true_01_4.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1gil_1_1packed__dynamic__channel__reference_3_01_bit_field_00_01_num_bits_00_01false_01_4.html">packed_dynamic_channel_reference&lt; BitField, NumBits, false &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Models a constant subbyte channel reference whose bit offset is a runtime parameter. Models <a class="el" href="structboost_1_1gil_1_1_channel_concept.html" title="A channel is the building block of a color. Color is defined as a mixture of primary colors and a cha...">ChannelConcept</a> Same as packed_channel_reference, except that the offset is a runtime parameter.  <a href="classboost_1_1gil_1_1packed__dynamic__channel__reference_3_01_bit_field_00_01_num_bits_00_01false_01_4.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -100,6 +86,12 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespaceboost"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceboost.html">boost</a></td></tr>
 <tr class="memdesc:namespaceboost"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pixel 2D LOCATOR. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:aba81a066620602fddaf547ddafd4ae15"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="channel_8hpp.html#aba81a066620602fddaf547ddafd4ae15">BOOST_GIL_CONFIG_HAS_UNALIGNED_ACCESS</a></td></tr>
+<tr class="memdesc:aba81a066620602fddaf547ddafd4ae15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define to allow unaligned memory access for models of packed channel value. Theoretically (or historically?) on platforms which support dereferencing on non-word memory boundary, unaligned access may result in performance improvement.  <a href="#aba81a066620602fddaf547ddafd4ae15">More...</a><br/></td></tr>
+<tr class="separator:aba81a066620602fddaf547ddafd4ae15"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -141,13 +133,29 @@ template&lt;typename BF , int NB, bool M&gt; </td></tr>
 <dl class="section date"><dt>Date</dt><dd>2005-2007 <br/>
  Last updated on May 6, 2007</dd></dl>
 <p>Definitions of standard GIL channel models </p>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="aba81a066620602fddaf547ddafd4ae15"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BOOST_GIL_CONFIG_HAS_UNALIGNED_ACCESS</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Define to allow unaligned memory access for models of packed channel value. Theoretically (or historically?) on platforms which support dereferencing on non-word memory boundary, unaligned access may result in performance improvement. </p>
+<dl class="section warning"><dt>Warning</dt><dd>Unfortunately, this optimization may be a C/C++ strict aliasing rules violation, if accessed data buffer has effective type that cannot be aliased without leading to undefined behaviour. </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
      <!-- start footer part -->
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Mon Sep 24 2018 19:19:49 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Thu Sep 27 2018 23:39:40 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
