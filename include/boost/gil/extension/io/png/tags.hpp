@@ -1,23 +1,17 @@
-/*
-    Copyright 2007-2008 Christian Henning, Andreas Pokorny, Lubomir Bourdev
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2007-2008 Christian Henning, Andreas Pokorny, Lubomir Bourdev
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_IO_PNG_TAGS_HPP
 #define BOOST_GIL_EXTENSION_IO_PNG_TAGS_HPP
 
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief
-/// \author Christian Henning, Andreas Pokorny, Lubomir Bourdev \n
-///         
-/// \date   2007-2008 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
+#include <boost/gil/io/base.hpp>
+
+#include <string>
+#include <vector>
 
 #ifdef BOOST_GIL_IO_PNG_FLOATING_POINT_SUPPORTED
 #ifdef BOOST_GIL_IO_PNG_FIXED_POINT_SUPPORTED
@@ -46,11 +40,6 @@
 #define BOOST_GIL_IO_PNG_1_4_OR_LOWER
 #endif // PNG_LIBPNG_VER_MAJOR == 1
 #endif // PNG_LIBPNG_VER_MINOR <= 4
-
-#include <string>
-#include <vector>
-
-#include <boost/gil/io/base.hpp>
 
 namespace boost { namespace gil {
 
@@ -94,7 +83,7 @@ struct png_num_channels : property_base< png_byte > {};
     /// Defines type for physical scale property.
     struct png_scale : property_base< double > {};
 
-#else 
+#else
     /// Defines type for CIE chromacities property.
     struct png_chromacities_type : property_base< png_fixed_point > {};
 
@@ -207,7 +196,7 @@ struct png_compression_type : property_base< png_byte >
     static const type default_value = PNG_COMPRESSION_TYPE_BASE;
 };
 
-// compression level - default values taken from libpng manual. 
+// compression level - default values taken from libpng manual.
 // Look for png_set_compression_level
 struct png_compression_level : property_base< int >
 {
@@ -326,7 +315,7 @@ struct png_info_base
 
     , _valid_file_gamma( 0   )
     , _file_gamma      ( 1.0 )
-#else 
+#else
     , _valid_cie_colors( 0 )
     , _white_x         ( 0 )
     , _white_y         ( 0 )

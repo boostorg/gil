@@ -1,27 +1,18 @@
-/*
-    Copyright 2013 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-
-/**************************************************
- *
- * This test file will only test the library's
- * interface. It's more of a compile time test
- * than a runtime test.
- *
- **************************************************/
-
+//
+// Copyright 2013 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #define BOOST_TEST_MODULE tiff_test
-#include <boost/test/unit_test.hpp>
-
-#define BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
 #define BOOST_FILESYSTEM_VERSION 3
-#include <boost/filesystem/convenience.hpp>
+#define BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
 
 #include <boost/gil/extension/io/tiff.hpp>
+
+#include <boost/filesystem/convenience.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include <fstream>
 #include <sstream>
@@ -29,6 +20,9 @@
 #include "mandel_view.hpp"
 #include "paths.hpp"
 #include "subimage_test.hpp"
+
+// This test file will only test the library's interface.
+// It's more of a compile time test than a runtime test.
 
 using namespace std;
 using namespace boost;
@@ -81,7 +75,7 @@ BOOST_AUTO_TEST_CASE( read_image_info_test )
         backend_t backend = read_image_info( file
                                            , tag_t()
                                            );
-                                           
+
         BOOST_CHECK_EQUAL( backend._info._width , 1000u );
         BOOST_CHECK_EQUAL( backend._info._height,  600u );
     }
@@ -264,7 +258,7 @@ BOOST_AUTO_TEST_CASE( write_view_test )
     {
         string filename( tiff_out + "write_test_tiff.tif" );
         TIFF* file = TIFFOpen( filename.c_str(), "w" );
-        
+
         write_view( file
                   , create_mandel_view( 320, 240
                                       , rgb8_pixel_t( 0,   0, 255 )
@@ -348,7 +342,7 @@ BOOST_AUTO_TEST_CASE( subimage_test )
 
 BOOST_AUTO_TEST_CASE( dynamic_image_test )
 {
-    // This test has been disabled for now because of 
+    // This test has been disabled for now because of
     // compilation issues with MSVC10.
 
     typedef mpl::vector< gray8_image_t

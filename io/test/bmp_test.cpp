@@ -1,22 +1,20 @@
-/*
-    Copyright 2013 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
+//
+// Copyright 2013 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #define BOOST_TEST_MODULE bmp_test
-#include <boost/test/unit_test.hpp>
-
 #define BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
-
-#include <fstream>
-
+#define BOOST_FILESYSTEM_VERSION 3
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/bmp.hpp>
 
-#define BOOST_FILESYSTEM_VERSION 3
 #include <boost/filesystem/convenience.hpp>
+#include <boost/test/unit_test.hpp>
+
+#include <fstream>
 
 #include "mandel_view.hpp"
 #include "paths.hpp"
@@ -73,7 +71,7 @@ BOOST_AUTO_TEST_CASE( read_image_info_using_string )
         backend_t backend = read_image_info( file
                                            , tag_t()
                                            );
-        
+
         BOOST_CHECK_EQUAL( backend._info._width , 1000 );
         BOOST_CHECK_EQUAL( backend._info._height, 600  );
     }
@@ -116,7 +114,7 @@ BOOST_AUTO_TEST_CASE( read_image_test )
 
     {
         FILE* file = fopen( bmp_filename.c_str(), "rb" );
-        
+
         rgb8_image_t img;
         read_image( file, img, tag_t() );
 
@@ -157,7 +155,7 @@ BOOST_AUTO_TEST_CASE( read_and_convert_image_test )
 
     {
         FILE* file = fopen( bmp_filename.c_str(), "rb" );
-        
+
         rgb8_image_t img;
         read_and_convert_image( file, img, tag_t() );
 
@@ -182,7 +180,7 @@ BOOST_AUTO_TEST_CASE( read_view_test )
 
     {
         FILE* file = fopen( bmp_filename.c_str(), "rb" );
-        
+
         rgb8_image_t img( 1000, 600  );
         read_view( file, view( img ), tag_t() );
     }
@@ -204,7 +202,7 @@ BOOST_AUTO_TEST_CASE( read_and_convert_view_test )
 
     {
         FILE* file = fopen( bmp_filename.c_str(), "rb" );
-        
+
         rgb8_image_t img( 1000, 600  );
         read_and_convert_view( file
                              , view( img )
@@ -220,7 +218,7 @@ BOOST_AUTO_TEST_CASE( write_view_test )
         string filename( bmp_out + "write_test_string.bmp" );
 
         write_view( filename
-                  , create_mandel_view( 1000, 600 
+                  , create_mandel_view( 1000, 600
                                       , rgb8_pixel_t( 0,   0, 255 )
                                       , rgb8_pixel_t( 0, 255,   0 )
                                       )
@@ -234,7 +232,7 @@ BOOST_AUTO_TEST_CASE( write_view_test )
         ofstream out( filename.c_str(), ios::binary );
 
         write_view( out
-                  , create_mandel_view( 1000, 600 
+                  , create_mandel_view( 1000, 600
                                       , rgb8_pixel_t( 0,   0, 255 )
                                       , rgb8_pixel_t( 0, 255,   0 )
                                       )
@@ -246,9 +244,9 @@ BOOST_AUTO_TEST_CASE( write_view_test )
         string filename( bmp_out + "write_test_file.bmp" );
 
         FILE* file = fopen( filename.c_str(), "wb" );
-        
+
         write_view( file
-                  , create_mandel_view( 1000, 600 
+                  , create_mandel_view( 1000, 600
                                       , rgb8_pixel_t( 0,   0, 255 )
                                       , rgb8_pixel_t( 0, 255,   0 )
                                       )
@@ -264,7 +262,7 @@ BOOST_AUTO_TEST_CASE( write_view_test )
         FILE* file = fopen( filename.c_str(), "wb" );
 
         write_view( file
-                  , create_mandel_view( 1000, 600 
+                  , create_mandel_view( 1000, 600
                                       , rgb8_pixel_t( 0,   0, 255 )
                                       , rgb8_pixel_t( 0, 255,   0 )
                                       )

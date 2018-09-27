@@ -6,7 +6,7 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-#include <boost/gil/gil_concept.hpp>
+#include <boost/gil/concepts.hpp>
 #include <cstdint>
 
 #define BOOST_TEST_MODULE test_channel_concepts

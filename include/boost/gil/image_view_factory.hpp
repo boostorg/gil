@@ -1,34 +1,23 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_IMAGE_VIEW_FACTORY_HPP
+#define BOOST_GIL_IMAGE_VIEW_FACTORY_HPP
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-
-/*************************************************************************************************/
-
-#ifndef GIL_IMAGE_VIEW_FACTORY_HPP
-#define GIL_IMAGE_VIEW_FACTORY_HPP
-
-/*!
-/// \file               
-/// \brief Methods for constructing image views from raw data or other image views
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated on March 9, 2007
-/// Methods for creating shallow image views from raw pixel data or from other image views - 
-/// flipping horizontally or vertically, axis-aligned rotation, a subimage, subsampled 
-/// or n-th channel image view. Derived image views are shallow copies and are fast to construct.
-*/
+#include <boost/gil/color_convert.hpp>
+#include <boost/gil/gray.hpp>
+#include <boost/gil/metafunctions.hpp>
 
 #include <cassert>
 #include <cstddef>
-#include "metafunctions.hpp"
-#include "gray.hpp"
-#include "color_convert.hpp"
+
+/// Methods for creating shallow image views from raw pixel data or from other image views -
+/// flipping horizontally or vertically, axis-aligned rotation, a subimage, subsampled
+/// or n-th channel image view. Derived image views are shallow copies and are fast to construct.
 
 /// \defgroup ImageViewConstructors Image View From Raw Data
 /// \ingroup ImageViewAlgorithm

@@ -1,22 +1,22 @@
-/*
-    Copyright 2013 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
+//
+// Copyright 2013 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_TIFF_TILED_READ_MACROS_HPP
 #define BOOST_GIL_TIFF_TILED_READ_MACROS_HPP
 
+#include <boost/gil.hpp>
+#include <boost/gil/extension/io/tiff/read.hpp>
+
+#include <boost/mpl/vector.hpp>
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/stringize.hpp>
 #include <boost/preprocessor/tuple/elem.hpp>
 #include <boost/preprocessor/comparison/less.hpp>
 #include <boost/preprocessor/repetition/repeat_from_to.hpp>
-
-#include <boost/mpl/vector.hpp>
-#include <boost/gil.hpp>
-#include <boost/gil/extension/io/tiff/read.hpp>
 
 #include "paths.hpp"
 

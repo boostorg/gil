@@ -1,32 +1,21 @@
-/*
-    Copyright 2007-2012 Christian Henning, Andreas Pokorny, Lubomir Bourdev
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2007-2012 Christian Henning, Andreas Pokorny, Lubomir Bourdev
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_IO_READ_AND_CONVERT_VIEW_HPP
 #define BOOST_GIL_IO_READ_AND_CONVERT_VIEW_HPP
 
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief
-/// \author Christian Henning, Andreas Pokorny, Lubomir Bourdev \n
-///
-/// \date   2007-2012 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
-#include <boost/type_traits/is_base_and_derived.hpp>
-#include <boost/mpl/and.hpp>
-#include <boost/utility/enable_if.hpp>
-
 #include <boost/gil/io/base.hpp>
+#include <boost/gil/io/conversion_policies.hpp>
 #include <boost/gil/io/device.hpp>
 #include <boost/gil/io/path_spec.hpp>
-#include <boost/gil/io/conversion_policies.hpp>
+
+#include <boost/mpl/and.hpp>
+#include <boost/type_traits/is_base_and_derived.hpp>
+#include <boost/utility/enable_if.hpp>
 
 namespace boost{ namespace gil {
 
@@ -140,7 +129,7 @@ void read_and_convert_view( const String&                           file_name
 /// \param file_name File name. Must satisfy is_supported_path_spec metafunction.
 /// \param view      The image view in which the data is read into.
 /// \param cc        Color converter function object.
-/// \param tag       Defines the image format. Must satisfy is_format_tag metafunction. 
+/// \param tag       Defines the image format. Must satisfy is_format_tag metafunction.
 /// \throw std::ios_base::failure
 template < typename String
          , typename View
@@ -177,7 +166,7 @@ void read_and_convert_view( const String&         file_name
 /// \param file It's a device. Must satisfy is_input_device metafunction or is_adaptable_input_device.
 /// \param view The image view in which the data is read into.
 /// \param cc   Color converter function object.
-/// \param tag  Defines the image format. Must satisfy is_format_tag metafunction. 
+/// \param tag  Defines the image format. Must satisfy is_format_tag metafunction.
 /// \throw std::ios_base::failure
 template < typename Device
          , typename View
@@ -286,7 +275,7 @@ void read_and_convert_view( Device&                                 device
 /// \brief Reads and color-converts an image view. No memory is allocated.
 /// \param file_name File name. Must satisfy is_supported_path_spec metafunction.
 /// \param view      The image view in which the data is read into.
-/// \param tag       Defines the image format. Must satisfy is_format_tag metafunction. 
+/// \param tag       Defines the image format. Must satisfy is_format_tag metafunction.
 /// \throw std::ios_base::failure
 template < typename String
          , typename View
@@ -320,7 +309,7 @@ void read_and_convert_view( const String&    file_name
 /// \brief Reads and color-converts an image view. No memory is allocated.
 /// \param file It's a device. Must satisfy is_input_device metafunction or is_adaptable_input_device.
 /// \param view The image view in which the data is read into.
-/// \param tag  Defines the image format. Must satisfy is_format_tag metafunction. 
+/// \param tag  Defines the image format. Must satisfy is_format_tag metafunction.
 /// \throw std::ios_base::failure
 template < typename Device
          , typename View

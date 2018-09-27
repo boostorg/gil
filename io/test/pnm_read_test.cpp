@@ -1,14 +1,15 @@
-/*
-    Copyright 2013 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
+//
+// Copyright 2013 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 //#define BOOST_TEST_MODULE pnm_read_test_module
-#include <boost/test/unit_test.hpp>
 
 #include <boost/gil/extension/io/pnm.hpp>
+
+#include <boost/test/unit_test.hpp>
 
 #include "paths.hpp"
 #include "scanline_read_test.hpp"
@@ -64,7 +65,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // p1.pnm
     {
         gray8_image_t img;
-        
+
         read_image( pnm_in + "p1.pnm", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 200u );
         BOOST_CHECK_EQUAL( view( img ).height(), 200u );
@@ -77,7 +78,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // p2.pnm
     {
         gray8_image_t img;
-        
+
         read_image( pnm_in + "p2.pnm", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 200u );
         BOOST_CHECK_EQUAL( view( img ).height(), 200u );
@@ -90,7 +91,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // p3.pnm
     {
         rgb8_image_t img;
-        
+
         read_image( pnm_in + "p3.pnm", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 256u );
         BOOST_CHECK_EQUAL( view( img ).height(), 256u );
@@ -103,7 +104,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // p4.pnm
     {
         gray1_image_t img;
-        
+
         read_image( pnm_in + "p4.pnm", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 200u );
         BOOST_CHECK_EQUAL( view( img ).height(), 200u );
@@ -116,7 +117,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // p5.pnm
     {
         gray8_image_t img;
-        
+
         read_image( pnm_in + "p5.pnm", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 200u );
         BOOST_CHECK_EQUAL( view( img ).height(), 200u );
@@ -129,7 +130,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // p6.pnm
     {
         rgb8_image_t img;
-        
+
         read_image( pnm_in + "p6.pnm", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 256u );
         BOOST_CHECK_EQUAL( view( img ).height(), 256u );

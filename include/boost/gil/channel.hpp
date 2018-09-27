@@ -1,41 +1,25 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_CHANNEL_HPP
+#define BOOST_GIL_CHANNEL_HPP
 
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-
-    See http://stlab.adobe.com/gil for most recent version including documentation.
-*/
-
-/*************************************************************************************************/
-
-#ifndef GIL_CHANNEL_HPP
-#define GIL_CHANNEL_HPP
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief Channel utilities
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated on May 6, 2007
-///
-/// Definitions of standard GIL channel models
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
-#include "utilities.hpp"
+#include <boost/gil/utilities.hpp>
 
 #include <boost/config.hpp>
 #include <boost/config/pragma_message.hpp>
 #include <boost/integer/integer_mask.hpp>
 #include <boost/type_traits/remove_cv.hpp>
 
-#include <limits>
 #include <cassert>
 #include <cstdint>
+#include <limits>
 
-#if defined(BOOST_GIL_DOXYGEN_ONLY)
+#ifdef BOOST_GIL_DOXYGEN_ONLY
 /// \def BOOST_GIL_CONFIG_HAS_UNALIGNED_ACCESS
 /// \brief Define to allow unaligned memory access for models of packed channel value.
 /// Theoretically (or historically?) on platforms which support dereferencing on
@@ -46,7 +30,7 @@
 #define BOOST_GIL_CONFIG_HAS_UNALIGNED_ACCESS
 #endif
 
-#if defined(BOOST_GIL_CONFIG_HAS_UNALIGNED_ACCESS)
+#ifdef BOOST_GIL_CONFIG_HAS_UNALIGNED_ACCESS
 #if defined(sun) || defined(__sun) || \             // SunOS
     defined(__osf__) || defined(__osf) || \         // Tru64
     defined(_hpux) || defined(hpux) || \            // HP-UX

@@ -1,32 +1,24 @@
-/*
-    Copyright 2013 Christian Henning and Juan V. Puertos
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2013 Christian Henning and Juan V. Puertos
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_TOOLBOX_IMAGE_TYPES_SUBCHROMA_IMAGE_HPP
 #define BOOST_GIL_EXTENSION_TOOLBOX_IMAGE_TYPES_SUBCHROMA_IMAGE_HPP
 
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file subchroma_image.hpp
-/// \brief Subchroma Image extension
-/// \author Christian Henning and Juan V. Puertos\n
-///
-/// \date 2013 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
+#include <boost/gil/image.hpp>
 
 #include <boost/mpl/divides.hpp>
 #include <boost/mpl/equal_to.hpp>
-#include <boost/mpl/int.hpp>
 #include <boost/mpl/if.hpp>
+#include <boost/mpl/int.hpp>
 #include <boost/mpl/or.hpp>
 #include <boost/mpl/vector_c.hpp>
 
-#include <boost/gil/image.hpp>
+#include <cstddef>
+#include <memory>
 
 namespace boost{ namespace gil {
 
@@ -574,4 +566,4 @@ typename subchroma_image< Pixel
 } // namespace gil
 } // namespace boost
 
-#endif // BOOST_GIL_EXTENSION_TOOLBOX_IMAGE_TYPES_SUBCHROMA_IMAGE_HPP
+#endif

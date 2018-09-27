@@ -1,21 +1,19 @@
-/*
-    Copyright 2013 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
+//
+// Copyright 2013 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 //#define BOOST_TEST_MODULE png_read_test_module
-#include <boost/test/unit_test.hpp>
-
 #define BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
 #define BOOST_GIL_IO_ENABLE_GRAY_ALPHA
-
-
 #define BOOST_FILESYSTEM_VERSION 3
-#include <boost/filesystem/convenience.hpp>
 
 #include <boost/gil/extension/io/png.hpp>
+
+#include <boost/filesystem/convenience.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include <cstdint>
 #include <iostream>

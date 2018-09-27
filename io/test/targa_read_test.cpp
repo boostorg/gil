@@ -1,16 +1,17 @@
-/*
-    Copyright 2013 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
+//
+// Copyright 2013 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 //#define BOOST_TEST_MODULE targa_read_test_module
-#include <boost/test/unit_test.hpp>
-#include <boost/type_traits/is_same.hpp>
 
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/targa.hpp>
+
+#include <boost/test/unit_test.hpp>
+#include <boost/type_traits/is_same.hpp>
 
 #include "paths.hpp"
 #include "scanline_read_test.hpp"

@@ -1,31 +1,20 @@
-/*
-    Copyright 2012 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2012 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_IO_TARGA_DETAIL_READER_BACKEND_HPP
 #define BOOST_GIL_EXTENSION_IO_TARGA_DETAIL_READER_BACKEND_HPP
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief
-/// \author Christian Henning \n
-///
-/// \date 2012 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/gil/extension/io/targa/tags.hpp>
 
 namespace boost { namespace gil {
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
-#pragma warning(push) 
-#pragma warning(disable:4512) //assignment operator could not be generated 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(push)
+#pragma warning(disable:4512) //assignment operator could not be generated
 #endif
 
 ///
@@ -50,7 +39,7 @@ public:
     , _settings( settings )
     , _info()
     {
-        read_header();    
+        read_header();
 
         if( _settings._dim.x == 0 )
         {
@@ -66,19 +55,19 @@ public:
     void read_header()
     {
         _info._header_size = targa_header_size::_size;
-        
+
         _info._offset = _io_dev.read_uint8() + _info._header_size;
-        
+
         _info._color_map_type = _io_dev.read_uint8();
         _info._image_type = _io_dev.read_uint8();
-        
+
         _info._color_map_start  = _io_dev.read_uint16();
         _info._color_map_length = _io_dev.read_uint16();
         _info._color_map_depth  = _io_dev.read_uint8();
-        
+
         _info._x_origin = _io_dev.read_uint16();
         _info._y_origin = _io_dev.read_uint16();
-        
+
         _info._width  = _io_dev.read_uint16();
         _info._height = _io_dev.read_uint16();
 
@@ -86,13 +75,13 @@ public:
         {
             io_error( "Invalid dimension for targa file" );
         }
-        
+
         _info._bits_per_pixel = _io_dev.read_uint8();
         if( _info._bits_per_pixel != 24 && _info._bits_per_pixel != 32 )
         {
             io_error( "Unsupported bit depth for targa file" );
         }
-        
+
         _info._descriptor = _io_dev.read_uint8();
 
         // According to TGA specs, http://www.gamers.org/dEngine/quake3/TGA.txt,
@@ -128,7 +117,7 @@ public:
         {
             _info._screen_origin_bit = true;
         }
-       
+
         _info._valid = true;
     }
 
@@ -165,9 +154,9 @@ public:
     image_read_info< targa_tag >     _info;
 };
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
-#pragma warning(pop) 
-#endif 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(pop)
+#endif
 
 } // namespace gil
 } // namespace boost

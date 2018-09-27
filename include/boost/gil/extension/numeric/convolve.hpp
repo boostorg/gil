@@ -1,46 +1,36 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_NUMERIC_CONVOLVE_HPP
 #define BOOST_GIL_EXTENSION_NUMERIC_CONVOLVE_HPP
 
-/*!
-/// \file 
-/// \brief 2D seperable convolutions and correlations
-///
-/// \author Hailin Jin and Lubomir Bourdev \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n
-*/
-
-
-#include <cstddef>
-#include <cassert>
-#include <algorithm>
-#include <vector>
-#include <functional>
-
-#include <boost/gil/image_view_factory.hpp>
-#include <boost/gil/algorithm.hpp>
-#include <boost/gil/metafunctions.hpp>
-#include <boost/gil/extension/numeric/pixel_numeric_operations.hpp>
 #include <boost/gil/extension/numeric/algorithm.hpp>
+#include <boost/gil/extension/numeric/pixel_numeric_operations.hpp>
+
+#include <boost/gil/algorithm.hpp>
+#include <boost/gil/image_view_factory.hpp>
+#include <boost/gil/metafunctions.hpp>
+
+#include <algorithm>
+#include <cassert>
+#include <cstddef>
+#include <functional>
+#include <vector>
 
 namespace boost { namespace gil {
+
+// 2D seperable convolutions and correlations
 
 /// \ingroup ImageAlgorithms
 /// Boundary options for 1D correlations/convolutions
 enum convolve_boundary_option  {
     convolve_option_output_ignore,  /// do nothing to the output
     convolve_option_output_zero,    /// set the output to zero
-    convolve_option_extend_padded,  /// assume the source boundaries to be padded already 
+    convolve_option_extend_padded,  /// assume the source boundaries to be padded already
     convolve_option_extend_zero,    /// assume the source boundaries to be zero
     convolve_option_extend_constant /// assume the source boundaries to be the boundary value
 };
@@ -82,7 +72,7 @@ void correlate_rows_imp(const SrcView& src, const Kernel& ker, const DstView& ds
                 correlator(&buffer.front(),&buffer.front()+width+1-ker.size(),
                            ker.begin(),it_dst);
                 it_dst+=width+1-ker.size();
-                if (option==convolve_option_output_zero) 
+                if (option==convolve_option_output_zero)
                     std::fill_n(it_dst,ker.right_size(),dst_zero);
             }
         }
@@ -213,6 +203,6 @@ void convolve_cols_fixed(const SrcView& src, const Kernel& ker, const DstView& d
     convolve_rows_fixed<PixelAccum>(transposed_view(src),ker,transposed_view(dst),option);
 }
 
-} }  // namespace boost::gil
+}} // namespace boost::gil
 
-#endif // BOOST_GIL_EXTENSION_NUMERIC_CONVOLVE_HPP
+#endif

@@ -1,12 +1,12 @@
-/*
-    Copyright 2013 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-#ifndef BOOST_GIL_IO_UNIT_TEST_PATHS_HPP
-#define BOOST_GIL_IO_UNIT_TEST_PATHS_HPP
+//
+// Copyright 2013 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_IO_TEST_PATHS_HPP
+#define BOOST_GIL_IO_TEST_PATHS_HPP
 
 #include <boost/filesystem.hpp>
 
@@ -46,4 +46,4 @@ static const std::string raw_filename  ( raw_in      + "RAW_CANON_D30_SRGB.CRW" 
 static const std::string targa_filename( targa_in    + "24BPP_compressed.tga"   );
 static const std::string tiff_filename ( tiff_in     + "test.tif"               );
 
-#endif // BOOST_GIL_IO_UNIT_TEST_PATHS_HPP
+#endif // BOOST_GIL_IO_TEST_PATHS_HPP

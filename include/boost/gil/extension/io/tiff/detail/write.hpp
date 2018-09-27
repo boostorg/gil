@@ -1,49 +1,37 @@
-/*
-    Copyright 2007-2012 Christian Henning, Lubomir Bourdev
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2007-2012 Christian Henning, Lubomir Bourdev
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_IO_TIFF_DETAIL_WRITE_HPP
 #define BOOST_GIL_EXTENSION_IO_TIFF_DETAIL_WRITE_HPP
 
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief
-/// \author Christian Henning, Lubomir Bourdev \n
-///
-/// \date   2007-2012 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
+#include <boost/gil/extension/io/tiff/tags.hpp>
+#include <boost/gil/extension/io/tiff/detail/writer_backend.hpp>
+#include <boost/gil/extension/io/tiff/detail/device.hpp>
+
+#include <boost/gil/premultiply.hpp>
+#include <boost/gil/io/base.hpp>
+#include <boost/gil/io/device.hpp>
+
+#include <boost/static_assert.hpp>
+
+#include <algorithm>
+#include <string>
+#include <vector>
 
 extern "C" {
 #include "tiff.h"
 #include "tiffio.h"
 }
 
-#include <algorithm>
-#include <string>
-#include <vector>
-#include <boost/static_assert.hpp>
-
-#include <boost/gil/premultiply.hpp>
-
-#include <boost/gil/extension/io/tiff/tags.hpp>
-
-#include <boost/gil/io/base.hpp>
-#include <boost/gil/io/device.hpp>
-
-#include <boost/gil/extension/io/tiff/detail/writer_backend.hpp>
-#include <boost/gil/extension/io/tiff/detail/device.hpp>
-
 namespace boost { namespace gil {
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
-#pragma warning(push) 
-#pragma warning(disable:4512) //assignment operator could not be generated 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(push)
+#pragma warning(disable:4512) //assignment operator could not be generated
 #endif
 
 namespace detail {
@@ -85,7 +73,7 @@ struct my_interleaved_pixel_iterator_type_from_pixel_reference< const bit_aligne
 struct tiff_write_is_supported
 {
     template< typename View >
-    struct apply 
+    struct apply
         : public is_write_supported< typename get_pixel_type< View >::type
                                    , tiff_tag
                                    >
@@ -226,7 +214,7 @@ private:
             // @todo: do optional bit swapping here if you need to...
         }
     }
-        
+
     /////////////////////////////
 
     template< typename View >
@@ -239,9 +227,9 @@ private:
       typedef mpl::bool_<mpl::contains<colour_space_t, alpha_t>::value> has_alpha_t;
 
         write_bit_aligned_view_to_dev(view, row_size_in_bytes, has_alpha_t());
-        
+
     }
-	
+
     template< typename View>
     void write_tiled_data( const View&            view
                          , tiff_tile_width::type  tw
@@ -339,7 +327,7 @@ private:
                  , it
                  );
     }
-        
+
     /////////////////////////////
 
 
@@ -369,7 +357,7 @@ private:
                                                       , static_cast< int >( tw )
                                                       , static_cast< int >( th )
                                                       );
-                    
+
 		    typedef typename color_space_type<typename View::value_type>::type colour_space_t;
 		    typedef mpl::bool_<mpl::contains<colour_space_t, alpha_t>::value> has_alpha_t;
 
@@ -453,9 +441,9 @@ public:
     }
 };
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
-#pragma warning(pop) 
-#endif 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(pop)
+#endif
 
 } // namespace gil
 } // namespace boost

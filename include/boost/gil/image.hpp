@@ -1,44 +1,25 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_IMAGE_HPP
+#define BOOST_GIL_IMAGE_HPP
 
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+#include <boost/gil/algorithm.hpp>
+#include <boost/gil/image_view.hpp>
+#include <boost/gil/metafunctions.hpp>
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-/*************************************************************************************************/
-
-#ifndef GIL_IMAGE_H
-#define GIL_IMAGE_H
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief Templated image
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date 2005-2007 \n Last updated on February 12, 2007
-///
-////////////////////////////////////////////////////////////////////////////////////////
+#include <boost/mpl/arithmetic.hpp>
+#include <boost/mpl/bool.hpp>
+#include <boost/mpl/if.hpp>
 
 #include <cstddef>
 #include <memory>
 
-#include <boost/mpl/bool.hpp>
-#include <boost/mpl/if.hpp>
-#include <boost/mpl/arithmetic.hpp>
-
-
-#include "image_view.hpp"
-#include "metafunctions.hpp"
-#include "algorithm.hpp"
-
 namespace boost { namespace gil {
-
-//#ifdef _MSC_VER
-//#pragma warning(push)
-//#pragma warning(disable : 4244)     // conversion from 'gil::image<V,Alloc>::coord_t' to 'int', possible loss of data (visual studio compiler doesn't realize that the two types are the same)
-//#endif
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup ImageModel PixelBasedModel
@@ -501,10 +482,6 @@ struct channel_mapping_type<image<Pixel,IsPlanar,Alloc> > : public channel_mappi
 template <typename Pixel, bool IsPlanar, typename Alloc>
 struct is_planar<image<Pixel,IsPlanar,Alloc> > : public mpl::bool_<IsPlanar> {};
 
-//#ifdef _MSC_VER
-//#pragma warning(pop)
-//#endif
-
-} }  // namespace boost::gil
+}}  // namespace boost::gil
 
 #endif

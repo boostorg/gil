@@ -1,17 +1,15 @@
-/*
-    Copyright 2013 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-
-#include <boost/test/unit_test.hpp>
-
+//
+// Copyright 2013 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #include <boost/gil.hpp>
-
 #include <boost/gil/io/typedefs.hpp>
 #include <boost/gil/extension/io/tiff.hpp>
+
+#include <boost/test/unit_test.hpp>
 
 #include "color_space_write_test.hpp"
 #include "mandel_view.hpp"

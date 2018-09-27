@@ -1,29 +1,16 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_METAFUNCTIONS_HPP
+#define BOOST_GIL_METAFUNCTIONS_HPP
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
+#include <boost/gil/channel.hpp>
+#include <boost/gil/concepts.hpp>
 
-/*************************************************************************************************/
-
-#ifndef GIL_METAFUNCTIONS_HPP
-#define GIL_METAFUNCTIONS_HPP
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief metafunctions that construct types or return type properties
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-///
-/// \date 2005-2007 \n Last updated on February 6, 2007
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
-#include <iterator>
 #include <boost/mpl/accumulate.hpp>
 #include <boost/mpl/back.hpp>
 #include <boost/mpl/bool.hpp>
@@ -34,8 +21,8 @@
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/vector_c.hpp>
 #include <boost/type_traits.hpp>
-#include "gil_concept.hpp"
-#include "channel.hpp"
+
+#include <iterator>
 
 namespace boost { namespace gil {
 
@@ -486,9 +473,6 @@ public:
     typedef typename image_type<channel_t, layout_t, planar>::type type;
 };
 
-
-
-
-} }  // namespace boost::gil
+}}  // namespace boost::gil
 
 #endif

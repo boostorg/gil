@@ -1,20 +1,19 @@
-/*
-    Copyright 2013 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
+//
+// Copyright 2013 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 //#define BOOST_TEST_MODULE png_file_format_test_module
-#include <boost/test/unit_test.hpp>
-
 #define BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
 #define BOOST_GIL_IO_ENABLE_GRAY_ALPHA
-
 #define BOOST_FILESYSTEM_VERSION 3
-#include <boost/filesystem/convenience.hpp>
 
 #include <boost/gil/extension/io/png.hpp>
+
+#include <boost/filesystem/convenience.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "paths.hpp"
 
@@ -31,9 +30,9 @@ BOOST_AUTO_TEST_SUITE( gil_io_png_tests )
 // Test will loop through the "in" folder to read and convert
 // the png's to rgb8_image_t's. Which then will be written in
 // the "out" folder.
-// 
+//
 // The file name structure is as followed:
-// 
+//
 // g04i2c08.png
 // || |||+---- bit-depth
 // || ||+----- color-type (descriptive)
@@ -56,7 +55,7 @@ BOOST_AUTO_TEST_CASE( file_format_test )
          ; ++dir_itr
          )
       {
-         if ( fs::is_regular( dir_itr->status() ) 
+         if ( fs::is_regular( dir_itr->status() )
             && ( fs::extension( dir_itr->path() ) == ".PNG" ))
          {
             rgb8_image_t img;

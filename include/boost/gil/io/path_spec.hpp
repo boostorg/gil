@@ -1,33 +1,22 @@
-/*
-    Copyright 2007-2008 Andreas Pokorny, Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2007-2008 Andreas Pokorny, Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_IO_PATH_SPEC_HPP
 #define BOOST_GIL_IO_PATH_SPEC_HPP
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief
-/// \author Andreas Pokorny, Christian Henning \n
-///
-/// \date   2007-2012 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
-#include <cstdlib>
-#include <string>
-
-#include <boost/mpl/bool_fwd.hpp>
 
 #ifdef BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
 #define BOOST_FILESYSTEM_VERSION 3
 #include <boost/filesystem/path.hpp>
 #endif // BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
+
+#include <boost/mpl/bool_fwd.hpp>
+
+#include <cstdlib>
+#include <string>
 
 namespace boost { namespace gil { namespace detail {
 

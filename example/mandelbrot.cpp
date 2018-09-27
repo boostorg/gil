@@ -1,29 +1,22 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-
-/*************************************************************************************************/
-
-/// \file
-/// \brief Test file for convolve_rows() and convolve_cols() in the numeric extension
-/// \author Lubomir Bourdev and Hailin Jin
-/// \date February 27, 2007
-
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #include <boost/gil/image.hpp>
 #include <boost/gil/typedefs.hpp>
 #include <boost/gil/extension/io/jpeg_io.hpp>
+
+// Example for convolve_rows() and convolve_cols() in the numeric extension
 
 using namespace boost::gil;
 
 // Models a Unary Function
 template <typename P>   // Models PixelValueConcept
-struct mandelbrot_fn {
+struct mandelbrot_fn
+{
     typedef point2<std::ptrdiff_t>    point_t;
 
     typedef mandelbrot_fn        const_t;

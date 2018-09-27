@@ -1,31 +1,22 @@
-﻿/*
-    Copyright 2013 Juan V. Puertos G-Cluster, Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+﻿//
+// Copyright 2013 Juan V. Puertos G-Cluster, Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_TOOLBOX_COLOR_SPACES_YCBCR_HPP
 #define BOOST_GIL_EXTENSION_TOOLBOX_COLOR_SPACES_YCBCR_HPP
 
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file ycbcr.hpp
-/// \brief Support for ycbcr ITU.BT-601 color space
-/// \author Juan V. Puertos G-Cluster 2013 \n
-///
-/// \date 2013 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
+#include <boost/gil/extension/toolbox/metafunctions/get_num_bits.hpp>
 
-#include <cstdint>
+#include <boost/gil.hpp> // FIXME: Include what you use!
+
 #include <boost/algorithm/clamp.hpp>
 #include <boost/mpl/range_c.hpp>
 #include <boost/mpl/vector_c.hpp>
-#include <boost/gil/gil_all.hpp>
 
-#include <boost/gil/extension/toolbox/metafunctions/get_num_bits.hpp>
+#include <cstdint>
 
 namespace boost{ namespace gil {
 

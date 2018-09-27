@@ -1,44 +1,30 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_COLOR_CONVERT_HPP
+#define BOOST_GIL_COLOR_CONVERT_HPP
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-/*************************************************************************************************/
+#include <boost/gil/channel_algorithm.hpp>
+#include <boost/gil/cmyk.hpp>
+#include <boost/gil/color_base_algorithm.hpp>
+#include <boost/gil/gray.hpp>
+#include <boost/gil/metafunctions.hpp>
+#include <boost/gil/pixel.hpp>
+#include <boost/gil/rgb.hpp>
+#include <boost/gil/rgba.hpp>
+#include <boost/gil/utilities.hpp>
 
-#ifndef GIL_COLOR_CONVERT_HPP
-#define GIL_COLOR_CONVERT_HPP
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief GIL default color space conversions
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated on January 30, 2007
-///
-/// Support for fast and simple color conversion. Accurate color conversion using color
-/// profiles can be supplied separately in a dedicated module
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
+#include <algorithm>
 #include <functional>
 
-#include <boost/config.hpp>
-
-#include "channel_algorithm.hpp"
-#include "pixel.hpp"
-#include "gray.hpp"
-#include "rgb.hpp"
-#include "rgba.hpp"
-#include "cmyk.hpp"
-#include "metafunctions.hpp"
-#include "utilities.hpp"
-#include "color_base_algorithm.hpp"
-
 namespace boost { namespace gil {
+
+/// Support for fast and simple color conversion.
+/// Accurate color conversion using color profiles can be supplied separately in a dedicated module.
 
 // Forward-declare
 template <typename P> struct channel_type;

@@ -1,30 +1,19 @@
-/*
-    Copyright 2007-2008 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2007-2008 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_IO_READER_BASE_HPP
 #define BOOST_GIL_IO_READER_BASE_HPP
 
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief
-/// \author Christian Henning \n
-///
-/// \date   2007-2008 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
 #include <boost/gil/io/base.hpp>
 
-namespace boost { namespace gil { 
+namespace boost { namespace gil {
 
 /// Reader Base Class
-/// 
+///
 /// It provides some basic functionality which is shared for all readers.
 /// For instance, it recreates images when necessary. It checks whether
 /// user supplied coordinates are valid.

@@ -1,34 +1,23 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_NUMERIC_RESAMPLE_HPP
 #define BOOST_GIL_EXTENSION_NUMERIC_RESAMPLE_HPP
 
-#include <boost/lambda/lambda.hpp>
-#include <boost/lambda/bind.hpp>
-
+#include <boost/gil/extension/numeric/affine.hpp>
 #include <boost/gil/extension/dynamic_image/dynamic_image_all.hpp>
 
-#include <boost/gil/extension/numeric/affine.hpp>
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief support for generic image resampling
-///        NOTE: The code is for example use only. It is not optimized for performance
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
+#include <boost/lambda/bind.hpp>
+#include <boost/lambda/lambda.hpp>
 
 namespace boost { namespace gil {
+
+// Support for generic image resampling
+// NOTE: The code is for example use only. It is not optimized for performance
 
 ///////////////////////////////////////////////////////////////////////////
 ////
@@ -61,7 +50,7 @@ void resample_pixels(const SrcView& src_view, const DstView& dst_view, const Map
 
 ///////////////////////////////////////////////////////////////////////////
 ////
-////   resample_pixels when one or both image views are run-time instantiated. 
+////   resample_pixels when one or both image views are run-time instantiated.
 ////
 ///////////////////////////////////////////////////////////////////////////
 
@@ -72,8 +61,8 @@ namespace detail {
         Sampler _sampler;
         resample_pixels_fn(const MapFn& dst_to_src, const Sampler& sampler) : _dst_to_src(dst_to_src), _sampler(sampler) {}
 
-        template <typename SrcView, typename DstView> BOOST_FORCEINLINE void apply_compatible(const SrcView& src, const DstView& dst)  const { 
-            resample_pixels(src, dst, _dst_to_src, _sampler); 
+        template <typename SrcView, typename DstView> BOOST_FORCEINLINE void apply_compatible(const SrcView& src, const DstView& dst)  const {
+            resample_pixels(src, dst, _dst_to_src, _sampler);
         }
     };
 }
@@ -97,7 +86,7 @@ void resample_pixels(const V1& src, const any_image_view<Types2>& dst, const Map
 /// \brief resample_pixels when both the source and the destination are run-time specified
 ///        If invoked on incompatible views, throws std::bad_cast()
 /// \ingroup ImageAlgorithms
-template <typename Sampler, typename SrcTypes, typename DstTypes, typename MapFn> 
+template <typename Sampler, typename SrcTypes, typename DstTypes, typename MapFn>
 void resample_pixels(const any_image_view<SrcTypes>& src, const any_image_view<DstTypes>& dst, const MapFn& dst_to_src, Sampler sampler=Sampler()) {
     apply_operation(src,dst,detail::resample_pixels_fn<Sampler,MapFn>(dst_to_src,sampler));
 }
@@ -111,8 +100,8 @@ void resample_pixels(const any_image_view<SrcTypes>& src, const any_image_view<D
 // Extract into dst the rotated bounds [src_min..src_max] rotated at 'angle' from the source view 'src'
 // The source coordinates are in the coordinate space of the source image
 // Note that the views could also be variants (i.e. any_image_view)
-template <typename Sampler, typename SrcMetaView, typename DstMetaView> 
-void resample_subimage(const SrcMetaView& src, const DstMetaView& dst, 
+template <typename Sampler, typename SrcMetaView, typename DstMetaView>
+void resample_subimage(const SrcMetaView& src, const DstMetaView& dst,
                          double src_min_x, double src_min_y,
                          double src_max_x, double src_max_y,
                          double angle, const Sampler& sampler=Sampler()) {
@@ -121,8 +110,8 @@ void resample_subimage(const SrcMetaView& src, const DstMetaView& dst,
     double dst_width  = std::max<double>((double)(dst.width()-1),1);
     double dst_height = std::max<double>((double)(dst.height()-1),1);
 
-    matrix3x2<double> mat = 
-        matrix3x2<double>::get_translate(-dst_width/2.0, -dst_height/2.0) * 
+    matrix3x2<double> mat =
+        matrix3x2<double>::get_translate(-dst_width/2.0, -dst_height/2.0) *
         matrix3x2<double>::get_scale(src_width / dst_width, src_height / dst_height)*
         matrix3x2<double>::get_rotate(-angle)*
         matrix3x2<double>::get_translate(src_min_x + src_width/2.0, src_min_y + src_height/2.0);
@@ -135,7 +124,7 @@ void resample_subimage(const SrcMetaView& src, const DstMetaView& dst,
 ////
 ///////////////////////////////////////////////////////////////////////////
 
-template <typename Sampler, typename SrcMetaView, typename DstMetaView> 
+template <typename Sampler, typename SrcMetaView, typename DstMetaView>
 void resize_view(const SrcMetaView& src, const DstMetaView& dst, const Sampler& sampler=Sampler()) {
     resample_subimage(src,dst,0.0,0.0,(double)src.width(),(double)src.height(),0.0,sampler);
 }

@@ -1,30 +1,17 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_ANY_IMAGE_VIEW_HPP
+#define BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_ANY_IMAGE_VIEW_HPP
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
+#include <boost/gil/extension/dynamic_image/variant.hpp>
 
-/*************************************************************************************************/
-
-#ifndef GIL_DYNAMICIMAGE_ANY_IMAGEVIEW_HPP
-#define GIL_DYNAMICIMAGE_ANY_IMAGEVIEW_HPP
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief Support for run-time instantiated image view
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-///
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
-#include "variant.hpp"
-#include "../../image_view.hpp"
-#include "../../image.hpp"
+#include <boost/gil/image.hpp>
+#include <boost/gil/image_view.hpp>
 
 namespace boost { namespace gil {
 
@@ -112,6 +99,6 @@ struct dynamic_xy_step_transposed_type<any_image_view<IVTypes> > {
     typedef any_image_view<typename mpl::transform<IVTypes, dynamic_xy_step_transposed_type<mpl::_1> >::type> type;
 };
 
-} }  // namespace boost::gil
+}}  // namespace boost::gil
 
 #endif

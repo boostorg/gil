@@ -1,23 +1,12 @@
-/*
-    Copyright 2008 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2008 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_IO_BMP_TAGS_HPP
 #define BOOST_GIL_EXTENSION_IO_BMP_TAGS_HPP
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief 
-/// \author Christian Henning \n
-///         
-/// \date 2008 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/gil/io/base.hpp>
 
@@ -110,7 +99,7 @@ struct image_read_info< bmp_tag >
     /// The compression method being used. See above for a list of possible values.
     bmp_compression::type _compression;
 
-    /// The image size. This is the size of the raw bitmap data (see below), 
+    /// The image size. This is the size of the raw bitmap data (see below),
     /// and should not be confused with the file size.
     bmp_image_size::type _image_size;
 
@@ -123,7 +112,7 @@ struct image_read_info< bmp_tag >
     /// The number of colors in the color palette, or 0 to default to 2^n - 1.
     bmp_num_colors::type            _num_colors;
 
-    /// The number of important colors used, or 0 when every color is important; 
+    /// The number of important colors used, or 0 when every color is important;
     /// generally ignored.
     bmp_num_important_colors::type  _num_important_colors;
 

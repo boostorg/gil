@@ -1,26 +1,14 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_NUMERIC_AFFINE_HPP
 #define BOOST_GIL_EXTENSION_NUMERIC_AFFINE_HPP
 
 #include <boost/gil/utilities.hpp>     // point2
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief support for affine transformations
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
 
 namespace boost { namespace gil {
 
@@ -74,7 +62,7 @@ concept MappingFunctionConcept {
     typename mapping_traits<MapFn>::result_type;   where PointNDConcept<result_type>;
 
     template <typename Domain> { where PointNDConcept<Domain> }
-    result_type transform(MapFn&, const Domain& src); 
+    result_type transform(MapFn&, const Domain& src);
 };
 */
 
@@ -88,6 +76,6 @@ struct mapping_traits<matrix3x2<F> > {
 template <typename F, typename F2> BOOST_FORCEINLINE
 point2<F> transform(const matrix3x2<F>& mat, const point2<F2>& src) { return src * mat; }
 
-} }  // namespace boost::gil
+}} // namespace boost::gil
 
-#endif // BOOST_GIL_EXTENSION_NUMERIC_AFFINE_HPP
+#endif

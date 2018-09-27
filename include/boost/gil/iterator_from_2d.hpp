@@ -1,33 +1,24 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_ITERATOR_FROM_2D_HPP
+#define BOOST_GIL_ITERATOR_FROM_2D_HPP
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-/*************************************************************************************************/
+#include <boost/gil/concepts.hpp>
+#include <boost/gil/pixel_iterator.hpp>
+#include <boost/gil/locator.hpp>
 
-#ifndef GIL_ITERATOR_FROM_2D_H
-#define GIL_ITERATOR_FROM_2D_H
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief pixel step iterator, pixel image iterator and pixel dereference iterator
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated on September 18, 2007
-///
-////////////////////////////////////////////////////////////////////////////////////////
+#include <boost/iterator/iterator_facade.hpp>
 
 #include <cassert>
-#include <boost/iterator/iterator_facade.hpp>
-#include "gil_concept.hpp"
-#include "pixel_iterator.hpp"
-#include "locator.hpp"
 
 namespace boost { namespace gil {
+
+/// pixel step iterator, pixel image iterator and pixel dereference iterator
 
 ////////////////////////////////////////////////////////////////////////////////////////
 ///                 

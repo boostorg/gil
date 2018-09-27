@@ -1,37 +1,26 @@
-/*
-    Copyright 2012 Kenneth Riddile and Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2012 Kenneth Riddile, Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_IO_TARGA_DETAIL_SCANLINE_READ_HPP
 #define BOOST_GIL_EXTENSION_IO_TARGA_DETAIL_SCANLINE_READ_HPP
 
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief
-/// \author Kenneth Riddile and Christian Henning \n
-///
-/// \date 2012 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
-#include <vector>
+#include <boost/gil/extension/io/targa/detail/is_allowed.hpp>
+#include <boost/gil/extension/io/targa/detail/reader_backend.hpp>
 
 #include <boost/gil/io/base.hpp>
 #include <boost/gil/io/bit_operations.hpp>
 #include <boost/gil/io/conversion_policies.hpp>
-#include <boost/gil/io/row_buffer_helper.hpp>
-#include <boost/gil/io/reader_base.hpp>
 #include <boost/gil/io/device.hpp>
+#include <boost/gil/io/reader_base.hpp>
+#include <boost/gil/io/row_buffer_helper.hpp>
 #include <boost/gil/io/scanline_read_iterator.hpp>
 #include <boost/gil/io/typedefs.hpp>
 
-#include <boost/gil/extension/io/targa/detail/reader_backend.hpp>
-#include <boost/gil/extension/io/targa/detail/is_allowed.hpp>
+#include <vector>
 
 namespace boost { namespace gil {
 
@@ -75,9 +64,9 @@ public:
         // jump to scanline
         long offset = this->_info._offset
                     + ( this->_info._height - 1 - pos ) * static_cast< long >( this->_scanline_length );
-        
+
         this->_io_dev.seek( offset );
-        
+
 
         read_row( dst );
     }
@@ -101,7 +90,7 @@ private:
         {
             io_error( "scanline reader cannot read indexed targa files." );
         }
-        
+
         if( this->_info._image_type != targa_image_type::_rgb )
         {
             io_error( "scanline reader cannot read this targa image type." );
@@ -115,7 +104,7 @@ private:
                 {
                     io_error( "Inconsistent color map type and image type in targa file." );
                 }
-                
+
                 if( this->_info._color_map_length != 0 )
                 {
                     io_error( "Non-indexed targa files containing a palette are not supported." );
@@ -125,7 +114,7 @@ private:
                 {
                     io_error( "scanline reader cannot read targa files which have screen origin bit set." );
                 }
-                
+
                 switch( this->_info._bits_per_pixel )
                 {
                     case 24:
@@ -144,7 +133,7 @@ private:
                         break;
                     }
                 }
-                
+
                 break;
             }
             default:

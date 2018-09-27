@@ -1,30 +1,29 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-    */
-
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifdef _MSC_VER
 #pragma warning(disable : 4244)     // conversion from 'gil::image<V,Alloc>::coord_t' to 'int', possible loss of data (visual studio compiler doesn't realize that the two types are the same)
 #pragma warning(disable : 4503)     // decorated name length exceeded, name was truncated
 #endif
 
-#include <string>
-#include <vector>
+#include <boost/gil/extension/dynamic_image/dynamic_image_all.hpp>
+
+#include <boost/crc.hpp>
+#include <boost/lambda/bind.hpp>
+#include <boost/lambda/lambda.hpp>
+#include <boost/mpl/vector.hpp>
+
 #include <ios>
 #include <iostream>
 #include <fstream>
 #include <map>
 #include <stdexcept>
-#include <boost/lambda/lambda.hpp>
-#include <boost/lambda/bind.hpp>
-#include <boost/mpl/vector.hpp>
-#include <boost/gil/extension/dynamic_image/dynamic_image_all.hpp>
-#include <boost/crc.hpp>
+#include <string>
+#include <vector>
 
 using namespace boost::gil;
 using namespace std;
@@ -543,7 +542,7 @@ int main(int argc, char* argv[])
         std::ifstream file_is_there(local_name.c_str());
         if (!file_is_there)
             throw std::runtime_error("Unable to open gil_reference_checksums.txt");
-        
+
         test_image(local_name.c_str());
 
         return EXIT_SUCCESS;

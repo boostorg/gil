@@ -1,37 +1,27 @@
-/*
-    Copyright 2012 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2012 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_IO_JPEG_DETAIL_READER_BACKEND_HPP
 #define BOOST_GIL_EXTENSION_IO_JPEG_DETAIL_READER_BACKEND_HPP
 
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief
-/// \author Christian Henning \n
-///
-/// \date 2012 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
 #include <boost/gil/extension/io/jpeg/tags.hpp>
 
+#include <csetjmp>
 #include <memory>
 
 namespace boost { namespace gil {
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
-#pragma warning(push) 
-#pragma warning(disable:4512) //assignment operator could not be generated 
-#pragma warning(disable:4611) //interaction between '_setjmp' and C++ object destruction is non-portable 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(push)
+#pragma warning(disable:4512) //assignment operator could not be generated
+#pragma warning(disable:4611) //interaction between '_setjmp' and C++ object destruction is non-portable
 #endif
 
-namespace detail { 
+namespace detail {
 
 ///
 /// Wrapper for libjpeg's decompress object. Implements value semantics.
@@ -190,7 +180,7 @@ public:
     {
         return _settings;
     }
-    
+
     /// Return image header info.
     const image_read_info< jpeg_tag >& get_info()
     {
@@ -319,9 +309,9 @@ public:
     JOCTET buffer_[4096];
 };
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
-#pragma warning(pop) 
-#endif 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(pop)
+#endif
 
 } // namespace gil
 } // namespace boost

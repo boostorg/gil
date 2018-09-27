@@ -1,15 +1,15 @@
-/*
-    Copyright 2013 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
+//
+// Copyright 2013 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 //#define BOOST_TEST_MODULE jpeg_read_test_module
-#include <boost/test/unit_test.hpp>
-
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/jpeg.hpp>
+
+#include <boost/test/unit_test.hpp>
 
 #include "paths.hpp"
 #include "scanline_read_test.hpp"
@@ -53,7 +53,7 @@ BOOST_AUTO_TEST_CASE( read_pixel_density_test )
     backend_t backend = read_image_info( jpeg_in + "EddDawson/36dpi.jpg"
                                        , tag_t()
                                        );
-                                           
+
     rgb8_image_t img;
     read_image( jpeg_in + "EddDawson/36dpi.jpg", img, jpeg_tag() );
 

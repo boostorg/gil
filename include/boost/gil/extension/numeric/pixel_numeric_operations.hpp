@@ -1,37 +1,28 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_NUMERIC_PIXEL_NUMERIC_OPERATIONS_HPP
 #define BOOST_GIL_EXTENSION_NUMERIC_PIXEL_NUMERIC_OPERATIONS_HPP
 
-/*!
-/// \file               
-/// \brief Structures for pixel-wise numeric operations
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n
-/// Currently defined structures:
-///     pixel_plus_t (+), pixel_minus_t (-)
-///     pixel_multiplies_scalar_t (*), pixel_divides_scalar_t (/)
-///     pixel_halves_t (/=2), pixel_zeros_t (=0)
-///     pixel_assigns_t (=)
-*/
+#include <boost/gil/extension/numeric/channel_numeric_operations.hpp>
+
+#include <boost/gil/color_base_algorithm.hpp>
+#include <boost/gil/pixel.hpp>
 
 #include <functional>
 
-#include <boost/gil/pixel.hpp>
-#include <boost/gil/color_base_algorithm.hpp>
-
-#include <boost/gil/extension/numeric/channel_numeric_operations.hpp>
-
 namespace boost { namespace gil {
+
+// Structures for pixel-wise numeric operations
+// Currently defined structures:
+//     pixel_plus_t (+), pixel_minus_t (-)
+//     pixel_multiplies_scalar_t (*), pixel_divides_scalar_t (/)
+//     pixel_halves_t (/=2), pixel_zeros_t (=0)
+//     pixel_assigns_t (=)
 
 /// \ingroup PixelNumericOperations
 /// \brief construct for adding two pixels
@@ -79,7 +70,7 @@ struct pixel_multiplies_scalar_t {
         static_transform(p,result,
                            std::bind(channel_multiplies_scalar_t<typename channel_type<PixelRef>::type,
                                                                  Scalar,
-                                                                 typename channel_type<PixelR>::type>(), 
+                                                                 typename channel_type<PixelR>::type>(),
                                      std::placeholders::_1, s));
         return result;
     }
@@ -178,6 +169,6 @@ struct pixel_assigns_t {
     }
 };
 
-} }  // namespace boost::gil
+}} // namespace boost::gil
 
-#endif // BOOST_GIL_EXTENSION_NUMERIC_PIXEL_NUMERIC_OPERATIONS_HPP
+#endif

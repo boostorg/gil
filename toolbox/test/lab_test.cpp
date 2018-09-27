@@ -1,24 +1,22 @@
-/*
-    Copyright 2013 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/// \file lab_test.cpp
-/// \brief Unit test for LAB Colorspace
-/// \author Davide Anastasia <davideanastasia@users.sourceforge.net>
-
-#include <boost/test/unit_test.hpp>
-
-#define TEST_CHECK_CLOSE(a, b) \
-    BOOST_CHECK_CLOSE(a, b, 0.0005f)
-
-#include <iostream>
+//
+// Copyright 2013 Christian Henning
+// Copyright 2013 Davide Anastasia <davideanastasia@users.sourceforge.net>
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #include <boost/gil.hpp>
 #include <boost/gil/extension/toolbox/color_spaces/lab.hpp>
 
+#include <boost/test/unit_test.hpp>
+
+#include <iostream>
+
 using namespace boost;
+
+#define TEST_CHECK_CLOSE(a, b) \
+    BOOST_CHECK_CLOSE(a, b, 0.0005f)
 
 BOOST_AUTO_TEST_SUITE( toolbox_tests )
 

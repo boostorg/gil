@@ -1,34 +1,17 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_IMAGE_VIEW_HPP
+#define BOOST_GIL_IMAGE_VIEW_HPP
 
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-/*************************************************************************************************/
-
-#ifndef GIL_IMAGE_VIEW_H
-#define GIL_IMAGE_VIEW_H
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief image view class
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date 2005-2007 \n Last updated on February 12, 2007
-///
-////////////////////////////////////////////////////////////////////////////////////////
+#include <boost/gil/iterator_from_2d.hpp>
 
 #include <cstddef>
 #include <iterator>
-#include "iterator_from_2d.hpp"
-
-//#ifdef _MSC_VER
-//#pragma warning(push)
-//#pragma warning(disable : 4244)     // conversion from 'gil::image<V,Alloc>::coord_t' to 'int', possible loss of data (visual studio compiler doesn't realize that the two types are the same)
-//#endif
 
 namespace boost { namespace gil {
 
@@ -245,10 +228,6 @@ struct transposed_type<image_view<L> > {
     typedef image_view<typename transposed_type<L>::type> type;
 };
 
-} }  // namespace boost::gil
-
-//#ifdef _MSC_VER
-//#pragma warning(pop)
-//#endif
+}}  // namespace boost::gil
 
 #endif

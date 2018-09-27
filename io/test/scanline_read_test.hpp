@@ -1,12 +1,12 @@
-/*
-    Copyright 2013 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-#ifndef BOOST_GIL_IO_UNIT_TEST_SCANLINE_READ_TEST_HPP
-#define BOOST_GIL_IO_UNIT_TEST_SCANLINE_READ_TEST_HPP
+//
+// Copyright 2013 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_IO_TEST_SCANLINE_READ_TEST_HPP
+#define BOOST_GIL_IO_TEST_SCANLINE_READ_TEST_HPP
 
 #include <boost/gil.hpp>
 
@@ -58,4 +58,4 @@ void test_scanline_reader( const char* file_name )
     cmp_view( view( dst ), view( img ) );
 }
 
-#endif // BOOST_GIL_IO_UNIT_TEST_SCANLINE_READ_TEST_HPP
+#endif // BOOST_GIL_IO_TEST_SCANLINE_READ_TEST_HPP

@@ -1,23 +1,12 @@
-/*
-    Copyright 2010 Kenneth Riddile
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2010 Kenneth Riddile
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_IO_TARGA_TAGS_HPP
 #define BOOST_GIL_EXTENSION_IO_TARGA_TAGS_HPP
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief 
-/// \author Kenneth Riddile \n
-///         
-/// \date 2010 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/gil/io/base.hpp>
 
@@ -95,40 +84,40 @@ struct image_read_info< targa_tag >
 
     /// The size of this header:
     targa_header_size::type _header_size;
-    
+
     /// The offset, i.e. starting address, of the byte where the targa data can be found.
     targa_offset::type _offset;
-    
+
     /// The type of color map used by the image, i.e. RGB or indexed.
     targa_color_map_type::type _color_map_type;
-    
+
     /// The type of image data, i.e compressed, indexed, uncompressed RGB, etc.
     targa_image_type::type _image_type;
-    
+
     /// Index of first entry in the color map table.
     targa_color_map_start::type _color_map_start;
-    
+
     /// Number of entries in the color map table.
     targa_color_map_length::type _color_map_length;
-    
+
     /// Bit depth for each color map entry.
     targa_color_map_depth::type _color_map_depth;
-    
+
     /// X coordinate of the image origin.
     targa_origin_element::type _x_origin;
-    
+
     /// Y coordinate of the image origin.
     targa_origin_element::type _y_origin;
-    
+
     /// Width of the image in pixels.
     targa_dimension::type _width;
-    
+
     /// Height of the image in pixels.
     targa_dimension::type _height;
-    
+
     /// Bit depth of the image.
     targa_depth::type _bits_per_pixel;
-    
+
     /// The targa image descriptor.
     targa_descriptor::type _descriptor;
 

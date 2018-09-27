@@ -1,24 +1,21 @@
-/*
-    Copyright 2007-2012 Christian Henning, Andreas Pokorny, Lubomir Bourdev
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2007-2012 Christian Henning, Andreas Pokorny, Lubomir Bourdev
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_IO_WRITE_VIEW_HPP
 #define BOOST_GIL_IO_WRITE_VIEW_HPP
 
-#include <boost/type_traits/is_base_and_derived.hpp>
-#include <boost/type_traits/is_base_and_derived.hpp>
-#include <boost/mpl/and.hpp>
-#include <boost/utility/enable_if.hpp>
-
 #include <boost/gil/io/base.hpp>
+#include <boost/gil/io/conversion_policies.hpp>
 #include <boost/gil/io/device.hpp>
 #include <boost/gil/io/path_spec.hpp>
-#include <boost/gil/io/conversion_policies.hpp>
+
+#include <boost/mpl/and.hpp>
+#include <boost/type_traits/is_base_and_derived.hpp>
+#include <boost/utility/enable_if.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \file

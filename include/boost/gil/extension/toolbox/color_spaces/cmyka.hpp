@@ -1,29 +1,19 @@
-/*
-    Copyright 2012 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2012 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_TOOLBOX_COLOR_SPACES_CMYKA_HPP
 #define BOOST_GIL_EXTENSION_TOOLBOX_COLOR_SPACES_CMYKA_HPP
 
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file cmyka.hpp
-/// \brief Support for cmyka color space.
-/// \author Christian Henning \n
-///
-/// \date 2012 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
-#include <boost/gil/rgba.hpp>
 #include <boost/gil/cmyk.hpp>
-
 #include <boost/gil/color_convert.hpp>
+#include <boost/gil/rgba.hpp>
 #include <boost/gil/typedefs.hpp>
+
+#include <boost/mpl/vector.hpp>
 
 namespace boost{ namespace gil {
 
@@ -49,8 +39,8 @@ GIL_DEFINE_ALL_TYPEDEFS(32f, float32_t, cmyka)
 //    void operator()(const P1& src, P2& dst) const {
 //        typedef typename channel_type<P1>::type T1;
 //        default_color_converter_impl<cmyk_t,C2>()(
-//            pixel<T1,cmyk_layout_t>(channel_multiply(get_color(src,cyan_t()),  get_color(src,alpha_t())), 
-//                                    channel_multiply(get_color(src,magenta_t()),get_color(src,alpha_t())), 
+//            pixel<T1,cmyk_layout_t>(channel_multiply(get_color(src,cyan_t()),  get_color(src,alpha_t())),
+//                                    channel_multiply(get_color(src,magenta_t()),get_color(src,alpha_t())),
 //                                    channel_multiply(get_color(src,yellow_t()), get_color(src,alpha_t())),
 //                                    channel_multiply(get_color(src,black_t()), get_color(src,alpha_t())))
 //            ,dst);
@@ -62,8 +52,8 @@ struct default_color_converter_impl<cmyka_t,rgba_t> {
     void operator()(const P1& src, P2& dst) const {
         typedef typename channel_type<P1>::type T1;
         default_color_converter_impl<cmyk_t,rgba_t>()(
-            pixel<T1,cmyk_layout_t>(get_color(src,cyan_t()), 
-                                    get_color(src,magenta_t()), 
+            pixel<T1,cmyk_layout_t>(get_color(src,cyan_t()),
+                                    get_color(src,magenta_t()),
                                     get_color(src,yellow_t()),
                                     get_color(src,black_t()))
             ,dst);
@@ -83,4 +73,4 @@ struct default_color_converter_impl<cmyka_t,cmyka_t> {
 } // namespace gil
 } // namespace boost
 
-#endif // BOOST_GIL_EXTENSION_TOOLBOX_COLOR_SPACES_CMYKA_HPP
+#endif
