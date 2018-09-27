@@ -24,7 +24,6 @@
 
 #include <cassert>
 #include <iterator>
-#include "gil_config.hpp"
 #include "gil_concept.hpp"
 #include "utilities.hpp"
 #include "pixel.hpp"

@@ -28,7 +28,6 @@
 #include <boost/mpl/range_c.hpp>
 #include <boost/mpl/vector_c.hpp>
 
-#include "gil_config.hpp"
 #include "utilities.hpp"
 #include "metafunctions.hpp"
 

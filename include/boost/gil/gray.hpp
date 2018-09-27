@@ -21,7 +21,6 @@
 /// \date 2005-2007 \n Last updated on March 8, 2006
 ////////////////////////////////////////////////////////////////////////////////////////
 
-#include "gil_config.hpp"
 #include "utilities.hpp"
 #include <boost/type_traits.hpp>
 #include <boost/mpl/range_c.hpp>

@@ -25,7 +25,6 @@
 #include <cassert>
 #include <iterator>
 #include <boost/iterator/iterator_facade.hpp>
-#include "gil_config.hpp"
 #include "pixel.hpp"
 #include "step_iterator.hpp"
 

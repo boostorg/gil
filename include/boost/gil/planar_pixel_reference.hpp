@@ -23,7 +23,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/mpl/range_c.hpp>
-#include "gil_config.hpp"
 #include "gil_concept.hpp"
 #include "color_base.hpp"
 #include "channel.hpp"

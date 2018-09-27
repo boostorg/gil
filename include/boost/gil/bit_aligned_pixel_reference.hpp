@@ -33,7 +33,6 @@
 #include <boost/mpl/push_back.hpp>
 #include <boost/mpl/vector.hpp>
 
-#include "gil_config.hpp"
 #include "pixel.hpp"
 #include "channel.hpp"
 

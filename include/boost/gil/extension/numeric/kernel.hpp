@@ -26,7 +26,6 @@
 #include <vector>
 #include <memory>
 
-#include <boost/gil/gil_config.hpp>
 #include <boost/gil/utilities.hpp>
 
 namespace boost { namespace gil {

@@ -26,7 +26,6 @@
 #include <boost/mpl/and.hpp>
 #include <boost/mpl/or.hpp>
 
-#include "gil_config.hpp"
 #include "gil_concept.hpp"
 #include "color_base_algorithm.hpp"
 #include "image_view.hpp"

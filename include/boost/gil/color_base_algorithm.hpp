@@ -30,7 +30,6 @@
 #include <boost/mpl/contains.hpp>
 #include <boost/mpl/at.hpp>
 
-#include "gil_config.hpp"
 #include "gil_concept.hpp"
 #include "utilities.hpp"
 

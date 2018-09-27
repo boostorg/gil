@@ -27,7 +27,6 @@
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/front.hpp>
 #include <boost/type_traits.hpp>
-#include "gil_config.hpp"
 #include "color_base.hpp"
 #include "gil_concept.hpp"
 #include "channel.hpp"

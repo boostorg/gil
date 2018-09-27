@@ -28,7 +28,6 @@
 
 #include <boost/config.hpp>
 
-#include "gil_config.hpp"
 #include "channel_algorithm.hpp"
 #include "pixel.hpp"
 #include "gray.hpp"
