@@ -1,53 +1,37 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_EXAMPLE_INTERLEAVED_REF_HPP
+#define BOOST_GIL_EXAMPLE_INTERLEAVED_REF_HPP
 
-    See http://stlab.adobe.com/gil for most recent version including documentation.
-*/
-
-/*************************************************************************************************/
-
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief Example on how to create a new model of a pixel reference
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date 2005-2007 \n Last updated on February 26, 2007
-//////
-////////////////////////////////////////////////////////////////////////////////////////
-
-#ifndef GIL_INTERLEAVED_REF_HPP
-#define GIL_INTERLEAVED_REF_HPP
+#include <boost/gil/extension/dynamic_image/dynamic_image_all.hpp>
 
 #include <boost/mpl/range_c.hpp>
 #include <boost/mpl/vector_c.hpp>
-#include <boost/gil/extension/dynamic_image/dynamic_image_all.hpp>
+
+// Example on how to create a new model of a pixel reference
 
 namespace boost { namespace gil {
 
+// A model of an interleaved pixel reference. Holds a pointer to the first channel
+// MODELS:
+//    MutableHomogeneousPixelConcept
+//       MutableHomogeneousColorBaseConcept
+//           MutableColorBaseConcept
+//           HomogeneousColorBaseConcept
+//               ColorBaseConcept
+//    HomogeneousPixelBasedConcept
+//       PixelBasedConcept
+//
+// For planar reference proxies to work properly, all of their methods must be const-qualified
+// and their iterator's reference type must be const-qualified.
+// Mutability of the reference proxy is part of its type (in this case, depends on the mutability of ChannelReference)
 
-/////////////////////////////////////////////////////////////////////////
-///
-/// A model of an interleaved pixel reference. Holds a pointer to the first channel
-/// MODELS: 
-///    MutableHomogeneousPixelConcept
-///       MutableHomogeneousColorBaseConcept
-///           MutableColorBaseConcept 
-///           HomogeneousColorBaseConcept
-///               ColorBaseConcept
-///    HomogeneousPixelBasedConcept
-///       PixelBasedConcept
-///
-/// For planar reference proxies to work properly, all of their methods must be const-qualified
-/// and their iterator's reference type must be const-qualified. 
-/// Mutability of the reference proxy is part of its type (in this case, depends on the mutability of ChannelReference)
-/////////////////////////////////////////////////////////////////////////
-
-template <typename ChannelReference, // Models ChannelConcept. A channel reference, unsigned char& or const unsigned char& 
+template <typename ChannelReference, // Models ChannelConcept. A channel reference, unsigned char& or const unsigned char&
           typename Layout>           // A layout (includes the color space and channel ordering)
 struct interleaved_ref {
 private:
@@ -67,8 +51,8 @@ public:
     template <typename P> bool operator!=(const P& p)    const { return !(*this==p); }
 
 // Required by MutableColorBaseConcept
-    
-    // Assignment from a compatible type 
+
+    // Assignment from a compatible type
     const interleaved_ref&  operator=(const interleaved_ref& p)  const { static_copy(p,*this); return *this; }
     template <typename P> const interleaved_ref& operator=(const P& p) const { check_compatible<P>(); static_copy(p,*this); return *this; }
 
@@ -93,19 +77,19 @@ private:
 
 // Required by ColorBaseConcept
 template <typename ChannelReference, typename Layout, int K>
-struct kth_element_type<interleaved_ref<ChannelReference,Layout>,K> { 
-    typedef ChannelReference type; 
+struct kth_element_type<interleaved_ref<ChannelReference,Layout>,K> {
+    typedef ChannelReference type;
 };
 
 template <typename ChannelReference, typename Layout, int K>
-struct kth_element_reference_type<interleaved_ref<ChannelReference,Layout>,K> { 
-    typedef ChannelReference type; 
+struct kth_element_reference_type<interleaved_ref<ChannelReference,Layout>,K> {
+    typedef ChannelReference type;
 };
 
 template <typename ChannelReference, typename Layout, int K>
 struct kth_element_const_reference_type<interleaved_ref<ChannelReference,Layout>,K> {
-    typedef ChannelReference type; 
-//    typedef typename channel_traits<ChannelReference>::const_reference type; 
+    typedef ChannelReference type;
+//    typedef typename channel_traits<ChannelReference>::const_reference type;
 };
 
 
@@ -130,7 +114,7 @@ namespace detail {
 
 // Required by MutableColorBaseConcept. The default std::swap does not do the right thing for proxy references - it swaps the references, not the values
 template <typename ChannelReference, typename Layout>
-void swap(const interleaved_ref<ChannelReference,Layout>& x, const interleaved_ref<ChannelReference,Layout>& y) { 
+void swap(const interleaved_ref<ChannelReference,Layout>& x, const interleaved_ref<ChannelReference,Layout>& y) {
     static_for_each(x,y,detail::swap_fn_t());
 };
 
@@ -143,13 +127,13 @@ struct is_pixel<interleaved_ref<ChannelReference,Layout> > : public boost::mpl::
 template <typename ChannelReference, typename Layout>
 struct color_space_type<interleaved_ref<ChannelReference,Layout> > {
     typedef typename Layout::color_space_t type;
-}; 
+};
 
 // Required by PixelBasedConcept
 template <typename ChannelReference, typename Layout>
 struct channel_mapping_type<interleaved_ref<ChannelReference,Layout> > {
     typedef typename Layout::channel_mapping_t type;
-}; 
+};
 
 // Required by PixelBasedConcept
 template <typename ChannelReference, typename Layout>
@@ -159,7 +143,7 @@ struct is_planar<interleaved_ref<ChannelReference,Layout> > : mpl::false_ {};
 template <typename ChannelReference, typename Layout>
 struct channel_type<interleaved_ref<ChannelReference,Layout> > {
     typedef typename channel_traits<ChannelReference>::value_type type;
-}; 
+};
 
 } }  // namespace boost::gil
 
