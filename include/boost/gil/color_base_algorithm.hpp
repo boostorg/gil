@@ -72,7 +72,7 @@ bgr432_pixel_t red_pixel(0,0,0);
 
 // Set the red channel to 100%
 red_channel_reference_t red_channel = semantic_at_c<0>(red_pixel);
-red_channel = channel_traits<red_channel_reference_t>::max_value();       
+red_channel = channel_traits<red_channel_reference_t>::max_value();
 
 \endcode
 */
@@ -103,16 +103,16 @@ template <typename ColorBase, int K> struct kth_semantic_element_const_reference
 /// \ingroup ColorBaseAlgorithmSemanticAtC
 template <int K, typename ColorBase> inline
 typename disable_if<is_const<ColorBase>,typename kth_semantic_element_reference_type<ColorBase,K>::type>::type
-semantic_at_c(ColorBase& p) { 
-    return kth_semantic_element_reference_type<ColorBase,K>::get(p); 
+semantic_at_c(ColorBase& p) {
+    return kth_semantic_element_reference_type<ColorBase,K>::get(p);
 }
 
 /// \brief A constant accessor to the K-th semantic element of a color base
 /// \ingroup ColorBaseAlgorithmSemanticAtC
 template <int K, typename ColorBase> inline
 typename kth_semantic_element_const_reference_type<ColorBase,K>::type
-semantic_at_c(const ColorBase& p) { 
-    return kth_semantic_element_const_reference_type<ColorBase,K>::get(p); 
+semantic_at_c(const ColorBase& p) {
+    return kth_semantic_element_const_reference_type<ColorBase,K>::get(p);
 }
 
 ///////////////////////////////////////
@@ -135,7 +135,7 @@ void set_red_to_max(Pixel& pixel) {
     BOOST_STATIC_ASSERT((contains_color<Pixel, red_t>::value));
 
     typedef typename color_element_type<Pixel, red_t>::type red_channel_t;
-    get_color(pixel, red_t()) = channel_traits<red_channel_t>::max_value(); 
+    get_color(pixel, red_t()) = channel_traits<red_channel_t>::max_value();
 }
 \endcode
 */
@@ -165,14 +165,14 @@ struct color_element_const_reference_type : public kth_semantic_element_const_re
 
 /// \brief Mutable accessor to the element associated with a given color name
 /// \ingroup ColorBaseAlgorithmColor
-template <typename ColorBase, typename Color> 
+template <typename ColorBase, typename Color>
 typename color_element_reference_type<ColorBase,Color>::type get_color(ColorBase& cb, Color=Color()) {
     return color_element_reference_type<ColorBase,Color>::get(cb);
 }
 
 /// \brief Constant accessor to the element associated with a given color name
 /// \ingroup ColorBaseAlgorithmColor
-template <typename ColorBase, typename Color> 
+template <typename ColorBase, typename Color>
 typename color_element_const_reference_type<ColorBase,Color>::type get_color(const ColorBase& cb, Color=Color()) {
     return color_element_const_reference_type<ColorBase,Color>::get(cb);
 }
@@ -214,64 +214,78 @@ namespace detail {
 
 // compile-time recursion for per-element operations on color bases
 template <int N>
-struct element_recursion {
-    //static_equal
+struct element_recursion
+{
+
+#if defined(BOOST_GCC)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+#pragma GCC diagnostic ignored "-Wfloat-equal"
+#endif
     template <typename P1,typename P2>
-    static bool static_equal(const P1& p1, const P2& p2) { 
+    static bool static_equal(const P1& p1, const P2& p2)
+    {
         return element_recursion<N-1>::static_equal(p1,p2) &&
-               semantic_at_c<N-1>(p1)==semantic_at_c<N-1>(p2); 
+               semantic_at_c<N-1>(p1)==semantic_at_c<N-1>(p2);
     }
-    //static_copy
+
     template <typename P1,typename P2>
-    static void static_copy(const P1& p1, P2& p2) {
+    static void static_copy(const P1& p1, P2& p2)
+    {
         element_recursion<N-1>::static_copy(p1,p2);
         semantic_at_c<N-1>(p2)=semantic_at_c<N-1>(p1);
     }
-    //static_fill
+
     template <typename P,typename T2>
-    static void static_fill(P& p, T2 v) {
+    static void static_fill(P& p, T2 v)
+    {
         element_recursion<N-1>::static_fill(p,v);
         semantic_at_c<N-1>(p)=v;
     }
-    //static_generate
-    template <typename Dst,typename Op> 
-    static void static_generate(Dst& dst, Op op) {
+
+    template <typename Dst,typename Op>
+    static void static_generate(Dst& dst, Op op)
+    {
         element_recursion<N-1>::static_generate(dst,op);
         semantic_at_c<N-1>(dst)=op();
     }
+#if defined(BOOST_GCC)
+#pragma GCC diagnostic pop
+#endif
+
     //static_for_each with one source
-    template <typename P1,typename Op> 
+    template <typename P1,typename Op>
     static Op static_for_each(P1& p1, Op op) {
         Op op2(element_recursion<N-1>::static_for_each(p1,op));
         op2(semantic_at_c<N-1>(p1));
         return op2;
     }
-    template <typename P1,typename Op> 
+    template <typename P1,typename Op>
     static Op static_for_each(const P1& p1, Op op) {
         Op op2(element_recursion<N-1>::static_for_each(p1,op));
         op2(semantic_at_c<N-1>(p1));
         return op2;
     }
     //static_for_each with two sources
-    template <typename P1,typename P2,typename Op> 
+    template <typename P1,typename P2,typename Op>
     static Op static_for_each(P1& p1, P2& p2, Op op) {
         Op op2(element_recursion<N-1>::static_for_each(p1,p2,op));
         op2(semantic_at_c<N-1>(p1), semantic_at_c<N-1>(p2));
         return op2;
     }
-    template <typename P1,typename P2,typename Op> 
+    template <typename P1,typename P2,typename Op>
     static Op static_for_each(P1& p1, const P2& p2, Op op) {
         Op op2(element_recursion<N-1>::static_for_each(p1,p2,op));
         op2(semantic_at_c<N-1>(p1), semantic_at_c<N-1>(p2));
         return op2;
     }
-    template <typename P1,typename P2,typename Op> 
+    template <typename P1,typename P2,typename Op>
     static Op static_for_each(const P1& p1, P2& p2, Op op) {
         Op op2(element_recursion<N-1>::static_for_each(p1,p2,op));
         op2(semantic_at_c<N-1>(p1), semantic_at_c<N-1>(p2));
         return op2;
     }
-    template <typename P1,typename P2,typename Op> 
+    template <typename P1,typename P2,typename Op>
     static Op static_for_each(const P1& p1, const P2& p2, Op op) {
         Op op2(element_recursion<N-1>::static_for_each(p1,p2,op));
         op2(semantic_at_c<N-1>(p1), semantic_at_c<N-1>(p2));
@@ -327,13 +341,13 @@ struct element_recursion {
         return op2;
     }
     //static_transform with one source
-    template <typename P1,typename Dst,typename Op> 
+    template <typename P1,typename Dst,typename Op>
     static Op static_transform(P1& src, Dst& dst, Op op) {
         Op op2(element_recursion<N-1>::static_transform(src,dst,op));
         semantic_at_c<N-1>(dst)=op2(semantic_at_c<N-1>(src));
         return op2;
     }
-    template <typename P1,typename Dst,typename Op> 
+    template <typename P1,typename Dst,typename Op>
     static Op static_transform(const P1& src, Dst& dst, Op op) {
         Op op2(element_recursion<N-1>::static_transform(src,dst,op));
         semantic_at_c<N-1>(dst)=op2(semantic_at_c<N-1>(src));
@@ -409,16 +423,16 @@ template <int N>
 struct min_max_recur {
     template <typename P> static typename element_const_reference_type<P>::type max_(const P& p) {
         return mutable_max(min_max_recur<N-1>::max_(p),semantic_at_c<N-1>(p));
-    }    
+    }
     template <typename P> static typename element_reference_type<P>::type       max_(      P& p) {
         return mutable_max(min_max_recur<N-1>::max_(p),semantic_at_c<N-1>(p));
-    }    
+    }
     template <typename P> static typename element_const_reference_type<P>::type min_(const P& p) {
         return mutable_min(min_max_recur<N-1>::min_(p),semantic_at_c<N-1>(p));
-    }    
+    }
     template <typename P> static typename element_reference_type<P>::type       min_(      P& p) {
         return mutable_min(min_max_recur<N-1>::min_(p),semantic_at_c<N-1>(p));
-    }    
+    }
 };
 
 // termination condition of the compile-time recursion for min/max element
@@ -465,7 +479,7 @@ typename element_reference_type<P>::type       static_min(      P& p) { return d
 /// \}
 
 /**
-\defgroup ColorBaseAlgorithmEqual static_equal 
+\defgroup ColorBaseAlgorithmEqual static_equal
 \ingroup ColorBaseAlgorithm
 \brief Equivalent to std::equal. Pairs the elements semantically
 
@@ -488,7 +502,7 @@ bool static_equal(const P1& p1, const P2& p2) { return detail::element_recursion
 /// \}
 
 /**
-\defgroup ColorBaseAlgorithmCopy static_copy 
+\defgroup ColorBaseAlgorithmCopy static_copy
 \ingroup ColorBaseAlgorithm
 \brief Equivalent to std::copy. Pairs the elements semantically
 
@@ -511,7 +525,7 @@ void static_copy(const Src& src, Dst& dst) {  detail::element_recursion<size<Dst
 /// \}
 
 /**
-\defgroup ColorBaseAlgorithmFill static_fill 
+\defgroup ColorBaseAlgorithmFill static_fill
 \ingroup ColorBaseAlgorithm
 \brief Equivalent to std::fill.
 
@@ -529,7 +543,7 @@ void static_fill(P& p, const V& v) {  detail::element_recursion<size<P>::value>:
 /// \}
 
 /**
-\defgroup ColorBaseAlgorithmGenerate static_generate 
+\defgroup ColorBaseAlgorithmGenerate static_generate
 \ingroup ColorBaseAlgorithm
 \brief Equivalent to std::generate.
 
@@ -555,7 +569,7 @@ void static_generate(P1& dst,Op op)                      { detail::element_recur
 /// \}
 
 /**
-\defgroup ColorBaseAlgorithmTransform static_transform 
+\defgroup ColorBaseAlgorithmTransform static_transform
 \ingroup ColorBaseAlgorithm
 \brief Equivalent to std::transform. Pairs the elements semantically
 
@@ -605,15 +619,15 @@ Op static_transform(const P2& p2,const P3& p3,Dst& dst,Op op) { return detail::e
 /// \}
 
 /**
-\defgroup ColorBaseAlgorithmForEach static_for_each 
+\defgroup ColorBaseAlgorithmForEach static_for_each
 \ingroup ColorBaseAlgorithm
 \brief Equivalent to std::for_each. Pairs the elements semantically
 
 Example: Use static_for_each to increment a planar pixel iterator
 \code
-struct increment { 
-    template <typename Incrementable> 
-    void operator()(Incrementable& x) const { ++x; } 
+struct increment {
+    template <typename Incrementable>
+    void operator()(Incrementable& x) const { ++x; }
 };
 
 template <typename ColorBase>
