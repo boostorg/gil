@@ -1,46 +1,34 @@
-/*
-    Copyright 2007-2008 Christian Henning, Andreas Pokorny, Lubomir Bourdev
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2007-2008 Christian Henning, Andreas Pokorny, Lubomir Bourdev
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_IO_BASE_HPP
 #define BOOST_GIL_IO_BASE_HPP
 
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief
-/// \author Christian Henning, Andreas Pokorny, Lubomir Bourdev \n
-///
-/// \date   2007-2008 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
+#include <boost/gil/extension/toolbox/toolbox.hpp>
 
-#include <ostream>
-#include <istream>
-#include <vector>
+#include <boost/gil/bit_aligned_pixel_reference.hpp>
+#include <boost/gil/bit_aligned_pixel_iterator.hpp>
+#include <boost/gil/color_convert.hpp>
+#include <boost/gil/utilities.hpp>
+#include <boost/gil/io/error.hpp>
+#include <boost/gil/io/typedefs.hpp>
 
 #include <boost/bind.hpp>
 #include <boost/type_traits/is_base_of.hpp>
 
-#include <boost/gil/utilities.hpp>
-#include <boost/gil/color_convert.hpp>
-#include <boost/gil/bit_aligned_pixel_reference.hpp>
-#include <boost/gil/bit_aligned_pixel_iterator.hpp>
-
-#include <boost/gil/extension/toolbox/toolbox.hpp>
-
-#include <boost/gil/io/typedefs.hpp>
-#include <boost/gil/io/error.hpp>
+#include <istream>
+#include <ostream>
+#include <vector>
 
 namespace boost { namespace gil {
 
 struct format_tag {};
 
-template< typename Property > 
+template< typename Property >
 struct property_base
 {
     typedef Property type;
@@ -84,11 +72,11 @@ public:
 };
 
 /**
- * Boolean meta function, mpl::true_ if the pixel type \a PixelType is supported 
+ * Boolean meta function, mpl::true_ if the pixel type \a PixelType is supported
  * by the image format identified with \a FormatTag.
  * \todo the name is_supported is to generic, pick something more IO realted.
  */
-// Depending on image type the parameter Pixel can be a reference type 
+// Depending on image type the parameter Pixel can be a reference type
 // for bit_aligned images or a pixel for byte images.
 template< typename Pixel, typename FormatTag > struct is_read_supported {};
 template< typename Pixel, typename FormatTag > struct is_write_supported {};
@@ -96,7 +84,7 @@ template< typename Pixel, typename FormatTag > struct is_write_supported {};
 
 namespace detail {
 
-template< typename Property > 
+template< typename Property >
 struct property_base
 {
     typedef Property type;

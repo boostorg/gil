@@ -1,25 +1,21 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-// channel.cpp : Tests channel
 //
-
-#include <cstdint>
-#include <exception>
-#include <iostream>
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #include <boost/gil/channel.hpp>
 #include <boost/gil/channel_algorithm.hpp>
 #include <boost/gil/typedefs.hpp>
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
-#pragma warning(push) 
-#pragma warning(disable:4512) //assignment operator could not be generated 
+#include <cstdint>
+#include <exception>
+#include <iostream>
+
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(push)
+#pragma warning(disable:4512) //assignment operator could not be generated
 #endif
 
 
@@ -221,12 +217,12 @@ protected:
 
 
 template <typename ChannelValue>
-void test_channel_value() { 
+void test_channel_value() {
     do_test<value_core<ChannelValue> >().test_all();
 }
 
 template <typename ChannelRef>
-void test_channel_reference() { 
+void test_channel_reference() {
     do_test<reference_core<ChannelRef> >().test_all();
 }
 
@@ -273,12 +269,12 @@ struct channel_archetype {
     // convertible to a scalar
     operator std::uint8_t() const { return 0; }
 
-    
+
     channel_archetype& operator++() { return *this; }
     channel_archetype& operator--() { return *this; }
     channel_archetype  operator++(int) { return *this; }
     channel_archetype  operator--(int) { return *this; }
-    
+
     template <typename Scalar> channel_archetype operator+=(Scalar) { return *this; }
     template <typename Scalar> channel_archetype operator-=(Scalar) { return *this; }
     template <typename Scalar> channel_archetype operator*=(Scalar) { return *this; }
@@ -384,7 +380,7 @@ int main()
     }
 }
 
-// TODO: 
+// TODO:
 // - provide algorithm performance overloads for scoped channel and packed channels
 // - Update concepts and documentation
 // - What to do about pointer types?!

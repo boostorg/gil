@@ -1,46 +1,25 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_GIL_CHANNEL_ALGORITHM_HPP
+#define BOOST_GIL_GIL_CHANNEL_ALGORITHM_HPP
 
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+#include <boost/gil/channel.hpp>
+#include <boost/gil/promote_integral.hpp>
+#include <boost/gil/typedefs.hpp>
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-/*************************************************************************************************/
-
-#ifndef GIL_CHANNEL_ALGORITHM_HPP
-#define GIL_CHANNEL_ALGORITHM_HPP
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief Channel algorithms
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated on May 6, 2007
-///
-/// Definitions of standard GIL 8-bit, 16-bit, 32-bit channels
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
-#include <boost/config.hpp>
 #include <boost/mpl/less.hpp>
 #include <boost/mpl/integral_c.hpp>
 #include <boost/mpl/greater.hpp>
 #include <boost/type_traits.hpp>
 
-#include "channel.hpp"
-#include "promote_integral.hpp"
-#include "typedefs.hpp"
-
 #include <limits>
 
 namespace boost { namespace gil {
-
-//#ifdef _MSC_VER
-//#pragma warning(push)
-//#pragma warning(disable: 4309)      // disable truncation of constant value warning (using -1 to get the max value of an integral)
-//#endif
 
 namespace detail {
 
@@ -539,10 +518,6 @@ inline typename channel_traits<Channel>::value_type channel_invert(Channel x) {
     auto const inverted_x = static_cast<base_t>(promoted_inverted_x);
     return inverted_x;
 }
-
-//#ifdef _MSC_VER
-//#pragma warning(pop)
-//#endif
 
 } }  // namespace boost::gil
 

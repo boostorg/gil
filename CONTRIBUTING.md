@@ -20,6 +20,7 @@ please follow the workflow explained in this document.
   * [Using Boost.Build](#using-boostbuild)
   * [Using CMake](#using-cmake)
   * [Using Faber](#using-faber)
+* [Guidelines](#guidelines)
 
 ## Prerequisites
 
@@ -391,3 +392,41 @@ Here is an example of such lightweight workflow in Linux environment (Debian-bas
 Maintainer: [@stefanseefeld](https://github.com/stefanseefeld)
 
 _TODO_
+
+## Guidelines
+
+Boost.GIL is a more than a decade old mature library maintained by several
+developers with help from a couple of dozens contributors.
+It is important to maintain consistent design, look and feel.
+Thus, below a few basic guidelines are listed.
+
+First and foremost, make sure you are familiar with the official
+[Boost Library Requirements and Guidelines](https://www.boost.org/development/requirements.html).
+
+Second, strive for writing idiomatic C++11, clean and elegant code.
+
+**NOTE:** *The Boost.GIL source code does not necessary represent clean and elegant
+code to look up to. The library has recently entered the transition to C++11.
+Major refactoring overhaul is ongoing.*
+
+Maintain structure your source code files according to the following guidelines:
+
+* Name files in meaningful way.
+* Put copyright and license information in every file
+* If your changes [meet a certain threshold of originality](https://www.boost.org/users/license.html),
+  add yourself to the copyright notice. Do not put any additional authorship or
+  file comments (eg. no `\file` for Doxygen), revision information, etc.
+* In header, put `#include` guard based on header path and file name
+    ```
+    #ifndef BOOST_GIL_<DIR1>_<DIR2>_<FILE>_HPP
+    #define BOOST_GIL_<DIR1>_<DIR2>_<FILE>_HPP
+    ...
+    #endif
+    ```
+* Make sure each [header is self-contained](https://github.com/boostorg/gil/wiki/Include-Directives-Order), i.e. that they include all headers they need.
+* All public headers should be placed in `boost/gil/` or `boost/gil/<component>/`.
+* All non-public headers should be placed `boost/gil/detail` or `boost/gil/<component>/detail`.
+* All public definitions should reside in scope of `namespace boost { namespace gil {...}}`.
+* All non-public definitions should reside in scope of `namespace boost { namespace gil { namespace detail {...}}}`.
+* Write your code to fit within **90** columns of text (see discussion on [preferred line length](https://lists.boost.org/boost-gil/2018/04/0028.php) in GIL).
+* Indent with **4 spaces**, not tabs. See the [.editorconfig](https://github.com/boostorg/gil/blob/develop/.editorconfig) file for details. Please, do not increases the indentation level within namespace.

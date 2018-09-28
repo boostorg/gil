@@ -1,17 +1,14 @@
-/*
-    Copyright 2013 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/// \brief Unit test for indexed_image type.
-
-#include <boost/test/unit_test.hpp>
-
+//
+// Copyright 2013 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #include <boost/gil.hpp>
 #include <boost/gil/extension/toolbox/image_types/indexed_image.hpp>
 
+#include <boost/test/unit_test.hpp>
 
 using namespace std;
 using namespace boost;
@@ -34,7 +31,7 @@ BOOST_AUTO_TEST_CASE( index_image_test )
 
         image_t img( 640, 480, 256 );
 
-        
+
 #if __cplusplus >= 201103L
         generate_pixels( img.get_indices_view()
                        , [] () -> uint8_t
@@ -62,7 +59,7 @@ BOOST_AUTO_TEST_CASE( index_image_test )
 
         for( image_t::indices_view_t::iterator it = indices.begin(); it != indices.end(); ++it )
         {
-            static uint8_t i = 0; 
+            static uint8_t i = 0;
             i = ( i == 256 ) ? 0 : ++i;
 
             *it = gray8_pixel_t( i );
@@ -71,7 +68,7 @@ BOOST_AUTO_TEST_CASE( index_image_test )
         image_t::palette_view_t colors = img.get_palette_view();
         for( image_t::palette_view_t::iterator it = colors.begin(); it != colors.end(); ++it )
         {
-            static uint8_t i = 0; 
+            static uint8_t i = 0;
             i = ( i == 256 ) ? 0 : ++i;
 
             *it = rgb8_pixel_t( i, i, i );
@@ -113,7 +110,7 @@ BOOST_AUTO_TEST_CASE( index_image_test )
         image_t::indices_view_t indices = img.get_indices_view();
         for( image_t::indices_view_t::iterator it = indices.begin(); it != indices.end(); ++it )
         {
-            static uint8_t i = 0; 
+            static uint8_t i = 0;
             i = ( i == 256 ) ? 0 : ++i;
 
             *it = gray8_pixel_t( i );
@@ -122,7 +119,7 @@ BOOST_AUTO_TEST_CASE( index_image_test )
         image_t::palette_view_t colors = img.get_palette_view();
         for( image_t::palette_view_t::iterator it = colors.begin(); it != colors.end(); ++it )
         {
-            static uint8_t i = 0; 
+            static uint8_t i = 0;
             i = ( i == 256 ) ? 0 : ++i;
 
             *it = rgb8_pixel_t( i, i, i );

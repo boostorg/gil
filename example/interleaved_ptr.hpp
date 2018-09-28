@@ -1,48 +1,31 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-
-/*************************************************************************************************/
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief Example on how to create a pixel iterator
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date 2005-2007 \n Last updated on February 26, 2007
-///
-/// Definitions of standard GIL channel models
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
-#ifndef GIL_INTERLEAVED_PTR_HPP
-#define GIL_INTERLEAVED_PTR_HPP
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_EXAMPLE_INTERLEAVED_PTR_HPP
+#define BOOST_GIL_EXAMPLE_INTERLEAVED_PTR_HPP
 
 #include <boost/gil/pixel_iterator.hpp>
 #include "interleaved_ref.hpp"
 
+// Example on how to create a pixel iterator
+
 namespace boost { namespace gil {
-/////////////////////////////////////////////////////////////////////////
-///
-/// A model of an interleaved pixel iterator. Contains an iterator to the first channel of the current pixel
-///
-/// Models:
-///     MutablePixelIteratorConcept
-///        PixelIteratorConcept
-///           boost_concepts::RandomAccessTraversalConcept
-///           PixelBasedConcept
-///     HomogeneousPixelBasedConcept
-///        PixelBasedConcept
-///     ByteAdvanceableConcept
-///     HasDynamicXStepTypeConcept
-///
-/////////////////////////////////////////////////////////////////////////
+
+// A model of an interleaved pixel iterator. Contains an iterator to the first channel of the current pixel
+//
+// Models:
+//     MutablePixelIteratorConcept
+//        PixelIteratorConcept
+//           boost_concepts::RandomAccessTraversalConcept
+//           PixelBasedConcept
+//     HomogeneousPixelBasedConcept
+//        PixelBasedConcept
+//     ByteAdvanceableConcept
+//     HasDynamicXStepTypeConcept
 
 template <typename ChannelPtr,  // Models Channel Iterator (examples: unsigned char* or const unsigned char*)
           typename Layout>      // A layout (includes the color space and channel ordering)

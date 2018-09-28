@@ -1,23 +1,12 @@
-/*
-    Copyright 2010 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2010 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_IO_TARGA_OLD_HPP
 #define BOOST_GIL_EXTENSION_IO_TARGA_OLD_HPP
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief
-/// \author Christian Henning \n
-///         
-/// \date 2010 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/gil/extension/io/targa.hpp>
 
@@ -47,12 +36,12 @@ point2< std::ptrdiff_t > targa_read_dimensions( const String& filename )
 /// \ingroup BMP_IO
 /// \brief Loads the image specified by the given targa image file name into the given view.
 /// Triggers a compile assert if the view color space and channel depth are not supported by the BMP library or by the I/O extension.
-/// Throws std::ios_base::failure if the file is not a valid BMP file, or if its color space or channel depth are not 
+/// Throws std::ios_base::failure if the file is not a valid BMP file, or if its color space or channel depth are not
 /// compatible with the ones specified by View, or if its dimensions don't match the ones of the view.
 template< typename String
         , typename View
         >
-inline 
+inline
 void targa_read_view( const String& filename
                     , const View&   view
                     )
@@ -66,12 +55,12 @@ void targa_read_view( const String& filename
 /// \ingroup BMP_IO
 /// \brief Allocates a new image whose dimensions are determined by the given bmp image file, and loads the pixels into it.
 /// Triggers a compile assert if the image color space or channel depth are not supported by the BMP library or by the I/O extension.
-/// Throws std::ios_base::failure if the file is not a valid BMP file, or if its color space or channel depth are not 
+/// Throws std::ios_base::failure if the file is not a valid BMP file, or if its color space or channel depth are not
 /// compatible with the ones specified by Image
 template< typename String
         , typename Image
         >
-inline 
+inline
 void targa_read_image( const String& filename
                      , Image&        img
                      )
@@ -89,7 +78,7 @@ template< typename String
         , typename View
         , typename CC
         >
-inline 
+inline
 void targa_read_and_convert_view( const String& filename
                                 , const View&   view
                                 , CC            cc
@@ -108,7 +97,7 @@ void targa_read_and_convert_view( const String& filename
 template< typename String
         , typename View
         >
-inline 
+inline
 void targa_read_and_convert_view( const String& filename
                                 , const View&   view
                                 )
@@ -126,7 +115,7 @@ template< typename String
         , typename Image
         , typename CC
         >
-inline 
+inline
 void targa_read_and_convert_image( const String& filename
                                  , Image&        img
                                  , CC            cc
@@ -145,7 +134,7 @@ void targa_read_and_convert_image( const String& filename
 template< typename String
         , typename Image
         >
-inline 
+inline
 void targa_read_and_convert_image( const String filename
                                  , Image&       img
                                  )

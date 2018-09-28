@@ -1,24 +1,17 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-
-/*************************************************************************************************/
-
-/// \file
-/// \brief Example file to demonstrate a way to compute histogram
-/// \author Lubomir Bourdev and Hailin Jin
-/// \date February 27, 2007
-
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/jpeg.hpp>
+
 #include <algorithm>
 #include <fstream>
+
+// Example file to demonstrate a way to compute histogram
 
 using namespace boost::gil;
 

@@ -1,52 +1,36 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#include <boost/gil.hpp>
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-
-/*************************************************************************************************/
-
-/// \file
-/// \brief GIL performance test suite
-/// \date 2007 \n Last updated on February 12, 2007
-///
-/// Available tests:
-///    fill_pixels() on rgb8_image_t with rgb8_pixel_t
-///    fill_pixels() on rgb8_planar_image_t with rgb8_pixel_t
-///    fill_pixels() on rgb8_image_t with bgr8_pixel_t
-///    fill_pixels() on rgb8_planar_image_t with bgr8_pixel_t
-///    for_each_pixel() on rgb8_image_t
-///    for_each_pixel() on rgb8_planar_t
-///    copy_pixels() between rgb8_image_t and rgb8_image_t
-///    copy_pixels() between rgb8_image_t and bgr8_image_t
-///    copy_pixels() between rgb8_planar_image_t and rgb8_planar_image_t
-///    copy_pixels() between rgb8_image_t and rgb8_planar_image_t
-///    copy_pixels() between rgb8_planar_image_t and rgb8_image_t
-///    transform_pixels() between rgb8_image_t and rgb8_image_t
-///    transform_pixels() between rgb8_planar_image_t and rgb8_planar_image_t
-///    transform_pixels() between rgb8_planar_image_t and rgb8_image_t
-///    transform_pixels() between rgb8_image_t and rgb8_planar_image_t
+#include <boost/test/unit_test.hpp>
 
 #include <cstddef>
 #include <ctime>
 #include <iostream>
-#include <boost/gil/pixel.hpp>
-#include <boost/gil/planar_pixel_iterator.hpp>
-#include <boost/gil/planar_pixel_reference.hpp>
-#include <boost/gil/iterator_from_2d.hpp>
-#include <boost/gil/step_iterator.hpp>
-#include <boost/gil/rgb.hpp>
-#include <boost/gil/image_view.hpp>
-#include <boost/gil/image.hpp>
-#include <boost/gil/typedefs.hpp>
-#include <boost/gil/algorithm.hpp>
 
-#include <boost/test/unit_test.hpp>
-
+// GIL performance test suite
+//
+// Available tests:
+//    fill_pixels() on rgb8_image_t with rgb8_pixel_t
+//    fill_pixels() on rgb8_planar_image_t with rgb8_pixel_t
+//    fill_pixels() on rgb8_image_t with bgr8_pixel_t
+//    fill_pixels() on rgb8_planar_image_t with bgr8_pixel_t
+//    for_each_pixel() on rgb8_image_t
+//    for_each_pixel() on rgb8_planar_t
+//    copy_pixels() between rgb8_image_t and rgb8_image_t
+//    copy_pixels() between rgb8_image_t and bgr8_image_t
+//    copy_pixels() between rgb8_planar_image_t and rgb8_planar_image_t
+//    copy_pixels() between rgb8_image_t and rgb8_planar_image_t
+//    copy_pixels() between rgb8_planar_image_t and rgb8_image_t
+//    transform_pixels() between rgb8_image_t and rgb8_image_t
+//    transform_pixels() between rgb8_planar_image_t and rgb8_planar_image_t
+//    transform_pixels() between rgb8_planar_image_t and rgb8_image_t
+//    transform_pixels() between rgb8_image_t and rgb8_planar_image_t
 
 using namespace boost::gil;
 

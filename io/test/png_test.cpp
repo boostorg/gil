@@ -1,22 +1,21 @@
-/*
-    Copyright 2013 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
+//
+// Copyright 2013 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #define BOOST_TEST_MODULE png_test
-#include <boost/test/unit_test.hpp>
-
-#include <fstream>
-
-#include <boost/gil.hpp>
-
 //#define BOOST_GIL_IO_PNG_FLOATING_POINT_SUPPORTED
 //#define BOOST_GIL_IO_PNG_FIXED_POINT_SUPPORTED
+
+#include <boost/gil.hpp>
 #include <boost/gil/extension/io/png.hpp>
 
+#include <boost/test/unit_test.hpp>
 #include <boost/type_traits/is_same.hpp>
+
+#include <fstream>
 
 #include "mandel_view.hpp"
 #include "paths.hpp"
@@ -64,7 +63,7 @@ BOOST_AUTO_TEST_CASE( read_image_info_using_string )
 
     {
         FILE* file = fopen( png_filename.c_str(), "rb" );
-        
+
         typedef get_reader_backend< FILE*
                                   , tag_t
                                   >::type backend_t;
@@ -100,7 +99,7 @@ BOOST_AUTO_TEST_CASE( read_image_test )
 
     {
         FILE* file = fopen( png_filename.c_str(), "rb" );
-        
+
         rgba8_image_t img;
         read_image( file, img, tag_t() );
 
@@ -139,7 +138,7 @@ BOOST_AUTO_TEST_CASE( read_and_convert_image_test )
 
     {
         FILE* file = fopen( png_filename.c_str(), "rb" );
-        
+
         rgb8_image_t img;
         read_and_convert_image( file, img, tag_t() );
 
@@ -164,7 +163,7 @@ BOOST_AUTO_TEST_CASE( read_view_test )
 
     {
         FILE* file = fopen( png_filename.c_str(), "rb" );
-        
+
         rgba8_image_t img( 1000, 600 );
         read_view( file, view( img ), tag_t() );
     }
@@ -186,7 +185,7 @@ BOOST_AUTO_TEST_CASE( read_and_convert_view_test )
 
     {
         FILE* file = fopen( png_filename.c_str(), "rb" );
-        
+
         rgb8_image_t img( 1000, 600 );
 
         read_and_convert_view( file
@@ -243,7 +242,7 @@ BOOST_AUTO_TEST_CASE( write_view_test )
         string filename( png_out + "write_test_file.png" );
 
         FILE* file = fopen( filename.c_str(), "wb" );
-        
+
         write_view( file
                   , create_mandel_view( 320, 240
                                       , rgb8_pixel_t( 0,   0, 255 )

@@ -1,27 +1,17 @@
-/*
-    Copyright 2012 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+//
+// Copyright 2012 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_IO_MAKE_BACKEND_HPP
 #define BOOST_GIL_IO_MAKE_BACKEND_HPP
 
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief
-/// \author Christian Henning \n
-///
-/// \date 2012 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
+#include <boost/gil/io/get_reader.hpp>
 
 #include <boost/utility/enable_if.hpp>
-
-#include "get_reader.hpp"
 
 namespace boost { namespace gil {
 
@@ -63,7 +53,7 @@ make_reader_backend( const std::wstring&                     file_name
     typedef typename get_read_device< std::wstring
                                     , FormatTag
                                     >::type device_t;
-                   
+
     const char* str = detail::convert_to_native_string( file_name );
 
     device_t device( str

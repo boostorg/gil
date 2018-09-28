@@ -16,15 +16,15 @@
 #ifndef BOOST_GIL_PROMOTE_INTEGRAL_HPP
 #define BOOST_GIL_PROMOTE_INTEGRAL_HPP
 
-#include <climits>
-#include <cstddef>
-#include <type_traits>
-
 #include <boost/mpl/begin.hpp>
 #include <boost/mpl/deref.hpp>
 #include <boost/mpl/end.hpp>
 #include <boost/mpl/list.hpp>
 #include <boost/mpl/next.hpp>
+
+#include <climits>
+#include <cstddef>
+#include <type_traits>
 
 namespace boost { namespace gil
 {

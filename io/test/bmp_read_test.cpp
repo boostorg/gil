@@ -1,20 +1,19 @@
-/*
-    Copyright 2013 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
+//
+// Copyright 2013 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 //#define BOOST_TEST_MODULE bmp_read_test_module
-#include <boost/test/unit_test.hpp>
-#include <boost/type_traits/is_same.hpp>
-
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/bmp.hpp>
 
-#include "scanline_read_test.hpp"
+#include <boost/test/unit_test.hpp>
+#include <boost/type_traits/is_same.hpp>
 
 #include "paths.hpp"
+#include "scanline_read_test.hpp"
 
 using namespace std;
 using namespace boost::gil;
@@ -74,11 +73,11 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
         read_image( bmp_in + "g01bw.bmp", img, tag_t() );
     }
 
-    // g01wb.bmp - white and black palette (#FFFFFF,#000000). 
+    // g01wb.bmp - white and black palette (#FFFFFF,#000000).
     // Should look the same as g01bw, not inverted.
     {
         rgba8_image_t img;
-        
+
         read_image( bmp_in + "g01wb.bmp", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 127u );
         BOOST_CHECK_EQUAL( view( img ).height(),  64u );
@@ -89,7 +88,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // g01bg.bmp - blue and green palette (#4040FF,#40FF40)
     {
         rgba8_image_t img;
-        
+
         read_image( bmp_in + "g01bg.bmp", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 127u );
         BOOST_CHECK_EQUAL( view( img ).height(),  64u );
@@ -100,7 +99,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // g01p1.bmp - 1-color (blue) palette (#4040FF)
     {
         rgba8_image_t img;
-        
+
         read_image( bmp_in + "g01p1.bmp", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 127u );
         BOOST_CHECK_EQUAL( view( img ).height(),  64u );
@@ -111,7 +110,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // g04.bmp - basic 4bpp (16 color) image
     {
         rgba8_image_t img;
-        
+
         read_image( bmp_in + "g04.bmp", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 127u );
         BOOST_CHECK_EQUAL( view( img ).height(),  64u );
@@ -122,7 +121,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // g04rle.bmp - RLE compressed.
     {
         rgb8_image_t img;
-        
+
         read_image( bmp_in + "g04rle.bmp", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 127u );
         BOOST_CHECK_EQUAL( view( img ).height(),  64u );
@@ -133,7 +132,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // g04p4.bmp - 4-color grayscale palette
     {
         rgba8_image_t img;
-        
+
         read_image( bmp_in + "g04p4.bmp", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 127u );
         BOOST_CHECK_EQUAL( view( img ).height(),  64u );
@@ -144,7 +143,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // g08.bmp - basic 8bpp (256 color) image
     {
         rgba8_image_t img;
-        
+
         read_image( bmp_in + "g08.bmp", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 127u );
         BOOST_CHECK_EQUAL( view( img ).height(),  64u );
@@ -155,7 +154,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // g08p256.bmp - biClrUsed=256, biClrImportant=0 [=256]
     {
         rgba8_image_t img;
-        
+
         read_image( bmp_in + "g08p256.bmp", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 127u );
         BOOST_CHECK_EQUAL( view( img ).height(),  64u );
@@ -166,7 +165,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // g08pi256.bmp - biClrUsed=256, biClrImportant=256
     {
         rgba8_image_t img;
-        
+
         read_image( bmp_in + "g08pi256.bmp", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 127u );
         BOOST_CHECK_EQUAL( view( img ).height(),  64u );
@@ -174,12 +173,12 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
         write( img, "g08pi256.bmp" );
     }
 
-    // g08pi64.bmp - biClrUsed=256, biClrImportant=64. It's barely possible that some 
-    // sophisticated viewers may display this image in grayscale, if there are a 
+    // g08pi64.bmp - biClrUsed=256, biClrImportant=64. It's barely possible that some
+    // sophisticated viewers may display this image in grayscale, if there are a
     // limited number of colors available.
     {
         rgba8_image_t img;
-        
+
         read_image( bmp_in + "g08pi64.bmp", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 127u );
         BOOST_CHECK_EQUAL( view( img ).height(),  64u );
@@ -190,7 +189,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // g08rle.bmp - RLE compressed.
     {
         rgb8_image_t img;
-        
+
         read_image( bmp_in + "g08rle.bmp", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 127u );
         BOOST_CHECK_EQUAL( view( img ).height(),  64u );
@@ -198,12 +197,12 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
         write( img, "g08rle.bmp" );
     }
 
-    // g08os2.bmp - OS/2-style bitmap. This is an obsolete variety of BMP 
-    // that is still encountered sometimes. It has 3-byte palette 
+    // g08os2.bmp - OS/2-style bitmap. This is an obsolete variety of BMP
+    // that is still encountered sometimes. It has 3-byte palette
     // entries (instead of 4), and 16-bit width/height fields (instead of 32).
     {
         rgb8_image_t img;
-        
+
         read_image( bmp_in + "g08os2.bmp", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 127u );
         BOOST_CHECK_EQUAL( view( img ).height(),  64u );
@@ -214,7 +213,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // g08res22.bmp - resolution 7874x7874 pixels/meter (200x200 dpi)
     {
         rgba8_image_t img;
-        
+
         read_image( bmp_in + "g08res22.bmp", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 127u );
         BOOST_CHECK_EQUAL( view( img ).height(),  64u );
@@ -225,7 +224,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // g08res11.bmp - resolution 3937x3937 pixels/meter (100x100 dpi)
     {
         rgba8_image_t img;
-        
+
         read_image( bmp_in + "g08res11.bmp", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 127u );
         BOOST_CHECK_EQUAL( view( img ).height(),  64u );
@@ -233,13 +232,13 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
         write( img, "g08res11.bmp" );
     }
 
-    // g08res21.bmp resolution 7874x3937 pixels/meter (200x100 dpi). 
-    // Some programs (e.g. Imaging for Windows) may display this image 
-    // stretched vertically, which is the optimal thing to do if the 
+    // g08res21.bmp resolution 7874x3937 pixels/meter (200x100 dpi).
+    // Some programs (e.g. Imaging for Windows) may display this image
+    // stretched vertically, which is the optimal thing to do if the
     // program is primarily a viewer, rather than an editor.
     {
         rgba8_image_t img;
-        
+
         read_image( bmp_in + "g08res21.bmp", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 127u );
         BOOST_CHECK_EQUAL( view( img ).height(),  64u );
@@ -250,7 +249,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // g08s0.bmp - bits size not given (set to 0). This is legal for uncompressed bitmaps.
     {
         rgba8_image_t img;
-        
+
         read_image( bmp_in + "g08s0.bmp", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 127u );
         BOOST_CHECK_EQUAL( view( img ).height(),  64u );
@@ -258,11 +257,11 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
         write( img, "g08s0.bmp" );
     }
 
-    // g08offs.bmp - bfOffBits in header not set to the usual value. 
+    // g08offs.bmp - bfOffBits in header not set to the usual value.
     // There are 100 extra unused bytes between palette and bits.
     {
         rgba8_image_t img;
-        
+
         read_image( bmp_in + "g08offs.bmp", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 127u );
         BOOST_CHECK_EQUAL( view( img ).height(),  64u );
@@ -273,7 +272,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // g08w126.bmp - size 126x63 (right and bottom slightly clipped)
     {
         rgba8_image_t img;
-        
+
         read_image( bmp_in + "g08w126.bmp", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 126u );
         BOOST_CHECK_EQUAL( view( img ).height(),  63u );
@@ -284,7 +283,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // g08w125.bmp - size 125x62
     {
         rgba8_image_t img;
-        
+
         read_image( bmp_in + "g08w125.bmp", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 125u );
         BOOST_CHECK_EQUAL( view( img ).height(),  62u );
@@ -295,7 +294,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // g08w124.bmp - size 124x61
     {
         rgba8_image_t img;
-        
+
         read_image( bmp_in + "g08w124.bmp", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 124u );
         BOOST_CHECK_EQUAL( view( img ).height(),  61u );
@@ -306,7 +305,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // g08p64.bmp - 64-color grayscale palette
     {
         rgba8_image_t img;
-        
+
         read_image( bmp_in + "g08p64.bmp", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 127u );
         BOOST_CHECK_EQUAL( view( img ).height(),  64u );
@@ -317,7 +316,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // g16def555.bmp - 15-bit color (1 bit wasted), biCompression=BI_RGB (no bitfields, defaults to 5-5-5)
     {
         rgb8_image_t img;
-        
+
         read_image( bmp_in + "g16def555.bmp", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 127u );
         BOOST_CHECK_EQUAL( view( img ).height(),  64u );
@@ -328,7 +327,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // g16bf555.bmp - 15-bit color, biCompression=BI_BITFIELDS (bitfields indicate 5-5-5)
     {
         rgb8_image_t img;
-        
+
         read_image( bmp_in + "g16bf555.bmp", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 127u );
         BOOST_CHECK_EQUAL( view( img ).height(),  64u );
@@ -339,7 +338,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // g16bf565.bmp - 16-bit color, biCompression=BI_BITFIELDS (bitfields indicate 5-6-5)
     {
         rgb8_image_t img;
-        
+
         read_image( bmp_in + "g16bf565.bmp", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 127u );
         BOOST_CHECK_EQUAL( view( img ).height(),  64u );
@@ -350,7 +349,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // g24.bmp - 24-bit color (BGR)
     {
         rgb8_image_t img;
-        
+
         read_image( bmp_in + "g24.bmp", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 127u );
         BOOST_CHECK_EQUAL( view( img ).height(),  64u );
@@ -361,7 +360,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
     // g32def.bmp - 24-bit color (8 bits wasted), biCompression=BI_RGB (no bitfields, defaults to BGRx)
     {
         rgba8_image_t img;
-        
+
         read_image( bmp_in + "g32def.bmp", img, tag_t() );
         BOOST_CHECK_EQUAL( view( img ).width() , 127u );
         BOOST_CHECK_EQUAL( view( img ).height(),  64u );
@@ -389,7 +388,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_image_iterator_test )
     // g01bw.bmp - black and white palette (#000000,#FFFFFF)
     test_scanline_reader< rgba8_image_t, bmp_tag >( string( bmp_in + "g01bw.bmp" ).c_str() );
 
-    // g01wb.bmp - white and black palette (#FFFFFF,#000000). 
+    // g01wb.bmp - white and black palette (#FFFFFF,#000000).
     // Should look the same as g01bw, not inverted.
     test_scanline_reader< rgba8_image_t, bmp_tag >( string( bmp_in + "g01wb.bmp" ).c_str() );
 
@@ -418,16 +417,16 @@ BOOST_AUTO_TEST_CASE( read_reference_images_image_iterator_test )
     // g08pi256.bmp - biClrUsed=256, biClrImportant=256
     test_scanline_reader< rgba8_image_t, bmp_tag >( string( bmp_in + "g08pi256.bmp" ).c_str() );
 
-    // g08pi64.bmp - biClrUsed=256, biClrImportant=64. It's barely possible that some 
-    // sophisticated viewers may display this image in grayscale, if there are a 
+    // g08pi64.bmp - biClrUsed=256, biClrImportant=64. It's barely possible that some
+    // sophisticated viewers may display this image in grayscale, if there are a
     // limited number of colors available.
     test_scanline_reader< rgba8_image_t, bmp_tag >( string( bmp_in + "g08pi64.bmp" ).c_str() );
 
     // not supported
     // g08rle.bmp - RLE compressed.
 
-    // g08os2.bmp - OS/2-style bitmap. This is an obsolete variety of BMP 
-    // that is still encountered sometimes. It has 3-byte palette 
+    // g08os2.bmp - OS/2-style bitmap. This is an obsolete variety of BMP
+    // that is still encountered sometimes. It has 3-byte palette
     // entries (instead of 4), and 16-bit width/height fields (instead of 32).
     test_scanline_reader< rgb8_image_t, bmp_tag >( string( bmp_in + "g08os2.bmp" ).c_str() );
 
@@ -437,16 +436,16 @@ BOOST_AUTO_TEST_CASE( read_reference_images_image_iterator_test )
     // g08res11.bmp - resolution 3937x3937 pixels/meter (100x100 dpi)
     test_scanline_reader< rgba8_image_t, bmp_tag >( string( bmp_in + "g08res11.bmp" ).c_str() );
 
-    // g08res21.bmp resolution 7874x3937 pixels/meter (200x100 dpi). 
-    // Some programs (e.g. Imaging for Windows) may display this image 
-    // stretched vertically, which is the optimal thing to do if the 
+    // g08res21.bmp resolution 7874x3937 pixels/meter (200x100 dpi).
+    // Some programs (e.g. Imaging for Windows) may display this image
+    // stretched vertically, which is the optimal thing to do if the
     // program is primarily a viewer, rather than an editor.
     test_scanline_reader< rgba8_image_t, bmp_tag >( string( bmp_in + "g08res21.bmp" ).c_str() );
 
     // g08s0.bmp - bits size not given (set to 0). This is legal for uncompressed bitmaps.
     test_scanline_reader< rgba8_image_t, bmp_tag >( string( bmp_in + "g08s0.bmp" ).c_str() );
 
-    // g08offs.bmp - bfOffBits in header not set to the usual value. 
+    // g08offs.bmp - bfOffBits in header not set to the usual value.
     // There are 100 extra unused bytes between palette and bits.
     test_scanline_reader< rgba8_image_t, bmp_tag >( string( bmp_in + "g08offs.bmp" ).c_str() );
 

@@ -1,44 +1,32 @@
-/*
-    Copyright 2012 Kenneth Riddile, Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2012 Kenneth Riddile, Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_IO_TARGA_DETAIL_READ_HPP
 #define BOOST_GIL_EXTENSION_IO_TARGA_DETAIL_READ_HPP
 
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief
-/// \author Kenneth Riddile, Christian Henning \n
-///
-/// \date 2012 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
-#include <vector>
-
 #include <boost/gil/extension/io/targa/tags.hpp>
+#include <boost/gil/extension/io/targa/detail/reader_backend.hpp>
+#include <boost/gil/extension/io/targa/detail/is_allowed.hpp>
 
 #include <boost/gil/io/base.hpp>
 #include <boost/gil/io/bit_operations.hpp>
 #include <boost/gil/io/conversion_policies.hpp>
-#include <boost/gil/io/row_buffer_helper.hpp>
-#include <boost/gil/io/reader_base.hpp>
 #include <boost/gil/io/device.hpp>
+#include <boost/gil/io/reader_base.hpp>
+#include <boost/gil/io/row_buffer_helper.hpp>
 #include <boost/gil/io/typedefs.hpp>
 
-#include <boost/gil/extension/io/targa/detail/reader_backend.hpp>
-#include <boost/gil/extension/io/targa/detail/is_allowed.hpp>
+#include <vector>
 
 namespace boost { namespace gil {
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
-#pragma warning(push) 
-#pragma warning(disable:4512) //assignment operator could not be generated 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(push)
+#pragma warning(disable:4512) //assignment operator could not be generated
 #endif
 
 ///
@@ -80,7 +68,7 @@ public:
                  , ConversionPolicy
                  >()
     , backend_t( io_dev
-               , settings 
+               , settings
                )
     {}
 
@@ -106,7 +94,7 @@ public:
         io_error_if( !detail::is_allowed< View >( this->_info, is_read_and_convert_t() )
                    , "Image types aren't compatible."
                    );
-        
+
         switch( this->_info._image_type )
         {
             case targa_image_type::_rgb:
@@ -115,12 +103,12 @@ public:
                 {
                     io_error( "Inconsistent color map type and image type in targa file." );
                 }
-                
+
                 if( this->_info._color_map_length != 0 )
                 {
                     io_error( "Non-indexed targa files containing a palette are not supported." );
                 }
-                
+
                 switch( this->_info._bits_per_pixel )
                 {
                     case 24:
@@ -159,7 +147,7 @@ public:
                         break;
                     }
                 }
-                
+
                 break;
             }
             case targa_image_type::_rle_rgb:
@@ -168,12 +156,12 @@ public:
                 {
                     io_error( "Inconsistent color map type and image type in targa file." );
                 }
-                
+
                 if( this->_info._color_map_length != 0 )
                 {
                     io_error( "Non-indexed targa files containing a palette are not supported." );
                 }
-                
+
                 switch( this->_info._bits_per_pixel )
                 {
                     case 24:
@@ -206,7 +194,7 @@ public:
                         break;
                     }
                 }
-                
+
                 break;
             }
             default:
@@ -257,13 +245,13 @@ private:
         targa_depth::type bytes_per_pixel = this->_info._bits_per_pixel / 8;
         size_t image_size = this->_info._width * this->_info._height * bytes_per_pixel;
         byte_vector_t image_data( image_size );
-        
+
         this->_io_dev.seek( static_cast< long >( this->_info._offset ));
-        
+
         for( size_t pixel = 0; pixel < image_size; )
         {
             targa_offset::type current_byte = this->_io_dev.read_uint8();
-            
+
             if( current_byte & 0x80 ) // run length chunk (high bit = 1)
             {
                 uint8_t chunk_length = current_byte - 127;
@@ -272,7 +260,7 @@ private:
                 {
                     pixel_data[channel] = this->_io_dev.read_uint8();
                 }
-                
+
                 // Repeat the next pixel chunk_length times
                 for( uint8_t i = 0; i < chunk_length; ++i, pixel += bytes_per_pixel )
                 {
@@ -282,7 +270,7 @@ private:
             else // raw chunk
             {
                 uint8_t chunk_length = current_byte + 1;
-                
+
                 // Write the next chunk_length pixels directly
                 size_t pixels_written = chunk_length * bytes_per_pixel;
                 this->_io_dev.read( &image_data[pixel], pixels_written );
@@ -304,7 +292,7 @@ private:
     }
 };
 
-namespace detail { 
+namespace detail {
 
 class targa_type_format_checker
 {
@@ -407,9 +395,9 @@ public:
     }
 };
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
-#pragma warning(pop) 
-#endif 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(pop)
+#endif
 
 } // namespace gil
 } // namespace boost

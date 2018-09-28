@@ -1,23 +1,12 @@
-/*
-    Copyright 2007-2008 Christian Henning, Andreas Pokorny, Lubomir Bourdev
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2007-2008 Christian Henning, Andreas Pokorny, Lubomir Bourdev
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_IO_BIT_OPERATIONS_HPP
 #define BOOST_GIL_IO_BIT_OPERATIONS_HPP
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief
-/// \author Christian Henning \n
-///
-/// \date   2008 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/bind.hpp>
 
@@ -107,7 +96,7 @@ private:
 
         return result;
     }
- 
+
 private:
 
     bool _apply_operation;

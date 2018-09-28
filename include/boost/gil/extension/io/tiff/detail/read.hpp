@@ -1,23 +1,29 @@
-/*
-    Copyright 2007-2012 Christian Henning, Lubomir Bourdev
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2007-2012 Christian Henning, Lubomir Bourdev
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_IO_TIFF_DETAIL_READER_HPP
 #define BOOST_GIL_EXTENSION_IO_TIFF_DETAIL_READER_HPP
 
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief
-/// \author Christian Henning, Lubomir Bourdev \n
-///
-/// \date   2007-2012 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
+#include <boost/gil/extension/io/tiff/detail/device.hpp>
+#include <boost/gil/extension/io/tiff/detail/is_allowed.hpp>
+#include <boost/gil/extension/io/tiff/detail/reader_backend.hpp>
+
+#include <boost/gil/io/base.hpp>
+#include <boost/gil/io/bit_operations.hpp>
+#include <boost/gil/io/conversion_policies.hpp>
+#include <boost/gil/io/device.hpp>
+#include <boost/gil/io/reader_base.hpp>
+#include <boost/gil/io/row_buffer_helper.hpp>
+
+#include <boost/static_assert.hpp>
+
+#include <algorithm>
+#include <string>
+#include <vector>
 
 // taken from jpegxx - https://bitbucket.org/edd/jpegxx/src/ea2492a1a4a6/src/ijg_headers.hpp
 #ifndef BOOST_GIL_EXTENSION_IO_TIFF_C_LIB_COMPILED_AS_CPLUSPLUS
@@ -31,29 +37,11 @@
     }
 #endif
 
-#include <algorithm>
-#include <string>
-#include <vector>
+namespace boost { namespace gil {
 
-#include <boost/static_assert.hpp>
-
-#include <boost/gil/io/base.hpp>
-#include <boost/gil/io/conversion_policies.hpp>
-#include <boost/gil/io/bit_operations.hpp>
-#include <boost/gil/io/row_buffer_helper.hpp>
-#include <boost/gil/io/device.hpp>
-#include <boost/gil/io/reader_base.hpp>
-
-#include <boost/gil/extension/io/tiff/detail/reader_backend.hpp>
-#include <boost/gil/extension/io/tiff/detail/device.hpp>
-#include <boost/gil/extension/io/tiff/detail/is_allowed.hpp>
-
-
-namespace boost { namespace gil { 
-
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
-#pragma warning(push) 
-#pragma warning(disable:4512) //assignment operator could not be generated 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(push)
+#pragma warning(disable:4512) //assignment operator could not be generated
 #endif
 
 template < int K >
@@ -157,8 +145,8 @@ public:
     {
         if( this->_info._photometric_interpretation == PHOTOMETRIC_PALETTE )
         {
-            this->_scanline_length = this->_info._width 
-                                   * num_channels< rgb16_view_t >::value 
+            this->_scanline_length = this->_info._width
+                                   * num_channels< rgb16_view_t >::value
                                    * sizeof( channel_type<rgb16_view_t>::type );
 
             // Steps:
@@ -218,7 +206,7 @@ public:
             }
         }
     }
-    
+
 private:
 
     template< typename View >
@@ -442,7 +430,7 @@ private:
                                 , int         plane
                                 )
    {
-       ///@todo: why is 
+       ///@todo: why is
        /// typedef Buffer row_buffer_helper_t;
        /// not working? I get compiler error with MSVC10.
        /// read_stripped_data IS working.
@@ -565,7 +553,7 @@ private:
                             , int         plane
                             )
    {
-       ///@todo: why is 
+       ///@todo: why is
        /// typedef Buffer row_buffer_helper_t;
        /// not working? I get compiler error with MSVC10.
        /// read_stripped_data IS working.
@@ -643,7 +631,7 @@ private:
       it_t first = begin + this->_settings._top_left.x;
       it_t last  = first + this->_settings._dim.x; // one after last element
 
-      // I don't think tiff allows for random access of row, that's why we need 
+      // I don't think tiff allows for random access of row, that's why we need
       // to read and discard rows when reading subimages.
       skip_over_rows( row_buffer_helper.buffer()
                     , plane
@@ -653,7 +641,7 @@ private:
       std::ptrdiff_t row_end = row + this->_settings._dim.y;
       std::ptrdiff_t dst_row = 0;
 
-      for( 
+      for(
          ; row < row_end
          ; ++row, ++dst_row
          )
@@ -791,9 +779,9 @@ public:
     }
 };
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
-#pragma warning(pop) 
-#endif 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(pop)
+#endif
 
 } // namespace gil
 } // namespace boost

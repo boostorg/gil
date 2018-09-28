@@ -1,43 +1,30 @@
-/*
-    Copyright 2007-2012 Christian Henning, Andreas Pokorny, Lubomir Bourdev
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2007-2012 Christian Henning, Andreas Pokorny, Lubomir Bourdev
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_IO_PNG_DETAIL_READ_HPP
 #define BOOST_GIL_EXTENSION_IO_PNG_DETAIL_READ_HPP
 
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief
-/// \author Christian Henning, Andreas Pokorny, Lubomir Bourdev \n
-///
-/// \date   2007-2012 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
 #include <boost/gil/extension/io/png/tags.hpp>
-
-#include <boost/gil.hpp>
-
-#include <boost/gil/io/base.hpp>
-#include <boost/gil/io/reader_base.hpp>
-#include <boost/gil/io/conversion_policies.hpp>
-#include <boost/gil/io/device.hpp>
-#include <boost/gil/io/typedefs.hpp>
-#include <boost/gil/io/row_buffer_helper.hpp>
-
 #include <boost/gil/extension/io/png/detail/reader_backend.hpp>
 #include <boost/gil/extension/io/png/detail/is_allowed.hpp>
 
+#include <boost/gil.hpp> // FIXME: Include what you use!
+#include <boost/gil/io/base.hpp>
+#include <boost/gil/io/conversion_policies.hpp>
+#include <boost/gil/io/device.hpp>
+#include <boost/gil/io/reader_base.hpp>
+#include <boost/gil/io/row_buffer_helper.hpp>
+#include <boost/gil/io/typedefs.hpp>
+
 namespace boost { namespace gil {
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
-#pragma warning(push) 
-#pragma warning(disable:4512) //assignment operator could not be generated 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(push)
+#pragma warning(disable:4512) //assignment operator could not be generated
 #endif
 
 ///
@@ -243,7 +230,7 @@ private:
             , typename View
             >
     void read_rows( const View& view )
-    {        
+    {
         typedef detail::row_buffer_helper_view< ImagePixel > row_buffer_helper_t;
 
         typedef typename row_buffer_helper_t::iterator_t it_t;
@@ -434,9 +421,9 @@ public:
     }
 };
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
-#pragma warning(pop) 
-#endif 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(pop)
+#endif
 
 } // namespace gil
 } // namespace boost

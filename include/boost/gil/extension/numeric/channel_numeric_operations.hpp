@@ -1,33 +1,24 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_NUMERIC_CHANNEL_NUMERIC_OPERATIONS_HPP
 #define BOOST_GIL_EXTENSION_NUMERIC_CHANNEL_NUMERIC_OPERATIONS_HPP
-
-/*!
-/// \file               
-/// \brief Structures for channel-wise numeric operations
-/// \author Hailin Jin and Lubomir Bourdev \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n
-/// Currently defined structures:
-///    channel_plus_t (+), channel_minus_t (-),
-///    channel_multiplies_t (*), channel_divides_t (/),
-///    channel_plus_scalar_t (+s), channel_minus_scalar_t (-s),
-///    channel_multiplies_scalar_t (*s), channel_divides_scalar_t (/s),
-///    channel_halves_t (/=2), channel_zeros_t (=0), channel_assigns_t (=)
-*/
 
 #include <functional>
 
 namespace boost { namespace gil {
+
+// Structures for channel-wise numeric operations
+// Currently defined structures:
+//    channel_plus_t (+), channel_minus_t (-),
+//    channel_multiplies_t (*), channel_divides_t (/),
+//    channel_plus_scalar_t (+s), channel_minus_scalar_t (-s),
+//    channel_multiplies_scalar_t (*s), channel_divides_scalar_t (/s),
+//    channel_halves_t (/=2), channel_zeros_t (=0), channel_assigns_t (=)
 
 /// \ingroup ChannelNumericOperations
 /// structure for adding one channel to another
@@ -151,6 +142,6 @@ struct channel_assigns_t : public std::binary_function<Channel1,Channel2,Channel
     }
 };
 
-} }  // namespace boost::gil
+}}  // namespace boost::gil
 
-#endif // BOOST_GIL_EXTENSION_NUMERIC_CHANNEL_NUMERIC_OPERATIONS_HPP
+#endif

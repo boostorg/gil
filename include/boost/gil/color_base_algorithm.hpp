@@ -1,40 +1,25 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_COLOR_BASE_ALGORITHM_HPP
+#define BOOST_GIL_COLOR_BASE_ALGORITHM_HPP
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
+#include <boost/gil/concepts.hpp>
+#include <boost/gil/utilities.hpp>
 
-/*************************************************************************************************/
-
-#ifndef GIL_COLOR_BASE_ALGORITHM_HPP
-#define GIL_COLOR_BASE_ALGORITHM_HPP
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief pixel related algorithms
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated on February 16, 2007
-///
-////////////////////////////////////////////////////////////////////////////////////////
+#include <boost/config.hpp>
+#include <boost/mpl/at.hpp>
+#include <boost/mpl/contains.hpp>
+#include <boost/type_traits.hpp>
+#include <boost/utility/enable_if.hpp>
 
 #include <algorithm>
 
-#include <boost/config.hpp>
-#include <boost/type_traits.hpp>
-#include <boost/utility/enable_if.hpp>
-#include <boost/mpl/contains.hpp>
-#include <boost/mpl/at.hpp>
-
-#include "gil_concept.hpp"
-#include "utilities.hpp"
-
 namespace boost { namespace gil {
-
 
 ///////////////////////////////////////
 ///

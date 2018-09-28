@@ -1,39 +1,30 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-
-/*************************************************************************************************/
-
-/// \file
-/// \brief Example file to show how to deal with packed pixels
-/// \author Lubomir Bourdev and Hailin Jin
-/// \date February 27, 2007
-///
-/// This test file demonstrates how to use packed pixel formats in GIL. 
-/// A "packed" pixel is a pixel whose channels are bit ranges.
-/// Here we create an RGB image whose pixel has 16-bits, such as:
-/// bits [0..6] are the blue channel
-/// bits [7..13] are the green channel
-/// bits [14..15] are the red channel
-/// We read a regular 8-bit RGB image, convert it to packed BGR772, convert it back to 8-bit RGB and save it to a file.
-/// Since the red channel is only two bits the color loss should be observable in the result
-///
-/// This test file also demonstrates how to use bit-aligned images - these are images whose pixels themselves are not byte aligned.
-/// For example, an rgb222 image has a pixel whose size is 6 bits. Bit-aligned images are more complicated than packed images. They
-/// require a special proxy class to represent pixel reference and pixel iterator (packed images use C++ reference and C pointer respectively).
-/// The alignment parameter in the constructor of bit-aligned images is in bit units. For example, if you want your bit-aligned image to have 4-byte
-/// alignment of its rows use alignment of 32, not 4.
-///
-/// To demonstrate that image view transformations work on packed images, we save the result transposed.
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#include <boost/gil/extension/io/jpeg_io.hpp>
 
 #include <algorithm>
-#include <boost/gil/extension/io/jpeg_io.hpp>
+
+// This test file demonstrates how to use packed pixel formats in GIL.
+// A "packed" pixel is a pixel whose channels are bit ranges.
+// Here we create an RGB image whose pixel has 16-bits, such as:
+// bits [0..6] are the blue channel
+// bits [7..13] are the green channel
+// bits [14..15] are the red channel
+// We read a regular 8-bit RGB image, convert it to packed BGR772, convert it back to 8-bit RGB and save it to a file.
+// Since the red channel is only two bits the color loss should be observable in the result
+//
+// This test file also demonstrates how to use bit-aligned images - these are images whose pixels themselves are not byte aligned.
+// For example, an rgb222 image has a pixel whose size is 6 bits. Bit-aligned images are more complicated than packed images. They
+// require a special proxy class to represent pixel reference and pixel iterator (packed images use C++ reference and C pointer respectively).
+// The alignment parameter in the constructor of bit-aligned images is in bit units. For example, if you want your bit-aligned image to have 4-byte
+// alignment of its rows use alignment of 32, not 4.
+//
+// To demonstrate that image view transformations work on packed images, we save the result transposed.
 
 using namespace boost;
 using namespace boost::gil;

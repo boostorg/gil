@@ -1,14 +1,15 @@
-/*
-    Copyright 2013 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
+//
+// Copyright 2013 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 //#define BOOST_TEST_MODULE tiff_subimage_test_module
-#include <boost/test/unit_test.hpp>
 
 #include <boost/gil/extension/io/tiff.hpp>
+
+#include <boost/test/unit_test.hpp>
 
 #include <fstream>
 #include <sstream>
@@ -74,7 +75,7 @@ BOOST_AUTO_TEST_CASE( subimage_test_8 )
     read_image( tiff_in_GM + "tiger-minisblack-strip-08.tif", img1, settings );
     read_image( tiff_in_GM + "tiger-minisblack-tile-08.tif" , img2, settings );
     read_image( tiff_in_GM + "tiger-minisblack-strip-08.tif", img3, tag_t()  );
-    
+
     BOOST_CHECK( equal_pixels( const_view( img1 ), const_view( img2 )));
     BOOST_CHECK( equal_pixels( const_view( img1 ), subimage_view( view( img3 ), top_left, dim )));
 }
@@ -91,7 +92,7 @@ BOOST_AUTO_TEST_CASE( subimage_test_16 )
     read_image( tiff_in_GM + "tiger-minisblack-strip-16.tif", img1, settings );
     read_image( tiff_in_GM + "tiger-minisblack-tile-16.tif" , img2, settings );
     read_image( tiff_in_GM + "tiger-minisblack-strip-16.tif", img3, tag_t()  );
-    
+
     BOOST_CHECK( equal_pixels( const_view( img1 ), const_view( img2 )));
     BOOST_CHECK( equal_pixels( const_view( img1 ), subimage_view( view( img3 ), top_left, dim )));
 }
@@ -109,7 +110,7 @@ BOOST_AUTO_TEST_CASE( subimage_test_32 )
     read_image( tiff_in_GM + "tiger-minisblack-strip-32.tif", img1, settings );
     read_image( tiff_in_GM + "tiger-minisblack-tile-32.tif" , img2, settings );
     read_image( tiff_in_GM + "tiger-minisblack-strip-32.tif", img3, tag_t()  );
-    
+
     BOOST_CHECK( equal_pixels( const_view( img1 ), const_view( img2 )));
     BOOST_CHECK( equal_pixels( const_view( img1 ), subimage_view( view( img3 ), top_left, dim )));
 }

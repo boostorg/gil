@@ -1,29 +1,16 @@
-/*
-    Copyright 2007-2008 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2007-2008 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_IO_ROW_BUFFER_HELPER_HPP
 #define BOOST_GIL_IO_ROW_BUFFER_HELPER_HPP
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief  Helper for having one read implementation used for
-///         bit_aligned and byte images.
-/// \author Christian Henning, Andreas Pokorny, Lubomir Bourdev \n
-///
-/// \date   2007-2008 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
 
 #include <boost/gil/extension/toolbox/metafunctions/is_bit_aligned.hpp>
 
 #include <boost/gil/io/typedefs.hpp>
-
 
 namespace boost { namespace gil { namespace detail {
 
@@ -67,10 +54,10 @@ struct row_buffer_helper< Pixel
     row_buffer_helper( std::size_t width
                      , bool        in_bytes
                      )
-    : _c( ( width 
+    : _c( ( width
           * pixel_bit_size< pixel_type >::value
           )
-          >> 3 
+          >> 3
         )
 
     , _r( width
@@ -127,16 +114,16 @@ struct row_buffer_helper< Pixel
     row_buffer_helper( std::size_t width
                      , bool        in_bytes
                      )
-    : _c( ( width 
+    : _c( ( width
           * num_channels< pixel_type >::type::value
           * channel_type< pixel_type >::type::num_bits
           )
-          >> 3 
+          >> 3
         )
 
     , _r( width
-        * num_channels< pixel_type >::type::value 
-        * channel_type< pixel_type >::type::num_bits 
+        * num_channels< pixel_type >::type::value
+        * channel_type< pixel_type >::type::num_bits
         - ( _c << 3 )
        )
     {
@@ -190,14 +177,14 @@ struct row_buffer_helper_view : row_buffer_helper< typename View::value_type >
 
 template< typename View >
 struct row_buffer_helper_view< View
-                             , typename enable_if< typename is_bit_aligned< typename View::value_type 
+                             , typename enable_if< typename is_bit_aligned< typename View::value_type
                                                                           >::type
                                                  >::type
                              > : row_buffer_helper< typename View::reference >
 {
     row_buffer_helper_view( std::size_t width
                           , bool        in_bytes
-                          ) 
+                          )
     : row_buffer_helper< typename View::reference >( width
                                                    , in_bytes
                                                    )

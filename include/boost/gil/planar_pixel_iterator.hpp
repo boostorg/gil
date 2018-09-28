@@ -1,32 +1,20 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_PLANAR_PIXEL_ITERATOR_HPP
+#define BOOST_GIL_PLANAR_PIXEL_ITERATOR_HPP
 
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+#include <boost/gil/pixel.hpp>
+#include <boost/gil/step_iterator.hpp>
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-
-/*************************************************************************************************/
-
-#ifndef GIL_PLANAR_PTR_H
-#define GIL_PLANAR_PTR_H
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief planar pixel pointer class
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated on February 12, 2007
-///
-////////////////////////////////////////////////////////////////////////////////////////
+#include <boost/iterator/iterator_facade.hpp>
 
 #include <cassert>
 #include <iterator>
-#include <boost/iterator/iterator_facade.hpp>
-#include "pixel.hpp"
-#include "step_iterator.hpp"
 
 namespace boost { namespace gil {
 //forward declaration (as this file is included in planar_pixel_reference.hpp)

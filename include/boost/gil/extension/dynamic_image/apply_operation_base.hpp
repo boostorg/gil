@@ -1,36 +1,27 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_APPLY_OPERATION_BASE_HPP
+#define BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_APPLY_OPERATION_BASE_HPP
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
+#include <boost/gil/utilities.hpp>
 
-/*************************************************************************************************/
-
-#ifndef GIL_APPLY_OPERATION_BASE_HPP
-#define GIL_APPLY_OPERATION_BASE_HPP
-
-#include "../../utilities.hpp"
+#include <boost/config.hpp>
 #include <boost/mpl/begin.hpp>
 #include <boost/mpl/next.hpp>
 #include <boost/mpl/deref.hpp>
 #include <boost/mpl/size.hpp>
 #include <boost/preprocessor/repeat.hpp> 
 
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief Given an object with run-time specified type (denoted as an array of Bits, dynamic index, and a static set of Types) and a generic operation, 
-///        casts the object to its appropriate type and applies the operation
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date 2005-2007 \n Last updated on November 6, 2007
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
 namespace boost { namespace gil {
+
+/// Given an object with run-time specified type (denoted as an array of Bits,
+/// dynamic index, and a static set of Types) and a generic operation,
+/// casts the object to its appropriate type and applies the operation
 
 /*
 GENERATE_APPLY_FWD_OPS generates for every N functions that look like this (for N==2):
@@ -178,7 +169,6 @@ static typename Op::result_type BOOST_FORCEINLINE apply_operation_base(const Bit
 #undef GIL_GENERATE_APPLY_FWD_OPS
 #undef BHS
 
-} }  // namespace boost::gil
-
+}}  // namespace boost::gil
 
 #endif

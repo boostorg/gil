@@ -1,29 +1,17 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-/*************************************************************************************************/
-
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_TOOLBOX_DYNAMIC_IMAGES_HPP
 #define BOOST_GIL_EXTENSION_TOOLBOX_DYNAMIC_IMAGES_HPP
 
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file dynamic_images.hpp
-/// \brief Generic io functions for dealing with dynamic images.
-/// \author Hailin Jin, Lubomir Bourdev, and Christian Henning \n
-///
-/// \date 2012 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
+#include <boost/gil/extension/dynamic_image/dynamic_image_all.hpp>
 
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/size.hpp>
-#include <boost/gil/extension/dynamic_image/dynamic_image_all.hpp>
 
 namespace boost { namespace gil {
 
@@ -119,7 +107,6 @@ struct color_space_type< any_image_pixel_t >
     typedef any_image_color_space_t type;
 };
 
+}} // namespace boost::gil
 
-} }  // namespace boost::gil
-
-#endif // BOOST_GIL_EXTENSION_TOOLBOX_DYNAMIC_IMAGES_HPP
+#endif

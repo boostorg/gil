@@ -1,12 +1,10 @@
-/*
-    Copyright 2013 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/// \brief Unit test for hsl and hsv color spaces 
-
+//
+// Copyright 2013 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #include <boost/gil.hpp>
 #include <boost/gil/extension/toolbox/color_spaces/hsl.hpp>
 #include <boost/gil/extension/toolbox/color_spaces/hsv.hpp>
@@ -42,7 +40,7 @@ BOOST_AUTO_TEST_CASE( hsl_hsv_test )
             hsl32f_view_t::x_iterator hsl_x_it = view( hsl_img ).row_begin( y );
             hsv32f_view_t::x_iterator hsv_x_it = view( hsv_img ).row_begin( y );
 
-            float v = static_cast<float>( height -  y ) 
+            float v = static_cast<float>( height -  y )
                     / height;
 
             for( size_t x = 0; x < width; x++ )

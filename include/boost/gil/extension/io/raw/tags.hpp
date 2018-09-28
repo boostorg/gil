@@ -1,24 +1,14 @@
-/*
-    Copyright 2013 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2013 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_IO_RAW_TAGS_HPP
 #define BOOST_GIL_EXTENSION_IO_RAW_TAGS_HPP
 
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief All supported raw tags by the gil io extension.
-/// \author Olivier Tournaire \n
-///
-/// \date   2011 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
+#include <boost/gil/io/base.hpp>
 
 #ifndef BOOST_GIL_EXTENSION_IO_RAW_C_LIB_COMPILED_AS_CPLUSPLUS
     extern "C" {
@@ -29,8 +19,6 @@
 #ifndef BOOST_GIL_EXTENSION_IO_RAW_C_LIB_COMPILED_AS_CPLUSPLUS
     }
 #endif
-
-#include <boost/gil/io/base.hpp>
 
 namespace boost { namespace gil {
 

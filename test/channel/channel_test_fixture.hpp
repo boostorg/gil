@@ -7,7 +7,7 @@
 // http://www.boost.org/LICENSE_1_0.txt
 //
 #include <boost/gil/channel.hpp>
-#include <boost/gil/gil_concept.hpp>
+#include <boost/gil/concepts.hpp>
 #include <boost/gil/typedefs.hpp>
 #include <cstdint>
 #include <tuple>

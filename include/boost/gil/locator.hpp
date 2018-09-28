@@ -1,36 +1,22 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_LOCATOR_HPP
+#define BOOST_GIL_LOCATOR_HPP
 
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+#include <boost/gil/pixel_iterator.hpp>
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-
-/*************************************************************************************************/
-
-#ifndef GIL_LOCATOR_H
-#define GIL_LOCATOR_H
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief pixel 2D locator
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n September 20, 2006
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
-#include <cstddef>
 #include <cassert>
-#include "pixel_iterator.hpp"
-
-////////////////////////////////////////////////////////////////////////////////////////
-///                 Pixel 2D LOCATOR
-////////////////////////////////////////////////////////////////////////////////////////
+#include <cstddef>
 
 namespace boost { namespace gil {
+
+/// Pixel 2D locator
+
 //forward declarations
 template <typename P> std::ptrdiff_t memunit_step(const P*);
 template <typename P> P* memunit_advanced(const P* p, std::ptrdiff_t diff);

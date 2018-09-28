@@ -1,16 +1,16 @@
-/*
-    Copyright 2013 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-#ifndef BOOST_GIL_IO_UNIT_TEST_COLOR_SPACE_WRITE_TEST_HPP
-#define BOOST_GIL_IO_UNIT_TEST_COLOR_SPACE_WRITE_TEST_HPP
-
-#include <string>
+//
+// Copyright 2013 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_IO_TEST_COLOR_SPACE_WRITE_TEST_HPP
+#define BOOST_GIL_IO_TEST_COLOR_SPACE_WRITE_TEST_HPP
 
 #include <boost/gil.hpp>
+
+#include <string>
 
 #include "cmp_view.hpp"
 
@@ -43,4 +43,4 @@ void color_space_write_test( const std::string& file_name_1
 #endif // BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
 }
 
-#endif // BOOST_GIL_IO_UNIT_TEST_COLOR_SPACE_WRITE_TEST_HPP
+#endif

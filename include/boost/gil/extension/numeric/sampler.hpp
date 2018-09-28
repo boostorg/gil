@@ -1,31 +1,20 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_NUMERIC_SAMPLER_HPP
 #define BOOST_GIL_EXTENSION_NUMERIC_SAMPLER_HPP
 
+#include <boost/gil/extension/numeric/pixel_numeric_operations.hpp>
 #include <boost/gil/extension/dynamic_image/dynamic_image_all.hpp>
 
-#include <boost/gil/extension/numeric/pixel_numeric_operations.hpp>
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief Nearest-neighbor and bilinear image samplers.
-///        NOTE: The code is for example use only. It is not optimized for performance
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
 namespace boost { namespace gil {
+
+// Nearest-neighbor and bilinear image samplers.
+// NOTE: The code is for example use only. It is not optimized for performance
 
 ///////////////////////////////////////////////////////////////////////////
 ////
@@ -96,7 +85,7 @@ struct add_dst_mul_src {
 };
 } // namespace detail
 
-/// \brief A sampler that sets the destination pixel as the bilinear interpolation of the four closest pixels from the source. 
+/// \brief A sampler that sets the destination pixel as the bilinear interpolation of the four closest pixels from the source.
 /// If outside the bounds, it doesn't change the destination
 /// \ingroup ImageAlgorithms
 struct bilinear_sampler {};
@@ -109,7 +98,7 @@ bool sample(bilinear_sampler, const SrcView& src, const point2<F>& p, DstP& resu
     point2<ptrdiff_t> p0(ifloor(p.x), ifloor(p.y)); // the closest integer coordinate top left from p
     point2<F> frac(p.x-p0.x, p.y-p0.y);
 
-    if (p0.x < -1 || p0.y < -1 || p0.x>=src.width() || p0.y>=src.height()) 
+    if (p0.x < -1 || p0.y < -1 || p0.x>=src.width() || p0.y>=src.height())
     {
         return false;
     }
@@ -194,7 +183,6 @@ bool sample(bilinear_sampler, const SrcView& src, const point2<F>& p, DstP& resu
 	return true;
 }
 
-}  // namespace gil
-}  // namespace boost
+}}  // namespace boost::gil
 
-#endif // BOOST_GIL_EXTENSION_NUMERIC_SAMPLER_HPP
+#endif

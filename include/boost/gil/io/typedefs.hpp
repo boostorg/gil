@@ -1,36 +1,25 @@
-/*
-    Copyright 2007-2008 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2007-2008 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_IO_TYPEDEFS_HPP
 #define BOOST_GIL_IO_TYPEDEFS_HPP
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief
-/// \author Christian Henning \n
-///
-/// \date   2007-2008 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
-#include <vector>
-
-#include <boost/type_traits/is_base_of.hpp>
-
-#include <boost/gil/image.hpp>
-#include <boost/gil/utilities.hpp>
 
 #ifdef BOOST_GIL_IO_ENABLE_GRAY_ALPHA
 #include <boost/gil/extension/toolbox/color_spaces/gray_alpha.hpp>
 #endif // BOOST_GIL_IO_ENABLE_GRAY_ALPHA
 
-namespace boost { namespace gil { 
+#include <boost/gil/image.hpp>
+#include <boost/gil/utilities.hpp>
+
+#include <boost/type_traits/is_base_of.hpp>
+
+#include <vector>
+
+namespace boost { namespace gil {
 
 struct double_zero { static double apply() { return 0.0; } };
 struct double_one  { static double apply() { return 1.0; } };
@@ -43,7 +32,7 @@ typedef point2< std::ptrdiff_t > point_t;
 } // namespace gil
 } // namespace boost
 
-namespace boost { 
+namespace boost {
 
 template<> struct is_floating_point<gil::float32_t> : mpl::true_ {};
 template<> struct is_floating_point<gil::float64_t> : mpl::true_ {};

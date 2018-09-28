@@ -1,23 +1,12 @@
-/*
-    Copyright 2007-2008 Christian Henning, Andreas Pokorny, Lubomir Bourdev
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2007-2008 Christian Henning, Andreas Pokorny, Lubomir Bourdev
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_IO_PNG_DETAIL_SUPPORTED_TYPES_HPP
 #define BOOST_GIL_EXTENSION_IO_PNG_DETAIL_SUPPORTED_TYPES_HPP
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief
-/// \author Christian Henning, Andreas Pokorny, Lubomir Bourdev \n
-///
-/// \date   2007-2008 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
 
 #ifdef BOOST_GIL_IO_ENABLE_GRAY_ALPHA
 #include <boost/gil/extension/toolbox/color_spaces/gray_alpha.hpp>
@@ -168,7 +157,7 @@ template< typename BitField
 struct png_write_support< packed_dynamic_channel_reference< BitField
                                                           , 1
                                                           , Mutable
-                                                          > 
+                                                          >
                         , gray_t
                         > : write_support_true
                           , png_rw_support_base< 1
@@ -196,7 +185,7 @@ template< typename BitField
 struct png_write_support< packed_dynamic_channel_reference< BitField
                                                           , 2
                                                           , Mutable
-                                                          > 
+                                                          >
                         , gray_t
                         > : write_support_true
                           , png_rw_support_base< 2
@@ -224,7 +213,7 @@ template< typename BitField
 struct png_write_support< packed_dynamic_channel_reference< BitField
                                                           , 4
                                                           , Mutable
-                                                          > 
+                                                          >
                         , gray_t
                         > : write_support_true
                           , png_rw_support_base< 4
@@ -349,7 +338,7 @@ struct is_write_supported< Pixel
     : mpl::bool_< detail::png_write_support< typename channel_type< Pixel >::type
                                            , typename color_space_type< Pixel >::type
                                            >::is_supported
-                > 
+                >
 {
     typedef detail::png_write_support< typename channel_type< Pixel >::type
                                      , typename color_space_type< Pixel >::type
@@ -361,6 +350,5 @@ struct is_write_supported< Pixel
 
 } // namespace gil
 } // namespace boost
-
 
 #endif

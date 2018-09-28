@@ -1,23 +1,12 @@
-/*
-    Copyright 2007-2012 Christian Henning, Andreas Pokorny, Lubomir Bourdev
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2007-2012 Christian Henning, Andreas Pokorny, Lubomir Bourdev
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_IO_JPEG_TAGS_HPP
 #define BOOST_GIL_EXTENSION_IO_JPEG_TAGS_HPP
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief All supported jpeg tags by the gil io extension.
-/// \author Christian Henning, Andreas Pokorny, Lubomir Bourdev \n
-///         
-/// \date   2007-2012 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
 
 // taken from jpegxx - https://bitbucket.org/edd/jpegxx/src/ea2492a1a4a6/src/ijg_headers.hpp
 #ifndef BOOST_GIL_EXTENSION_IO_JPEG_C_LIB_COMPILED_AS_CPLUSPLUS
@@ -32,11 +21,10 @@
     #endif
 #endif
 
-//jpeglib doesn't know about FILE
-#include <stdio.h>
+#include <cstdio> // jpeglib doesn't know about FILE
 
-#include <jpeglib.h>
 #include <jerror.h>
+#include <jpeglib.h>
 
 #ifndef BOOST_GIL_EXTENSION_IO_JPEG_C_LIB_COMPILED_AS_CPLUSPLUS
     }
@@ -172,7 +160,7 @@ struct image_read_settings< jpeg_tag > : public image_read_settings_base
     , _dct_method( dct_method )
     {}
 
-    /// The dct ( discrete cosine transformation ) method. 
+    /// The dct ( discrete cosine transformation ) method.
     jpeg_dct_method::type _dct_method;
 };
 
@@ -205,7 +193,7 @@ struct image_write_info< jpeg_tag >
     /// The jpeg quality.
     jpeg_quality::type _quality;
 
-    /// The dct ( discrete cosine transformation ) method. 
+    /// The dct ( discrete cosine transformation ) method.
     jpeg_dct_method::type _dct_method;
 
     /// Density conversion unit.
@@ -236,7 +224,6 @@ private:
     }
 
 };
-
 
 } // namespace gil
 } // namespace boost

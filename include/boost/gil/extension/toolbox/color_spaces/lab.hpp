@@ -1,26 +1,18 @@
-/*
-    Copyright 2012 Chung-Lin Wen
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2012 Chung-Lin Wen
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_TOOLBOX_COLOR_SPACES_LAB_HPP
 #define BOOST_GIL_EXTENSION_TOOLBOX_COLOR_SPACES_LAB_HPP
 
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file lab.hpp
-/// \brief Support for CIE Lab color space
-/// \author Chung-Lin Wen \n
-///
-/// \date 2012 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
-#include <boost/gil/gil_all.hpp> // FIXME: Include what you use, not everything, even in extensions!
 #include <boost/gil/extension/toolbox/color_spaces/xyz.hpp>
+
+#include <boost/gil.hpp> // FIXME: Include what you use, not everything, even in extensions!
+
+#include <boost/mpl/vector.hpp>
 
 namespace boost{ namespace gil {
 
@@ -175,4 +167,4 @@ struct default_color_converter_impl<lab_t,rgb_t>
 } // namespace gil
 } // namespace boost
 
-#endif // BOOST_GIL_EXTENSION_TOOLBOX_COLOR_SPACES_LAB_HPP
+#endif

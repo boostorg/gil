@@ -1,45 +1,35 @@
-/*
-    Copyright 2012 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2012 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_IO_PNM_DETAIL_READ_HPP
 #define BOOST_GIL_EXTENSION_IO_PNM_DETAIL_READ_HPP
 
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief
-/// \author Christian Henning \n
-///
-/// \date 2012 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
-#include <vector>
-#include <boost/bind.hpp>
-#include <boost/gil.hpp>
 #include <boost/gil/extension/io/pnm/tags.hpp>
-
-#include <boost/gil/io/base.hpp>
-#include <boost/gil/io/conversion_policies.hpp>
-#include <boost/gil/io/row_buffer_helper.hpp>
-#include <boost/gil/io/bit_operations.hpp>
-#include <boost/gil/io/reader_base.hpp>
-#include <boost/gil/io/device.hpp>
-#include <boost/gil/io/typedefs.hpp>
-
 #include <boost/gil/extension/io/pnm/detail/reader_backend.hpp>
 #include <boost/gil/extension/io/pnm/detail/is_allowed.hpp>
 
+#include <boost/gil.hpp> // FIXME: Include what you use!
+#include <boost/gil/io/base.hpp>
+#include <boost/gil/io/bit_operations.hpp>
+#include <boost/gil/io/conversion_policies.hpp>
+#include <boost/gil/io/device.hpp>
+#include <boost/gil/io/reader_base.hpp>
+#include <boost/gil/io/row_buffer_helper.hpp>
+#include <boost/gil/io/typedefs.hpp>
+
+#include <boost/bind.hpp>
+
+#include <vector>
+
 namespace boost { namespace gil {
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
-#pragma warning(push) 
-#pragma warning(disable:4512) //assignment operator could not be generated 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(push)
+#pragma warning(disable:4512) //assignment operator could not be generated
 #endif
 
 ///
@@ -119,7 +109,7 @@ public:
             {
                 this->_scanline_length = this->_info._width;
 
-                read_text_data< gray8_view_t >( view ); 
+                read_text_data< gray8_view_t >( view );
 
                 break;
             }
@@ -364,7 +354,7 @@ private:
 };
 
 
-namespace detail { 
+namespace detail {
 
 struct pnm_type_format_checker
 {
@@ -455,9 +445,9 @@ public:
     }
 };
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
-#pragma warning(pop) 
-#endif 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(pop)
+#endif
 
 } // gil
 } // boost

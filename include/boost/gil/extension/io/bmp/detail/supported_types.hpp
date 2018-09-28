@@ -1,34 +1,21 @@
-/*
-    Copyright 2008 Christian Henning
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-*/
-
-/*************************************************************************************************/
-
+//
+// Copyright 2008 Christian Henning
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_EXTENSION_IO_BMP_DETAIL_SUPPORTED_TYPES_HPP
 #define BOOST_GIL_EXTENSION_IO_BMP_DETAIL_SUPPORTED_TYPES_HPP
 
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief 
-/// \author Christian Henning \n
-///
-/// \date   2008 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
+#include <boost/gil/bit_aligned_pixel_reference.hpp>
+#include <boost/gil/channel.hpp>
+#include <boost/gil/color_base.hpp>
+#include <boost/gil/packed_pixel.hpp>
+#include <boost/gil/io/base.hpp>
 
 #include <boost/mpl/not.hpp>
 #include <boost/type_traits/is_same.hpp>
-
-#include <boost/gil/channel.hpp>
-#include <boost/gil/color_base.hpp>
-#include <boost/gil/bit_aligned_pixel_reference.hpp>
-#include <boost/gil/packed_pixel.hpp>
-
-#include <boost/gil/io/base.hpp>
-
 
 namespace boost { namespace gil { namespace detail {
 
@@ -76,7 +63,7 @@ struct bmp_read_support<uint8_t
 {
     static const bmp_bits_per_pixel::type bpp = 8;
 };
-                      
+
 
 
 template<>
@@ -124,7 +111,7 @@ struct is_read_supported< Pixel
                         >
     : mpl::bool_< detail::bmp_read_support< typename channel_type< Pixel >::type
                                           , typename color_space_type< Pixel >::type
-                                          >::is_supported 
+                                          >::is_supported
                 >
 {
     typedef detail::bmp_read_support< typename channel_type< Pixel >::type
@@ -145,6 +132,5 @@ struct is_write_supported< Pixel
 
 } // namespace gil
 } // namespace boost
-
 
 #endif

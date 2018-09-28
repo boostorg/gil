@@ -1,38 +1,27 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
+#ifndef BOOST_GIL_PIXEL_HPP
+#define BOOST_GIL_PIXEL_HPP
 
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-/*************************************************************************************************/
+#include <boost/gil/channel.hpp>
+#include <boost/gil/color_base.hpp>
+#include <boost/gil/color_base_algorithm.hpp>
+#include <boost/gil/concepts.hpp>
+#include <boost/gil/metafunctions.hpp>
+#include <boost/gil/utilities.hpp>
 
-#ifndef GIL_PIXEL_H
-#define GIL_PIXEL_H
-
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
-/// \brief pixel class and related utilities
-/// \author Lubomir Bourdev and Hailin Jin \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated on September 28, 2006
-///
-////////////////////////////////////////////////////////////////////////////////////////
-
-#include <functional>
 #include <boost/core/ignore_unused.hpp>
-#include <boost/utility/enable_if.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/front.hpp>
 #include <boost/type_traits.hpp>
-#include "color_base.hpp"
-#include "gil_concept.hpp"
-#include "channel.hpp"
-#include "metafunctions.hpp"
-#include "utilities.hpp"
-#include "color_base_algorithm.hpp"
+#include <boost/utility/enable_if.hpp>
+
+#include <functional>
 
 namespace boost { namespace gil {
 
@@ -206,10 +195,11 @@ struct channel_type<pixel<ChannelValue,Layout> > {
     typedef ChannelValue type;
 }; 
 
-} }  // namespace boost::gil
+}}  // namespace boost::gil
 
 namespace boost {
     template <typename ChannelValue, typename Layout> 
     struct has_trivial_constructor<gil::pixel<ChannelValue,Layout> > : public has_trivial_constructor<ChannelValue> {};
 }
+
 #endif

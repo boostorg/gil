@@ -1,28 +1,19 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-/*************************************************************************************************/
-
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #ifndef BOOST_GIL_IO_DYNAMIC_IO_NEW_HPP
 #define BOOST_GIL_IO_DYNAMIC_IO_NEW_HPP
 
-/// \file
-/// \brief  Generic io functions for dealing with dynamic images
-//
-/// \author Hailin Jin and Lubomir Bourdev \n
-///         Adobe Systems Incorporated
-/// \date   2005-2007 \n Last updated May 30, 2006
+#include <boost/gil/extension/dynamic_image/dynamic_image_all.hpp>
+
+#include <boost/gil/io/error.hpp>
 
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/size.hpp>
-#include <boost/gil/io/error.hpp>
-#include <boost/gil/extension/dynamic_image/dynamic_image_all.hpp>
 
 namespace boost { namespace gil {
 
