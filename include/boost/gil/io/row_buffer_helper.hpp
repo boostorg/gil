@@ -8,9 +8,18 @@
 #ifndef BOOST_GIL_IO_ROW_BUFFER_HELPER_HPP
 #define BOOST_GIL_IO_ROW_BUFFER_HELPER_HPP
 
+// TODO: Shall we move toolbox to core?
 #include <boost/gil/extension/toolbox/metafunctions/is_bit_aligned.hpp>
+#include <boost/gil/extension/toolbox/metafunctions/is_homogeneous.hpp>
+#include <boost/gil/extension/toolbox/metafunctions/pixel_bit_size.hpp>
 
 #include <boost/gil/io/typedefs.hpp>
+
+#include <boost/mpl/and.hpp>
+#include <boost/utility/enable_if.hpp>
+
+#include <cstddef>
+#include <vector>
 
 namespace boost { namespace gil { namespace detail {
 
@@ -98,13 +107,19 @@ private:
     buffer_t _row_buffer;
 };
 
-template<typename Pixel >
-struct row_buffer_helper< Pixel
-                        , typename boost::enable_if< typename mpl::and_< typename is_bit_aligned< Pixel >::type
-                                                                , typename is_homogeneous< Pixel >::type
-                                                                >::type
-                                            >
-                        >
+template<typename Pixel>
+struct row_buffer_helper
+<
+    Pixel,
+    typename boost::enable_if
+    <
+        typename mpl::and_
+        <
+            typename is_bit_aligned<Pixel>::type,
+            typename is_homogeneous<Pixel>::type
+        >::type
+    >
+>
 {
     typedef byte_t element_t;
     typedef std::vector< element_t > buffer_t;

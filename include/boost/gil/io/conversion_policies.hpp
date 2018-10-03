@@ -9,6 +9,7 @@
 #define BOOST_GIL_IO_CONVERSION_POLICIES_HPP
 
 #include <boost/gil/image_view_factory.hpp>
+#include <boost/gil/io/error.hpp>
 
 #include <algorithm>
 #include <iterator>

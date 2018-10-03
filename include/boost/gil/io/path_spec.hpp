@@ -13,7 +13,7 @@
 #include <boost/filesystem/path.hpp>
 #endif // BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
 
-#include <boost/mpl/bool_fwd.hpp>
+#include <boost/mpl/bool.hpp> // for complete types of true_ and false_
 
 #include <cstdlib>
 #include <string>

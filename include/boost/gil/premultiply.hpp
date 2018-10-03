@@ -10,6 +10,7 @@
 
 #include <boost/gil/rgba.hpp>
 
+#include <boost/mpl/for_each.hpp>
 #include <boost/mpl/remove.hpp>
 
 namespace boost { namespace gil {
@@ -17,48 +18,48 @@ namespace boost { namespace gil {
 template <typename SrcP, typename DstP>
 struct channel_premultiply
 {
-	channel_premultiply(SrcP const & src, DstP & dst)
-		: src_(src), dst_(dst)
-	{}
-	
-	template <typename Channel>
-	void operator()(Channel c) const
-	{
-		// @todo: need to do a “channel_convert” too, in case the channel types aren't the same?
-		get_color(dst_, Channel()) = channel_multiply(get_color(src_,Channel()), alpha_or_max(src_));
-	}
-	SrcP const & src_;
-	DstP & dst_;
+    channel_premultiply(SrcP const & src, DstP & dst)
+        : src_(src), dst_(dst)
+    {}
+
+    template <typename Channel>
+    void operator()(Channel c) const
+    {
+        // @todo: need to do a “channel_convert” too, in case the channel types aren't the same?
+        get_color(dst_, Channel()) = channel_multiply(get_color(src_,Channel()), alpha_or_max(src_));
+    }
+    SrcP const & src_;
+    DstP & dst_;
 };
 
 namespace detail
 {
-	template <typename SrcP, typename DstP>
-	void assign_alpha_if(mpl::true_, SrcP const &src, DstP &dst)
-	{
-	    get_color(dst,alpha_t()) = alpha_or_max(src);
-	};
+    template <typename SrcP, typename DstP>
+    void assign_alpha_if(mpl::true_, SrcP const &src, DstP &dst)
+    {
+        get_color(dst,alpha_t()) = alpha_or_max(src);
+    }
 
-	template <typename SrcP, typename DstP>
-	void assign_alpha_if(mpl::false_, SrcP const &src, DstP &dst)
-	{
-	  // nothing to do
-	};
+    template <typename SrcP, typename DstP>
+    void assign_alpha_if(mpl::false_, SrcP const &src, DstP &dst)
+    {
+      // nothing to do
+    }
 }
 
 struct premultiply
 {
-	template <typename SrcP, typename DstP>
-	void operator()(const SrcP& src, DstP& dst) const
-	{
-		typedef typename color_space_type<SrcP>::type src_colour_space_t;
-		typedef typename color_space_type<DstP>::type dst_colour_space_t;
-		typedef typename mpl::remove <src_colour_space_t, alpha_t>::type src_colour_channels;
+    template <typename SrcP, typename DstP>
+    void operator()(const SrcP& src, DstP& dst) const
+    {
+        typedef typename color_space_type<SrcP>::type src_colour_space_t;
+        typedef typename color_space_type<DstP>::type dst_colour_space_t;
+        typedef typename mpl::remove <src_colour_space_t, alpha_t>::type src_colour_channels;
 
-		typedef mpl::bool_<mpl::contains<dst_colour_space_t, alpha_t>::value> has_alpha_t;
-		mpl::for_each<src_colour_channels>(channel_premultiply<SrcP, DstP>(src, dst));
-		detail::assign_alpha_if(has_alpha_t(), src, dst);
-	}
+        typedef mpl::bool_<mpl::contains<dst_colour_space_t, alpha_t>::value> has_alpha_t;
+        mpl::for_each<src_colour_channels>(channel_premultiply<SrcP, DstP>(src, dst));
+        detail::assign_alpha_if(has_alpha_t(), src, dst);
+    }
 };
 
 template <typename SrcConstRefP,  // const reference to the source pixel
