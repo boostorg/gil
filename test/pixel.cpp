@@ -27,10 +27,17 @@ void error_if(bool condition);
 struct increment {
     template <typename Incrementable> void operator()(Incrementable& x) const { ++x; }
 };
-struct prev {
+
+struct prev
+{
     template <typename Subtractable>
-    typename channel_traits<Subtractable>::value_type operator()(const Subtractable& x) const { return x-1; }
+    auto operator()(const Subtractable& x) const -> typename channel_traits<Subtractable>::value_type
+    {
+        using return_type = typename channel_traits<Subtractable>::value_type;
+        return static_cast<return_type>(x - 1);
+    }
 };
+
 struct set_to_one{ int operator()() const { return 1; } };
 
 // Construct with two pixel types. They must be compatible and the second must be mutable

@@ -613,7 +613,7 @@ struct ColorBaseConcept {
         typedef typename ColorBase::layout_t::channel_mapping_t channel_mapping_t;
         // TODO: channel_mapping_t must be an MPL RandomAccessSequence
 
-        static const std::size_t num_elements = size<ColorBase>::value;
+        static const int num_elements = size<ColorBase>::value;
 
         typedef typename kth_element_type<ColorBase,num_elements-1>::type TN;
         typedef typename kth_element_const_reference_type<ColorBase,num_elements-1>::type CR;
@@ -693,7 +693,7 @@ struct HomogeneousColorBaseConcept {
     void constraints() {
         gil_function_requires< ColorBaseConcept<ColorBase> >();
 
-        static const std::size_t num_elements = size<ColorBase>::value;
+        static const int num_elements = size<ColorBase>::value;
 
         typedef typename kth_element_type<ColorBase,0>::type T0;
         typedef typename kth_element_type<ColorBase,num_elements-1>::type TN;
