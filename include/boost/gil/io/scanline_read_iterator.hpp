@@ -9,10 +9,13 @@
 #define BOOST_GIL_IO_SCANLINE_READ_ITERATOR_HPP
 
 #include <boost/gil/io/error.hpp>
+#include <boost/gil/io/typedefs.hpp>
 
 #include <boost/iterator/iterator_facade.hpp>
 
+#include <iterator>
 #include <memory>
+#include <vector>
 
 namespace boost { namespace gil {
 

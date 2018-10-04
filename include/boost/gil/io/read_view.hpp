@@ -9,7 +9,9 @@
 #define BOOST_GIL_IO_READ_VIEW_HPP
 
 #include <boost/gil/io/base.hpp>
+#include <boost/gil/io/conversion_policies.hpp>
 #include <boost/gil/io/device.hpp>
+#include <boost/gil/io/get_reader.hpp>
 #include <boost/gil/io/path_spec.hpp>
 
 #include <boost/type_traits/is_base_and_derived.hpp>

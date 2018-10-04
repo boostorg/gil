@@ -10,6 +10,7 @@
 
 #include <boost/gil/io/base.hpp>
 #include <boost/gil/io/device.hpp>
+#include <boost/gil/io/get_reader.hpp>
 #include <boost/gil/io/path_spec.hpp>
 
 #include <boost/mpl/and.hpp>
