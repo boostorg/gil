@@ -20,7 +20,7 @@ matrix:
     - env: BOGUS_JOB=true
   include:
     - os: linux
-      env: COMPILER=g++-5 VARIANT=debug TOOLSET=gcc CXXSTD=c++11
+      env: COMPILER=g++-5 VARIANT=debug TOOLSET=gcc CXXSTD=c++11 TEST_HEADERS=1
       addons:
         apt:
           packages:

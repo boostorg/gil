@@ -20,6 +20,7 @@ environment:
     - TOOLSET: msvc-14.1
       ARCH: x86_64
       VARIANT: debug
+      TEST_HEADERS: 1
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     - TOOLSET: msvc-14.1
       ARCH: x86_64
