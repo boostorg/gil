@@ -432,7 +432,7 @@
 <div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> ColorBase::layout_t::channel_mapping_t channel_mapping_t;</div>
 <div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;        <span class="comment">// TODO: channel_mapping_t must be an MPL RandomAccessSequence</span></div>
 <div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160;</div>
-<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> std::size_t num_elements = <a class="code" href="structboost_1_1gil_1_1size.html">size&lt;ColorBase&gt;::value</a>;</div>
+<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> num_elements = <a class="code" href="structboost_1_1gil_1_1size.html">size&lt;ColorBase&gt;::value</a>;</div>
 <div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;</div>
 <div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> kth_element_type&lt;ColorBase,num_elements-1&gt;::type TN;</div>
 <div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> kth_element_const_reference_type&lt;ColorBase,num_elements-1&gt;::type CR;</div>
@@ -480,7 +480,7 @@
 <div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;    <span class="keywordtype">void</span> constraints() {</div>
 <div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;        gil_function_requires&lt; ColorBaseConcept&lt;ColorBase&gt; &gt;();</div>
 <div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;</div>
-<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> std::size_t num_elements = <a class="code" href="structboost_1_1gil_1_1size.html">size&lt;ColorBase&gt;::value</a>;</div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> num_elements = <a class="code" href="structboost_1_1gil_1_1size.html">size&lt;ColorBase&gt;::value</a>;</div>
 <div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;</div>
 <div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> kth_element_type&lt;ColorBase,0&gt;::type T0;</div>
 <div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> kth_element_type&lt;ColorBase,num_elements-1&gt;::type TN;</div>
@@ -1518,7 +1518,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Fri Sep 28 2018 20:56:26 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Fri Oct 5 2018 01:42:08 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
