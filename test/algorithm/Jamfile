@@ -15,3 +15,4 @@ project
     ;
 
 run for_each_pixel.cpp ;
+run std_fill.cpp ;
