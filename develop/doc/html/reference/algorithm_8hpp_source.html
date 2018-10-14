@@ -325,7 +325,7 @@
 <div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;        std::ptrdiff_t n=last-first;</div>
 <div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;        <span class="keywordflow">while</span> (n&gt;0) {</div>
 <div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;            std::ptrdiff_t numToDo=std::min&lt;const std::ptrdiff_t&gt;(n,(std::ptrdiff_t)(first.width()-first.x_pos()));</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;            fill_n(first.x(), numToDo, val);</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;            std::fill_n(first.x(), numToDo, val);</div>
 <div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;            first+=numToDo;</div>
 <div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;            n-=numToDo;</div>
 <div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;        }</div>
@@ -878,7 +878,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Fri Oct 5 2018 22:40:32 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sun Oct 14 2018 04:44:23 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
