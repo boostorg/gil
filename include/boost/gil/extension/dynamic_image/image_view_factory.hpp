@@ -11,6 +11,7 @@
 #include <boost/gil/extension/dynamic_image/any_image_view.hpp>
 
 #include <boost/gil/image_view_factory.hpp>
+#include <boost/gil/point.hpp>
 
 namespace boost { namespace gil {
 

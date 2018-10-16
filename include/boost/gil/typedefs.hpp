@@ -12,6 +12,7 @@
 #include <boost/gil/cmyk.hpp>
 #include <boost/gil/device_n.hpp>
 #include <boost/gil/gray.hpp>
+#include <boost/gil/point.hpp>
 #include <boost/gil/rgb.hpp>
 #include <boost/gil/rgba.hpp>
 
