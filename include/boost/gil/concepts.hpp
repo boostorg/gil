@@ -39,9 +39,9 @@ template <typename T> struct channel_traits;
 template <typename P> struct is_pixel;
 template <typename dstT, typename srcT>
 typename channel_traits<dstT>::value_type channel_convert(const srcT& val);
-template <typename T> class point2;
-template <std::size_t K, typename T> const T& axis_value(const point2<T>& p);
-template <std::size_t K, typename T>       T& axis_value(      point2<T>& p);
+template <typename T> class point;
+template <std::size_t K, typename T> const T& axis_value(point<T> const& p);
+template <std::size_t K, typename T>       T& axis_value(point<T>& p);
 template <typename ColorBase, int K> struct kth_element_type;
 template <typename ColorBase, int K> struct kth_element_reference_type;
 template <typename ColorBase, int K> struct kth_element_const_reference_type;

@@ -26,7 +26,7 @@
     template <typename, typename> struct planar_pixel_reference;                         \
     template <typename, typename> struct planar_pixel_iterator;                          \
     template <typename> class memory_based_step_iterator;                                \
-    template <typename> class point2;                                                    \
+    template <typename> class point;                                                    \
     template <typename> class memory_based_2d_locator;                                   \
     template <typename> class image_view;                                                \
     template <typename, bool, typename> class image;                                     \

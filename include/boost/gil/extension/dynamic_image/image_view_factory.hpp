@@ -43,18 +43,40 @@ template <typename Result> struct rotated180_view_fn {
     typedef Result result_type;
     template <typename View> result_type operator()(const View& src) const { return result_type(rotated180_view(src)); }
 };
-template <typename Result> struct subimage_view_fn {
+
+template <typename Result>
+struct subimage_view_fn
+{
     typedef Result result_type;
-    subimage_view_fn(const point2<std::ptrdiff_t>& topleft, const point2<std::ptrdiff_t>& dimensions) : _topleft(topleft), _size2(dimensions) {}
-    point2<std::ptrdiff_t> _topleft,_size2;
-    template <typename View> result_type operator()(const View& src) const { return result_type(subimage_view(src,_topleft,_size2)); }
+    subimage_view_fn(point_t const& topleft, point_t const& dimensions)
+        : _topleft(topleft), _size2(dimensions)
+    {}
+
+    template <typename View>
+    result_type operator()(const View& src) const
+    {
+        return result_type(subimage_view(src,_topleft,_size2));
+    }
+
+    point_t _topleft;
+    point_t _size2;
 };
-template <typename Result> struct subsampled_view_fn {
+
+template <typename Result>
+struct subsampled_view_fn
+{
     typedef Result result_type;
-    subsampled_view_fn(const point2<std::ptrdiff_t>& step) : _step(step) {}
-    point2<std::ptrdiff_t> _step;
-    template <typename View> result_type operator()(const View& src) const { return result_type(subsampled_view(src,_step)); }
+    subsampled_view_fn(point_t const& step) : _step(step) {}
+
+    template <typename View>
+    result_type operator()(const View& src) const
+    {
+        return result_type(subsampled_view(src,_step));
+    }
+
+    point_t _step;
 };
+
 template <typename Result> struct nth_channel_view_fn {
     typedef Result result_type;
     nth_channel_view_fn(int n) : _n(n) {}
@@ -104,33 +126,57 @@ typename dynamic_xy_step_transposed_type<any_image_view<ViewTypes> >::type rotat
 }
 
 /// \ingroup ImageViewTransformations180
-template <typename ViewTypes> inline // Models MPL Random Access Container of models of ImageViewConcept
-typename dynamic_xy_step_type<any_image_view<ViewTypes> >::type rotated180_view(const any_image_view<ViewTypes>& src) {
-    return apply_operation(src,detail::rotated180_view_fn<typename dynamic_xy_step_type<any_image_view<ViewTypes> >::type>());
+/// Models MPL Random Access Container of models of ImageViewConcept
+template <typename ViewTypes>
+inline auto rotated180_view(const any_image_view<ViewTypes>& src)
+    -> typename dynamic_xy_step_type<any_image_view<ViewTypes>>::type
+{
+    using step_type = typename dynamic_xy_step_type<any_image_view<ViewTypes>>::type;
+    return apply_operation(src, detail::rotated180_view_fn<step_type>());
 }
 
 /// \ingroup ImageViewTransformationsSubimage
-template <typename ViewTypes> inline // Models MPL Random Access Container of models of ImageViewConcept
-any_image_view<ViewTypes> subimage_view(const any_image_view<ViewTypes>& src, const point2<std::ptrdiff_t>& topleft, const point2<std::ptrdiff_t>& dimensions) {
-    return apply_operation(src,detail::subimage_view_fn<any_image_view<ViewTypes> >(topleft,dimensions));
+///  // Models MPL Random Access Container of models of ImageViewConcept
+template <typename ViewTypes>
+inline auto subimage_view(any_image_view<ViewTypes> const& src,
+                          point_t const& topleft, point_t const& dimensions)
+    -> any_image_view<ViewTypes>
+{
+    using subimage_view_fn = detail::subimage_view_fn<any_image_view<ViewTypes>>;
+    return apply_operation(src, subimage_view_fn(topleft, dimensions));
 }
 
 /// \ingroup ImageViewTransformationsSubimage
-template <typename ViewTypes> inline // Models MPL Random Access Container of models of ImageViewConcept
-any_image_view<ViewTypes> subimage_view(const any_image_view<ViewTypes>& src, int xMin, int yMin, int width, int height) {
-    return apply_operation(src,detail::subimage_view_fn<any_image_view<ViewTypes> >(point2<std::ptrdiff_t>(xMin,yMin),point2<std::ptrdiff_t>(width,height)));
+/// Models MPL Random Access Container of models of ImageViewConcept
+template <typename ViewTypes>
+inline auto subimage_view(any_image_view<ViewTypes> const& src,
+                          int xMin, int yMin, int width, int height)
+    -> any_image_view<ViewTypes>
+{
+    using subimage_view_fn = detail::subimage_view_fn<any_image_view<ViewTypes>>;
+    return apply_operation(src, subimage_view_fn(point_t(xMin, yMin),point_t(width, height)));
 }
 
 /// \ingroup ImageViewTransformationsSubsampled
-template <typename ViewTypes> inline // Models MPL Random Access Container of models of ImageViewConcept
-typename dynamic_xy_step_type<any_image_view<ViewTypes> >::type subsampled_view(const any_image_view<ViewTypes>& src, const point2<std::ptrdiff_t>& step) {
-    return apply_operation(src,detail::subsampled_view_fn<typename dynamic_xy_step_type<any_image_view<ViewTypes> >::type>(step));
+/// Models MPL Random Access Container of models of ImageViewConcept
+template <typename ViewTypes>
+inline auto subsampled_view(any_image_view<ViewTypes> const& src, point_t const& step)
+    -> typename dynamic_xy_step_type<any_image_view<ViewTypes>>::type
+{
+    using step_type = typename dynamic_xy_step_type<any_image_view<ViewTypes>>::type;
+    using subsampled_view = detail::subsampled_view_fn<step_type>;
+    return apply_operation(src, subsampled_view(step));
 }
 
 /// \ingroup ImageViewTransformationsSubsampled
-template <typename ViewTypes> inline // Models MPL Random Access Container of models of ImageViewConcept
-typename dynamic_xy_step_type<any_image_view<ViewTypes> >::type subsampled_view(const any_image_view<ViewTypes>& src, int xStep, int yStep) {
-    return apply_operation(src,detail::subsampled_view_fn<typename dynamic_xy_step_type<any_image_view<ViewTypes> >::type>(point2<std::ptrdiff_t>(xStep,yStep)));
+/// Models MPL Random Access Container of models of ImageViewConcept
+template <typename ViewTypes>
+inline auto subsampled_view(any_image_view<ViewTypes> const& src, int xStep, int yStep)
+    -> typename dynamic_xy_step_type<any_image_view<ViewTypes>>::type
+{
+    using step_type = typename dynamic_xy_step_type<any_image_view<ViewTypes>>::type;
+    using subsampled_view_fn = detail::subsampled_view_fn<step_type>;
+    return apply_operation(src, subsampled_view_fn(point_t(xStep, yStep)));
 }
 
 namespace detail {

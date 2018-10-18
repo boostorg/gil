@@ -15,8 +15,8 @@
 #include <boost/config.hpp>
 
 #if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
-#pragma warning(push) 
-#pragma warning(disable:4512) //assignment operator could not be generated 
+#pragma warning(push)
+#pragma warning(disable:4512) //assignment operator could not be generated
 #endif
 
 namespace boost { namespace gil {
@@ -28,13 +28,15 @@ namespace detail {
     template <typename T> struct get_const_view_t { typedef typename T::const_view_t type; };
     template <typename Images> struct images_get_const_views_t : public mpl::transform<Images, get_const_view_t<mpl::_1> > {};
 
-    struct recreate_image_fnobj {
+    struct recreate_image_fnobj
+    {
         typedef void result_type;
-        const point2<std::ptrdiff_t>& _dimensions;
+        point<std::ptrdiff_t> const& _dimensions;
         unsigned _alignment;
 
-        recreate_image_fnobj(const point2<std::ptrdiff_t>& dims, unsigned alignment) : _dimensions(dims), _alignment(alignment) {}
-        template <typename Image> result_type operator()(Image& img) const { img.recreate(_dimensions,_alignment); }
+        recreate_image_fnobj(point<std::ptrdiff_t> const& dims, unsigned alignment) : _dimensions(dims), _alignment(alignment) {}
+        template <typename Image>
+        result_type operator()(Image& img) const { img.recreate(_dimensions,_alignment); }
     };
 
     template <typename AnyView>  // Models AnyViewConcept
@@ -53,7 +55,7 @@ namespace detail {
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \ingroup ImageModel
 /// \brief Represents a run-time specified image. Note it does NOT model ImageConcept
-///  
+///
 /// Represents an image whose type (color space, layout, planar/interleaved organization, etc) can be specified at run time.
 /// It is the runtime equivalent of \p image.
 /// Some of the requirements of ImageConcept, such as the \p value_type typedef cannot be fulfilled, since the language does not allow runtime type specification.
@@ -68,7 +70,7 @@ public:
     typedef any_image_view<typename detail::images_get_views_t<ImageTypes>::type>       view_t;
     typedef std::ptrdiff_t x_coord_t;
     typedef std::ptrdiff_t y_coord_t;
-    typedef point2<std::ptrdiff_t> point_t;
+    typedef point<std::ptrdiff_t> point_t;
 
     any_image()                                                          : parent_t() {}
     template <typename T> explicit any_image(const T& obj)               : parent_t(obj) {}
@@ -80,8 +82,15 @@ public:
     any_image&                       operator=(const any_image& v)            { parent_t::operator=((const parent_t&)v); return *this;}
     template <typename Types> any_image& operator=(const any_image<Types>& v) { parent_t::operator=((const variant<Types>&)v); return *this;}
 
-    void recreate(const point_t& dims, unsigned alignment=1)               { apply_operation(*this,detail::recreate_image_fnobj(dims,alignment)); }
-    void recreate(x_coord_t width, y_coord_t height, unsigned alignment=1) { recreate(point2<std::ptrdiff_t>(width,height),alignment); }
+    void recreate(const point_t& dims, unsigned alignment=1)
+    {
+        apply_operation(*this,detail::recreate_image_fnobj(dims,alignment));
+    }
+
+    void recreate(x_coord_t width, y_coord_t height, unsigned alignment=1)
+    {
+        recreate({width, height}, alignment);
+    }
 
     std::size_t num_channels()  const { return apply_operation(*this, detail::any_type_get_num_channels()); }
     point_t     dimensions()    const { return apply_operation(*this, detail::any_type_get_dimensions()); }
@@ -97,21 +106,21 @@ public:
 
 /// \brief Returns the non-constant-pixel view of any image. The returned view is any view.
 template <typename Types>  BOOST_FORCEINLINE // Models ImageVectorConcept
-typename any_image<Types>::view_t view(any_image<Types>& anyImage) { 
+typename any_image<Types>::view_t view(any_image<Types>& anyImage) {
     return apply_operation(anyImage, detail::any_image_get_view<typename any_image<Types>::view_t>());
 }
 
 /// \brief Returns the constant-pixel view of any image. The returned view is any view.
 template <typename Types> BOOST_FORCEINLINE // Models ImageVectorConcept
-typename any_image<Types>::const_view_t const_view(const any_image<Types>& anyImage) { 
+typename any_image<Types>::const_view_t const_view(const any_image<Types>& anyImage) {
     return apply_operation(anyImage, detail::any_image_get_const_view<typename any_image<Types>::const_view_t>());
 }
 ///@}
 
 }}  // namespace boost::gil
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400) 
-#pragma warning(pop) 
-#endif 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(pop)
+#endif
 
 #endif

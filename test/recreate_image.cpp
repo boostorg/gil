@@ -86,8 +86,8 @@ BOOST_AUTO_TEST_SUITE(GIL_Tests)
 
 BOOST_AUTO_TEST_CASE(recreate_image_test)
 {
-    auto tasib_1 = total_allocated_size_in_bytes< rgb8_view_t, false >( point2< rgb8_view_t::coord_t >( 640, 480 ) );
-    auto tasib_2 = total_allocated_size_in_bytes< rgb8_view_t, false >( point2< rgb8_view_t::coord_t >( 320, 200 ) );
+    auto tasib_1 = total_allocated_size_in_bytes<rgb8_view_t, false>({640, 480});
+    auto tasib_2 = total_allocated_size_in_bytes<rgb8_view_t, false>({320, 200});
 
     rgb8_image_t img( 640, 480 );
     img.recreate( 320, 200 );

@@ -27,8 +27,7 @@ BOOST_AUTO_TEST_SUITE( gil_io_tiff_tests )
 
 BOOST_AUTO_TEST_CASE( old_read_dimensions_test )
 {
-    point2< std::ptrdiff_t > dim = tiff_read_dimensions( tiff_filename );
-
+    boost::gil::point_t dim = tiff_read_dimensions(tiff_filename);
     BOOST_CHECK_EQUAL( dim.x, 1000 );
     BOOST_CHECK_EQUAL( dim.y,  600 );
 }

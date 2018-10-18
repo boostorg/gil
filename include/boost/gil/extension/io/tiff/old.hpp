@@ -15,21 +15,12 @@ namespace boost { namespace gil {
 /// \ingroup TIFF_IO
 /// \brief Returns the width and height of the TIFF file at the specified location.
 /// Throws std::ios_base::failure if the location does not correspond to a valid TIFF file
-template< typename String >
-inline
-point2< std::ptrdiff_t > tiff_read_dimensions( const String& filename )
+template<typename String>
+inline point_t tiff_read_dimensions(String const& filename)
 {
-    typedef typename get_reader_backend< String
-                                       , tiff_tag
-                                       >::type backend_t;
-
-    backend_t backend = read_image_info( filename
-                                       , tiff_tag()
-                                       );
-
-    return point2< std::ptrdiff_t >( backend._info._width
-                                   , backend._info._height
-                                   );
+    using backend_t = typename get_reader_backend<String, tiff_tag>::type;
+    backend_t backend = read_image_info(filename, tiff_tag());
+    return { backend._info._width, backend._info._height };
 }
 
 /// \ingroup TIFF_IO

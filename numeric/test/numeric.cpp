@@ -22,14 +22,13 @@ using namespace gil;
 template < class F, class I >
 struct TestMapFn
 {
-    typedef point2<F> point_t;
-    typedef point_t result_type;
-    result_type operator()( point2<I> const& src ) const
+    using point_t = point<F>;
+    using result_type = point_t;
+    result_type operator()(point<I> const& src) const
     {
         F x = static_cast<F>( src.x ) - 0.5;
         F y = static_cast<F>( src.y ) - 0.5;
-
-        return point_t( x, y );
+        return { x, y };
     }
 };
 
@@ -44,9 +43,8 @@ struct mapping_traits< TestMapFn<F,I> > {
     typedef typename TestMapFn<F,I>::result_type result_type;
 };
 
-template < class F, class I >
-inline
-point2<F> transform( TestMapFn<F,I> const& mf, point2<I> const& src )
+template <class F, class I>
+inline point<F> transform(TestMapFn<F, I> const& mf, point<I> const& src)
 {
     return mf(src);
 }

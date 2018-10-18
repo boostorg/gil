@@ -19,7 +19,7 @@ using namespace std;
 
 void test_pixel_iterator()
 {
-    boost::function_requires<Point2DConcept<point2<int> > >();
+    boost::function_requires<Point2DConcept<point<int>>>();
 
     boost::function_requires<MutablePixelIteratorConcept<bgr8_ptr_t> >();
     boost::function_requires<MutablePixelIteratorConcept<cmyk8_planar_ptr_t> >();
@@ -249,7 +249,7 @@ void test_pixel_iterator() {
     xy_locator.x()++;
 //  memory_based_step_iterator<rgb8_pixel_t>& yit=xy_locator.y();
     xy_locator.y()++;
-    xy_locator+=point2<std::ptrdiff_t>(3,4);
+    xy_locator+=point<std::ptrdiff_t>(3,4);
     // *xy_locator=(xy_locator(-1,0)+xy_locator(0,1))/2;
     rgb8_pixel_t& rf=*xy_locator; ignore_unused_variable_warning(rf);
 

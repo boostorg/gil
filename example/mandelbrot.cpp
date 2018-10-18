@@ -17,8 +17,7 @@ using namespace boost::gil;
 template <typename P>   // Models PixelValueConcept
 struct mandelbrot_fn
 {
-    typedef point2<std::ptrdiff_t>    point_t;
-
+    using point_t = boost::gil::point_t;
     typedef mandelbrot_fn        const_t;
     typedef P                    value_type;
     typedef value_type           reference;
@@ -37,7 +36,7 @@ struct mandelbrot_fn
     result_type operator()(const point_t& p) const {
         // normalize the coords to (-2..1, -1.5..1.5)
         // (actually make y -1.0..2 so it is asymmetric, so we can verify some view factory methods)
-        double t=get_num_iter(point2<double>(p.x/(double)_img_size.x*3-2, p.y/(double)_img_size.y*3-1.0f));//1.5f));
+        double t=get_num_iter(point<double>(p.x/(double)_img_size.x*3-2, p.y/(double)_img_size.y*3-1.0f));//1.5f));
         t=pow(t,0.2);
 
         value_type ret;
@@ -47,10 +46,10 @@ struct mandelbrot_fn
     }
 
 private:
-    double get_num_iter(const point2<double>& p) const {
-        point2<double> Z(0,0);
+    double get_num_iter(const point<double>& p) const {
+        point<double> Z(0,0);
         for (int i=0; i<MAX_ITER; ++i) {
-            Z = point2<double>(Z.x*Z.x - Z.y*Z.y + p.x, 2*Z.x*Z.y + p.y);
+            Z = point<double>(Z.x*Z.x - Z.y*Z.y + p.x, 2*Z.x*Z.y + p.y);
             if (Z.x*Z.x + Z.y*Z.y > 4)
                 return i/(double)MAX_ITER;
         }

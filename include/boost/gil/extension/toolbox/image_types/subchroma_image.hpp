@@ -9,6 +9,7 @@
 #define BOOST_GIL_EXTENSION_TOOLBOX_IMAGE_TYPES_SUBCHROMA_IMAGE_HPP
 
 #include <boost/gil/image.hpp>
+#include <boost/gil/point.hpp>
 
 #include <boost/mpl/divides.hpp>
 #include <boost/mpl/equal_to.hpp>
@@ -21,8 +22,6 @@
 #include <memory>
 
 namespace boost{ namespace gil {
-
-typedef boost::gil::point2< std::ptrdiff_t > point_t;
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \class subchroma_image_deref_fn
@@ -77,13 +76,13 @@ struct subchroma_image_deref_fn
                          );
     }
 
-    /// 
+    ///
     const plane_locator_t& y_locator() const { return _y_locator; }
     const plane_locator_t& v_locator() const { return _v_locator; }
     const plane_locator_t& u_locator() const { return _u_locator; }
 
 private:
-    
+
     plane_locator_t _y_locator;
     plane_locator_t _v_locator;
     plane_locator_t _u_locator;
@@ -93,7 +92,7 @@ private:
 ////////////////////////////////////////////////////////////////////////////////////////
 /// \class subchroma_image_locator_type
 /// \ingroup PixelLocatorModel PixelBasedModel
-/// \brief 
+/// \brief
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 template< typename Locator
@@ -114,19 +113,19 @@ struct subchroma_image_locator
 /////////////////////////////
 
 template < typename Locator, typename Factors >
-struct channel_type< subchroma_image_locator< Locator, Factors > > 
+struct channel_type< subchroma_image_locator< Locator, Factors > >
     : public channel_type< typename subchroma_image_locator< Locator, Factors >::type > {};
 
 template < typename Locator, typename Factors >
-struct color_space_type< subchroma_image_locator< Locator, Factors > > 
+struct color_space_type< subchroma_image_locator< Locator, Factors > >
     : public color_space_type< typename subchroma_image_locator< Locator, Factors >::type > {};
 
 template < typename Locator, typename Factors >
-struct channel_mapping_type< subchroma_image_locator< Locator, Factors > > 
+struct channel_mapping_type< subchroma_image_locator< Locator, Factors > >
     : public channel_mapping_type< typename subchroma_image_locator< Locator, Factors >::type > {};
 
 template < typename Locator, typename Factors >
-struct is_planar< subchroma_image_locator< Locator, Factors > > 
+struct is_planar< subchroma_image_locator< Locator, Factors > >
     : public is_planar< typename subchroma_image_locator< Locator, Factors >::type > {};
 
 /////////////////////////////
@@ -168,7 +167,7 @@ struct transposed_type< subchroma_image_locator< Locator, Factors > >
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 template< typename Locator
-        , typename Factors = mpl::vector_c< int, 4, 4, 4 > 
+        , typename Factors = mpl::vector_c< int, 4, 4, 4 >
         >
 class subchroma_image_view : public image_view< Locator >
 {
@@ -199,7 +198,7 @@ public:
     , _v_dimensions( v_dimensions )
     , _u_dimensions( u_dimensions )
     {}
-    
+
     /// copy constructor
     template< typename Subchroma_View >
     subchroma_image_view( const Subchroma_View& v )
@@ -241,11 +240,11 @@ private:
 /////////////////////////////
 
 template < typename Locator, typename Factors >
-struct channel_type< subchroma_image_view< Locator, Factors > > 
-    : public channel_type< Locator > {}; 
+struct channel_type< subchroma_image_view< Locator, Factors > >
+    : public channel_type< Locator > {};
 
 template < typename Locator, typename Factors >
-struct color_space_type< subchroma_image_view< Locator, Factors > > 
+struct color_space_type< subchroma_image_view< Locator, Factors > >
     : public color_space_type< Locator > {};
 
 template < typename Locator, typename Factors >
@@ -253,7 +252,7 @@ struct channel_mapping_type< subchroma_image_view< Locator, Factors > >
      : public channel_mapping_type< Locator > {};
 
 template < typename Locator, typename Factors >
-struct is_planar< subchroma_image_view< Locator, Factors > > 
+struct is_planar< subchroma_image_view< Locator, Factors > >
     : public is_planar< Locator > {};
 
 /////////////////////////////
@@ -301,7 +300,7 @@ struct Scaling_Factors
                                             , mpl::equal_to< mpl::int_< a >, mpl::int_< 1 > >
                                             >
                                   >::type::value
-                       )); 
+                       ));
 
     BOOST_STATIC_ASSERT(( mpl::or_< mpl::equal_to< mpl::int_< b >, mpl::int_< 4 > >
                                   , mpl::or_< mpl::equal_to< mpl::int_< b >, mpl::int_< 2 > >
@@ -310,7 +309,7 @@ struct Scaling_Factors
                                                       >
                                             >
                                   >::type::value
-                       )); 
+                       ));
 
     BOOST_STATIC_CONSTANT( int, ss_X = ( mpl::divides< mpl::int_< J >
                                                      , mpl::int_< a >
@@ -337,7 +336,7 @@ struct Scaling_Factors
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 template< typename Pixel
-        , typename Factors   = mpl::vector_c< int, 4, 4, 4 > 
+        , typename Factors   = mpl::vector_c< int, 4, 4, 4 >
         , typename Allocator = std::allocator< unsigned char >
         >
 class subchroma_image : public Scaling_Factors< mpl::at_c< Factors, 0 >::type::value
@@ -347,7 +346,7 @@ class subchroma_image : public Scaling_Factors< mpl::at_c< Factors, 0 >::type::v
 {
 
 public:
-    
+
     typedef typename channel_type< Pixel >::type channel_t;
     typedef pixel< channel_t, gray_layout_t> pixel_t;
 
@@ -411,7 +410,7 @@ private:
                       , locator
                       );
     }
-    
+
 
 private:
 
@@ -508,7 +507,7 @@ typename subchroma_image< Pixel
     std::size_t u_channel_size = 1;
 
     unsigned char* u_base = y_base + ( y_width  * y_height * y_channel_size );
-    unsigned char* v_base = u_base + ( y_width  / scaling_factors_t::ss_X ) 
+    unsigned char* v_base = u_base + ( y_width  / scaling_factors_t::ss_X )
                                    * u_channel_size;
 
     typedef subchroma_image< Pixel, Factors >::plane_view_t plane_view_t;
@@ -541,7 +540,7 @@ typename subchroma_image< Pixel
                        , v_plane.xy_at( 0, 0 )
                        , u_plane.xy_at( 0, 0 )
                        );
-    
+
 
     typedef subchroma_image< Pixel
                            , Factors

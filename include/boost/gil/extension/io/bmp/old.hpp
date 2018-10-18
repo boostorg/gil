@@ -15,23 +15,13 @@ namespace boost { namespace gil {
 /// \ingroup BMP_IO
 /// \brief Returns the width and height of the BMP file at the specified location.
 /// Throws std::ios_base::failure if the location does not correspond to a valid BMP file
-template< typename String >
-inline
-point2< std::ptrdiff_t > bmp_read_dimensions( const String& filename )
+template<typename String>
+inline point_t bmp_read_dimensions(String const& filename)
 {
-    typedef typename get_reader_backend< String
-                                       , bmp_tag
-                                       >::type backend_t;
-
-    backend_t backend = read_image_info( filename
-                                       , bmp_tag()
-                                       );
-
-    return point2< std::ptrdiff_t >( backend._info._width
-                                   , backend._info._height
-                                   );
+    using backend_t = typename get_reader_backend<String, bmp_tag>::type;
+    backend_t backend = read_image_info(filename, bmp_tag());
+    return { backend._info._width, backend._info._height };
 }
-
 
 /// \ingroup BMP_IO
 /// \brief Loads the image specified by the given bmp image file name into the given view.

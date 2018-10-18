@@ -121,7 +121,7 @@ private:
         return _coords==it._coords && _p==it._p;
     }
 
-    point2<std::ptrdiff_t> _coords;
+    point_t _coords;
     std::ptrdiff_t _width;
     Loc2 _p;
 };
