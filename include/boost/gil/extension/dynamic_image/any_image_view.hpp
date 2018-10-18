@@ -12,6 +12,7 @@
 
 #include <boost/gil/image.hpp>
 #include <boost/gil/image_view.hpp>
+#include <boost/gil/point.hpp>
 
 namespace boost { namespace gil {
 

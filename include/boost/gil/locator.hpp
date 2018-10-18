@@ -9,6 +9,7 @@
 #define BOOST_GIL_LOCATOR_HPP
 
 #include <boost/gil/pixel_iterator.hpp>
+#include <boost/gil/point.hpp>
 
 #include <cassert>
 #include <cstddef>

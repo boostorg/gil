@@ -23,6 +23,7 @@
 #include <boost/gil/pixel_iterator_adaptor.hpp>
 #include <boost/gil/planar_pixel_reference.hpp>
 #include <boost/gil/planar_pixel_iterator.hpp>
+#include <boost/gil/point.hpp>
 #include <boost/gil/step_iterator.hpp>
 #include <boost/gil/typedefs.hpp>
 #include <boost/gil/virtual_locator.hpp>

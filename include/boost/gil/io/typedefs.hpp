@@ -13,6 +13,7 @@
 #endif // BOOST_GIL_IO_ENABLE_GRAY_ALPHA
 
 #include <boost/gil/image.hpp>
+#include <boost/gil/point.hpp>
 #include <boost/gil/utilities.hpp>
 
 #include <boost/type_traits/is_base_of.hpp>
