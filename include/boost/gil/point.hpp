@@ -47,12 +47,6 @@ public:
     point2() = default;
     point2(T px, T py) : x(px), y(py) {}
 
-    {
-        x = p.x;
-        y = p.y;
-        return *this;
-    }
-
     point2 operator<<(std::ptrdiff_t shift) const
     {
         return point2(x << shift, y << shift);
@@ -228,6 +222,6 @@ inline point2<std::ptrdiff_t> iceil(const point2<double>& p)
     return point2<std::ptrdiff_t>(iceil(p.x), iceil(p.y));
 }
 
-}}  // namespace boost::gil
+}} // namespace boost::gil
 
 #endif
