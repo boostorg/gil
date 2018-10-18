@@ -46,7 +46,6 @@ public:
 
     point2() = default;
     point2(T px, T py) : x(px), y(py) {}
-    point2(point2 const& p) : x(p.x), y(p.y) {}
 
     point2& operator=(point2 const& p)
     {
