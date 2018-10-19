@@ -18,7 +18,7 @@ option(GIL_BUILD_EXAMPLES "Build GIL examples" OFF) # FIXME: Switch to ON after 
 option(GIL_ENABLE_IO "Enable GIL IO in tests and examples (require libjpeg, libpng, libtiff)" ON)
 option(GIL_USE_BOOST_STAGE "Use Boost from current source tree and libraries from stage, unless BOOST_ROOT specified." ON)
 option(GIL_USE_CONAN "Use Conan to install dependencies" OFF)
-option(GIL_DISABLE_FINDBOOST_DOWNLOAD "Disable auto-download FindBoost.cmake for CMake <3.10" OFF)
+option(GIL_ENABLE_FINDBOOST_DOWNLOAD "Enable auto-download FindBoost.cmake for CMake" OFF)
 
 #-----------------------------------------------------------------------------
 # Dependency: Boost
@@ -26,12 +26,19 @@ option(GIL_DISABLE_FINDBOOST_DOWNLOAD "Disable auto-download FindBoost.cmake for
 # - look for default installation location
 # - look for location specified with BOOST_ROOT
 #-----------------------------------------------------------------------------
-if (CMAKE_VERSION VERSION_LESS 3.10 AND NOT GIL_DISABLE_FINDBOOST_DOWNLOAD)
+if (CMAKE_VERSION VERSION_LESS 3.12 AND NOT GIL_ENABLE_FINDBOOST_DOWNLOAD)
+  message(STATUS "You are using CMake older than 3.12")
+  message(STATUS "FindBoost.cmake has likely been updated to detect newer or even not yet released Boost")
+  message(STATUS "Run CMake with -DGIL_ENABLE_FINDBOOST_DOWNLOAD=ON to get latest version of FindBoost.cmake")
+  message(STATUS "WARNING:")
+  message(STATUS "   Newer FindBoost.cmake may fail to find your Boost for many reasons.")
+  message(STATUS "   For example, this may be due to unrecognised toolset eg. latest Visual Studio 2017.")
+  message(STATUS "   Try run CMake with -DBoost_COMPILER=\"-vc141\" or value for your toolset.")
+endif()
+
+if (GIL_ENABLE_FINDBOOST_DOWNLOAD)
   if (NOT EXISTS "${CMAKE_BINARY_DIR}/cmake/FindBoost.cmake")
-    message(STATUS "You are using CMake older than 3.10")
-    message(STATUS "FindBoost.cmake has likely been updated to detect newer or even not yet released Boost")
     message(STATUS "Downloading FindBoost.cmake from https://gitlab.kitware.com/cmake/ release branch")
-    message(STATUS "The auto-download can be disabled with GIL_DISABLE_FINDBOOST_DOWNLOAD=ON")
     file(DOWNLOAD
       "https://gitlab.kitware.com/cmake/cmake/raw/release/Modules/FindBoost.cmake"
       "${CMAKE_BINARY_DIR}/cmake/FindBoost.cmake")
@@ -52,6 +59,7 @@ if(GIL_BUILD_TESTS)
   list(APPEND BOOST_COMPONENTS unit_test_framework filesystem)
 endif()
 
+#set(Boost_DEBUG ON)
 set(Boost_DETAILED_FAILURE_MSG ON)
 if(MSVC)
   set(Boost_USE_STATIC_LIBS ON)
