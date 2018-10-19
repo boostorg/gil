@@ -23,7 +23,7 @@ template <typename P> std::ptrdiff_t memunit_step(const P*);
 template <typename P> P* memunit_advanced(const P* p, std::ptrdiff_t diff);
 template <typename P> P& memunit_advanced_ref(P* p, std::ptrdiff_t diff);
 template <typename Iterator, typename D> struct iterator_add_deref;
-template <typename T> class point2;
+template <typename T> class point;
 namespace detail {
     // helper class specialized for each axis of pixel_2d_locator
     template <std::size_t D, typename Loc>  class locator_axis;
@@ -112,7 +112,7 @@ public:
     typedef typename std::iterator_traits<x_iterator>::value_type       value_type;
     typedef typename std::iterator_traits<x_iterator>::reference        reference;    // result of dereferencing
     typedef typename std::iterator_traits<x_iterator>::difference_type  coord_t;      // 1D difference type (same for all dimensions)
-    typedef point2<coord_t>                                             difference_type; // result of operator-(locator,locator)
+    typedef point<coord_t>                                              difference_type; // result of operator-(locator,locator)
     typedef difference_type                                             point_t;
     template <std::size_t D> struct axis {
         typedef typename detail::locator_axis<D,Loc>::coord_t           coord_t;

@@ -25,8 +25,7 @@ BOOST_AUTO_TEST_SUITE( gil_io_targa_tests )
 
 BOOST_AUTO_TEST_CASE( old_read_dimensions_test )
 {
-    point2< std::ptrdiff_t > dim = targa_read_dimensions( targa_filename );
-
+    boost::gil::point_t dim = targa_read_dimensions(targa_filename);
     BOOST_CHECK_EQUAL( dim.x, 124 );
     BOOST_CHECK_EQUAL( dim.y, 124 );
 }
