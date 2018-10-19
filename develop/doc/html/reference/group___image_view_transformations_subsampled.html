@@ -58,28 +58,101 @@ template&lt;typename View &gt; </td></tr>
 template&lt;typename View &gt; </td></tr>
 <tr class="memitem:gaf964b0723086dbf0b1935c1774f49771"><td class="memTemplItemLeft" align="right" valign="top">dynamic_xy_step_type&lt; View &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><b>subsampled_view</b> (const View &amp;src, const typename View::point_t &amp;step)</td></tr>
 <tr class="separator:gaf964b0723086dbf0b1935c1774f49771"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf62e80486ea4415c2a52be6dcd73d1aa"><td class="memTemplParams" colspan="2"><a class="anchor" id="gaf62e80486ea4415c2a52be6dcd73d1aa"></a>
-template&lt;typename ViewTypes &gt; </td></tr>
-<tr class="memitem:gaf62e80486ea4415c2a52be6dcd73d1aa"><td class="memTemplItemLeft" align="right" valign="top">dynamic_xy_step_type<br class="typebreak"/>
-&lt; any_image_view&lt; ViewTypes &gt;<br class="typebreak"/>
- &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><b>subsampled_view</b> (const any_image_view&lt; ViewTypes &gt; &amp;src, const point2&lt; std::ptrdiff_t &gt; &amp;step)</td></tr>
-<tr class="separator:gaf62e80486ea4415c2a52be6dcd73d1aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga241bb8e990e1251937cdbfe1bc7c4fcb"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga241bb8e990e1251937cdbfe1bc7c4fcb"></a>
-template&lt;typename ViewTypes &gt; </td></tr>
-<tr class="memitem:ga241bb8e990e1251937cdbfe1bc7c4fcb"><td class="memTemplItemLeft" align="right" valign="top">dynamic_xy_step_type<br class="typebreak"/>
-&lt; any_image_view&lt; ViewTypes &gt;<br class="typebreak"/>
- &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><b>subsampled_view</b> (const any_image_view&lt; ViewTypes &gt; &amp;src, int xStep, int yStep)</td></tr>
-<tr class="separator:ga241bb8e990e1251937cdbfe1bc7c4fcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga25985c3d3d2303ad0da3c9c723e1daad"><td class="memTemplParams" colspan="2">template&lt;typename ViewTypes &gt; </td></tr>
+<tr class="memitem:ga25985c3d3d2303ad0da3c9c723e1daad"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_transformations_subsampled.html#ga25985c3d3d2303ad0da3c9c723e1daad">subsampled_view</a> (any_image_view&lt; ViewTypes &gt; const &amp;src, point_t const &amp;step) -&gt; typename dynamic_xy_step_type&lt; any_image_view&lt; ViewTypes &gt;&gt;::type</td></tr>
+<tr class="separator:ga25985c3d3d2303ad0da3c9c723e1daad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae93629502d602e030981722dbaed7542"><td class="memTemplParams" colspan="2">template&lt;typename ViewTypes &gt; </td></tr>
+<tr class="memitem:gae93629502d602e030981722dbaed7542"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_transformations_subsampled.html#gae93629502d602e030981722dbaed7542">subsampled_view</a> (any_image_view&lt; ViewTypes &gt; const &amp;src, int xStep, int yStep) -&gt; typename dynamic_xy_step_type&lt; any_image_view&lt; ViewTypes &gt;&gt;::type</td></tr>
+<tr class="separator:gae93629502d602e030981722dbaed7542"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>view of a subsampled version of an <a class="el" href="classboost_1_1gil_1_1image__view.html" title="A lightweight object that interprets memory as a 2D array of pixels. Models ImageViewConcept,PixelBasedConcept,HasDynamicXStepTypeConcept,HasDynamicYStepTypeConcept,HasTransposedTypeConcept. ">image_view</a>, stepping over a number of channels in X and number of rows in Y </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga25985c3d3d2303ad0da3c9c723e1daad"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto boost::gil::subsampled_view </td>
+          <td>(</td>
+          <td class="paramtype">any_image_view&lt; ViewTypes &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">point_t const &amp;&#160;</td>
+          <td class="paramname"><em>step</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt; typename dynamic_xy_step_type&lt;any_image_view&lt;ViewTypes&gt;&gt;::type
+</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Models MPL Random Access Container of models of <a class="el" href="structboost_1_1gil_1_1_image_view_concept.html" title="GIL&#39;s 2-dimensional view over immutable GIL pixels. ">ImageViewConcept</a> </p>
+
+</div>
+</div>
+<a class="anchor" id="gae93629502d602e030981722dbaed7542"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto boost::gil::subsampled_view </td>
+          <td>(</td>
+          <td class="paramtype">any_image_view&lt; ViewTypes &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>xStep</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>yStep</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt; typename dynamic_xy_step_type&lt;any_image_view&lt;ViewTypes&gt;&gt;::type
+</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Models MPL Random Access Container of models of <a class="el" href="structboost_1_1gil_1_1_image_view_concept.html" title="GIL&#39;s 2-dimensional view over immutable GIL pixels. ">ImageViewConcept</a> </p>
+
+</div>
+</div>
 </div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
      <!-- start footer part -->
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Thu Oct 18 2018 23:02:17 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Fri Oct 19 2018 08:04:08 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

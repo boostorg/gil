@@ -92,9 +92,9 @@
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> P&gt; <span class="keyword">struct </span>is_pixel;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> dstT, <span class="keyword">typename</span> srcT&gt;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">typename</span> channel_traits&lt;dstT&gt;::value_type <a class="code" href="group___channel_convert_algorithm.html#ga1ca10b1d27bc2f2ce4906b8890e613a5">channel_convert</a>(<span class="keyword">const</span> srcT&amp; val);</div>
-<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="classboost_1_1gil_1_1point2.html">   42</a></span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">class </span><a class="code" href="classboost_1_1gil_1_1point2.html">point2</a>;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">template</span> &lt;std::<span class="keywordtype">size_t</span> K, <span class="keyword">typename</span> T&gt; <span class="keyword">const</span> T&amp; axis_value(<span class="keyword">const</span> <a class="code" href="classboost_1_1gil_1_1point2.html">point2&lt;T&gt;</a>&amp; p);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">template</span> &lt;std::<span class="keywordtype">size_t</span> K, <span class="keyword">typename</span> T&gt;       T&amp; axis_value(      <a class="code" href="classboost_1_1gil_1_1point2.html">point2&lt;T&gt;</a>&amp; p);</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="classboost_1_1gil_1_1point.html">   42</a></span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">class </span><a class="code" href="classboost_1_1gil_1_1point.html">point</a>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">template</span> &lt;std::<span class="keywordtype">size_t</span> K, <span class="keyword">typename</span> T&gt; <span class="keyword">const</span> T&amp; axis_value(<a class="code" href="classboost_1_1gil_1_1point.html">point&lt;T&gt;</a> <span class="keyword">const</span>&amp; p);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">template</span> &lt;std::<span class="keywordtype">size_t</span> K, <span class="keyword">typename</span> T&gt;       T&amp; axis_value(<a class="code" href="classboost_1_1gil_1_1point.html">point&lt;T&gt;</a>&amp; p);</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> ColorBase, <span class="keywordtype">int</span> K&gt; <span class="keyword">struct </span>kth_element_type;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> ColorBase, <span class="keywordtype">int</span> K&gt; <span class="keyword">struct </span>kth_element_reference_type;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> ColorBase, <span class="keywordtype">int</span> K&gt; <span class="keyword">struct </span>kth_element_const_reference_type;</div>
@@ -246,14 +246,14 @@
 <div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> std::size_t N=P::num_dimensions; ignore_unused_variable_warning(N);</div>
 <div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> P::template axis&lt;0&gt;::coord_t FT;</div>
 <div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> P::template axis&lt;N-1&gt;::coord_t LT;</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        FT ft=gil::axis_value&lt;0&gt;(point);</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;        axis_value&lt;0&gt;(point)=ft;</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        LT lt=axis_value&lt;N-1&gt;(point);</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;        axis_value&lt;N-1&gt;(point)=lt;</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        FT ft=gil::axis_value&lt;0&gt;(<a class="code" href="classboost_1_1gil_1_1point.html">point</a>);</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;        axis_value&lt;0&gt;(<a class="code" href="classboost_1_1gil_1_1point.html">point</a>)=ft;</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        LT lt=axis_value&lt;N-1&gt;(<a class="code" href="classboost_1_1gil_1_1point.html">point</a>);</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;        axis_value&lt;N-1&gt;(<a class="code" href="classboost_1_1gil_1_1point.html">point</a>)=lt;</div>
 <div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;</div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;<span class="comment">//        value_type v=point[0];  ignore_unused_variable_warning(v);</span></div>
 <div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    }</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    P point;</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    P <a class="code" href="classboost_1_1gil_1_1point.html">point</a>;</div>
 <div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;};</div>
 <div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;</div>
 <div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;</div>
@@ -262,10 +262,10 @@
 <div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    <span class="keywordtype">void</span> constraints() {</div>
 <div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;        gil_function_requires&lt; PointNDConcept&lt;P&gt; &gt;();</div>
 <div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;        BOOST_STATIC_ASSERT(P::num_dimensions == 2);</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;        point.x=point.y;</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;        point[0]=point[1];</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;        <a class="code" href="classboost_1_1gil_1_1point.html">point</a>.x=<a class="code" href="classboost_1_1gil_1_1point.html">point</a>.y;</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;        <a class="code" href="classboost_1_1gil_1_1point.html">point</a>[0]=<a class="code" href="classboost_1_1gil_1_1point.html">point</a>[1];</div>
 <div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    }</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    P point;</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    P <a class="code" href="classboost_1_1gil_1_1point.html">point</a>;</div>
 <div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;};</div>
 <div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;</div>
 <div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;<span class="comment">//</span></div>
@@ -889,7 +889,7 @@
 <div class="line"><a name="l01463"></a><span class="lineno"> 1463</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> Loc::difference_type   difference_type;    <span class="comment">// result of operator-(pixel_locator, pixel_locator)</span></div>
 <div class="line"><a name="l01464"></a><span class="lineno"> 1464</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> Loc::cached_location_t cached_location_t;  <span class="comment">// type used to store relative location (to allow for more efficient repeated access)</span></div>
 <div class="line"><a name="l01465"></a><span class="lineno"> 1465</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> Loc::const_t           const_t;         <span class="comment">// same as this type, but over const values</span></div>
-<div class="line"><a name="l01466"></a><span class="lineno"> 1466</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> Loc::point_t           point_t;         <span class="comment">// same as difference_type</span></div>
+<div class="line"><a name="l01466"></a><span class="lineno"> 1466</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> Loc::point_t           <a class="code" href="classboost_1_1gil_1_1point.html">point_t</a>;         <span class="comment">// same as difference_type</span></div>
 <div class="line"><a name="l01467"></a><span class="lineno"> 1467</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> std::size_t N=Loc::num_dimensions; ignore_unused_variable_warning(N);</div>
 <div class="line"><a name="l01468"></a><span class="lineno"> 1468</span>&#160;</div>
 <div class="line"><a name="l01469"></a><span class="lineno"> 1469</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> Loc::template axis&lt;0&gt;::iterator    first_it_type;</div>
@@ -1060,7 +1060,7 @@
 <div class="line"><a name="l01770"></a><span class="lineno"> 1770</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> View::pointer          pointer;</div>
 <div class="line"><a name="l01771"></a><span class="lineno"> 1771</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> View::difference_type  difference_type; <span class="comment">// result of operator-(1d_iterator,1d_iterator)</span></div>
 <div class="line"><a name="l01772"></a><span class="lineno"> 1772</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> View::const_t          const_t;         <span class="comment">// same as this type, but over const values</span></div>
-<div class="line"><a name="l01773"></a><span class="lineno"> 1773</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> View::point_t          point_t;         <span class="comment">// N-dimensional point</span></div>
+<div class="line"><a name="l01773"></a><span class="lineno"> 1773</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> View::point_t          <a class="code" href="classboost_1_1gil_1_1point.html">point_t</a>;         <span class="comment">// N-dimensional point</span></div>
 <div class="line"><a name="l01774"></a><span class="lineno"> 1774</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> View::locator          locator;         <span class="comment">// N-dimensional locator</span></div>
 <div class="line"><a name="l01775"></a><span class="lineno"> 1775</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> View::iterator         iterator;</div>
 <div class="line"><a name="l01776"></a><span class="lineno"> 1776</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> View::const_iterator   const_iterator;</div>
@@ -1354,7 +1354,7 @@
 <div class="line"><a name="l02184"></a><span class="lineno"> 2184</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> Img::const_view_t const_view_t;</div>
 <div class="line"><a name="l02185"></a><span class="lineno"> 2185</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> Img::value_type   pixel_t;</div>
 <div class="line"><a name="l02186"></a><span class="lineno"> 2186</span>&#160;</div>
-<div class="line"><a name="l02187"></a><span class="lineno"> 2187</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> Img::point_t        point_t;</div>
+<div class="line"><a name="l02187"></a><span class="lineno"> 2187</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> Img::point_t        <a class="code" href="classboost_1_1gil_1_1point.html">point_t</a>;</div>
 <div class="line"><a name="l02188"></a><span class="lineno"> 2188</span>&#160;        gil_function_requires&lt;PointNDConcept&lt;point_t&gt; &gt;();</div>
 <div class="line"><a name="l02189"></a><span class="lineno"> 2189</span>&#160;</div>
 <div class="line"><a name="l02190"></a><span class="lineno"> 2190</span>&#160;        const_view_t cv = <a class="code" href="group___image_model.html#ga0505866ffb317dcd320e74be9874f950">const_view</a>(img); ignore_unused_variable_warning(cv);</div>
@@ -1497,7 +1497,6 @@
 <div class="ttc" id="structboost_1_1gil_1_1packed__pixel_html"><div class="ttname"><a href="structboost_1_1gil_1_1packed__pixel.html">boost::gil::packed_pixel</a></div><div class="ttdoc">Heterogeneous pixel value whose channel references can be constructed from the pixel bitfield and the...</div><div class="ttdef"><b>Definition:</b> concepts.hpp:73</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1size_html"><div class="ttname"><a href="structboost_1_1gil_1_1size.html">boost::gil::size</a></div><div class="ttdoc">Returns an MPL integral type specifying the number of elements in a color base. </div><div class="ttdef"><b>Definition:</b> color_base_algorithm.hpp:45</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1_forward_collection_image_view_concept_html"><div class="ttname"><a href="structboost_1_1gil_1_1_forward_collection_image_view_concept.html">boost::gil::ForwardCollectionImageViewConcept</a></div><div class="ttdoc">GIL view as ForwardCollection. </div><div class="ttdef"><b>Definition:</b> concepts.hpp:1958</div></div>
-<div class="ttc" id="classboost_1_1gil_1_1point2_html"><div class="ttname"><a href="classboost_1_1gil_1_1point2.html">boost::gil::point2</a></div><div class="ttdoc">2D point both axes of which have the same dimension typeModels: Point2DConcept </div><div class="ttdef"><b>Definition:</b> concepts.hpp:42</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1_pixel_iterator_concept_html"><div class="ttname"><a href="structboost_1_1gil_1_1_pixel_iterator_concept.html">boost::gil::PixelIteratorConcept</a></div><div class="ttdoc">An STL random access traversal iterator over a model of PixelConcept. </div><div class="ttdef"><b>Definition:</b> concepts.hpp:1198</div></div>
 <div class="ttc" id="group___image_model_html_ga0505866ffb317dcd320e74be9874f950"><div class="ttname"><a href="group___image_model.html#ga0505866ffb317dcd320e74be9874f950">boost::gil::const_view</a></div><div class="ttdeci">const image&lt; Pixel, IsPlanar, Alloc &gt;::const_view_t const_view(const image&lt; Pixel, IsPlanar, Alloc &gt; &amp;img)</div><div class="ttdoc">Returns the constant-pixel view of an image. </div><div class="ttdef"><b>Definition:</b> image.hpp:464</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1_views_compatible_concept_html"><div class="ttname"><a href="structboost_1_1gil_1_1_views_compatible_concept.html">boost::gil::ViewsCompatibleConcept</a></div><div class="ttdoc">Views are compatible if they have the same color spaces and compatible channel values. Constness and layout are not important for compatibility. </div><div class="ttdef"><b>Definition:</b> concepts.hpp:2140</div></div>
@@ -1511,6 +1510,7 @@
 <div class="ttc" id="structboost_1_1gil_1_1_random_access_n_d_locator_concept_html"><div class="ttname"><a href="structboost_1_1gil_1_1_random_access_n_d_locator_concept.html">boost::gil::RandomAccessNDLocatorConcept</a></div><div class="ttdoc">N-dimensional locator over immutable values. </div><div class="ttdef"><b>Definition:</b> concepts.hpp:1457</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1_regular_html"><div class="ttname"><a href="structboost_1_1gil_1_1_regular.html">boost::gil::Regular</a></div><div class="ttdef"><b>Definition:</b> concepts.hpp:215</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1_pixel_concept_html"><div class="ttname"><a href="structboost_1_1gil_1_1_pixel_concept.html">boost::gil::PixelConcept</a></div><div class="ttdoc">Pixel concept - A color base whose elements are channels. </div><div class="ttdef"><b>Definition:</b> concepts.hpp:881</div></div>
+<div class="ttc" id="classboost_1_1gil_1_1point_html"><div class="ttname"><a href="classboost_1_1gil_1_1point.html">boost::gil::point</a></div><div class="ttdoc">2D point both axes of which have the same dimension typeModels: Point2DConcept </div><div class="ttdef"><b>Definition:</b> concepts.hpp:42</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1_mutable_pixel_locator_concept_html"><div class="ttname"><a href="structboost_1_1gil_1_1_mutable_pixel_locator_concept.html">boost::gil::MutablePixelLocatorConcept</a></div><div class="ttdoc">GIL&#39;s 2-dimensional locator over mutable GIL pixels. </div><div class="ttdef"><b>Definition:</b> concepts.hpp:1687</div></div>
 </div><!-- fragment --></div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
@@ -1518,7 +1518,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Thu Oct 18 2018 23:02:17 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Fri Oct 19 2018 08:04:08 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

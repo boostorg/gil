@@ -226,7 +226,7 @@ terms, points are N-dimensional and model the following concept:</p>
 </div>
 <div class="section" id="models">
 <h3>Models</h3>
-<p>GIL provides a model of <code class="docutils literal notranslate"><span class="pre">Point2DConcept</span></code>, <code class="docutils literal notranslate"><span class="pre">point2&lt;T&gt;</span></code> where
+<p>GIL provides a model of <code class="docutils literal notranslate"><span class="pre">Point2DConcept</span></code>, <code class="docutils literal notranslate"><span class="pre">point&lt;T&gt;</span></code> where
 <code class="docutils literal notranslate"><span class="pre">T</span></code> is the coordinate type.</p>
 </div>
 </div>
@@ -1446,7 +1446,7 @@ base class useful if they need to provide other models of
 <span class="n">below</span><span class="o">=</span><span class="n">loc</span><span class="p">.</span><span class="n">cache_location</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 <span class="o">++</span><span class="n">loc</span><span class="p">.</span><span class="n">x</span><span class="p">();</span>                       <span class="c1">// move to (11,10)</span>
 <span class="n">loc</span><span class="p">.</span><span class="n">y</span><span class="p">()</span><span class="o">+=</span><span class="mi">15</span><span class="p">;</span>                     <span class="c1">// move to (11,25)</span>
-<span class="n">loc</span><span class="o">-=</span><span class="n">point2</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="c1">// move to (10,24)</span>
+<span class="n">loc</span><span class="o">-=</span><span class="n">point</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="c1">// move to (10,24)</span>
 <span class="o">*</span><span class="n">loc</span><span class="o">=</span><span class="p">(</span><span class="n">loc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="n">loc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>     <span class="c1">// set pixel (10,24) to the average of (10,23) and (10,25) (grayscale pixels only)</span>
 <span class="o">*</span><span class="n">loc</span><span class="o">=</span><span class="p">(</span><span class="n">loc</span><span class="p">[</span><span class="n">above</span><span class="p">]</span><span class="o">+</span><span class="n">loc</span><span class="p">[</span><span class="n">below</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>  <span class="c1">// the same, but faster using cached relative neighbor locations</span>
 </pre></div>
@@ -2102,7 +2102,7 @@ code. Synopsis:</p>
   <span class="k">typedef</span> <span class="p">...</span> <span class="n">const_t</span><span class="p">;</span> <span class="c1">// immutable equivalent of this</span>
   <span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span> <span class="n">x_coord_t</span><span class="p">;</span>
   <span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span> <span class="n">y_coord_t</span><span class="p">;</span>
-  <span class="k">typedef</span> <span class="n">point2</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span><span class="o">&gt;</span> <span class="n">point_t</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="n">point</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span><span class="o">&gt;</span> <span class="n">point_t</span><span class="p">;</span>
 
   <span class="n">any_image_view</span><span class="p">();</span>
   <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span> <span class="k">explicit</span> <span class="n">any_image_view</span><span class="p">(</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">obj</span><span class="p">);</span>
@@ -2127,7 +2127,7 @@ code. Synopsis:</p>
   <span class="k">typedef</span> <span class="p">...</span> <span class="n">view_t</span><span class="p">;</span>
   <span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span> <span class="n">x_coord_t</span><span class="p">;</span>
   <span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span> <span class="n">y_coord_t</span><span class="p">;</span>
-  <span class="k">typedef</span> <span class="n">point2</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span><span class="o">&gt;</span> <span class="n">point_t</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="n">point</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span><span class="o">&gt;</span> <span class="n">point_t</span><span class="p">;</span>
 
   <span class="n">any_image</span><span class="p">();</span>
   <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span> <span class="k">explicit</span> <span class="n">any_image</span><span class="p">(</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">obj</span><span class="p">);</span>
@@ -2480,7 +2480,7 @@ use.  Here are the I/O APIs for JPEG files (replace “jpeg” with “tiff”
 or “png” for the APIs of the other libraries):</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// Returns the width and height of the JPEG file at the specified location.</span>
 <span class="c1">// Throws std::ios_base::failure if the location does not correspond to a valid JPEG file</span>
-<span class="n">point2</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span><span class="o">&gt;</span> <span class="n">jpeg_read_dimensions</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span><span class="p">);</span>
+<span class="n">point</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span><span class="o">&gt;</span> <span class="n">jpeg_read_dimensions</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span><span class="p">);</span>
 
 <span class="c1">// Allocates a new image whose dimensions are determined by the given jpeg image file, and loads the pixels into it.</span>
 <span class="c1">// Triggers a compile assert if the image color space or channel depth are not supported by the JPEG library or by the I/O extension.</span>

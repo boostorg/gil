@@ -130,7 +130,7 @@
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;</div>
 <div class="line"><a name="l00126"></a><span class="lineno"><a class="line" href="classboost_1_1gil_1_1image__view.html#a6c48c6a68d087259caa53b9ffae2a4f0">  126</a></span>&#160;    reference <a class="code" href="classboost_1_1gil_1_1image__view.html#a6c48c6a68d087259caa53b9ffae2a4f0">back</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> *rbegin(); }</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keyword">const</span> point_t&amp;   dimensions()<span class="keyword">            const </span>{ <span class="keywordflow">return</span> _dimensions; }</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keyword">const</span> <a class="code" href="classboost_1_1gil_1_1point.html">point_t</a>&amp;   dimensions()<span class="keyword">            const </span>{ <span class="keywordflow">return</span> _dimensions; }</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    <span class="keyword">const</span> locator&amp;   pixels()<span class="keyword">                const </span>{ <span class="keywordflow">return</span> _pixels; }</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    x_coord_t        width()<span class="keyword">                 const </span>{ <span class="keywordflow">return</span> dimensions().x; }</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    y_coord_t        height()<span class="keyword">                const </span>{ <span class="keywordflow">return</span> dimensions().y; }</div>
@@ -231,13 +231,14 @@
 <div class="ttc" id="classboost_1_1gil_1_1iterator__from__2d_html"><div class="ttname"><a href="classboost_1_1gil_1_1iterator__from__2d.html">boost::gil::iterator_from_2d</a></div><div class="ttdoc">Provides 1D random-access navigation to the pixels of the image. Models: PixelIteratorConcept, PixelBasedConcept, HasDynamicXStepTypeConcept. </div><div class="ttdef"><b>Definition:</b> iterator_from_2d.hpp:43</div></div>
 <div class="ttc" id="classboost_1_1gil_1_1image__view_html_a6abdcb0b8cadeb8f39806bd6413a2075"><div class="ttname"><a href="classboost_1_1gil_1_1image__view.html#a6abdcb0b8cadeb8f39806bd6413a2075">boost::gil::image_view::swap</a></div><div class="ttdeci">void swap(image_view&lt; Loc &gt; &amp;other)</div><div class="ttdoc">Exchanges the elements of the current view with those of other in constant time. </div><div class="ttdef"><b>Definition:</b> image_view.hpp:104</div></div>
 <div class="ttc" id="classboost_1_1gil_1_1image__view_html_a6f29c8a7f499b266d4cf7a3dfd75b940"><div class="ttname"><a href="classboost_1_1gil_1_1image__view.html#a6f29c8a7f499b266d4cf7a3dfd75b940">boost::gil::image_view::front</a></div><div class="ttdeci">reference front() const </div><div class="ttdoc">Returns a reference to the first element in raster order. </div><div class="ttdef"><b>Definition:</b> image_view.hpp:120</div></div>
+<div class="ttc" id="classboost_1_1gil_1_1point_html"><div class="ttname"><a href="classboost_1_1gil_1_1point.html">boost::gil::point&lt; std::ptrdiff_t &gt;</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
      <!-- start footer part -->
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Thu Oct 18 2018 23:02:17 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Fri Oct 19 2018 08:04:08 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
