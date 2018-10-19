@@ -40,6 +40,6 @@ add_test(gil.tests.core.image
   gil_test_image
   ${CMAKE_CURRENT_SOURCE_DIR}/gil_reference_checksums.txt)
 
-# New tests based on Boost.Test
 add_subdirectory(algorithm)
 add_subdirectory(channel)
+add_subdirectory(image_view)
