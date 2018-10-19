@@ -278,7 +278,7 @@ Run I/O extension tests bundled in target called `simple`:
 ./b2 libs/gil/io/test//simple
 ```
 
-_TODO: Explain I/O dependencies (libjpeg, etc.)_
+*TODO:* _Explain I/O dependencies (libjpeg, etc.)_
 
 ### Using CMake
 
@@ -300,8 +300,12 @@ The provided CMake configuration allows a couple of ways to develop Boost.GIL:
    with headers and stage build of required libraries, for example:
     ```shell
     ./b2 headers
-    ./b2 --with-test --with-filesystem variant=debug stage
-    ./b2 --with-test --with-filesystem variant=release stage
+    ./b2 variant=debug --with-test --with-filesystem stage
+    ./b2 variant=release --with-test --with-filesystem stage
+    ```
+    or, depending on specific requirements, more complete build:
+    ```shell
+    ./b2 variant=debug,release address-model=32,64 --layout=versioned --with-test --with-filesystem stage
     ```
 
 Using the installed Boost enables a lightweight mode for the library development,
@@ -319,7 +323,7 @@ Here is an example of such lightweight workflow in Linux environment (Debian-bas
 
 * Optionally, install libraries required by the I/O extension
 
-    ```
+    ```shell
     sudo apt-get update
     sudo apt install libtiff-dev libpng-dev libjpeg-dev
     ```
@@ -327,16 +331,16 @@ Here is an example of such lightweight workflow in Linux environment (Debian-bas
 * Clone Boost.GIL repository
 
     ```shell
-    $ git clone https://github.com/boostorg/gil.git
-    $ cd gil
+    git clone https://github.com/boostorg/gil.git
+    cd gil
     ```
 
 * Configure build with CMake
 
     ```shell
-    $ mkdir _build
-    $ cd _build/
-    $ cmake ..
+    mkdir _build
+    cd _build/
+    cmake ..
     -- The CXX compiler identification is GNU 7.3.0
     -- Check for working CXX compiler: /usr/bin/c++
     -- Check for working CXX compiler: /usr/bin/c++ -- works
@@ -367,7 +371,7 @@ Here is an example of such lightweight workflow in Linux environment (Debian-bas
 * List available CMake targets
 
     ```shell
-    $ cmake --build . --target help
+    cmake --build . --target help
     ```
 
 * Build selected target with CMake
@@ -378,12 +382,12 @@ Here is an example of such lightweight workflow in Linux environment (Debian-bas
 
 * List available CTest targets
 
-    ```
-    $ ctest --show-only | grep Test
+    ```shell
+    ctest --show-only | grep Test
     ```
 * Run selected test with CTest
 
-    ```
+    ```shell
     ctest -R gil.tests.core.pixel
     ```
 
@@ -391,7 +395,7 @@ Here is an example of such lightweight workflow in Linux environment (Debian-bas
 
 Maintainer: [@stefanseefeld](https://github.com/stefanseefeld)
 
-_TODO_
+*TODO:* _Describe_
 
 ## Guidelines
 
@@ -417,7 +421,7 @@ Maintain structure your source code files according to the following guidelines:
   add yourself to the copyright notice. Do not put any additional authorship or
   file comments (eg. no `\file` for Doxygen), revision information, etc.
 * In header, put `#include` guard based on header path and file name
-    ```
+    ```cpp
     #ifndef BOOST_GIL_<DIR1>_<DIR2>_<FILE>_HPP
     #define BOOST_GIL_<DIR1>_<DIR2>_<FILE>_HPP
     ...
