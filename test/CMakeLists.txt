@@ -43,3 +43,4 @@ add_test(gil.tests.core.image
 add_subdirectory(algorithm)
 add_subdirectory(channel)
 add_subdirectory(image_view)
+add_subdirectory(point)
