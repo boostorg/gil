@@ -14,6 +14,7 @@
 #include <boost/config/no_tr1/cmath.hpp>
 
 #include <cstddef>
+#include <type_traits>
 
 namespace boost { namespace gil {
 
@@ -71,9 +72,20 @@ public:
         return *this;
     }
 
-    point& operator/=(double t)
+    point& operator/=(double d)
     {
-        if (t < 0 || 0 < t) { x /= t; y /= t; }
+        if (d < 0 || 0 < d)
+        {
+            x = static_cast<T>(x / d);
+            y = static_cast<T>(y / d);
+        }
+        return *this;
+    }
+
+    point& operator*=(double d)
+    {
+        x = static_cast<T>(x * d);
+        y = static_cast<T>(y * d);
         return *this;
     }
 
@@ -107,8 +119,8 @@ using point_t = point<std::ptrdiff_t>;
 template <typename T>
 T point<T>::* const point<T>::mem_array[point<T>::num_dimensions] =
 {
-  & point<T>::x,
-  & point<T>::y
+    &point<T>::x,
+    &point<T>::y
 };
 
 /// \ingroup PointModel
@@ -116,7 +128,7 @@ template <typename T>
 BOOST_FORCEINLINE
 bool operator==(const point<T>& p1, const point<T>& p2)
 {
-    return (p1.x == p2.x && p1.y == p2.y);
+    return p1.x == p2.x && p1.y == p2.y;
 }
 
 /// \ingroup PointModel
@@ -132,7 +144,7 @@ template <typename T>
 BOOST_FORCEINLINE
 point<T> operator+(const point<T>& p1, const point<T>& p2)
 {
-    return point<T>(p1.x + p2.x, p1.y + p2.y);
+    return { p1.x + p2.x, p1.y + p2.y };
 }
 
 /// \ingroup PointModel
@@ -140,7 +152,7 @@ template <typename T>
 BOOST_FORCEINLINE
 point<T> operator-(const point<T>& p)
 {
-    return point<T>(-p.x, -p.y);
+    return { -p.x, -p.y };
 }
 
 /// \ingroup PointModel
@@ -148,44 +160,67 @@ template <typename T>
 BOOST_FORCEINLINE
 point<T> operator-(const point<T>& p1, const point<T>& p2)
 {
-    return point<T>(p1.x - p2.x, p1.y - p2.y);
+    return { p1.x - p2.x, p1.y - p2.y };
 }
 
 /// \ingroup PointModel
-template <typename T>
+template <typename T, typename D>
 BOOST_FORCEINLINE
-point<double> operator/(const point<T>& p, double t)
+auto operator/(point<T> const& p, D d) -> point<typename std::common_type<T, D>::type>
 {
-    return (t < 0 || 0 < t)
-        ? point<double>(p.x / t, p.y / t)
-        : point<double>(0, 0);
+    static_assert(std::is_arithmetic<D>::value, "denominator is not arithmetic type");
+    using result_type = typename std::common_type<T, D>::type;
+    if (d < 0 || 0 < d)
+    {
+        double const x = p.x / static_cast<double>(d);
+        double const y = p.y / static_cast<double>(d);
+        return point<result_type>{
+            static_cast<result_type>(iround(x)),
+            static_cast<result_type>(iround(y))};
+    }
+    else
+    {
+        return point<result_type>{0, 0};
+    }
 }
 
 /// \ingroup PointModel
-template <typename T>
+template <typename T, typename M>
 BOOST_FORCEINLINE
-point<T> operator*(const point<T>& p, std::ptrdiff_t t)
+auto operator*(point<T> const& p, M m) -> point<typename std::common_type<T, M>::type>
 {
-    return point<T>(p.x * t, p.y * t);
+    static_assert(std::is_arithmetic<M>::value, "multiplier is not arithmetic type");
+    using result_type = typename std::common_type<T, M>::type;
+    return point<result_type>{p.x * m, p.y * m};
 }
 
 /// \ingroup PointModel
-template <typename T>
+template <typename T, typename M>
 BOOST_FORCEINLINE
-point<T> operator*(std::ptrdiff_t t, const point<T>& p)
+auto operator*(M m, point<T> const& p) -> point<typename std::common_type<T, M>::type>
 {
-    return point<T>(p.x * t, p.y * t);
+    static_assert(std::is_arithmetic<M>::value, "multiplier is not arithmetic type");
+    using result_type = typename std::common_type<T, M>::type;
+    return point<result_type>{p.x * m, p.y * m};
 }
 
 /// \ingroup PointModel
 template <std::size_t K, typename T>
 BOOST_FORCEINLINE
-T const& axis_value(const point<T>& p) { return p[K]; }
+T const& axis_value(point<T> const& p)
+{
+    static_assert(K < point<T>::num_dimensions, "axis index out of range");
+    return p[K];
+}
 
 /// \ingroup PointModel
 template <std::size_t K, typename T>
 BOOST_FORCEINLINE
-T& axis_value(point<T>& p) { return p[K]; }
+T& axis_value(point<T>& p)
+{
+    static_assert(K < point<T>::num_dimensions, "axis index out of range");
+    return p[K];
+}
 
 /// \addtogroup PointAlgorithm
 ///
@@ -195,39 +230,47 @@ T& axis_value(point<T>& p) { return p[K]; }
 /// \endcode
 
 /// \ingroup PointAlgorithm
-inline point<std::ptrdiff_t> iround(const point<float>& p)
+template <typename T>
+inline point<std::ptrdiff_t> iround(point<T> const& p)
 {
-    return point<std::ptrdiff_t>(iround(p.x), iround(p.y));
+    static_assert(std::is_integral<T>::value, "T is not integer");
+    return { static_cast<std::ptrdiff_t>(p.x), static_cast<std::ptrdiff_t>(p.y) };
 }
 
 /// \ingroup PointAlgorithm
-inline point<std::ptrdiff_t> iround(const point<double>& p)
+inline point<std::ptrdiff_t> iround(point<float> const& p)
 {
-    return point<std::ptrdiff_t>(iround(p.x), iround(p.y));
+    return { iround(p.x), iround(p.y) };
 }
 
 /// \ingroup PointAlgorithm
-inline point<std::ptrdiff_t> ifloor(const point<float>& p)
+inline point<std::ptrdiff_t> iround(point<double> const& p)
 {
-    return point<std::ptrdiff_t>(ifloor(p.x), ifloor(p.y));
+    return { iround(p.x), iround(p.y) };
 }
 
 /// \ingroup PointAlgorithm
-inline point<std::ptrdiff_t> ifloor(const point<double>& p)
+inline point<std::ptrdiff_t> ifloor(point<float> const& p)
 {
-    return point<std::ptrdiff_t>(ifloor(p.x), ifloor(p.y));
+    return { ifloor(p.x), ifloor(p.y) };
 }
 
 /// \ingroup PointAlgorithm
-inline point<std::ptrdiff_t> iceil(const point<float>& p)
+inline point<std::ptrdiff_t> ifloor(point<double> const& p)
 {
-    return point<std::ptrdiff_t>(iceil(p.x), iceil(p.y));
+    return { ifloor(p.x), ifloor(p.y) };
 }
 
 /// \ingroup PointAlgorithm
-inline point<std::ptrdiff_t> iceil(const point<double>& p)
+inline point<std::ptrdiff_t> iceil(point<float> const& p)
 {
-    return point<std::ptrdiff_t>(iceil(p.x), iceil(p.y));
+    return { iceil(p.x), iceil(p.y) };
+}
+
+/// \ingroup PointAlgorithm
+inline point<std::ptrdiff_t> iceil(point<double> const& p)
+{
+    return { iceil(p.x), iceil(p.y) };
 }
 
 }} // namespace boost::gil
