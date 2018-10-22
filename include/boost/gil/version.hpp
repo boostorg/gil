@@ -5,7 +5,7 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-#ifndef BOOST_BOOST_GIL_VERSION_HPP
+#ifndef BOOST_GIL_VERSION_HPP
 #define BOOST_GIL_VERSION_HPP
 
 /// @def BOOST_GIL_API_VERSION
