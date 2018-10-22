@@ -16,7 +16,6 @@
 #include <boost/gil/io/get_reader.hpp>
 #include <boost/gil/io/path_spec.hpp>
 
-#include <boost/algorithm/string.hpp>
 #include <boost/mpl/and.hpp>
 #include <boost/type_traits/is_base_and_derived.hpp>
 #include <boost/utility/enable_if.hpp>
