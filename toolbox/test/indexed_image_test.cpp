@@ -152,13 +152,12 @@ BOOST_AUTO_TEST_CASE( index_image_test )
 BOOST_AUTO_TEST_CASE(index_image_view_test)
 {
     // generate some data
-    int width = 640;
-    int height = 480;
-    int num_colors = 3;
-    int Index = 2;
+    std::size_t const width = 640;
+    std::size_t const height = 480;
+    std::size_t const num_colors = 3;
 
     // indices
-    vector<uint8_t> indices(width * height, Index);
+    vector<uint8_t> indices(width * height, 2);
 
     // colors
     vector<rgb8_pixel_t> palette(num_colors);
