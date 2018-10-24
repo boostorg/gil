@@ -18,12 +18,12 @@
 #include <boost/static_assert.hpp>
 #include <boost/type_traits.hpp>
 
-#include <functional>
-#include <boost/config/no_tr1/cmath.hpp>
-#include <cstddef>
 #include <algorithm>
-#include <utility>
+#include <cmath>
+#include <cstddef>
+#include <functional>
 #include <iterator>
+#include <utility>
 
 namespace boost { namespace gil {
 
