@@ -11,7 +11,6 @@
 #include <boost/gil/utilities.hpp>
 
 #include <boost/config.hpp>
-#include <boost/config/no_tr1/cmath.hpp>
 
 #include <cstddef>
 
