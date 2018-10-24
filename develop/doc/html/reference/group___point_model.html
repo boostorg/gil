@@ -77,22 +77,22 @@ template&lt;typename T &gt; </td></tr>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ga0aad48387ed0659fdbb93f2080938398"><td class="memTemplItemLeft" align="right" valign="top">BOOST_FORCEINLINE point&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator-</b> (const point&lt; T &gt; &amp;p1, const point&lt; T &gt; &amp;p2)</td></tr>
 <tr class="separator:ga0aad48387ed0659fdbb93f2080938398"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0ee642b3d2d06154d30ad4819573f19e"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga0ee642b3d2d06154d30ad4819573f19e"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ga0ee642b3d2d06154d30ad4819573f19e"><td class="memTemplItemLeft" align="right" valign="top">BOOST_FORCEINLINE point&lt; double &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator/</b> (const point&lt; T &gt; &amp;p, double t)</td></tr>
-<tr class="separator:ga0ee642b3d2d06154d30ad4819573f19e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga08db34135adec52d8e526101d64e37cd"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga08db34135adec52d8e526101d64e37cd"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ga08db34135adec52d8e526101d64e37cd"><td class="memTemplItemLeft" align="right" valign="top">BOOST_FORCEINLINE point&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator*</b> (const point&lt; T &gt; &amp;p, std::ptrdiff_t t)</td></tr>
-<tr class="separator:ga08db34135adec52d8e526101d64e37cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7e088fe5b9f1635c27f41ef226e86b26"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga7e088fe5b9f1635c27f41ef226e86b26"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ga7e088fe5b9f1635c27f41ef226e86b26"><td class="memTemplItemLeft" align="right" valign="top">BOOST_FORCEINLINE point&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator*</b> (std::ptrdiff_t t, const point&lt; T &gt; &amp;p)</td></tr>
-<tr class="separator:ga7e088fe5b9f1635c27f41ef226e86b26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaacc5215df0d7e24c5f3c3fd04dbef3fa"><td class="memTemplParams" colspan="2"><a class="anchor" id="gaacc5215df0d7e24c5f3c3fd04dbef3fa"></a>
+<tr class="memitem:gab68d58a26e1bd81f131dfb526702525b"><td class="memTemplParams" colspan="2"><a class="anchor" id="gab68d58a26e1bd81f131dfb526702525b"></a>
+template&lt;typename T , typename D &gt; </td></tr>
+<tr class="memitem:gab68d58a26e1bd81f131dfb526702525b"><td class="memTemplItemLeft" align="right" valign="top">BOOST_FORCEINLINE auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator/</b> (point&lt; T &gt; const &amp;p, D d) -&gt; point&lt; typename std::common_type&lt; T, D &gt;::type &gt;</td></tr>
+<tr class="separator:gab68d58a26e1bd81f131dfb526702525b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadcccc9254bf82ea302288f3b2354e0b3"><td class="memTemplParams" colspan="2"><a class="anchor" id="gadcccc9254bf82ea302288f3b2354e0b3"></a>
+template&lt;typename T , typename M &gt; </td></tr>
+<tr class="memitem:gadcccc9254bf82ea302288f3b2354e0b3"><td class="memTemplItemLeft" align="right" valign="top">BOOST_FORCEINLINE auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator*</b> (point&lt; T &gt; const &amp;p, M m) -&gt; point&lt; typename std::common_type&lt; T, M &gt;::type &gt;</td></tr>
+<tr class="separator:gadcccc9254bf82ea302288f3b2354e0b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac9adeb2acdd00c5becf7235fa0ee778b"><td class="memTemplParams" colspan="2"><a class="anchor" id="gac9adeb2acdd00c5becf7235fa0ee778b"></a>
+template&lt;typename T , typename M &gt; </td></tr>
+<tr class="memitem:gac9adeb2acdd00c5becf7235fa0ee778b"><td class="memTemplItemLeft" align="right" valign="top">BOOST_FORCEINLINE auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator*</b> (M m, point&lt; T &gt; const &amp;p) -&gt; point&lt; typename std::common_type&lt; T, M &gt;::type &gt;</td></tr>
+<tr class="separator:gac9adeb2acdd00c5becf7235fa0ee778b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4fa5ac5751e7092a699b60759f16b3a4"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga4fa5ac5751e7092a699b60759f16b3a4"></a>
 template&lt;std::size_t K, typename T &gt; </td></tr>
-<tr class="memitem:gaacc5215df0d7e24c5f3c3fd04dbef3fa"><td class="memTemplItemLeft" align="right" valign="top">BOOST_FORCEINLINE T const &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>axis_value</b> (const point&lt; T &gt; &amp;p)</td></tr>
-<tr class="separator:gaacc5215df0d7e24c5f3c3fd04dbef3fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4fa5ac5751e7092a699b60759f16b3a4"><td class="memTemplItemLeft" align="right" valign="top">BOOST_FORCEINLINE T const &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>axis_value</b> (point&lt; T &gt; const &amp;p)</td></tr>
+<tr class="separator:ga4fa5ac5751e7092a699b60759f16b3a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf09e6ece916a457c68c2326ca3c969e1"><td class="memTemplParams" colspan="2"><a class="anchor" id="gaf09e6ece916a457c68c2326ca3c969e1"></a>
 template&lt;std::size_t K, typename T &gt; </td></tr>
 <tr class="memitem:gaf09e6ece916a457c68c2326ca3c969e1"><td class="memTemplItemLeft" align="right" valign="top">BOOST_FORCEINLINE T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>axis_value</b> (point&lt; T &gt; &amp;p)</td></tr>
@@ -111,7 +111,7 @@ template&lt;std::size_t K, typename T &gt; </td></tr>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Oct 24 2018 09:40:25 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Wed Oct 24 2018 13:44:07 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
