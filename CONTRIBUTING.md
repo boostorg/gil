@@ -368,6 +368,19 @@ Here is an example of such lightweight workflow in Linux environment (Debian-bas
     -- Build files have been written to: /home/mloskot/gil/_build
     ```
 
+    **TIP:** If CMake is failing to find Boost libraries, you can try a few hacks:
+
+     - `-DGIL_ENABLE_FINDBOOST_DOWNLOAD=ON` to use very latest version of
+       `FindBoost.cmake` without upgrading your CMake installation.
+     - `-DBoost_COMPILER=-gcc5` or `-DBoost_COMPILER=-vc141` to help CMake match
+        your compiler with Boost libraries naming in versioned layout
+        (ie. `libboost_unit_test_framework-gcc5-mt-x64-1_69` and not `-gcc55-`).
+     - `DCMAKE_CXX_COMPILER_ARCHITECTURE_ID=x64` to help CMake match the target
+        architecture, in case it fails to determine it for your compiler, which is
+        also crucial for matching `-x64-` in the versioned layout names.
+     - if CMake is still failing to find Boost, you may try `-DBoost_DEBUG=ON` to
+       get detailed diagnostics output from `FindBoost.cmake` module.
+
 * List available CMake targets
 
     ```shell
