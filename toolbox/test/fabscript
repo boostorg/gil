@@ -30,6 +30,8 @@ def gil_test(name, sources, features, condition=True):
     return test(name, binary(name, sources, features=features, condition=condition))
 
 
+# TODO: Add `subchroma_image.cpp` after fixing run-time failure,
+#       for details see https://github.com/boostorg/gil/pull/164
 tests = [gil_test('toolbox',
                   ['test.cpp', 'channel_type.cpp', 'channel_view.cpp', 'cmyka.cpp',
                    'get_num_bits.cpp', 'get_pixel_type.cpp', 'gray_alpha.cpp', 'gray_to_rgba.cpp',

@@ -32,6 +32,9 @@ target_sources(gil_test_ext_toolbox
   lab_test.cpp
   pixel_bit_size.cpp
   rgb_to_luminance.cpp
+  # TODO: Add subchroma_image.cpp after fixing run-time failure,
+  #       for details see https://github.com/boostorg/gil/pull/164
+  #subchroma_image.cpp
   xyz_test.cpp)
 target_link_libraries(gil_test_ext_toolbox
   PRIVATE
