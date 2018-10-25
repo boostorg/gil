@@ -375,7 +375,7 @@ Here is an example of such lightweight workflow in Linux environment (Debian-bas
      - `-DBoost_COMPILER=-gcc5` or `-DBoost_COMPILER=-vc141` to help CMake match
         your compiler with Boost libraries naming in versioned layout
         (ie. `libboost_unit_test_framework-gcc5-mt-x64-1_69` and not `-gcc55-`).
-     - `DCMAKE_CXX_COMPILER_ARCHITECTURE_ID=x64` to help CMake match the target
+     - `-DCMAKE_CXX_COMPILER_ARCHITECTURE_ID=x64` to help CMake match the target
         architecture, in case it fails to determine it for your compiler, which is
         also crucial for matching `-x64-` in the versioned layout names.
      - if CMake is still failing to find Boost, you may try `-DBoost_DEBUG=ON` to
