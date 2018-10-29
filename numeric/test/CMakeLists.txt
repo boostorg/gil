@@ -6,7 +6,7 @@
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 #
-message(STATUS "Configuring Boost.GIL Numeric tests")
+message(STATUS "Boost.GIL: configuring Numeric extension tests")
 
 file(GLOB _headers
   ${PROJECT_SOURCE_DIR}/include/boost/gil/extension/numeric/*.hpp)

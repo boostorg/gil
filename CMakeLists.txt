@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2017 Mateusz Loskot <mateusz at loskot dot net>
+# Copyright (c) 2017-2018 Mateusz Loskot <mateusz at loskot dot net>
 #
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
@@ -16,7 +16,6 @@ include(CMakeDependentOption)
 option(GIL_BUILD_TESTS "Build GIL tests" ON)
 option(GIL_BUILD_EXAMPLES "Build GIL examples" OFF) # FIXME: Switch to ON after https://github.com/boostorg/gil/issues/40
 option(GIL_ENABLE_IO "Enable GIL IO in tests and examples (require libjpeg, libpng, libtiff)" ON)
-option(GIL_USE_BOOST_STAGE "Use Boost from current source tree and libraries from stage, unless BOOST_ROOT specified." ON)
 option(GIL_USE_CONAN "Use Conan to install dependencies" OFF)
 option(GIL_ENABLE_FINDBOOST_DOWNLOAD "Enable auto-download FindBoost.cmake for CMake" OFF)
 
@@ -26,19 +25,19 @@ option(GIL_ENABLE_FINDBOOST_DOWNLOAD "Enable auto-download FindBoost.cmake for C
 # - look for default installation location
 # - look for location specified with BOOST_ROOT
 #-----------------------------------------------------------------------------
-if (CMAKE_VERSION VERSION_LESS 3.12 AND NOT GIL_ENABLE_FINDBOOST_DOWNLOAD)
-  message(STATUS "You are using CMake older than 3.12")
-  message(STATUS "FindBoost.cmake has likely been updated to detect newer or even not yet released Boost")
-  message(STATUS "Run CMake with -DGIL_ENABLE_FINDBOOST_DOWNLOAD=ON to get latest version of FindBoost.cmake")
-  message(STATUS "WARNING:")
-  message(STATUS "   Newer FindBoost.cmake may fail to find your Boost for many reasons.")
-  message(STATUS "   For example, this may be due to unrecognised toolset eg. latest Visual Studio 2017.")
-  message(STATUS "   Try run CMake with -DBoost_COMPILER=\"-vc141\" or value for your toolset.")
+if (CMAKE_VERSION VERSION_LESS 3.13 AND NOT GIL_ENABLE_FINDBOOST_DOWNLOAD)
+  message(STATUS "Boost.GIL: You are using CMake older than 3.13")
+  message(STATUS "Boost.GIL: FindBoost.cmake has likely been updated to detect newer or even not yet released Boost")
+  message(STATUS "Boost.GIL: Run CMake with -DGIL_ENABLE_FINDBOOST_DOWNLOAD=ON to get latest version of FindBoost.cmake")
+  message(STATUS "Boost.GIL: WARNING:")
+  message(STATUS "Boost.GIL:    Newer FindBoost.cmake may fail to find your Boost for many reasons.")
+  message(STATUS "Boost.GIL:    For example, this may be due to unrecognised toolset eg. latest Visual Studio 2017.")
+  message(STATUS "Boost.GIL:    Try run CMake with -DBoost_COMPILER=\"-vc141\" or value for your toolset.")
 endif()
 
 if (GIL_ENABLE_FINDBOOST_DOWNLOAD)
   if (NOT EXISTS "${CMAKE_BINARY_DIR}/cmake/FindBoost.cmake")
-    message(STATUS "Downloading FindBoost.cmake from https://gitlab.kitware.com/cmake/ release branch")
+    message(STATUS "Boost.GIL: Downloading FindBoost.cmake from https://gitlab.kitware.com/cmake/ release branch")
     file(DOWNLOAD
       "https://gitlab.kitware.com/cmake/cmake/raw/release/Modules/FindBoost.cmake"
       "${CMAKE_BINARY_DIR}/cmake/FindBoost.cmake")
@@ -46,11 +45,13 @@ if (GIL_ENABLE_FINDBOOST_DOWNLOAD)
   list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_BINARY_DIR}/cmake)
 endif()
 
-if(GIL_USE_BOOST_STAGE AND NOT DEFINED BOOST_ROOT AND NOT DEFINED ENV{BOOST_ROOT})
+if(NOT DEFINED BOOST_ROOT AND NOT DEFINED ENV{BOOST_ROOT})
+  message(STATUS "Boost.GIL: Looking for Boost from current source tree and libraries from stage.")
+  message(STATUS "Boost.GIL: Disable stage look-up with passing -DBOOST_ROOT=/path/to/your/boost.")
   get_filename_component(_boost_root ../../ ABSOLUTE)
   if(EXISTS ${_boost_root}/boost-build.jam)
     set(BOOST_ROOT ${_boost_root})
-    message(STATUS "Using Boost libraries from stage directory in BOOST_ROOT=${BOOST_ROOT}")
+    message(STATUS "Boost.GIL: Using Boost libraries from stage directory in BOOST_ROOT=${BOOST_ROOT}")
   endif()
 endif()
 
@@ -67,8 +68,8 @@ if(MSVC)
 endif()
 
 find_package(Boost 1.65.0 REQUIRED COMPONENTS ${BOOST_COMPONENTS})
-message(STATUS "Boost_INCLUDE_DIRS=${Boost_INCLUDE_DIRS}")
-message(STATUS "Boost_LIBRARY_DIRS=${Boost_LIBRARY_DIRS}")
+message(STATUS "Boost.GIL: using Boost_INCLUDE_DIRS=${Boost_INCLUDE_DIRS}")
+message(STATUS "Boost.GIL: using Boost_LIBRARY_DIRS=${Boost_LIBRARY_DIRS}")
 
 # The boostorg/gil repository includes must come first,
 # before Boost includes from cloned Boost superproject or installed distribution.
@@ -86,7 +87,7 @@ if (GIL_ENABLE_IO)
   if(GIL_USE_CONAN)
     # Download automatically, you can also just copy the conan.cmake file
     if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
-      message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
+      message(STATUS "Boost.GIL: Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
       file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/v0.9/conan.cmake"
         "${CMAKE_BINARY_DIR}/conan.cmake")
     endif()

@@ -6,7 +6,7 @@
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 #
-message(STATUS "Configuring Boost.GIL IO tests")
+message(STATUS "Boost.GIL: configuring IO extension tests")
 
 # Unfortunately, ALIAS of imported target is not supported
 # see https://github.com/conan-io/conan/issues/2125

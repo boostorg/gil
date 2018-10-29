@@ -6,7 +6,7 @@
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 #
-message(STATUS "Configuring Boost.GIL Toolbox tests")
+message(STATUS "Boost.GIL: configuring Toolbox extension tests")
 
 file(GLOB_RECURSE _headers
   ${PROJECT_SOURCE_DIR}/include/boost/gil/extension/toolbox/*.hpp)

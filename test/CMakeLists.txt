@@ -5,7 +5,7 @@
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 #
-message(STATUS "Configuring Boost.GIL core tests")
+message(STATUS "Boost.GIL: configuring core tests")
 
 foreach(name channel pixel pixel_iterator promote_integral)
   add_executable(gil_test_${name} "")
