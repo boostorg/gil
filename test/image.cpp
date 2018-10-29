@@ -12,6 +12,7 @@
 
 #include <boost/gil/extension/dynamic_image/dynamic_image_all.hpp>
 
+#include <boost/core/ignore_unused.hpp>
 #include <boost/crc.hpp>
 #include <boost/lambda/bind.hpp>
 #include <boost/lambda/lambda.hpp>
@@ -170,7 +171,11 @@ private:
     template <typename Img> void basic_test(const string& prefix);
     template <typename View> void view_transformations_test(const View& img_view, const string& prefix);
     template <typename View> void homogeneous_view_transformations_test(const View& img_view, const string& prefix, mpl::true_);
-    template <typename View> void homogeneous_view_transformations_test(const View& img_view, const string& prefix, mpl::false_) {}
+    template <typename View> void homogeneous_view_transformations_test(const View& img_view, const string& prefix, mpl::false_)
+    {
+        boost::ignore_unused(img_view);
+        boost::ignore_unused(prefix);
+    }
     template <typename View> void histogram_test(const View& img_view, const string& prefix);
     void virtual_view_test();
     void packed_image_test();
