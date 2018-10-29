@@ -59,7 +59,7 @@ struct subchroma_image_deref_fn
     {}
 
     /// operator()
-    typename result_type operator()( const point_t& p ) const
+    result_type operator()( const point_t& p ) const
     {
         typedef Scaling_Factors< mpl::at_c< Factors, 0 >::type::value
                                , mpl::at_c< Factors, 1 >::type::value
