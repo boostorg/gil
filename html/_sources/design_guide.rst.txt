@@ -156,7 +156,7 @@ GIL uses a two-dimensional point, which is a refinement of
 Models
 ~~~~~~
 
-GIL provides a model of ``Point2DConcept``, ``point2<T>`` where
+GIL provides a model of ``Point2DConcept``, ``point<T>`` where
 ``T`` is the coordinate type.
 
 Channel
@@ -1014,7 +1014,7 @@ to another base iterator::
   concept MutableIteratorAdaptorConcept : IteratorAdaptorConcept<Iterator> {};
 
 .. seealso::
-   
+
    - `IteratorAdaptorConcept<Iterator> <reference/structboost_1_1gil_1_1_iterator_adaptor_concept.html>`_
    - `MutableIteratorAdaptorConcept<Iterator> <reference/structboost_1_1gil_1_1_mutable_iterator_adaptor_concept.html>`_
 
@@ -1396,7 +1396,7 @@ Here is some sample code using locators::
   below=loc.cache_location(0, 1);
   ++loc.x();                       // move to (11,10)
   loc.y()+=15;                     // move to (11,25)
-  loc-=point2<std::ptrdiff_t>(1,1);// move to (10,24)
+  loc-=point<std::ptrdiff_t>(1,1);// move to (10,24)
   *loc=(loc(0,-1)+loc(0,1))/2;     // set pixel (10,24) to the average of (10,23) and (10,25) (grayscale pixels only)
   *loc=(loc[above]+loc[below])/2;  // the same, but faster using cached relative neighbor locations
 
@@ -2064,7 +2064,7 @@ GIL's ``any_image_view`` and ``any_image`` are subclasses of ``variant``::
     typedef ... const_t; // immutable equivalent of this
     typedef std::ptrdiff_t x_coord_t;
     typedef std::ptrdiff_t y_coord_t;
-    typedef point2<std::ptrdiff_t> point_t;
+    typedef point<std::ptrdiff_t> point_t;
 
     any_image_view();
     template <typename T> explicit any_image_view(const T& obj);
@@ -2089,7 +2089,7 @@ GIL's ``any_image_view`` and ``any_image`` are subclasses of ``variant``::
     typedef ... view_t;
     typedef std::ptrdiff_t x_coord_t;
     typedef std::ptrdiff_t y_coord_t;
-    typedef point2<std::ptrdiff_t> point_t;
+    typedef point<std::ptrdiff_t> point_t;
 
     any_image();
     template <typename T> explicit any_image(const T& obj);
@@ -2442,7 +2442,7 @@ or "png" for the APIs of the other libraries)::
 
   // Returns the width and height of the JPEG file at the specified location.
   // Throws std::ios_base::failure if the location does not correspond to a valid JPEG file
-  point2<std::ptrdiff_t> jpeg_read_dimensions(const char*);
+  point<std::ptrdiff_t> jpeg_read_dimensions(const char*);
 
   // Allocates a new image whose dimensions are determined by the given jpeg image file, and loads the pixels into it.
   // Triggers a compile assert if the image color space or channel depth are not supported by the JPEG library or by the I/O extension.

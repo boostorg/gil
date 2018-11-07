@@ -32,7 +32,6 @@
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
     </ul>
@@ -47,7 +46,7 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespaceboost.html">boost</a></li><li class="navelem"><b>gil</b></li><li class="navelem"><a class="el" href="structboost_1_1gil_1_1_pixel_iterator_concept.html">PixelIteratorConcept</a></li>  </ul>
+<li class="navelem"><b>boost</b></li><li class="navelem"><b>gil</b></li><li class="navelem"><a class="el" href="structboost_1_1gil_1_1_pixel_iterator_concept.html">PixelIteratorConcept</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -63,7 +62,7 @@
 <p>An STL random access traversal iterator over a model of <a class="el" href="structboost_1_1gil_1_1_pixel_concept.html" title="Pixel concept - A color base whose elements are channels. ">PixelConcept</a>.  
  <a href="structboost_1_1gil_1_1_pixel_iterator_concept.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="gil__concept_8hpp_source.html">gil_concept.hpp</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="concepts_8hpp_source.html">concepts.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -96,13 +95,13 @@ struct boost::gil::PixelIteratorConcept&lt; Iterator &gt;</h3>
 </ul>
 <div class="fragment"><div class="line">concept PixelIteratorConcept&lt;typename Iterator&gt; : boost_concepts::RandomAccessTraversalConcept&lt;Iterator&gt;, PixelBasedConcept&lt;Iterator&gt; {</div>
 <div class="line">    where PixelValueConcept&lt;value_type&gt;;</div>
-<div class="line">    <span class="keyword">typename</span> const_iterator_type&lt;It&gt;::type;         </div>
+<div class="line">    <span class="keyword">typename</span> const_iterator_type&lt;It&gt;::type;</div>
 <div class="line">        where PixelIteratorConcept&lt;const_iterator_type&lt;It&gt;::type&gt;;</div>
-<div class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">bool</span>  iterator_is_mutable&lt;It&gt;::type::value;          </div>
+<div class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">bool</span>  iterator_is_mutable&lt;It&gt;::type::value;</div>
 <div class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">bool</span>  is_iterator_adaptor&lt;It&gt;::type::value;   <span class="comment">// is it an iterator adaptor</span></div>
 <div class="line">};</div>
 </div><!-- fragment --> </div><hr/>The documentation for this struct was generated from the following file:<ul>
-<li><a class="el" href="gil__concept_8hpp_source.html">gil_concept.hpp</a></li>
+<li><a class="el" href="concepts_8hpp_source.html">concepts.hpp</a></li>
 </ul>
 </div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
@@ -110,7 +109,7 @@ struct boost::gil::PixelIteratorConcept&lt; Iterator &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Tue Aug 21 2018 14:16:56 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Wed Nov 7 2018 15:28:42 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

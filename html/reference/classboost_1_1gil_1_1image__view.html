@@ -32,7 +32,6 @@
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
     </ul>
@@ -47,7 +46,7 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespaceboost.html">boost</a></li><li class="navelem"><b>gil</b></li><li class="navelem"><a class="el" href="classboost_1_1gil_1_1image__view.html">image_view</a></li>  </ul>
+<li class="navelem"><b>boost</b></li><li class="navelem"><b>gil</b></li><li class="navelem"><a class="el" href="classboost_1_1gil_1_1image__view.html">image_view</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -94,6 +93,16 @@ Loc::const_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>const_t<
 <tr class="memitem:aae57e67599898ee16dcf5e9b79062c84"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aae57e67599898ee16dcf5e9b79062c84"></a>
 typedef <a class="el" href="classboost_1_1gil_1_1iterator__from__2d.html">iterator_from_2d</a>&lt; Loc &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>iterator</b></td></tr>
 <tr class="separator:aae57e67599898ee16dcf5e9b79062c84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a252b1e031397c1dfe4fba0c55859132d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a252b1e031397c1dfe4fba0c55859132d"></a>
+typedef <a class="el" href="classboost_1_1gil_1_1iterator__from__2d.html">const_t::iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><b>const_iterator</b></td></tr>
+<tr class="separator:a252b1e031397c1dfe4fba0c55859132d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecc6792343337d748ae743d24d8e79e6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aecc6792343337d748ae743d24d8e79e6"></a>
+typedef const_t::reference&#160;</td><td class="memItemRight" valign="bottom"><b>const_reference</b></td></tr>
+<tr class="separator:aecc6792343337d748ae743d24d8e79e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0f138845d937a8096f9d64cc46404db"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab0f138845d937a8096f9d64cc46404db"></a>
+typedef std::iterator_traits<br class="typebreak"/>
+&lt; <a class="el" href="classboost_1_1gil_1_1iterator__from__2d.html">iterator</a> &gt;::pointer&#160;</td><td class="memItemRight" valign="bottom"><b>pointer</b></td></tr>
+<tr class="separator:ab0f138845d937a8096f9d64cc46404db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a92b881db836646f4039adcbb73c8595f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a92b881db836646f4039adcbb73c8595f"></a>
 typedef std::reverse_iterator<br class="typebreak"/>
 &lt; <a class="el" href="classboost_1_1gil_1_1iterator__from__2d.html">iterator</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>reverse_iterator</b></td></tr>
@@ -146,6 +155,18 @@ template&lt;typename View &gt; </td></tr>
 template&lt;typename View &gt; </td></tr>
 <tr class="memitem:aa40440ee08712ccd1fa7e2ee44a920f0"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator!=</b> (const View &amp;v) const </td></tr>
 <tr class="separator:aa40440ee08712ccd1fa7e2ee44a920f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6abdcb0b8cadeb8f39806bd6413a2075"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1gil_1_1image__view.html#a6abdcb0b8cadeb8f39806bd6413a2075">swap</a> (<a class="el" href="classboost_1_1gil_1_1image__view.html">image_view</a>&lt; Loc &gt; &amp;other)</td></tr>
+<tr class="memdesc:a6abdcb0b8cadeb8f39806bd6413a2075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exchanges the elements of the current view with those of <em>other</em> in constant time.  <a href="#a6abdcb0b8cadeb8f39806bd6413a2075">More...</a><br/></td></tr>
+<tr class="separator:a6abdcb0b8cadeb8f39806bd6413a2075"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6e61de369e994009e36f344f99c15ad"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1gil_1_1image__view.html#ac6e61de369e994009e36f344f99c15ad">empty</a> () const </td></tr>
+<tr class="memdesc:ac6e61de369e994009e36f344f99c15ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the view has no elements, false otherwise.  <a href="#ac6e61de369e994009e36f344f99c15ad">More...</a><br/></td></tr>
+<tr class="separator:ac6e61de369e994009e36f344f99c15ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f29c8a7f499b266d4cf7a3dfd75b940"><td class="memItemLeft" align="right" valign="top">reference&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1gil_1_1image__view.html#a6f29c8a7f499b266d4cf7a3dfd75b940">front</a> () const </td></tr>
+<tr class="memdesc:a6f29c8a7f499b266d4cf7a3dfd75b940"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a reference to the first element in raster order.  <a href="#a6f29c8a7f499b266d4cf7a3dfd75b940">More...</a><br/></td></tr>
+<tr class="separator:a6f29c8a7f499b266d4cf7a3dfd75b940"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c48c6a68d087259caa53b9ffae2a4f0"><td class="memItemLeft" align="right" valign="top">reference&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1gil_1_1image__view.html#a6c48c6a68d087259caa53b9ffae2a4f0">back</a> () const </td></tr>
+<tr class="memdesc:a6c48c6a68d087259caa53b9ffae2a4f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a reference to the last element in raster order.  <a href="#a6c48c6a68d087259caa53b9ffae2a4f0">More...</a><br/></td></tr>
+<tr class="separator:a6c48c6a68d087259caa53b9ffae2a4f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af723fb36aee62ac02924637371797b7a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af723fb36aee62ac02924637371797b7a"></a>
 const point_t &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>dimensions</b> () const </td></tr>
 <tr class="separator:af723fb36aee62ac02924637371797b7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -273,7 +294,117 @@ class boost::gil::image_view&lt; Loc &gt;</h3>
 <div class="fragment"><div class="line"><a class="code" href="group___s_t_l_optimizations.html#gaab999be608ae006f1127b8bb5145a227">std::fill</a>(img.begin(), img.end(), red_pixel);</div>
 </div><!-- fragment --><p>In addition, horizontal, vertical and 2D random access iterators are provided.</p>
 <p>Note also that <code><a class="el" href="classboost_1_1gil_1_1image__view.html" title="A lightweight object that interprets memory as a 2D array of pixels. Models ImageViewConcept,PixelBasedConcept,HasDynamicXStepTypeConcept,HasDynamicYStepTypeConcept,HasTransposedTypeConcept. ">image_view</a></code> does not require that its element type be a pixel. It could be instantiated with a locator whose <code>value_type</code> models only <code><a class="el" href="structboost_1_1gil_1_1_regular.html">Regular</a></code>. In this case the image view models the weaker <a class="el" href="structboost_1_1gil_1_1_random_access2_d_image_view_concept.html" title="2-dimensional view over immutable values ">RandomAccess2DImageViewConcept</a>, and does not model <a class="el" href="structboost_1_1gil_1_1_pixel_based_concept.html" title="Concept for all pixel-based GIL constructs, such as pixels, iterators, locators, views and images who...">PixelBasedConcept</a>. Many generic algorithms don't require the elements to be pixels. </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a6c48c6a68d087259caa53b9ffae2a4f0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">reference back </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a reference to the last element in raster order. </p>
+<dl class="section note"><dt>Note</dt><dd>Required by the ForwardCollection, since view model the concept. </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a href="https://www.boost.org/libs/utility/Collection.html">https://www.boost.org/libs/utility/Collection.html</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ac6e61de369e994009e36f344f99c15ad"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool empty </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns true if the view has no elements, false otherwise. </p>
+<dl class="section note"><dt>Note</dt><dd>Required by the Collection concept </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a href="https://www.boost.org/libs/utility/Collection.html">https://www.boost.org/libs/utility/Collection.html</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a6f29c8a7f499b266d4cf7a3dfd75b940"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">reference front </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a reference to the first element in raster order. </p>
+<dl class="section note"><dt>Note</dt><dd>Required by the ForwardCollection, since view model the concept. </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a href="https://www.boost.org/libs/utility/Collection.html">https://www.boost.org/libs/utility/Collection.html</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a6abdcb0b8cadeb8f39806bd6413a2075"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void swap </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classboost_1_1gil_1_1image__view.html">image_view</a>&lt; Loc &gt; &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Exchanges the elements of the current view with those of <em>other</em> in constant time. </p>
+<dl class="section note"><dt>Note</dt><dd>Required by the Collection concept </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a href="https://www.boost.org/libs/utility/Collection.html">https://www.boost.org/libs/utility/Collection.html</a> </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="image__view_8hpp_source.html">image_view.hpp</a></li>
 </ul>
 </div><!-- contents -->
@@ -282,7 +413,7 @@ class boost::gil::image_view&lt; Loc &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Tue Aug 21 2018 14:16:56 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Wed Nov 7 2018 15:28:42 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

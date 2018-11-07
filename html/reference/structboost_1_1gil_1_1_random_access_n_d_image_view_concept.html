@@ -32,7 +32,6 @@
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
     </ul>
@@ -47,7 +46,7 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespaceboost.html">boost</a></li><li class="navelem"><b>gil</b></li><li class="navelem"><a class="el" href="structboost_1_1gil_1_1_random_access_n_d_image_view_concept.html">RandomAccessNDImageViewConcept</a></li>  </ul>
+<li class="navelem"><b>boost</b></li><li class="navelem"><b>gil</b></li><li class="navelem"><a class="el" href="structboost_1_1gil_1_1_random_access_n_d_image_view_concept.html">RandomAccessNDImageViewConcept</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -63,7 +62,7 @@
 <p>N-dimensional view over immutable values.  
  <a href="structboost_1_1gil_1_1_random_access_n_d_image_view_concept.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="gil__concept_8hpp_source.html">gil_concept.hpp</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="concepts_8hpp_source.html">concepts.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -90,7 +89,7 @@ struct boost::gil::RandomAccessNDImageViewConcept&lt; View &gt;</h3>
 <div class="line">    <span class="keyword">typename</span> point_t;  where PointNDConcept&lt;point_t&gt;; <span class="comment">// N-dimensional point</span></div>
 <div class="line">    <span class="keyword">typename</span> locator;  where RandomAccessNDLocatorConcept&lt;locator&gt;; <span class="comment">// N-dimensional locator.</span></div>
 <div class="line">    <span class="keyword">typename</span> iterator; where RandomAccessTraversalConcept&lt;iterator&gt;; <span class="comment">// 1-dimensional iterator over all values</span></div>
-<div class="line">    <span class="keyword">typename</span> reverse_iterator; where RandomAccessTraversalConcept&lt;reverse_iterator&gt;; </div>
+<div class="line">    <span class="keyword">typename</span> reverse_iterator; where RandomAccessTraversalConcept&lt;reverse_iterator&gt;;</div>
 <div class="line">    <span class="keyword">typename</span> size_type;       <span class="comment">// the return value of size()</span></div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// Equivalent to RandomAccessNDLocatorConcept::axis</span></div>
@@ -108,10 +107,10 @@ struct boost::gil::RandomAccessNDImageViewConcept&lt; View &gt;</h3>
 <div class="line">    };</div>
 <div class="line"></div>
 <div class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">size_t</span> num_dimensions = point_t::num_dimensions;</div>
-<div class="line">    </div>
+<div class="line"></div>
 <div class="line">    <span class="comment">// Create from a locator at the top-left corner and dimensions</span></div>
 <div class="line">    View::View(<span class="keyword">const</span> locator&amp;, <span class="keyword">const</span> point_type&amp;);</div>
-<div class="line">    </div>
+<div class="line"></div>
 <div class="line">    size_type        View::size()       <span class="keyword">const</span>; <span class="comment">// total number of elements</span></div>
 <div class="line">    reference        operator[](View, <span class="keyword">const</span> difference_type&amp;) <span class="keyword">const</span>; <span class="comment">// 1-dimensional reference</span></div>
 <div class="line">    iterator         View::begin()      <span class="keyword">const</span>;</div>
@@ -128,7 +127,7 @@ struct boost::gil::RandomAccessNDImageViewConcept&lt; View &gt;</h3>
 <div class="line">    reference operator()(View,<span class="keyword">const</span> point_t&amp;) <span class="keyword">const</span>;</div>
 <div class="line">};</div>
 </div><!-- fragment --> </div><hr/>The documentation for this struct was generated from the following file:<ul>
-<li><a class="el" href="gil__concept_8hpp_source.html">gil_concept.hpp</a></li>
+<li><a class="el" href="concepts_8hpp_source.html">concepts.hpp</a></li>
 </ul>
 </div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
@@ -136,7 +135,7 @@ struct boost::gil::RandomAccessNDImageViewConcept&lt; View &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Tue Aug 21 2018 14:16:56 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Wed Nov 7 2018 15:28:42 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

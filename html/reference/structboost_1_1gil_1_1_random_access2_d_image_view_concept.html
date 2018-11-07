@@ -32,7 +32,6 @@
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
     </ul>
@@ -47,7 +46,7 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespaceboost.html">boost</a></li><li class="navelem"><b>gil</b></li><li class="navelem"><a class="el" href="structboost_1_1gil_1_1_random_access2_d_image_view_concept.html">RandomAccess2DImageViewConcept</a></li>  </ul>
+<li class="navelem"><b>boost</b></li><li class="navelem"><b>gil</b></li><li class="navelem"><a class="el" href="structboost_1_1gil_1_1_random_access2_d_image_view_concept.html">RandomAccess2DImageViewConcept</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -63,7 +62,7 @@
 <p>2-dimensional view over immutable values  
  <a href="structboost_1_1gil_1_1_random_access2_d_image_view_concept.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="gil__concept_8hpp_source.html">gil_concept.hpp</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="concepts_8hpp_source.html">concepts.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -90,10 +89,10 @@ struct boost::gil::RandomAccess2DImageViewConcept&lt; View &gt;</h3>
 <div class="line">    <span class="keyword">typename</span> x_coord_t  = axis&lt;0&gt;::coord_t;</div>
 <div class="line">    <span class="keyword">typename</span> y_coord_t  = axis&lt;1&gt;::coord_t;</div>
 <div class="line">    <span class="keyword">typename</span> xy_locator = locator;</div>
-<div class="line">    </div>
+<div class="line"></div>
 <div class="line">    x_coord_t View::width()  <span class="keyword">const</span>;</div>
 <div class="line">    y_coord_t View::height() <span class="keyword">const</span>;</div>
-<div class="line">    </div>
+<div class="line"></div>
 <div class="line">    <span class="comment">// X-navigation</span></div>
 <div class="line">    x_iterator View::x_at(<span class="keyword">const</span> point_t&amp;) <span class="keyword">const</span>;</div>
 <div class="line">    x_iterator View::row_begin(y_coord_t) <span class="keyword">const</span>;</div>
@@ -103,11 +102,11 @@ struct boost::gil::RandomAccess2DImageViewConcept&lt; View &gt;</h3>
 <div class="line">    y_iterator View::y_at(<span class="keyword">const</span> point_t&amp;) <span class="keyword">const</span>;</div>
 <div class="line">    y_iterator View::col_begin(x_coord_t) <span class="keyword">const</span>;</div>
 <div class="line">    y_iterator View::col_end  (x_coord_t) <span class="keyword">const</span>;</div>
-<div class="line">       </div>
+<div class="line"></div>
 <div class="line">    <span class="comment">// navigating in 2D</span></div>
 <div class="line">    xy_locator View::xy_at(<span class="keyword">const</span> point_t&amp;) <span class="keyword">const</span>;</div>
 <div class="line"></div>
-<div class="line">    <span class="comment">// (x,y) versions of all methods taking point_t    </span></div>
+<div class="line">    <span class="comment">// (x,y) versions of all methods taking point_t</span></div>
 <div class="line">    View::View(x_coord_t,y_coord_t,<span class="keyword">const</span> locator&amp;);</div>
 <div class="line">    iterator View::at(x_coord_t,y_coord_t) <span class="keyword">const</span>;</div>
 <div class="line">    reference operator()(View,x_coord_t,y_coord_t) <span class="keyword">const</span>;</div>
@@ -116,7 +115,7 @@ struct boost::gil::RandomAccess2DImageViewConcept&lt; View &gt;</h3>
 <div class="line">    y_iterator View::y_at(x_coord_t,y_coord_t) <span class="keyword">const</span>;</div>
 <div class="line">};</div>
 </div><!-- fragment --> </div><hr/>The documentation for this struct was generated from the following file:<ul>
-<li><a class="el" href="gil__concept_8hpp_source.html">gil_concept.hpp</a></li>
+<li><a class="el" href="concepts_8hpp_source.html">concepts.hpp</a></li>
 </ul>
 </div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
@@ -124,7 +123,7 @@ struct boost::gil::RandomAccess2DImageViewConcept&lt; View &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Tue Aug 21 2018 14:16:56 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Wed Nov 7 2018 15:28:42 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

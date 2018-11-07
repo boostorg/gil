@@ -1,21 +1,13 @@
-/*
-    Copyright 2005-2007 Adobe Systems Incorporated
-   
-    Use, modification and distribution are subject to the Boost Software License,
-    Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
-    http://www.boost.org/LICENSE_1_0.txt).
-
-    See http://opensource.adobe.com/gil for most recent version including documentation.
-*/
-
-/*************************************************************************************************/
-
-/// \file
-/// \brief Example file to demonstrate a way to compute gradients along x-axis
-/// \author Lubomir Bourdev and Hailin Jin
-/// \date October 19, 2006
-
+//
+// Copyright 2005-2007 Adobe Systems Incorporated
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #include <boost/gil/extension/io/jpeg_dynamic_io.hpp>
+
+// Example to demonstrate a way to compute gradients along x-axis
 
 using namespace boost::gil;
 
@@ -36,7 +28,7 @@ void x_gradient(const SrcView& src, const DstView& dst) {
         typename DstView::x_iterator dst_it = dst.row_begin(y);
 
         for (int x=1; x<src.width()-1; ++x) {
-            static_transform(src_it[x-1], src_it[x+1], dst_it[x], 
+            static_transform(src_it[x-1], src_it[x+1], dst_it[x],
                              halfdiff_cast_channels<dst_channel_t>());
         }
     }
@@ -51,7 +43,7 @@ void x_luminosity_gradient(const SrcView& src, const DstView& dst) {
 int main() {
     rgb8_image_t img;
     jpeg_read_image("test.jpg",img);
-    
+
     gray8s_image_t img_out(img.dimensions());
     fill_pixels(view(img_out),int8_t(0));
 
