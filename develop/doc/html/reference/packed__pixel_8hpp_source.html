@@ -139,10 +139,10 @@
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="comment">//  ColorBasedConcept</span></div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> BitField, <span class="keyword">typename</span> ChannelRefVec, <span class="keyword">typename</span> Layout, <span class="keywordtype">int</span> K&gt;  </div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="keyword">struct </span>kth_element_type&lt;packed_pixel&lt;BitField,ChannelRefVec,Layout&gt;,K&gt; : <span class="keyword">public</span> <a class="code" href="group___color_base_model_homogeneous.html#gab7da9373761e576fdedd2d7852dd9185">mpl::at_c</a>&lt;ChannelRefVec,K&gt; {};</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="keyword">struct </span>kth_element_type&lt;packed_pixel&lt;BitField,ChannelRefVec,Layout&gt;,K&gt; : <span class="keyword">public</span> <a class="code" href="group___color_base_model_homogeneous.html#ga6fb9de37a524b47bd591e1528809b24f">mpl::at_c</a>&lt;ChannelRefVec,K&gt; {};</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> BitField, <span class="keyword">typename</span> ChannelRefVec, <span class="keyword">typename</span> Layout, <span class="keywordtype">int</span> K&gt;  </div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="keyword">struct </span>kth_element_reference_type&lt;packed_pixel&lt;BitField,ChannelRefVec,Layout&gt;,K&gt; : <span class="keyword">public</span> <a class="code" href="group___color_base_model_homogeneous.html#gab7da9373761e576fdedd2d7852dd9185">mpl::at_c</a>&lt;ChannelRefVec,K&gt; {};</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="keyword">struct </span>kth_element_reference_type&lt;packed_pixel&lt;BitField,ChannelRefVec,Layout&gt;,K&gt; : <span class="keyword">public</span> <a class="code" href="group___color_base_model_homogeneous.html#ga6fb9de37a524b47bd591e1528809b24f">mpl::at_c</a>&lt;ChannelRefVec,K&gt; {};</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> BitField, <span class="keyword">typename</span> ChannelRefVec, <span class="keyword">typename</span> Layout, <span class="keywordtype">int</span> K&gt;  </div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="keyword">struct </span>kth_element_const_reference_type&lt;packed_pixel&lt;BitField,ChannelRefVec,Layout&gt;,K&gt; {</div>
@@ -151,13 +151,13 @@
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K, <span class="keyword">typename</span> P, <span class="keyword">typename</span> C, <span class="keyword">typename</span> L&gt; <span class="keyword">inline</span></div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="keyword">typename</span> kth_element_reference_type&lt;packed_pixel&lt;P,C,L&gt;, K&gt;::type </div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<a class="code" href="group___color_base_model_homogeneous.html#gab7da9373761e576fdedd2d7852dd9185">at_c</a>(packed_pixel&lt;P,C,L&gt;&amp; p) { </div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<a class="code" href="group___color_base_model_homogeneous.html#ga6fb9de37a524b47bd591e1528809b24f">at_c</a>(packed_pixel&lt;P,C,L&gt;&amp; p) { </div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">typename</span> kth_element_reference_type&lt;packed_pixel&lt;P,C,L&gt;, K&gt;::type(&amp;p._bitfield); </div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;}</div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K, <span class="keyword">typename</span> P, <span class="keyword">typename</span> C, <span class="keyword">typename</span> L&gt; <span class="keyword">inline</span></div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="keyword">typename</span> kth_element_const_reference_type&lt;packed_pixel&lt;P,C,L&gt;, K&gt;::type </div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<a class="code" href="group___color_base_model_homogeneous.html#gab7da9373761e576fdedd2d7852dd9185">at_c</a>(<span class="keyword">const</span> packed_pixel&lt;P,C,L&gt;&amp; p) { </div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<a class="code" href="group___color_base_model_homogeneous.html#ga6fb9de37a524b47bd591e1528809b24f">at_c</a>(<span class="keyword">const</span> packed_pixel&lt;P,C,L&gt;&amp; p) { </div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">typename</span> kth_element_const_reference_type&lt;packed_pixel&lt;P,C,L&gt;, K&gt;::type(&amp;p._bitfield);</div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;}</div>
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
@@ -199,14 +199,14 @@
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    <span class="keyword">struct </span>has_trivial_constructor&lt;gil::packed_pixel&lt;P,C,L&gt; &gt; : <span class="keyword">public</span> has_trivial_constructor&lt;P&gt; {};</div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;}</div>
 <div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="group___color_base_model_homogeneous_html_gab7da9373761e576fdedd2d7852dd9185"><div class="ttname"><a href="group___color_base_model_homogeneous.html#gab7da9373761e576fdedd2d7852dd9185">boost::gil::at_c</a></div><div class="ttdeci">add_reference&lt; E &gt;::type at_c(detail::homogeneous_color_base&lt; E, L, N &gt; &amp;p)</div><div class="ttdoc">Provides mutable access to the K-th element, in physical order. </div><div class="ttdef"><b>Definition:</b> color_base.hpp:381</div></div>
+<div class="ttc" id="group___color_base_model_homogeneous_html_ga6fb9de37a524b47bd591e1528809b24f"><div class="ttname"><a href="group___color_base_model_homogeneous.html#ga6fb9de37a524b47bd591e1528809b24f">boost::gil::at_c</a></div><div class="ttdeci">add_reference&lt; E &gt;::type at_c(detail::homogeneous_color_base&lt; E, L, N &gt; &amp;p)</div><div class="ttdoc">Provides mutable access to the K-th element, in physical order. </div><div class="ttdef"><b>Definition:</b> color_base.hpp:381</div></div>
 </div><!-- fragment --></div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
      <!-- start footer part -->
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Mon Oct 29 2018 18:17:24 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Nov 17 2018 23:37:05 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

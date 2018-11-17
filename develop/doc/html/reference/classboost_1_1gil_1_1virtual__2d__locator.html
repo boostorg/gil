@@ -60,7 +60,7 @@
 </div><!--header-->
 <div class="contents">
 
-<p>A 2D locator over a virtual image. Upon dereferencing, invokes a given function object passing it its coordinates. Models: <a class="el" href="structboost_1_1gil_1_1_pixel_locator_concept.html" title="GIL&#39;s 2-dimensional locator over immutable GIL pixels. ">PixelLocatorConcept</a>, <a class="el" href="structboost_1_1gil_1_1_has_dynamic_x_step_type_concept.html" title="Concept for iterators, locators and views that can define a type just like the given iterator/locator...">HasDynamicXStepTypeConcept</a>, <a class="el" href="structboost_1_1gil_1_1_has_dynamic_y_step_type_concept.html" title="Concept for locators and views that can define a type just like the given locator or view...">HasDynamicYStepTypeConcept</a>, <a class="el" href="structboost_1_1gil_1_1_has_transposed_type_concept.html" title="Concept for locators and views that can define a type just like the given locator or view...">HasTransposedTypeConcept</a>.  
+<p>A 2D locator over a virtual image. Upon dereferencing, invokes a given function object passing it its coordinates. Models: PixelLocatorConcept, HasDynamicXStepTypeConcept, HasDynamicYStepTypeConcept, HasTransposedTypeConcept.  
  <a href="classboost_1_1gil_1_1virtual__2d__locator.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="virtual__locator_8hpp_source.html">virtual_locator.hpp</a>&gt;</code></p>
@@ -109,7 +109,7 @@ typedef parent_t::y_coord_t&#160;</td><td class="memItemRight" valign="bottom"><
 typedef <a class="el" href="structboost_1_1gil_1_1position__iterator.html">parent_t::x_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><b>x_iterator</b></td></tr>
 <tr class="separator:a397e495b7f82699fdd7f80b6b52fee34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf65c5fdc3dc0b541734105fa4b5502a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adf65c5fdc3dc0b541734105fa4b5502a"></a>
-typedef parent_t::y_iterator&#160;</td><td class="memItemRight" valign="bottom"><b>y_iterator</b></td></tr>
+typedef <a class="el" href="structboost_1_1gil_1_1position__iterator.html">parent_t::y_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><b>y_iterator</b></td></tr>
 <tr class="separator:adf65c5fdc3dc0b541734105fa4b5502a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_types_classboost_1_1gil_1_1pixel__2d__locator__base"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classboost_1_1gil_1_1pixel__2d__locator__base')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="classboost_1_1gil_1_1pixel__2d__locator__base.html">pixel_2d_locator_base&lt; virtual_2d_locator&lt; Deref, IsTransposed &gt;, position_iterator&lt; Deref, IsTransposed &gt;, position_iterator&lt; Deref, 1-IsTransposed &gt; &gt;</a></td></tr>
 <tr class="memitem:ae3d00803fa442dc8138e53c6fd6ff551 inherit pub_types_classboost_1_1gil_1_1pixel__2d__locator__base"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae3d00803fa442dc8138e53c6fd6ff551"></a>
@@ -178,13 +178,13 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const
 <a class="el" href="structboost_1_1gil_1_1position__iterator.html">x_iterator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>x</b> ()</td></tr>
 <tr class="separator:a72169bdc650ac7eda288398e4ce1d7f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac7ca2bdfc5a0be2b150b22dddfd9b10f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac7ca2bdfc5a0be2b150b22dddfd9b10f"></a>
-y_iterator &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>y</b> ()</td></tr>
+<a class="el" href="structboost_1_1gil_1_1position__iterator.html">y_iterator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>y</b> ()</td></tr>
 <tr class="separator:ac7ca2bdfc5a0be2b150b22dddfd9b10f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e86d37c383d7cbafbd4969321d07ae7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1e86d37c383d7cbafbd4969321d07ae7"></a>
 <a class="el" href="structboost_1_1gil_1_1position__iterator.html">x_iterator</a> const &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>x</b> () const </td></tr>
 <tr class="separator:a1e86d37c383d7cbafbd4969321d07ae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8d8247ad88b73c9bb3b5d7122064ec59"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8d8247ad88b73c9bb3b5d7122064ec59"></a>
-y_iterator const &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>y</b> () const </td></tr>
+<a class="el" href="structboost_1_1gil_1_1position__iterator.html">y_iterator</a> const &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>y</b> () const </td></tr>
 <tr class="separator:a8d8247ad88b73c9bb3b5d7122064ec59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe237e335f588dfc308517870df6f160"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe237e335f588dfc308517870df6f160"></a>
 y_coord_t&#160;</td><td class="memItemRight" valign="bottom"><b>y_distance_to</b> (const <a class="el" href="classboost_1_1gil_1_1virtual__2d__locator.html">this_t</a> &amp;it2, x_coord_t) const </td></tr>
@@ -284,7 +284,7 @@ static const std::size_t&#160;</td><td class="memItemRight" valign="bottom"><b>n
 <div class="textblock"><h3>template&lt;typename Deref, bool IsTransposed&gt;<br/>
 class boost::gil::virtual_2d_locator&lt; Deref, IsTransposed &gt;</h3>
 
-<p>A 2D locator over a virtual image. Upon dereferencing, invokes a given function object passing it its coordinates. Models: <a class="el" href="structboost_1_1gil_1_1_pixel_locator_concept.html" title="GIL&#39;s 2-dimensional locator over immutable GIL pixels. ">PixelLocatorConcept</a>, <a class="el" href="structboost_1_1gil_1_1_has_dynamic_x_step_type_concept.html" title="Concept for iterators, locators and views that can define a type just like the given iterator/locator...">HasDynamicXStepTypeConcept</a>, <a class="el" href="structboost_1_1gil_1_1_has_dynamic_y_step_type_concept.html" title="Concept for locators and views that can define a type just like the given locator or view...">HasDynamicYStepTypeConcept</a>, <a class="el" href="structboost_1_1gil_1_1_has_transposed_type_concept.html" title="Concept for locators and views that can define a type just like the given locator or view...">HasTransposedTypeConcept</a>. </p>
+<p>A 2D locator over a virtual image. Upon dereferencing, invokes a given function object passing it its coordinates. Models: PixelLocatorConcept, HasDynamicXStepTypeConcept, HasDynamicYStepTypeConcept, HasTransposedTypeConcept. </p>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="virtual__locator_8hpp_source.html">virtual_locator.hpp</a></li>
 </ul>
@@ -294,7 +294,7 @@ class boost::gil::virtual_2d_locator&lt; Deref, IsTransposed &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Mon Oct 29 2018 18:17:25 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Nov 17 2018 23:37:05 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

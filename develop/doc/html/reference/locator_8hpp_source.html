@@ -75,7 +75,7 @@
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> P&gt; P* memunit_advanced(<span class="keyword">const</span> P* p, std::ptrdiff_t diff);</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> P&gt; P&amp; memunit_advanced_ref(P* p, std::ptrdiff_t diff);</div>
 <div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1iterator__add__deref.html">   25</a></span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Iterator, <span class="keyword">typename</span> D&gt; <span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1iterator__add__deref.html">iterator_add_deref</a>;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">class </span><a class="code" href="classboost_1_1gil_1_1point.html">point</a>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="classboost_1_1gil_1_1point.html">   26</a></span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">class </span><a class="code" href="classboost_1_1gil_1_1point.html">point</a>;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">namespace </span>detail {</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="comment">// helper class specialized for each axis of pixel_2d_locator</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">template</span> &lt;std::<span class="keywordtype">size_t</span> D, <span class="keyword">typename</span> Loc&gt;  <span class="keyword">class </span>locator_axis;</div>
@@ -87,7 +87,7 @@
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">struct </span>color_space_type;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">struct </span>channel_mapping_type;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">struct </span>is_planar;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1num__channels.html">num_channels</a>;</div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1num__channels.html">   38</a></span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1num__channels.html">num_channels</a>;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">// The type of a locator or a view that has X and Y swapped. By default it is the same</span></div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">struct </span>transposed_type {</div>
@@ -314,15 +314,15 @@
 <div class="ttc" id="classboost_1_1gil_1_1pixel__2d__locator__base_html"><div class="ttname"><a href="classboost_1_1gil_1_1pixel__2d__locator__base.html">boost::gil::pixel_2d_locator_base</a></div><div class="ttdoc">base class for models of PixelLocatorConceptPixel locator is similar to a pixel iterator, but allows for 2D navigation of pixels within an image view. It has a 2D difference_type and supports random access operations like: </div><div class="ttdef"><b>Definition:</b> locator.hpp:105</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1iterator__add__deref_html"><div class="ttname"><a href="structboost_1_1gil_1_1iterator__add__deref.html">boost::gil::iterator_add_deref</a></div><div class="ttdoc">Returns the type (and creates an instance) of an iterator that invokes the given dereference adaptor ...</div><div class="ttdef"><b>Definition:</b> locator.hpp:25</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1channel__type_html"><div class="ttname"><a href="structboost_1_1gil_1_1channel__type.html">boost::gil::channel_type</a></div><div class="ttdef"><b>Definition:</b> color_convert.hpp:30</div></div>
-<div class="ttc" id="structboost_1_1gil_1_1num__channels_html"><div class="ttname"><a href="structboost_1_1gil_1_1num__channels.html">boost::gil::num_channels</a></div><div class="ttdoc">Returns the number of channels of a pixel-based GIL construct. </div><div class="ttdef"><b>Definition:</b> concepts.hpp:56</div></div>
-<div class="ttc" id="classboost_1_1gil_1_1point_html"><div class="ttname"><a href="classboost_1_1gil_1_1point.html">boost::gil::point</a></div><div class="ttdoc">2D point both axes of which have the same dimension typeModels: Point2DConcept </div><div class="ttdef"><b>Definition:</b> concepts.hpp:42</div></div>
+<div class="ttc" id="structboost_1_1gil_1_1num__channels_html"><div class="ttname"><a href="structboost_1_1gil_1_1num__channels.html">boost::gil::num_channels</a></div><div class="ttdoc">Returns the number of channels of a pixel-based GIL construct. </div><div class="ttdef"><b>Definition:</b> locator.hpp:38</div></div>
+<div class="ttc" id="classboost_1_1gil_1_1point_html"><div class="ttname"><a href="classboost_1_1gil_1_1point.html">boost::gil::point</a></div><div class="ttdoc">2D point both axes of which have the same dimension typeModels: Point2DConcept </div><div class="ttdef"><b>Definition:</b> locator.hpp:26</div></div>
 </div><!-- fragment --></div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
      <!-- start footer part -->
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Mon Oct 29 2018 18:17:24 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Nov 17 2018 23:37:05 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

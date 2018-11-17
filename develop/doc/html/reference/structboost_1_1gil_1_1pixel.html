@@ -59,12 +59,12 @@
 </div><!--header-->
 <div class="contents">
 
-<p>Represents a pixel value (a container of channels). Models: <a class="el" href="structboost_1_1gil_1_1_homogeneous_color_base_value_concept.html" title="Homogeneous color base that also has a default constructor. Refines Regular. ">HomogeneousColorBaseValueConcept</a>, <a class="el" href="structboost_1_1gil_1_1_pixel_value_concept.html" title="Pixel concept that is a Regular type. ">PixelValueConcept</a>, <a class="el" href="structboost_1_1gil_1_1_homogeneous_pixel_based_concept.html" title="Concept for homogeneous pixel-based GIL constructs. ">HomogeneousPixelBasedConcept</a>.  
+<p>Represents a pixel value (a container of channels). Models: HomogeneousColorBaseValueConcept, PixelValueConcept, HomogeneousPixelBasedConcept.  
  <a href="structboost_1_1gil_1_1pixel.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="pixel_8hpp_source.html">pixel.hpp</a>&gt;</code></p>
 
-<p>Inherits homogeneous_color_base&lt; Element, Layout, K &gt;.</p>
+<p>Inherits homogeneous_color_base&lt; ChannelValue, Layout, mpl::size&lt; Layout::color_space_t &gt;::value &gt;.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -142,8 +142,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (chann
 <div class="textblock"><h3>template&lt;typename T, typename L&gt;<br/>
 struct boost::gil::pixel&lt; T, L &gt;</h3>
 
-<p>Represents a pixel value (a container of channels). Models: <a class="el" href="structboost_1_1gil_1_1_homogeneous_color_base_value_concept.html" title="Homogeneous color base that also has a default constructor. Refines Regular. ">HomogeneousColorBaseValueConcept</a>, <a class="el" href="structboost_1_1gil_1_1_pixel_value_concept.html" title="Pixel concept that is a Regular type. ">PixelValueConcept</a>, <a class="el" href="structboost_1_1gil_1_1_homogeneous_pixel_based_concept.html" title="Concept for homogeneous pixel-based GIL constructs. ">HomogeneousPixelBasedConcept</a>. </p>
-<p>A pixel is a set of channels defining the color at a given point in an image. Conceptually, a pixel is little more than a color base whose elements model <code><a class="el" href="structboost_1_1gil_1_1_channel_concept.html" title="A channel is the building block of a color. Color is defined as a mixture of primary colors and a cha...">ChannelConcept</a></code>. The class <code>pixel</code> defines a simple, homogeneous pixel value. It is used to store the value of a color. The built-in C++ references to <code>pixel</code>, <code>pixel&amp;</code> and <code>const</code> <code>pixel&amp;</code> are used to represent a reference to a pixel inside an interleaved image view (a view in which all channels are together in memory). Similarly, built-in pointer types <code>pixel*</code> and <code>const</code> <code>pixel*</code> are used as the standard iterator over a row of interleaved homogeneous pixels.</p>
+<p>Represents a pixel value (a container of channels). Models: HomogeneousColorBaseValueConcept, PixelValueConcept, HomogeneousPixelBasedConcept. </p>
+<p>A pixel is a set of channels defining the color at a given point in an image. Conceptually, a pixel is little more than a color base whose elements model <code>ChannelConcept</code>. The class <code>pixel</code> defines a simple, homogeneous pixel value. It is used to store the value of a color. The built-in C++ references to <code>pixel</code>, <code>pixel&amp;</code> and <code>const</code> <code>pixel&amp;</code> are used to represent a reference to a pixel inside an interleaved image view (a view in which all channels are together in memory). Similarly, built-in pointer types <code>pixel*</code> and <code>const</code> <code>pixel*</code> are used as the standard iterator over a row of interleaved homogeneous pixels.</p>
 <p>Since <code>pixel</code> inherits the properties of color base, assigning, equality comparison and copy-construcion are allowed between compatible pixels. This means that an 8-bit RGB pixel may be assigned to an 8-bit BGR pixel, or to an 8-bit planar reference. The channels are properly paired semantically.</p>
 <p>The single-channel (grayscale) instantiation of the class pixel, (i.e. <code>pixel&lt;T,gray_layout_t&gt;</code>) is also convertible to/from a channel value. This allows grayscale pixels to be used in simpler expressions like *gray_pix1 = *gray_pix2 instead of more complicated at_c&lt;0&gt;(gray_pix1) = at_c&lt;0&gt;(gray_pix2) or get_color&lt;gray_color_t&gt;(gray_pix1) = get_color&lt;gray_color_t&gt;(gray_pix2) </p>
 </div><hr/>The documentation for this struct was generated from the following files:<ul>
@@ -156,7 +156,7 @@ struct boost::gil::pixel&lt; T, L &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Mon Oct 29 2018 18:17:25 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Nov 17 2018 23:37:05 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

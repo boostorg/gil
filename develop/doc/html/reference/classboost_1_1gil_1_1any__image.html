@@ -59,7 +59,7 @@
 </div><!--header-->
 <div class="contents">
 
-<p>Represents a run-time specified image. Note it does NOT model <a class="el" href="structboost_1_1gil_1_1_image_concept.html" title="2-dimensional image whose value type models PixelValueConcept ">ImageConcept</a>.  
+<p>Represents a run-time specified image. Note it does NOT model ImageConcept.  
  <a href="classboost_1_1gil_1_1any__image.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="any__image_8hpp_source.html">any_image.hpp</a>&gt;</code></p>
@@ -196,8 +196,8 @@ static bool&#160;</td><td class="memItemRight" valign="bottom"><b>has_type</b> (
 <div class="textblock"><h3>template&lt;typename ImageTypes&gt;<br/>
 class boost::gil::any_image&lt; ImageTypes &gt;</h3>
 
-<p>Represents a run-time specified image. Note it does NOT model <a class="el" href="structboost_1_1gil_1_1_image_concept.html" title="2-dimensional image whose value type models PixelValueConcept ">ImageConcept</a>. </p>
-<p>Represents an image whose type (color space, layout, planar/interleaved organization, etc) can be specified at run time. It is the runtime equivalent of <code>image</code>. Some of the requirements of <a class="el" href="structboost_1_1gil_1_1_image_concept.html" title="2-dimensional image whose value type models PixelValueConcept ">ImageConcept</a>, such as the <code>value_type</code> typedef cannot be fulfilled, since the language does not allow runtime type specification. Other requirements, such as access to the pixels, would be inefficient to provide. Thus <code><a class="el" href="classboost_1_1gil_1_1any__image.html" title="Represents a run-time specified image. Note it does NOT model ImageConcept. ">any_image</a></code> does not fully model <a class="el" href="structboost_1_1gil_1_1_image_concept.html" title="2-dimensional image whose value type models PixelValueConcept ">ImageConcept</a>. In particular, its <code>view</code> and <code>const_view</code> methods return <code><a class="el" href="classboost_1_1gil_1_1any__image__view.html" title="Represents a run-time specified image view. Models HasDynamicXStepTypeConcept, HasDynamicYStepTypeCon...">any_image_view</a></code>, which does not fully model <a class="el" href="structboost_1_1gil_1_1_image_view_concept.html" title="GIL&#39;s 2-dimensional view over immutable GIL pixels. ">ImageViewConcept</a>. See <code><a class="el" href="classboost_1_1gil_1_1any__image__view.html" title="Represents a run-time specified image view. Models HasDynamicXStepTypeConcept, HasDynamicYStepTypeCon...">any_image_view</a></code> for more. </p>
+<p>Represents a run-time specified image. Note it does NOT model ImageConcept. </p>
+<p>Represents an image whose type (color space, layout, planar/interleaved organization, etc) can be specified at run time. It is the runtime equivalent of <code>image</code>. Some of the requirements of ImageConcept, such as the <code>value_type</code> typedef cannot be fulfilled, since the language does not allow runtime type specification. Other requirements, such as access to the pixels, would be inefficient to provide. Thus <code><a class="el" href="classboost_1_1gil_1_1any__image.html" title="Represents a run-time specified image. Note it does NOT model ImageConcept. ">any_image</a></code> does not fully model ImageConcept. In particular, its <code>view</code> and <code>const_view</code> methods return <code><a class="el" href="classboost_1_1gil_1_1any__image__view.html" title="Represents a run-time specified image view. Models HasDynamicXStepTypeConcept, HasDynamicYStepTypeCon...">any_image_view</a></code>, which does not fully model ImageViewConcept. See <code><a class="el" href="classboost_1_1gil_1_1any__image__view.html" title="Represents a run-time specified image view. Models HasDynamicXStepTypeConcept, HasDynamicYStepTypeCon...">any_image_view</a></code> for more. </p>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="any__image_8hpp_source.html">any_image.hpp</a></li>
 </ul>
@@ -207,7 +207,7 @@ class boost::gil::any_image&lt; ImageTypes &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Mon Oct 29 2018 18:17:25 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Nov 17 2018 23:37:05 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

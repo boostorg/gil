@@ -154,7 +154,7 @@ Additional Inherited Members</h2></td></tr>
 class boost::gil::memory_based_step_iterator&lt; Iterator &gt;</h3>
 
 <p>MEMORY-BASED STEP ITERATOR. </p>
-<p>Iterator with dynamically specified step in memory units (bytes or bits). Models <a class="el" href="structboost_1_1gil_1_1_step_iterator_concept.html" title="Step iterator concept. ">StepIteratorConcept</a>, <a class="el" href="structboost_1_1gil_1_1_iterator_adaptor_concept.html" title="Iterator adaptor is a forward iterator adapting another forward iterator. ">IteratorAdaptorConcept</a>, <a class="el" href="structboost_1_1gil_1_1_memory_based_iterator_concept.html" title="Concept of a random-access iterator that can be advanced in memory units (bytes or bits) ...">MemoryBasedIteratorConcept</a>, <a class="el" href="structboost_1_1gil_1_1_pixel_iterator_concept.html" title="An STL random access traversal iterator over a model of PixelConcept. ">PixelIteratorConcept</a>, <a class="el" href="structboost_1_1gil_1_1_has_dynamic_x_step_type_concept.html" title="Concept for iterators, locators and views that can define a type just like the given iterator/locator...">HasDynamicXStepTypeConcept</a></p>
+<p>Iterator with dynamically specified step in memory units (bytes or bits). Models StepIteratorConcept, IteratorAdaptorConcept, MemoryBasedIteratorConcept, PixelIteratorConcept, HasDynamicXStepTypeConcept</p>
 <p>A refinement of step_iterator_adaptor that uses a dynamic parameter for the step which is specified in memory units, such as bytes or bits</p>
 <p>Pixel step iterators are used to provide iteration over non-adjacent pixels. Common use is a vertical traversal, where the step is the row stride.</p>
 <p>Another application is as a sub-channel view. For example, a red intensity image over interleaved RGB data would use a step iterator adaptor with step sizeof(channel_t)*3 In the latter example the step size could be fixed at compile time for efficiency. Compile-time fixed step can be implemented by providing a step function object that takes the step as a template </p>
@@ -194,7 +194,7 @@ class boost::gil::memory_based_step_iterator&lt; Iterator &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Mon Oct 29 2018 18:17:25 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Nov 17 2018 23:37:05 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

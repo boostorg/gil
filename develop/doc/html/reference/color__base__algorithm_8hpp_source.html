@@ -125,12 +125,12 @@
 <div class="line"><a name="l00164"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1color__element__const__reference__type.html">  164</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1color__element__const__reference__type.html">color_element_const_reference_type</a> : <span class="keyword">public</span> <a class="code" href="structboost_1_1gil_1_1kth__semantic__element__const__reference__type.html">kth_semantic_element_const_reference_type</a>&lt;ColorBase,color_index_type&lt;ColorBase,Color&gt;::value&gt; {};</div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> ColorBase, <span class="keyword">typename</span> Color&gt;</div>
-<div class="line"><a name="l00169"></a><span class="lineno"><a class="line" href="group___color_base_algorithm_color.html#gab2d1dda637cb2b7c32cc87f199ea1dc0">  169</a></span>&#160;<span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1color__element__reference__type.html">color_element_reference_type&lt;ColorBase,Color&gt;::type</a> <a class="code" href="group___color_base_algorithm_color.html#ga3f358408ca48aa4ac1c869044ca60e7c">get_color</a>(ColorBase&amp; cb, Color=Color()) {</div>
+<div class="line"><a name="l00169"></a><span class="lineno"><a class="line" href="group___color_base_algorithm_color.html#gab2d1dda637cb2b7c32cc87f199ea1dc0">  169</a></span>&#160;<span class="keyword">typename</span> color_element_reference_type&lt;ColorBase,Color&gt;::type <a class="code" href="group___color_base_algorithm_color.html#ga3f358408ca48aa4ac1c869044ca60e7c">get_color</a>(ColorBase&amp; cb, Color=Color()) {</div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="structboost_1_1gil_1_1color__element__reference__type.html">color_element_reference_type&lt;ColorBase,Color&gt;::get</a>(cb);</div>
 <div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;}</div>
 <div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;</div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> ColorBase, <span class="keyword">typename</span> Color&gt;</div>
-<div class="line"><a name="l00176"></a><span class="lineno"><a class="line" href="group___color_base_algorithm_color.html#ga3f358408ca48aa4ac1c869044ca60e7c">  176</a></span>&#160;<span class="keyword">typename</span> color_element_const_reference_type&lt;ColorBase,Color&gt;::type <a class="code" href="group___color_base_algorithm_color.html#ga3f358408ca48aa4ac1c869044ca60e7c">get_color</a>(<span class="keyword">const</span> ColorBase&amp; cb, Color=Color()) {</div>
+<div class="line"><a name="l00176"></a><span class="lineno"><a class="line" href="group___color_base_algorithm_color.html#ga3f358408ca48aa4ac1c869044ca60e7c">  176</a></span>&#160;<span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1color__element__const__reference__type.html">color_element_const_reference_type&lt;ColorBase,Color&gt;::type</a> <a class="code" href="group___color_base_algorithm_color.html#ga3f358408ca48aa4ac1c869044ca60e7c">get_color</a>(<span class="keyword">const</span> ColorBase&amp; cb, Color=Color()) {</div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="structboost_1_1gil_1_1color__element__const__reference__type.html">color_element_const_reference_type&lt;ColorBase,Color&gt;::get</a>(cb);</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;}</div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;</div>
@@ -504,7 +504,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Mon Oct 29 2018 18:17:24 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Nov 17 2018 23:37:05 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
