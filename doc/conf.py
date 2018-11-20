@@ -24,7 +24,11 @@ import sys, os
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autosectionlabel']
+extensions = [
+  'sphinx.ext.autosectionlabel',
+  'breathe',
+  'exhale'
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -83,14 +87,37 @@ autosectionlabel_prefix_document = True
 # output. They are ignored by default.
 show_authors = False
 
+# Tell sphinx what the primary language being documented is.
+primary_domain = 'cpp'
+
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'default'
 
-highlight_language = 'c++'
+highlight_language = 'cpp'
 
 # A list of ignored prefixes for module index sorting.
 #modindex_common_prefix = []
 
+# Setup the breathe extension
+breathe_projects = {
+    "My Project": "./xml"
+}
+breathe_default_project = "My Project"
+
+# Setup the exhale extension
+exhale_args = {
+    # These arguments are required
+    "containmentFolder":     "./api",
+    "rootFileName":          "library.rst",
+    "rootFileTitle":         "Library API",
+    "doxygenStripFromPath":  "..",
+    # Suggested optional arguments
+    "createTreeView":        True,
+    # TIP: if using the sphinx-bootstrap-theme, you need
+    # "treeViewIsBootstrap": True,
+    "exhaleExecutesDoxygen": True,
+    "exhaleDoxygenStdin":    "INPUT = ../include"
+}
 
 # -- Options for HTML output ---------------------------------------------------
 

@@ -14,7 +14,7 @@ image type.
    toolbox
    numeric
    design_guide
-   API Reference <./reference/index.html#://>
+   api/library_root
 
 Sample files
 ------------

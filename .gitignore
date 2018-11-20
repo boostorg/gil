@@ -19,7 +19,5 @@ stdcerr
 # JetBrains
 /.idea
 
-# Documentation (Python)
+# Python (documentation)
 .venv
-/doc/html
-/doc/warnings.txt
