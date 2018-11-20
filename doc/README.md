@@ -26,4 +26,9 @@ Install Sphinx and Sphinx extensions:
 
 ## Build
 
-TODO
+_TODO_: Build for editing vs build for release, etc.
+
+```console
+(.venv)$ echo "using doxygen ;" > ~/user-config.jam
+(.venv)$ b2 doc/
+```
