@@ -171,7 +171,9 @@ html_use_index = True
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'BoostGILdoc'
 
-html_add_permalinks = False
+# This value determines the text for the permalink; it defaults to "¶".
+# Set it to None or the empty string to disable permalinks.
+html_add_permalinks = ''
 
 # -- Options for LaTeX output --------------------------------------------------
 
