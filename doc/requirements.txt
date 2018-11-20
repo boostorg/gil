@@ -1,2 +1,1 @@
-sphinx>=1.6     # Sphinx extension Exhale uses logging API introduced in Sphinx 1.6
-#exhale>=0.2    # TODO
+sphinx>=1.6
