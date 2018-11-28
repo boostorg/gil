@@ -5,22 +5,17 @@ A simple guide about writing and building documentation for Boost.GIL.
 ## Prerequisites
 
 - Python 3.4+
-- [Install Sphinx](#install-sphinx)
-- Install [Doxygen](http://www.doxygen.org)
+- [Sphinx](http://www.sphinx-doc.org/) 1.7.9
+- [Doxygen](http://www.doxygen.org)
 
 ## Installation
 
-Create Python virtual environment:
+Prepare Python virtual environment with Sphinx and Exhale:
 
 ```console
 $ cd boost/libs/gil
 $ python3 -m venv .venv
 $ source ./.venv/bin/activate
-```
-
-Install Sphinx and Sphinx extensions:
-
-```console
 (.venv)$ pip install -r doc/requirements.txt
 ```
 
