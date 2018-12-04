@@ -19,11 +19,11 @@ namespace boost{ namespace gil {
 namespace xyz_color_space
 {
 /// \brief x Color Component
-struct x_t {};    
+struct x_t {};
 /// \brief y Color Component
 struct y_t {};
 /// \brief z Color Component
-struct z_t {}; 
+struct z_t {};
 }
 /// \}
 
@@ -40,7 +40,7 @@ GIL_DEFINE_ALL_TYPEDEFS(32f, float32_t, xyz)
 
 /// \ingroup ColorConvert
 /// \brief RGB to XYZ
-/// <a href="http://www.brucelindbloom.com/index.html?Eqn_RGB_XYZ_Matrix.html">Link</a> 
+/// <a href="http://www.brucelindbloom.com/index.html?Eqn_RGB_XYZ_Matrix.html">Link</a>
 /// \note rgb_t is assumed to be sRGB D65
 template <>
 struct default_color_converter_impl< rgb_t, xyz_t >

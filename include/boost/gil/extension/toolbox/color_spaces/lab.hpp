@@ -21,11 +21,11 @@ namespace boost{ namespace gil {
 namespace lab_color_space
 {
 /// \brief Luminance
-struct luminance_t {};    
+struct luminance_t {};
 /// \brief a Color Component
 struct a_color_opponent_t {};
 /// \brief b Color Component
-struct b_color_opponent_t {}; 
+struct b_color_opponent_t {};
 }
 /// \}
 

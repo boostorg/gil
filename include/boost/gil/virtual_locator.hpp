@@ -16,7 +16,7 @@ namespace boost { namespace gil {
 
 /// \brief A 2D locator over a virtual image. Upon dereferencing, invokes a given function object passing it its coordinates. Models: PixelLocatorConcept, HasDynamicXStepTypeConcept, HasDynamicYStepTypeConcept, HasTransposedTypeConcept
 /// \ingroup PixelLocatorModel PixelBasedModel
-/// 
+///
 template <typename Deref, bool IsTransposed>        // A function object that given a point returns a reference. Models PixelDereferenceAdaptorConcept
 class virtual_2d_locator : public pixel_2d_locator_base<virtual_2d_locator<Deref,IsTransposed>, position_iterator<Deref,IsTransposed>, position_iterator<Deref,1-IsTransposed> > {
     typedef virtual_2d_locator<Deref,IsTransposed>  this_t;
@@ -35,8 +35,8 @@ public:
 
     template <typename NewDeref> struct add_deref {
         typedef virtual_2d_locator<deref_compose<NewDeref,Deref>,IsTransposed > type;
-        static type make(const virtual_2d_locator<Deref,IsTransposed>& loc, const NewDeref& nderef) { 
-            return type(loc.pos(), loc.step(), deref_compose<NewDeref,Deref>(nderef,loc.deref_fn())); 
+        static type make(const virtual_2d_locator<Deref,IsTransposed>& loc, const NewDeref& nderef) {
+            return type(loc.pos(), loc.step(), deref_compose<NewDeref,Deref>(nderef,loc.deref_fn()));
         }
     };
 
@@ -44,8 +44,8 @@ public:
     template <typename D, bool TR> virtual_2d_locator(const virtual_2d_locator<D,TR>& loc, coord_t y_step)
         : _p(loc.pos(), point_t(loc.step().x,loc.step().y*y_step),     loc.deref_fn()) {}
     template <typename D, bool TR> virtual_2d_locator(const virtual_2d_locator<D,TR>& loc, coord_t x_step, coord_t y_step, bool transpose=false)
-        : _p(loc.pos(), transpose ? 
-                    point_t(loc.step().x*y_step,loc.step().y*x_step) : 
+        : _p(loc.pos(), transpose ?
+                    point_t(loc.step().x*y_step,loc.step().y*x_step) :
                     point_t(loc.step().x*x_step,loc.step().y*y_step), loc.deref_fn()) { assert(transpose==(IsTransposed!=TR));}
 
     template <typename D, bool TR> virtual_2d_locator(const virtual_2d_locator<D,TR>& pl) : _p(pl._p) {}

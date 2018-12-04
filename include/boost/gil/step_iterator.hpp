@@ -28,14 +28,14 @@ namespace detail {
 /// \ingroup PixelIteratorModelStepPtr
 /// \brief An adaptor over an existing iterator that changes the step unit
 ///
-/// (i.e. distance(it,it+1)) by a given predicate. Instead of calling base's 
+/// (i.e. distance(it,it+1)) by a given predicate. Instead of calling base's
 /// operators ++, --, +=, -=, etc. the adaptor is using the passed policy object SFn
 /// for advancing and for computing the distance between iterators.
 
 template <typename Derived,  // type of the derived class
           typename Iterator, // Models Iterator
           typename SFn>      // A policy object that can compute the distance between two iterators of type Iterator
-                             // and can advance an iterator of type Iterator a given number of Iterator's units  
+                             // and can advance an iterator of type Iterator a given number of Iterator's units
 class step_iterator_adaptor : public iterator_adaptor<Derived, Iterator, use_default, use_default, use_default, typename SFn::difference_type> {
 public:
     typedef iterator_adaptor<Derived, Iterator, use_default, use_default, use_default, typename SFn::difference_type> parent_t;
@@ -62,33 +62,33 @@ private:
 // although iterator_adaptor defines these, the default implementation computes distance and compares for zero.
 // it is often faster to just apply the relation operator to the base
 template <typename D,typename Iterator,typename SFn> inline
-bool operator>(const step_iterator_adaptor<D,Iterator,SFn>& p1, const step_iterator_adaptor<D,Iterator,SFn>& p2) { 
-    return p1.step()>0 ? p1.base()> p2.base() : p1.base()< p2.base(); 
+bool operator>(const step_iterator_adaptor<D,Iterator,SFn>& p1, const step_iterator_adaptor<D,Iterator,SFn>& p2) {
+    return p1.step()>0 ? p1.base()> p2.base() : p1.base()< p2.base();
 }
 
 template <typename D,typename Iterator,typename SFn> inline
-bool operator<(const step_iterator_adaptor<D,Iterator,SFn>& p1, const step_iterator_adaptor<D,Iterator,SFn>& p2) { 
-    return p1.step()>0 ? p1.base()< p2.base() : p1.base()> p2.base(); 
+bool operator<(const step_iterator_adaptor<D,Iterator,SFn>& p1, const step_iterator_adaptor<D,Iterator,SFn>& p2) {
+    return p1.step()>0 ? p1.base()< p2.base() : p1.base()> p2.base();
 }
 
 template <typename D,typename Iterator,typename SFn> inline
-bool operator>=(const step_iterator_adaptor<D,Iterator,SFn>& p1, const step_iterator_adaptor<D,Iterator,SFn>& p2) { 
-    return p1.step()>0 ? p1.base()>=p2.base() : p1.base()<=p2.base(); 
+bool operator>=(const step_iterator_adaptor<D,Iterator,SFn>& p1, const step_iterator_adaptor<D,Iterator,SFn>& p2) {
+    return p1.step()>0 ? p1.base()>=p2.base() : p1.base()<=p2.base();
 }
 
 template <typename D,typename Iterator,typename SFn> inline
-bool operator<=(const step_iterator_adaptor<D,Iterator,SFn>& p1, const step_iterator_adaptor<D,Iterator,SFn>& p2) { 
-    return p1.step()>0 ? p1.base()<=p2.base() : p1.base()>=p2.base(); 
+bool operator<=(const step_iterator_adaptor<D,Iterator,SFn>& p1, const step_iterator_adaptor<D,Iterator,SFn>& p2) {
+    return p1.step()>0 ? p1.base()<=p2.base() : p1.base()>=p2.base();
 }
 
 template <typename D,typename Iterator,typename SFn> inline
-bool operator==(const step_iterator_adaptor<D,Iterator,SFn>& p1, const step_iterator_adaptor<D,Iterator,SFn>& p2) { 
-    return p1.base()==p2.base(); 
+bool operator==(const step_iterator_adaptor<D,Iterator,SFn>& p1, const step_iterator_adaptor<D,Iterator,SFn>& p2) {
+    return p1.base()==p2.base();
 }
 
 template <typename D,typename Iterator,typename SFn> inline
-bool operator!=(const step_iterator_adaptor<D,Iterator,SFn>& p1, const step_iterator_adaptor<D,Iterator,SFn>& p2) { 
-    return p1.base()!=p2.base(); 
+bool operator!=(const step_iterator_adaptor<D,Iterator,SFn>& p1, const step_iterator_adaptor<D,Iterator,SFn>& p2) {
+    return p1.base()!=p2.base();
 }
 
 } // namespace detail
@@ -101,13 +101,13 @@ bool operator!=(const step_iterator_adaptor<D,Iterator,SFn>& p1, const step_iter
 /// \ingroup PixelIteratorModelStepPtr PixelBasedModel
 /// \brief Iterator with dynamically specified step in memory units (bytes or bits). Models StepIteratorConcept, IteratorAdaptorConcept, MemoryBasedIteratorConcept, PixelIteratorConcept, HasDynamicXStepTypeConcept
 ///
-/// A refinement of step_iterator_adaptor that uses a dynamic parameter for the step 
+/// A refinement of step_iterator_adaptor that uses a dynamic parameter for the step
 /// which is specified in memory units, such as bytes or bits
 ///
-/// Pixel step iterators are used to provide iteration over non-adjacent pixels. 
+/// Pixel step iterators are used to provide iteration over non-adjacent pixels.
 /// Common use is a vertical traversal, where the step is the row stride.
 ///
-/// Another application is as a sub-channel view. For example, a red intensity image over 
+/// Another application is as a sub-channel view. For example, a red intensity image over
 /// interleaved RGB data would use a step iterator adaptor with step sizeof(channel_t)*3
 /// In the latter example the step size could be fixed at compile time for efficiency.
 /// Compile-time fixed step can be implemented by providing a step function object that takes the step as a template
@@ -122,7 +122,7 @@ struct memunit_step_fn {
     memunit_step_fn(difference_type step=memunit_step(Iterator())) : _step(step) {}
 
     difference_type difference(const Iterator& it1, const Iterator& it2) const { return memunit_distance(it1,it2)/_step; }
-    void            advance(Iterator& it, difference_type d)             const { memunit_advance(it,d*_step); } 
+    void            advance(Iterator& it, difference_type d)             const { memunit_advance(it,d*_step); }
     difference_type step()                                               const { return _step; }
 
     void            set_step(std::ptrdiff_t step) { _step=step; }
@@ -132,13 +132,13 @@ private:
 };
 
 template <typename Iterator>
-class memory_based_step_iterator : public detail::step_iterator_adaptor<memory_based_step_iterator<Iterator>, 
-                                                                            Iterator, 
+class memory_based_step_iterator : public detail::step_iterator_adaptor<memory_based_step_iterator<Iterator>,
+                                                                            Iterator,
                                                                             memunit_step_fn<Iterator> > {
     GIL_CLASS_REQUIRE(Iterator, boost::gil, MemoryBasedIteratorConcept)
 public:
-    typedef detail::step_iterator_adaptor<memory_based_step_iterator<Iterator>, 
-                                          Iterator, 
+    typedef detail::step_iterator_adaptor<memory_based_step_iterator<Iterator>,
+                                          Iterator,
                                           memunit_step_fn<Iterator> > parent_t;
     typedef typename parent_t::reference                            reference;
     typedef typename parent_t::difference_type                      difference_type;
@@ -146,7 +146,7 @@ public:
 
     memory_based_step_iterator() : parent_t(Iterator()) {}
     memory_based_step_iterator(Iterator it, std::ptrdiff_t memunit_step) : parent_t(it, memunit_step_fn<Iterator>(memunit_step)) {}
-    template <typename I2> 
+    template <typename I2>
     memory_based_step_iterator(const memory_based_step_iterator<I2>& it)
         : parent_t(it.base(), memunit_step_fn<Iterator>(it.step())) {}
 
@@ -212,28 +212,28 @@ template <typename Iterator>
 inline std::ptrdiff_t memunit_step(const memory_based_step_iterator<Iterator>& p) { return p.step(); }
 
 template <typename Iterator>
-inline std::ptrdiff_t memunit_distance(const memory_based_step_iterator<Iterator>& p1, 
-                                    const memory_based_step_iterator<Iterator>& p2) { 
-    return memunit_distance(p1.base(),p2.base()); 
+inline std::ptrdiff_t memunit_distance(const memory_based_step_iterator<Iterator>& p1,
+                                    const memory_based_step_iterator<Iterator>& p2) {
+    return memunit_distance(p1.base(),p2.base());
 }
 
 template <typename Iterator>
-inline void memunit_advance(memory_based_step_iterator<Iterator>& p, 
-                         std::ptrdiff_t diff) { 
+inline void memunit_advance(memory_based_step_iterator<Iterator>& p,
+                         std::ptrdiff_t diff) {
     memunit_advance(p.base(), diff);
 }
 
 template <typename Iterator>
-inline memory_based_step_iterator<Iterator> 
-memunit_advanced(const memory_based_step_iterator<Iterator>& p, 
+inline memory_based_step_iterator<Iterator>
+memunit_advanced(const memory_based_step_iterator<Iterator>& p,
               std::ptrdiff_t diff) {
     return memory_based_step_iterator<Iterator>(memunit_advanced(p.base(), diff),p.step());
 }
 
 template <typename Iterator>
-inline typename std::iterator_traits<Iterator>::reference 
-memunit_advanced_ref(const memory_based_step_iterator<Iterator>& p, 
-                  std::ptrdiff_t diff) { 
+inline typename std::iterator_traits<Iterator>::reference
+memunit_advanced_ref(const memory_based_step_iterator<Iterator>& p,
+                  std::ptrdiff_t diff) {
     return memunit_advanced_ref(p.base(), diff);
 }
 
@@ -265,19 +265,19 @@ template <typename I> typename dynamic_x_step_type<I>::type make_step_iterator(c
 namespace detail {
 
 // if the iterator is a plain base iterator (non-adaptor), wraps it in memory_based_step_iterator
-template <typename I> 
+template <typename I>
 typename dynamic_x_step_type<I>::type make_step_iterator_impl(const I& it, std::ptrdiff_t step, mpl::false_) {
     return memory_based_step_iterator<I>(it, step);
 }
 
 // If the iterator is compound, put the step in its base
-template <typename I> 
+template <typename I>
 typename dynamic_x_step_type<I>::type make_step_iterator_impl(const I& it, std::ptrdiff_t step, mpl::true_) {
     return make_step_iterator(it.base(), step);
 }
 
 // If the iterator is memory_based_step_iterator, change the step
-template <typename BaseIt> 
+template <typename BaseIt>
 memory_based_step_iterator<BaseIt> make_step_iterator_impl(const memory_based_step_iterator<BaseIt>& it, std::ptrdiff_t step, mpl::true_) {
     return memory_based_step_iterator<BaseIt>(it.base(), step);
 }
@@ -286,7 +286,7 @@ memory_based_step_iterator<BaseIt> make_step_iterator_impl(const memory_based_st
 /// \brief Constructs a step iterator from a base iterator and a step.
 ///
 /// To construct a step iterator from a given iterator Iterator and a given step, if Iterator does not
-/// already have a dynamic step, we wrap it in a memory_based_step_iterator. Otherwise we 
+/// already have a dynamic step, we wrap it in a memory_based_step_iterator. Otherwise we
 /// do a compile-time traversal of the chain of iterator adaptors to locate the step iterator
 /// and then set it step to the new one.
 ///

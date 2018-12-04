@@ -21,13 +21,13 @@ namespace boost { namespace gil {
 /// \{
 
 /// \brief Cyan
-struct cyan_t {};    
+struct cyan_t {};
 
 /// \brief Magenta
 struct magenta_t {};
 
 /// \brief Yellow
-struct yellow_t {}; 
+struct yellow_t {};
 
 /// \brief Black
 struct black_t {};

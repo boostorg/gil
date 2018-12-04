@@ -42,7 +42,7 @@ typename UnaryOp::result_type apply_operation(const variant<Types>& arg, UnaryOp
 /// \ingroup Variant
 /// \brief Invokes a generic constant operation (represented as a binary function object) on two variants
 template <typename Types1, typename Types2, typename BinaryOp> BOOST_FORCEINLINE
-typename BinaryOp::result_type apply_operation(const variant<Types1>& arg1, const variant<Types2>& arg2, BinaryOp op) {    
+typename BinaryOp::result_type apply_operation(const variant<Types1>& arg1, const variant<Types2>& arg2, BinaryOp op) {
     return apply_operation_base<Types1,Types2>(arg1._bits, arg1._index, arg2._bits, arg2._index, op);
 }
 

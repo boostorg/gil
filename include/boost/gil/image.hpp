@@ -77,7 +77,7 @@ public:
     image(const point_t& dimensions,
           const Pixel& p_in,
           std::size_t alignment,
-          const Alloc alloc_in = Alloc())  : _memory(0), _align_in_bytes(alignment), _alloc(alloc_in) 
+          const Alloc alloc_in = Alloc())  : _memory(0), _align_in_bytes(alignment), _alloc(alloc_in)
                                            , _allocated_bytes( 0 ) {
         allocate_and_fill(dimensions, p_in);
     }
@@ -211,7 +211,7 @@ public:
     // with Allocator
     void recreate(const point_t& dims, std::size_t alignment, const Alloc alloc_in )
     {
-        if(  dims            == _view.dimensions() 
+        if(  dims            == _view.dimensions()
           && _align_in_bytes == alignment
           && alloc_in        == _alloc
           )
@@ -245,7 +245,7 @@ public:
 
     void recreate(const point_t& dims, const Pixel& p_in, std::size_t alignment, const Alloc alloc_in )
     {
-        if(  dims            == _view.dimensions() 
+        if(  dims            == _view.dimensions()
           && _align_in_bytes == alignment
           && alloc_in        == _alloc
           )
@@ -340,7 +340,7 @@ private:
         // when value_type is a non-pixel, like int or float, num_channels< ... > doesn't work.
         const std::size_t _channels_in_image = mpl::eval_if< is_pixel< value_type >
                                                            , num_channels< view_t >
-                                                           , mpl::int_< 1 > 
+                                                           , mpl::int_< 1 >
 														   >::type::value;
 
         std::size_t size_in_units = is_planar_impl( get_row_size_in_memunits( dimensions.x ) * dimensions.y
@@ -398,7 +398,7 @@ private:
 
         unsigned char* tmp = ( _align_in_bytes > 0 ) ? (unsigned char*) align( (std::size_t) _memory
                                                                              ,_align_in_bytes
-                                                                             ) 
+                                                                             )
                                                      : _memory;
         typename view_t::x_iterator first;
 

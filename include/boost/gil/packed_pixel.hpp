@@ -22,12 +22,12 @@ namespace boost { namespace gil {
 /// A model of a heterogeneous pixel whose channels are bit ranges.
 /// For example 16-bit RGB in '565' format.
 
-/// \defgroup ColorBaseModelPackedPixel packed_pixel 
+/// \defgroup ColorBaseModelPackedPixel packed_pixel
 /// \ingroup ColorBaseModel
 /// \brief A heterogeneous color base whose elements are reference proxies to channels in a pixel. Models ColorBaseValueConcept. This class is used to model packed pixels, such as 16-bit packed RGB.
 
 /**
-\defgroup PixelModelPackedPixel packed_pixel 
+\defgroup PixelModelPackedPixel packed_pixel
 \ingroup PixelModel
 \brief A heterogeneous pixel used to represent packed pixels with non-byte-aligned channels. Models PixelValueConcept
 
@@ -40,7 +40,7 @@ rgb565_pixel_t r565;
 get_color(r565,red_t())   = 31;
 get_color(r565,green_t()) = 63;
 get_color(r565,blue_t())  = 31;
-assert(r565 == rgb565_pixel_t((uint16_t)0xFFFF));    
+assert(r565 == rgb565_pixel_t((uint16_t)0xFFFF));
 \endcode
 */
 
@@ -70,35 +70,35 @@ struct packed_pixel {
         boost::ignore_unused(d);
     }
     packed_pixel(int chan0, int chan1) : _bitfield(0) {
-        BOOST_STATIC_ASSERT((num_channels<packed_pixel>::value==2)); 
-        gil::at_c<0>(*this)=chan0; gil::at_c<1>(*this)=chan1; 
-    } 
-    packed_pixel(int chan0, int chan1, int chan2) : _bitfield(0) { 
-        BOOST_STATIC_ASSERT((num_channels<packed_pixel>::value==3)); 
+        BOOST_STATIC_ASSERT((num_channels<packed_pixel>::value==2));
+        gil::at_c<0>(*this)=chan0; gil::at_c<1>(*this)=chan1;
+    }
+    packed_pixel(int chan0, int chan1, int chan2) : _bitfield(0) {
+        BOOST_STATIC_ASSERT((num_channels<packed_pixel>::value==3));
         gil::at_c<0>(*this) = chan0;
         gil::at_c<1>(*this) = chan1;
         gil::at_c<2>(*this) = chan2;
-    } 
-    packed_pixel(int chan0, int chan1, int chan2, int chan3) : _bitfield(0) { 
-        BOOST_STATIC_ASSERT((num_channels<packed_pixel>::value==4)); 
-        gil::at_c<0>(*this)=chan0; gil::at_c<1>(*this)=chan1; gil::at_c<2>(*this)=chan2; gil::at_c<3>(*this)=chan3; 
-    } 
-    packed_pixel(int chan0, int chan1, int chan2, int chan3, int chan4) : _bitfield(0) { 
-        BOOST_STATIC_ASSERT((num_channels<packed_pixel>::value==5)); 
+    }
+    packed_pixel(int chan0, int chan1, int chan2, int chan3) : _bitfield(0) {
+        BOOST_STATIC_ASSERT((num_channels<packed_pixel>::value==4));
+        gil::at_c<0>(*this)=chan0; gil::at_c<1>(*this)=chan1; gil::at_c<2>(*this)=chan2; gil::at_c<3>(*this)=chan3;
+    }
+    packed_pixel(int chan0, int chan1, int chan2, int chan3, int chan4) : _bitfield(0) {
+        BOOST_STATIC_ASSERT((num_channels<packed_pixel>::value==5));
         gil::at_c<0>(*this)=chan0; gil::at_c<1>(*this)=chan1; gil::at_c<2>(*this)=chan2; gil::at_c<3>(*this)=chan3; gil::at_c<4>(*this)=chan4;
-    } 
+    }
 
     packed_pixel& operator=(const packed_pixel& p)     { _bitfield=p._bitfield; return *this; }
 
-    template <typename P> packed_pixel& operator=(const P& p)        { assign(p, mpl::bool_<is_pixel<P>::value>()); return *this; } 
-    template <typename P> bool          operator==(const P& p) const { return equal(p, mpl::bool_<is_pixel<P>::value>()); } 
+    template <typename P> packed_pixel& operator=(const P& p)        { assign(p, mpl::bool_<is_pixel<P>::value>()); return *this; }
+    template <typename P> bool          operator==(const P& p) const { return equal(p, mpl::bool_<is_pixel<P>::value>()); }
 
     template <typename P> bool operator!=(const P& p) const { return !(*this==p); }
 
 private:
     template <typename Pixel> static void check_compatible() { gil_function_requires<PixelsCompatibleConcept<Pixel,packed_pixel> >(); }
-    template <typename Pixel> void assign(const Pixel& p, mpl::true_)       { check_compatible<Pixel>(); static_copy(p,*this); } 
-    template <typename Pixel> bool  equal(const Pixel& p, mpl::true_) const { check_compatible<Pixel>(); return static_equal(*this,p); } 
+    template <typename Pixel> void assign(const Pixel& p, mpl::true_)       { check_compatible<Pixel>(); static_copy(p,*this); }
+    template <typename Pixel> bool  equal(const Pixel& p, mpl::true_) const { check_compatible<Pixel>(); return static_equal(*this,p); }
 
 // Support for assignment/equality comparison of a channel with a grayscale pixel
     static void check_gray() {  BOOST_STATIC_ASSERT((is_same<typename Layout::color_space_t, gray_t>::value)); }
@@ -113,26 +113,26 @@ public:
 //  ColorBasedConcept
 /////////////////////////////
 
-template <typename BitField, typename ChannelRefVec, typename Layout, int K>  
+template <typename BitField, typename ChannelRefVec, typename Layout, int K>
 struct kth_element_type<packed_pixel<BitField,ChannelRefVec,Layout>,K> : public mpl::at_c<ChannelRefVec,K> {};
 
-template <typename BitField, typename ChannelRefVec, typename Layout, int K>  
+template <typename BitField, typename ChannelRefVec, typename Layout, int K>
 struct kth_element_reference_type<packed_pixel<BitField,ChannelRefVec,Layout>,K> : public mpl::at_c<ChannelRefVec,K> {};
 
-template <typename BitField, typename ChannelRefVec, typename Layout, int K>  
+template <typename BitField, typename ChannelRefVec, typename Layout, int K>
 struct kth_element_const_reference_type<packed_pixel<BitField,ChannelRefVec,Layout>,K> {
     typedef typename channel_traits<typename mpl::at_c<ChannelRefVec,K>::type>::const_reference type;
 };
 
 template <int K, typename P, typename C, typename L> inline
-typename kth_element_reference_type<packed_pixel<P,C,L>, K>::type 
-at_c(packed_pixel<P,C,L>& p) { 
-    return typename kth_element_reference_type<packed_pixel<P,C,L>, K>::type(&p._bitfield); 
+typename kth_element_reference_type<packed_pixel<P,C,L>, K>::type
+at_c(packed_pixel<P,C,L>& p) {
+    return typename kth_element_reference_type<packed_pixel<P,C,L>, K>::type(&p._bitfield);
 }
 
 template <int K, typename P, typename C, typename L> inline
-typename kth_element_const_reference_type<packed_pixel<P,C,L>, K>::type 
-at_c(const packed_pixel<P,C,L>& p) { 
+typename kth_element_const_reference_type<packed_pixel<P,C,L>, K>::type
+at_c(const packed_pixel<P,C,L>& p) {
     return typename kth_element_const_reference_type<packed_pixel<P,C,L>, K>::type(&p._bitfield);
 }
 
@@ -141,7 +141,7 @@ at_c(const packed_pixel<P,C,L>& p) {
 /////////////////////////////
 
 // Metafunction predicate that flags packed_pixel as a model of PixelConcept. Required by PixelConcept
-template <typename BitField, typename ChannelRefVec, typename Layout>  
+template <typename BitField, typename ChannelRefVec, typename Layout>
 struct is_pixel<packed_pixel<BitField,ChannelRefVec,Layout> > : public mpl::true_{};
 
 /////////////////////////////
@@ -151,15 +151,15 @@ struct is_pixel<packed_pixel<BitField,ChannelRefVec,Layout> > : public mpl::true
 template <typename P, typename C, typename Layout>
 struct color_space_type<packed_pixel<P,C,Layout> > {
     typedef typename Layout::color_space_t type;
-}; 
+};
 
 template <typename P, typename C, typename Layout>
 struct channel_mapping_type<packed_pixel<P,C,Layout> > {
     typedef typename Layout::channel_mapping_t type;
-}; 
+};
 
 template <typename P, typename C, typename Layout>
-struct is_planar<packed_pixel<P,C,Layout> > : mpl::false_ {}; 
+struct is_planar<packed_pixel<P,C,Layout> > : mpl::false_ {};
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -173,9 +173,9 @@ struct is_planar<packed_pixel<P,C,Layout> > : mpl::false_ {};
 /// \brief Iterators over interleaved pixels.
 /// The pointer packed_pixel<P,CR,Layout>* is used as an iterator over interleaved pixels of packed format. Models PixelIteratorConcept, HasDynamicXStepTypeConcept, MemoryBasedIteratorConcept
 
-template <typename P, typename C, typename L>  
+template <typename P, typename C, typename L>
 struct iterator_is_mutable<packed_pixel<P,C,L>*> : public mpl::bool_<packed_pixel<P,C,L>::is_mutable> {};
-template <typename P, typename C, typename L>  
+template <typename P, typename C, typename L>
 struct iterator_is_mutable<const packed_pixel<P,C,L>*> : public mpl::false_ {};
 
 

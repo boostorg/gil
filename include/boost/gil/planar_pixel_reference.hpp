@@ -56,7 +56,7 @@ planar_pixel_reference(ChannelReference v0, ChannelReference v1, ChannelReferenc
     template <typename P>                         planar_pixel_reference(const P& p)        : parent_t(p) { check_compatible<P>();}
 
     // PERFORMANCE_CHECK: Is this constructor necessary?
-    template <typename ChannelV, typename Mapping>           
+    template <typename ChannelV, typename Mapping>
     planar_pixel_reference(pixel<ChannelV,layout<ColorSpace,Mapping> >& p)   : parent_t(p) { check_compatible<pixel<ChannelV,layout<ColorSpace,Mapping> > >();}
 
     // Construct at offset from a given location
@@ -91,19 +91,19 @@ private:
 //  ColorBasedConcept
 /////////////////////////////
 
-template <typename ChannelReference, typename ColorSpace, int K>  
+template <typename ChannelReference, typename ColorSpace, int K>
 struct kth_element_type<planar_pixel_reference<ChannelReference,ColorSpace>, K> {
     typedef ChannelReference type;
 };
 
-template <typename ChannelReference, typename ColorSpace, int K>  
+template <typename ChannelReference, typename ColorSpace, int K>
 struct kth_element_reference_type<planar_pixel_reference<ChannelReference,ColorSpace>, K> {
     typedef ChannelReference type;
 };
 
-template <typename ChannelReference, typename ColorSpace, int K>  
-struct kth_element_const_reference_type<planar_pixel_reference<ChannelReference,ColorSpace>, K> 
-    : public add_reference<typename add_const<ChannelReference>::type> 
+template <typename ChannelReference, typename ColorSpace, int K>
+struct kth_element_const_reference_type<planar_pixel_reference<ChannelReference,ColorSpace>, K>
+    : public add_reference<typename add_const<ChannelReference>::type>
 {
 //    typedef typename channel_traits<ChannelReference>::const_reference type;
 };
@@ -114,7 +114,7 @@ struct kth_element_const_reference_type<planar_pixel_reference<ChannelReference,
 
 /// \brief Metafunction predicate that flags planar_pixel_reference as a model of PixelConcept. Required by PixelConcept
 /// \ingroup PixelModelPlanarRef
-template <typename ChannelReference, typename ColorSpace>  
+template <typename ChannelReference, typename ColorSpace>
 struct is_pixel< planar_pixel_reference<ChannelReference,ColorSpace> > : public mpl::true_{};
 
 /////////////////////////////
@@ -123,35 +123,35 @@ struct is_pixel< planar_pixel_reference<ChannelReference,ColorSpace> > : public 
 
 /// \brief Specifies the color space type of a planar pixel reference. Required by PixelBasedConcept
 /// \ingroup PixelModelPlanarRef
-template <typename ChannelReference, typename ColorSpace>  
+template <typename ChannelReference, typename ColorSpace>
 struct color_space_type<planar_pixel_reference<ChannelReference,ColorSpace> > {
     typedef ColorSpace type;
-}; 
+};
 
 /// \brief Specifies the color space type of a planar pixel reference. Required by PixelBasedConcept
 /// \ingroup PixelModelPlanarRef
-template <typename ChannelReference, typename ColorSpace>  
+template <typename ChannelReference, typename ColorSpace>
 struct channel_mapping_type<planar_pixel_reference<ChannelReference,ColorSpace> > {
     typedef typename layout<ColorSpace>::channel_mapping_t type;
-}; 
+};
 
 /// \brief Specifies that planar_pixel_reference represents a planar construct. Required by PixelBasedConcept
 /// \ingroup PixelModelPlanarRef
-template <typename ChannelReference, typename ColorSpace>  
+template <typename ChannelReference, typename ColorSpace>
 struct is_planar<planar_pixel_reference<ChannelReference,ColorSpace> > : mpl::true_ {};
 
 /// \brief Specifies the color space type of a planar pixel reference. Required by HomogeneousPixelBasedConcept
 /// \ingroup PixelModelPlanarRef
-template <typename ChannelReference, typename ColorSpace>  
+template <typename ChannelReference, typename ColorSpace>
 struct channel_type<planar_pixel_reference<ChannelReference,ColorSpace> > {
     typedef typename channel_traits<ChannelReference>::value_type type;
-}; 
+};
 
 }}  // namespace boost::gil
 
 namespace std {
 // We are forced to define swap inside std namespace because on some platforms (Visual Studio 8) STL calls swap qualified.
-// swap with 'left bias': 
+// swap with 'left bias':
 // - swap between proxy and anything
 // - swap between value type and proxy
 // - swap between proxy and proxy
@@ -160,22 +160,22 @@ namespace std {
 /// \brief  swap for planar_pixel_reference
 /// \ingroup PixelModelPlanarRef
 template <typename CR, typename CS, typename R> inline
-void swap(const boost::gil::planar_pixel_reference<CR,CS> x, R& y) { 
-    boost::gil::swap_proxy<typename boost::gil::planar_pixel_reference<CR,CS>::value_type>(x,y); 
+void swap(const boost::gil::planar_pixel_reference<CR,CS> x, R& y) {
+    boost::gil::swap_proxy<typename boost::gil::planar_pixel_reference<CR,CS>::value_type>(x,y);
 }
 
 /// \brief  swap for planar_pixel_reference
 /// \ingroup PixelModelPlanarRef
 template <typename CR, typename CS> inline
-void swap(typename boost::gil::planar_pixel_reference<CR,CS>::value_type& x, const boost::gil::planar_pixel_reference<CR,CS> y) { 
-    boost::gil::swap_proxy<typename boost::gil::planar_pixel_reference<CR,CS>::value_type>(x,y); 
+void swap(typename boost::gil::planar_pixel_reference<CR,CS>::value_type& x, const boost::gil::planar_pixel_reference<CR,CS> y) {
+    boost::gil::swap_proxy<typename boost::gil::planar_pixel_reference<CR,CS>::value_type>(x,y);
 }
 
 /// \brief  swap for planar_pixel_reference
 /// \ingroup PixelModelPlanarRef
 template <typename CR, typename CS> inline
-void swap(const boost::gil::planar_pixel_reference<CR,CS> x, const boost::gil::planar_pixel_reference<CR,CS> y) { 
-    boost::gil::swap_proxy<typename boost::gil::planar_pixel_reference<CR,CS>::value_type>(x,y); 
+void swap(const boost::gil::planar_pixel_reference<CR,CS> x, const boost::gil::planar_pixel_reference<CR,CS> y) {
+    boost::gil::swap_proxy<typename boost::gil::planar_pixel_reference<CR,CS>::value_type>(x,y);
 }
 
 }   // namespace std

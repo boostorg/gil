@@ -24,11 +24,11 @@ namespace boost{ namespace gil {
 namespace hsv_color_space
 {
 /// \brief Hue
-struct hue_t {};    
+struct hue_t {};
 /// \brief Saturation
 struct saturation_t{};
 /// \brief Value
-struct value_t {}; 
+struct value_t {};
 }
 /// \}
 
@@ -68,11 +68,11 @@ struct default_color_converter_impl< rgb_t, hsv_t >
       float32_t diff = max_color - min_color;
 
       if( max_color < 0.0001f )
-      {  
+      {
          saturation = 0.f;
       }
-      else  
-      {      
+      else
+      {
          saturation = diff / max_color;
       }
 
@@ -80,10 +80,10 @@ struct default_color_converter_impl< rgb_t, hsv_t >
       if( saturation < 0.0001f )
       {
          //it doesn't matter what value it has
-         hue = 0.f; 
-      }   
+         hue = 0.f;
+      }
       else
-      { 
+      {
          if( (std::abs)( boost::numeric_cast<float32_t>(temp_red - max_color) ) < 0.0001f )
          {
             hue = ( temp_green - temp_blue )
@@ -91,17 +91,17 @@ struct default_color_converter_impl< rgb_t, hsv_t >
          }
          else if( temp_green >= max_color ) // means == but >= avoids compiler warning; color is never greater than max
          {
-            hue = 2.f + ( temp_blue - temp_red ) 
+            hue = 2.f + ( temp_blue - temp_red )
                 / diff;
          }
          else
          {
-            hue = 4.f + ( temp_red - temp_green ) 
+            hue = 4.f + ( temp_red - temp_green )
                 / diff;
          }
 
          //to bring it to a number between 0 and 1
-         hue /= 6.f; 
+         hue /= 6.f;
 
          if( hue < 0.f )
          {
@@ -148,18 +148,18 @@ struct default_color_converter_impl<hsv_t,rgb_t>
 
          frac = h - i;
 
-         p = get_color( src, value_t() ) 
+         p = get_color( src, value_t() )
            * ( 1.f - get_color( src, saturation_t() ));
 
          q = get_color( src, value_t() )
            * ( 1.f - ( get_color( src, saturation_t() ) * frac ));
 
-         t = get_color( src, value_t() ) 
+         t = get_color( src, value_t() )
            * ( 1.f - ( get_color( src, saturation_t() ) * ( 1.f - frac )));
 
          switch( i )
-         {         
-            case 0: 
+         {
+            case 0:
             {
                red   = get_color( src, value_t() );
                green = t;
@@ -168,7 +168,7 @@ struct default_color_converter_impl<hsv_t,rgb_t>
                break;
             }
 
-            case 1: 
+            case 1:
             {
                red   = q;
                green = get_color( src, value_t() );
@@ -177,7 +177,7 @@ struct default_color_converter_impl<hsv_t,rgb_t>
                break;
             }
 
-            case 2: 
+            case 2:
             {
                red   = p;
                green = get_color( src, value_t() );
@@ -186,7 +186,7 @@ struct default_color_converter_impl<hsv_t,rgb_t>
                break;
             }
 
-            case 3: 
+            case 3:
             {
                red   = p;
                green = q;
@@ -195,7 +195,7 @@ struct default_color_converter_impl<hsv_t,rgb_t>
                break;
             }
 
-            case 4: 
+            case 4:
             {
                red   = t;
                green = p;
@@ -204,10 +204,10 @@ struct default_color_converter_impl<hsv_t,rgb_t>
                break;
             }
 
-            case 5: 
+            case 5:
             {
                red   = get_color( src, value_t() );
-               green = p; 
+               green = p;
                blue  = q;
 
                break;

@@ -29,7 +29,7 @@ namespace boost { namespace gil {
 /// \brief An iterator over non-byte-aligned pixels. Models PixelIteratorConcept, PixelBasedConcept, MemoryBasedIteratorConcept, HasDynamicXStepTypeConcept
 ///
 /// An iterator over pixels that correspond to non-byte-aligned bit ranges. Examples of such pixels are single bit grayscale pixel, or a 6-bit RGB 222 pixel.
-/// 
+///
 /// \ingroup PixelIteratorNonAlignedPixelIterator PixelBasedModel
 
 template <typename NonAlignedPixelReference>
@@ -81,15 +81,15 @@ private:
     bool equal(const bit_aligned_pixel_iterator& it) const { return _bit_range==it._bit_range; }
 };
 
-template <typename NonAlignedPixelReference> 
-struct const_iterator_type<bit_aligned_pixel_iterator<NonAlignedPixelReference> > { 
-    typedef bit_aligned_pixel_iterator<typename NonAlignedPixelReference::const_reference> type; 
+template <typename NonAlignedPixelReference>
+struct const_iterator_type<bit_aligned_pixel_iterator<NonAlignedPixelReference> > {
+    typedef bit_aligned_pixel_iterator<typename NonAlignedPixelReference::const_reference> type;
 };
 
-template <typename NonAlignedPixelReference> 
+template <typename NonAlignedPixelReference>
 struct iterator_is_mutable<bit_aligned_pixel_iterator<NonAlignedPixelReference> > : public mpl::bool_<NonAlignedPixelReference::is_mutable> {};
 
-template <typename NonAlignedPixelReference> 
+template <typename NonAlignedPixelReference>
 struct is_iterator_adaptor<bit_aligned_pixel_iterator<NonAlignedPixelReference> > : public mpl::false_ {};
 
 /////////////////////////////
@@ -113,17 +113,17 @@ template <typename NonAlignedPixelReference>
 struct byte_to_memunit<bit_aligned_pixel_iterator<NonAlignedPixelReference> > : public mpl::int_<8> {};
 
 template <typename NonAlignedPixelReference>
-inline std::ptrdiff_t memunit_step(const bit_aligned_pixel_iterator<NonAlignedPixelReference>&) { 
-    return NonAlignedPixelReference::bit_size; 
+inline std::ptrdiff_t memunit_step(const bit_aligned_pixel_iterator<NonAlignedPixelReference>&) {
+    return NonAlignedPixelReference::bit_size;
 }
 
 template <typename NonAlignedPixelReference>
-inline std::ptrdiff_t memunit_distance(const bit_aligned_pixel_iterator<NonAlignedPixelReference>& p1, const bit_aligned_pixel_iterator<NonAlignedPixelReference>& p2) { 
-    return (p2.bit_range().current_byte() - p1.bit_range().current_byte())*8 + p2.bit_range().bit_offset() - p1.bit_range().bit_offset(); 
+inline std::ptrdiff_t memunit_distance(const bit_aligned_pixel_iterator<NonAlignedPixelReference>& p1, const bit_aligned_pixel_iterator<NonAlignedPixelReference>& p2) {
+    return (p2.bit_range().current_byte() - p1.bit_range().current_byte())*8 + p2.bit_range().bit_offset() - p1.bit_range().bit_offset();
 }
 
 template <typename NonAlignedPixelReference>
-inline void memunit_advance(bit_aligned_pixel_iterator<NonAlignedPixelReference>& p, std::ptrdiff_t diff) { 
+inline void memunit_advance(bit_aligned_pixel_iterator<NonAlignedPixelReference>& p, std::ptrdiff_t diff) {
     p.bit_range().bit_advance(diff);
 }
 
@@ -170,9 +170,9 @@ struct iterator_type_from_pixel<bit_aligned_pixel_reference<B,C,L,M>,IsPlanar,Is
 namespace std {
 
 // It is important to provide an overload of uninitialized_copy for bit_aligned_pixel_iterator. The default STL implementation calls placement new,
-// which is not defined for bit_aligned_pixel_iterator. 
+// which is not defined for bit_aligned_pixel_iterator.
 template <typename NonAlignedPixelReference>
-boost::gil::bit_aligned_pixel_iterator<NonAlignedPixelReference> uninitialized_copy(boost::gil::bit_aligned_pixel_iterator<NonAlignedPixelReference> first, 
+boost::gil::bit_aligned_pixel_iterator<NonAlignedPixelReference> uninitialized_copy(boost::gil::bit_aligned_pixel_iterator<NonAlignedPixelReference> first,
                                                                                    boost::gil::bit_aligned_pixel_iterator<NonAlignedPixelReference> last,
                                                                                    boost::gil::bit_aligned_pixel_iterator<NonAlignedPixelReference> dst) {
     return std::copy(first,last,dst);
