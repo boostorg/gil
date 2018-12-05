@@ -30,12 +30,12 @@ namespace boost { namespace gil {
 template <typename P> struct channel_type;
 
 ////////////////////////////////////////////////////////////////////////////////////////
-///                 
+///
 ///                 COLOR SPACE CONVERSION
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-/// \ingroup ColorConvert 
+/// \ingroup ColorConvert
 /// \brief Color Convertion function object. To be specialized for every src/dst color space
 template <typename C1, typename C2>
 struct default_color_converter_impl {};
@@ -120,7 +120,7 @@ template <>
 struct default_color_converter_impl<rgb_t,gray_t> {
     template <typename P1, typename P2>
     void operator()(const P1& src, P2& dst) const {
-        get_color(dst,gray_color_t()) = 
+        get_color(dst,gray_color_t()) =
             detail::rgb_to_luminance<typename color_element_type<P2,gray_color_t>::type>(
                 get_color(src,red_t()), get_color(src,green_t()), get_color(src,blue_t())
             );
@@ -172,17 +172,17 @@ struct default_color_converter_impl<cmyk_t,rgb_t> {
         get_color(dst,red_t())  =
             channel_convert<typename color_element_type<P2,red_t>::type>(
                 channel_invert<T1>(
-                    (std::min)(channel_traits<T1>::max_value(), 
+                    (std::min)(channel_traits<T1>::max_value(),
                              T1(channel_multiply(get_color(src,cyan_t()),channel_invert(get_color(src,black_t())))+get_color(src,black_t())))));
         get_color(dst,green_t())=
             channel_convert<typename color_element_type<P2,green_t>::type>(
                 channel_invert<T1>(
-                    (std::min)(channel_traits<T1>::max_value(), 
+                    (std::min)(channel_traits<T1>::max_value(),
                              T1(channel_multiply(get_color(src,magenta_t()),channel_invert(get_color(src,black_t())))+get_color(src,black_t())))));
         get_color(dst,blue_t()) =
             channel_convert<typename color_element_type<P2,blue_t>::type>(
                 channel_invert<T1>(
-                    (std::min)(channel_traits<T1>::max_value(), 
+                    (std::min)(channel_traits<T1>::max_value(),
                              T1(channel_multiply(get_color(src,yellow_t()),channel_invert(get_color(src,black_t())))+get_color(src,black_t())))));
     }
 };
@@ -201,28 +201,28 @@ struct default_color_converter_impl<cmyk_t,gray_t> {
                 channel_multiply(
                     channel_invert(
                        detail::rgb_to_luminance<typename color_element_type<P1,black_t>::type>(
-                            get_color(src,cyan_t()), 
-                            get_color(src,magenta_t()), 
+                            get_color(src,cyan_t()),
+                            get_color(src,magenta_t()),
                             get_color(src,yellow_t())
                        )
-                    ), 
+                    ),
                     channel_invert(get_color(src,black_t()))));
     }
 };
 
 namespace detail {
-template <typename Pixel> 
+template <typename Pixel>
 typename channel_type<Pixel>::type alpha_or_max_impl(const Pixel& p, mpl::true_) {
     return get_color(p,alpha_t());
 }
-template <typename Pixel> 
+template <typename Pixel>
 typename channel_type<Pixel>::type alpha_or_max_impl(const Pixel&  , mpl::false_) {
     return channel_traits<typename channel_type<Pixel>::type>::max_value();
 }
 } // namespace detail
 
 // Returns max_value if the pixel has no alpha channel. Otherwise returns the alpha.
-template <typename Pixel> 
+template <typename Pixel>
 typename channel_type<Pixel>::type alpha_or_max(const Pixel& p) {
     return detail::alpha_or_max_impl(p, mpl::contains<typename color_space_type<Pixel>::type,alpha_t>());
 }
@@ -248,7 +248,7 @@ struct default_color_converter_impl<C1,rgba_t> {
 ///  \brief Converting RGBA to any pixel type. Note: Supports homogeneous pixels only.
 ///
 /// Done by multiplying the alpha to get to RGB, then converting the RGB to the target pixel type
-/// Note: This may be slower if the compiler doesn't optimize out constructing/destructing a temporary RGB pixel. 
+/// Note: This may be slower if the compiler doesn't optimize out constructing/destructing a temporary RGB pixel.
 ///       Consider rewriting if performance is an issue
 template <typename C2>
 struct default_color_converter_impl<rgba_t,C2> {
@@ -256,8 +256,8 @@ struct default_color_converter_impl<rgba_t,C2> {
     void operator()(const P1& src, P2& dst) const {
         typedef typename channel_type<P1>::type T1;
         default_color_converter_impl<rgb_t,C2>()(
-            pixel<T1,rgb_layout_t>(channel_multiply(get_color(src,red_t()),  get_color(src,alpha_t())), 
-                                   channel_multiply(get_color(src,green_t()),get_color(src,alpha_t())), 
+            pixel<T1,rgb_layout_t>(channel_multiply(get_color(src,red_t()),  get_color(src,alpha_t())),
+                                   channel_multiply(get_color(src,green_t()),get_color(src,alpha_t())),
                                    channel_multiply(get_color(src,blue_t()), get_color(src,alpha_t())))
             ,dst);
     }
@@ -281,7 +281,7 @@ struct default_color_converter_impl<rgba_t,rgba_t> {
 /// \brief class for color-converting one pixel to another
 struct default_color_converter {
     template <typename SrcP, typename DstP>
-    void operator()(const SrcP& src,DstP& dst) const { 
+    void operator()(const SrcP& src,DstP& dst) const {
         typedef typename color_space_type<SrcP>::type SrcColorSpace;
         typedef typename color_space_type<DstP>::type DstColorSpace;
         default_color_converter_impl<SrcColorSpace,DstColorSpace>()(src,dst);

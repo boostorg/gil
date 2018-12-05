@@ -20,7 +20,7 @@ namespace boost { namespace gil {
 
 /// \ingroup ColorNameModel
 /// \brief Alpha
-struct alpha_t {};    
+struct alpha_t {};
 
 /// \ingroup ColorSpaceModel
 typedef mpl::vector4<red_t,green_t,blue_t,alpha_t> rgba_t;

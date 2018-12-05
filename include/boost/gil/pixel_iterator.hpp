@@ -64,13 +64,13 @@ template <typename T> struct iterator_is_mutable<const T*> : public mpl::false_{
 //  HasDynamicXStepTypeConcept
 /////////////////////////////
 
-/// \ingroup PixelIteratorModelInterleavedPtr 
+/// \ingroup PixelIteratorModelInterleavedPtr
 template <typename Pixel>
 struct dynamic_x_step_type<Pixel*> {
     typedef memory_based_step_iterator<Pixel*> type;
 };
 
-/// \ingroup PixelIteratorModelInterleavedPtr 
+/// \ingroup PixelIteratorModelInterleavedPtr
 template <typename Pixel>
 struct dynamic_x_step_type<const Pixel*> {
     typedef memory_based_step_iterator<const Pixel*> type;
@@ -115,12 +115,12 @@ template <typename P>
 inline std::ptrdiff_t memunit_step(const P*) { return sizeof(P); }
 
 template <typename P>
-inline std::ptrdiff_t memunit_distance(const P* p1, const P* p2) { 
-    return (gil_reinterpret_cast_c<const unsigned char*>(p2)-gil_reinterpret_cast_c<const unsigned char*>(p1)); 
+inline std::ptrdiff_t memunit_distance(const P* p1, const P* p2) {
+    return (gil_reinterpret_cast_c<const unsigned char*>(p2)-gil_reinterpret_cast_c<const unsigned char*>(p1));
 }
 
 template <typename P>
-inline void memunit_advance(P* &p, std::ptrdiff_t diff) { 
+inline void memunit_advance(P* &p, std::ptrdiff_t diff) {
     p=(P*)((unsigned char*)(p)+diff);
 }
 

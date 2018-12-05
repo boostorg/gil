@@ -35,7 +35,7 @@ struct channel_view_type : public kth_channel_view_type< channel_type_to_index< 
     static const int index = channel_type_to_index< Channel
                                                   , View
                                                   >::value;
-                                                  
+
     typedef kth_channel_view_type< index
                                  , View
                                  > parent_t;

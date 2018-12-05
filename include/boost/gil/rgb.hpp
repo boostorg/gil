@@ -22,13 +22,13 @@ namespace boost { namespace gil {
 /// \{
 
 /// \brief Red
-struct red_t {};    
+struct red_t {};
 
 /// \brief Green
 struct green_t {};
 
 /// \brief Blue
-struct blue_t {}; 
+struct blue_t {};
 /// \}
 
 /// \ingroup ColorSpaceModel

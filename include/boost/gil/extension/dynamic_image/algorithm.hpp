@@ -15,7 +15,7 @@
 #include <boost/bind.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////////////
-/// \file               
+/// \file
 /// \brief Some basic STL-style algorithms when applied to runtime type specified image views
 /// \author Lubomir Bourdev and Hailin Jin \n
 ///         Adobe Systems Incorporated
