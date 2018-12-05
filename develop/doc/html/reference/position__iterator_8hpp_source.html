@@ -114,32 +114,32 @@
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="group___s_t_l_optimizations.html#ga2902a23650ef266e80874ce5df076079">equal</a>(<span class="keyword">const</span> position_iterator&amp; it)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> _p==it._p; }</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;};</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Deref,<span class="keywordtype">int</span> Dim&gt; </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Deref,<span class="keywordtype">int</span> Dim&gt;</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keyword">struct </span>const_iterator_type&lt;position_iterator&lt;Deref,Dim&gt; &gt; {</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keyword">typedef</span> position_iterator&lt;typename Deref::const_t,Dim&gt; type;</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;};</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Deref,<span class="keywordtype">int</span> Dim&gt; </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Deref,<span class="keywordtype">int</span> Dim&gt;</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="keyword">struct </span>iterator_is_mutable&lt;position_iterator&lt;Deref,Dim&gt; &gt; : <span class="keyword">public</span> mpl::bool_&lt;Deref::is_mutable&gt; {</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;};</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment">//  PixelBasedConcept</span></div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Deref,<span class="keywordtype">int</span> Dim&gt; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Deref,<span class="keywordtype">int</span> Dim&gt;</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="keyword">struct </span>color_space_type&lt;position_iterator&lt;Deref,Dim&gt; &gt; : <span class="keyword">public</span> color_space_type&lt;typename Deref::value_type&gt; {};</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Deref,<span class="keywordtype">int</span> Dim&gt; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Deref,<span class="keywordtype">int</span> Dim&gt;</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keyword">struct </span>channel_mapping_type&lt;position_iterator&lt;Deref,Dim&gt; &gt; : <span class="keyword">public</span> channel_mapping_type&lt;typename Deref::value_type&gt; {};</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Deref,<span class="keywordtype">int</span> Dim&gt; </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Deref,<span class="keywordtype">int</span> Dim&gt;</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keyword">struct </span>is_planar&lt;position_iterator&lt;Deref,Dim&gt; &gt; : <span class="keyword">public</span> mpl::false_ {};</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Deref,<span class="keywordtype">int</span> Dim&gt; </div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Deref,<span class="keywordtype">int</span> Dim&gt;</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="keyword">struct </span>channel_type&lt;position_iterator&lt;Deref,Dim&gt; &gt; : <span class="keyword">public</span> channel_type&lt;typename Deref::value_type&gt; {};</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="comment">//  HasDynamicXStepTypeConcept</span></div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Deref,<span class="keywordtype">int</span> Dim&gt; </div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Deref,<span class="keywordtype">int</span> Dim&gt;</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="keyword">struct </span>dynamic_x_step_type&lt;position_iterator&lt;Deref,Dim&gt; &gt; {</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keyword">typedef</span> position_iterator&lt;Deref,Dim&gt; type;</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;};</div>
@@ -157,7 +157,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Nov 17 2018 23:37:05 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Wed Dec 5 2018 08:21:10 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

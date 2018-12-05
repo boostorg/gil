@@ -121,15 +121,15 @@
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="group___s_t_l_optimizations.html#ga2902a23650ef266e80874ce5df076079">equal</a>(<span class="keyword">const</span> bit_aligned_pixel_iterator&amp; it)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> _bit_range==it._bit_range; }</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;};</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> NonAlignedPixelReference&gt; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keyword">struct </span>const_iterator_type&lt;bit_aligned_pixel_iterator&lt;NonAlignedPixelReference&gt; &gt; { </div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keyword">typedef</span> bit_aligned_pixel_iterator&lt;typename NonAlignedPixelReference::const_reference&gt; type; </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> NonAlignedPixelReference&gt;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keyword">struct </span>const_iterator_type&lt;bit_aligned_pixel_iterator&lt;NonAlignedPixelReference&gt; &gt; {</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keyword">typedef</span> bit_aligned_pixel_iterator&lt;typename NonAlignedPixelReference::const_reference&gt; type;</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;};</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> NonAlignedPixelReference&gt; </div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> NonAlignedPixelReference&gt;</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keyword">struct </span>iterator_is_mutable&lt;bit_aligned_pixel_iterator&lt;NonAlignedPixelReference&gt; &gt; : <span class="keyword">public</span> mpl::bool_&lt;NonAlignedPixelReference::is_mutable&gt; {};</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> NonAlignedPixelReference&gt; </div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> NonAlignedPixelReference&gt;</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="keyword">struct </span>is_iterator_adaptor&lt;bit_aligned_pixel_iterator&lt;NonAlignedPixelReference&gt; &gt; : <span class="keyword">public</span> mpl::false_ {};</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="comment">//  PixelBasedConcept</span></div>
@@ -149,17 +149,17 @@
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="keyword">struct </span>byte_to_memunit&lt;bit_aligned_pixel_iterator&lt;NonAlignedPixelReference&gt; &gt; : <span class="keyword">public</span> mpl::int_&lt;8&gt; {};</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> NonAlignedPixelReference&gt;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="keyword">inline</span> std::ptrdiff_t memunit_step(<span class="keyword">const</span> bit_aligned_pixel_iterator&lt;NonAlignedPixelReference&gt;&amp;) { </div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keywordflow">return</span> NonAlignedPixelReference::bit_size; </div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="keyword">inline</span> std::ptrdiff_t memunit_step(<span class="keyword">const</span> bit_aligned_pixel_iterator&lt;NonAlignedPixelReference&gt;&amp;) {</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keywordflow">return</span> NonAlignedPixelReference::bit_size;</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;}</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> NonAlignedPixelReference&gt;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="keyword">inline</span> std::ptrdiff_t memunit_distance(<span class="keyword">const</span> bit_aligned_pixel_iterator&lt;NonAlignedPixelReference&gt;&amp; p1, <span class="keyword">const</span> bit_aligned_pixel_iterator&lt;NonAlignedPixelReference&gt;&amp; p2) { </div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <span class="keywordflow">return</span> (p2.bit_range().current_byte() - p1.bit_range().current_byte())*8 + p2.bit_range().bit_offset() - p1.bit_range().bit_offset(); </div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="keyword">inline</span> std::ptrdiff_t memunit_distance(<span class="keyword">const</span> bit_aligned_pixel_iterator&lt;NonAlignedPixelReference&gt;&amp; p1, <span class="keyword">const</span> bit_aligned_pixel_iterator&lt;NonAlignedPixelReference&gt;&amp; p2) {</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <span class="keywordflow">return</span> (p2.bit_range().current_byte() - p1.bit_range().current_byte())*8 + p2.bit_range().bit_offset() - p1.bit_range().bit_offset();</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;}</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;</div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> NonAlignedPixelReference&gt;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> memunit_advance(bit_aligned_pixel_iterator&lt;NonAlignedPixelReference&gt;&amp; p, std::ptrdiff_t diff) { </div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> memunit_advance(bit_aligned_pixel_iterator&lt;NonAlignedPixelReference&gt;&amp; p, std::ptrdiff_t diff) {</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    p.bit_range().bit_advance(diff);</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;}</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;</div>
@@ -202,9 +202,9 @@
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="keyword">namespace </span>std {</div>
 <div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;</div>
 <div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="comment">// It is important to provide an overload of uninitialized_copy for bit_aligned_pixel_iterator. The default STL implementation calls placement new,</span></div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;<span class="comment">// which is not defined for bit_aligned_pixel_iterator. </span></div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;<span class="comment">// which is not defined for bit_aligned_pixel_iterator.</span></div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> NonAlignedPixelReference&gt;</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;<a class="code" href="structboost_1_1gil_1_1bit__aligned__pixel__iterator.html">boost::gil::bit_aligned_pixel_iterator&lt;NonAlignedPixelReference&gt;</a> uninitialized_copy(<a class="code" href="structboost_1_1gil_1_1bit__aligned__pixel__iterator.html">boost::gil::bit_aligned_pixel_iterator&lt;NonAlignedPixelReference&gt;</a> first, </div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;<a class="code" href="structboost_1_1gil_1_1bit__aligned__pixel__iterator.html">boost::gil::bit_aligned_pixel_iterator&lt;NonAlignedPixelReference&gt;</a> uninitialized_copy(<a class="code" href="structboost_1_1gil_1_1bit__aligned__pixel__iterator.html">boost::gil::bit_aligned_pixel_iterator&lt;NonAlignedPixelReference&gt;</a> first,</div>
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;                                                                                   <a class="code" href="structboost_1_1gil_1_1bit__aligned__pixel__iterator.html">boost::gil::bit_aligned_pixel_iterator&lt;NonAlignedPixelReference&gt;</a> last,</div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;                                                                                   <a class="code" href="structboost_1_1gil_1_1bit__aligned__pixel__iterator.html">boost::gil::bit_aligned_pixel_iterator&lt;NonAlignedPixelReference&gt;</a> dst) {</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="group___s_t_l_optimizations.html#ga0881964a0319aa859cda6408c5a1cda2">std::copy</a>(first,last,dst);</div>
@@ -222,7 +222,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Nov 17 2018 23:37:04 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Wed Dec 5 2018 08:21:10 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

@@ -85,8 +85,8 @@
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> NewDeref&gt; <span class="keyword">struct </span>add_deref {</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classboost_1_1gil_1_1virtual__2d__locator.html">virtual_2d_locator&lt;deref_compose&lt;NewDeref,Deref&gt;</a>,IsTransposed &gt; type;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keyword">static</span> type make(<span class="keyword">const</span> <a class="code" href="classboost_1_1gil_1_1virtual__2d__locator.html">virtual_2d_locator&lt;Deref,IsTransposed&gt;</a>&amp; loc, <span class="keyword">const</span> NewDeref&amp; nderef) { </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            <span class="keywordflow">return</span> type(loc.pos(), loc.step(), <a class="code" href="classboost_1_1gil_1_1deref__compose.html">deref_compose&lt;NewDeref,Deref&gt;</a>(nderef,loc.deref_fn())); </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keyword">static</span> type make(<span class="keyword">const</span> <a class="code" href="classboost_1_1gil_1_1virtual__2d__locator.html">virtual_2d_locator&lt;Deref,IsTransposed&gt;</a>&amp; loc, <span class="keyword">const</span> NewDeref&amp; nderef) {</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            <span class="keywordflow">return</span> type(loc.pos(), loc.step(), <a class="code" href="classboost_1_1gil_1_1deref__compose.html">deref_compose&lt;NewDeref,Deref&gt;</a>(nderef,loc.deref_fn()));</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        }</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    };</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
@@ -94,8 +94,8 @@
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> D, <span class="keywordtype">bool</span> TR&gt; <a class="code" href="classboost_1_1gil_1_1virtual__2d__locator.html">virtual_2d_locator</a>(<span class="keyword">const</span> <a class="code" href="classboost_1_1gil_1_1virtual__2d__locator.html">virtual_2d_locator&lt;D,TR&gt;</a>&amp; loc, coord_t y_step)</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        : _p(loc.pos(), <a class="code" href="classboost_1_1gil_1_1point.html">point_t</a>(loc.step().x,loc.step().y*y_step),     loc.deref_fn()) {}</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> D, <span class="keywordtype">bool</span> TR&gt; virtual_2d_locator(<span class="keyword">const</span> <a class="code" href="classboost_1_1gil_1_1virtual__2d__locator.html">virtual_2d_locator&lt;D,TR&gt;</a>&amp; loc, coord_t x_step, coord_t y_step, <span class="keywordtype">bool</span> transpose=<span class="keyword">false</span>)</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        : _p(loc.pos(), transpose ? </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;                    <a class="code" href="classboost_1_1gil_1_1point.html">point_t</a>(loc.step().x*y_step,loc.step().y*x_step) : </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        : _p(loc.pos(), transpose ?</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;                    <a class="code" href="classboost_1_1gil_1_1point.html">point_t</a>(loc.step().x*y_step,loc.step().y*x_step) :</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                    <a class="code" href="classboost_1_1gil_1_1point.html">point_t</a>(loc.step().x*x_step,loc.step().y*y_step), loc.deref_fn()) { assert(transpose==(IsTransposed!=TR));}</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> D, <span class="keywordtype">bool</span> TR&gt; virtual_2d_locator(<span class="keyword">const</span> <a class="code" href="classboost_1_1gil_1_1virtual__2d__locator.html">virtual_2d_locator&lt;D,TR&gt;</a>&amp; pl) : _p(pl._p) {}</div>
@@ -175,7 +175,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Nov 17 2018 23:37:05 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Wed Dec 5 2018 08:21:10 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

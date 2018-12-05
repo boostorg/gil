@@ -68,7 +68,7 @@
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;boost/mpl/next.hpp&gt;</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;boost/mpl/deref.hpp&gt;</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;boost/mpl/size.hpp&gt;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;boost/preprocessor/repeat.hpp&gt;</span> </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;boost/preprocessor/repeat.hpp&gt;</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">namespace </span>boost { <span class="keyword">namespace </span>gil {</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
@@ -105,7 +105,7 @@
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment">    };</span></div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment">*/</span></div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#define GIL_FWD_TYPEDEFS(z, N, text)   T##N; typedef typename mpl::next&lt;T##N&gt;::type </span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#define GIL_FWD_TYPEDEFS(z, N, text)   T##N; typedef typename mpl::next&lt;T##N&gt;::type</span></div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define GIL_FWD_CASE(z, N, SUM)       case N: return op(*gil_reinterpret_cast&lt;typename mpl::deref&lt;T##N&gt;::type*&gt;(&amp;bits));</span></div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define GIL_FWD_CONST_CASE(z, N, SUM) case N: return op(*gil_reinterpret_cast_c&lt;const typename mpl::deref&lt;T##N&gt;::type*&gt;(&amp;bits));</span></div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor"></span></div>
@@ -166,13 +166,13 @@
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;} <span class="comment">// namespace detail</span></div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="comment">// unary application</span></div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Types, <span class="keyword">typename</span> Bits, <span class="keyword">typename</span> Op&gt; </div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Types, <span class="keyword">typename</span> Bits, <span class="keyword">typename</span> Op&gt;</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="keyword">typename</span> Op::result_type BOOST_FORCEINLINE apply_operation_basec(<span class="keyword">const</span> Bits&amp; bits, std::size_t index, Op op) {</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="keywordflow">return</span> detail::apply_operation_fwd_fn&lt;mpl::size&lt;Types&gt;::value&gt;().<span class="keyword">template</span> applyc&lt;Types&gt;(bits,index,op);</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;}</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="comment">// unary application</span></div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Types, <span class="keyword">typename</span> Bits, <span class="keyword">typename</span> Op&gt; </div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Types, <span class="keyword">typename</span> Bits, <span class="keyword">typename</span> Op&gt;</div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="keyword">typename</span> Op::result_type BOOST_FORCEINLINE apply_operation_base(      Bits&amp; bits, std::size_t index, Op op) {</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="keywordflow">return</span> detail::apply_operation_fwd_fn&lt;mpl::size&lt;Types&gt;::value&gt;().<span class="keyword">template</span> apply&lt;Types&gt;(bits,index,op);</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;}</div>
@@ -200,7 +200,7 @@
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;</div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        reduce_bind2(<span class="keyword">const</span> Bits1&amp; bits1, std::size_t index1, Op&amp; op) : _bits1(bits1), _index1(index1), _op(op) {}</div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T2&gt; BOOST_FORCEINLINE result_type operator()(<span class="keyword">const</span> T2&amp; t2) { </div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T2&gt; BOOST_FORCEINLINE result_type operator()(<span class="keyword">const</span> T2&amp; t2) {</div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;            <span class="keywordflow">return</span> apply_operation_basec&lt;Types1&gt;(_bits1, _index1, reduce_bind1&lt;T2,Op&gt;(t2, _op));</div>
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        }</div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    };</div>
@@ -228,7 +228,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Nov 17 2018 23:37:04 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Wed Dec 5 2018 08:21:10 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
