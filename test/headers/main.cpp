@@ -1,4 +1,5 @@
 //
+// Copyright (c) 2018 Mateusz Loskot <mateusz@loskot.net>
 // Copyright (c) 2007-2015 Andrey Semashev
 //
 // Distributed under the Boost Software License, Version 1.0. (See
