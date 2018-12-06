@@ -243,7 +243,7 @@ channels, such as support for arithmetic operations.
 Models
 ~~~~~~
 
-All built-in integral and floating point types are valid channels.
+All C++11 fundamental integer and float point types are valid channels.
 
 The minimum and maximum values of a channel modeled by a built-in type
 correspond to the minimum and maximum physical range of the built-in
