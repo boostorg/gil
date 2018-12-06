@@ -8,6 +8,7 @@
 #ifndef BOOST_GIL_EXTENSION_TOOLBOX_COLOR_SPACES_HSL_HPP
 #define BOOST_GIL_EXTENSION_TOOLBOX_COLOR_SPACES_HSL_HPP
 
+#include <boost/gil/color_convert.hpp>
 #include <boost/gil/typedefs.hpp>
 
 namespace boost{ namespace gil {

@@ -10,6 +10,7 @@
 
 #include <boost/gil/extension/toolbox/metafunctions/get_num_bits.hpp>
 
+#include <boost/gil/color_convert.hpp>
 #include <boost/gil.hpp> // FIXME: Include what you use!
 
 #include <boost/mpl/identity.hpp>

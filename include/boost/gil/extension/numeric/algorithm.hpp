@@ -8,6 +8,8 @@
 #ifndef BOOST_GIL_EXTENSION_NUMERIC_ALGORITHM_HPP
 #define BOOST_GIL_EXTENSION_NUMERIC_ALGORITHM_HPP
 
+#include <boost/gil/extension/numeric/pixel_numeric_operations.hpp>
+
 #include <boost/gil/metafunctions.hpp>
 #include <boost/gil/pixel_iterator.hpp>
 

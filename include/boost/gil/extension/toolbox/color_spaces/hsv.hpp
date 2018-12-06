@@ -10,6 +10,7 @@
 
 #include <boost/numeric/conversion/cast.hpp>
 
+#include <boost/gil/color_convert.hpp>
 #include <boost/gil/typedefs.hpp>
 
 #include <boost/mpl/vector.hpp>

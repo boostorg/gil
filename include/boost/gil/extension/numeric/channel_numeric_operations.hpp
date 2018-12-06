@@ -8,6 +8,8 @@
 #ifndef BOOST_GIL_EXTENSION_NUMERIC_CHANNEL_NUMERIC_OPERATIONS_HPP
 #define BOOST_GIL_EXTENSION_NUMERIC_CHANNEL_NUMERIC_OPERATIONS_HPP
 
+#include <boost/gil/channel.hpp>
+
 #include <functional>
 
 namespace boost { namespace gil {
