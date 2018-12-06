@@ -98,43 +98,54 @@ struct RandomAccessNDLocatorConcept
     {
         gil_function_requires<Regular<Loc>>();
 
-        typedef typename Loc::value_type        value_type;
-        typedef typename Loc::reference         reference;          // result of dereferencing
-        typedef typename Loc::difference_type   difference_type;    // result of operator-(pixel_locator, pixel_locator)
-        typedef typename Loc::cached_location_t cached_location_t;  // type used to store relative location (to allow for more efficient repeated access)
-        typedef typename Loc::const_t           const_t;         // same as this type, but over const values
-        typedef typename Loc::point_t           point_t;         // same as difference_type
-        static const std::size_t N=Loc::num_dimensions; ignore_unused_variable_warning(N);
+        using value_type = typename Loc::value_type;
+        using reference = typename Loc::reference; // result of dereferencing
+        using difference_type = typename Loc::difference_type; // result of operator-(pixel_locator, pixel_locator)
+        using cached_location_t = typename Loc::cached_location_t; // type used to store relative location (to allow for more efficient repeated access)
+        using const_t = typename Loc::const_t; // same as this type, but over const values
+        using point_t = typename Loc::point_t; // same as difference_type
 
-        typedef typename Loc::template axis<0>::iterator    first_it_type;
-        typedef typename Loc::template axis<N-1>::iterator  last_it_type;
+        static std::size_t const N = Loc::num_dimensions; ignore_unused_variable_warning(N);
+
+        using first_it_type = typename Loc::template axis<0>::iterator;
+        using last_it_type = typename Loc::template axis<N-1>::iterator;
         gil_function_requires<boost_concepts::RandomAccessTraversalConcept<first_it_type>>();
         gil_function_requires<boost_concepts::RandomAccessTraversalConcept<last_it_type>>();
 
-        // point_t must be an N-dimensional point, each dimension of which must have the same type as difference_type of the corresponding iterator
+        // point_t must be an N-dimensional point, each dimension of which must
+        // have the same type as difference_type of the corresponding iterator
         gil_function_requires<PointNDConcept<point_t>>();
         BOOST_STATIC_ASSERT(point_t::num_dimensions==N);
-        BOOST_STATIC_ASSERT((is_same<typename std::iterator_traits<first_it_type>::difference_type, typename point_t::template axis<0>::coord_t>::value));
-        BOOST_STATIC_ASSERT((is_same<typename std::iterator_traits<last_it_type>::difference_type, typename point_t::template axis<N-1>::coord_t>::value));
+        BOOST_STATIC_ASSERT((is_same
+            <
+                typename std::iterator_traits<first_it_type>::difference_type,
+                typename point_t::template axis<0>::coord_t
+            >::value));
+        BOOST_STATIC_ASSERT((is_same
+            <
+                typename std::iterator_traits<last_it_type>::difference_type,
+                typename point_t::template axis<N-1>::coord_t
+            >::value));
 
         difference_type d;
-        loc+=d;
-        loc-=d;
-        loc=loc+d;
-        loc=loc-d;
-        reference r1=loc[d];  ignore_unused_variable_warning(r1);
-        reference r2=*loc;  ignore_unused_variable_warning(r2);
-        cached_location_t cl=loc.cache_location(d);  ignore_unused_variable_warning(cl);
-        reference r3=loc[d];  ignore_unused_variable_warning(r3);
+        loc += d;
+        loc -= d;
+        loc = loc + d;
+        loc = loc - d;
+        reference r1 = loc[d];  ignore_unused_variable_warning(r1);
+        reference r2 = *loc;  ignore_unused_variable_warning(r2);
+        cached_location_t cl = loc.cache_location(d);  ignore_unused_variable_warning(cl);
+        reference r3 = loc[d];  ignore_unused_variable_warning(r3);
 
-        first_it_type fi=loc.template axis_iterator<0>();
-        fi=loc.template axis_iterator<0>(d);
-        last_it_type li=loc.template axis_iterator<N-1>();
-        li=loc.template axis_iterator<N-1>(d);
+        first_it_type fi = loc.template axis_iterator<0>();
+        fi = loc.template axis_iterator<0>(d);
+        last_it_type li = loc.template axis_iterator<N-1>();
+        li = loc.template axis_iterator<N-1>(d);
 
-        typedef PixelDereferenceAdaptorArchetype<typename Loc::value_type> deref_t;
-        typedef typename Loc::template add_deref<deref_t>::type dtype;
-        //gil_function_requires<RandomAccessNDLocatorConcept<dtype>>();    // infinite recursion
+        using deref_t = PixelDereferenceAdaptorArchetype<typename Loc::value_type>;
+        using dtype = typename Loc::template add_deref<deref_t>::type;
+        // TODO: infinite recursion - FIXME?
+        //gil_function_requires<RandomAccessNDLocatorConcept<dtype>>();
     }
     Loc loc;
 };
@@ -187,20 +198,20 @@ struct RandomAccess2DLocatorConcept
         gil_function_requires<RandomAccessNDLocatorConcept<Loc>>();
         BOOST_STATIC_ASSERT(Loc::num_dimensions==2);
 
-        typedef typename dynamic_x_step_type<Loc>::type dynamic_x_step_t;
-        typedef typename dynamic_y_step_type<Loc>::type dynamic_y_step_t;
-        typedef typename transposed_type<Loc>::type     transposed_t;
+        using dynamic_x_step_t = typename dynamic_x_step_type<Loc>::type;
+        using dynamic_y_step_t = typename dynamic_y_step_type<Loc>::type;
+        using transposed_t = typename transposed_type<Loc>::type;
 
-        typedef typename Loc::cached_location_t   cached_location_t;
+        using cached_location_t = typename Loc::cached_location_t;
         gil_function_requires<Point2DConcept<typename Loc::point_t>>();
 
-        typedef typename Loc::x_iterator x_iterator;
-        typedef typename Loc::y_iterator y_iterator;
-        typedef typename Loc::x_coord_t  x_coord_t;
-        typedef typename Loc::y_coord_t  y_coord_t;
+        using x_iterator = typename Loc::x_iterator;
+        using y_iterator = typename Loc::y_iterator;
+        using x_coord_t = typename Loc::x_coord_t;
+        using y_coord_t = typename Loc::y_coord_t;
 
-        x_coord_t xd=0; ignore_unused_variable_warning(xd);
-        y_coord_t yd=0; ignore_unused_variable_warning(yd);
+        x_coord_t xd = 0; ignore_unused_variable_warning(xd);
+        y_coord_t yd = 0; ignore_unused_variable_warning(yd);
 
         typename Loc::difference_type d;
         typename Loc::reference r=loc(xd,yd);  ignore_unused_variable_warning(r);
@@ -208,24 +219,30 @@ struct RandomAccess2DLocatorConcept
         dynamic_x_step_t loc2(dynamic_x_step_t(), yd);
         dynamic_x_step_t loc3(dynamic_x_step_t(), xd, yd);
 
-        typedef typename dynamic_y_step_type<typename dynamic_x_step_type<transposed_t>::type>::type dynamic_xy_step_transposed_t;
+        using dynamic_xy_step_transposed_t = typename dynamic_y_step_type
+            <
+                typename dynamic_x_step_type<transposed_t>::type
+            >::type;
         dynamic_xy_step_transposed_t loc4(loc, xd,yd,true);
 
-        bool is_contiguous=loc.is_1d_traversable(xd); ignore_unused_variable_warning(is_contiguous);
+        bool is_contiguous = loc.is_1d_traversable(xd);
+        ignore_unused_variable_warning(is_contiguous);
+
         loc.y_distance_to(loc, xd);
 
-        loc=loc.xy_at(d);
-        loc=loc.xy_at(xd,yd);
+        loc = loc.xy_at(d);
+        loc = loc.xy_at(xd, yd);
 
-        x_iterator xit=loc.x_at(d);
-        xit=loc.x_at(xd,yd);
-        xit=loc.x();
+        x_iterator xit = loc.x_at(d);
+        xit = loc.x_at(xd, yd);
+        xit = loc.x();
 
-        y_iterator yit=loc.y_at(d);
-        yit=loc.y_at(xd,yd);
-        yit=loc.y();
+        y_iterator yit = loc.y_at(d);
+        yit = loc.y_at(xd, yd);
+        yit = loc.y();
 
-        cached_location_t cl=loc.cache_location(xd,yd);  ignore_unused_variable_warning(cl);
+        cached_location_t cl = loc.cache_location(xd, yd);
+        ignore_unused_variable_warning(cl);
     }
     Loc loc;
 };
@@ -251,7 +268,7 @@ struct PixelLocatorConcept
         gil_function_requires<RandomAccess2DLocatorConcept<Loc>>();
         gil_function_requires<PixelIteratorConcept<typename Loc::x_iterator>>();
         gil_function_requires<PixelIteratorConcept<typename Loc::y_iterator>>();
-        typedef typename Loc::coord_t                      coord_t;
+        using coord_t = typename Loc::coord_t;
         BOOST_STATIC_ASSERT((is_same<typename Loc::x_coord_t, typename Loc::y_coord_t>::value));
     }
     Loc loc;
@@ -265,15 +282,21 @@ struct RandomAccessNDLocatorIsMutableConcept
 {
     void constraints()
     {
-        gil_function_requires<detail::RandomAccessIteratorIsMutableConcept<typename Loc::template axis<0>::iterator>>();
-        gil_function_requires<detail::RandomAccessIteratorIsMutableConcept<typename Loc::template axis<Loc::num_dimensions-1>::iterator>>();
+        gil_function_requires<detail::RandomAccessIteratorIsMutableConcept
+            <
+                typename Loc::template axis<0>::iterator
+            >>();
+        gil_function_requires<detail::RandomAccessIteratorIsMutableConcept
+            <
+                typename Loc::template axis<Loc::num_dimensions-1>::iterator
+            >>();
 
         typename Loc::difference_type d; initialize_it(d);
-        typename Loc::value_type v;initialize_it(v);
-        typename Loc::cached_location_t cl=loc.cache_location(d);
-        *loc=v;
-        loc[d]=v;
-        loc[cl]=v;
+        typename Loc::value_type v; initialize_it(v);
+        typename Loc::cached_location_t cl = loc.cache_location(d);
+        *loc = v;
+        loc[d] = v;
+        loc[cl] = v;
     }
     Loc loc;
 };
@@ -285,10 +308,10 @@ struct RandomAccess2DLocatorIsMutableConcept
     void constraints()
     {
         gil_function_requires<detail::RandomAccessNDLocatorIsMutableConcept<Loc>>();
-        typename Loc::x_coord_t xd=0; ignore_unused_variable_warning(xd);
-        typename Loc::y_coord_t yd=0; ignore_unused_variable_warning(yd);
+        typename Loc::x_coord_t xd = 0; ignore_unused_variable_warning(xd);
+        typename Loc::y_coord_t yd = 0; ignore_unused_variable_warning(yd);
         typename Loc::value_type v; initialize_it(v);
-        loc(xd,yd)=v;
+        loc(xd, yd) = v;
     }
     Loc loc;
 };

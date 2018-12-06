@@ -27,7 +27,7 @@ namespace boost { namespace gil {
 /// \brief N-dimensional container of values
 ///
 /// \code
-/// concept RandomAccessNDImageConcept<typename Img> : Regular<Img>
+/// concept RandomAccessNDImageConcept<typename Image> : Regular<Image>
 /// {
 ///     typename view_t; where MutableRandomAccessNDImageViewConcept<view_t>;
 ///     typename const_view_t = view_t::const_t;
@@ -35,48 +35,47 @@ namespace boost { namespace gil {
 ///     typename value_type   = view_t::value_type;
 ///     typename allocator_type;
 ///
-///     Img::Img(point_t dims, std::size_t alignment=1);
-///     Img::Img(point_t dims, value_type fill_value, std::size_t alignment);
+///     Image::Image(point_t dims, std::size_t alignment=1);
+///     Image::Image(point_t dims, value_type fill_value, std::size_t alignment);
 ///
-///     void Img::recreate(point_t new_dims, std::size_t alignment=1);
-///     void Img::recreate(point_t new_dims, value_type fill_value, std::size_t alignment);
+///     void Image::recreate(point_t new_dims, std::size_t alignment=1);
+///     void Image::recreate(point_t new_dims, value_type fill_value, std::size_t alignment);
 ///
-///     const point_t&        Img::dimensions() const;
-///     const const_view_t&   const_view(const Img&);
-///     const view_t&         view(Img&);
+///     const point_t&        Image::dimensions() const;
+///     const const_view_t&   const_view(const Image&);
+///     const view_t&         view(Image&);
 /// };
 /// \endcode
-template <typename Img>
+template <typename Image>
 struct RandomAccessNDImageConcept
 {
     void constraints()
     {
-        gil_function_requires<Regular<Img>>();
+        gil_function_requires<Regular<Image>>();
 
-        typedef typename Img::view_t       view_t;
-        gil_function_requires<MutableRandomAccessNDImageViewConcept<view_t> >();
+        using view_t = typename Image::view_t;
+        gil_function_requires<MutableRandomAccessNDImageViewConcept<view_t>>();
 
-        typedef typename Img::const_view_t const_view_t;
-        typedef typename Img::value_type   pixel_t;
+        using const_view_t = typename Image::const_view_t;
+        using pixel_t = typename Image::value_type;
+        using point_t = typename Image::point_t;
+        gil_function_requires<PointNDConcept<point_t>>();
 
-        typedef typename Img::point_t        point_t;
-        gil_function_requires<PointNDConcept<point_t> >();
-
-        const_view_t cv = const_view(img);
+        const_view_t cv = const_view(image);
         ignore_unused_variable_warning(cv);
-        view_t v  = view(img);
+        view_t v = view(image);
         ignore_unused_variable_warning(v);
 
         pixel_t fill_value;
-        point_t pt=img.dimensions();
-        Img im1(pt);
-        Img im2(pt,1);
-        Img im3(pt,fill_value,1);
-        img.recreate(pt);
-        img.recreate(pt,1);
-        img.recreate(pt,fill_value,1);
+        point_t pt = image.dimensions();
+        Image image1(pt);
+        Image image2(pt, 1);
+        Image image3(pt, fill_value, 1);
+        image.recreate(pt);
+        image.recreate(pt, 1);
+        image.recreate(pt, fill_value, 1);
     }
-    Img img;
+    Image image;
 };
 
 
@@ -84,70 +83,70 @@ struct RandomAccessNDImageConcept
 /// \brief 2-dimensional container of values
 ///
 /// \code
-/// concept RandomAccess2DImageConcept<RandomAccessNDImageConcept Img>
+/// concept RandomAccess2DImageConcept<RandomAccessNDImageConcept Image>
 /// {
 ///     typename x_coord_t = const_view_t::x_coord_t;
 ///     typename y_coord_t = const_view_t::y_coord_t;
 ///
-///     Img::Img(x_coord_t width, y_coord_t height, std::size_t alignment=1);
-///     Img::Img(x_coord_t width, y_coord_t height, value_type fill_value, std::size_t alignment);
+///     Image::Image(x_coord_t width, y_coord_t height, std::size_t alignment=1);
+///     Image::Image(x_coord_t width, y_coord_t height, value_type fill_value, std::size_t alignment);
 ///
-///     x_coord_t Img::width() const;
-///     y_coord_t Img::height() const;
+///     x_coord_t Image::width() const;
+///     y_coord_t Image::height() const;
 ///
-///     void Img::recreate(x_coord_t width, y_coord_t height, std::size_t alignment=1);
-///     void Img::recreate(x_coord_t width, y_coord_t height, value_type fill_value, std::size_t alignment);
+///     void Image::recreate(x_coord_t width, y_coord_t height, std::size_t alignment=1);
+///     void Image::recreate(x_coord_t width, y_coord_t height, value_type fill_value, std::size_t alignment);
 /// };
 /// \endcode
-template <typename Img>
+template <typename Image>
 struct RandomAccess2DImageConcept
 {
     void constraints()
     {
-        gil_function_requires<RandomAccessNDImageConcept<Img> >();
-        typedef typename Img::x_coord_t  x_coord_t;
-        typedef typename Img::y_coord_t  y_coord_t;
-        typedef typename Img::value_type value_t;
+        gil_function_requires<RandomAccessNDImageConcept<Image>>();
+        using x_coord_t = typename Image::x_coord_t;
+        using y_coord_t = typename Image::y_coord_t;
+        using value_t = typename Image::value_type;
 
-        gil_function_requires<MutableRandomAccess2DImageViewConcept<typename Img::view_t> >();
+        gil_function_requires<MutableRandomAccess2DImageViewConcept<typename Image::view_t>>();
 
-        x_coord_t w=img.width();
-        y_coord_t h=img.height();
+        x_coord_t w=image.width();
+        y_coord_t h=image.height();
         value_t fill_value;
-        Img im1(w,h);
-        Img im2(w,h,1);
-        Img im3(w,h,fill_value,1);
-        img.recreate(w,h);
-        img.recreate(w,h,1);
-        img.recreate(w,h,fill_value,1);
+        Image im1(w,h);
+        Image im2(w,h,1);
+        Image im3(w,h,fill_value,1);
+        image.recreate(w,h);
+        image.recreate(w,h,1);
+        image.recreate(w,h,fill_value,1);
     }
-    Img img;
+    Image image;
 };
 
 /// \ingroup ImageConcept
 /// \brief 2-dimensional image whose value type models PixelValueConcept
 ///
 /// \code
-/// concept ImageConcept<RandomAccess2DImageConcept Img>
+/// concept ImageConcept<RandomAccess2DImageConcept Image>
 /// {
 ///     where MutableImageViewConcept<view_t>;
 ///     typename coord_t  = view_t::coord_t;
 /// };
 /// \endcode
-template <typename Img>
+template <typename Image>
 struct ImageConcept
 {
     void constraints()
     {
-        gil_function_requires<RandomAccess2DImageConcept<Img> >();
-        gil_function_requires<MutableImageViewConcept<typename Img::view_t> >();
-        typedef typename Img::coord_t        coord_t;
-        BOOST_STATIC_ASSERT(num_channels<Img>::value == mpl::size<typename color_space_type<Img>::type>::value);
+        gil_function_requires<RandomAccess2DImageConcept<Image>>();
+        gil_function_requires<MutableImageViewConcept<typename Image::view_t>>();
+        using coord_t = typename Image::coord_t;
+        BOOST_STATIC_ASSERT(num_channels<Image>::value == mpl::size<typename color_space_type<Image>::type>::value);
 
-        BOOST_STATIC_ASSERT((is_same<coord_t, typename Img::x_coord_t>::value));
-        BOOST_STATIC_ASSERT((is_same<coord_t, typename Img::y_coord_t>::value));
+        BOOST_STATIC_ASSERT((is_same<coord_t, typename Image::x_coord_t>::value));
+        BOOST_STATIC_ASSERT((is_same<coord_t, typename Image::y_coord_t>::value));
     }
-    Img img;
+    Image image;
 };
 
 }} // namespace boost::gil

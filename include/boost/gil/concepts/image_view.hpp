@@ -98,25 +98,25 @@ struct RandomAccessNDImageViewConcept
     {
         gil_function_requires<Regular<View>>();
 
-        typedef typename View::value_type       value_type;
-        typedef typename View::reference        reference;       // result of dereferencing
-        typedef typename View::pointer          pointer;
-        typedef typename View::difference_type  difference_type; // result of operator-(1d_iterator,1d_iterator)
-        typedef typename View::const_t          const_t;         // same as this type, but over const values
-        typedef typename View::point_t          point_t;         // N-dimensional point
-        typedef typename View::locator          locator;         // N-dimensional locator
-        typedef typename View::iterator         iterator;
-        typedef typename View::const_iterator   const_iterator;
-        typedef typename View::reverse_iterator reverse_iterator;
-        typedef typename View::size_type        size_type;
+        using value_type = typename View::value_type;
+        using reference = typename View::reference; // result of dereferencing
+        using pointer = typename View::pointer;
+        using difference_type = typename View::difference_type; // result of operator-(1d_iterator,1d_iterator)
+        using const_t = typename View::const_t; // same as this type, but over const values
+        using point_t = typename View::point_t; // N-dimensional point
+        using locator = typename View::locator; // N-dimensional locator
+        using iterator = typename View::iterator;
+        using const_iterator = typename View::const_iterator;
+        using reverse_iterator = typename View::reverse_iterator;
+        using size_type = typename View::size_type;
         static const std::size_t N=View::num_dimensions;
 
         gil_function_requires<RandomAccessNDLocatorConcept<locator>>();
         gil_function_requires<boost_concepts::RandomAccessTraversalConcept<iterator>>();
         gil_function_requires<boost_concepts::RandomAccessTraversalConcept<reverse_iterator>>();
 
-        typedef typename View::template axis<0>::iterator   first_it_type;
-        typedef typename View::template axis<N-1>::iterator last_it_type;
+        using first_it_type = typename View::template axis<0>::iterator;
+        using last_it_type = typename View::template axis<N-1>::iterator;
         gil_function_requires<boost_concepts::RandomAccessTraversalConcept<first_it_type>>();
         gil_function_requires<boost_concepts::RandomAccessTraversalConcept<last_it_type>>();
 
@@ -126,8 +126,16 @@ struct RandomAccessNDImageViewConcept
         // point_t must be an N-dimensional point, each dimension of which must have the same type as difference_type of the corresponding iterator
         gil_function_requires<PointNDConcept<point_t>>();
         BOOST_STATIC_ASSERT(point_t::num_dimensions==N);
-        BOOST_STATIC_ASSERT((is_same<typename std::iterator_traits<first_it_type>::difference_type, typename point_t::template axis<0>::coord_t>::value));
-        BOOST_STATIC_ASSERT((is_same<typename std::iterator_traits<last_it_type>::difference_type, typename point_t::template axis<N-1>::coord_t>::value));
+        BOOST_STATIC_ASSERT((is_same
+            <
+                typename std::iterator_traits<first_it_type>::difference_type,
+                typename point_t::template axis<0>::coord_t
+            >::value));
+        BOOST_STATIC_ASSERT((is_same
+            <
+                typename std::iterator_traits<last_it_type>::difference_type,
+                typename point_t::template axis<N-1>::coord_t
+            >::value));
 
         point_t p;
         locator lc;
@@ -148,8 +156,8 @@ struct RandomAccessNDImageViewConcept
         rit = view.rbegin();
         rit = view.rend();
 
-        reference r1 = view[d]; ignore_unused_variable_warning(r1);    // 1D access
-        reference r2 = view(p); ignore_unused_variable_warning(r2);    // 2D access
+        reference r1 = view[d]; ignore_unused_variable_warning(r1); // 1D access
+        reference r2 = view(p); ignore_unused_variable_warning(r2); // 2D access
 
         // get 1-D iterator of any dimension at a given pixel location
         first_it_type fi = view.template axis_iterator<0>(p);
@@ -157,8 +165,8 @@ struct RandomAccessNDImageViewConcept
         last_it_type li = view.template axis_iterator<N-1>(p);
         ignore_unused_variable_warning(li);
 
-        typedef PixelDereferenceAdaptorArchetype<typename View::value_type> deref_t;
-        typedef typename View::template add_deref<deref_t>::type dtype;
+        using deref_t = PixelDereferenceAdaptorArchetype<typename View::value_type>;
+        using dtype = typename View::template add_deref<deref_t>::type;
     }
     View view;
 };
@@ -212,15 +220,14 @@ struct RandomAccess2DImageViewConcept
         // TODO: This executes the requirements for RandomAccessNDLocatorConcept again. Fix it to improve compile time
         gil_function_requires<RandomAccess2DLocatorConcept<typename View::locator>>();
 
-        typedef typename dynamic_x_step_type<View>::type  dynamic_x_step_t;
-        typedef typename dynamic_y_step_type<View>::type  dynamic_y_step_t;
-        typedef typename transposed_type<View>::type      transposed_t;
-
-        typedef typename View::x_iterator x_iterator;
-        typedef typename View::y_iterator y_iterator;
-        typedef typename View::x_coord_t  x_coord_t;
-        typedef typename View::y_coord_t  y_coord_t;
-        typedef typename View::xy_locator xy_locator;
+        using dynamic_x_step_t = typename dynamic_x_step_type<View>::type;
+        using dynamic_y_step_t = typename dynamic_y_step_type<View>::type;
+        using transposed_t = typename transposed_type<View>::type;
+        using x_iterator = typename View::x_iterator;
+        using y_iterator = typename View::y_iterator;
+        using x_coord_t = typename View::x_coord_t;
+        using y_coord_t = typename View::y_coord_t;
+        using xy_locator = typename View::xy_locator;
 
         x_coord_t xd = 0; ignore_unused_variable_warning(xd);
         y_coord_t yd = 0; ignore_unused_variable_warning(yd);
@@ -228,12 +235,12 @@ struct RandomAccess2DImageViewConcept
         y_iterator yit;
         typename View::point_t d;
 
-        View(xd, yd, xy_locator());       // constructible with width, height, 2d_locator
+        View(xd, yd, xy_locator()); // constructible with width, height, 2d_locator
 
         xy_locator lc = view.xy_at(xd, yd);
         lc = view.xy_at(d);
 
-        typename View::reference r=view(xd, yd);
+        typename View::reference r = view(xd, yd);
         ignore_unused_variable_warning(r);
         xd = view.width();
         yd = view.height();
@@ -368,7 +375,7 @@ struct ImageViewConcept
 
         BOOST_STATIC_ASSERT((is_same<typename View::x_coord_t, typename View::y_coord_t>::value));
 
-        typedef typename View::coord_t           coord_t;      // 1D difference type (same for all dimensions)
+        using coord_t = typename View::coord_t; // 1D difference type (same for all dimensions)
         std::size_t num_chan = view.num_channels(); ignore_unused_variable_warning(num_chan);
     }
     View view;
@@ -385,16 +392,32 @@ struct RandomAccessNDImageViewIsMutableConcept
         gil_function_requires<detail::RandomAccessNDLocatorIsMutableConcept<typename View::locator>>();
 
         gil_function_requires<detail::RandomAccessIteratorIsMutableConcept<typename View::iterator>>();
-        gil_function_requires<detail::RandomAccessIteratorIsMutableConcept<typename View::reverse_iterator>>();
-        gil_function_requires<detail::RandomAccessIteratorIsMutableConcept<typename View::template axis<0>::iterator>>();
-        gil_function_requires<detail::RandomAccessIteratorIsMutableConcept<typename View::template axis<View::num_dimensions-1>::iterator>>();
 
-        typename View::difference_type diff; initialize_it(diff); ignore_unused_variable_warning(diff);
+        gil_function_requires<detail::RandomAccessIteratorIsMutableConcept
+            <
+                typename View::reverse_iterator
+            >>();
+
+        gil_function_requires<detail::RandomAccessIteratorIsMutableConcept
+            <
+                typename View::template axis<0>::iterator
+            >>();
+
+        gil_function_requires<detail::RandomAccessIteratorIsMutableConcept
+            <
+                typename View::template axis<View::num_dimensions - 1>::iterator
+            >>();
+
+        typename View::difference_type diff;
+        initialize_it(diff);
+        ignore_unused_variable_warning(diff);
+
         typename View::point_t pt;
-        typename View::value_type v; initialize_it(v);
+        typename View::value_type v;
+        initialize_it(v);
 
-        view[diff]=v;
-        view(pt)=v;
+        view[diff] = v;
+        view(pt) = v;
     }
     View view;
 };
@@ -406,10 +429,10 @@ struct RandomAccess2DImageViewIsMutableConcept
     void constraints()
     {
         gil_function_requires<detail::RandomAccessNDImageViewIsMutableConcept<View>>();
-        typename View::x_coord_t xd=0; ignore_unused_variable_warning(xd);
-        typename View::y_coord_t yd=0; ignore_unused_variable_warning(yd);
+        typename View::x_coord_t xd = 0; ignore_unused_variable_warning(xd);
+        typename View::y_coord_t yd = 0; ignore_unused_variable_warning(yd);
         typename View::value_type v; initialize_it(v);
-        view(xd,yd)=v;
+        view(xd, yd) = v;
     }
     View view;
 };
@@ -489,12 +512,14 @@ struct MutableImageViewConcept
 ///
 template <typename V1, typename V2>
 struct views_are_compatible
-    : public pixels_are_compatible<typename V1::value_type, typename V2::value_type>
+    : pixels_are_compatible<typename V1::value_type, typename V2::value_type>
 {
 };
 
 /// \ingroup ImageViewConcept
-/// \brief Views are compatible if they have the same color spaces and compatible channel values. Constness and layout are not important for compatibility
+/// \brief Views are compatible if they have the same color spaces and compatible channel values.
+///
+/// Constness and layout are not important for compatibility.
 ///
 /// \code
 /// concept ViewsCompatibleConcept<ImageViewConcept V1, ImageViewConcept V2>
@@ -507,7 +532,7 @@ struct ViewsCompatibleConcept
 {
     void constraints()
     {
-        BOOST_STATIC_ASSERT((views_are_compatible<V1,V2>::value));
+        BOOST_STATIC_ASSERT((views_are_compatible<V1, V2>::value));
     }
 };
 

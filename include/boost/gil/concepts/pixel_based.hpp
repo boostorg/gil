@@ -24,7 +24,11 @@
 namespace boost { namespace gil {
 
 /// \ingroup PixelBasedConcept
-/// \brief Concept for all pixel-based GIL constructs, such as pixels, iterators, locators, views and images whose value type is a pixel.
+/// \brief Concept for all pixel-based GIL constructs.
+///
+/// Pixel-based constructs include pixels, iterators, locators, views and
+/// images whose value type is a pixel.
+///
 /// \code
 /// concept PixelBasedConcept<typename T>
 /// {
@@ -44,9 +48,10 @@ struct PixelBasedConcept
 {
     void constraints()
     {
-        typedef typename color_space_type<P>::type color_space_t;
+        using color_space_t = typename color_space_type<P>::type;
         gil_function_requires<ColorSpaceConcept<color_space_t>>();
-        typedef typename channel_mapping_type<P>::type channel_mapping_t;
+
+        using channel_mapping_t = typename channel_mapping_type<P>::type ;
         gil_function_requires<ChannelMappingConcept<channel_mapping_t>>();
 
         static const bool planar = is_planar<P>::type::value;
@@ -74,7 +79,8 @@ struct HomogeneousPixelBasedConcept
     void constraints()
     {
         gil_function_requires<PixelBasedConcept<P>>();
-        typedef typename channel_type<P>::type channel_t;
+
+        using channel_t = typename channel_type<P>::type;
         gil_function_requires<ChannelConcept<channel_t>>();
     }
 };
