@@ -61,16 +61,21 @@ struct PixelDereferenceAdaptorConcept
         gil_function_requires<boost::CopyConstructibleConcept<D>>();
         gil_function_requires<boost::AssignableConcept<D>>();
 
-        gil_function_requires<PixelConcept<typename detail::remove_const_and_reference<typename D::result_type>::type>>();
+        gil_function_requires<PixelConcept
+            <
+                typename detail::remove_const_and_reference<typename D::result_type>::type
+            >>();
 
-        typedef typename D::const_t const_t;
+        using const_t = typename D::const_t;
         gil_function_requires<PixelDereferenceAdaptorConcept<const_t>>();
-        typedef typename D::value_type value_type;
-        gil_function_requires<PixelValueConcept<value_type>>();
-        typedef typename D::reference reference;                // == PixelConcept (if you remove const and reference)
-        typedef typename D::const_reference const_reference;    // == PixelConcept (if you remove const and reference)
 
-        const bool is_mutable = D::is_mutable;
+        using value_type = typename D::value_type;
+        gil_function_requires<PixelValueConcept<value_type>>();
+
+        using reference = typename D::reference; // == PixelConcept (if you remove const and reference)
+        using const_reference = typename D::const_reference; // == PixelConcept (if you remove const and reference)
+
+        bool const is_mutable = D::is_mutable;
         ignore_unused_variable_warning(is_mutable);
     }
     D d;
@@ -79,12 +84,13 @@ struct PixelDereferenceAdaptorConcept
 template <typename P>
 struct PixelDereferenceAdaptorArchetype
 {
-    typedef P argument_type;
-    typedef P result_type;
-    typedef PixelDereferenceAdaptorArchetype const_t;
-    typedef typename remove_reference<P>::type value_type;
-    typedef typename add_reference<P>::type reference;
-    typedef reference const_reference;
+    using argument_type = P;
+    using result_type = P;
+    using const_t = PixelDereferenceAdaptorArchetype;
+    using value_type = typename remove_reference<P>::type;
+    using reference = typename add_reference<P>::type;
+    using const_reference = reference;
+
     static const bool is_mutable = false;
     P operator()(P) const { throw; }
 };

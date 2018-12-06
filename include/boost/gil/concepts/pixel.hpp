@@ -67,14 +67,20 @@ struct PixelConcept
         static const bool is_mutable = P::is_mutable;
         ignore_unused_variable_warning(is_mutable);
 
-        typedef typename P::value_type value_type;
+        using value_type = typename P::value_type;
 //      gil_function_requires<PixelValueConcept<value_type>>();
 
-        typedef typename P::reference reference;
-        gil_function_requires<PixelConcept<typename detail::remove_const_and_reference<reference>::type>>();
+        using reference = typename P::reference;
+        gil_function_requires<PixelConcept
+            <
+                typename detail::remove_const_and_reference<reference>::type
+            >>();
 
-        typedef typename P::const_reference const_reference;
-        gil_function_requires<PixelConcept<typename detail::remove_const_and_reference<const_reference>::type>>();
+        using const_reference = typename P::const_reference;
+        gil_function_requires<PixelConcept
+            <
+                typename detail::remove_const_and_reference<const_reference>::type
+            >>();
     }
 };
 

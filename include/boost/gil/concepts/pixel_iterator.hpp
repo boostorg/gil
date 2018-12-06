@@ -69,7 +69,8 @@ struct RandomAccessIteratorIsMutableConcept
     void constraints()
     {
         gil_function_requires<BidirectionalIteratorIsMutableConcept<TT>>();
-        typename std::iterator_traits<TT>::difference_type n=0;
+
+        typename std::iterator_traits<TT>::difference_type n = 0;
         ignore_unused_variable_warning(n);
         i[n] = *i; // require element access and assignment
     }
@@ -103,8 +104,12 @@ struct PixelIteratorIsMutableConcept
     void constraints()
     {
         gil_function_requires<detail::RandomAccessIteratorIsMutableConcept<Iterator>>();
-        typedef typename remove_reference<typename std::iterator_traits<Iterator>::reference>::type ref;
-        typedef typename element_type<ref>::type channel_t;
+
+        using ref_t = typename remove_reference
+            <
+                typename std::iterator_traits<Iterator>::reference
+            >::type;
+        using channel_t = typename element_type<ref_t>::type;
         gil_function_requires<detail::ChannelIsMutableConcept<channel_t>>();
     }
 };
@@ -126,7 +131,7 @@ struct HasDynamicXStepTypeConcept
 {
     void constraints()
     {
-        typedef typename dynamic_x_step_type<T>::type type;
+        using type = typename dynamic_x_step_type<T>::type;
     }
 };
 
@@ -144,7 +149,7 @@ struct HasDynamicYStepTypeConcept
 {
     void constraints()
     {
-        typedef typename dynamic_y_step_type<T>::type type;
+        using type = typename dynamic_y_step_type<T>::type;
     }
 };
 
@@ -162,7 +167,7 @@ struct HasTransposedTypeConcept
 {
     void constraints()
     {
-        typedef typename transposed_type<T>::type type;
+        using type = typename transposed_type<T>::type;
     }
 };
 
@@ -197,12 +202,12 @@ struct PixelIteratorConcept
         gil_function_requires<boost_concepts::RandomAccessTraversalConcept<Iterator>>();
         gil_function_requires<PixelBasedConcept<Iterator>>();
 
-        typedef typename std::iterator_traits<Iterator>::value_type value_type;
+        using value_type = typename std::iterator_traits<Iterator>::value_type;
         gil_function_requires<PixelValueConcept<value_type>>();
 
-        typedef typename const_iterator_type<Iterator>::type const_t;
-        static const bool is_mut = iterator_is_mutable<Iterator>::type::value;
-        ignore_unused_variable_warning(is_mut);
+        using const_t = typename const_iterator_type<Iterator>::type;
+        static bool const is_mutable = iterator_is_mutable<Iterator>::type::value;
+        ignore_unused_variable_warning(is_mutable);
 
         // immutable iterator must be constructible from (possibly mutable) iterator
         const_t const_it(it);
@@ -215,7 +220,7 @@ struct PixelIteratorConcept
 
     void check_base(mpl::true_)
     {
-        typedef typename iterator_adaptor_get_base<Iterator>::type base_t;
+        using base_t = typename iterator_adaptor_get_base<Iterator>::type;
         gil_function_requires<PixelIteratorConcept<base_t>>();
     }
 
@@ -343,13 +348,13 @@ struct IteratorAdaptorConcept
     {
         gil_function_requires<boost_concepts::ForwardTraversalConcept<Iterator>>();
 
-        typedef typename iterator_adaptor_get_base<Iterator>::type base_t;
+        using base_t = typename iterator_adaptor_get_base<Iterator>::type;
         gil_function_requires<boost_concepts::ForwardTraversalConcept<base_t>>();
 
         BOOST_STATIC_ASSERT(is_iterator_adaptor<Iterator>::value);
-        typedef typename iterator_adaptor_rebind<Iterator, void*>::type rebind_t;
+        using rebind_t = typename iterator_adaptor_rebind<Iterator, void*>::type;
 
-        base_t base=it.base();
+        base_t base = it.base();
         ignore_unused_variable_warning(base);
     }
     Iterator it;

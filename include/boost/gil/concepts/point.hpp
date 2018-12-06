@@ -58,15 +58,15 @@ struct PointNDConcept
     {
         gil_function_requires<Regular<P>>();
 
-        typedef typename P::value_type value_type;
+        using value_type = typename P::value_type;
         static const std::size_t N = P::num_dimensions;
         ignore_unused_variable_warning(N);
-        typedef typename P::template axis<0>::coord_t FT;
-        typedef typename P::template axis<N-1>::coord_t LT;
+        using FT = typename P::template axis<0>::coord_t;
+        using LT = typename P::template axis<N - 1>::coord_t;
         FT ft = gil::axis_value<0>(point);
         axis_value<0>(point) = ft;
-        LT lt = axis_value<N-1>(point);
-        axis_value<N-1>(point) = lt;
+        LT lt = axis_value<N - 1>(point);
+        axis_value<N - 1>(point) = lt;
 
         //value_type v=point[0];
         //ignore_unused_variable_warning(v);

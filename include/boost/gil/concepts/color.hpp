@@ -39,8 +39,8 @@ struct ColorSpaceConcept
 };
 
 // Models ColorSpaceConcept
-template <typename ColorSpace1, typename ColorSpace2>
-struct color_spaces_are_compatible : public is_same<ColorSpace1,ColorSpace2>
+template <typename CS1, typename CS2>
+struct color_spaces_are_compatible : is_same<CS1, CS2>
 {
 };
 

@@ -28,8 +28,8 @@ template <typename T>
 struct channel_traits;
 
 template <typename DstT, typename SrcT>
-typename channel_traits<DstT>::value_type channel_convert(SrcT const& val);
-
+auto channel_convert(SrcT const& val)
+    -> typename channel_traits<DstT>::value_type;
 
 /// \ingroup ChannelConcept
 /// \brief A channel is the building block of a color.
@@ -145,7 +145,7 @@ struct ChannelValueConcept
 /// \ingroup ChannelAlgorithm
 template <typename T1, typename T2>  // Models GIL Pixel
 struct channels_are_compatible
-    : public is_same
+    : is_same
         <
             typename channel_traits<T1>::value_type,
             typename channel_traits<T2>::value_type
@@ -189,7 +189,7 @@ struct ChannelConvertibleConcept
     {
         gil_function_requires<ChannelConcept<SrcChannel>>();
         gil_function_requires<MutableChannelConcept<DstChannel>>();
-        dst = channel_convert<DstChannel,SrcChannel>(src);
+        dst = channel_convert<DstChannel, SrcChannel>(src);
         ignore_unused_variable_warning(dst);
     }
     SrcChannel src;

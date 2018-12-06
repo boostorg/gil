@@ -32,32 +32,47 @@ struct homogeneous_color_base;
 } // namespace detail
 
 template <int K, typename E, typename L, int N>
-typename add_reference<E>::type at_c(detail::homogeneous_color_base<E, L, N>& p);
+auto at_c(detail::homogeneous_color_base<E, L, N>& p)
+    -> typename add_reference<E>::type;
 
 template <int K, typename E, typename L, int N>
-typename add_reference<typename add_const<E>::type>::type at_c(detail::homogeneous_color_base<E, L, N> const& p);
+auto at_c(detail::homogeneous_color_base<E, L, N> const& p)
+    -> typename add_reference<typename add_const<E>::type>::type;
 
 template <typename P, typename C, typename L>
 struct packed_pixel;
 
 template <int K, typename P, typename C, typename L>
-typename kth_element_reference_type<packed_pixel<P, C, L>, K>::type at_c(packed_pixel<P, C, L>& p);
+auto at_c(packed_pixel<P, C, L>& p)
+    -> typename kth_element_reference_type<packed_pixel<P, C, L>, K>::type;
 
 template <int K, typename P, typename C, typename L>
-typename kth_element_const_reference_type<packed_pixel<P, C, L>, K>::type at_c(packed_pixel<P, C, L> const& p);
+auto at_c(packed_pixel<P, C, L> const& p)
+    -> typename kth_element_const_reference_type<packed_pixel<P, C, L>, K>::type;
 
 template <typename B, typename C, typename L, bool M>
 struct bit_aligned_pixel_reference;
 
-template <int K, typename B, typename C, typename L, bool M> inline
-typename kth_element_reference_type<bit_aligned_pixel_reference<B, C, L, M>, K>::type at_c(bit_aligned_pixel_reference<B, C, L, M> const& p);
+template <int K, typename B, typename C, typename L, bool M>
+inline auto at_c(bit_aligned_pixel_reference<B, C, L, M> const& p)
+    -> typename kth_element_reference_type
+        <
+            bit_aligned_pixel_reference<B, C, L, M>,
+            K
+        >::type;
 
 // Forward declarations of semantic_at_c
 template <int K, typename ColorBase>
-typename disable_if<is_const<ColorBase>, typename kth_semantic_element_reference_type<ColorBase,K>::type>::type semantic_at_c(ColorBase& p);
+auto semantic_at_c(ColorBase& p)
+    -> typename disable_if
+        <
+            is_const<ColorBase>,
+            typename kth_semantic_element_reference_type<ColorBase, K>::type
+        >::type;
 
 template <int K, typename ColorBase>
-typename kth_semantic_element_const_reference_type<ColorBase, K>::type semantic_at_c(ColorBase const& p);
+auto semantic_at_c(ColorBase const& p)
+    -> typename kth_semantic_element_const_reference_type<ColorBase, K>::type;
 
 /// \ingroup ColorBaseConcept
 /// \brief A color base is a container of color elements (such as channels, channel references or channel pointers).
@@ -120,24 +135,25 @@ struct ColorBaseConcept
         gil_function_requires<CopyConstructible<ColorBase>>();
         gil_function_requires<EqualityComparable<ColorBase>>();
 
-        typedef typename ColorBase::layout_t::color_space_t color_space_t;
+        using color_space_t = typename ColorBase::layout_t::color_space_t;
         gil_function_requires<ColorSpaceConcept<color_space_t>>();
 
-        typedef typename ColorBase::layout_t::channel_mapping_t channel_mapping_t;
+        using channel_mapping_t = typename ColorBase::layout_t::channel_mapping_t;
         // TODO: channel_mapping_t must be an MPL RandomAccessSequence
 
         static const int num_elements = size<ColorBase>::value;
 
-        typedef typename kth_element_type<ColorBase, num_elements - 1>::type TN;
-        typedef typename kth_element_const_reference_type<ColorBase, num_elements - 1>::type CR;
+        using TN = typename kth_element_type<ColorBase, num_elements - 1>::type;
+        using RN = typename kth_element_const_reference_type<ColorBase, num_elements - 1>::type;
 
-        CR cr = gil::at_c<num_elements - 1>(cb);
-        ignore_unused_variable_warning(cr);
+        RN r = gil::at_c<num_elements - 1>(cb);
+        ignore_unused_variable_warning(r);
 
         // functions that work for every pixel (no need to require them)
         semantic_at_c<0>(cb);
         semantic_at_c<num_elements-1>(cb);
-        // also static_max(cb), static_min(cb), static_fill(cb,value), and all variations of static_for_each(), static_generate(), static_transform()
+        // also static_max(cb), static_min(cb), static_fill(cb,value),
+        // and all variations of static_for_each(), static_generate(), static_transform()
     }
     ColorBase cb;
 };
@@ -166,9 +182,9 @@ struct MutableColorBaseConcept
         gil_function_requires<Assignable<ColorBase>>();
         gil_function_requires<Swappable<ColorBase>>();
 
-        typedef typename kth_element_reference_type<ColorBase, 0>::type CR;
+        using R0 = typename kth_element_reference_type<ColorBase, 0>::type;
 
-        CR r = gil::at_c<0>(cb);
+        R0 r = gil::at_c<0>(cb);
         gil::at_c<0>(cb) = r;
     }
     ColorBase cb;
@@ -198,7 +214,7 @@ struct ColorBaseValueConcept
 /// {
 ///     // For all K in [0 ... size<C1>::value-1):
 ///     //     where SameType<kth_element_type<CB,K>::type, kth_element_type<CB,K+1>::type>;
-///     kth_element_const_reference_type<CB,0>::type dynamic_at_c(const CB&, std::size_t n) const;
+///     kth_element_const_reference_type<CB,0>::type dynamic_at_c(CB const&, std::size_t n) const;
 /// };
 /// \endcode
 template <typename ColorBase>
@@ -210,12 +226,13 @@ struct HomogeneousColorBaseConcept
 
         static const int num_elements = size<ColorBase>::value;
 
-        typedef typename kth_element_type<ColorBase, 0>::type T0;
-        typedef typename kth_element_type<ColorBase, num_elements - 1>::type TN;
+        using T0 = typename kth_element_type<ColorBase, 0>::type;
+        using TN = typename kth_element_type<ColorBase, num_elements - 1>::type;
 
         BOOST_STATIC_ASSERT((is_same<T0, TN>::value));   // better than nothing
-        typedef typename kth_element_const_reference_type<ColorBase, 0>::type CRef0;
-        CRef0 e0 = dynamic_at_c(cb, 0);
+
+        using R0 = typename kth_element_const_reference_type<ColorBase, 0>::type;
+        R0 r = dynamic_at_c(cb, 0);
     }
     ColorBase cb;
 };
@@ -236,8 +253,8 @@ struct MutableHomogeneousColorBaseConcept
     {
         gil_function_requires<ColorBaseConcept<ColorBase>>();
         gil_function_requires<HomogeneousColorBaseConcept<ColorBase>>();
-        typedef typename kth_element_reference_type<ColorBase, 0>::type R0;
-        R0 x = dynamic_at_c(cb, 0);
+        using R0 = typename kth_element_reference_type<ColorBase, 0>::type;
+        R0 r = dynamic_at_c(cb, 0);
         dynamic_at_c(cb, 0) = dynamic_at_c(cb, 0);
     }
     ColorBase cb;
