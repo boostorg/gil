@@ -313,16 +313,7 @@ channels, such as support for arithmetic operations.</p>
 </div>
 <div class="section" id="id1">
 <h3>Models</h3>
-<p>All built-in integral and floating point types are valid channels. GIL
-provides standard type aliases for some integral channels:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="n">boost</span><span class="o">::</span><span class="kt">uint8_t</span>  <span class="n">bits8</span><span class="p">;</span>
-<span class="k">typedef</span> <span class="n">boost</span><span class="o">::</span><span class="kt">uint16_t</span> <span class="n">bits16</span><span class="p">;</span>
-<span class="k">typedef</span> <span class="n">boost</span><span class="o">::</span><span class="kt">uint32_t</span> <span class="n">bits32</span><span class="p">;</span>
-<span class="k">typedef</span> <span class="n">boost</span><span class="o">::</span><span class="kt">int8_t</span>   <span class="n">bits8s</span><span class="p">;</span>
-<span class="k">typedef</span> <span class="n">boost</span><span class="o">::</span><span class="kt">int16_t</span>  <span class="n">bits16s</span><span class="p">;</span>
-<span class="k">typedef</span> <span class="n">boost</span><span class="o">::</span><span class="kt">int32_t</span>  <span class="n">bits32s</span><span class="p">;</span>
-</pre></div>
-</div>
+<p>All C++11 fundamental integer and float point types are valid channels.</p>
 <p>The minimum and maximum values of a channel modeled by a built-in type
 correspond to the minimum and maximum physical range of the built-in
 type, as specified by its <code class="docutils literal notranslate"><span class="pre">std::numeric_limits</span></code>. Sometimes the
