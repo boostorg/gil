@@ -243,15 +243,7 @@ channels, such as support for arithmetic operations.
 Models
 ~~~~~~
 
-All built-in integral and floating point types are valid channels. GIL
-provides standard type aliases for some integral channels::
-
-  typedef boost::uint8_t  bits8;
-  typedef boost::uint16_t bits16;
-  typedef boost::uint32_t bits32;
-  typedef boost::int8_t   bits8s;
-  typedef boost::int16_t  bits16s;
-  typedef boost::int32_t  bits32s;
+All built-in integral and floating point types are valid channels.
 
 The minimum and maximum values of a channel modeled by a built-in type
 correspond to the minimum and maximum physical range of the built-in
