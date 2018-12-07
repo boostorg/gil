@@ -8,7 +8,6 @@
 #include <boost/test/unit_test.hpp>
 
 #include <boost/gil.hpp>
-
 #include <boost/gil/extension/toolbox/color_spaces/ycbcr.hpp>
 #include <boost/gil/extension/toolbox/image_types/subchroma_image.hpp>
 
@@ -92,7 +91,8 @@ BOOST_AUTO_TEST_CASE( subchroma_image_test )
                                                                 , y_height
                                                                 , &data.front()
                                                                 );
-        rgb8_pixel_t p = *v.xy_at( 0, 0 );
+        rgb8_pixel_t p;
+        p = *v.xy_at( 0, 0 );
     }
 }
 
