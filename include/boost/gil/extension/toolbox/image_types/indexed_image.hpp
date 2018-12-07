@@ -12,6 +12,7 @@
 
 #include <boost/gil/image.hpp>
 #include <boost/gil/point.hpp>
+#include <boost/gil/virtual_locator.hpp>
 
 #include <boost/mpl/if.hpp>
 #include <boost/type_traits/is_integral.hpp>
