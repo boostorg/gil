@@ -382,7 +382,7 @@ Here is an example of such lightweight workflow in Linux environment (Debian-bas
         than 3.13 match your compiler with toolset used in the Boost librariey file names
         (ie. `libboost_unit_test_framework-gcc5-mt-x64-1_69` and not `-gcc55-`).
         Fixed in CMake 3.13.0.
-     
+
      - if CMake is still failing to find Boost, you may try `-DBoost_DEBUG=ON` to
        get detailed diagnostics output from `FindBoost.cmake` module.
 
@@ -451,4 +451,7 @@ Maintain structure your source code files according to the following guidelines:
 * All public definitions should reside in scope of `namespace boost { namespace gil {...}}`.
 * All non-public definitions should reside in scope of `namespace boost { namespace gil { namespace detail {...}}}`.
 * Write your code to fit within **90** columns of text (see discussion on [preferred line length](https://lists.boost.org/boost-gil/2018/04/0028.php) in GIL).
-* Indent with **4 spaces**, not tabs. See the [.editorconfig](https://github.com/boostorg/gil/blob/develop/.editorconfig) file for details. Please, do not increases the indentation level within namespace.
+* Use [EditorConfig](https://editorconfig.org) for your editor and enable [.editorconfig](https://github.com/boostorg/gil/blob/develop/.editorconfig) to:
+    * Indent with **4 spaces** and no tabs.
+    * Trim any trailing whitespaces.
+* Do not increases the indentation level within namespace.
