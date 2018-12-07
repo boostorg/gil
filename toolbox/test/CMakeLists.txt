@@ -8,36 +8,33 @@
 #
 message(STATUS "Boost.GIL: configuring Toolbox extension tests")
 
-file(GLOB_RECURSE _headers
-  ${PROJECT_SOURCE_DIR}/include/boost/gil/extension/toolbox/*.hpp)
-list(APPEND _headers ${_boost_gil_headers})
-
-add_executable(gil_test_ext_toolbox "")
-target_sources(gil_test_ext_toolbox
+add_executable(test_ext_toolbox "")
+target_sources(test_ext_toolbox
   PRIVATE
-  ${_headers}
-  test.cpp
-  channel_type.cpp
-  channel_view.cpp
-  cmyka.cpp
-  get_num_bits.cpp
-  get_pixel_type.cpp
-  gray_alpha.cpp
-  gray_to_rgba.cpp
-  hsl_hsv_test.cpp
-  indexed_image_test.cpp
-  is_bit_aligned.cpp
-  is_homogeneous.cpp
-  is_similar.cpp
-  lab_test.cpp
-  pixel_bit_size.cpp
-  rgb_to_luminance.cpp
-  # TODO: Add subchroma_image.cpp after fixing run-time failure,
-  #       for details see https://github.com/boostorg/gil/pull/164
-  #subchroma_image.cpp
-  xyz_test.cpp)
-target_link_libraries(gil_test_ext_toolbox
+    test.cpp
+    channel_type.cpp
+    channel_view.cpp
+    cmyka.cpp
+    get_num_bits.cpp
+    get_pixel_type.cpp
+    gray_alpha.cpp
+    gray_to_rgba.cpp
+    hsl_hsv_test.cpp
+    indexed_image_test.cpp
+    is_bit_aligned.cpp
+    is_homogeneous.cpp
+    is_similar.cpp
+    lab_test.cpp
+    pixel_bit_size.cpp
+    rgb_to_luminance.cpp
+    # TODO: Add subchroma_image.cpp after fixing run-time failure,
+    #       for details see https://github.com/boostorg/gil/pull/164
+    #subchroma_image.cpp
+    xyz_test.cpp)
+target_link_libraries(test_ext_toolbox
   PRIVATE
-  Boost::disable_autolinking
-  Boost::unit_test_framework)
-add_test(gil.tests.ext.toolbox gil_test_ext_toolbox)
+    gil_compile_options
+    gil_include_directories
+    Boost::disable_autolinking
+    Boost::unit_test_framework)
+add_test(test.ext.toolbox test_ext_toolbox)

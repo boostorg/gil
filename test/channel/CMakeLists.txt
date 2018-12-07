@@ -18,15 +18,13 @@ foreach(name
   algorithm_channel_multiply
   algorithm_channel_relation)
 
-  add_executable(gil_test_${name} "")
-  target_sources(gil_test_${name}
+  add_executable(test_core_${name} "")
+  target_sources(test_core_${name} PRIVATE ${name}.cpp)
+  target_link_libraries(test_core_${name}
     PRIVATE
-    ${_boost_gil_headers}
-    ${_boost_gil_test_headers}
-    ${name}.cpp)
-  target_link_libraries(gil_test_${name}
-    PRIVATE
-    Boost::disable_autolinking
-    Boost::unit_test_framework)
-  add_test(gil.tests.core.${name} gil_test_${name})
+      gil_compile_options
+      gil_include_directories
+      Boost::disable_autolinking
+      Boost::unit_test_framework)
+  add_test(test.core.${name} test_core_${name})
 endforeach()

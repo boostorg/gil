@@ -23,60 +23,56 @@ else()
   list(APPEND _tiff_deps TIFF::TIFF)
 endif()
 
-file(GLOB_RECURSE _headers
-  ${PROJECT_SOURCE_DIR}/include/boost/gil/extension/io/*.hpp)
-list(APPEND _headers ${_boost_gil_headers})
-
 add_definitions(-DBOOST_GIL_IO_TEST_ALLOW_READING_IMAGES=1)
 add_definitions(-DBOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES=1)
 if(NOT MSVC)
   add_definitions(-DBOOST_TEST_DYN_LINK)
 endif()
 
-add_executable(gil_test_ext_io_simple "")
-target_sources(gil_test_ext_io_simple PRIVATE ${_headers} all_formats_test.cpp)
-target_link_libraries(gil_test_ext_io_simple PRIVATE
+add_executable(test_ext_io_simple "")
+target_sources(test_ext_io_simple PRIVATE ${_headers} all_formats_test.cpp)
+target_link_libraries(test_ext_io_simple PRIVATE
   ${_boost_deps} ${_jpeg_deps} ${_png_deps} ${_tiff_deps})
 if (JPEG_LIBRARIES AND JPEG_INCLUDE_DIR)
-  target_include_directories(gil_test_ext_io_simple PRIVATE ${JPEG_INCLUDE_DIR})
+  target_include_directories(test_ext_io_simple PRIVATE ${JPEG_INCLUDE_DIR})
 endif()
-add_test(tests.ext.io.simple gil_test_ext_io_simple)
+add_test(test.ext.io.simple test_ext_io_simple)
 
-add_executable(gil_test_ext_io_bmp "")
-target_sources(gil_test_ext_io_bmp PRIVATE ${_headers}
+add_executable(test_ext_io_bmp "")
+target_sources(test_ext_io_bmp PRIVATE ${_headers}
   bmp_old_test.cpp bmp_read_test.cpp bmp_test.cpp bmp_write_test.cpp)
-target_link_libraries(gil_test_ext_io_bmp PRIVATE ${_boost_deps})
-add_test(tests.ext.io.bmp gil_test_ext_io_bmp)
+target_link_libraries(test_ext_io_bmp PRIVATE ${_boost_deps})
+add_test(test.ext.io.bmp test_ext_io_bmp)
 
-add_executable(gil_test_ext_io_jpeg "")
-target_sources(gil_test_ext_io_jpeg PRIVATE ${_headers}
+add_executable(test_ext_io_jpeg "")
+target_sources(test_ext_io_jpeg PRIVATE ${_headers}
   jpeg_test.cpp jpeg_old_test.cpp jpeg_read_test.cpp jpeg_write_test.cpp)
-target_link_libraries(gil_test_ext_io_jpeg PRIVATE ${_boost_deps} ${_jpeg_deps})
+target_link_libraries(test_ext_io_jpeg PRIVATE ${_boost_deps} ${_jpeg_deps})
 if (JPEG_LIBRARIES AND JPEG_INCLUDE_DIR)
-  target_include_directories(gil_test_ext_io_jpeg PRIVATE ${JPEG_INCLUDE_DIR})
+  target_include_directories(test_ext_io_jpeg PRIVATE ${JPEG_INCLUDE_DIR})
 endif()
-add_test(tests.ext.io.jpeg gil_test_ext_io_jpeg)
+add_test(test.ext.io.jpeg test_ext_io_jpeg)
 
-add_executable(gil_test_ext_io_png "")
-target_sources(gil_test_ext_io_png PRIVATE ${_headers}
+add_executable(test_ext_io_png "")
+target_sources(test_ext_io_png PRIVATE ${_headers}
   png_test.cpp png_old_test.cpp png_file_format_test.cpp png_read_test.cpp)
-target_link_libraries(gil_test_ext_io_png PRIVATE ${_boost_deps} ${_png_deps})
-add_test(tests.ext.io.png gil_test_ext_io_png)
+target_link_libraries(test_ext_io_png PRIVATE ${_boost_deps} ${_png_deps})
+add_test(test.ext.io.png test_ext_io_png)
 
-add_executable(gil_test_ext_io_pnm "")
-target_sources(gil_test_ext_io_pnm PRIVATE ${_headers}
+add_executable(test_ext_io_pnm "")
+target_sources(test_ext_io_pnm PRIVATE ${_headers}
   pnm_test.cpp pnm_old_test.cpp pnm_read_test.cpp pnm_write_test.cpp)
-target_link_libraries(gil_test_ext_io_pnm PRIVATE ${_boost_deps} ${_png_deps})
-add_test(tests.ext.io.pnm gil_test_ext_io_pnm)
+target_link_libraries(test_ext_io_pnm PRIVATE ${_boost_deps} ${_png_deps})
+add_test(test.ext.io.pnm test_ext_io_pnm)
 
-add_executable(gil_test_ext_io_targa "")
-target_sources(gil_test_ext_io_targa PRIVATE ${_headers}
+add_executable(test_ext_io_targa "")
+target_sources(test_ext_io_targa PRIVATE ${_headers}
   targa_test.cpp targa_old_test.cpp targa_read_test.cpp targa_write_test.cpp)
-target_link_libraries(gil_test_ext_io_targa PRIVATE ${_boost_deps})
-add_test(tests.ext.io.targa gil_test_ext_io_targa)
+target_link_libraries(test_ext_io_targa PRIVATE ${_boost_deps})
+add_test(test.ext.io.targa test_ext_io_targa)
 
-add_executable(gil_test_ext_io_tiff "")
-target_sources(gil_test_ext_io_tiff PRIVATE
+add_executable(test_ext_io_tiff "")
+target_sources(test_ext_io_tiff PRIVATE
   ${_headers}
   tiff_file_format_test.cpp
   tiff_old_test.cpp
@@ -104,6 +100,6 @@ target_sources(gil_test_ext_io_tiff PRIVATE
   tiff_tiled_rgb_planar_test_21-31_32_64.cpp
   tiff_tiled_test.cpp
   tiff_write_test.cpp)
-target_link_libraries(gil_test_ext_io_tiff PRIVATE ${_boost_deps} ${_tiff_deps} ${_tiffxx_library})
-target_include_directories(gil_test_ext_io_tiff PRIVATE ${_tiffxx_include_dir})
-add_test(tests.ext.io.tiff gil_test_ext_io_tiff)
+target_link_libraries(test_ext_io_tiff PRIVATE ${_boost_deps} ${_tiff_deps} ${_tiffxx_library})
+target_include_directories(test_ext_io_tiff PRIVATE ${_tiffxx_include_dir})
+add_test(test.ext.io.tiff test_ext_io_tiff)

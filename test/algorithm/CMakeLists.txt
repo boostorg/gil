@@ -8,8 +8,13 @@
 foreach(name
   for_each_pixel
   std_fill)
-  add_executable(gil_test_${name} "")
-  target_sources(gil_test_${name} PRIVATE ${_boost_gil_headers} ${name}.cpp)
-  target_link_libraries(gil_test_${name} PRIVATE Boost::boost)
-  add_test(gil.tests.core.${name} gil_test_${name})
+
+  add_executable(test_core_${name} "")
+  target_sources(test_core_${name} PRIVATE ${name}.cpp)
+  target_link_libraries(test_core_${name}
+    PRIVATE
+      gil_compile_options
+      gil_include_directories
+      Boost::boost)
+  add_test(test.core.${name} test_core_${name})
 endforeach()

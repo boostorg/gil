@@ -6,14 +6,36 @@
 # http://www.boost.org/LICENSE_1_0.txt)
 #
 cmake_minimum_required(VERSION 3.10)
-project(Boost.GIL CXX)
+
+#-----------------------------------------------------------------------------
+# Version
+#-----------------------------------------------------------------------------
+file(STRINGS
+  include/boost/gil/version.hpp
+  BOOST_GIL_LIB_VERSION
+  REGEX "#define BOOST_GIL_LIB_VERSION ")
+
+if(BOOST_GIL_LIB_VERSION)
+  string(REGEX REPLACE ".*\"(.*)\".*" "\\1" BOOST_GIL_LIB_VERSION "${BOOST_GIL_LIB_VERSION}")
+  string(REPLACE "_" "." BOOST_GIL_LIB_VERSION "${BOOST_GIL_LIB_VERSION}")
+else()
+  message(SEND_ERROR "Cannot find version in '${CMAKE_CURRENT_SOURCE_DIR}/include/boost/gil/version.hpp'")
+endif()
+
+#-----------------------------------------------------------------------------
+# Project
+#-----------------------------------------------------------------------------
+project(Boost.GIL
+  LANGUAGES CXX
+  VERSION ${BOOST_GIL_LIB_VERSION}
+  DESCRIPTION "Boost.GIL - Generic Image Library | Requires C++11 since Boost 1.68")
+
+message(STATUS "Boost.GIL: Version ${PROJECT_VERSION}")
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-include(CMakeDependentOption)
-option(GIL_BUILD_TESTS "Build GIL tests" ON)
 option(GIL_BUILD_EXAMPLES "Build GIL examples" OFF) # FIXME: Switch to ON after https://github.com/boostorg/gil/issues/40
 option(GIL_ENABLE_IO "Enable GIL IO in tests and examples (require libjpeg, libpng, libtiff)" ON)
 option(GIL_USE_CONAN "Use Conan to install dependencies" OFF)
@@ -55,30 +77,18 @@ if(NOT DEFINED BOOST_ROOT AND NOT DEFINED ENV{BOOST_ROOT})
   endif()
 endif()
 
-set(BOOST_COMPONENTS)
-if(GIL_BUILD_TESTS)
-  list(APPEND BOOST_COMPONENTS unit_test_framework filesystem)
-endif()
-
-#set(Boost_DEBUG ON)
 set(Boost_DETAILED_FAILURE_MSG ON)
 if(MSVC)
   set(Boost_USE_STATIC_LIBS ON)
   set(Boost_USE_STATIC_RUNTIME OFF)
 endif()
 
-find_package(Boost 1.65.0 REQUIRED COMPONENTS ${BOOST_COMPONENTS})
+find_package(Boost 1.65.0 REQUIRED
+  COMPONENTS
+    filesystem
+    unit_test_framework)
 message(STATUS "Boost.GIL: using Boost_INCLUDE_DIRS=${Boost_INCLUDE_DIRS}")
 message(STATUS "Boost.GIL: using Boost_LIBRARY_DIRS=${Boost_LIBRARY_DIRS}")
-
-# The boostorg/gil repository includes must come first,
-# before Boost includes from cloned Boost superproject or installed distribution.
-# Otherwise the IDE sees the wrong file (ie. due to boost/ symlinks or
-# GIL headers from installed Boost instead of this clone of boostog/gil).
-include_directories(include)
-
-# GIL header gil_test_common.hpp shared between tests
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/test)
 
 #-----------------------------------------------------------------------------
 # Dependency: libpng, libjpeg, libtiff via Vcpkg or Conan
@@ -116,59 +126,54 @@ if (GIL_ENABLE_IO)
 endif()
 
 #-----------------------------------------------------------------------------
-# Compiler
-#
+# Common C++ compilation flags
 # Follows https://svn.boost.org/trac10/wiki/Guidelines/WarningsGuidelines
 #-----------------------------------------------------------------------------
-if(MSVC)
-  string(REGEX REPLACE "/W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
-  string(REGEX REPLACE "-W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
-  add_compile_options(-W4)
-  add_compile_options(-bigobj)
-  add_compile_options(-FC) # Need absolute path for __FILE__ used in tests
+add_library(gil_compile_options INTERFACE)
+target_compile_features(gil_compile_options INTERFACE cxx_std_11)
 
-  add_definitions(-D_CRT_NONSTDC_NO_DEPRECATE=1)
-  add_definitions(-D_SCL_SECURE_NO_DEPRECATE=1)
-  add_definitions(-D_CRT_SECURE_NO_WARNINGS=1)
-  add_definitions(-D_SCL_SECURE_NO_WARNINGS=1)
-  add_definitions(-DNOMINMAX=1)
-  add_definitions(-DBOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE=1)
-else()
-  # Assumes compilers which recognize GCC and clang speak
-  add_compile_options(-pedantic)
-  add_compile_options(-fstrict-aliasing)
-  add_compile_options(-Wall)
-  add_compile_options(-Wextra)
-  add_compile_options(-Wstrict-aliasing)
-  add_compile_options(-Wconversion )
-  add_compile_options(-Wsign-promo)
-  add_compile_options(-Wfloat-equal)
-  add_compile_options(-Wunused-parameter)
-  add_compile_options(-Wshadow)
-endif()
+target_compile_options(gil_compile_options
+  INTERFACE
+    $<$<CXX_COMPILER_ID:MSVC>:-W4>
+    $<$<CXX_COMPILER_ID:MSVC>:-bigobj>
+    $<$<CXX_COMPILER_ID:MSVC>:-FC> # Need absolute path for __FILE__ used in tests
+    $<$<OR:$<CXX_COMPILER_ID:GNU>, $<CXX_COMPILER_ID:Clang>>:-fstrict-aliasing -pedantic
+      -Wall -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter
+    >)
+
+target_compile_definitions(gil_compile_options
+  INTERFACE
+    $<$<CXX_COMPILER_ID:MSVC>:_CRT_NONSTDC_NO_DEPRECATE>
+    $<$<CXX_COMPILER_ID:MSVC>:_SCL_SECURE_NO_DEPRECATE>
+    $<$<CXX_COMPILER_ID:MSVC>:_CRT_SECURE_NO_WARNINGS>
+    $<$<CXX_COMPILER_ID:MSVC>:NOMINMAX>
+    $<$<CXX_COMPILER_ID:MSVC>:BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE>)
 
 #-----------------------------------------------------------------------------
-# Headers
+# Common include directories
+#
+# The boostorg/gil repository includes must come first,
+# before Boost includes from cloned Boost superproject or installed distribution.
+# Otherwise IDEs may see the wrong file (ie. due to boost/ symlinks or
+# GIL headers from installed Boost instead of this clone of boostog/gil).
 #-----------------------------------------------------------------------------
-file(GLOB _boost_gil_headers
-     ${PROJECT_SOURCE_DIR}/include/boost/gil/*.hpp
-     ${PROJECT_SOURCE_DIR}/include/boost/gil.hpp)
+add_library(gil_include_directories INTERFACE)
+target_include_directories(gil_include_directories
+  BEFORE
+  INTERFACE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/test)
 
 #-----------------------------------------------------------------------------
 # Tests
 #-----------------------------------------------------------------------------
-if(GIL_BUILD_TESTS)
-  file(GLOB _boost_gil_test_headers
-    ${PROJECT_SOURCE_DIR}/test/gil_test_common.hpp)
-
-  enable_testing()
-  add_subdirectory(test)
-  if (GIL_ENABLE_IO)
-    add_subdirectory(io/test)
-  endif()
-  add_subdirectory(numeric/test)
-  add_subdirectory(toolbox/test)
+enable_testing()
+add_subdirectory(test)
+if (GIL_ENABLE_IO)
+  add_subdirectory(io/test)
 endif()
+add_subdirectory(numeric/test)
+add_subdirectory(toolbox/test)
 
 #-----------------------------------------------------------------------------
 # Examples
