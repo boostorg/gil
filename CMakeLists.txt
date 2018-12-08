@@ -137,7 +137,7 @@ target_compile_options(gil_compile_options
     $<$<CXX_COMPILER_ID:MSVC>:-W4>
     $<$<CXX_COMPILER_ID:MSVC>:-bigobj>
     $<$<CXX_COMPILER_ID:MSVC>:-FC> # Need absolute path for __FILE__ used in tests
-    $<$<OR:$<CXX_COMPILER_ID:GNU>, $<CXX_COMPILER_ID:Clang>>:-fstrict-aliasing -pedantic
+    $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-fstrict-aliasing -pedantic
       -Wall -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter
     >)
 
