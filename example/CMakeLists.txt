@@ -8,7 +8,7 @@
 #
 message(STATUS "Boost.GIL: Configuring examples")
 
-if (CMAKE_VERSION VERSION_GREATER_EQUAL 3.12.0)
+if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.12.0)
   file(GLOB_RECURSE _examples ${CMAKE_CURRENT_LIST_DIR}/*.cpp CONFIGURE_DEPEND)
 else()
   file(GLOB_RECURSE _examples ${CMAKE_CURRENT_LIST_DIR}/*.cpp)
@@ -20,7 +20,7 @@ foreach(_example ${_examples})
   target_compile_definitions(example_${_name} PRIVATE BOOST_GIL_USE_CONCEPT_CHECK=1)
   # Unfortunately, ALIAS of imported target is not supported
   # see https://github.com/conan-io/conan/issues/2125
-  if (GIL_USE_CONAN)
+  if(GIL_USE_CONAN)
     target_link_libraries(example_${_name}
       PRIVATE
         gil_compile_options
@@ -40,7 +40,7 @@ foreach(_example ${_examples})
         PNG::PNG
         TIFF::TIFF
         ${JPEG_LIBRARIES})
-    if (JPEG_LIBRARIES AND JPEG_INCLUDE_DIR)
+    if(JPEG_LIBRARIES AND JPEG_INCLUDE_DIR)
       target_include_directories(example_${_name} PRIVATE ${JPEG_INCLUDE_DIR})
     endif()
   endif()

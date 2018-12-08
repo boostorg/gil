@@ -36,10 +36,10 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+option(GIL_BUILD_IO "Build GIL IO tests and examples (require libjpeg, libpng, libtiff)" ON)
 option(GIL_BUILD_EXAMPLES "Build GIL examples" OFF) # FIXME: Switch to ON after https://github.com/boostorg/gil/issues/40
-option(GIL_ENABLE_IO "Enable GIL IO in tests and examples (require libjpeg, libpng, libtiff)" ON)
 option(GIL_USE_CONAN "Use Conan to install dependencies" OFF)
-option(GIL_ENABLE_FINDBOOST_DOWNLOAD "Enable auto-download FindBoost.cmake for CMake" OFF)
+option(GIL_DOWNLOAD_FINDBOOST "Download FindBoost.cmake from latest CMake release" OFF)
 
 #-----------------------------------------------------------------------------
 # Dependency: Boost
@@ -47,17 +47,17 @@ option(GIL_ENABLE_FINDBOOST_DOWNLOAD "Enable auto-download FindBoost.cmake for C
 # - look for default installation location
 # - look for location specified with BOOST_ROOT
 #-----------------------------------------------------------------------------
-if (CMAKE_VERSION VERSION_LESS 3.13 AND NOT GIL_ENABLE_FINDBOOST_DOWNLOAD)
+if (CMAKE_VERSION VERSION_LESS 3.13 AND NOT GIL_DOWNLOAD_FINDBOOST)
   message(STATUS "Boost.GIL: You are using CMake older than 3.13")
   message(STATUS "Boost.GIL: FindBoost.cmake has likely been updated to detect newer or even not yet released Boost")
-  message(STATUS "Boost.GIL: Run CMake with -DGIL_ENABLE_FINDBOOST_DOWNLOAD=ON to get latest version of FindBoost.cmake")
+  message(STATUS "Boost.GIL: Run CMake with -DGIL_DOWNLOAD_FINDBOOST=ON to get latest version of FindBoost.cmake")
   message(STATUS "Boost.GIL: WARNING:")
   message(STATUS "Boost.GIL:    Newer FindBoost.cmake may fail to find your Boost for many reasons.")
   message(STATUS "Boost.GIL:    For example, this may be due to unrecognised toolset eg. latest Visual Studio 2017.")
   message(STATUS "Boost.GIL:    Try run CMake with -DBoost_COMPILER=\"-vc141\" or value for your toolset.")
 endif()
 
-if (GIL_ENABLE_FINDBOOST_DOWNLOAD)
+if (GIL_DOWNLOAD_FINDBOOST)
   if (NOT EXISTS "${CMAKE_BINARY_DIR}/cmake/FindBoost.cmake")
     message(STATUS "Boost.GIL: Downloading FindBoost.cmake from https://gitlab.kitware.com/cmake/ release branch")
     file(DOWNLOAD
@@ -93,7 +93,7 @@ message(STATUS "Boost.GIL: using Boost_LIBRARY_DIRS=${Boost_LIBRARY_DIRS}")
 #-----------------------------------------------------------------------------
 # Dependency: libpng, libjpeg, libtiff via Vcpkg or Conan
 #-----------------------------------------------------------------------------
-if (GIL_ENABLE_IO)
+if (GIL_BUILD_IO)
   if(GIL_USE_CONAN)
     # Download automatically, you can also just copy the conan.cmake file
     if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
@@ -169,7 +169,7 @@ target_include_directories(gil_include_directories
 #-----------------------------------------------------------------------------
 enable_testing()
 add_subdirectory(test)
-if (GIL_ENABLE_IO)
+if (GIL_BUILD_IO)
   add_subdirectory(io/test)
 endif()
 add_subdirectory(numeric/test)
@@ -178,6 +178,6 @@ add_subdirectory(toolbox/test)
 #-----------------------------------------------------------------------------
 # Examples
 #-----------------------------------------------------------------------------
-if(GIL_BUILD_EXAMPLES AND GIL_ENABLE_IO)
+if(GIL_BUILD_EXAMPLES AND GIL_BUILD_IO)
   add_subdirectory(example)
 endif()

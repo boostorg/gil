@@ -20,7 +20,7 @@
       "ctestCommandArgs": "",
       "variables": [
         { "name": "Boost_ARCHITECTURE", "value": "-x64" },
-        { "name": "GIL_ENABLE_FINDBOOST_DOWNLOAD", "value": "ON" },
+        { "name": "GIL_DOWNLOAD_FINDBOOST", "value": "ON" },
         { "name": "GIL_USE_CONAN", "value": "ON" },
         { "name": "GIL_BUILD_EXAMPLES", "value": "ON" }
       ]
@@ -37,7 +37,7 @@
       "ctestCommandArgs": "",
       "variables": [
         { "name": "Boost_ARCHITECTURE", "value": "-x64" },
-        { "name": "GIL_ENABLE_FINDBOOST_DOWNLOAD", "value": "ON" },
+        { "name": "GIL_DOWNLOAD_FINDBOOST", "value": "ON" },
         { "name": "GIL_USE_CONAN", "value": "ON" },
         { "name": "GIL_BUILD_EXAMPLES", "value": "ON" }
       ]
@@ -53,7 +53,7 @@
       "buildCommandArgs": "-v",
       "ctestCommandArgs": "",
       "variables": [
-        { "name": "GIL_ENABLE_FINDBOOST_DOWNLOAD", "value": "ON" },
+        { "name": "GIL_DOWNLOAD_FINDBOOST", "value": "ON" },
         { "name": "GIL_USE_CONAN", "value": "ON" },
         { "name": "GIL_BUILD_EXAMPLES", "value": "ON" }
       ]
@@ -69,7 +69,7 @@
       "buildCommandArgs": "-v",
       "ctestCommandArgs": "",
       "variables": [
-        { "name": "GIL_ENABLE_FINDBOOST_DOWNLOAD", "value": "ON" },
+        { "name": "GIL_DOWNLOAD_FINDBOOST", "value": "ON" },
         { "name": "GIL_USE_CONAN", "value": "ON" },
         { "name": "GIL_BUILD_EXAMPLES", "value": "ON" }
       ]
