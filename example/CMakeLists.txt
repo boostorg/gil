@@ -14,32 +14,39 @@ else()
   file(GLOB_RECURSE _examples ${CMAKE_CURRENT_LIST_DIR}/*.cpp)
 endif()
 
-foreach(example ${_examples})
-  get_filename_component(name ${example} NAME_WE)
-  add_executable(gil_example_${name} ${name}.cpp)
-  target_compile_definitions(gil_example_${name} PRIVATE BOOST_GIL_USE_CONCEPT_CHECK=1)
+foreach(_example ${_examples})
+  get_filename_component(_name ${_example} NAME_WE)
+  add_executable(example_${_name} ${_name}.cpp)
+  target_compile_definitions(example_${_name} PRIVATE BOOST_GIL_USE_CONCEPT_CHECK=1)
   # Unfortunately, ALIAS of imported target is not supported
   # see https://github.com/conan-io/conan/issues/2125
   if (GIL_USE_CONAN)
-    target_link_libraries(gil_example_${name}
+    target_link_libraries(example_${_name}
       PRIVATE
-      Boost::disable_autolinking
-      Boost::filesystem
-      CONAN_PKG::libjpeg
-      CONAN_PKG::libpng
-      CONAN_PKG::libtiff)
+        gil_compile_options
+        gil_include_directories
+        Boost::disable_autolinking
+        Boost::filesystem
+        CONAN_PKG::libjpeg
+        CONAN_PKG::libpng
+        CONAN_PKG::libtiff)
   else()
-    target_link_libraries(gil_example_${name}
+    target_link_libraries(example_${_name}
       PRIVATE
-      Boost::disable_autolinking
-      Boost::filesystem
-      PNG::PNG
-      TIFF::TIFF
-      ${JPEG_LIBRARIES})
+        gil_compile_options
+        gil_include_directories
+        Boost::disable_autolinking
+        Boost::filesystem
+        PNG::PNG
+        TIFF::TIFF
+        ${JPEG_LIBRARIES})
     if (JPEG_LIBRARIES AND JPEG_INCLUDE_DIR)
-      target_include_directories(gil_example_${name} PRIVATE ${JPEG_INCLUDE_DIR})
+      target_include_directories(example_${_name} PRIVATE ${JPEG_INCLUDE_DIR})
     endif()
   endif()
+
+  unset(_name)
 endforeach()
 
+unset(_example)
 unset(_examples)
