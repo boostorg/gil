@@ -44,6 +44,8 @@ add_test(test.core.image
 
 # On CI services, test the self-contained headers on-demand only to avoid build timeouts.
 # CI environment is common for Travis CI, AppVeyor, CircleCI, etc.
+# On Boost regression builds, CMake does not run, but Boost.Build,
+# so the header tests are not enabled there either.
 if(NOT DEFINED ENV{CI})
   add_subdirectory(headers)
 endif()
