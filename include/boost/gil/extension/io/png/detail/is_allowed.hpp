@@ -8,6 +8,8 @@
 #ifndef BOOST_GIL_EXTENSION_IO_PNG_DETAIL_IS_ALLOWED_HPP
 #define BOOST_GIL_EXTENSION_IO_PNG_DETAIL_IS_ALLOWED_HPP
 
+#include <boost/gil/extension/io/png/tags.hpp>
+
 #include <boost/mpl/bool_fwd.hpp>
 #include <boost/mpl/for_each.hpp>
 

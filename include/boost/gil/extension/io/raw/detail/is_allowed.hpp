@@ -8,8 +8,8 @@
 #ifndef BOOST_GIL_EXTENSION_IO_RAW_DETAIL_IS_ALLOWED_HPP
 #define BOOST_GIL_EXTENSION_IO_RAW_DETAIL_IS_ALLOWED_HPP
 
-#include <boost/gil/io/base.hpp>
 #include <boost/gil/extension/io/raw/tags.hpp>
+#include <boost/gil/io/base.hpp>
 
 namespace boost { namespace gil { namespace detail {
 

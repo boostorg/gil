@@ -8,6 +8,8 @@
 #ifndef BOOST_GIL_EXTENSION_IO_JPEG_DETAIL_IS_ALLOWED_HPP
 #define BOOST_GIL_EXTENSION_IO_JPEG_DETAIL_IS_ALLOWED_HPP
 
+#include <boost/gil/extension/io/jpeg/tags.hpp>
+
 namespace boost { namespace gil { namespace detail {
 
 template< typename View >

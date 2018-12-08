@@ -8,6 +8,7 @@
 #ifndef BOOST_GIL_EXTENSION_IO_TIFF_DETAIL_IS_ALLOWED_HPP
 #define BOOST_GIL_EXTENSION_IO_TIFF_DETAIL_IS_ALLOWED_HPP
 
+#include <boost/gil/extension/io/tiff/tags.hpp>
 #include <boost/gil/io/base.hpp>
 
 #include <boost/mpl/for_each.hpp>

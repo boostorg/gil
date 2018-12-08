@@ -8,6 +8,7 @@
 #ifndef BOOST_GIL_EXTENSION_IO_BMP_DETAIL_IS_ALLOWED_HPP
 #define BOOST_GIL_EXTENSION_IO_BMP_DETAIL_IS_ALLOWED_HPP
 
+#include <boost/gil/extension/io/bmp/tags.hpp>
 #include <boost/gil/channel.hpp>
 
 #include <boost/mpl/bool_fwd.hpp>
