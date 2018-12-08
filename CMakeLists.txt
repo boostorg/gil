@@ -132,6 +132,11 @@ endif()
 add_library(gil_compile_options INTERFACE)
 target_compile_features(gil_compile_options INTERFACE cxx_std_11)
 
+if(MSVC)
+  string(REGEX REPLACE "/W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
+  string(REGEX REPLACE "-W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
+endif()
+
 target_compile_options(gil_compile_options
   INTERFACE
     $<$<CXX_COMPILER_ID:MSVC>:-W4>
