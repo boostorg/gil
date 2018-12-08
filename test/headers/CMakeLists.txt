@@ -14,7 +14,6 @@ file(GLOB_RECURSE _headers
   RELATIVE "${CMAKE_SOURCE_DIR}/include/boost/gil"
   "${CMAKE_SOURCE_DIR}/include/boost/gil/*.hpp")
 
-file(MAKE_DIRECTORY test/headers)
 file(READ ${CMAKE_CURRENT_LIST_DIR}/main.cpp _main_content)
 
 add_custom_target(test_headers)
