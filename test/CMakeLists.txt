@@ -42,6 +42,12 @@ add_test(test.core.image
   test_core_image
   ${CMAKE_CURRENT_SOURCE_DIR}/gil_reference_checksums.txt)
 
+# On CI services, test the self-contained headers on-demand only to avoid build timeouts.
+# CI environment is common for Travis CI, AppVeyor, CircleCI, etc.
+if(NOT DEFINED ENV{CI})
+  add_subdirectory(headers)
+endif()
+
 add_subdirectory(algorithm)
 add_subdirectory(channel)
 add_subdirectory(image_view)
