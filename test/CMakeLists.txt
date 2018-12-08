@@ -7,37 +7,32 @@
 #
 message(STATUS "Boost.GIL: configuring core tests")
 
-foreach(name
+foreach(_name
   channel
+  image
   pixel
   pixel_iterator
   promote_integral)
+  set(_target test_core_${_name})
 
-  add_executable(test_core_${name} "")
-  target_sources(test_core_${name} PRIVATE ${name}.cpp error_if.cpp)
-  target_link_libraries(test_core_${name}
+  add_executable(${_target} "")
+  target_sources(${_target} PRIVATE ${_name}.cpp error_if.cpp)
+  target_link_libraries(${_target}
     PRIVATE
       gil_compile_options
       gil_include_directories
-      Boost::disable_autolinking
-      Boost::filesystem
-      Boost::unit_test_framework)
-  add_test(test.core.${name} test_core_${name})
+      gil_dependencies)
+  add_test(test.core.${_name} ${_target})
+
+  unset(_target)
+  unset(_name)
 endforeach()
 
-add_executable(test_core_image "")
+# Add extra source files accompanying image.cpp
 target_sources(test_core_image
   PRIVATE
     error_if.cpp
-    image.cpp
     sample_image.cpp)
-target_link_libraries(test_core_image
-  PRIVATE
-    gil_compile_options
-    gil_include_directories
-    Boost::disable_autolinking
-    Boost::filesystem
-    Boost::unit_test_framework)
 add_test(test.core.image
   test_core_image
   ${CMAKE_CURRENT_SOURCE_DIR}/gil_reference_checksums.txt)

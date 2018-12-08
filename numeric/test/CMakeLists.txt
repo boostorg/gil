@@ -8,16 +8,16 @@
 #
 message(STATUS "Boost.GIL: configuring Numeric extension tests")
 
-foreach(name
+foreach(_name
   numeric)
 
-  add_executable(test_ext_${name} "")
-  target_sources(test_ext_${name} PRIVATE ${name}.cpp)
-  target_link_libraries(test_ext_${name}
+  set(_target test_ext_${_name})
+  add_executable(${_target} "")
+  target_sources(${_target} PRIVATE ${_name}.cpp)
+  target_link_libraries(${_target}
     PRIVATE
       gil_compile_options
       gil_include_directories
-      Boost::disable_autolinking
-      Boost::unit_test_framework)
-  add_test(test.ext.${name} test_ext_${name})
+      gil_dependencies)
+  add_test(test.ext.${_name} ${_target})
 endforeach()

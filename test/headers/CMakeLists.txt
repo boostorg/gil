@@ -45,7 +45,7 @@ foreach(_header ${_headers})
     PRIVATE
       gil_compile_options
       gil_include_directories
-      Boost::boost)
+      gil_dependencies)
 
   add_dependencies(test_all_headers test_header_${_name})
 

@@ -35,6 +35,5 @@ target_link_libraries(test_ext_toolbox
   PRIVATE
     gil_compile_options
     gil_include_directories
-    Boost::disable_autolinking
-    Boost::unit_test_framework)
+    gil_dependencies)
 add_test(test.ext.toolbox test_ext_toolbox)

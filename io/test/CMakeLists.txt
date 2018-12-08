@@ -8,98 +8,87 @@
 #
 message(STATUS "Boost.GIL: configuring IO extension tests")
 
-# Unfortunately, ALIAS of imported target is not supported
-# see https://github.com/conan-io/conan/issues/2125
-list(APPEND _boost_deps Boost::disable_autolinking)
-list(APPEND _boost_deps Boost::filesystem)
-list(APPEND _boost_deps Boost::unit_test_framework)
-if(GIL_USE_CONAN)
-  list(APPEND _jpeg_deps CONAN_PKG::libjpeg)
-  list(APPEND _png_deps CONAN_PKG::libpng)
-  list(APPEND _tiff_deps CONAN_PKG::libtiff)
-else()
-  list(APPEND _jpeg_deps ${JPEG_LIBRARIES})
-  list(APPEND _png_deps PNG::PNG)
-  list(APPEND _tiff_deps TIFF::TIFF)
-endif()
+foreach(_name
+  bmp
+  jpeg
+  png
+  pnm
+  raw
+  simple
+  targa
+  tiff)
+  set(_target test_ext_io_${_name})
 
-add_definitions(-DBOOST_GIL_IO_TEST_ALLOW_READING_IMAGES=1)
-add_definitions(-DBOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES=1)
-if(NOT MSVC)
-  add_definitions(-DBOOST_TEST_DYN_LINK)
-endif()
+  add_executable(${_target} "")
+  target_link_libraries(${_target}
+    PRIVATE
+      gil_compile_options
+      gil_include_directories
+      gil_dependencies)
+  target_compile_definitions(${_target}
+    PRIVATE
+      BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES
+      BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
+      $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:BOOST_TEST_DYN_LINK>)
+  add_test(test.ext.io.${_name} ${_target})
 
-add_executable(test_ext_io_simple "")
-target_sources(test_ext_io_simple PRIVATE ${_headers} all_formats_test.cpp)
-target_link_libraries(test_ext_io_simple PRIVATE
-  ${_boost_deps} ${_jpeg_deps} ${_png_deps} ${_tiff_deps})
-if(JPEG_LIBRARIES AND JPEG_INCLUDE_DIR)
-  target_include_directories(test_ext_io_simple PRIVATE ${JPEG_INCLUDE_DIR})
-endif()
-add_test(test.ext.io.simple test_ext_io_simple)
+  unset(_name)
+  unset(_target)
+endforeach()
 
-add_executable(test_ext_io_bmp "")
-target_sources(test_ext_io_bmp PRIVATE ${_headers}
-  bmp_old_test.cpp bmp_read_test.cpp bmp_test.cpp bmp_write_test.cpp)
-target_link_libraries(test_ext_io_bmp PRIVATE ${_boost_deps})
-add_test(test.ext.io.bmp test_ext_io_bmp)
+target_sources(test_ext_io_simple
+  PRIVATE
+    all_formats_test.cpp)
 
-add_executable(test_ext_io_jpeg "")
-target_sources(test_ext_io_jpeg PRIVATE ${_headers}
-  jpeg_test.cpp jpeg_old_test.cpp jpeg_read_test.cpp jpeg_write_test.cpp)
-target_link_libraries(test_ext_io_jpeg PRIVATE ${_boost_deps} ${_jpeg_deps})
-if(JPEG_LIBRARIES AND JPEG_INCLUDE_DIR)
-  target_include_directories(test_ext_io_jpeg PRIVATE ${JPEG_INCLUDE_DIR})
-endif()
-add_test(test.ext.io.jpeg test_ext_io_jpeg)
+target_sources(test_ext_io_bmp
+  PRIVATE
+    bmp_old_test.cpp bmp_read_test.cpp bmp_test.cpp bmp_write_test.cpp)
 
-add_executable(test_ext_io_png "")
-target_sources(test_ext_io_png PRIVATE ${_headers}
-  png_test.cpp png_old_test.cpp png_file_format_test.cpp png_read_test.cpp)
-target_link_libraries(test_ext_io_png PRIVATE ${_boost_deps} ${_png_deps})
-add_test(test.ext.io.png test_ext_io_png)
+target_sources(test_ext_io_jpeg
+  PRIVATE
+    jpeg_test.cpp jpeg_old_test.cpp jpeg_read_test.cpp jpeg_write_test.cpp)
 
-add_executable(test_ext_io_pnm "")
-target_sources(test_ext_io_pnm PRIVATE ${_headers}
-  pnm_test.cpp pnm_old_test.cpp pnm_read_test.cpp pnm_write_test.cpp)
-target_link_libraries(test_ext_io_pnm PRIVATE ${_boost_deps} ${_png_deps})
-add_test(test.ext.io.pnm test_ext_io_pnm)
+target_sources(test_ext_io_png
+  PRIVATE
+    png_test.cpp png_old_test.cpp png_file_format_test.cpp png_read_test.cpp)
 
-add_executable(test_ext_io_targa "")
-target_sources(test_ext_io_targa PRIVATE ${_headers}
-  targa_test.cpp targa_old_test.cpp targa_read_test.cpp targa_write_test.cpp)
-target_link_libraries(test_ext_io_targa PRIVATE ${_boost_deps})
-add_test(test.ext.io.targa test_ext_io_targa)
+target_sources(test_ext_io_pnm
+  PRIVATE
+    pnm_test.cpp pnm_old_test.cpp pnm_read_test.cpp pnm_write_test.cpp)
 
-add_executable(test_ext_io_tiff "")
-target_sources(test_ext_io_tiff PRIVATE
-  ${_headers}
-  tiff_file_format_test.cpp
-  tiff_old_test.cpp
-  tiff_subimage_test.cpp
-  tiff_test.cpp
-  tiff_tiled_float_test.cpp
-  tiff_tiled_minisblack_test_1-10.cpp
-  tiff_tiled_minisblack_test_11-20.cpp
-  tiff_tiled_minisblack_test_21-31_32-64.cpp
-  tiff_tiled_minisblack_write_test_1-10.cpp
-  tiff_tiled_minisblack_write_test_11-20.cpp
-  tiff_tiled_minisblack_write_test_21-31_32-64.cpp
-  tiff_tiled_palette_test_1-8.cpp
-  tiff_tiled_palette_test_8-16.cpp
-  tiff_tiled_palette_write_test_1-8.cpp
-  tiff_tiled_palette_write_test_8-16.cpp
-  tiff_tiled_rgb_contig_test_1-10.cpp
-  tiff_tiled_rgb_contig_test_11-20.cpp
-  tiff_tiled_rgb_contig_test_21-31_32_64.cpp
-  tiff_tiled_rgb_contig_write_test_1-10.cpp
-  tiff_tiled_rgb_contig_write_test_11-20.cpp
-  tiff_tiled_rgb_contig_write_test_21-31_32_64.cpp
-  tiff_tiled_rgb_planar_test_1-10.cpp
-  tiff_tiled_rgb_planar_test_11-20.cpp
-  tiff_tiled_rgb_planar_test_21-31_32_64.cpp
-  tiff_tiled_test.cpp
-  tiff_write_test.cpp)
-target_link_libraries(test_ext_io_tiff PRIVATE ${_boost_deps} ${_tiff_deps} ${_tiffxx_library})
-target_include_directories(test_ext_io_tiff PRIVATE ${_tiffxx_include_dir})
-add_test(test.ext.io.tiff test_ext_io_tiff)
+target_sources(test_ext_io_raw
+  PRIVATE
+    raw_test.cpp)
+
+target_sources(test_ext_io_targa
+  PRIVATE
+    targa_test.cpp targa_old_test.cpp targa_read_test.cpp targa_write_test.cpp)
+
+target_sources(test_ext_io_tiff
+  PRIVATE
+    tiff_file_format_test.cpp
+    tiff_old_test.cpp
+    tiff_subimage_test.cpp
+    tiff_test.cpp
+    tiff_tiled_float_test.cpp
+    tiff_tiled_minisblack_test_1-10.cpp
+    tiff_tiled_minisblack_test_11-20.cpp
+    tiff_tiled_minisblack_test_21-31_32-64.cpp
+    tiff_tiled_minisblack_write_test_1-10.cpp
+    tiff_tiled_minisblack_write_test_11-20.cpp
+    tiff_tiled_minisblack_write_test_21-31_32-64.cpp
+    tiff_tiled_palette_test_1-8.cpp
+    tiff_tiled_palette_test_8-16.cpp
+    tiff_tiled_palette_write_test_1-8.cpp
+    tiff_tiled_palette_write_test_8-16.cpp
+    tiff_tiled_rgb_contig_test_1-10.cpp
+    tiff_tiled_rgb_contig_test_11-20.cpp
+    tiff_tiled_rgb_contig_test_21-31_32_64.cpp
+    tiff_tiled_rgb_contig_write_test_1-10.cpp
+    tiff_tiled_rgb_contig_write_test_11-20.cpp
+    tiff_tiled_rgb_contig_write_test_21-31_32_64.cpp
+    tiff_tiled_rgb_planar_test_1-10.cpp
+    tiff_tiled_rgb_planar_test_11-20.cpp
+    tiff_tiled_rgb_planar_test_21-31_32_64.cpp
+    tiff_tiled_test.cpp
+    tiff_write_test.cpp)

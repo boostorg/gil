@@ -35,14 +35,7 @@ foreach(_example ${_examples})
       PRIVATE
         gil_compile_options
         gil_include_directories
-        Boost::disable_autolinking
-        Boost::filesystem
-        PNG::PNG
-        TIFF::TIFF
-        ${JPEG_LIBRARIES})
-    if(JPEG_LIBRARIES AND JPEG_INCLUDE_DIR)
-      target_include_directories(example_${_name} PRIVATE ${JPEG_INCLUDE_DIR})
-    endif()
+        gil_dependencies)
   endif()
 
   unset(_name)

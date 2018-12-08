@@ -5,16 +5,20 @@
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 #
-foreach(name
+foreach(_name
   for_each_pixel
   std_fill)
+  set(_target test_core_${_name})
 
-  add_executable(test_core_${name} "")
-  target_sources(test_core_${name} PRIVATE ${name}.cpp)
-  target_link_libraries(test_core_${name}
+  add_executable(${_target} "")
+  target_sources(${_target} PRIVATE ${_name}.cpp)
+  target_link_libraries(${_target}
     PRIVATE
       gil_compile_options
       gil_include_directories
-      Boost::boost)
-  add_test(test.core.${name} test_core_${name})
+      gil_dependencies)
+  add_test(test.core.${_name} ${_target})
+
+  unset(_name)
+  unset(_target)
 endforeach()

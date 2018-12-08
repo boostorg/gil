@@ -42,12 +42,17 @@ option(GIL_USE_CONAN "Use Conan to install dependencies" OFF)
 option(GIL_DOWNLOAD_FINDBOOST "Download FindBoost.cmake from latest CMake release" OFF)
 
 #-----------------------------------------------------------------------------
+# Dependency target
+#-----------------------------------------------------------------------------
+add_library(gil_dependencies INTERFACE)
+
+#-----------------------------------------------------------------------------
 # Dependency: Boost
 # - look for stage Build
 # - look for default installation location
 # - look for location specified with BOOST_ROOT
 #-----------------------------------------------------------------------------
-if (CMAKE_VERSION VERSION_LESS 3.13 AND NOT GIL_DOWNLOAD_FINDBOOST)
+if(CMAKE_VERSION VERSION_LESS 3.13 AND NOT GIL_DOWNLOAD_FINDBOOST)
   message(STATUS "Boost.GIL: You are using CMake older than 3.13")
   message(STATUS "Boost.GIL: FindBoost.cmake has likely been updated to detect newer or even not yet released Boost")
   message(STATUS "Boost.GIL: Run CMake with -DGIL_DOWNLOAD_FINDBOOST=ON to get latest version of FindBoost.cmake")
@@ -57,8 +62,8 @@ if (CMAKE_VERSION VERSION_LESS 3.13 AND NOT GIL_DOWNLOAD_FINDBOOST)
   message(STATUS "Boost.GIL:    Try run CMake with -DBoost_COMPILER=\"-vc141\" or value for your toolset.")
 endif()
 
-if (GIL_DOWNLOAD_FINDBOOST)
-  if (NOT EXISTS "${CMAKE_BINARY_DIR}/cmake/FindBoost.cmake")
+if(GIL_DOWNLOAD_FINDBOOST)
+  if(NOT EXISTS "${CMAKE_BINARY_DIR}/cmake/FindBoost.cmake")
     message(STATUS "Boost.GIL: Downloading FindBoost.cmake from https://gitlab.kitware.com/cmake/ release branch")
     file(DOWNLOAD
       "https://gitlab.kitware.com/cmake/cmake/raw/release/Modules/FindBoost.cmake"
@@ -90,10 +95,16 @@ find_package(Boost 1.65.0 REQUIRED
 message(STATUS "Boost.GIL: using Boost_INCLUDE_DIRS=${Boost_INCLUDE_DIRS}")
 message(STATUS "Boost.GIL: using Boost_LIBRARY_DIRS=${Boost_LIBRARY_DIRS}")
 
+target_link_libraries(gil_dependencies
+  INTERFACE
+    Boost::disable_autolinking
+    Boost::filesystem
+    Boost::unit_test_framework)
+
 #-----------------------------------------------------------------------------
 # Dependency: libpng, libjpeg, libtiff via Vcpkg or Conan
 #-----------------------------------------------------------------------------
-if (GIL_BUILD_IO)
+if(GIL_BUILD_IO)
   if(GIL_USE_CONAN)
     # Download automatically, you can also just copy the conan.cmake file
     if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
@@ -112,16 +123,41 @@ if (GIL_BUILD_IO)
     conan_cmake_run(CONANFILE conanfile.txt BASIC_SETUP CMAKE_TARGETS)
 
     set(CMAKE_BUILD_TYPE ${_build_type_saved})
+    unset(_build_type_saved)
+
+    target_link_libraries(gil_dependencies
+      INTERFACE
+        CONAN_PKG::libjpeg
+        CONAN_PKG::libpng
+        CONAN_PKG::libtiff)
   else()
     find_package(JPEG)
     find_package(PNG)
     find_package(TIFF)
 
-    if (NOT MSVC)
+    target_link_libraries(gil_dependencies
+      INTERFACE
+        ${JPEG_LIBRARIES}
+        PNG::PNG
+        TIFF::TIFF)
+
+    target_include_directories(gil_dependencies
+      INTERFACE
+        ${JPEG_INCLUDE_DIR})
+
+    if(UNIX)
       # Typically, Linux packages provide C++ stream interface for TIFF
       find_path(_tiffxx_include_dir NAMES tiffio.hxx)
       find_library(_tiffxx_library NAMES tiffxx)
+
+      target_link_libraries(gil_dependencies
+        INTERFACE
+          ${_tiffxx_library})
+      target_include_directories(gil_dependencies
+        INTERFACE
+          ${_tiffxx_include_dir})
     endif()
+
   endif()
 endif()
 
@@ -174,7 +210,7 @@ target_include_directories(gil_include_directories
 #-----------------------------------------------------------------------------
 enable_testing()
 add_subdirectory(test)
-if (GIL_BUILD_IO)
+if(GIL_BUILD_IO)
   add_subdirectory(io/test)
 endif()
 add_subdirectory(numeric/test)
