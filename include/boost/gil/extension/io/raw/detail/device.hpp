@@ -9,6 +9,8 @@
 #ifndef BOOST_GIL_EXTENSION_IO_RAW_DETAIL_DEVICE_HPP
 #define BOOST_GIL_EXTENSION_IO_RAW_DETAIL_DEVICE_HPP
 
+#include <boost/gil/extension/io/raw/tags.hpp>
+
 #include <boost/gil/io/base.hpp>
 #include <boost/gil/io/device.hpp>
 

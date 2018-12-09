@@ -8,8 +8,11 @@
 #ifndef BOOST_GIL_EXTENSION_IO_TIFF_DETAIL_SUPPORTED_TYPES_HPP
 #define BOOST_GIL_EXTENSION_IO_TIFF_DETAIL_SUPPORTED_TYPES_HPP
 
+#include <boost/gil/extension/io/tiff/tags.hpp>
+
 #include <boost/gil/channel.hpp>
 #include <boost/gil/color_base.hpp>
+#include <boost/gil/io/base.hpp>
 
 #include <boost/mpl/not.hpp>
 #include <boost/type_traits/is_same.hpp>
