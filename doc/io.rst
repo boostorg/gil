@@ -354,7 +354,6 @@ BOOST_GIL_IO_PNG_DITHERING_SUPPORTED                     Look up "dithering" in 
 BOOST_GIL_IO_PNG_1_4_OR_LOWER                            Allow compiling with libpng 1.4 or lower.
 BOOST_GIL_EXTENSION_IO_JPEG_C_LIB_COMPILED_AS_CPLUSPLUS  libjpeg is compiled as c++ lib.
 BOOST_GIL_EXTENSION_IO_PNG_C_LIB_COMPILED_AS_CPLUSPLUS   libpng is compiled as c++ lib.
-BOOST_GIL_EXTENSION_IO_RAW_C_LIB_COMPILED_AS_CPLUSPLUS   libraw is compiled as c++ lib.
 BOOST_GIL_EXTENSION_IO_TIFF_C_LIB_COMPILED_AS_CPLUSPLUS  libtiff is compiled as c++ lib.
 BOOST_GIL_EXTENSION_IO_ZLIB_C_LIB_COMPILED_AS_CPLUSPLUS  zlib is compiled as c++ lib.
 BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES                   Allow basic test images to be read from local hard drive. The paths can be set in paths.hpp

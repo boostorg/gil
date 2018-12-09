@@ -10,15 +10,7 @@
 
 #include <boost/gil/io/base.hpp>
 
-#ifndef BOOST_GIL_EXTENSION_IO_RAW_C_LIB_COMPILED_AS_CPLUSPLUS
-    extern "C" {
-#endif
-
 #include <libraw/libraw.h>
-
-#ifndef BOOST_GIL_EXTENSION_IO_RAW_C_LIB_COMPILED_AS_CPLUSPLUS
-    }
-#endif
 
 namespace boost { namespace gil {
 
