@@ -8,6 +8,8 @@
 #ifndef BOOST_GIL_EXTENSION_IO_JPEG_DETAIL_SUPPORTED_TYPES_HPP
 #define BOOST_GIL_EXTENSION_IO_JPEG_DETAIL_SUPPORTED_TYPES_HPP
 
+#include <boost/gil/extension/io/jpeg/tags.hpp>
+
 #include <boost/gil/channel.hpp>
 #include <boost/gil/color_base.hpp>
 

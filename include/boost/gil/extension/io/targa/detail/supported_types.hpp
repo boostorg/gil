@@ -8,6 +8,8 @@
 #ifndef BOOST_GIL_EXTENSION_IO_TARGA_DETAIL_SUPPORTED_TYPES_HPP
 #define BOOST_GIL_EXTENSION_IO_TARGA_DETAIL_SUPPORTED_TYPES_HPP
 
+#include <boost/gil/extension/io/targa/tags.hpp>
+
 #include <boost/gil/channel.hpp>
 #include <boost/gil/color_base.hpp>
 #include <boost/gil/io/base.hpp>

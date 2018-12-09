@@ -12,6 +12,7 @@
 #include <boost/gil/extension/io/pnm/detail/writer_backend.hpp>
 
 #include <boost/gil/io/base.hpp>
+#include <boost/gil/io/bit_operations.hpp>
 #include <boost/gil/io/device.hpp>
 
 #include <cstdlib>

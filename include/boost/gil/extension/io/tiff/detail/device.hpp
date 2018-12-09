@@ -8,6 +8,7 @@
 #ifndef BOOST_GIL_EXTENSION_IO_TIFF_DETAIL_DEVICE_HPP
 #define BOOST_GIL_EXTENSION_IO_TIFF_DETAIL_DEVICE_HPP
 
+#include <boost/gil/extension/io/tiff/tags.hpp>
 #include <boost/gil/extension/io/tiff/detail/log.hpp>
 
 #include <boost/gil/io/base.hpp>

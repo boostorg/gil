@@ -8,9 +8,13 @@
 #ifndef BOOST_GIL_EXTENSION_IO_PNG_DETAIL_SUPPORTED_TYPES_HPP
 #define BOOST_GIL_EXTENSION_IO_PNG_DETAIL_SUPPORTED_TYPES_HPP
 
+#include <boost/gil/extension/io/png/tags.hpp>
+
 #ifdef BOOST_GIL_IO_ENABLE_GRAY_ALPHA
 #include <boost/gil/extension/toolbox/color_spaces/gray_alpha.hpp>
 #endif // BOOST_GIL_IO_ENABLE_GRAY_ALPHA
+
+#include <cstddef>
 
 namespace boost { namespace gil { namespace detail {
 

@@ -9,6 +9,7 @@
 #define BOOST_GIL_EXTENSION_IO_TIFF_DETAIL_WRITER_BACKEND_HPP
 
 #include <boost/gil/extension/io/tiff/tags.hpp>
+#include <boost/gil/extension/io/tiff/detail/device.hpp>
 
 #include <boost/mpl/contains.hpp>
 
