@@ -18,9 +18,9 @@ file(GLOB_RECURSE _headers
 file(READ ${CMAKE_CURRENT_LIST_DIR}/main.cpp _main_content)
 
 # TODO: Which option is most convenient to build from IDEs?
-add_custom_target(test_all_headers)
-#add_executable(test_all_headers main.cpp)
-#add_library(test_all_headers STATIC main.cpp)
+add_custom_target(test_compile_headers)
+#add_executable(test_compile_headers main.cpp)
+#add_library(test_compile_headers STATIC main.cpp)
 
 foreach(_header ${_headers})
   string(REPLACE ".hpp" "" _name ${_header})
@@ -47,7 +47,7 @@ foreach(_header ${_headers})
       gil_include_directories
       gil_dependencies)
 
-  add_dependencies(test_all_headers test_header_${_name})
+  add_dependencies(test_compile_headers test_header_${_name})
 
   unset(_cpp)
   unset(_header)
