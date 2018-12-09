@@ -39,7 +39,7 @@ void read_view( Reader                                  reader
                                                                                   , typename Reader::format_tag_t
                                                                                   >::type
                                                        >::type
-                                  >::type* /* ptr */ = 0
+                                  >::type* /* ptr */ = nullptr
               )
 {
     reader.check_image_size( view.dimensions() );
@@ -111,7 +111,7 @@ void read_view( Device&          file
                                                                                   , FormatTag
                                                                                   >::type
                                                       >::type
-                                  >::type* /* ptr */ = 0
+                                  >::type* /* ptr */ = nullptr
               )
 {
     typedef typename get_reader< Device
@@ -185,7 +185,7 @@ void read_view( const String&    file_name
                                                                                   , FormatTag
                                                                                   >::type
                                                       >::type
-                                  >::type* /* ptr */ = 0
+                                  >::type* /* ptr */ = nullptr
               )
 {
     typedef typename get_reader< String

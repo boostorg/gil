@@ -320,9 +320,9 @@ private:
                           , mpl::true_   // is View rgb16_view_t
                           )
    {
-      tiff_color_map::red_t   red   = NULL;
-      tiff_color_map::green_t green = NULL;
-      tiff_color_map::blue_t  blue  = NULL;
+      tiff_color_map::red_t   red   = nullptr;
+      tiff_color_map::green_t green = nullptr;
+      tiff_color_map::blue_t  blue  = nullptr;
 
       this->_io_dev.get_field_defaulted( red, green, blue );
 

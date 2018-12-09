@@ -27,7 +27,7 @@ make_reader_backend( const String&                           file_name
                    , typename enable_if< mpl::and_< detail::is_supported_path_spec< String >
                                                   , is_format_tag< FormatTag >
                                                            >
-                                       >::type* /* ptr */ = 0
+                                       >::type* /* ptr */ = nullptr
                    )
 {
     typedef typename get_read_device< String
@@ -95,7 +95,7 @@ make_reader_backend( Device&                                 io_dev
                                                                                      >
                                                   , is_format_tag< FormatTag >
                                                   >
-                                       >::type* /* ptr */ = 0
+                                       >::type* /* ptr */ = nullptr
                    )
 {
     typedef typename get_read_device< Device

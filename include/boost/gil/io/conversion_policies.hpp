@@ -30,7 +30,7 @@ public:
              , typename disable_if< typename pixels_are_compatible< typename std::iterator_traits<InIterator>::value_type
                                                                   , typename std::iterator_traits<OutIterator>::value_type
                                                                   >::type
-                                  >::type* /* ptr */ = 0
+                                  >::type* /* ptr */ = nullptr
              )
     {
         io_error( "Data cannot be copied because the pixels are incompatible." );
@@ -45,7 +45,7 @@ public:
              , typename enable_if< typename pixels_are_compatible< typename std::iterator_traits<InIterator>::value_type
                                                                  , typename std::iterator_traits<OutIterator>::value_type
                                                                  >::type
-                                 >::type* /* ptr */ = 0
+                                 >::type* /* ptr */ = nullptr
              )
     {
         std::copy( begin

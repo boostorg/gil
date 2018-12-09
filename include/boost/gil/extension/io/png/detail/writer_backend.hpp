@@ -61,22 +61,22 @@ public:
         // the library version is compatible with the one used at compile time,
         // in case we are using dynamically linked libraries.  REQUIRED.
         get()->_struct = png_create_write_struct( PNG_LIBPNG_VER_STRING
-                                                , NULL  // user_error_ptr
-                                                , NULL  // user_error_fn
-                                                , NULL  // user_warning_fn
+                                                , nullptr  // user_error_ptr
+                                                , nullptr  // user_error_fn
+                                                , nullptr  // user_warning_fn
                                                 );
 
-        io_error_if( get_struct() == NULL
+        io_error_if( get_struct() == nullptr
                    , "png_writer: fail to call png_create_write_struct()"
                    );
 
         // Allocate/initialize the image information data.  REQUIRED
         get()->_info = png_create_info_struct( get_struct() );
 
-        if( get_info() == NULL )
+        if( get_info() == nullptr )
         {
             png_destroy_write_struct( &get()->_struct
-                                    , NULL
+                                    , nullptr
                                     );
 
             io_error( "png_writer: fail to call png_create_info_struct()" );

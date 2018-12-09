@@ -26,7 +26,7 @@ make_dynamic_image_reader( const String&    file_name
                          , typename enable_if< mpl::and_< detail::is_supported_path_spec< String >
                                                         , is_format_tag< FormatTag >
                                                                  >
-                                             >::type* /* ptr */ = 0
+                                             >::type* /* ptr */ = nullptr
                          )
 {
     typename get_read_device< String
@@ -126,7 +126,7 @@ make_dynamic_image_reader( const String&    file_name
                          , typename enable_if< mpl::and_< detail::is_supported_path_spec< String >
                                                         , is_format_tag< FormatTag >
                                                                  >
-                                             >::type* /* ptr */ = 0
+                                             >::type* /* ptr */ = nullptr
                          )
 {
     return make_dynamic_image_reader( file_name
