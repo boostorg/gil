@@ -341,31 +341,6 @@ Here is an example of such lightweight workflow in Linux environment (Debian-bas
     mkdir _build
     cd _build/
     cmake ..
-    -- The CXX compiler identification is GNU 7.3.0
-    -- Check for working CXX compiler: /usr/bin/c++
-    -- Check for working CXX compiler: /usr/bin/c++ -- works
-    -- Detecting CXX compiler ABI info
-    -- Detecting CXX compiler ABI info - done
-    -- Detecting CXX compile features
-    -- Detecting CXX compile features - done
-    -- Boost version: 1.65.1
-    -- Found the following Boost libraries:
-    --   unit_test_framework
-    --   filesystem
-    --   system
-    -- Boost_INCLUDE_DIRS=/usr/include
-    -- Boost_LIBRARY_DIRS=/usr/lib/x86_64-linux-gnu
-    -- Found JPEG: /usr/lib/x86_64-linux-gnu/libjpeg.so
-    -- Found ZLIB: /usr/lib/x86_64-linux-gnu/libz.so (found version "1.2.11")
-    -- Found PNG: /usr/lib/x86_64-linux-gnu/libpng.so (found version "1.6.34")
-    -- Found TIFF: /usr/lib/x86_64-linux-gnu/libtiff.so (found version "4.0.9")
-    -- Configuring Boost.GIL core tests
-    -- Configuring Boost.GIL IO tests
-    -- Configuring Boost.GIL Numeric tests
-    -- Configuring Boost.GIL Toolbox tests
-    -- Configuring done
-    -- Generating done
-    -- Build files have been written to: /home/mloskot/gil/_build
     ```
 
     **TIP:** If CMake is failing to find Boost libraries, especially built with
