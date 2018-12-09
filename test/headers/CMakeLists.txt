@@ -26,6 +26,7 @@ foreach(_header ${_headers})
   string(REPLACE ".hpp" "" _name ${_header})
   string(REPLACE "/" "_" _main ${_name})
   string(REPLACE "/" "-" _name ${_name})
+  set(_target test_header_${_name})
   set(_cpp ${CMAKE_BINARY_DIR}/test/headers/${_name}.cpp)
 
   string(REPLACE "BOOST_GIL_TEST_HEADER" "${_header}" _content "${_main_content}")
@@ -34,20 +35,20 @@ foreach(_header ${_headers})
   file(WRITE ${_cpp} "${_content}")
   unset(_content)
 
-  add_library(test_header_${_name} OBJECT)
+  add_library(${_target} OBJECT)
 
-  target_sources(test_header_${_name}
+  target_sources(${_target}
     PRIVATE
       ${_cpp}
       ${CMAKE_SOURCE_DIR}/include/boost/gil/${_header})
 
-  target_link_libraries(test_header_${_name}
+  target_link_libraries(${_target}
     PRIVATE
       gil_compile_options
       gil_include_directories
       gil_dependencies)
 
-  add_dependencies(test_compile_headers test_header_${_name})
+  add_dependencies(test_compile_headers ${_target})
 
   unset(_cpp)
   unset(_header)
