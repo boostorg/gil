@@ -26,7 +26,7 @@ make_scanline_reader( const String&    file_name
                     , typename enable_if< mpl::and_< detail::is_supported_path_spec< String >
                                                    , is_format_tag< FormatTag >
                                                    >
-                                        >::type* /* ptr */ = 0
+                                        >::type* /* ptr */ = nullptr
            )
 {
     typename get_read_device< String

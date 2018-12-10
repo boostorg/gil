@@ -43,7 +43,7 @@ void write_view( Writer&     writer
                                                                                     , typename Writer::format_tag_t
                                                                                     >::type
                                                        >::type
-                                   >::type* /* ptr */ = 0
+                                   >::type* /* ptr */ = nullptr
                )
 {
     writer.apply( view );
@@ -65,7 +65,7 @@ void write_view( Device&          device
                                                                                     , FormatTag
                                                                                     >::type
                                                        >::type
-                                   >::type* /* ptr */ = 0
+                                   >::type* /* ptr */ = nullptr
                )
 {
     typedef typename get_writer< Device
@@ -95,7 +95,7 @@ void write_view( const String&    file_name
                                                                                     , FormatTag
                                                                                     >::type
                                                        >::type
-                                   >::type* /* ptr */ = 0
+                                   >::type* /* ptr */ = nullptr
                )
 {
     typedef typename get_writer< String
@@ -129,7 +129,7 @@ void write_view( Device&                                 device
                                                                                     , FormatTag
                                                                                     >::type
                                                        >::type
-                                   >::type* /* ptr */ = 0
+                                   >::type* /* ptr */ = nullptr
                )
 {
     typedef typename get_writer< Device
@@ -160,7 +160,7 @@ void write_view( const String&                             file_name
                                                                                     , FormatTag
                                                                                     >::type
                                                        >::type
-                                   >::type* /* ptr */ = 0
+                                   >::type* /* ptr */ = nullptr
                )
 {
     typedef typename get_writer< String
@@ -189,7 +189,7 @@ void write_view( Writer&                        writer
                , typename enable_if< typename mpl::and_< typename detail::is_dynamic_image_writer< Writer >::type
                                                        , typename is_format_tag< typename Writer::format_tag_t >::type
                                                        >::type
-                                   >::type* /* ptr */ = 0
+                                   >::type* /* ptr */ = nullptr
                )
 {
     writer.apply( view );
@@ -237,7 +237,7 @@ void write_view( const String&                  file_name
                , typename enable_if< typename mpl::and_< typename detail::is_supported_path_spec< String >::type
                                                        , typename is_format_tag< FormatTag >::type
                                                        >::type
-                                   >::type* /* ptr */ = 0
+                                   >::type* /* ptr */ = nullptr
                )
 {
     typedef typename get_dynamic_image_writer< String
@@ -301,7 +301,7 @@ void write_view( const String&                      file_name
                , typename enable_if< typename mpl::and_< typename detail::is_supported_path_spec< String >::type
                                                        , typename is_format_tag< FormatTag >::type
                                                        >::type
-                                   >::type* /* ptr */ = 0
+                                   >::type* /* ptr */ = nullptr
                )
 {
     typedef typename get_dynamic_image_writer< String

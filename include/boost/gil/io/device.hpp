@@ -65,9 +65,9 @@ public:
                       , read_tag   = read_tag()
                       )
     {
-        FILE* file = NULL;
+        FILE* file = nullptr;
 
-        io_error_if( ( file = fopen( file_name.c_str(), "rb" )) == NULL
+        io_error_if( ( file = fopen( file_name.c_str(), "rb" )) == nullptr
                    , "file_stream_device: failed to open file"
                    );
 
@@ -83,9 +83,9 @@ public:
                       , read_tag   = read_tag()
                       )
     {
-        FILE* file = NULL;
+        FILE* file = nullptr;
 
-        io_error_if( ( file = fopen( file_name, "rb" )) == NULL
+        io_error_if( ( file = fopen( file_name, "rb" )) == nullptr
                    , "file_stream_device: failed to open file"
                    );
 
@@ -101,9 +101,9 @@ public:
                       , write_tag
                       )
     {
-        FILE* file = NULL;
+        FILE* file = nullptr;
 
-        io_error_if( ( file = fopen( file_name.c_str(), "wb" )) == NULL
+        io_error_if( ( file = fopen( file_name.c_str(), "wb" )) == nullptr
                    , "file_stream_device: failed to open file"
                    );
 
@@ -119,9 +119,9 @@ public:
                       , write_tag
                       )
     {
-        FILE* file = NULL;
+        FILE* file = nullptr;
 
-        io_error_if( ( file = fopen( file_name, "wb" )) == NULL
+        io_error_if( ( file = fopen( file_name, "wb" )) == nullptr
                    , "file_stream_device: failed to open file"
                    );
 

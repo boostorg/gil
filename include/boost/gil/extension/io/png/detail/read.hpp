@@ -220,7 +220,7 @@ public:
 
         // read rest of file, and get additional chunks in info_ptr
         png_read_end( this->get_struct()
-                    , NULL
+                    , nullptr
                     );
     }
 
@@ -265,7 +265,7 @@ private:
                     // Read the image using the "sparkle" effect.
                     png_read_rows( this->get_struct()
                                  , &row_ptr
-                                 , NULL
+                                 , nullptr
                                  , 1
                                  );
                 }
@@ -278,7 +278,7 @@ private:
                     // Read the image using the "sparkle" effect.
                     png_read_rows( this->get_struct()
                                  , &row_ptr
-                                 , NULL
+                                 , nullptr
                                  , 1
                                  );
 
@@ -302,7 +302,7 @@ private:
                     // Read the image using the "sparkle" effect.
                     png_read_rows( this->get_struct()
                                  , &row_ptr
-                                 , NULL
+                                 , nullptr
                                  , 1
                                  );
                 }
@@ -314,7 +314,7 @@ private:
                     // Read the image using the "sparkle" effect.
                     png_read_rows( this->get_struct()
                                  , &row_ptr
-                                 , NULL
+                                 , nullptr
                                  , 1
                                  );
                 }

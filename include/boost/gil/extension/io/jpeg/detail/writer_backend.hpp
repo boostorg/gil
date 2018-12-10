@@ -55,7 +55,7 @@ private:
             jpeg_destroy_compress( jpeg_compress_ptr );
 
             delete jpeg_compress_ptr;
-            jpeg_compress_ptr = NULL;
+            jpeg_compress_ptr = nullptr;
         }
     }
 

@@ -37,7 +37,7 @@ void read_and_convert_view( Reader&     reader
                           , typename enable_if< mpl::and_< detail::is_reader< Reader >
                                                          , is_format_tag< typename Reader::format_tag_t >
                                                          >
-                          >::type* /* ptr */ = 0
+                          >::type* /* ptr */ = nullptr
                           )
 {
     reader.check_image_size( view.dimensions() );
@@ -289,7 +289,7 @@ void read_and_convert_view( const String&    file_name
                           , typename enable_if< mpl::and_< is_format_tag< FormatTag >
                                                          , detail::is_supported_path_spec< String >
                                                          >
-                                              >::type* /* ptr */ = 0
+                                              >::type* /* ptr */ = nullptr
                           )
 {
     typedef typename get_reader< String
@@ -325,7 +325,7 @@ void read_and_convert_view( Device&          device
                                                                                  >
                                                          , is_format_tag< FormatTag >
                                                          >
-                                               >::type* /* ptr */ = 0
+                                               >::type* /* ptr */ = nullptr
                           )
 {
     typedef typename get_reader< Device

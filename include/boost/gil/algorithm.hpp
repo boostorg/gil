@@ -431,7 +431,7 @@ void destruct_range_impl( It
                         , typename enable_if< mpl::or_< mpl::not_< is_pointer< It > >
                                                       , boost::has_trivial_destructor< typename std::iterator_traits< It >::value_type >
                                                       >
-                                            >::type* /* ptr */ = 0)
+                                            >::type* /* ptr */ = nullptr)
 {}
 
 template <typename It> BOOST_FORCEINLINE
@@ -606,7 +606,7 @@ void default_construct_pixels_impl( const View& img_view
                                   , boost::enable_if< is_same< mpl::bool_< B >
                                                              , mpl::false_
                                                              >
-                                                    >* /* ptr */ = 0
+                                                    >* /* ptr */ = nullptr
                                   )
 {
     if( img_view.is_1d_traversable() )

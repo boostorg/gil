@@ -74,7 +74,7 @@ public:
 
     int unpack()                                                         { return _processor_ptr.get()->unpack(); }
     int dcraw_process()                                                  { return _processor_ptr.get()->dcraw_process(); }
-    libraw_processed_image_t* dcraw_make_mem_image(int* error_code=NULL) { return _processor_ptr.get()->dcraw_make_mem_image(error_code); }
+    libraw_processed_image_t* dcraw_make_mem_image(int* error_code=nullptr) { return _processor_ptr.get()->dcraw_make_mem_image(error_code); }
 
 protected:
 

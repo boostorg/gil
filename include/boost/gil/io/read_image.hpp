@@ -40,7 +40,7 @@ void read_image( Reader           reader
                                                                  , typename Reader::format_tag_t
                                                                  >
                                               >
-                                   >::type* /* ptr */ = 0
+                                   >::type* /* ptr */ = nullptr
                )
 {
     reader.init_image( img
@@ -110,7 +110,7 @@ void read_image( Device&          file
                                                                  , FormatTag
                                                                  >
                                               >
-                                   >::type* /* ptr */ = 0
+                                   >::type* /* ptr */ = nullptr
                )
 {
     typedef typename get_reader< Device
@@ -147,7 +147,7 @@ void read_image( const String&                           file_name
                                                                  , FormatTag
                                                                  >
                                               >
-                                   >::type* /* ptr */ = 0
+                                   >::type* /* ptr */ = nullptr
                )
 {
     typedef typename get_reader< String
@@ -184,7 +184,7 @@ void read_image( const String&    file_name
                                                                  , FormatTag
                                                                  >
                                               >
-                                   >::type* /* ptr */ = 0
+                                   >::type* /* ptr */ = nullptr
                )
 {
     typedef typename get_reader< String
@@ -213,7 +213,7 @@ void read_image( Reader&              reader
                , typename enable_if< mpl::and_< detail::is_dynamic_image_reader< Reader >
                                               , is_format_tag< typename Reader::format_tag_t >
                                               >
-                                   >::type* /* ptr */ = 0
+                                   >::type* /* ptr */ = nullptr
                )
 {
     reader.apply( images );
@@ -335,7 +335,7 @@ void read_image( const String&        file_name
                , typename enable_if< mpl::and_< detail::is_supported_path_spec< String >
                                               , is_format_tag< FormatTag >
                                               >
-                                   >::type* /* ptr */ = 0
+                                   >::type* /* ptr */ = nullptr
                )
 {
     typedef typename get_dynamic_image_reader< String

@@ -390,6 +390,37 @@ Maintainer: [@stefanseefeld](https://github.com/stefanseefeld)
 
 *TODO:* _Describe_
 
+### Running clang-tidy
+
+[clang-tidy](http://clang.llvm.org/extra/clang-tidy/) can be run on demand to
+diagnose or diagnose and fix or refactor source code issues.
+Since the CMake configuration is provided, it is easier to run it
+using compile command database which can be easily generated.
+
+Currently, integration using the CMake 3.6+ target
+property `CXX_CLANG_TIDY` is not provided.
+
+First, generate `compile_commands.json` database for `clang-tidy`:
+
+```shell
+cmake -S . -B _build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
+```
+
+Next, verify [what checks are aleady configured](http://clang.llvm.org/extra/clang-tidy/checks/list.html)
+in `.clang-tidy` file provided:
+
+```shell
+clang-tidy -dump-config
+clang-tidy -p _build -list-checks
+```
+
+Finally, run parallel `clang-tidy` runner script to apply any desired
+checks (and fixes) across the library source code:
+
+```shell
+run-clang-tidy.py -p=_build -header-filter='boost\/gil\/.*' -checks='-*,modernize-use-using' [-fix]
+```
+
 ## Guidelines
 
 Boost.GIL is a more than a decade old mature library maintained by several

@@ -65,7 +65,7 @@ struct packed_pixel {
 
     // Construct from another compatible pixel type
     packed_pixel(const packed_pixel& p) : _bitfield(p._bitfield) {}
-    template <typename P> packed_pixel(const P& p, typename enable_if_c<is_pixel<P>::value>::type* d=0) {
+    template <typename P> packed_pixel(const P& p, typename enable_if_c<is_pixel<P>::value>::type* d=nullptr) {
         check_compatible<P>(); static_copy(p,*this);
         boost::ignore_unused(d);
     }

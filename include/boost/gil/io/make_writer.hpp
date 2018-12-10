@@ -26,7 +26,7 @@ make_writer( const String&                        file_name
            , typename enable_if< mpl::and_< detail::is_supported_path_spec< String >
                                           , is_format_tag< FormatTag >
                                           >
-                               >::type* /* ptr */ = 0
+                               >::type* /* ptr */ = nullptr
            )
 {
     typename get_write_device< String
@@ -97,7 +97,7 @@ make_writer( Device&                              file
            , typename enable_if< mpl::and_< typename detail::is_adaptable_output_device< FormatTag, Device >::type
                                           , is_format_tag< FormatTag >
                                           >
-                               >::type* /* ptr */ = 0
+                               >::type* /* ptr */ = nullptr
            )
 {
     typename get_write_device< Device
@@ -126,7 +126,7 @@ make_writer( const String&    file_name
            , typename enable_if< mpl::and_< detail::is_supported_path_spec< String >
                                           , is_format_tag< FormatTag >
                                           >
-                               >::type* /* ptr */ = 0
+                               >::type* /* ptr */ = nullptr
            )
 {
     return make_writer( file_name
@@ -177,7 +177,7 @@ make_writer( Device&          file
            , typename enable_if< mpl::and_< typename detail::is_adaptable_output_device< FormatTag, Device >::type
                                           , is_format_tag< FormatTag >
                                           >
-                               >::type* /* ptr */ = 0
+                               >::type* /* ptr */ = nullptr
            )
 {
     return make_writer( file

@@ -40,7 +40,7 @@ read_image_info( Device&                                 file
                                                                                  >
                                               , is_format_tag< FormatTag >
                                               >
-                                   >::type* /* ptr */ = 0
+                                   >::type* /* ptr */ = nullptr
                )
 {
     return make_reader_backend( file, settings );
@@ -65,7 +65,7 @@ read_image_info( Device&          file
                                                                                  >
                                               , is_format_tag< FormatTag >
                                               >
-                                   >::type* /* ptr */ = 0
+                                   >::type* /* ptr */ = nullptr
                )
 {
     return read_image_info( file
@@ -90,7 +90,7 @@ read_image_info( const String&                           file_name
                , typename enable_if< mpl::and_< is_format_tag< FormatTag >
                                               , detail::is_supported_path_spec< String >
                                               >
-                                   >::type* /* ptr */ = 0
+                                   >::type* /* ptr */ = nullptr
                )
 {
     return make_reader_backend( file_name, settings );
@@ -113,7 +113,7 @@ read_image_info( const String&    file_name
                , typename enable_if< mpl::and_< is_format_tag< FormatTag >
                                               , detail::is_supported_path_spec< String >
                                               >
-                                   >::type* /* ptr */ = 0
+                                   >::type* /* ptr */ = nullptr
                )
 {
     return read_image_info( file_name

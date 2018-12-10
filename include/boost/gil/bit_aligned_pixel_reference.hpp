@@ -44,7 +44,7 @@ private:
     int     _bit_offset;     // offset from the beginning of the current byte. 0<=_bit_offset<=7
 
 public:
-    bit_range() : _current_byte(NULL), _bit_offset(0) {}
+    bit_range() : _current_byte(nullptr), _bit_offset(0) {}
     bit_range(byte_t* current_byte, int bit_offset) : _current_byte(current_byte), _bit_offset(bit_offset) { assert(bit_offset>=0 && bit_offset<8); }
 
     bit_range(const bit_range& br) : _current_byte(br._current_byte), _bit_offset(br._bit_offset) {}

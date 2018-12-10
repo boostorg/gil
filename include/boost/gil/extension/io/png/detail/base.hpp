@@ -17,8 +17,8 @@ namespace boost { namespace gil { namespace detail {
 struct png_ptr_wrapper
 {
     png_ptr_wrapper()
-    : _struct( NULL )
-    , _info  ( NULL )
+    : _struct( nullptr )
+    , _info  ( nullptr )
     {}
 
     png_structp _struct;
@@ -64,11 +64,11 @@ private:
 
             png_destroy_read_struct( &png_ptr->_struct
                                    , &png_ptr->_info
-                                   , NULL
+                                   , nullptr
                                    );
 
             delete png_ptr;
-            png_ptr = NULL;
+            png_ptr = nullptr;
         }
     }
 
@@ -83,7 +83,7 @@ private:
                                     );
 
             delete png_ptr;
-            png_ptr = NULL;
+            png_ptr = nullptr;
         }
     }
 
