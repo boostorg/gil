@@ -90,7 +90,7 @@ If you skip this step, executing `b2` to run tests will automatically
 create the directory with all headers required by Boost.GIL and tests.
 
     ```shell
-    ./b2 headers
+    ./b2 -j8 headers
     ```
 
 **TIP:** If something goes wrong, you end up with incomplete or accidentally
@@ -110,7 +110,7 @@ git submodule update --init --recursive --jobs 8
 
 Regardless if you decide to develop again `master` (recommended) or `develop`
 branch of the Boost super-project, you should *always* base your contributions
-(ie. topic branches) on Boost.GIL `develop` branch.
+(i.e. topic branches) on Boost.GIL `develop` branch.
 
 1. Go to the Boost.GIL library submodule.
 
@@ -261,15 +261,15 @@ Run core tests only specifying location of directory with tests:
 
 ```shell
 cd libs/gil
-../../b2 test
+../../b2 -j8 test
 ```
 
 Run all tests for selected extension (from Boost root directory, as alternative):
 
 ```shell
-./b2 libs/gil/io/test
-./b2 libs/gil/numeric/test
-./b2 libs/gil/toolbox/test
+./b2 -j8 libs/gil/io/test
+./b2 -j8 libs/gil/numeric/test
+./b2 -j8 libs/gil/toolbox/test
 ```
 
 Run I/O extension tests bundled in target called `simple`:
@@ -299,13 +299,13 @@ The provided CMake configuration allows a couple of ways to develop Boost.GIL:
    `libs/gil`. This mode requires prior deployment of `boost` virtual directory
    with headers and stage build of required libraries, for example:
     ```shell
-    ./b2 headers
-    ./b2 variant=debug --with-test --with-filesystem stage
-    ./b2 variant=release --with-test --with-filesystem stage
+    ./b2 -j8 headers
+    ./b2 -j8 variant=debug --with-test --with-filesystem stage
+    ./b2 -j8 variant=release --with-test --with-filesystem stage
     ```
     or, depending on specific requirements, more complete build:
     ```shell
-    ./b2 variant=debug,release address-model=32,64 --layout=versioned --with-test --with-filesystem stage
+    ./b2 -j8 variant=debug,release address-model=32,64 --layout=versioned --with-test --with-filesystem stage
     ```
 
 Using the installed Boost enables a lightweight mode for the library development,
@@ -354,8 +354,8 @@ Here is an example of such lightweight workflow in Linux environment (Debian-bas
         The option added in CMake 3.13.0.
 
      - `-DBoost_COMPILER=-gcc5` or `-DBoost_COMPILER=-vc141` to help CMake earlier
-        than 3.13 match your compiler with toolset used in the Boost librariey file names
-        (ie. `libboost_unit_test_framework-gcc5-mt-x64-1_69` and not `-gcc55-`).
+        than 3.13 match your compiler with toolset used in the Boost library file names
+        (i.e. `libboost_unit_test_framework-gcc5-mt-x64-1_69` and not `-gcc55-`).
         Fixed in CMake 3.13.0.
 
      - if CMake is still failing to find Boost, you may try `-DBoost_DEBUG=ON` to
@@ -406,7 +406,7 @@ First, generate `compile_commands.json` database for `clang-tidy`:
 cmake -S . -B _build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
 ```
 
-Next, verify [what checks are aleady configured](http://clang.llvm.org/extra/clang-tidy/checks/list.html)
+Next, verify [what checks are already configured](http://clang.llvm.org/extra/clang-tidy/checks/list.html)
 in `.clang-tidy` file provided:
 
 ```shell
