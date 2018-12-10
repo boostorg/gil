@@ -92,7 +92,7 @@
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="comment">// Construct from another compatible pixel type</span></div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    packed_pixel(<span class="keyword">const</span> packed_pixel&amp; p) : _bitfield(p._bitfield) {}</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> P&gt; packed_pixel(<span class="keyword">const</span> P&amp; p, <span class="keyword">typename</span> enable_if_c&lt;is_pixel&lt;P&gt;::value&gt;::type* d=0) {</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> P&gt; packed_pixel(<span class="keyword">const</span> P&amp; p, <span class="keyword">typename</span> enable_if_c&lt;is_pixel&lt;P&gt;::value&gt;::type* d=<span class="keyword">nullptr</span>) {</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        check_compatible&lt;P&gt;(); static_copy(p,*<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        boost::ignore_unused(d);</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    }</div>
@@ -206,7 +206,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sun Dec 9 2018 23:33:49 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Mon Dec 10 2018 09:27:11 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

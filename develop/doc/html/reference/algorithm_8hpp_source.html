@@ -388,7 +388,7 @@
 <div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;                        , <span class="keyword">typename</span> enable_if&lt; mpl::or_&lt; mpl::not_&lt; is_pointer&lt; It &gt; &gt;</div>
 <div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;                                                      , boost::has_trivial_destructor&lt; <span class="keyword">typename</span> std::iterator_traits&lt; It &gt;::value_type &gt;</div>
 <div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;                                                      &gt;</div>
-<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;                                            &gt;::type* <span class="comment">/* ptr */</span> = 0)</div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;                                            &gt;::type* <span class="comment">/* ptr */</span> = <span class="keyword">nullptr</span>)</div>
 <div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;{}</div>
 <div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;</div>
 <div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> It&gt; BOOST_FORCEINLINE</div>
@@ -533,7 +533,7 @@
 <div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;                                  , boost::enable_if&lt; is_same&lt; mpl::bool_&lt; B &gt;</div>
 <div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160;                                                             , mpl::false_</div>
 <div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160;                                                             &gt;</div>
-<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;                                                    &gt;* <span class="comment">/* ptr */</span> = 0</div>
+<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;                                                    &gt;* <span class="comment">/* ptr */</span> = <span class="keyword">nullptr</span></div>
 <div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;                                  )</div>
 <div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;{</div>
 <div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;    <span class="keywordflow">if</span>( img_view.is_1d_traversable() )</div>
@@ -877,7 +877,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sun Dec 9 2018 23:33:49 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Mon Dec 10 2018 09:27:11 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

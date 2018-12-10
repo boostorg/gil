@@ -126,7 +126,7 @@
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    pixel&amp;                       operator=(<span class="keyword">const</span> pixel&amp; p)       { static_copy(p,*<span class="keyword">this</span>); <span class="keywordflow">return</span> *<span class="keyword">this</span>; }</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <span class="comment">// Construct from another compatible pixel type</span></div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Pixel&gt;    pixel(<span class="keyword">const</span> Pixel&amp; p, <span class="keyword">typename</span> enable_if_c&lt;is_pixel&lt;Pixel&gt;::value&gt;::type* dummy = 0) : parent_t(p) {</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Pixel&gt;    pixel(<span class="keyword">const</span> Pixel&amp; p, <span class="keyword">typename</span> enable_if_c&lt;is_pixel&lt;Pixel&gt;::value&gt;::type* dummy = <span class="keyword">nullptr</span>) : parent_t(p) {</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        check_compatible&lt;Pixel&gt;();</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        boost::ignore_unused(dummy);</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    }</div>
@@ -217,7 +217,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sun Dec 9 2018 23:33:49 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Mon Dec 10 2018 09:27:11 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
