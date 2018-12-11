@@ -5,34 +5,48 @@
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 #
-message(STATUS "Boost.GIL: configuring self-contained header tests for all headers")
-
-# Mimics self-contained header tests defined in Jamfile as file-less targets
-# CMake creates .cpp files on disk.
-# Advantage is those files can be analysed with clang-tidy, etc.
-
-file(GLOB_RECURSE _headers
+file(GLOB _core
   RELATIVE "${CMAKE_SOURCE_DIR}/include/boost/gil"
   "${CMAKE_SOURCE_DIR}/include/boost/gil/*.hpp")
+file(GLOB _concepts
+  RELATIVE "${CMAKE_SOURCE_DIR}/include/boost/gil"
+  "${CMAKE_SOURCE_DIR}/include/boost/gil/concepts/*.hpp")
+file(GLOB _io
+  RELATIVE "${CMAKE_SOURCE_DIR}/include/boost/gil"
+  "${CMAKE_SOURCE_DIR}/include/boost/gil/io/*.hpp")
+
+list(APPEND _headers "${_concepts}")
+list(APPEND _headers "${_core}")
+list(APPEND _headers "${_io}")
+
+
+# file(GLOB_RECURSE _ext_io_headers
+#   RELATIVE "${CMAKE_SOURCE_DIR}/include/boost/gil"
+#   "${CMAKE_SOURCE_DIR}/include/boost/gil/extension/*.hpp")
+
+#-----------------------------------------------------------------------------
+# Target: test_headers_self_contained
+# Bundles all targets of self-contained header tests,
+# functional equivalent to self-contained header tests defined in Jamfile.
+#-----------------------------------------------------------------------------
+message(STATUS "Boost.GIL: configuring self-contained header tests for all headers")
+add_custom_target(test_headers_self_contained)
 
 file(READ ${CMAKE_CURRENT_LIST_DIR}/main.cpp _main_content)
 
-# TODO: Which option is most convenient to build from IDEs?
-add_custom_target(test_compile_headers)
-#add_executable(test_compile_headers main.cpp)
-#add_library(test_compile_headers STATIC main.cpp)
-
 foreach(_header ${_headers})
-  string(REPLACE ".hpp" "" _name ${_header})
-  string(REPLACE "/" "_" _main ${_name})
-  string(REPLACE "/" "-" _name ${_name})
-  set(_target test_header_${_name})
-  set(_cpp ${CMAKE_BINARY_DIR}/test/headers/${_name}.cpp)
+  string(REPLACE ".hpp" "" _target ${_header})
+  string(REPLACE "/" "_" _main ${_target})
+  string(REPLACE "/" "-" _target ${_target})
+  set(_cpp ${CMAKE_BINARY_DIR}/test/headers/${_target}.cpp)
+  set(_target test_header_${_target})
 
   string(REPLACE "BOOST_GIL_TEST_HEADER" "${_header}" _content "${_main_content}")
   string(REPLACE "main" "${_main}" _content "${_content}")
   unset(_main)
+
   file(WRITE ${_cpp} "${_content}")
+  unset(_cpp)
   unset(_content)
 
   add_library(${_target} OBJECT)
@@ -48,11 +62,34 @@ foreach(_header ${_headers})
       gil_include_directories
       gil_dependencies)
 
-  add_dependencies(test_compile_headers ${_target})
+  add_dependencies(test_headers_self_contained ${_target})
 
-  unset(_cpp)
-  unset(_header)
-  unset(_name)
+  unset(_target)
 endforeach()
 
+#-----------------------------------------------------------------------------
+# Target: test_headers_all_in_one
+# Verifies compilation of all headers included in one translation unit.
+# An extra advantage is that such translation unit can be analysed with clang-tidy, etc.
+#-----------------------------------------------------------------------------
+message(STATUS "Boost.GIL: configuring all-in-one headers test for all headers")
+add_library(test_headers_all_in_one OBJECT)
+
+set(_cpp ${CMAKE_BINARY_DIR}/test/headers/test_headers_all_in_one.cpp)
+file(TOUCH ${_cpp})
+file(WRITE ${_cpp} "// All headers included in one translation unit\n")
+foreach(_header ${_headers})
+  file(APPEND ${_cpp} "#include <boost/gil/${_header}>\n")
+endforeach()
+file(APPEND ${_cpp} "int main() { return 0; }\n")
+
+target_sources(test_headers_all_in_one PRIVATE ${_cpp})
+
+target_link_libraries(test_headers_all_in_one
+  PRIVATE
+    gil_compile_options
+    gil_include_directories
+    gil_dependencies)
+
+unset(_cpp)
 unset(_headers)
