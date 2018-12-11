@@ -5,20 +5,23 @@
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 #
-file(GLOB _core
-  RELATIVE "${CMAKE_SOURCE_DIR}/include/boost/gil"
-  "${CMAKE_SOURCE_DIR}/include/boost/gil/*.hpp")
-file(GLOB _concepts
-  RELATIVE "${CMAKE_SOURCE_DIR}/include/boost/gil"
-  "${CMAKE_SOURCE_DIR}/include/boost/gil/concepts/*.hpp")
-file(GLOB _io
-  RELATIVE "${CMAKE_SOURCE_DIR}/include/boost/gil"
-  "${CMAKE_SOURCE_DIR}/include/boost/gil/io/*.hpp")
 
-list(APPEND _headers "${_concepts}")
-list(APPEND _headers "${_core}")
-list(APPEND _headers "${_io}")
+# List headers in order: concepts, core, io, extensions
+foreach(_dir
+  concepts/
+  ""
+  io/
+  extension/dynamic_image/
+  extension/numeric/
+  extension/toolbox/
+  extension/io/)
 
+  file(GLOB _dir_headers
+    RELATIVE "${CMAKE_SOURCE_DIR}/include/boost/gil"
+    "${CMAKE_SOURCE_DIR}/include/boost/gil/${_dir}*.hpp")
+  list(APPEND _headers "${_dir_headers}")
+  unset(_dir_headers)
+endforeach()
 
 # file(GLOB_RECURSE _ext_io_headers
 #   RELATIVE "${CMAKE_SOURCE_DIR}/include/boost/gil"
