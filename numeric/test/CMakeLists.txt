@@ -6,7 +6,7 @@
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 #
-message(STATUS "Boost.GIL: configuring Numeric extension tests")
+message(STATUS "Boost.GIL: Configuring Numeric extension tests")
 
 foreach(_name
   numeric)

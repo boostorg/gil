@@ -6,7 +6,7 @@
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 #
-message(STATUS "Boost.GIL: configuring Toolbox extension tests")
+message(STATUS "Boost.GIL: Configuring Toolbox extension tests")
 
 add_executable(test_ext_toolbox "")
 target_sources(test_ext_toolbox

@@ -32,7 +32,7 @@ endforeach()
 # Bundles all targets of self-contained header tests,
 # functional equivalent to self-contained header tests defined in Jamfile.
 #-----------------------------------------------------------------------------
-message(STATUS "Boost.GIL: configuring self-contained header tests for all headers")
+message(STATUS "Boost.GIL: Configuring self-contained header tests for all headers")
 add_custom_target(test_headers_self_contained)
 
 file(READ ${CMAKE_CURRENT_LIST_DIR}/main.cpp _main_content)
@@ -75,7 +75,7 @@ endforeach()
 # Verifies compilation of all headers included in one translation unit.
 # An extra advantage is that such translation unit can be analysed with clang-tidy, etc.
 #-----------------------------------------------------------------------------
-message(STATUS "Boost.GIL: configuring all-in-one headers test for all headers")
+message(STATUS "Boost.GIL: Configuring all-in-one headers test for all headers")
 add_library(test_headers_all_in_one OBJECT)
 
 set(_cpp ${CMAKE_BINARY_DIR}/test/headers/test_headers_all_in_one.cpp)

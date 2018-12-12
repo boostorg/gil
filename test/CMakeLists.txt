@@ -5,7 +5,7 @@
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 #
-message(STATUS "Boost.GIL: configuring core tests")
+message(STATUS "Boost.GIL: Configuring core tests")
 
 foreach(_name
   channel
