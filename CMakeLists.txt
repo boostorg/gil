@@ -39,6 +39,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 option(GIL_BUILD_IO "Build GIL IO tests and examples (require libjpeg, libpng, libtiff)" ON)
 option(GIL_BUILD_EXAMPLES "Build GIL examples" OFF) # FIXME: Switch to ON after https://github.com/boostorg/gil/issues/40
 option(GIL_USE_CONAN "Use Conan to install dependencies" OFF)
+option(GIL_USE_CLANG_TIDY "Set CMAKE_CXX_CLANG_TIDY property on targets to enable clang-tidy linting" OFF)
 option(GIL_DOWNLOAD_FINDBOOST "Download FindBoost.cmake from latest CMake release" OFF)
 
 #-----------------------------------------------------------------------------
@@ -92,8 +93,8 @@ find_package(Boost 1.65.0 REQUIRED
   COMPONENTS
     filesystem
     unit_test_framework)
-message(STATUS "Boost.GIL: using Boost_INCLUDE_DIRS=${Boost_INCLUDE_DIRS}")
-message(STATUS "Boost.GIL: using Boost_LIBRARY_DIRS=${Boost_LIBRARY_DIRS}")
+message(STATUS "Boost.GIL: Using Boost_INCLUDE_DIRS=${Boost_INCLUDE_DIRS}")
+message(STATUS "Boost.GIL: Using Boost_LIBRARY_DIRS=${Boost_LIBRARY_DIRS}")
 
 target_link_libraries(gil_dependencies
   INTERFACE
@@ -162,6 +163,22 @@ if(GIL_BUILD_IO)
 endif()
 
 #-----------------------------------------------------------------------------
+# clang-tidy
+# - default checks specified in .clang-tidy configuration file
+#-----------------------------------------------------------------------------
+if(GIL_USE_CLANG_TIDY AND CMAKE_VERSION VERSION_GREATER_EQUAL 3.6)
+  find_program(_clang_tidy
+    NAMES clang-tidy-7 clang-tidy-6.0 clang-tidy-5.0 clang-tidy-4.0 clang-tidy
+    DOC "Path to clang-tidy executable")
+
+  if(_clang_tidy)
+    message(STATUS "Boost.GIL: Configuring ${_clang_tidy} to run linting analysis for targets")
+    set(CMAKE_CXX_CLANG_TIDY ${_clang_tidy})
+  endif()
+  unset(_clang_tidy)
+endif()
+
+#-----------------------------------------------------------------------------
 # Common C++ compilation flags
 # Follows https://svn.boost.org/trac10/wiki/Guidelines/WarningsGuidelines
 #-----------------------------------------------------------------------------
@@ -178,9 +195,14 @@ target_compile_options(gil_compile_options
     $<$<CXX_COMPILER_ID:MSVC>:-W4>
     $<$<CXX_COMPILER_ID:MSVC>:-bigobj>
     $<$<CXX_COMPILER_ID:MSVC>:-FC> # Need absolute path for __FILE__ used in tests
-    $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-fstrict-aliasing -pedantic
-      -Wall -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter
-    >)
+    $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-fstrict-aliasing -pedantic>)
+
+# Do not mix warnings due to strict compilation level with linter warnings
+if(NOT CMAKE_CXX_CLANG_TIDY)
+  target_compile_options(gil_compile_options
+    INTERFACE
+      $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-Wall -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter>)
+endif()
 
 target_compile_definitions(gil_compile_options
   INTERFACE
