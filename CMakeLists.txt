@@ -154,6 +154,7 @@ if(GIL_BUILD_IO)
       target_link_libraries(gil_dependencies
         INTERFACE
           ${_tiffxx_library})
+
       target_include_directories(gil_dependencies
         INTERFACE
           ${_tiffxx_include_dir})
@@ -185,6 +186,7 @@ endif()
 add_library(gil_compile_options INTERFACE)
 target_compile_features(gil_compile_options INTERFACE cxx_std_11)
 
+# see https://cmake.org/pipermail/cmake/2018-December/068716.html
 if(MSVC)
   string(REGEX REPLACE "/W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
   string(REGEX REPLACE "-W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
