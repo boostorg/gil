@@ -439,7 +439,7 @@ expected results, especially if run against all configured translation units at 
     across the library source code:
 
     ```shell
-    run-clang-tidy.py -p=_build -header-filter='boost\/gil\/.*' -checks='-*,modernize-use-using' -fix
+    run-clang-tidy.py -p=_build -header-filter='boost\/gil\/.*' -checks='-*,modernize-use-using' -fix > cl.log 2>&1
     ```
 
 ## Guidelines
