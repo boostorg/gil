@@ -6,15 +6,26 @@
 # http://www.boost.org/LICENSE_1_0.txt)
 #
 
+list(APPEND _ext_dirs extension/dynamic_image/)
+
+if(GIL_ENABLE_EXT_NUMERIC)
+  list(APPEND _ext_dirs extension/numeric/)
+endif()
+
+if(GIL_ENABLE_EXT_TOOLBOX)
+  list(APPEND _ext_dirs extension/toolbox/)
+endif()
+
+if(GIL_ENABLE_EXT_IO)
+  list(APPEND _ext_dirs extension/io/)
+endif()
+
 # List headers in order: concepts, core, io, extensions
 foreach(_dir
   concepts/
   ""
   io/
-  extension/dynamic_image/
-  extension/numeric/
-  extension/toolbox/
-  extension/io/)
+  ${_ext_dirs})
 
   file(GLOB _dir_headers
     RELATIVE "${CMAKE_SOURCE_DIR}/include/boost/gil"

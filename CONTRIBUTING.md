@@ -313,6 +313,9 @@ Using the installed Boost enables a lightweight mode for the library development
 inside a stand-alone clone Boost.GIL repository and without any need to clone the
 whole Boost super-project.
 
+For available custom CMake options, open the top-level `CMakeLists.txt`
+and search for `option`.
+
 Here is an example of such lightweight workflow in Linux environment (Debian-based):
 
 * Install required Boost libraries

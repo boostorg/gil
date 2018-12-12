@@ -36,8 +36,10 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-option(GIL_BUILD_IO "Build GIL IO tests and examples (require libjpeg, libpng, libtiff)" ON)
-option(GIL_BUILD_EXAMPLES "Build GIL examples" OFF) # FIXME: Switch to ON after https://github.com/boostorg/gil/issues/40
+option(GIL_BUILD_EXAMPLES "Build examples" OFF) # FIXME: Switch to ON after https://github.com/boostorg/gil/issues/40
+option(GIL_ENABLE_EXT_IO "Enable IO extension, tests and examples (require libjpeg, libpng, libtiff)" ON)
+option(GIL_ENABLE_EXT_NUMERIC "Enable Numeric extension, tests and examples" ON)
+option(GIL_ENABLE_EXT_TOOLBOX "Enable Toolbox extension, tests and examples" ON)
 option(GIL_USE_CONAN "Use Conan to install dependencies" OFF)
 option(GIL_USE_CLANG_TIDY "Set CMAKE_CXX_CLANG_TIDY property on targets to enable clang-tidy linting" OFF)
 option(GIL_DOWNLOAD_FINDBOOST "Download FindBoost.cmake from latest CMake release" OFF)
@@ -105,7 +107,7 @@ target_link_libraries(gil_dependencies
 #-----------------------------------------------------------------------------
 # Dependency: libpng, libjpeg, libtiff via Vcpkg or Conan
 #-----------------------------------------------------------------------------
-if(GIL_BUILD_IO)
+if(GIL_ENABLE_EXT_IO)
   if(GIL_USE_CONAN)
     # Download automatically, you can also just copy the conan.cmake file
     if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
@@ -234,15 +236,22 @@ target_include_directories(gil_include_directories
 #-----------------------------------------------------------------------------
 enable_testing()
 add_subdirectory(test)
-if(GIL_BUILD_IO)
+
+if(GIL_ENABLE_EXT_IO)
   add_subdirectory(io/test)
 endif()
-add_subdirectory(numeric/test)
-add_subdirectory(toolbox/test)
+
+if(GIL_ENABLE_EXT_NUMERIC)
+  add_subdirectory(numeric/test)
+endif()
+
+if(GIL_ENABLE_EXT_TOOLBOX)
+  add_subdirectory(toolbox/test)
+endif()
 
 #-----------------------------------------------------------------------------
 # Examples
 #-----------------------------------------------------------------------------
-if(GIL_BUILD_EXAMPLES AND GIL_BUILD_IO)
+if(GIL_BUILD_EXAMPLES AND GIL_ENABLE_EXT_IO)
   add_subdirectory(example)
 endif()
