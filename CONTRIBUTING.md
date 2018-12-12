@@ -20,6 +20,7 @@ please follow the workflow explained in this document.
   * [Using Boost.Build](#using-boostbuild)
   * [Using CMake](#using-cmake)
   * [Using Faber](#using-faber)
+  * [Running clang-tidy](#running-clang-tidy)
 * [Guidelines](#guidelines)
 
 ## Prerequisites
@@ -394,32 +395,52 @@ Maintainer: [@stefanseefeld](https://github.com/stefanseefeld)
 
 [clang-tidy](http://clang.llvm.org/extra/clang-tidy/) can be run on demand to
 diagnose or diagnose and fix or refactor source code issues.
-Since the CMake configuration is provided, it is easier to run it
-using compile command database which can be easily generated.
 
-Currently, integration using the CMake 3.6+ target
-property `CXX_CLANG_TIDY` is not provided.
+Since the CMake configuration is provided for building tests and examples,
+it is easy to run `clang-tidy` using either the integration built-in CMake 3.6+
+as target property `CXX_CLANG_TIDY` or the compile command database which
+can be easily generated.
 
-First, generate `compile_commands.json` database for `clang-tidy`:
+#### Linting
 
-```shell
-cmake -S . -B _build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON ..
-```
-
-Next, verify [what checks are already configured](http://clang.llvm.org/extra/clang-tidy/checks/list.html)
-in `.clang-tidy` file provided:
+This mode uses the CMake built-in integration and runs `clang-tidy` checks configured
+in [.clang-tidy](https://github.com/boostorg/gil/blob/develop/.clang-tidy).
+All custom compilation warning levels (e.g. `-Wall`) are disabled and
+compiler defaults are used.
 
 ```shell
-clang-tidy -dump-config
-clang-tidy -p _build -list-checks
+cd libs/gil
+cmake -S . -B _build -DGIL_USE_CLANG_TIDY=ON
+
+# all targets
+cmake --build _build
+
+# selected target
+cmake --build _build --target test_headers_all_in_one
 ```
 
-Finally, run parallel `clang-tidy` runner script to apply any desired
-checks (and fixes) across the library source code:
+#### Refactoring
 
-```shell
-run-clang-tidy.py -p=_build -header-filter='boost\/gil\/.*' -checks='-*,modernize-use-using' [-fix]
-```
+**WARNING:** This is advanced processing and depending on checks, it may fail to deliver
+expected results, especially if run against all configured translation units at ones.
+
+1. Generate `compile_commands.json` database
+
+    ```shell
+    cd libs/gil
+    cmake -S . -B _build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+    ```
+
+2. Edit `compile_commands.json` and remove entries of commands for all but the `.cpp`
+    files you wish to refactor. For example, keep `test_headers_all_in_one.cpp` only
+    to refactor all headers.
+
+3. Run the parallel `clang-tidy` runner script to apply the desired checks (and fixes)
+    across the library source code:
+
+    ```shell
+    run-clang-tidy.py -p=_build -header-filter='boost\/gil\/.*' -checks='-*,modernize-use-using' -fix
+    ```
 
 ## Guidelines
 
