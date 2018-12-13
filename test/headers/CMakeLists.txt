@@ -6,37 +6,35 @@
 # http://www.boost.org/LICENSE_1_0.txt)
 #
 
-list(APPEND _ext_dirs extension/dynamic_image/)
-
-if(GIL_ENABLE_EXT_NUMERIC)
-  list(APPEND _ext_dirs extension/numeric/)
-endif()
-
-if(GIL_ENABLE_EXT_TOOLBOX)
-  list(APPEND _ext_dirs extension/toolbox/)
-endif()
-
-if(GIL_ENABLE_EXT_IO)
-  list(APPEND _ext_dirs extension/io/)
-endif()
-
 # List headers in order: concepts, core, io, extensions
-foreach(_dir
-  concepts/
-  ""
-  io/
-  ${_ext_dirs})
+file(GLOB_RECURSE _hpp_concepts RELATIVE
+  "${CMAKE_SOURCE_DIR}/include/boost/gil"
+  "${CMAKE_SOURCE_DIR}/include/boost/gil/concepts/*.hpp")
+list(APPEND _headers ${_hpp_concepts})
 
-  file(GLOB _dir_headers
-    RELATIVE "${CMAKE_SOURCE_DIR}/include/boost/gil"
-    "${CMAKE_SOURCE_DIR}/include/boost/gil/${_dir}*.hpp")
-  list(APPEND _headers "${_dir_headers}")
-  unset(_dir_headers)
+file(GLOB _hpp_core RELATIVE
+  "${CMAKE_SOURCE_DIR}/include/boost/gil"
+  "${CMAKE_SOURCE_DIR}/include/boost/gil/*.hpp")
+list(APPEND _headers ${_hpp_core})
+
+list(APPEND _ext_dirs extension/dynamic_image/)
+if(GIL_ENABLE_EXT_NUMERIC)
+  list(APPEND _ext_dirs extension/numeric)
+endif()
+if(GIL_ENABLE_EXT_TOOLBOX)
+  list(APPEND _ext_dirs extension/toolbox)
+endif()
+if(GIL_ENABLE_EXT_IO)
+  list(APPEND _ext_dirs io)
+  list(APPEND _ext_dirs extension/io)
+endif()
+
+foreach(_dir ${_ext_dirs})
+  file(GLOB_RECURSE _hpp RELATIVE
+    "${CMAKE_SOURCE_DIR}/include/boost/gil"
+    "${CMAKE_SOURCE_DIR}/include/boost/gil/${_dir}/*.hpp")
+  list(APPEND _headers ${_hpp})
 endforeach()
-
-# file(GLOB_RECURSE _ext_io_headers
-#   RELATIVE "${CMAKE_SOURCE_DIR}/include/boost/gil"
-#   "${CMAKE_SOURCE_DIR}/include/boost/gil/extension/*.hpp")
 
 #-----------------------------------------------------------------------------
 # Target: test_headers_self_contained
