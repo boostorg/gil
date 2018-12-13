@@ -153,7 +153,7 @@ struct Metafunction
 {
     void constraints()
     {
-        typedef typename T::type type;
+        using type = typename T::type;
     }
 };
 
