@@ -13,8 +13,6 @@
 #include <boost/gil/color_base_algorithm.hpp>
 #include <boost/gil/pixel.hpp>
 
-#include <functional>
-
 namespace boost { namespace gil {
 
 // Structures for pixel-wise numeric operations
