@@ -46,13 +46,13 @@ protected:
     {}
 
     png_ptr_wrapper*       get()       { return _png_ptr.get(); }
-    const png_ptr_wrapper* get() const { return _png_ptr.get(); }
+    png_ptr_wrapper const* get() const { return _png_ptr.get(); }
 
-    png_structp       get_struct()       { return get()->_struct; }
-    const png_structp get_struct() const { return get()->_struct; }
+    png_struct*       get_struct()       { return get()->_struct; }
+    png_struct const* get_struct() const { return get()->_struct; }
 
-    png_infop       get_info()       { return get()->_info; }
-    const png_infop get_info() const { return get()->_info; }
+    png_info*       get_info()       { return get()->_info; }
+    png_info const* get_info() const { return get()->_info; }
 
 private:
 
