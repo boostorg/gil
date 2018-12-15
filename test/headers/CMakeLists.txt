@@ -58,7 +58,6 @@ foreach(_header ${_headers})
   unset(_main)
 
   file(WRITE ${_cpp} "${_content}")
-  unset(_cpp)
   unset(_content)
 
   add_executable(${_target})
@@ -67,6 +66,7 @@ foreach(_header ${_headers})
     PRIVATE
       ${_cpp}
       ${CMAKE_SOURCE_DIR}/include/boost/gil/${_header})
+  unset(_cpp)
 
   target_link_libraries(${_target}
     PRIVATE
@@ -85,22 +85,22 @@ endforeach()
 # An extra advantage is that such translation unit can be analysed with clang-tidy, etc.
 #-----------------------------------------------------------------------------
 message(STATUS "Boost.GIL: Configuring all-in-one headers test for all headers")
-add_executable(test_headers_all_in_one)
 
 set(_cpp ${CMAKE_BINARY_DIR}/test/headers/test_headers_all_in_one.cpp)
 file(WRITE ${_cpp} "// All headers included in one translation unit\n")
 foreach(_header ${_headers})
   file(APPEND ${_cpp} "#include <boost/gil/${_header}>\n")
 endforeach()
+unset(_headers)
 file(APPEND ${_cpp} "int main() { return 0; }\n")
 
+add_executable(test_headers_all_in_one)
+
 target_sources(test_headers_all_in_one PRIVATE ${_cpp})
+unset(_cpp)
 
 target_link_libraries(test_headers_all_in_one
   PRIVATE
     gil_compile_options
     gil_include_directories
     gil_dependencies)
-
-unset(_cpp)
-unset(_headers)
