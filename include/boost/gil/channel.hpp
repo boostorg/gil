@@ -112,11 +112,11 @@ namespace detail {
 \code
 template <typename Channel>
 struct channel_traits {
-    typedef ... value_type;
-    typedef ... reference;
-    typedef ... pointer;
-    typedef ... const_reference;
-    typedef ... const_pointer;
+    using value_type = ...;
+    using reference = ...;
+    using pointer = ...;
+    using const_reference = ...;
+    using const_pointer = ...;
 
     static const bool is_mutable;
     static value_type min_value();
@@ -153,7 +153,7 @@ Example:
 // Create a double channel with range [-0.5 .. 0.5]
 struct double_minus_half  { static double apply() { return -0.5; } };
 struct double_plus_half   { static double apply() { return  0.5; } };
-typedef scoped_channel_value<double, double_minus_half, double_plus_half> bits64custom_t;
+using bits64custom_t = scoped_channel_value<double, double_minus_half, double_plus_half>;
 
 // channel_convert its maximum should map to the maximum
 bits64custom_t x = channel_traits<bits64custom_t>::max_value();
@@ -257,7 +257,7 @@ namespace detail {
 Example:
 \code
 // A 4-bit unsigned integral channel.
-typedef packed_channel_value<4> bits4;
+using bits4 = packed_channel_value<4>;
 
 assert(channel_traits<bits4>::min_value()==0);
 assert(channel_traits<bits4>::max_value()==15);
@@ -387,7 +387,7 @@ private:
 Example:
 \code
 // Reference to a 2-bit channel starting at bit 1 (i.e. the second bit)
-typedef const packed_channel_reference<uint16_t,1,2,true> bits2_1_ref_t;
+using bits2_1_ref_t = packed_channel_reference<uint16_t,1,2,true> const;
 
 uint16_t data=0;
 bits2_1_ref_t channel_ref(&data);
@@ -508,7 +508,7 @@ namespace boost { namespace gil {
 Example:
 \code
 // Reference to a 2-bit channel whose offset is specified at construction time
-typedef const packed_dynamic_channel_reference<uint8_t,2,true> bits2_dynamic_ref_t;
+using bits2_dynamic_ref_t = packed_dynamic_channel_reference<uint8_t,2,true> const;
 
 uint16_t data=0;
 bits2_dynamic_ref_t channel_ref(&data,1);

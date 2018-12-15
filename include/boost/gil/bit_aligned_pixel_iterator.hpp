@@ -39,11 +39,11 @@ struct bit_aligned_pixel_iterator : public iterator_facade<bit_aligned_pixel_ite
                                                   const NonAlignedPixelReference,
                                                   typename NonAlignedPixelReference::bit_range_t::difference_type> {
 private:
-    typedef iterator_facade<bit_aligned_pixel_iterator<NonAlignedPixelReference>,
+    using parent_t = iterator_facade<bit_aligned_pixel_iterator<NonAlignedPixelReference>,
                             typename NonAlignedPixelReference::value_type,
                             std::random_access_iterator_tag,
                             const NonAlignedPixelReference,
-                            typename NonAlignedPixelReference::bit_range_t::difference_type> parent_t;
+                            typename NonAlignedPixelReference::bit_range_t::difference_type>;
     template <typename Ref> friend struct bit_aligned_pixel_iterator;
 
     using bit_range_t = typename NonAlignedPixelReference::bit_range_t;
@@ -152,13 +152,15 @@ struct dynamic_x_step_type<bit_aligned_pixel_iterator<NonAlignedPixelReference> 
 /////////////////////////////
 
 template <typename B, typename C, typename L, bool M>
-struct iterator_type_from_pixel<const bit_aligned_pixel_reference<B,C,L,M>,false,false,false> {
-    typedef bit_aligned_pixel_iterator<bit_aligned_pixel_reference<B,C,L,false> > type;
+struct iterator_type_from_pixel<const bit_aligned_pixel_reference<B,C,L,M>,false,false,false>
+{
+    using type = bit_aligned_pixel_iterator<bit_aligned_pixel_reference<B,C,L,false>> ;
 };
 
 template <typename B, typename C, typename L, bool M>
-struct iterator_type_from_pixel<const bit_aligned_pixel_reference<B,C,L,M>,false,false,true> {
-    typedef bit_aligned_pixel_iterator<bit_aligned_pixel_reference<B,C,L,true> > type;
+struct iterator_type_from_pixel<const bit_aligned_pixel_reference<B,C,L,M>,false,false,true>
+{
+    using type = bit_aligned_pixel_iterator<bit_aligned_pixel_reference<B,C,L,true>>;
 };
 
 template <typename B, typename C, typename L, bool M, bool IsPlanar, bool IsStep, bool IsMutable>

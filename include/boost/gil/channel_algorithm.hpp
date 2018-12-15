@@ -84,7 +84,7 @@ Example:
 float32_t src_channel = channel_traits<float32_t>::max_value();
 assert(src_channel == 1);
 
-// uint8_t is 8-bit unsigned integral channel (typedef-ed from unsigned char)
+// uint8_t is 8-bit unsigned integral channel (aliased from unsigned char)
 uint8_t dst_channel = channel_convert<uint8_t>(src_channel);
 assert(dst_channel == 255);     // max value goes to max value
 \endcode
@@ -308,7 +308,7 @@ template <> struct channel_converter_unsigned<float32_t,uint32_t> {
 
 namespace detail {
 // Converting from signed to unsigned integral channel.
-// It is both a unary function, and a metafunction (thus requires the 'type' nested typedef, which equals result_type)
+// It is both a unary function, and a metafunction (thus requires the 'type' nested alias, which equals result_type)
 template <typename ChannelValue>     // Model ChannelValueConcept
 struct channel_convert_to_unsigned : public detail::identity<ChannelValue> {
     using type = ChannelValue;
@@ -343,7 +343,7 @@ template <> struct channel_convert_to_unsigned<int32_t> {
 
 
 // Converting from unsigned to signed integral channel
-// It is both a unary function, and a metafunction (thus requires the 'type' nested typedef, which equals result_type)
+// It is both a unary function, and a metafunction (thus requires the 'type' nested alias, which equals result_type)
 template <typename ChannelValue>     // Model ChannelValueConcept
 struct channel_convert_from_unsigned : public detail::identity<ChannelValue> {
     using type = ChannelValue;
