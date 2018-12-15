@@ -8,12 +8,10 @@
 #ifndef BOOST_GIL_IO_ROW_BUFFER_HELPER_HPP
 #define BOOST_GIL_IO_ROW_BUFFER_HELPER_HPP
 
-// TODO: Shall we move toolbox to core?
-#include <boost/gil/extension/toolbox/metafunctions/is_bit_aligned.hpp>
-#include <boost/gil/extension/toolbox/metafunctions/is_homogeneous.hpp>
-#include <boost/gil/extension/toolbox/metafunctions/pixel_bit_size.hpp>
-
 #include <boost/gil/io/typedefs.hpp>
+#include <boost/gil/utility/is_bit_aligned.hpp>
+#include <boost/gil/utility/is_homogeneous.hpp>
+#include <boost/gil/utility/pixel_bit_size.hpp>
 
 #include <boost/mpl/and.hpp>
 #include <boost/utility/enable_if.hpp>

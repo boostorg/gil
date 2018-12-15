@@ -8,6 +8,7 @@
 #ifndef BOOST_GIL_IO_BASE_HPP
 #define BOOST_GIL_IO_BASE_HPP
 
+// TODO: This core IO dependancy on Toolbox extension has to be fixed --mloskot
 #include <boost/gil/extension/toolbox/toolbox.hpp>
 
 #include <boost/gil/bit_aligned_pixel_reference.hpp>

@@ -16,16 +16,12 @@ target_sources(test_ext_toolbox
     channel_view.cpp
     cmyka.cpp
     get_num_bits.cpp
-    get_pixel_type.cpp
     gray_alpha.cpp
     gray_to_rgba.cpp
     hsl_hsv_test.cpp
     indexed_image_test.cpp
-    is_bit_aligned.cpp
-    is_homogeneous.cpp
     is_similar.cpp
     lab_test.cpp
-    pixel_bit_size.cpp
     rgb_to_luminance.cpp
     # TODO: Add subchroma_image.cpp after fixing run-time failure,
     #       for details see https://github.com/boostorg/gil/pull/164

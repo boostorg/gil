@@ -14,21 +14,7 @@ project
     <library>/boost/test//boost_unit_test_framework
     ;
 
-run
-    test.cpp
-    channel_type.cpp
-    channel_view.cpp
-    cmyka.cpp
-    get_num_bits.cpp
-    gray_alpha.cpp
-    gray_to_rgba.cpp
-    hsl_hsv_test.cpp
-    indexed_image_test.cpp
-    is_similar.cpp
-    lab_test.cpp
-    rgb_to_luminance.cpp
-    # TODO: Add subchroma_image.cpp after fixing run-time failure,
-    #       for details see https://github.com/boostorg/gil/pull/164
-    #subchroma_image.cpp
-    xyz_test.cpp
-    ;
+compile is_bit_aligned.cpp ;
+compile is_homogeneous.cpp ;
+compile get_pixel_type.cpp ;
+compile pixel_bit_size.cpp ;

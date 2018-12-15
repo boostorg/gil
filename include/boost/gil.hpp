@@ -28,5 +28,8 @@
 #include <boost/gil/typedefs.hpp>
 #include <boost/gil/virtual_locator.hpp>
 #include <boost/gil/version.hpp>
-
+#include <boost/gil/utility/is_bit_aligned.hpp>
+#include <boost/gil/utility/is_homogeneous.hpp>
+#include <boost/gil/utility/get_pixel_type.hpp>
+#include <boost/gil/utility/pixel_bit_size.hpp>
 #endif

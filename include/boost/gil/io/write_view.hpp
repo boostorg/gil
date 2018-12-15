@@ -13,6 +13,7 @@
 #include <boost/gil/io/device.hpp>
 #include <boost/gil/io/get_writer.hpp>
 #include <boost/gil/io/path_spec.hpp>
+#include <boost/gil/utility/get_pixel_type.hpp>
 
 #include <boost/mpl/and.hpp>
 #include <boost/type_traits/is_base_and_derived.hpp>

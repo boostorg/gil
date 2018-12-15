@@ -8,11 +8,10 @@
 #ifndef BOOST_GIL_EXTENSION_TOOLBOX_IMAGE_TYPES_INDEXED_IMAGE_HPP
 #define BOOST_GIL_EXTENSION_TOOLBOX_IMAGE_TYPES_INDEXED_IMAGE_HPP
 
-#include <boost/gil/extension/toolbox/metafunctions/is_bit_aligned.hpp>
-
 #include <boost/gil/image.hpp>
 #include <boost/gil/point.hpp>
 #include <boost/gil/virtual_locator.hpp>
+#include <boost/gil/utility/is_bit_aligned.hpp>
 
 #include <boost/mpl/if.hpp>
 #include <boost/type_traits/is_integral.hpp>

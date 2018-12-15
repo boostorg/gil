@@ -5,8 +5,8 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-#ifndef BOOST_GIL_EXTENSION_TOOLBOX_METAFUNCTIONS_IS_BIT_ALIGNED_TYPE_HPP
-#define BOOST_GIL_EXTENSION_TOOLBOX_METAFUNCTIONS_IS_BIT_ALIGNED_TYPE_HPP
+#ifndef BOOST_GIL_UTILITY_IS_BIT_ALIGNED_TYPE_HPP
+#define BOOST_GIL_UTILITY_IS_BIT_ALIGNED_TYPE_HPP
 
 #include <boost/gil/bit_aligned_pixel_reference.hpp>
 

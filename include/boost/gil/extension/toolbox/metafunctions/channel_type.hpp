@@ -10,10 +10,10 @@
 
 #include <boost/gil/extension/toolbox/dynamic_images.hpp>
 #include <boost/gil/extension/toolbox/metafunctions/get_num_bits.hpp>
-#include <boost/gil/extension/toolbox/metafunctions/is_homogeneous.hpp>
 
 #include <boost/gil/bit_aligned_pixel_reference.hpp>
 #include <boost/gil/channel.hpp>
+#include <boost/gil/utility/is_homogeneous.hpp>
 
 #include <boost/mpl/at.hpp>
 #include <boost/utility/enable_if.hpp>
