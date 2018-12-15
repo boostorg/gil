@@ -21,10 +21,10 @@ namespace boost { namespace gil {
 struct gray_color_t {};
 
 /// \ingroup ColorSpaceModel
-typedef mpl::vector1<gray_color_t> gray_t;
+using gray_t = mpl::vector1<gray_color_t>;
 
 /// \ingroup LayoutModel
-typedef layout<gray_t> gray_layout_t;
+using gray_layout_t = layout<gray_t>;
 
 } }  // namespace boost::gil
 
