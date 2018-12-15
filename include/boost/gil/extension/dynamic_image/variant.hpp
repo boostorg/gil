@@ -35,7 +35,7 @@ namespace detail {
     template <typename Types, typename T> struct type_to_index;
     template <typename Op, typename T> struct reduce;
     struct destructor_op {
-        typedef void result_type;
+        using result_type = void;
         template <typename T> result_type operator()(const T& t) const { t.~T(); }
     };
     template <typename T, typename Bits> void copy_construct_in_place(const T& t, Bits& bits);
@@ -82,9 +82,9 @@ class variant {
     static const std::size_t MAX_SIZE  = mpl::fold<Types, mpl::size_t<0>, mpl::max<mpl::_1, mpl::sizeof_<mpl::_2> > >::type::value;
     static const std::size_t NUM_TYPES = mpl::size<Types>::value;
 public:
-    typedef Types                            types_t;
+    using types_t = Types;
 
-    typedef struct { char data[MAX_SIZE]; } base_t;    // empty space equal to the size of the largest type in Types
+    using base_t = struct { char data[MAX_SIZE]; }; // empty space equal to the size of the largest type in Types
 
     // Default constructor - default construct the first type
     variant() : _index(0)    { new(&_bits) typename mpl::at_c<Types,0>::type(); }
@@ -142,7 +142,7 @@ namespace detail {
 
     template <typename Bits>
     struct copy_construct_in_place_fn {
-        typedef void result_type;
+        using result_type = void;
         Bits& _dst;
         copy_construct_in_place_fn(Bits& dst) : _dst(dst) {}
 
@@ -154,7 +154,7 @@ namespace detail {
         const Bits& _dst;
         equal_to_fn(const Bits& dst) : _dst(dst) {}
 
-        typedef bool result_type;
+        using result_type = bool;
         template <typename T> result_type operator()(const T& x) const {
             return x==*gil_reinterpret_cast_c<const T*>(&_dst);
         }
@@ -162,7 +162,7 @@ namespace detail {
 
     template <typename Types>
     struct type_to_index_fn {
-        typedef std::size_t result_type;
+        using result_type = std::size_t;
 
         template <typename T> result_type operator()(const T&) const { return detail::type_to_index<Types,T>::value; }
     };

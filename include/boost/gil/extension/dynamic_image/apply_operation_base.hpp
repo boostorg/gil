@@ -29,9 +29,9 @@ GENERATE_APPLY_FWD_OPS generates for every N functions that look like this (for 
     template <> struct apply_operation_fwd_fn<3> {
         template <typename Types, typename Bits, typename UnaryOp>
         typename UnaryOp::result_type apply(Bits& bits, std::size_t index, UnaryOp op) const {
-            typedef typename mpl::begin<Types>::type T0;
-            typedef typename mpl::next<T0>::type T1;
-            typedef typename mpl::next<T1>::type T2;
+            using T0 = typename mpl::begin<Types>::type;
+            using T1 = typename mpl::next<T0>::type;
+            using T2 = typename mpl::next<T1>::type;
             switch (index) {
                 case 0: return op(reinterpret_cast<typename mpl::deref<T0>::type&>(bits));
                 case 1: return op(reinterpret_cast<typename mpl::deref<T1>::type&>(bits));
@@ -42,9 +42,9 @@ GENERATE_APPLY_FWD_OPS generates for every N functions that look like this (for 
 
         template <typename Types, typename Bits, typename UnaryOp>
         typename UnaryOp::result_type applyc(const Bits& bits, std::size_t index, UnaryOp op) const {
-            typedef typename mpl::begin<Types>::type T0;
-            typedef typename mpl::next<T0>::type T1;
-            typedef typename mpl::next<T1>::type T2;
+            using T0 = typename mpl::begin<Types>::type;
+            using T1 = typename mpl::next<T0>::type;
+            using T2 = typename mpl::next<T1>::type;
             switch (index) {
                 case 0: return op(reinterpret_cast<const typename mpl::deref<T0>::type&>(bits));
                 case 1: return op(reinterpret_cast<const typename mpl::deref<T1>::type&>(bits));
@@ -55,6 +55,7 @@ GENERATE_APPLY_FWD_OPS generates for every N functions that look like this (for 
     };
 */
 
+// TODO: Review, simplify, refactor, modernize (e.g. typedef to using) --mloskot
 #define GIL_FWD_TYPEDEFS(z, N, text)   T##N; typedef typename mpl::next<T##N>::type
 #define GIL_FWD_CASE(z, N, SUM)       case N: return op(*gil_reinterpret_cast<typename mpl::deref<T##N>::type*>(&bits));
 #define GIL_FWD_CONST_CASE(z, N, SUM) case N: return op(*gil_reinterpret_cast_c<const typename mpl::deref<T##N>::type*>(&bits));
@@ -133,7 +134,7 @@ namespace detail {
         const T2& _t2;
         Op&  _op;
 
-        typedef typename Op::result_type result_type;
+        using result_type = typename Op::result_type;
 
         reduce_bind1(const T2& t2, Op& op) : _t2(t2), _op(op) {}
 
@@ -146,7 +147,7 @@ namespace detail {
         std::size_t _index1;
         Op&  _op;
 
-        typedef typename Op::result_type result_type;
+        using result_type = typename Op::result_type;
 
         reduce_bind2(const Bits1& bits1, std::size_t index1, Op& op) : _bits1(bits1), _index1(index1), _op(op) {}
 
