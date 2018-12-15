@@ -68,25 +68,18 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a1a5f62260eb47c48fd372ea7df1de6ee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1a5f62260eb47c48fd372ea7df1de6ee"></a>
-typedef <br class="typebreak"/>
-detail::homogeneous_color_base<br class="typebreak"/>
-&lt; ChannelReference, <a class="el" href="structboost_1_1gil_1_1layout.html">layout</a><br class="typebreak"/>
-&lt; ColorSpace &gt;, mpl::size<br class="typebreak"/>
-&lt; ColorSpace &gt;::value &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>parent_t</b></td></tr>
-<tr class="separator:a1a5f62260eb47c48fd372ea7df1de6ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58fc016f8cc17a482ff4abea80558bb0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a58fc016f8cc17a482ff4abea80558bb0"></a>
-typedef <a class="el" href="structboost_1_1gil_1_1pixel.html">pixel</a>&lt; channel_t, <br class="typebreak"/>
-<a class="el" href="structboost_1_1gil_1_1layout.html">layout</a>&lt; ColorSpace &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b></td></tr>
-<tr class="separator:a58fc016f8cc17a482ff4abea80558bb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a513092e92cd5258638c9a16ad8ef4f6a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a513092e92cd5258638c9a16ad8ef4f6a"></a>
-typedef <a class="el" href="structboost_1_1gil_1_1planar__pixel__reference.html">planar_pixel_reference</a>&#160;</td><td class="memItemRight" valign="bottom"><b>reference</b></td></tr>
-<tr class="separator:a513092e92cd5258638c9a16ad8ef4f6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0a3d8339ccdbacf93748df22e3a3169"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae0a3d8339ccdbacf93748df22e3a3169"></a>
-typedef <a class="el" href="structboost_1_1gil_1_1planar__pixel__reference.html">planar_pixel_reference</a><br class="typebreak"/>
-&lt; channel_const_reference, <br class="typebreak"/>
-ColorSpace &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>const_reference</b></td></tr>
-<tr class="separator:ae0a3d8339ccdbacf93748df22e3a3169"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18332c293875dbd82fd0c69b044261be"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a18332c293875dbd82fd0c69b044261be"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>parent_t</b> = detail::homogeneous_color_base&lt; ChannelReference, <a class="el" href="structboost_1_1gil_1_1layout.html">layout</a>&lt; ColorSpace &gt;, mpl::size&lt; ColorSpace &gt;::value &gt;</td></tr>
+<tr class="separator:a18332c293875dbd82fd0c69b044261be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d44eadf3d6303b5621a0f99a4e45c22"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5d44eadf3d6303b5621a0f99a4e45c22"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b> = <a class="el" href="structboost_1_1gil_1_1pixel.html">pixel</a>&lt; channel_t, <a class="el" href="structboost_1_1gil_1_1layout.html">layout</a>&lt; ColorSpace &gt;&gt;</td></tr>
+<tr class="separator:a5d44eadf3d6303b5621a0f99a4e45c22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85cb80ed1553967ad2c639a01f5886dd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a85cb80ed1553967ad2c639a01f5886dd"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>reference</b> = <a class="el" href="structboost_1_1gil_1_1planar__pixel__reference.html">planar_pixel_reference</a>&lt; ChannelReference, ColorSpace &gt;</td></tr>
+<tr class="separator:a85cb80ed1553967ad2c639a01f5886dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7402622b02382ce4ca74caa76db55e47"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7402622b02382ce4ca74caa76db55e47"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>const_reference</b> = <a class="el" href="structboost_1_1gil_1_1planar__pixel__reference.html">planar_pixel_reference</a>&lt; channel_const_reference, ColorSpace &gt;</td></tr>
+<tr class="separator:a7402622b02382ce4ca74caa76db55e47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -158,7 +151,7 @@ struct boost::gil::planar_pixel_reference&lt; T, C &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Dec 15 2018 03:04:54 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Dec 15 2018 20:34:09 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

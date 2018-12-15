@@ -54,7 +54,7 @@ Modules</h2></td></tr>
 <p>A channel adaptor that modifies the range of the source channel. Models: ChannelValueConcept</p>
 <p>Represents the value of an unsigned integral channel operating over a bit range. Models: ChannelValueConcept Example: </p>
 <div class="fragment"><div class="line"><span class="comment">// A 4-bit unsigned integral channel.</span></div>
-<div class="line"><span class="keyword">typedef</span> packed_channel_value&lt;4&gt; bits4;</div>
+<div class="line"><span class="keyword">using</span> bits4 = packed_channel_value&lt;4&gt;;</div>
 <div class="line"></div>
 <div class="line">assert(channel_traits&lt;bits4&gt;::min_value()==0);</div>
 <div class="line">assert(channel_traits&lt;bits4&gt;::max_value()==15);</div>
@@ -66,7 +66,7 @@ Modules</h2></td></tr>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Dec 15 2018 03:04:54 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Dec 15 2018 20:34:09 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

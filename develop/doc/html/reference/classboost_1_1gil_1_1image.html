@@ -67,33 +67,30 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a5cceacf69467d6cab8a6e995c2f42b8d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5cceacf69467d6cab8a6e995c2f42b8d"></a>
-typedef std::allocator_traits<br class="typebreak"/>
-&lt; Alloc &gt;::template <br class="typebreak"/>
-rebind_alloc&lt; unsigned char &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>allocator_type</b></td></tr>
-<tr class="separator:a5cceacf69467d6cab8a6e995c2f42b8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace737b4613c456dfc955be0baa3580fb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ace737b4613c456dfc955be0baa3580fb"></a>
-typedef <a class="el" href="structboost_1_1gil_1_1view__type__from__pixel.html">view_type_from_pixel</a><br class="typebreak"/>
-&lt; Pixel, IsPlanar &gt;::type&#160;</td><td class="memItemRight" valign="bottom"><b>view_t</b></td></tr>
-<tr class="separator:ace737b4613c456dfc955be0baa3580fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06c555fc448b7f9c2aa28410f80452bb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a06c555fc448b7f9c2aa28410f80452bb"></a>
-typedef <a class="el" href="classboost_1_1gil_1_1image__view.html">view_t::const_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>const_view_t</b></td></tr>
-<tr class="separator:a06c555fc448b7f9c2aa28410f80452bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e4745ceac24bead06763a3c017eba99"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e4745ceac24bead06763a3c017eba99"></a>
-typedef view_t::point_t&#160;</td><td class="memItemRight" valign="bottom"><b>point_t</b></td></tr>
-<tr class="separator:a7e4745ceac24bead06763a3c017eba99"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd362058c9e6a8e0b327d9f424c217d1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acd362058c9e6a8e0b327d9f424c217d1"></a>
-typedef view_t::coord_t&#160;</td><td class="memItemRight" valign="bottom"><b>coord_t</b></td></tr>
-<tr class="separator:acd362058c9e6a8e0b327d9f424c217d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b77b76051f0c45c6f2708063ca235db"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9b77b76051f0c45c6f2708063ca235db"></a>
-typedef view_t::value_type&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b></td></tr>
-<tr class="separator:a9b77b76051f0c45c6f2708063ca235db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d1e74f2234f644ee8413a0dbd4fa13c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7d1e74f2234f644ee8413a0dbd4fa13c"></a>
-typedef coord_t&#160;</td><td class="memItemRight" valign="bottom"><b>x_coord_t</b></td></tr>
-<tr class="separator:a7d1e74f2234f644ee8413a0dbd4fa13c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22bd17e5b8a8a2d3642e80e2bab7e92e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a22bd17e5b8a8a2d3642e80e2bab7e92e"></a>
-typedef coord_t&#160;</td><td class="memItemRight" valign="bottom"><b>y_coord_t</b></td></tr>
-<tr class="separator:a22bd17e5b8a8a2d3642e80e2bab7e92e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3638c9d581a358b25c4f675367ce023f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3638c9d581a358b25c4f675367ce023f"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>allocator_type</b> = typename std::allocator_traits&lt; Alloc &gt;::template rebind_alloc&lt; unsigned char &gt;</td></tr>
+<tr class="separator:a3638c9d581a358b25c4f675367ce023f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a036604f03e8badb4465c65270d8e3d22"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a036604f03e8badb4465c65270d8e3d22"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>view_t</b> = typename <a class="el" href="structboost_1_1gil_1_1view__type__from__pixel.html">view_type_from_pixel</a>&lt; Pixel, IsPlanar &gt;::type</td></tr>
+<tr class="separator:a036604f03e8badb4465c65270d8e3d22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af22de4cd1c084c288216682b1a04416a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af22de4cd1c084c288216682b1a04416a"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>const_view_t</b> = typename view_t::const_t</td></tr>
+<tr class="separator:af22de4cd1c084c288216682b1a04416a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfe36fdedc6e90f870ef4fd0bf18b22a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adfe36fdedc6e90f870ef4fd0bf18b22a"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>point_t</b> = typename view_t::point_t</td></tr>
+<tr class="separator:adfe36fdedc6e90f870ef4fd0bf18b22a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a568300af26fec4a23b5f280209f1ad14"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a568300af26fec4a23b5f280209f1ad14"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>coord_t</b> = typename view_t::coord_t</td></tr>
+<tr class="separator:a568300af26fec4a23b5f280209f1ad14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a470418f083aa6040ac1983dc22e94d76"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a470418f083aa6040ac1983dc22e94d76"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b> = typename view_t::value_type</td></tr>
+<tr class="separator:a470418f083aa6040ac1983dc22e94d76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e1d4e6abecb43f99a7d66c8479f15c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e1d4e6abecb43f99a7d66c8479f15c3"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>x_coord_t</b> = coord_t</td></tr>
+<tr class="separator:a7e1d4e6abecb43f99a7d66c8479f15c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2c71b4976bdece620245109800e843f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab2c71b4976bdece620245109800e843f"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>y_coord_t</b> = coord_t</td></tr>
+<tr class="separator:ab2c71b4976bdece620245109800e843f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -192,7 +189,7 @@ class boost::gil::image&lt; Pixel, IsPlanar, Alloc &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Dec 15 2018 03:04:54 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Dec 15 2018 20:34:09 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

@@ -83,16 +83,16 @@
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                                                      const planar_pixel_reference&lt;typename std::iterator_traits&lt;ChannelPtr&gt;::reference,ColorSpace&gt; &gt;,</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                               <span class="keyword">public</span> detail::homogeneous_color_base&lt;ChannelPtr,layout&lt;ColorSpace&gt;,mpl::size&lt;ColorSpace&gt;::value &gt; {</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keyword">typedef</span> iterator_facade&lt;planar_pixel_iterator&lt;ChannelPtr,ColorSpace&gt;,</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;                            pixel&lt;typename std::iterator_traits&lt;ChannelPtr&gt;::value_type,layout&lt;ColorSpace&gt; &gt;,</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keyword">using</span> parent_t = iterator_facade&lt;planar_pixel_iterator&lt;ChannelPtr,ColorSpace&gt;,</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;                            pixel&lt;typename std::iterator_traits&lt;ChannelPtr&gt;::value_type,layout&lt;ColorSpace&gt;&gt;,</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                            std::random_access_iterator_tag,</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                            <span class="keyword">const</span> planar_pixel_reference&lt;typename std::iterator_traits&lt;ChannelPtr&gt;::reference,ColorSpace&gt; &gt; parent_t;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">typedef</span> detail::homogeneous_color_base&lt;ChannelPtr,layout&lt;ColorSpace&gt;,mpl::size&lt;ColorSpace&gt;::value&gt; color_base_parent_t;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> std::iterator_traits&lt;ChannelPtr&gt;::value_type channel_t;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                            <span class="keyword">const</span> planar_pixel_reference&lt;typename std::iterator_traits&lt;ChannelPtr&gt;::reference,ColorSpace&gt;&gt;;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">using</span> color_base_parent_t = detail::homogeneous_color_base&lt;ChannelPtr,layout&lt;ColorSpace&gt;,mpl::size&lt;ColorSpace&gt;::value&gt;;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">using</span> channel_t = <span class="keyword">typename</span> std::iterator_traits&lt;ChannelPtr&gt;::value_type;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> parent_t::value_type                 value_type;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> parent_t::reference                  reference;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> parent_t::difference_type            difference_type;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keyword">using</span> value_type = <span class="keyword">typename</span> parent_t::value_type;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keyword">using</span> reference = <span class="keyword">typename</span> parent_t::reference;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">using</span> difference_type = <span class="keyword">typename</span> parent_t::difference_type;</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    planar_pixel_iterator() : color_base_parent_t(0) {}</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    planar_pixel_iterator(<span class="keywordtype">bool</span>) {}        <span class="comment">// constructor that does not fill with zero (for performance)</span></div>
@@ -150,9 +150,9 @@
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> IC, <span class="keyword">typename</span> C&gt;</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="keyword">struct </span>const_iterator_type&lt;planar_pixel_iterator&lt;IC,C&gt; &gt; {</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> std::iterator_traits&lt;IC&gt;::value_type channel_t;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="keyword">using</span> channel_t = <span class="keyword">typename</span> std::iterator_traits&lt;IC&gt;::value_type;</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="keyword">typedef</span> planar_pixel_iterator&lt;typename channel_traits&lt;channel_t&gt;::const_pointer,C&gt; type;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="keyword">using</span> type = planar_pixel_iterator&lt;typename channel_traits&lt;channel_t&gt;::const_pointer,C&gt;;</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;};</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="comment">// The default implementation when the iterator is a C pointer is to use the standard constness semantics</span></div>
@@ -163,7 +163,7 @@
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> IC, <span class="keyword">typename</span> C, <span class="keywordtype">int</span> K&gt;</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="keyword">struct </span>kth_element_type&lt;planar_pixel_iterator&lt;IC,C&gt;, K&gt; {</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keyword">typedef</span> IC type;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    <span class="keyword">using</span> type = IC;</div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;};</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;</div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> IC, <span class="keyword">typename</span> C, <span class="keywordtype">int</span> K&gt;</div>
@@ -176,7 +176,7 @@
 <div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> IC, <span class="keyword">typename</span> C&gt;</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="keyword">struct </span>color_space_type&lt;planar_pixel_iterator&lt;IC,C&gt; &gt; {</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <span class="keyword">typedef</span> C type;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <span class="keyword">using</span> type = C;</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;};</div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;</div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> IC, <span class="keyword">typename</span> C&gt;</div>
@@ -187,7 +187,7 @@
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;</div>
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> IC, <span class="keyword">typename</span> C&gt;</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;<span class="keyword">struct </span>channel_type&lt;planar_pixel_iterator&lt;IC,C&gt; &gt; {</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> std::iterator_traits&lt;IC&gt;::value_type type;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <span class="keyword">using</span> type = <span class="keyword">typename</span> std::iterator_traits&lt;IC&gt;::value_type;</div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;};</div>
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;</div>
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="comment">//  MemoryBasedIteratorConcept</span></div>
@@ -230,7 +230,7 @@
 <div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> IC, <span class="keyword">typename</span> C&gt;</div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="keyword">struct </span>dynamic_x_step_type&lt;planar_pixel_iterator&lt;IC,C&gt; &gt; {</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    <span class="keyword">typedef</span> memory_based_step_iterator&lt;planar_pixel_iterator&lt;IC,C&gt; &gt; type;</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    <span class="keyword">using</span> type = memory_based_step_iterator&lt;planar_pixel_iterator&lt;IC,C&gt;&gt;;</div>
 <div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;};</div>
 <div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;} }  <span class="comment">// namespace boost::gil</span></div>
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;</div>
@@ -244,7 +244,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Dec 15 2018 03:04:54 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Dec 15 2018 20:34:09 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

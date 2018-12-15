@@ -67,7 +67,7 @@ template&lt;typename BF , int FB, int NB, bool M&gt; </td></tr>
 <p>The value of a subbyte channel. Models: ChannelValueConcept</p>
 <p>Represents a reference proxy to a channel operating over a bit range whose offset is fixed at compile time. Models ChannelConcept Example: </p>
 <div class="fragment"><div class="line"><span class="comment">// Reference to a 2-bit channel starting at bit 1 (i.e. the second bit)</span></div>
-<div class="line"><span class="keyword">typedef</span> <span class="keyword">const</span> packed_channel_reference&lt;uint16_t,1,2,true&gt; bits2_1_ref_t;</div>
+<div class="line"><span class="keyword">using</span> bits2_1_ref_t = packed_channel_reference&lt;uint16_t,1,2,true&gt; <span class="keyword">const</span>;</div>
 <div class="line"></div>
 <div class="line">uint16_t data=0;</div>
 <div class="line">bits2_1_ref_t channel_ref(&amp;data);</div>
@@ -79,7 +79,7 @@ template&lt;typename BF , int FB, int NB, bool M&gt; </td></tr>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Dec 15 2018 03:04:54 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Dec 15 2018 20:34:09 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

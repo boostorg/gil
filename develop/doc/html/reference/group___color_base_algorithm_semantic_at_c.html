@@ -84,10 +84,10 @@ template&lt;int K, typename ColorBase &gt; </td></tr>
 <p>The semantic index of an element is the index of its color in the color space. Semantic indexing allows for proper pairing of elements of color bases independent on their layout. For example, red is the first semantic element of a color base regardless of whether it has an RGB layout or a BGR layout. All GIL color base algorithms taking multiple color bases use semantic indexing to access their elements.</p>
 <p>Example: </p>
 <div class="fragment"><div class="line"><span class="comment">// 16-bit BGR pixel, 4 bits for the blue, 3 bits for the green, 2 bits for the red channel and 7 unused bits</span></div>
-<div class="line"><span class="keyword">typedef</span> packed_pixel_type&lt;uint16_t, mpl::vector3_c&lt;unsigned,4,3,2&gt;, bgr_layout_t&gt;::type bgr432_pixel_t;</div>
+<div class="line"><span class="keyword">using</span> bgr432_pixel_t = packed_pixel_type&lt;uint16_t, mpl::vector3_c&lt;unsigned,4,3,2&gt;, bgr_layout_t&gt;::type;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// A reference to its red channel. Although the red channel is the third, its semantic index is 0 in the RGB color space</span></div>
-<div class="line"><span class="keyword">typedef</span> kth_semantic_element_reference_type&lt;bgr432_pixel_t, 0&gt;::type red_channel_reference_t;</div>
+<div class="line"><span class="keyword">using</span> red_channel_reference_t = kth_semantic_element_reference_type&lt;bgr432_pixel_t, 0&gt;::type;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Initialize the pixel to black</span></div>
 <div class="line">bgr432_pixel_t red_pixel(0,0,0);</div>
@@ -101,7 +101,7 @@ template&lt;int K, typename ColorBase &gt; </td></tr>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Dec 15 2018 03:04:54 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Dec 15 2018 20:34:09 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

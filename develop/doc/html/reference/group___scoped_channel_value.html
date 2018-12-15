@@ -54,11 +54,11 @@ Modules</h2></td></tr>
 <p>Traits for channels. Contains the following members: </p>
 <div class="fragment"><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Channel&gt;</div>
 <div class="line"><span class="keyword">struct </span>channel_traits {</div>
-<div class="line">    <span class="keyword">typedef</span> ... value_type;</div>
-<div class="line">    <span class="keyword">typedef</span> ... reference;</div>
-<div class="line">    <span class="keyword">typedef</span> ... pointer;</div>
-<div class="line">    <span class="keyword">typedef</span> ... const_reference;</div>
-<div class="line">    <span class="keyword">typedef</span> ... const_pointer;</div>
+<div class="line">    <span class="keyword">using</span> value_type = ...;</div>
+<div class="line">    <span class="keyword">using</span> reference = ...;</div>
+<div class="line">    <span class="keyword">using</span> pointer = ...;</div>
+<div class="line">    <span class="keyword">using</span> const_reference = ...;</div>
+<div class="line">    <span class="keyword">using</span> const_pointer = ...;</div>
 <div class="line"></div>
 <div class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> is_mutable;</div>
 <div class="line">    <span class="keyword">static</span> value_type min_value();</div>
@@ -69,7 +69,7 @@ Modules</h2></td></tr>
 <div class="fragment"><div class="line"><span class="comment">// Create a double channel with range [-0.5 .. 0.5]</span></div>
 <div class="line"><span class="keyword">struct </span>double_minus_half  { <span class="keyword">static</span> <span class="keywordtype">double</span> apply() { <span class="keywordflow">return</span> -0.5; } };</div>
 <div class="line"><span class="keyword">struct </span>double_plus_half   { <span class="keyword">static</span> <span class="keywordtype">double</span> apply() { <span class="keywordflow">return</span>  0.5; } };</div>
-<div class="line"><span class="keyword">typedef</span> scoped_channel_value&lt;double, double_minus_half, double_plus_half&gt; bits64custom_t;</div>
+<div class="line"><span class="keyword">using</span> bits64custom_t = scoped_channel_value&lt;double, double_minus_half, double_plus_half&gt;;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// channel_convert its maximum should map to the maximum</span></div>
 <div class="line">bits64custom_t x = channel_traits&lt;bits64custom_t&gt;::max_value();</div>
@@ -82,7 +82,7 @@ Modules</h2></td></tr>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Dec 15 2018 03:04:54 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Dec 15 2018 20:34:09 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

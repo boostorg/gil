@@ -78,26 +78,27 @@
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
 <div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1blue__t.html">   31</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1blue__t.html">blue_t</a> {};</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">typedef</span> mpl::vector3&lt;red_t,green_t,blue_t&gt; rgb_t;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">using</span> rgb_t = mpl::vector3&lt;red_t,green_t,blue_t&gt;;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">typedef</span> <a class="code" href="structboost_1_1gil_1_1layout.html">layout&lt;rgb_t&gt;</a> <a class="code" href="structboost_1_1gil_1_1layout.html">rgb_layout_t</a>;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">typedef</span> <a class="code" href="structboost_1_1gil_1_1layout.html">layout&lt;rgb_t, mpl::vector3_c&lt;int,2,1,0&gt;</a> &gt; <a class="code" href="structboost_1_1gil_1_1layout.html">bgr_layout_t</a>;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">using</span> <a class="code" href="structboost_1_1gil_1_1layout.html">rgb_layout_t</a> = <a class="code" href="structboost_1_1gil_1_1layout.html">layout&lt;rgb_t&gt;</a>;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">using</span> <a class="code" href="structboost_1_1gil_1_1layout.html">bgr_layout_t</a> = <a class="code" href="structboost_1_1gil_1_1layout.html">layout&lt;rgb_t, mpl::vector3_c&lt;int,2,1,0&gt;</a>&gt;;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> IC&gt;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">inline</span></div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1type__from__x__iterator.html">type_from_x_iterator&lt;planar_pixel_iterator&lt;IC,rgb_t&gt;</a> &gt;::view_t</div>
 <div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="group___image_view_constructors.html#ga9531919254e21801a1586581253812d6">   47</a></span>&#160;<a class="code" href="group___image_view_constructors.html#ga9531919254e21801a1586581253812d6">planar_rgb_view</a>(std::size_t width, std::size_t height,</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;                IC r, IC g, IC b,</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                std::ptrdiff_t rowsize_in_bytes) {</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1type__from__x__iterator.html">type_from_x_iterator&lt;planar_pixel_iterator&lt;IC,rgb_t&gt;</a> &gt;::view_t RView;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordflow">return</span> RView(width, height,</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                 <span class="keyword">typename</span> RView::locator(<a class="code" href="structboost_1_1gil_1_1planar__pixel__iterator.html">planar_pixel_iterator&lt;IC,rgb_t&gt;</a>(r,g,b),</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                                         rowsize_in_bytes));</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;}</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}}  <span class="comment">// namespace boost::gil</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                std::ptrdiff_t rowsize_in_bytes)</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;{</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">using</span> view_t = <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1type__from__x__iterator.html">type_from_x_iterator&lt;planar_pixel_iterator&lt;IC,rgb_t&gt;</a>&gt;::view_t;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordflow">return</span> view_t(width, height,</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                 <span class="keyword">typename</span> view_t::locator(<a class="code" href="structboost_1_1gil_1_1planar__pixel__iterator.html">planar_pixel_iterator&lt;IC,rgb_t&gt;</a>(r,g,b),</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                                         rowsize_in_bytes));</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}}  <span class="comment">// namespace boost::gil</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="structboost_1_1gil_1_1planar__pixel__iterator_html"><div class="ttname"><a href="structboost_1_1gil_1_1planar__pixel__iterator.html">boost::gil::planar_pixel_iterator</a></div><div class="ttdoc">An iterator over planar pixels. Models HomogeneousColorBaseConcept, PixelIteratorConcept, HomogeneousPixelBasedConcept, MemoryBasedIteratorConcept, HasDynamicXStepTypeConcept. </div><div class="ttdef"><b>Definition:</b> algorithm.hpp:34</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1green__t_html"><div class="ttname"><a href="structboost_1_1gil_1_1green__t.html">boost::gil::green_t</a></div><div class="ttdoc">Green. </div><div class="ttdef"><b>Definition:</b> rgb.hpp:28</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1type__from__x__iterator_html"><div class="ttname"><a href="structboost_1_1gil_1_1type__from__x__iterator.html">boost::gil::type_from_x_iterator</a></div><div class="ttdoc">Given a pixel iterator defining access to pixels along a row, returns the types of the corresponding ...</div><div class="ttdef"><b>Definition:</b> metafunctions.hpp:238</div></div>
@@ -111,7 +112,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Dec 15 2018 03:04:54 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Dec 15 2018 20:34:09 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

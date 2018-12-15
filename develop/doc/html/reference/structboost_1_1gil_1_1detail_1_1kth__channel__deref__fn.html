@@ -66,30 +66,24 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:ab48180e485b10dfc2a2658b27b23d88e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab48180e485b10dfc2a2658b27b23d88e"></a>
-typedef <a class="el" href="structboost_1_1gil_1_1detail_1_1kth__channel__deref__fn.html">kth_channel_deref_fn</a><br class="typebreak"/>
-&lt; K, const_ref_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>const_t</b></td></tr>
-<tr class="separator:ab48180e485b10dfc2a2658b27b23d88e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac79ed995e6b4b1d8f459f0b37807e5cb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac79ed995e6b4b1d8f459f0b37807e5cb"></a>
-typedef <a class="el" href="structboost_1_1gil_1_1pixel__value__type.html">pixel_value_type</a><br class="typebreak"/>
-&lt; channel_t, <a class="el" href="structboost_1_1gil_1_1layout.html">gray_layout_t</a> &gt;<br class="typebreak"/>
-::type&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b></td></tr>
-<tr class="separator:ac79ed995e6b4b1d8f459f0b37807e5cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01ea77e6b19ce255f74eaa354e8cc6c1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a01ea77e6b19ce255f74eaa354e8cc6c1"></a>
-typedef <a class="el" href="structboost_1_1gil_1_1pixel__reference__type.html">pixel_reference_type</a><br class="typebreak"/>
-&lt; channel_t, <a class="el" href="structboost_1_1gil_1_1layout.html">gray_layout_t</a>, <br class="typebreak"/>
-false, false &gt;::type&#160;</td><td class="memItemRight" valign="bottom"><b>const_reference</b></td></tr>
-<tr class="separator:a01ea77e6b19ce255f74eaa354e8cc6c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ad6c059d39c24be9cddd1905995d23c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2ad6c059d39c24be9cddd1905995d23c"></a>
-typedef SrcP&#160;</td><td class="memItemRight" valign="bottom"><b>argument_type</b></td></tr>
-<tr class="separator:a2ad6c059d39c24be9cddd1905995d23c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63a5fc94722c4fbdb03ed0ec51cd89c8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a63a5fc94722c4fbdb03ed0ec51cd89c8"></a>
-typedef mpl::if_c&lt; is_mutable, <br class="typebreak"/>
-ref_t, <a class="el" href="structboost_1_1gil_1_1pixel.html">value_type</a> &gt;::type&#160;</td><td class="memItemRight" valign="bottom"><b>reference</b></td></tr>
-<tr class="separator:a63a5fc94722c4fbdb03ed0ec51cd89c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe53618876958e2e15351c19804738f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afe53618876958e2e15351c19804738f2"></a>
-typedef reference&#160;</td><td class="memItemRight" valign="bottom"><b>result_type</b></td></tr>
-<tr class="separator:afe53618876958e2e15351c19804738f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af21131141b1bfa3e3fa13e76ff809a33"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af21131141b1bfa3e3fa13e76ff809a33"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>const_t</b> = <a class="el" href="structboost_1_1gil_1_1detail_1_1kth__channel__deref__fn.html">kth_channel_deref_fn</a>&lt; K, const_ref_t &gt;</td></tr>
+<tr class="separator:af21131141b1bfa3e3fa13e76ff809a33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af13bb156678a77ca4776c2c8711a8e42"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af13bb156678a77ca4776c2c8711a8e42"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b> = typename <a class="el" href="structboost_1_1gil_1_1pixel__value__type.html">pixel_value_type</a>&lt; channel_t, <a class="el" href="structboost_1_1gil_1_1layout.html">gray_layout_t</a> &gt;::type</td></tr>
+<tr class="separator:af13bb156678a77ca4776c2c8711a8e42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33e39d505543dbfd49f764d84e3a016c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a33e39d505543dbfd49f764d84e3a016c"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>const_reference</b> = typename <a class="el" href="structboost_1_1gil_1_1pixel__reference__type.html">pixel_reference_type</a>&lt; channel_t, <a class="el" href="structboost_1_1gil_1_1layout.html">gray_layout_t</a>, false, false &gt;::type</td></tr>
+<tr class="separator:a33e39d505543dbfd49f764d84e3a016c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14a98eaf38a5a767e5262a3f3786c551"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a14a98eaf38a5a767e5262a3f3786c551"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>argument_type</b> = SrcP</td></tr>
+<tr class="separator:a14a98eaf38a5a767e5262a3f3786c551"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abaac4c46e44959e4464f1430f48821be"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abaac4c46e44959e4464f1430f48821be"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>reference</b> = typename mpl::if_c&lt; is_mutable, ref_t, value_type &gt;::type</td></tr>
+<tr class="separator:abaac4c46e44959e4464f1430f48821be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cef15c2b7d2b47815a814dd269ffc4f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1cef15c2b7d2b47815a814dd269ffc4f"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>result_type</b> = reference</td></tr>
+<tr class="separator:a1cef15c2b7d2b47815a814dd269ffc4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -119,7 +113,7 @@ struct boost::gil::detail::kth_channel_deref_fn&lt; K, SrcP &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Dec 15 2018 03:04:54 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Dec 15 2018 20:34:09 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

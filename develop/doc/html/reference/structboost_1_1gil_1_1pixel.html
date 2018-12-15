@@ -68,15 +68,15 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a991c5469a9489e9c204bbbdfca11d14d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a991c5469a9489e9c204bbbdfca11d14d"></a>
-typedef <a class="el" href="structboost_1_1gil_1_1pixel.html">pixel</a>&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b></td></tr>
-<tr class="separator:a991c5469a9489e9c204bbbdfca11d14d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe8933d436779a43cb5c1896ff5f2918"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe8933d436779a43cb5c1896ff5f2918"></a>
-typedef <a class="el" href="structboost_1_1gil_1_1pixel.html">value_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>reference</b></td></tr>
-<tr class="separator:abe8933d436779a43cb5c1896ff5f2918"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afdb67657e63a66ed3fae7b0c9fd81b48"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afdb67657e63a66ed3fae7b0c9fd81b48"></a>
-typedef const <a class="el" href="structboost_1_1gil_1_1pixel.html">value_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>const_reference</b></td></tr>
-<tr class="separator:afdb67657e63a66ed3fae7b0c9fd81b48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41e636d5aab49f830310d96cc20a62e4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a41e636d5aab49f830310d96cc20a62e4"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b> = <a class="el" href="structboost_1_1gil_1_1pixel.html">pixel</a>&lt; ChannelValue, Layout &gt;</td></tr>
+<tr class="separator:a41e636d5aab49f830310d96cc20a62e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74202cdd96628bc49a756e5fc87d22de"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a74202cdd96628bc49a756e5fc87d22de"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>reference</b> = <a class="el" href="structboost_1_1gil_1_1pixel.html">value_type</a> &amp;</td></tr>
+<tr class="separator:a74202cdd96628bc49a756e5fc87d22de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4780295ff953151e0121aebfbcade4da"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4780295ff953151e0121aebfbcade4da"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>const_reference</b> = <a class="el" href="structboost_1_1gil_1_1pixel.html">value_type</a> const &amp;</td></tr>
+<tr class="separator:a4780295ff953151e0121aebfbcade4da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -129,7 +129,7 @@ channel_traits&lt; channel_t &gt;<br class="typebreak"/>
 <tr class="separator:ab0d5a816a18cd4779d89c9f8afac47c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ab78490d6874a0ff45e23ccafb98f6f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9ab78490d6874a0ff45e23ccafb98f6f"></a>
 channel_traits&lt; channel_t &gt;<br class="typebreak"/>
-::<a class="el" href="structboost_1_1gil_1_1pixel.html">const_reference</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (std::size_t i) const </td></tr>
+::const_reference&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (std::size_t i) const </td></tr>
 <tr class="separator:a9ab78490d6874a0ff45e23ccafb98f6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa756430767fc3449e130ccb898570dfa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa756430767fc3449e130ccb898570dfa"></a>
 <a class="el" href="structboost_1_1gil_1_1pixel.html">pixel</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (channel_t chan)</td></tr>
@@ -156,7 +156,7 @@ struct boost::gil::pixel&lt; T, L &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Dec 15 2018 03:04:54 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Dec 15 2018 20:34:09 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

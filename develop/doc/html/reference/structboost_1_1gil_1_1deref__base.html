@@ -66,24 +66,24 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:afb938fb2974c9179d9e06ecb819ee501"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afb938fb2974c9179d9e06ecb819ee501"></a>
-typedef ArgType&#160;</td><td class="memItemRight" valign="bottom"><b>argument_type</b></td></tr>
-<tr class="separator:afb938fb2974c9179d9e06ecb819ee501"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b6b8959e0d4c32dc81e5ae0be62a0bb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5b6b8959e0d4c32dc81e5ae0be62a0bb"></a>
-typedef ResultType&#160;</td><td class="memItemRight" valign="bottom"><b>result_type</b></td></tr>
-<tr class="separator:a5b6b8959e0d4c32dc81e5ae0be62a0bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3caf3ebf651f1518b9343521d06cabe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac3caf3ebf651f1518b9343521d06cabe"></a>
-typedef ConstT&#160;</td><td class="memItemRight" valign="bottom"><b>const_t</b></td></tr>
-<tr class="separator:ac3caf3ebf651f1518b9343521d06cabe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04f69f8f2936ff309627511179c1709b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a04f69f8f2936ff309627511179c1709b"></a>
-typedef Value&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b></td></tr>
-<tr class="separator:a04f69f8f2936ff309627511179c1709b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac22dffd6274adb4b26142542c21a8718"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac22dffd6274adb4b26142542c21a8718"></a>
-typedef Reference&#160;</td><td class="memItemRight" valign="bottom"><b>reference</b></td></tr>
-<tr class="separator:ac22dffd6274adb4b26142542c21a8718"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a98d54eea8f3d4e78aa1cd91a9eadee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4a98d54eea8f3d4e78aa1cd91a9eadee"></a>
-typedef ConstReference&#160;</td><td class="memItemRight" valign="bottom"><b>const_reference</b></td></tr>
-<tr class="separator:a4a98d54eea8f3d4e78aa1cd91a9eadee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4a99658b3d392f5a918b37ef8e460fd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab4a99658b3d392f5a918b37ef8e460fd"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>argument_type</b> = ArgType</td></tr>
+<tr class="separator:ab4a99658b3d392f5a918b37ef8e460fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87045c8519448224d0348e90d18e3f68"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a87045c8519448224d0348e90d18e3f68"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>result_type</b> = ResultType</td></tr>
+<tr class="separator:a87045c8519448224d0348e90d18e3f68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf9615d788a7a2c58256f8a80c5e595c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf9615d788a7a2c58256f8a80c5e595c"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>const_t</b> = ConstT</td></tr>
+<tr class="separator:aaf9615d788a7a2c58256f8a80c5e595c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a127772511e59cd5f9115f38c908e0490"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a127772511e59cd5f9115f38c908e0490"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b> = Value</td></tr>
+<tr class="separator:a127772511e59cd5f9115f38c908e0490"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad792ff919d941331bc15d917f4c35ff2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad792ff919d941331bc15d917f4c35ff2"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>reference</b> = Reference</td></tr>
+<tr class="separator:ad792ff919d941331bc15d917f4c35ff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc6c8eff823d3312410fd44eb05c64a5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afc6c8eff823d3312410fd44eb05c64a5"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>const_reference</b> = ConstReference</td></tr>
+<tr class="separator:afc6c8eff823d3312410fd44eb05c64a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -105,7 +105,7 @@ struct boost::gil::deref_base&lt; ConstT, Value, Reference, ConstReference, ArgT
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Dec 15 2018 03:04:54 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Dec 15 2018 20:34:09 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

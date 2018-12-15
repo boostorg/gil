@@ -68,42 +68,36 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:ae3d00803fa442dc8138e53c6fd6ff551"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae3d00803fa442dc8138e53c6fd6ff551"></a>
-typedef XIterator&#160;</td><td class="memItemRight" valign="bottom"><b>x_iterator</b></td></tr>
-<tr class="separator:ae3d00803fa442dc8138e53c6fd6ff551"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c26f78fc975b07e562860c6035b5c77"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1c26f78fc975b07e562860c6035b5c77"></a>
-typedef YIterator&#160;</td><td class="memItemRight" valign="bottom"><b>y_iterator</b></td></tr>
-<tr class="separator:a1c26f78fc975b07e562860c6035b5c77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8948d7b39ef0dc53a64eeadd1f120236"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8948d7b39ef0dc53a64eeadd1f120236"></a>
-typedef std::iterator_traits<br class="typebreak"/>
-&lt; x_iterator &gt;::value_type&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b></td></tr>
-<tr class="separator:a8948d7b39ef0dc53a64eeadd1f120236"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c771c6b67581e966f3101a1b89b1984"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4c771c6b67581e966f3101a1b89b1984"></a>
-typedef std::iterator_traits<br class="typebreak"/>
-&lt; x_iterator &gt;::reference&#160;</td><td class="memItemRight" valign="bottom"><b>reference</b></td></tr>
-<tr class="separator:a4c771c6b67581e966f3101a1b89b1984"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5844f24fb8f1a0086e9682b95250cab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa5844f24fb8f1a0086e9682b95250cab"></a>
-typedef std::iterator_traits<br class="typebreak"/>
-&lt; x_iterator &gt;<br class="typebreak"/>
-::<a class="el" href="classboost_1_1gil_1_1point.html">difference_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>coord_t</b></td></tr>
-<tr class="separator:aa5844f24fb8f1a0086e9682b95250cab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a374499a5ef7f7a6830bc1adc475cd868"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a374499a5ef7f7a6830bc1adc475cd868"></a>
-typedef <a class="el" href="classboost_1_1gil_1_1point.html">point</a>&lt; coord_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>difference_type</b></td></tr>
-<tr class="separator:a374499a5ef7f7a6830bc1adc475cd868"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada4e134f4052097a3359396e730be85f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ada4e134f4052097a3359396e730be85f"></a>
-typedef <a class="el" href="classboost_1_1gil_1_1point.html">difference_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>point_t</b></td></tr>
-<tr class="separator:ada4e134f4052097a3359396e730be85f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f949a5fca986fca0058a1d0f288d9cf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2f949a5fca986fca0058a1d0f288d9cf"></a>
-typedef point_t::template axis<br class="typebreak"/>
-&lt; 0 &gt;::coord_t&#160;</td><td class="memItemRight" valign="bottom"><b>x_coord_t</b></td></tr>
-<tr class="separator:a2f949a5fca986fca0058a1d0f288d9cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a55d7968c5aa5022ee076def9ae3e4c97"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a55d7968c5aa5022ee076def9ae3e4c97"></a>
-typedef point_t::template axis<br class="typebreak"/>
-&lt; 1 &gt;::coord_t&#160;</td><td class="memItemRight" valign="bottom"><b>y_coord_t</b></td></tr>
-<tr class="separator:a55d7968c5aa5022ee076def9ae3e4c97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a923cc58ccc57319b3b438070df9dbedd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a923cc58ccc57319b3b438070df9dbedd"></a>
-typedef <a class="el" href="classboost_1_1gil_1_1point.html">difference_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>cached_location_t</b></td></tr>
-<tr class="separator:a923cc58ccc57319b3b438070df9dbedd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8dff97b16cfc859526cbe71bb5e0456"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac8dff97b16cfc859526cbe71bb5e0456"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>x_iterator</b> = XIterator</td></tr>
+<tr class="separator:ac8dff97b16cfc859526cbe71bb5e0456"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7db843d09573b19a4ec6c70cb699df2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac7db843d09573b19a4ec6c70cb699df2"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>y_iterator</b> = YIterator</td></tr>
+<tr class="separator:ac7db843d09573b19a4ec6c70cb699df2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cf0b4cc09e331d088cba0918375298a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4cf0b4cc09e331d088cba0918375298a"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b> = typename std::iterator_traits&lt; x_iterator &gt;::value_type</td></tr>
+<tr class="separator:a4cf0b4cc09e331d088cba0918375298a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4866d87dad1cbb5ec690604b6d7e4c9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae4866d87dad1cbb5ec690604b6d7e4c9"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>reference</b> = typename std::iterator_traits&lt; x_iterator &gt;::reference</td></tr>
+<tr class="separator:ae4866d87dad1cbb5ec690604b6d7e4c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b1fc581762647c48e112deb1b043ab5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6b1fc581762647c48e112deb1b043ab5"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>coord_t</b> = typename std::iterator_traits&lt; x_iterator &gt;::<a class="el" href="classboost_1_1gil_1_1point.html">difference_type</a></td></tr>
+<tr class="separator:a6b1fc581762647c48e112deb1b043ab5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb01b687e5fb83d62030e97956f78df8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afb01b687e5fb83d62030e97956f78df8"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>difference_type</b> = <a class="el" href="classboost_1_1gil_1_1point.html">point</a>&lt; coord_t &gt;</td></tr>
+<tr class="separator:afb01b687e5fb83d62030e97956f78df8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3b7e554a3f62b6ae64646320bdf4707"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad3b7e554a3f62b6ae64646320bdf4707"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>point_t</b> = <a class="el" href="classboost_1_1gil_1_1point.html">difference_type</a></td></tr>
+<tr class="separator:ad3b7e554a3f62b6ae64646320bdf4707"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af57b12c880c8e86ceb3ae23874ca5921"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af57b12c880c8e86ceb3ae23874ca5921"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>x_coord_t</b> = typename point_t::template axis&lt; 0 &gt;::coord_t</td></tr>
+<tr class="separator:af57b12c880c8e86ceb3ae23874ca5921"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f91fc1334430fa1687684fcc107b480"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1f91fc1334430fa1687684fcc107b480"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>y_coord_t</b> = typename point_t::template axis&lt; 1 &gt;::coord_t</td></tr>
+<tr class="separator:a1f91fc1334430fa1687684fcc107b480"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7192e60183dc5bbaaa9c9344e2b00ccc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7192e60183dc5bbaaa9c9344e2b00ccc"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>cached_location_t</b> = <a class="el" href="classboost_1_1gil_1_1point.html">difference_type</a></td></tr>
+<tr class="separator:a7192e60183dc5bbaaa9c9344e2b00ccc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -192,12 +186,12 @@ class boost::gil::pixel_2d_locator_base&lt; Loc, XIterator, YIterator &gt;</h3>
 <div class="line">locator[offset2]=my_pixel;</div>
 </div><!-- fragment --><p>In addition, each coordinate acts as a random-access iterator that can be modified separately: "++locator.x()" or "locator.y()+=10" thereby moving the locator horizontally or vertically.</p>
 <p>It is called a locator because it doesn't implement the complete interface of a random access iterator. For example, increment and decrement operations don't make sense (no way to specify dimension). Also 2D difference between two locators cannot be computed without knowledge of the X position within the image.</p>
-<p>This base class provides most of the methods and typedefs needed to create a model of a locator. GIL provides two locator models as subclasses of <code><a class="el" href="classboost_1_1gil_1_1pixel__2d__locator__base.html" title="base class for models of PixelLocatorConceptPixel locator is similar to a pixel iterator, but allows for 2D navigation of pixels within an image view. It has a 2D difference_type and supports random access operations like: ">pixel_2d_locator_base</a></code>. A memory-based locator, <code><a class="el" href="classboost_1_1gil_1_1memory__based__2d__locator.html" title="Memory-based pixel locator. Models: PixelLocatorConcept,HasDynamicXStepTypeConcept,HasDynamicYStepTypeConcept,HasTransposedTypeConceptThe class takes a step iterator as a parameter. The step iterator provides navigation along the vertical axis while its base iterator provides horizontal navigation. ">memory_based_2d_locator</a></code> and a virtual locator, <code><a class="el" href="classboost_1_1gil_1_1virtual__2d__locator.html" title="A 2D locator over a virtual image. Upon dereferencing, invokes a given function object passing it its...">virtual_2d_locator</a></code>. The minimum functionality a subclass must provide is this: </p>
+<p>This base class provides most of the methods and type aliases needed to create a model of a locator. GIL provides two locator models as subclasses of <code><a class="el" href="classboost_1_1gil_1_1pixel__2d__locator__base.html" title="base class for models of PixelLocatorConceptPixel locator is similar to a pixel iterator, but allows for 2D navigation of pixels within an image view. It has a 2D difference_type and supports random access operations like: ">pixel_2d_locator_base</a></code>. A memory-based locator, <code><a class="el" href="classboost_1_1gil_1_1memory__based__2d__locator.html" title="Memory-based pixel locator. Models: PixelLocatorConcept,HasDynamicXStepTypeConcept,HasDynamicYStepTypeConcept,HasTransposedTypeConceptThe class takes a step iterator as a parameter. The step iterator provides navigation along the vertical axis while its base iterator provides horizontal navigation. ">memory_based_2d_locator</a></code> and a virtual locator, <code><a class="el" href="classboost_1_1gil_1_1virtual__2d__locator.html" title="A 2D locator over a virtual image. Upon dereferencing, invokes a given function object passing it its...">virtual_2d_locator</a></code>. The minimum functionality a subclass must provide is this: </p>
 <div class="fragment"><div class="line"><span class="keyword">class </span>my_locator : <span class="keyword">public</span> pixel_2d_locator_base&lt;my_locator, ..., ...&gt; {  <span class="comment">// supply the types for x-iterator and y-iterator</span></div>
-<div class="line">       <span class="keyword">typedef</span> ... const_t;                      <span class="comment">// read-only locator</span></div>
+<div class="line">       <span class="keyword">using</span> const_t = ...;                      <span class="comment">// read-only locator</span></div>
 <div class="line"></div>
 <div class="line">       <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Deref&gt; <span class="keyword">struct </span>add_deref {</div>
-<div class="line">           <span class="keyword">typedef</span> ... type;                     <span class="comment">// locator that invokes the Deref dereference object upon pixel access</span></div>
+<div class="line">           <span class="keyword">using</span> type = ...;                     <span class="comment">// locator that invokes the Deref dereference object upon pixel access</span></div>
 <div class="line">           <span class="keyword">static</span> type make(<span class="keyword">const</span> my_locator&amp; loc, <span class="keyword">const</span> Deref&amp; d);</div>
 <div class="line">       };</div>
 <div class="line"></div>
@@ -233,7 +227,7 @@ class boost::gil::pixel_2d_locator_base&lt; Loc, XIterator, YIterator &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Dec 15 2018 03:04:54 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Dec 15 2018 20:34:09 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

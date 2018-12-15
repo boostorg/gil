@@ -67,36 +67,27 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a090a47563db6aaa3b7a65496a526745d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a090a47563db6aaa3b7a65496a526745d"></a>
-typedef <a class="el" href="classboost_1_1gil_1_1bit__range.html">boost::gil::bit_range</a><br class="typebreak"/>
-&lt; bit_size, IsMutable &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>bit_range_t</b></td></tr>
-<tr class="separator:a090a47563db6aaa3b7a65496a526745d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaba5710712a30d6edf78d95c5188a785"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaba5710712a30d6edf78d95c5188a785"></a>
-typedef BitField&#160;</td><td class="memItemRight" valign="bottom"><b>bitfield_t</b></td></tr>
-<tr class="separator:aaba5710712a30d6edf78d95c5188a785"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af59e345033c9be8446e064b67ab0cf09"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af59e345033c9be8446e064b67ab0cf09"></a>
-typedef mpl::if_c&lt; IsMutable, <br class="typebreak"/>
-unsigned char *, const <br class="typebreak"/>
-unsigned char * &gt;::type&#160;</td><td class="memItemRight" valign="bottom"><b>data_ptr_t</b></td></tr>
-<tr class="separator:af59e345033c9be8446e064b67ab0cf09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9bf611797579dcbe2e6dd308a54660d1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9bf611797579dcbe2e6dd308a54660d1"></a>
-typedef Layout&#160;</td><td class="memItemRight" valign="bottom"><b>layout_t</b></td></tr>
-<tr class="separator:a9bf611797579dcbe2e6dd308a54660d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c440a8aaa072f8f4a06ab15bd7e6475"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1c440a8aaa072f8f4a06ab15bd7e6475"></a>
-typedef <a class="el" href="structboost_1_1gil_1_1packed__pixel__type.html">packed_pixel_type</a><br class="typebreak"/>
-&lt; bitfield_t, ChannelBitSizes, <br class="typebreak"/>
-Layout &gt;::type&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b></td></tr>
-<tr class="separator:a1c440a8aaa072f8f4a06ab15bd7e6475"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac252e003e41a202aee175ee1f12ddfa8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac252e003e41a202aee175ee1f12ddfa8"></a>
-typedef const <br class="typebreak"/>
-<a class="el" href="structboost_1_1gil_1_1bit__aligned__pixel__reference.html">bit_aligned_pixel_reference</a>&#160;</td><td class="memItemRight" valign="bottom"><b>reference</b></td></tr>
-<tr class="separator:ac252e003e41a202aee175ee1f12ddfa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab28f2d0b6764eef60a8acd933ea3a7b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aab28f2d0b6764eef60a8acd933ea3a7b"></a>
-typedef const <br class="typebreak"/>
-<a class="el" href="structboost_1_1gil_1_1bit__aligned__pixel__reference.html">bit_aligned_pixel_reference</a><br class="typebreak"/>
-&lt; BitField, ChannelBitSizes, <br class="typebreak"/>
-Layout, false &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>const_reference</b></td></tr>
-<tr class="separator:aab28f2d0b6764eef60a8acd933ea3a7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c40100a6ef90526e4c8fe902d9f49d6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2c40100a6ef90526e4c8fe902d9f49d6"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>bit_range_t</b> = <a class="el" href="classboost_1_1gil_1_1bit__range.html">boost::gil::bit_range</a>&lt; bit_size, IsMutable &gt;</td></tr>
+<tr class="separator:a2c40100a6ef90526e4c8fe902d9f49d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a596bf8a97ba65996d16edc1e452c72e5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a596bf8a97ba65996d16edc1e452c72e5"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>bitfield_t</b> = BitField</td></tr>
+<tr class="separator:a596bf8a97ba65996d16edc1e452c72e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54a8d9bde545c79de9fba254ec44f914"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a54a8d9bde545c79de9fba254ec44f914"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>data_ptr_t</b> = typename mpl::if_c&lt; IsMutable, unsigned char *, const unsigned char * &gt;::type</td></tr>
+<tr class="separator:a54a8d9bde545c79de9fba254ec44f914"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6cfd5e763db68846a46fb3b68190cc4b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6cfd5e763db68846a46fb3b68190cc4b"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>layout_t</b> = Layout</td></tr>
+<tr class="separator:a6cfd5e763db68846a46fb3b68190cc4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38712138124cb33c6cfc27277d559e21"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a38712138124cb33c6cfc27277d559e21"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b> = typename <a class="el" href="structboost_1_1gil_1_1packed__pixel__type.html">packed_pixel_type</a>&lt; bitfield_t, ChannelBitSizes, Layout &gt;::type</td></tr>
+<tr class="separator:a38712138124cb33c6cfc27277d559e21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1e357adab1ad7bae9e8a4f861a11228"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae1e357adab1ad7bae9e8a4f861a11228"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>reference</b> = const <a class="el" href="structboost_1_1gil_1_1bit__aligned__pixel__reference.html">bit_aligned_pixel_reference</a>&lt; BitField, ChannelBitSizes, Layout, IsMutable &gt;</td></tr>
+<tr class="separator:ae1e357adab1ad7bae9e8a4f861a11228"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2eb697abb6a87b3ac5a81a2d51d4e267"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2eb697abb6a87b3ac5a81a2d51d4e267"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>const_reference</b> = <a class="el" href="structboost_1_1gil_1_1bit__aligned__pixel__reference.html">bit_aligned_pixel_reference</a>&lt; BitField, ChannelBitSizes, Layout, false &gt; const</td></tr>
+<tr class="separator:a2eb697abb6a87b3ac5a81a2d51d4e267"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -169,7 +160,7 @@ struct boost::gil::bit_aligned_pixel_reference&lt; BitField, ChannelBitSizes, La
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Dec 15 2018 03:04:54 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Dec 15 2018 20:34:09 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

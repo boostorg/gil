@@ -60,7 +60,7 @@ Classes</h2></td></tr>
 <div class="fragment"><div class="line"><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> data=0;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// A mutable reference to a 6-bit BGR pixel in &quot;123&quot; format (1 bit for red, 2 bits for green, 3 bits for blue)</span></div>
-<div class="line"><span class="keyword">typedef</span> <span class="keyword">const</span> bit_aligned_pixel_reference&lt;unsigned char, mpl::vector3_c&lt;int,1,2,3&gt;, rgb_layout_t, <span class="keyword">true</span>&gt;  rgb123_ref_t;</div>
+<div class="line"><span class="keyword">using</span> rgb123_ref_t = bit_aligned_pixel_reference&lt;unsigned char, mpl::vector3_c&lt;int,1,2,3&gt;, rgb_layout_t, <span class="keyword">true</span>&gt; <span class="keyword">const</span>;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// create the pixel reference at bit offset 2</span></div>
 <div class="line"><span class="comment">// (i.e. red = [2], green = [3,4], blue = [5,6,7] bits)</span></div>
@@ -77,7 +77,7 @@ Classes</h2></td></tr>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Dec 15 2018 03:04:54 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Dec 15 2018 20:34:09 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

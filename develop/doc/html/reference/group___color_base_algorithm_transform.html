@@ -86,7 +86,7 @@ template&lt;typename P2 , typename P3 , typename Dst , typename Op &gt; </td></t
 <div class="line"></div>
 <div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Pixel1, <span class="keyword">typename</span> Pixel2, <span class="keyword">typename</span> Pixel3&gt;</div>
 <div class="line"><span class="keywordtype">void</span> sum_channels(<span class="keyword">const</span> Pixel1&amp; p1, <span class="keyword">const</span> Pixel2&amp; p2, Pixel3&amp; result) {</div>
-<div class="line">    <span class="keyword">typedef</span> <span class="keyword">typename</span> channel_type&lt;Pixel3&gt;::type result_channel_t;</div>
+<div class="line">    <span class="keyword">using</span> result_channel_t = <span class="keyword">typename</span> channel_type&lt;Pixel3&gt;::type;</div>
 <div class="line">    static_transform(p1,p2,result,my_plus&lt;result_channel_t&gt;());</div>
 <div class="line">}</div>
 <div class="line"></div>
@@ -101,7 +101,7 @@ template&lt;typename P2 , typename P3 , typename Dst , typename Op &gt; </td></t
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Dec 15 2018 03:04:54 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Dec 15 2018 20:34:09 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
