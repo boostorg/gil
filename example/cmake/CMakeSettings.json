@@ -20,9 +20,12 @@
       "ctestCommandArgs": "",
       "variables": [
         { "name": "Boost_ARCHITECTURE", "value": "-x64" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "OFF" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "OFF" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "OFF" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "OFF" },
         { "name": "GIL_DOWNLOAD_FINDBOOST", "value": "ON" },
-        { "name": "GIL_USE_CONAN", "value": "ON" },
-        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" }
+        { "name": "GIL_USE_CONAN", "value": "ON" }
       ]
     },
     {
@@ -37,9 +40,12 @@
       "ctestCommandArgs": "",
       "variables": [
         { "name": "Boost_ARCHITECTURE", "value": "-x64" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "OFF" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "OFF" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "OFF" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "OFF" },
         { "name": "GIL_DOWNLOAD_FINDBOOST", "value": "ON" },
-        { "name": "GIL_USE_CONAN", "value": "ON" },
-        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" }
+        { "name": "GIL_USE_CONAN", "value": "ON" }
       ]
     },
     {
@@ -53,9 +59,12 @@
       "buildCommandArgs": "-v",
       "ctestCommandArgs": "",
       "variables": [
+        { "name": "GIL_ENABLE_EXT_IO", "value": "OFF" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "OFF" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "OFF" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "OFF" },
         { "name": "GIL_DOWNLOAD_FINDBOOST", "value": "ON" },
-        { "name": "GIL_USE_CONAN", "value": "ON" },
-        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" }
+        { "name": "GIL_USE_CONAN", "value": "ON" }
       ]
     },
     {
@@ -69,9 +78,12 @@
       "buildCommandArgs": "-v",
       "ctestCommandArgs": "",
       "variables": [
+        { "name": "GIL_ENABLE_EXT_IO", "value": "OFF" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "OFF" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "OFF" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "OFF" },
         { "name": "GIL_DOWNLOAD_FINDBOOST", "value": "ON" },
-        { "name": "GIL_USE_CONAN", "value": "ON" },
-        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" }
+        { "name": "GIL_USE_CONAN", "value": "ON" }
       ]
     },
     {
