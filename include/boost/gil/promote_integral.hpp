@@ -53,7 +53,7 @@ template
 >
 struct promote_to_larger
 {
-    typedef typename boost::mpl::deref<Iterator>::type current_type;
+    using current_type = typename boost::mpl::deref<Iterator>::type;
 
     typedef typename std::conditional
         <
@@ -76,7 +76,7 @@ struct promote_to_larger<T, EndIterator, EndIterator, MinSize>
 {
     // if promotion fails, keep the number T
     // (and cross fingers that overflow will not occur)
-    typedef T type;
+    using type = T;
 };
 
 }} // namespace detail::promote_integral
@@ -125,7 +125,7 @@ class promote_integral
 private:
     static bool const is_unsigned = std::is_unsigned<T>::type::value;
 
-    typedef detail::promote_integral::bit_size<T> bit_size_type;
+    using bit_size_type = detail::promote_integral::bit_size<T>;
 
     // Define the minimum size (in bits) needed for the promoted type
     // If T is the input type and P the promoted type, then the
@@ -194,7 +194,7 @@ class promote_integral
     >
 {
 public:
-    typedef T type;
+    using type = T;
 };
 
 }} // namespace boost::gil
