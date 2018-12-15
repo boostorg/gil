@@ -46,10 +46,10 @@ private:
                             typename NonAlignedPixelReference::bit_range_t::difference_type> parent_t;
     template <typename Ref> friend struct bit_aligned_pixel_iterator;
 
-    typedef typename NonAlignedPixelReference::bit_range_t bit_range_t;
+    using bit_range_t = typename NonAlignedPixelReference::bit_range_t;
 public:
-    typedef typename parent_t::difference_type             difference_type;
-    typedef typename parent_t::reference                   reference;
+    using difference_type = typename parent_t::difference_type;
+    using reference = typename parent_t::reference;
 
     bit_aligned_pixel_iterator() {}
     bit_aligned_pixel_iterator(const bit_aligned_pixel_iterator& p) : _bit_range(p._bit_range) {}
@@ -83,7 +83,7 @@ private:
 
 template <typename NonAlignedPixelReference>
 struct const_iterator_type<bit_aligned_pixel_iterator<NonAlignedPixelReference> > {
-    typedef bit_aligned_pixel_iterator<typename NonAlignedPixelReference::const_reference> type;
+    using type = bit_aligned_pixel_iterator<typename NonAlignedPixelReference::const_reference>;
 };
 
 template <typename NonAlignedPixelReference>
@@ -144,7 +144,7 @@ NonAlignedPixelReference memunit_advanced_ref(bit_aligned_pixel_iterator<NonAlig
 
 template <typename NonAlignedPixelReference>
 struct dynamic_x_step_type<bit_aligned_pixel_iterator<NonAlignedPixelReference> > {
-    typedef memory_based_step_iterator<bit_aligned_pixel_iterator<NonAlignedPixelReference> > type;
+    using type = memory_based_step_iterator<bit_aligned_pixel_iterator<NonAlignedPixelReference> >;
 };
 
 /////////////////////////////
