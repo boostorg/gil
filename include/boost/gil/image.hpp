@@ -39,17 +39,17 @@ template< typename Pixel, bool IsPlanar = false, typename Alloc=std::allocator<u
 class image {
 public:
 #if defined(BOOST_NO_CXX11_ALLOCATOR)
-    typedef typename Alloc::template rebind<unsigned char>::other allocator_type;
+    using allocator_type = typename Alloc::template rebind<unsigned char>::other;
 #else
-    typedef typename std::allocator_traits<Alloc>::template rebind_alloc<unsigned char> allocator_type;
+    using allocator_type = typename std::allocator_traits<Alloc>::template rebind_alloc<unsigned char>;
 #endif
-    typedef typename view_type_from_pixel<Pixel, IsPlanar>::type view_t;
-    typedef typename view_t::const_t                 const_view_t;
-    typedef typename view_t::point_t                 point_t;
-    typedef typename view_t::coord_t                 coord_t;
-    typedef typename view_t::value_type              value_type;
-    typedef coord_t                                  x_coord_t;
-    typedef coord_t                                  y_coord_t;
+    using view_t = typename view_type_from_pixel<Pixel, IsPlanar>::type;
+    using const_view_t = typename view_t::const_t;
+    using point_t = typename view_t::point_t;
+    using coord_t = typename view_t::coord_t;
+    using value_type = typename view_t::value_type;
+    using x_coord_t = coord_t;
+    using y_coord_t = coord_t;
 
     const point_t&          dimensions()            const { return _view.dimensions(); }
     x_coord_t               width()                 const { return _view.width(); }
@@ -335,7 +335,7 @@ private:
 
     std::size_t total_allocated_size_in_bytes(const point_t& dimensions) const {
 
-        typedef typename view_t::x_iterator x_iterator;
+        using x_iterator = typename view_t::x_iterator;
 
         // when value_type is a non-pixel, like int or float, num_channels< ... > doesn't work.
         const std::size_t _channels_in_image = mpl::eval_if< is_pixel< value_type >
