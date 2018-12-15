@@ -27,7 +27,7 @@ namespace boost { namespace gil {
 
 // Forward-declare gray_t
 struct gray_color_t;
-typedef mpl::vector1<gray_color_t> gray_t;
+using gray_t = mpl::vector1<gray_color_t>;
 template <typename PixelBased> struct color_space_type;
 template <typename PixelBased> struct channel_mapping_type;
 template <typename PixelBased> struct channel_type;
@@ -92,12 +92,12 @@ BOOST_STATIC_ASSERT((is_same<channel_type<bgr8_pixel_t>::type, uint8_t>::value))
 template <typename ChannelValue, typename Layout> // = mpl::range_c<int,0,ColorSpace::size> >
 struct pixel : public detail::homogeneous_color_base<ChannelValue,Layout,mpl::size<typename Layout::color_space_t>::value> {
 private:
-    typedef ChannelValue channel_t;
-    typedef detail::homogeneous_color_base<ChannelValue,Layout,mpl::size<typename Layout::color_space_t>::value> parent_t;
+    using channel_t = ChannelValue;
+    using parent_t = detail::homogeneous_color_base<ChannelValue,Layout,mpl::size<typename Layout::color_space_t>::value>;
 public:
-    typedef pixel                               value_type;
-    typedef value_type&                         reference;
-    typedef const value_type&                   const_reference;
+    using value_type = pixel<ChannelValue, Layout>;
+    using reference = value_type&;
+    using const_reference = value_type const&;
     BOOST_STATIC_CONSTANT(bool,                 is_mutable = channel_traits<channel_t>::is_mutable);
 
     pixel(){}
@@ -148,22 +148,22 @@ public:
 
 template <typename ChannelValue, typename Layout, int K>
 struct kth_element_type<pixel<ChannelValue,Layout>, K> {
-    typedef ChannelValue type;
+    using type = ChannelValue;
 };
 
 template <typename ChannelValue, typename Layout, int K>
 struct kth_element_reference_type<pixel<ChannelValue,Layout>, K> {
-    typedef typename channel_traits<ChannelValue>::reference type;
+    using type = typename channel_traits<ChannelValue>::reference;
 };
 
 template <typename ChannelValue, typename Layout, int K>
 struct kth_element_reference_type<const pixel<ChannelValue,Layout>, K> {
-    typedef typename channel_traits<ChannelValue>::const_reference type;
+    using type = typename channel_traits<ChannelValue>::const_reference;
 };
 
 template <typename ChannelValue, typename Layout, int K>
 struct kth_element_const_reference_type<pixel<ChannelValue,Layout>, K> {
-    typedef typename channel_traits<ChannelValue>::const_reference type;
+    using type = typename channel_traits<ChannelValue>::const_reference;
 };
 
 /////////////////////////////
@@ -179,12 +179,12 @@ struct is_pixel<pixel<ChannelValue,Layout> > : public mpl::true_{};
 
 template <typename ChannelValue, typename Layout>
 struct color_space_type<pixel<ChannelValue,Layout> > {
-    typedef typename Layout::color_space_t type;
+    using type = typename Layout::color_space_t;
 };
 
 template <typename ChannelValue, typename Layout>
 struct channel_mapping_type<pixel<ChannelValue,Layout> > {
-    typedef typename Layout::channel_mapping_t type;
+    using type = typename Layout::channel_mapping_t;
 };
 
 template <typename ChannelValue, typename Layout>
@@ -192,7 +192,7 @@ struct is_planar<pixel<ChannelValue,Layout> > : public mpl::false_ {};
 
 template <typename ChannelValue, typename Layout>
 struct channel_type<pixel<ChannelValue,Layout> > {
-    typedef ChannelValue type;
+    using type = ChannelValue;
 };
 
 }}  // namespace boost::gil
