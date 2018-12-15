@@ -79,7 +79,7 @@ struct error_t {};
 /// is not required and the default throws std::bad_cast.
 template <typename Derived, typename Result=void>
 struct binary_operation_obj {
-    typedef Result result_type;
+    using result_type = Result;
 
     template <typename V1, typename V2> BOOST_FORCEINLINE
     result_type operator()(const std::pair<const V1*,const V2*>& p) const {
@@ -175,7 +175,7 @@ struct copier_n {
 /// Source range is delimited by image iterators
 template <typename IL, typename O>  // IL Models ConstPixelLocatorConcept, O Models PixelIteratorConcept
 struct copier_n<iterator_from_2d<IL>,O> {
-    typedef typename std::iterator_traits<iterator_from_2d<IL> >::difference_type diff_t;
+    using diff_t = typename std::iterator_traits<iterator_from_2d<IL> >::difference_type;
     BOOST_FORCEINLINE void operator()(iterator_from_2d<IL> src, diff_t n, O dst) const {
         gil_function_requires<PixelLocatorConcept<IL> >();
         gil_function_requires<MutablePixelIteratorConcept<O> >();
@@ -193,7 +193,7 @@ struct copier_n<iterator_from_2d<IL>,O> {
 /// Destination range is delimited by image iterators
 template <typename I, typename OL> // I Models ConstPixelIteratorConcept, OL Models PixelLocatorConcept
 struct copier_n<I,iterator_from_2d<OL> > {
-    typedef typename std::iterator_traits<I>::difference_type diff_t;
+    using diff_t = typename std::iterator_traits<I>::difference_type;
     BOOST_FORCEINLINE void operator()(I src, diff_t n, iterator_from_2d<OL> dst) const {
         gil_function_requires<PixelIteratorConcept<I> >();
         gil_function_requires<MutablePixelLocatorConcept<OL> >();
@@ -211,7 +211,7 @@ struct copier_n<I,iterator_from_2d<OL> > {
 /// Both source and destination ranges are delimited by image iterators
 template <typename IL, typename OL>
 struct copier_n<iterator_from_2d<IL>,iterator_from_2d<OL> > {
-   typedef typename iterator_from_2d<IL>::difference_type diff_t;
+   using diff_t = typename iterator_from_2d<IL>::difference_type;
    BOOST_FORCEINLINE void operator()(iterator_from_2d<IL> src, diff_t n, iterator_from_2d<OL> dst) const {
         gil_function_requires<PixelLocatorConcept<IL> >();
         gil_function_requires<MutablePixelLocatorConcept<OL> >();
@@ -233,8 +233,8 @@ struct copier_n<iterator_from_2d<IL>,iterator_from_2d<OL> > {
 
 template <typename SrcIterator, typename DstIterator>
 BOOST_FORCEINLINE DstIterator copy_with_2d_iterators(SrcIterator first, SrcIterator last, DstIterator dst) {
-    typedef typename SrcIterator::x_iterator src_x_iterator;
-    typedef typename DstIterator::x_iterator dst_x_iterator;
+    using src_x_iterator = typename SrcIterator::x_iterator;
+    using dst_x_iterator = typename DstIterator::x_iterator;
 
     typename SrcIterator::difference_type n = last - first;
 
@@ -290,7 +290,7 @@ class copy_and_convert_pixels_fn : public binary_operation_obj<copy_and_convert_
 private:
     CC _cc;
 public:
-    typedef typename binary_operation_obj<copy_and_convert_pixels_fn<CC> >::result_type result_type;
+    using result_type = typename binary_operation_obj<copy_and_convert_pixels_fn<default_color_converter> >::result_type;
     copy_and_convert_pixels_fn() {}
     copy_and_convert_pixels_fn(CC cc_in) : _cc(cc_in) {}
    // when the two color spaces are incompatible, a color conversion is performed
@@ -491,7 +491,7 @@ void uninitialized_fill_aux(It first, It last,
                             const P& p, mpl::true_) {
     int channel=0;
     try {
-        typedef typename std::iterator_traits<It>::value_type pixel_t;
+        using pixel_t = typename std::iterator_traits<It>::value_type;
         while (channel < num_channels<pixel_t>::value) {
             std::uninitialized_fill(dynamic_at_c(first,channel), dynamic_at_c(last,channel),
                                     dynamic_at_c(p,channel));
@@ -550,7 +550,7 @@ void uninitialized_fill_pixels(const View& img_view, const Value& val) {
 namespace detail {
 template <typename It> BOOST_FORCEINLINE
 void default_construct_range_impl(It first, It last, mpl::true_) {
-    typedef typename std::iterator_traits<It>::value_type value_t;
+    using value_t = typename std::iterator_traits<It>::value_type;
     It first1=first;
     try {
         while (first!=last) {
@@ -575,7 +575,7 @@ BOOST_FORCEINLINE
 void default_construct_aux(It first, It last, mpl::true_) {
     int channel=0;
     try {
-        typedef typename std::iterator_traits<It>::value_type pixel_t;
+        using pixel_t = typename std::iterator_traits<It>::value_type;
         while (channel < num_channels<pixel_t>::value) {
             default_construct_range(dynamic_at_c(first,channel), dynamic_at_c(last,channel));
             ++channel;
@@ -675,7 +675,7 @@ void uninitialized_copy_aux(It1 first1, It1 last1,
                             It2 first2, mpl::true_) {
     int channel=0;
     try {
-        typedef typename std::iterator_traits<It1>::value_type pixel_t;
+        using pixel_t = typename std::iterator_traits<It1>::value_type;
         while (channel < num_channels<pixel_t>::value) {
             std::uninitialized_copy(dynamic_at_c(first1,channel), dynamic_at_c(last1,channel), dynamic_at_c(first2,channel));
             ++channel;
@@ -703,7 +703,7 @@ void uninitialized_copy_aux(It1 first1, It1 last1,
 /// If an exception is thrown destructs any in-place copy-constructed objects
 template <typename View1, typename View2>
 void uninitialized_copy_pixels(const View1& view1, const View2& view2) {
-    typedef mpl::bool_<is_planar<View1>::value && is_planar<View2>::value> is_planar;
+    using is_planar = mpl::bool_<is_planar<View1>::value && is_planar<View2>::value>;
     assert(view1.dimensions()==view2.dimensions());
     if (view1.is_1d_traversable() && view2.is_1d_traversable())
         detail::uninitialized_copy_aux(view1.begin().x(), view1.end().x(),
