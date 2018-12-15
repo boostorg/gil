@@ -39,17 +39,17 @@ struct bit_aligned_pixel_iterator : public iterator_facade<bit_aligned_pixel_ite
                                                   const NonAlignedPixelReference,
                                                   typename NonAlignedPixelReference::bit_range_t::difference_type> {
 private:
-    typedef iterator_facade<bit_aligned_pixel_iterator<NonAlignedPixelReference>,
+    using parent_t = iterator_facade<bit_aligned_pixel_iterator<NonAlignedPixelReference>,
                             typename NonAlignedPixelReference::value_type,
                             std::random_access_iterator_tag,
                             const NonAlignedPixelReference,
-                            typename NonAlignedPixelReference::bit_range_t::difference_type> parent_t;
+                            typename NonAlignedPixelReference::bit_range_t::difference_type>;
     template <typename Ref> friend struct bit_aligned_pixel_iterator;
 
-    typedef typename NonAlignedPixelReference::bit_range_t bit_range_t;
+    using bit_range_t = typename NonAlignedPixelReference::bit_range_t;
 public:
-    typedef typename parent_t::difference_type             difference_type;
-    typedef typename parent_t::reference                   reference;
+    using difference_type = typename parent_t::difference_type;
+    using reference = typename parent_t::reference;
 
     bit_aligned_pixel_iterator() {}
     bit_aligned_pixel_iterator(const bit_aligned_pixel_iterator& p) : _bit_range(p._bit_range) {}
@@ -83,7 +83,7 @@ private:
 
 template <typename NonAlignedPixelReference>
 struct const_iterator_type<bit_aligned_pixel_iterator<NonAlignedPixelReference> > {
-    typedef bit_aligned_pixel_iterator<typename NonAlignedPixelReference::const_reference> type;
+    using type = bit_aligned_pixel_iterator<typename NonAlignedPixelReference::const_reference>;
 };
 
 template <typename NonAlignedPixelReference>
@@ -144,7 +144,7 @@ NonAlignedPixelReference memunit_advanced_ref(bit_aligned_pixel_iterator<NonAlig
 
 template <typename NonAlignedPixelReference>
 struct dynamic_x_step_type<bit_aligned_pixel_iterator<NonAlignedPixelReference> > {
-    typedef memory_based_step_iterator<bit_aligned_pixel_iterator<NonAlignedPixelReference> > type;
+    using type = memory_based_step_iterator<bit_aligned_pixel_iterator<NonAlignedPixelReference> >;
 };
 
 /////////////////////////////
@@ -152,13 +152,15 @@ struct dynamic_x_step_type<bit_aligned_pixel_iterator<NonAlignedPixelReference> 
 /////////////////////////////
 
 template <typename B, typename C, typename L, bool M>
-struct iterator_type_from_pixel<const bit_aligned_pixel_reference<B,C,L,M>,false,false,false> {
-    typedef bit_aligned_pixel_iterator<bit_aligned_pixel_reference<B,C,L,false> > type;
+struct iterator_type_from_pixel<const bit_aligned_pixel_reference<B,C,L,M>,false,false,false>
+{
+    using type = bit_aligned_pixel_iterator<bit_aligned_pixel_reference<B,C,L,false>> ;
 };
 
 template <typename B, typename C, typename L, bool M>
-struct iterator_type_from_pixel<const bit_aligned_pixel_reference<B,C,L,M>,false,false,true> {
-    typedef bit_aligned_pixel_iterator<bit_aligned_pixel_reference<B,C,L,true> > type;
+struct iterator_type_from_pixel<const bit_aligned_pixel_reference<B,C,L,M>,false,false,true>
+{
+    using type = bit_aligned_pixel_iterator<bit_aligned_pixel_reference<B,C,L,true>>;
 };
 
 template <typename B, typename C, typename L, bool M, bool IsPlanar, bool IsStep, bool IsMutable>

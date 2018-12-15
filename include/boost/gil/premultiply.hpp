@@ -57,11 +57,11 @@ struct premultiply
     template <typename SrcP, typename DstP>
     void operator()(const SrcP& src, DstP& dst) const
     {
-        typedef typename color_space_type<SrcP>::type src_colour_space_t;
-        typedef typename color_space_type<DstP>::type dst_colour_space_t;
-        typedef typename mpl::remove <src_colour_space_t, alpha_t>::type src_colour_channels;
+        using src_colour_space_t = typename color_space_type<SrcP>::type;
+        using dst_colour_space_t = typename color_space_type<DstP>::type;
+        using src_colour_channels = typename mpl::remove <src_colour_space_t, alpha_t>::type;
 
-        typedef mpl::bool_<mpl::contains<dst_colour_space_t, alpha_t>::value> has_alpha_t;
+        using has_alpha_t = mpl::bool_<mpl::contains<dst_colour_space_t, alpha_t>::value>;
         mpl::for_each<src_colour_channels>(channel_premultiply<SrcP, DstP>(src, dst));
         detail::assign_alpha_if(has_alpha_t(), src, dst);
     }
@@ -72,12 +72,12 @@ template <typename SrcConstRefP,  // const reference to the source pixel
 class premultiply_deref_fn
 {
 public:
-    typedef premultiply_deref_fn const_t;
-    typedef DstP                value_type;
-    typedef value_type          reference;      // read-only dereferencing
-    typedef const value_type&   const_reference;
-    typedef SrcConstRefP        argument_type;
-    typedef reference           result_type;
+    using const_t = premultiply_deref_fn<SrcConstRefP, DstP>;
+    using value_type = DstP;
+    using reference = value_type;      // read-only dereferencing
+    using const_reference = const value_type &;
+    using argument_type = SrcConstRefP;
+    using result_type = reference;
     BOOST_STATIC_CONSTANT(bool, is_mutable=false);
 
     result_type operator()(argument_type srcP) const
@@ -92,11 +92,11 @@ template <typename SrcView, typename DstP>
 struct premultiplied_view_type
 {
 private:
-    typedef typename SrcView::const_t::reference src_pix_ref;  // const reference to pixel in SrcView
-    typedef premultiply_deref_fn<src_pix_ref, DstP> deref_t; // the dereference adaptor that performs color conversion
-    typedef typename SrcView::template add_deref<deref_t> add_ref_t;
+    using src_pix_ref = typename SrcView::const_t::reference;  // const reference to pixel in SrcView
+    using deref_t = premultiply_deref_fn<src_pix_ref, DstP>; // the dereference adaptor that performs color conversion
+    using add_ref_t = typename SrcView::template add_deref<deref_t>;
 public:
-    typedef typename add_ref_t::type type; // the color converted view type
+    using type = typename add_ref_t::type; // the color converted view type
     static type make(const SrcView& sv) { return add_ref_t::make(sv, deref_t()); }
 };
 

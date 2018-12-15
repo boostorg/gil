@@ -70,11 +70,11 @@ struct ChannelConcept
     {
         gil_function_requires<boost::EqualityComparableConcept<T>>();
 
-        typedef typename channel_traits<T>::value_type v;
-        typedef typename channel_traits<T>::reference r;
-        typedef typename channel_traits<T>::pointer p;
-        typedef typename channel_traits<T>::const_reference cr;
-        typedef typename channel_traits<T>::const_pointer cp;
+        using v = typename channel_traits<T>::value_type;
+        using r = typename channel_traits<T>::reference;
+        using p = typename channel_traits<T>::pointer;
+        using cr = typename channel_traits<T>::const_reference;
+        using cp = typename channel_traits<T>::const_pointer;
 
         channel_traits<T>::min_value();
         channel_traits<T>::max_value();

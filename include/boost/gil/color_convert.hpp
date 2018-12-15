@@ -139,7 +139,7 @@ template <>
 struct default_color_converter_impl<rgb_t,cmyk_t> {
     template <typename P1, typename P2>
     void operator()(const P1& src, P2& dst) const {
-        typedef typename channel_type<P2>::type T2;
+        using T2 = typename channel_type<P2>::type;
         get_color(dst,cyan_t())    = channel_invert(channel_convert<T2>(get_color(src,red_t())));          // c = 1 - r
         get_color(dst,magenta_t()) = channel_invert(channel_convert<T2>(get_color(src,green_t())));        // m = 1 - g
         get_color(dst,yellow_t())  = channel_invert(channel_convert<T2>(get_color(src,blue_t())));         // y = 1 - b
@@ -168,7 +168,7 @@ template <>
 struct default_color_converter_impl<cmyk_t,rgb_t> {
     template <typename P1, typename P2>
     void operator()(const P1& src, P2& dst) const {
-        typedef typename channel_type<P1>::type T1;
+        using T1 = typename channel_type<P1>::type;
         get_color(dst,red_t())  =
             channel_convert<typename color_element_type<P2,red_t>::type>(
                 channel_invert<T1>(
@@ -234,7 +234,7 @@ template <typename C1>
 struct default_color_converter_impl<C1,rgba_t> {
     template <typename P1, typename P2>
     void operator()(const P1& src, P2& dst) const {
-        typedef typename channel_type<P2>::type T2;
+        using T2 = typename channel_type<P2>::type;
         pixel<T2,rgb_layout_t> tmp;
         default_color_converter_impl<C1,rgb_t>()(src,tmp);
         get_color(dst,red_t())  =get_color(tmp,red_t());
@@ -254,7 +254,7 @@ template <typename C2>
 struct default_color_converter_impl<rgba_t,C2> {
     template <typename P1, typename P2>
     void operator()(const P1& src, P2& dst) const {
-        typedef typename channel_type<P1>::type T1;
+        using T1 = typename channel_type<P1>::type;
         default_color_converter_impl<rgb_t,C2>()(
             pixel<T1,rgb_layout_t>(channel_multiply(get_color(src,red_t()),  get_color(src,alpha_t())),
                                    channel_multiply(get_color(src,green_t()),get_color(src,alpha_t())),
@@ -282,8 +282,8 @@ struct default_color_converter_impl<rgba_t,rgba_t> {
 struct default_color_converter {
     template <typename SrcP, typename DstP>
     void operator()(const SrcP& src,DstP& dst) const {
-        typedef typename color_space_type<SrcP>::type SrcColorSpace;
-        typedef typename color_space_type<DstP>::type DstColorSpace;
+        using SrcColorSpace = typename color_space_type<SrcP>::type;
+        using DstColorSpace = typename color_space_type<DstP>::type;
         default_color_converter_impl<SrcColorSpace,DstColorSpace>()(src,dst);
     }
 };

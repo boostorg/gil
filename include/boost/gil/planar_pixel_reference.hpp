@@ -35,17 +35,18 @@ namespace boost { namespace gil {
 ///
 template <typename ChannelReference, typename ColorSpace>        // ChannelReference is a channel reference (const or mutable)
 struct planar_pixel_reference
-   : public detail::homogeneous_color_base<ChannelReference,layout<ColorSpace>,mpl::size<ColorSpace>::value> {
-    typedef detail::homogeneous_color_base<ChannelReference,layout<ColorSpace>,mpl::size<ColorSpace>::value> parent_t;
+   : public detail::homogeneous_color_base<ChannelReference,layout<ColorSpace>,mpl::size<ColorSpace>::value>
+{
+    using parent_t = detail::homogeneous_color_base<ChannelReference,layout<ColorSpace>,mpl::size<ColorSpace>::value>;
 private:
     // These three are only defined for homogeneous pixels
-    typedef typename channel_traits<ChannelReference>::value_type      channel_t;
-    typedef typename channel_traits<ChannelReference>::const_reference channel_const_reference;
+    using channel_t = typename channel_traits<ChannelReference>::value_type;
+    using channel_const_reference = typename channel_traits<ChannelReference>::const_reference;
 public:
     BOOST_STATIC_CONSTANT(bool, is_mutable = channel_traits<ChannelReference>::is_mutable);
-    typedef pixel<channel_t,layout<ColorSpace> >                       value_type;
-    typedef planar_pixel_reference                                     reference;
-    typedef planar_pixel_reference<channel_const_reference,ColorSpace> const_reference;
+    using value_type = pixel<channel_t,layout<ColorSpace>>;
+    using reference = planar_pixel_reference<ChannelReference, ColorSpace>;
+    using const_reference = planar_pixel_reference<channel_const_reference,ColorSpace>;
 
     planar_pixel_reference(ChannelReference v0, ChannelReference v1) : parent_t(v0,v1) {}
     planar_pixel_reference(ChannelReference v0, ChannelReference v1, ChannelReference v2) : parent_t(v0,v1,v2) {}
@@ -93,19 +94,19 @@ private:
 
 template <typename ChannelReference, typename ColorSpace, int K>
 struct kth_element_type<planar_pixel_reference<ChannelReference,ColorSpace>, K> {
-    typedef ChannelReference type;
+    using type = ChannelReference;
 };
 
 template <typename ChannelReference, typename ColorSpace, int K>
 struct kth_element_reference_type<planar_pixel_reference<ChannelReference,ColorSpace>, K> {
-    typedef ChannelReference type;
+    using type = ChannelReference;
 };
 
 template <typename ChannelReference, typename ColorSpace, int K>
 struct kth_element_const_reference_type<planar_pixel_reference<ChannelReference,ColorSpace>, K>
     : public add_reference<typename add_const<ChannelReference>::type>
 {
-//    typedef typename channel_traits<ChannelReference>::const_reference type;
+//    using type = typename channel_traits<ChannelReference>::const_reference;
 };
 
 /////////////////////////////
@@ -125,14 +126,14 @@ struct is_pixel< planar_pixel_reference<ChannelReference,ColorSpace> > : public 
 /// \ingroup PixelModelPlanarRef
 template <typename ChannelReference, typename ColorSpace>
 struct color_space_type<planar_pixel_reference<ChannelReference,ColorSpace> > {
-    typedef ColorSpace type;
+    using type = ColorSpace;
 };
 
 /// \brief Specifies the color space type of a planar pixel reference. Required by PixelBasedConcept
 /// \ingroup PixelModelPlanarRef
 template <typename ChannelReference, typename ColorSpace>
 struct channel_mapping_type<planar_pixel_reference<ChannelReference,ColorSpace> > {
-    typedef typename layout<ColorSpace>::channel_mapping_t type;
+    using type = typename layout<ColorSpace>::channel_mapping_t;
 };
 
 /// \brief Specifies that planar_pixel_reference represents a planar construct. Required by PixelBasedConcept
@@ -144,7 +145,7 @@ struct is_planar<planar_pixel_reference<ChannelReference,ColorSpace> > : mpl::tr
 /// \ingroup PixelModelPlanarRef
 template <typename ChannelReference, typename ColorSpace>
 struct channel_type<planar_pixel_reference<ChannelReference,ColorSpace> > {
-    typedef typename channel_traits<ChannelReference>::value_type type;
+    using type = typename channel_traits<ChannelReference>::value_type;
 };
 
 }}  // namespace boost::gil
