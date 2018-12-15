@@ -44,16 +44,16 @@ struct planar_pixel_iterator : public iterator_facade<planar_pixel_iterator<Chan
                                                       const planar_pixel_reference<typename std::iterator_traits<ChannelPtr>::reference,ColorSpace> >,
                                public detail::homogeneous_color_base<ChannelPtr,layout<ColorSpace>,mpl::size<ColorSpace>::value > {
 private:
-    typedef iterator_facade<planar_pixel_iterator<ChannelPtr,ColorSpace>,
-                            pixel<typename std::iterator_traits<ChannelPtr>::value_type,layout<ColorSpace> >,
+    using parent_t = iterator_facade<planar_pixel_iterator<ChannelPtr,ColorSpace>,
+                            pixel<typename std::iterator_traits<ChannelPtr>::value_type,layout<ColorSpace>>,
                             std::random_access_iterator_tag,
-                            const planar_pixel_reference<typename std::iterator_traits<ChannelPtr>::reference,ColorSpace> > parent_t;
-    typedef detail::homogeneous_color_base<ChannelPtr,layout<ColorSpace>,mpl::size<ColorSpace>::value> color_base_parent_t;
-    typedef typename std::iterator_traits<ChannelPtr>::value_type channel_t;
+                            const planar_pixel_reference<typename std::iterator_traits<ChannelPtr>::reference,ColorSpace>>;
+    using color_base_parent_t = detail::homogeneous_color_base<ChannelPtr,layout<ColorSpace>,mpl::size<ColorSpace>::value>;
+    using channel_t = typename std::iterator_traits<ChannelPtr>::value_type;
 public:
-    typedef typename parent_t::value_type                 value_type;
-    typedef typename parent_t::reference                  reference;
-    typedef typename parent_t::difference_type            difference_type;
+    using value_type = typename parent_t::value_type;
+    using reference = typename parent_t::reference;
+    using difference_type = typename parent_t::difference_type;
 
     planar_pixel_iterator() : color_base_parent_t(0) {}
     planar_pixel_iterator(bool) {}        // constructor that does not fill with zero (for performance)
@@ -116,9 +116,9 @@ namespace detail {
 template <typename IC, typename C>
 struct const_iterator_type<planar_pixel_iterator<IC,C> > {
 private:
-    typedef typename std::iterator_traits<IC>::value_type channel_t;
+    using channel_t = typename std::iterator_traits<IC>::value_type;
 public:
-    typedef planar_pixel_iterator<typename channel_traits<channel_t>::const_pointer,C> type;
+    using type = planar_pixel_iterator<typename channel_traits<channel_t>::const_pointer,C>;
 };
 
 // The default implementation when the iterator is a C pointer is to use the standard constness semantics
@@ -131,7 +131,7 @@ struct iterator_is_mutable<planar_pixel_iterator<IC,C> > : public detail::channe
 
 template <typename IC, typename C, int K>
 struct kth_element_type<planar_pixel_iterator<IC,C>, K> {
-    typedef IC type;
+    using type = IC;
 };
 
 template <typename IC, typename C, int K>
@@ -146,7 +146,7 @@ struct kth_element_const_reference_type<planar_pixel_iterator<IC,C>, K> : public
 
 template <typename IC, typename C>
 struct color_space_type<planar_pixel_iterator<IC,C> > {
-    typedef C type;
+    using type = C;
 };
 
 template <typename IC, typename C>
@@ -157,7 +157,7 @@ struct is_planar<planar_pixel_iterator<IC,C> > : public mpl::true_ {};
 
 template <typename IC, typename C>
 struct channel_type<planar_pixel_iterator<IC,C> > {
-    typedef typename std::iterator_traits<IC>::value_type type;
+    using type = typename std::iterator_traits<IC>::value_type;
 };
 
 /////////////////////////////
@@ -204,7 +204,7 @@ inline planar_pixel_reference<typename std::iterator_traits<ChannelPtr>::referen
 
 template <typename IC, typename C>
 struct dynamic_x_step_type<planar_pixel_iterator<IC,C> > {
-    typedef memory_based_step_iterator<planar_pixel_iterator<IC,C> > type;
+    using type = memory_based_step_iterator<planar_pixel_iterator<IC,C>>;
 };
 } }  // namespace boost::gil
 
