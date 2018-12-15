@@ -91,7 +91,7 @@ Example:
 unsigned char data=0;
 
 // A mutable reference to a 6-bit BGR pixel in "123" format (1 bit for red, 2 bits for green, 3 bits for blue)
-typedef const bit_aligned_pixel_reference<unsigned char, mpl::vector3_c<int,1,2,3>, rgb_layout_t, true>  rgb123_ref_t;
+using rgb123_ref_t = bit_aligned_pixel_reference<unsigned char, mpl::vector3_c<int,1,2,3>, rgb_layout_t, true> const;
 
 // create the pixel reference at bit offset 2
 // (i.e. red = [2], green = [3,4], blue = [5,6,7] bits)
