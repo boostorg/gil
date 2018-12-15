@@ -46,7 +46,6 @@ void correlate_rows_imp(const SrcView& src, const Kernel& ker, const DstView& ds
 
     typedef typename pixel_proxy<typename SrcView::value_type>::type PIXEL_SRC_REF;
     typedef typename pixel_proxy<typename DstView::value_type>::type PIXEL_DST_REF;
-    typedef typename Kernel::value_type kernel_type;
 
     if(ker.size()==1) {//reduces to a multiplication
         view_multiplies_scalar<PixelAccum>(src,*ker.begin(),dst);
