@@ -48,15 +48,11 @@ file(READ ${CMAKE_CURRENT_LIST_DIR}/main.cpp _main_content)
 
 foreach(_header ${_headers})
   string(REPLACE ".hpp" "" _target ${_header})
-  string(REPLACE "/" "_" _main ${_target})
   string(REPLACE "/" "-" _target ${_target})
   set(_cpp ${CMAKE_BINARY_DIR}/test/headers/${_target}.cpp)
   set(_target test_header_${_target})
 
   string(REPLACE "BOOST_GIL_TEST_HEADER" "${_header}" _content "${_main_content}")
-  string(REPLACE "main" "${_main}" _content "${_content}")
-  unset(_main)
-
   file(WRITE ${_cpp} "${_content}")
   unset(_content)
 
