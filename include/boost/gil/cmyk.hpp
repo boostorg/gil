@@ -37,7 +37,7 @@ struct black_t {};
 typedef mpl::vector4<cyan_t,magenta_t,yellow_t,black_t>  cmyk_t;
 
 /// \ingroup LayoutModel
-typedef layout<cmyk_t> cmyk_layout_t;
+using cmyk_layout_t = layout<cmyk_t>;
 
 /// \ingroup ImageViewConstructors
 /// \brief from raw CMYK planar data
