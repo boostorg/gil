@@ -89,16 +89,16 @@ template
 >
 struct deref_base
 {
-    typedef ArgType        argument_type;
-    typedef ResultType     result_type;
-    typedef ConstT         const_t;
-    typedef Value          value_type;
-    typedef Reference      reference;
-    typedef ConstReference const_reference;
+    using argument_type = ArgType;
+    using result_type = ResultType;
+    using const_t = ConstT;
+    using value_type = Value;
+    using reference = Reference;
+    using const_reference = ConstReference;
     BOOST_STATIC_CONSTANT(bool, is_mutable = IsMutable);
 };
 
-/// \brief Composes two dereference function objects. Similar to std::unary_compose but needs to pull some typedefs from the component types.  Models: PixelDereferenceAdaptorConcept
+/// \brief Composes two dereference function objects. Similar to std::unary_compose but needs to pull some aliases from the component types.  Models: PixelDereferenceAdaptorConcept
 /// \ingroup PixelDereferenceAdaptorModel
 ///
 template <typename D1, typename D2>
@@ -117,8 +117,8 @@ public:
     D1 _fn1;
     D2 _fn2;
 
-    typedef typename D2::argument_type   argument_type;
-    typedef typename D1::result_type     result_type;
+    using argument_type = typename D2::argument_type;
+    using result_type = typename D1::result_type;
 
     deref_compose() = default;
     deref_compose(const D1& x, const D2& y) : _fn1(x), _fn2(y) {}
@@ -192,17 +192,17 @@ copy_n(InputIter first, Size count, OutputIter result)
 template <typename T>
 struct identity
 {
-    typedef T argument_type;
-    typedef T result_type;
+    using argument_type = T;
+    using result_type = T;
     const T& operator()(const T& val) const { return val; }
 };
 
 /// \brief plus function object whose arguments may be of different type.
 template <typename T1, typename T2>
 struct plus_asymmetric {
-    typedef T1 first_argument_type;
-    typedef T2 second_argument_type;
-    typedef T1 result_type;
+    using first_argument_type = T1;
+    using second_argument_type = T2;
+    using result_type = T1;
     T1 operator()(T1 f1, T2 f2) const
     {
         return f1+f2;
@@ -213,8 +213,8 @@ struct plus_asymmetric {
 template <typename T>
 struct inc
 {
-    typedef T argument_type;
-    typedef T result_type;
+    using argument_type = T;
+    using result_type = T;
     T operator()(T x) const { return ++x; }
 };
 
@@ -222,8 +222,8 @@ struct inc
 template <typename T>
 struct dec
 {
-    typedef T argument_type;
-    typedef T result_type;
+    using argument_type = T;
+    using result_type = T;
     T operator()(T x) const { return --x; }
 };
 
@@ -245,8 +245,8 @@ struct type_to_index
 template <typename ColorSpace, typename ChannelMapping = mpl::range_c<int,0,mpl::size<ColorSpace>::value>>
 struct layout
 {
-    typedef ColorSpace      color_space_t;
-    typedef ChannelMapping  channel_mapping_t;
+    using color_space_t = ColorSpace;
+    using channel_mapping_t = ChannelMapping;
 };
 
 /// \brief A version of swap that also works with reference proxy objects

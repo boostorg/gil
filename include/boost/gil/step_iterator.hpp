@@ -36,12 +36,13 @@ template <typename Derived,  // type of the derived class
           typename Iterator, // Models Iterator
           typename SFn>      // A policy object that can compute the distance between two iterators of type Iterator
                              // and can advance an iterator of type Iterator a given number of Iterator's units
-class step_iterator_adaptor : public iterator_adaptor<Derived, Iterator, use_default, use_default, use_default, typename SFn::difference_type> {
+class step_iterator_adaptor : public iterator_adaptor<Derived, Iterator, use_default, use_default, use_default, typename SFn::difference_type>
+{
 public:
-    typedef iterator_adaptor<Derived, Iterator, use_default, use_default, use_default, typename SFn::difference_type> parent_t;
-    typedef typename std::iterator_traits<Iterator>::difference_type base_difference_type;
-    typedef typename SFn::difference_type                           difference_type;
-    typedef typename std::iterator_traits<Iterator>::reference       reference;
+    using parent_t = iterator_adaptor<Derived, Iterator, use_default, use_default, use_default, typename SFn::difference_type>;
+    using base_difference_type = typename std::iterator_traits<Iterator>::difference_type;
+    using difference_type = typename SFn::difference_type;
+    using reference = typename std::iterator_traits<Iterator>::reference;
 
     step_iterator_adaptor() {}
     step_iterator_adaptor(const Iterator& it, SFn step_fn=SFn()) : parent_t(it), _step_fn(step_fn) {}
@@ -117,7 +118,7 @@ bool operator!=(const step_iterator_adaptor<D,Iterator,SFn>& p1, const step_iter
 /// \brief function object that returns the memory unit distance between two iterators and advances a given iterator a given number of mem units (bytes or bits)
 template <typename Iterator>
 struct memunit_step_fn {
-    typedef std::ptrdiff_t difference_type;
+    using difference_type = std::ptrdiff_t;
 
     memunit_step_fn(difference_type step=memunit_step(Iterator())) : _step(step) {}
 
@@ -134,15 +135,16 @@ private:
 template <typename Iterator>
 class memory_based_step_iterator : public detail::step_iterator_adaptor<memory_based_step_iterator<Iterator>,
                                                                             Iterator,
-                                                                            memunit_step_fn<Iterator> > {
+                                                                            memunit_step_fn<Iterator>>
+{
     GIL_CLASS_REQUIRE(Iterator, boost::gil, MemoryBasedIteratorConcept)
 public:
-    typedef detail::step_iterator_adaptor<memory_based_step_iterator<Iterator>,
+    using parent_t = detail::step_iterator_adaptor<memory_based_step_iterator<Iterator>,
                                           Iterator,
-                                          memunit_step_fn<Iterator> > parent_t;
-    typedef typename parent_t::reference                            reference;
-    typedef typename parent_t::difference_type                      difference_type;
-    typedef Iterator                                                x_iterator;
+                                          memunit_step_fn<Iterator>>;
+    using reference = typename parent_t::reference;
+    using difference_type = typename parent_t::difference_type;
+    using x_iterator = Iterator;
 
     memory_based_step_iterator() : parent_t(Iterator()) {}
     memory_based_step_iterator(Iterator it, std::ptrdiff_t memunit_step) : parent_t(it, memunit_step_fn<Iterator>(memunit_step)) {}
@@ -162,7 +164,7 @@ public:
 
 template <typename Iterator>
 struct const_iterator_type<memory_based_step_iterator<Iterator> > {
-    typedef memory_based_step_iterator<typename const_iterator_type<Iterator>::type>  type;
+    using type = memory_based_step_iterator<typename const_iterator_type<Iterator>::type>;
 };
 
 template <typename Iterator>
@@ -178,12 +180,12 @@ struct is_iterator_adaptor<memory_based_step_iterator<Iterator> > : public mpl::
 
 template <typename Iterator>
 struct iterator_adaptor_get_base<memory_based_step_iterator<Iterator> > {
-    typedef Iterator type;
+    using type = Iterator;
 };
 
 template <typename Iterator, typename NewBaseIterator>
 struct iterator_adaptor_rebind<memory_based_step_iterator<Iterator>,NewBaseIterator> {
-    typedef memory_based_step_iterator<NewBaseIterator> type;
+    using type = memory_based_step_iterator<NewBaseIterator>;
 };
 
 /////////////////////////////
@@ -243,7 +245,7 @@ memunit_advanced_ref(const memory_based_step_iterator<Iterator>& p,
 
 template <typename Iterator>
 struct dynamic_x_step_type<memory_based_step_iterator<Iterator> > {
-    typedef memory_based_step_iterator<Iterator> type;
+    using type = memory_based_step_iterator<Iterator>;
 };
 
 // For step iterators, pass the function object to the base
@@ -251,7 +253,7 @@ template <typename Iterator, typename Deref>
 struct iterator_add_deref<memory_based_step_iterator<Iterator>,Deref> {
     GIL_CLASS_REQUIRE(Deref, boost::gil, PixelDereferenceAdaptorConcept)
 
-    typedef memory_based_step_iterator<typename iterator_add_deref<Iterator, Deref>::type> type;
+    using type = memory_based_step_iterator<typename iterator_add_deref<Iterator, Deref>::type>;
 
     static type make(const memory_based_step_iterator<Iterator>& it, const Deref& d) { return type(iterator_add_deref<Iterator, Deref>::make(it.base(),d),it.step()); }
 };
