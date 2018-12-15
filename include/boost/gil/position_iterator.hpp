@@ -34,9 +34,9 @@ struct position_iterator : public iterator_facade<position_iterator<Deref,Dim>,
                             std::random_access_iterator_tag,
                             typename Deref::reference,
                             typename Deref::argument_type::template axis<Dim>::coord_t> parent_t;
-    typedef typename parent_t::difference_type difference_type;
-    typedef typename parent_t::reference       reference;
-    typedef typename Deref::argument_type      point_t;
+    using difference_type = typename parent_t::difference_type;
+    using reference = typename parent_t::reference;
+    using point_t = typename Deref::argument_type;
 
     position_iterator() {}
     position_iterator(const point_t& p, const point_t& step, const Deref& d) : _p(p), _step(step), _d(d) {}
