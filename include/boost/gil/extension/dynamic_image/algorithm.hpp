@@ -149,7 +149,7 @@ template <typename Value>
 struct fill_pixels_fn {
     fill_pixels_fn(const Value& val) : _val(val) {}
 
-    typedef void result_type;
+    using result_type = void;
     template <typename V> result_type operator()(const V& img_view) const {
         fill_pixels_fn1<pixels_are_compatible<typename V::value_type, Value>::value>::apply(img_view,_val);
     }
