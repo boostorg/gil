@@ -88,7 +88,7 @@ private:
 
     void check_coordinates( const point_t& /* dim */ )
     {
-       //typedef point_t::value_type int_t;
+       //using int_t = point_t::value_type;
 
        //int_t width  = static_cast< int_t >( _info._width  );
        //int_t height = static_cast< int_t >( _info._height );

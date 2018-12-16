@@ -50,7 +50,7 @@ class file_stream_device
 {
 public:
 
-   typedef FormatTag format_tag_t;
+   using format_tag_t = FormatTag;
 
 public:
 
@@ -565,7 +565,7 @@ struct is_adaptable_input_device< FormatTag
                                                     >::type
                                 > : mpl::true_
 {
-    typedef istream_device< FormatTag > device_type;
+    using device_type = istream_device<FormatTag>;
 };
 
 template< typename FormatTag >
@@ -575,7 +575,7 @@ struct is_adaptable_input_device< FormatTag
                                 >
     : mpl::true_
 {
-    typedef file_stream_device< FormatTag > device_type;
+    using device_type = file_stream_device<FormatTag>;
 };
 
 ///
@@ -628,13 +628,13 @@ template< typename FormatTag
                                            >::type
         > : mpl::true_
 {
-    typedef ostream_device< FormatTag > device_type;
+    using device_type = ostream_device<FormatTag>;
 };
 
 template<typename FormatTag> struct is_adaptable_output_device<FormatTag,FILE*,void>
   : mpl::true_
 {
-    typedef file_stream_device< FormatTag > device_type;
+    using device_type = file_stream_device<FormatTag>;
 };
 
 

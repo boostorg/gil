@@ -68,9 +68,7 @@ void write_view( Device&          device
                                    >::type* /* ptr */ = nullptr
                )
 {
-    typedef typename get_writer< Device
-                               , FormatTag
-                               >::type writer_t;
+    using writer_t = typename get_writer<Device, FormatTag>::type;
 
     writer_t writer = make_writer( device
                                  , tag
@@ -98,9 +96,7 @@ void write_view( const String&    file_name
                                    >::type* /* ptr */ = nullptr
                )
 {
-    typedef typename get_writer< String
-                               , FormatTag
-                               >::type writer_t;
+    using writer_t = typename get_writer<String, FormatTag>::type;
 
     writer_t writer = make_writer( file_name
                                  , tag
@@ -132,9 +128,7 @@ void write_view( Device&                                 device
                                    >::type* /* ptr */ = nullptr
                )
 {
-    typedef typename get_writer< Device
-                               , FormatTag
-                               >::type writer_t;
+    using writer_t = typename get_writer<Device, FormatTag>::type;
 
     writer_t writer = make_writer( device
                                  , info
@@ -163,9 +157,7 @@ void write_view( const String&                             file_name
                                    >::type* /* ptr */ = nullptr
                )
 {
-    typedef typename get_writer< String
-                               , FormatTag
-                               >::type writer_t;
+    using writer_t = typename get_writer<String, FormatTag>::type;
 
     writer_t writer = make_writer( file_name
                                  , info
@@ -213,9 +205,7 @@ void write_view( Device&                        device
                                    >::type* /* ptr */ = 0
                )
 {
-    typedef typename get_dynamic_image_writer< Device
-                                             , FormatTag
-                                             >::type writer_t;
+    using writer_t = typename get_dynamic_image_writer<Device, FormatTag>::type;
 
     writer_t writer = make_dynamic_image_writer( device
                                                , tag
@@ -240,9 +230,11 @@ void write_view( const String&                  file_name
                                    >::type* /* ptr */ = nullptr
                )
 {
-    typedef typename get_dynamic_image_writer< String
-                                             , FormatTag
-                                             >::type writer_t;
+    using writer_t = typename get_dynamic_image_writer
+        <
+            String,
+            FormatTag
+        >::type;
 
     writer_t writer = make_dynamic_image_writer( file_name
                                                , tag
@@ -274,9 +266,11 @@ void write_view( Device&                           device
                                    >::type* /* ptr */ = 0
                )
 {
-    typedef typename get_dynamic_image_writer< Device
-                                             , FormatTag
-                                             >::type writer_t;
+    using writer_t = typename get_dynamic_image_writer
+        <
+            Device,
+            FormatTag
+        >::type;
 
     writer_t writer = make_dynamic_image_writer( device
                                                , info
@@ -304,9 +298,11 @@ void write_view( const String&                      file_name
                                    >::type* /* ptr */ = nullptr
                )
 {
-    typedef typename get_dynamic_image_writer< String
-                                             , FormatTag
-                                             >::type writer_t;
+    using writer_t = typename get_dynamic_image_writer
+        <
+            String,
+            FormatTag
+        >::type;
 
     writer_t writer = make_dynamic_image_writer( file_name
                                                , info
@@ -317,7 +313,6 @@ void write_view( const String&                      file_name
               );
 }
 
-} // namespace gil
-} // namespace boost
+}} // namespace boost::gil
 
 #endif

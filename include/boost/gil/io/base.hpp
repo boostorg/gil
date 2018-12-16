@@ -31,7 +31,7 @@ struct format_tag {};
 template< typename Property >
 struct property_base
 {
-    typedef Property type;
+    using type = Property;
 };
 
 template<typename FormatTag> struct is_format_tag : is_base_and_derived< format_tag
@@ -87,7 +87,7 @@ namespace detail {
 template< typename Property >
 struct property_base
 {
-    typedef Property type;
+    using type = Property;
 };
 
 } // namespace detail

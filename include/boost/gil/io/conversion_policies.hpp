@@ -19,7 +19,7 @@ namespace boost{namespace gil{ namespace detail {
 struct read_and_no_convert
 {
 public:
-    typedef void* color_converter_type;
+    using color_converter_type = void *;
 
     template< typename InIterator
             , typename OutIterator
@@ -60,7 +60,7 @@ template<typename CC>
 struct read_and_convert
 {
 public:
-    typedef CC color_converter_type;
+    using color_converter_type = default_color_converter;
     CC _cc;
 
     read_and_convert()
@@ -78,10 +78,10 @@ public:
              , OutIterator       out
              )
     {
-        typedef color_convert_deref_fn< typename std::iterator_traits<InIterator>::reference
+        using deref_t = color_convert_deref_fn<typename std::iterator_traits<InIterator>::reference
                                       , typename std::iterator_traits<OutIterator>::value_type //reference?
                                       , CC
-                                      > deref_t;
+                                      >;
 
         std::transform( begin
                       , end
