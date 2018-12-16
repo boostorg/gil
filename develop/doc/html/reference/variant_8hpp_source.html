@@ -88,7 +88,7 @@
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Types, <span class="keyword">typename</span> T&gt; <span class="keyword">struct </span>type_to_index;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Op, <span class="keyword">typename</span> T&gt; <span class="keyword">struct </span>reduce;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">struct </span>destructor_op {</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keyword">typedef</span> <span class="keywordtype">void</span> result_type;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keyword">using</span> result_type = void;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; result_type operator()(<span class="keyword">const</span> T&amp; t)<span class="keyword"> const </span>{ t.~T(); }</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    };</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> Bits&gt; <span class="keywordtype">void</span> copy_construct_in_place(<span class="keyword">const</span> T&amp; t, Bits&amp; bits);</div>
@@ -101,9 +101,9 @@
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> std::size_t MAX_SIZE  = mpl::fold&lt;Types, mpl::size_t&lt;0&gt;, mpl::max&lt;mpl::_1, mpl::sizeof_&lt;mpl::_2&gt; &gt; &gt;::type::value;</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> std::size_t NUM_TYPES = mpl::size&lt;Types&gt;::value;</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keyword">typedef</span> Types                            types_t;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keyword">using</span> types_t = Types;</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">struct </span>{ <span class="keywordtype">char</span> data[MAX_SIZE]; } base_t;    <span class="comment">// empty space equal to the size of the largest type in Types</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keyword">using</span> base_t = <span class="keyword">struct </span>{ <span class="keywordtype">char</span> data[MAX_SIZE]; }; <span class="comment">// empty space equal to the size of the largest type in Types</span></div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="comment">// Default constructor - default construct the first type</span></div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <a class="code" href="classboost_1_1gil_1_1variant.html">variant</a>() : _index(0)    { <span class="keyword">new</span>(&amp;_bits) <span class="keyword">typename</span> mpl::at_c&lt;Types,0&gt;::type(); }</div>
@@ -161,7 +161,7 @@
 <div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;</div>
 <div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Bits&gt;</div>
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    <span class="keyword">struct </span>copy_construct_in_place_fn {</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;        <span class="keyword">typedef</span> <span class="keywordtype">void</span> result_type;</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;        <span class="keyword">using</span> result_type = void;</div>
 <div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;        Bits&amp; _dst;</div>
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;        copy_construct_in_place_fn(Bits&amp; dst) : _dst(dst) {}</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;</div>
@@ -173,7 +173,7 @@
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        <span class="keyword">const</span> Bits&amp; _dst;</div>
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        equal_to_fn(<span class="keyword">const</span> Bits&amp; dst) : _dst(dst) {}</div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        <span class="keyword">typedef</span> <span class="keywordtype">bool</span> result_type;</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        <span class="keyword">using</span> result_type = bool;</div>
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; result_type operator()(<span class="keyword">const</span> T&amp; x)<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;            <span class="keywordflow">return</span> x==*gil_reinterpret_cast_c&lt;const T*&gt;(&amp;_dst);</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        }</div>
@@ -181,7 +181,7 @@
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;</div>
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Types&gt;</div>
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    <span class="keyword">struct </span>type_to_index_fn {</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        <span class="keyword">typedef</span> std::size_t result_type;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        <span class="keyword">using</span> result_type = std::size_t;</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;</div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; result_type operator()(<span class="keyword">const</span> T&amp;)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> detail::type_to_index&lt;Types,T&gt;::value; }</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    };</div>
@@ -229,7 +229,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Dec 15 2018 20:34:09 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sun Dec 16 2018 01:20:32 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

@@ -70,7 +70,7 @@
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">namespace </span>boost { <span class="keyword">namespace </span>gil {</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">namespace </span>detail {</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> View&gt; <span class="keyword">struct </span>get_const_t { <span class="keyword">typedef</span> <span class="keyword">typename</span> View::const_t type; };</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> View&gt; <span class="keyword">struct </span>get_const_t { <span class="keyword">using</span> type = <span class="keyword">typename</span> View::const_t; };</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Views&gt; <span class="keyword">struct </span>views_get_const_t : <span class="keyword">public</span> mpl::transform&lt;Views, get_const_t&lt;mpl::_1&gt; &gt; {};</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;}</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> View&gt; <span class="keyword">struct </span>dynamic_xy_step_type;</div>
@@ -81,7 +81,7 @@
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;     <span class="comment">// works for both image_view and image</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">struct </span>any_type_get_num_channels</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    {</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keyword">typedef</span> <span class="keywordtype">int</span> result_type;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keyword">using</span> result_type = int;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        result_type operator()(<span class="keyword">const</span> T&amp;)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> num_channels&lt;T&gt;::value; }</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    };</div>
@@ -97,12 +97,12 @@
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> ImageViewTypes&gt;</div>
 <div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="classboost_1_1gil_1_1any__image__view.html">   60</a></span>&#160;<span class="keyword">class </span><a class="code" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a> : <span class="keyword">public</span> <a class="code" href="classboost_1_1gil_1_1variant.html">variant</a>&lt;ImageViewTypes&gt; {</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keyword">typedef</span> <a class="code" href="classboost_1_1gil_1_1variant.html">variant&lt;ImageViewTypes&gt;</a> <a class="code" href="classboost_1_1gil_1_1variant.html">parent_t</a>;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keyword">using</span> <a class="code" href="classboost_1_1gil_1_1variant.html">parent_t</a> = <a class="code" href="classboost_1_1gil_1_1variant.html">variant&lt;ImageViewTypes&gt;</a>;</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keyword">typedef</span> <a class="code" href="classboost_1_1gil_1_1any__image__view.html">any_image_view&lt;typename detail::views_get_const_t&lt;ImageViewTypes&gt;::type</a>&gt; <a class="code" href="classboost_1_1gil_1_1any__image__view.html">const_t</a>;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keyword">typedef</span> std::ptrdiff_t x_coord_t;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keyword">typedef</span> std::ptrdiff_t y_coord_t;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keyword">typedef</span> <a class="code" href="classboost_1_1gil_1_1point.html">point&lt;std::ptrdiff_t&gt;</a> <a class="code" href="classboost_1_1gil_1_1point.html">point_t</a>;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keyword">using</span> <a class="code" href="classboost_1_1gil_1_1any__image__view.html">const_t</a> = <a class="code" href="classboost_1_1gil_1_1any__image__view.html">any_image_view&lt;typename detail::views_get_const_t&lt;ImageViewTypes&gt;::type</a>&gt;;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keyword">using</span> x_coord_t = std::ptrdiff_t;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keyword">using</span> y_coord_t = std::ptrdiff_t;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keyword">using</span> <a class="code" href="classboost_1_1gil_1_1point.html">point_t</a> = <a class="code" href="classboost_1_1gil_1_1point.html">point&lt;std::ptrdiff_t&gt;</a>;</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <a class="code" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>()                                                          : <a class="code" href="classboost_1_1gil_1_1variant.html">parent_t</a>() {}</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">explicit</span> <a class="code" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>(<span class="keyword">const</span> T&amp; obj)               : <a class="code" href="classboost_1_1gil_1_1variant.html">parent_t</a>(obj) {}</div>
@@ -122,30 +122,34 @@
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="comment">//  HasDynamicXStepTypeConcept</span></div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> IVTypes&gt;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="keyword">struct </span>dynamic_x_step_type&lt;<a class="code" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt;IVTypes&gt; &gt; {</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keyword">typedef</span> <a class="code" href="classboost_1_1gil_1_1any__image__view.html">any_image_view&lt;typename mpl::transform&lt;IVTypes, dynamic_x_step_type&lt;mpl::_1&gt;</a> &gt;::type&gt; type;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;};</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="comment">//  HasDynamicYStepTypeConcept</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> IVTypes&gt;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="keyword">struct </span>dynamic_y_step_type&lt;any_image_view&lt;IVTypes&gt; &gt; {</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keyword">typedef</span> any_image_view&lt;typename mpl::transform&lt;IVTypes, dynamic_y_step_type&lt;mpl::_1&gt; &gt;::type&gt; type;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;};</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> IVTypes&gt;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="keyword">struct </span>dynamic_xy_step_type&lt;any_image_view&lt;IVTypes&gt; &gt; {</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keyword">typedef</span> any_image_view&lt;typename mpl::transform&lt;IVTypes, dynamic_xy_step_type&lt;mpl::_1&gt; &gt;::type&gt; type;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;};</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> IVTypes&gt;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="keyword">struct </span>dynamic_xy_step_transposed_type&lt;any_image_view&lt;IVTypes&gt; &gt; {</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keyword">typedef</span> any_image_view&lt;typename mpl::transform&lt;IVTypes, dynamic_xy_step_transposed_type&lt;mpl::_1&gt; &gt;::type&gt; type;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;};</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;}}  <span class="comment">// namespace boost::gil</span></div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="keyword">struct </span>dynamic_x_step_type&lt;<a class="code" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt;IVTypes&gt;&gt;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;{</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keyword">using</span> type = <a class="code" href="classboost_1_1gil_1_1any__image__view.html">any_image_view&lt;typename mpl::transform&lt;IVTypes, dynamic_x_step_type&lt;mpl::_1&gt;</a>&gt;::type&gt;;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;};</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="comment">//  HasDynamicYStepTypeConcept</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> IVTypes&gt;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="keyword">struct </span>dynamic_y_step_type&lt;any_image_view&lt;IVTypes&gt;&gt;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;{</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keyword">using</span> type = any_image_view&lt;typename mpl::transform&lt;IVTypes, dynamic_y_step_type&lt;mpl::_1&gt;&gt;::type&gt;;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;};</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> IVTypes&gt;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="keyword">struct </span>dynamic_xy_step_type&lt;any_image_view&lt;IVTypes&gt;&gt;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;{</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keyword">using</span> type = any_image_view&lt;typename mpl::transform&lt;IVTypes, dynamic_xy_step_type&lt;mpl::_1&gt;&gt;::type&gt;;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;};</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> IVTypes&gt;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="keyword">struct </span>dynamic_xy_step_transposed_type&lt;any_image_view&lt;IVTypes&gt;&gt;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;{</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keyword">using</span> type = any_image_view&lt;typename mpl::transform&lt;IVTypes, dynamic_xy_step_transposed_type&lt;mpl::_1&gt;&gt;::type&gt;;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;};</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;}}  <span class="comment">// namespace boost::gil</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="group___variant_html_ga8ffab42c2958f3a64c262d4db56a8ae1"><div class="ttname"><a href="group___variant.html#ga8ffab42c2958f3a64c262d4db56a8ae1">boost::gil::apply_operation</a></div><div class="ttdeci">BOOST_FORCEINLINE UnaryOp::result_type apply_operation(variant&lt; Types &gt; &amp;arg, UnaryOp op)</div><div class="ttdoc">Invokes a generic mutable operation (represented as a unary function object) on a variant...</div><div class="ttdef"><b>Definition:</b> apply_operation.hpp:31</div></div>
 <div class="ttc" id="classboost_1_1gil_1_1variant_html"><div class="ttname"><a href="classboost_1_1gil_1_1variant.html">boost::gil::variant</a></div><div class="ttdoc">Represents a concrete instance of a run-time specified type from a set of typesA concept is typically...</div><div class="ttdef"><b>Definition:</b> variant.hpp:80</div></div>
 <div class="ttc" id="classboost_1_1gil_1_1any__image__view_html"><div class="ttname"><a href="classboost_1_1gil_1_1any__image__view.html">boost::gil::any_image_view</a></div><div class="ttdoc">Represents a run-time specified image view. Models HasDynamicXStepTypeConcept, HasDynamicYStepTypeCon...</div><div class="ttdef"><b>Definition:</b> any_image_view.hpp:60</div></div>
@@ -157,7 +161,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Dec 15 2018 20:34:08 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sun Dec 16 2018 01:20:32 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

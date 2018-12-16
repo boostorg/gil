@@ -75,31 +75,28 @@ Inheritance diagram for any_image&lt; ImageTypes &gt;:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a2acd50477b4c80241d1a9a360b9920ff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2acd50477b4c80241d1a9a360b9920ff"></a>
-typedef <a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a><br class="typebreak"/>
-&lt; typename <br class="typebreak"/>
-detail::images_get_const_views_t<br class="typebreak"/>
-&lt; ImageTypes &gt;::type &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>const_view_t</b></td></tr>
-<tr class="separator:a2acd50477b4c80241d1a9a360b9920ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e6b59952cd0e8904070f04b5e1fb51f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0e6b59952cd0e8904070f04b5e1fb51f"></a>
-typedef <a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a><br class="typebreak"/>
-&lt; typename <br class="typebreak"/>
-detail::images_get_views_t<br class="typebreak"/>
-&lt; ImageTypes &gt;::type &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>view_t</b></td></tr>
-<tr class="separator:a0e6b59952cd0e8904070f04b5e1fb51f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5396c00a891ea52bd233a307bdaf6a64"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5396c00a891ea52bd233a307bdaf6a64"></a>
-typedef std::ptrdiff_t&#160;</td><td class="memItemRight" valign="bottom"><b>x_coord_t</b></td></tr>
-<tr class="separator:a5396c00a891ea52bd233a307bdaf6a64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae21c9a09689df0e5118fd07840e055bb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae21c9a09689df0e5118fd07840e055bb"></a>
-typedef std::ptrdiff_t&#160;</td><td class="memItemRight" valign="bottom"><b>y_coord_t</b></td></tr>
-<tr class="separator:ae21c9a09689df0e5118fd07840e055bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c89932d01be8bea2024e834a235e889"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7c89932d01be8bea2024e834a235e889"></a>
-typedef <a class="el" href="classboost_1_1gil_1_1point.html">point</a>&lt; std::ptrdiff_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>point_t</b></td></tr>
-<tr class="separator:a7c89932d01be8bea2024e834a235e889"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83de2aae119cd119b34c0f9ffb654227"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a83de2aae119cd119b34c0f9ffb654227"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>const_view_t</b> = <a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; typename detail::images_get_const_views_t&lt; ImageTypes &gt;::type &gt;</td></tr>
+<tr class="separator:a83de2aae119cd119b34c0f9ffb654227"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa32bed62c7c5b6af5a3207194e2d105e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa32bed62c7c5b6af5a3207194e2d105e"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>view_t</b> = <a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; typename detail::images_get_views_t&lt; ImageTypes &gt;::type &gt;</td></tr>
+<tr class="separator:aa32bed62c7c5b6af5a3207194e2d105e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f1a92adcae3b10cbad7fe560a94d1b1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2f1a92adcae3b10cbad7fe560a94d1b1"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>x_coord_t</b> = std::ptrdiff_t</td></tr>
+<tr class="separator:a2f1a92adcae3b10cbad7fe560a94d1b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13938895b1e20b12d10f76329d47dc4a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a13938895b1e20b12d10f76329d47dc4a"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>y_coord_t</b> = std::ptrdiff_t</td></tr>
+<tr class="separator:a13938895b1e20b12d10f76329d47dc4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addc40a18340d115ea17a7ab120debe08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="addc40a18340d115ea17a7ab120debe08"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>point_t</b> = <a class="el" href="classboost_1_1gil_1_1point.html">point</a>&lt; std::ptrdiff_t &gt;</td></tr>
+<tr class="separator:addc40a18340d115ea17a7ab120debe08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_types_classboost_1_1gil_1_1variant"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classboost_1_1gil_1_1variant')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="classboost_1_1gil_1_1variant.html">variant&lt; ImageTypes &gt;</a></td></tr>
-<tr class="memitem:a7134669ce8033ee155ef5fbd15d74d18 inherit pub_types_classboost_1_1gil_1_1variant"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7134669ce8033ee155ef5fbd15d74d18"></a>
-typedef ImageTypes&#160;</td><td class="memItemRight" valign="bottom"><b>types_t</b></td></tr>
-<tr class="separator:a7134669ce8033ee155ef5fbd15d74d18 inherit pub_types_classboost_1_1gil_1_1variant"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae5a1d4ada4a33b7a8f97e3fa1c75ddb inherit pub_types_classboost_1_1gil_1_1variant"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aae5a1d4ada4a33b7a8f97e3fa1c75ddb"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>types_t</b> = ImageTypes</td></tr>
+<tr class="separator:aae5a1d4ada4a33b7a8f97e3fa1c75ddb inherit pub_types_classboost_1_1gil_1_1variant"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac15b1578eaeea880994f07ccb637019b inherit pub_types_classboost_1_1gil_1_1variant"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac15b1578eaeea880994f07ccb637019b"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>base_t</b> = struct{char data[MAX_SIZE]</td></tr>
+<tr class="separator:ac15b1578eaeea880994f07ccb637019b inherit pub_types_classboost_1_1gil_1_1variant"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -197,7 +194,7 @@ static bool&#160;</td><td class="memItemRight" valign="bottom"><b>has_type</b> (
 class boost::gil::any_image&lt; ImageTypes &gt;</h3>
 
 <p>Represents a run-time specified image. Note it does NOT model ImageConcept. </p>
-<p>Represents an image whose type (color space, layout, planar/interleaved organization, etc) can be specified at run time. It is the runtime equivalent of <code>image</code>. Some of the requirements of ImageConcept, such as the <code>value_type</code> typedef cannot be fulfilled, since the language does not allow runtime type specification. Other requirements, such as access to the pixels, would be inefficient to provide. Thus <code><a class="el" href="classboost_1_1gil_1_1any__image.html" title="Represents a run-time specified image. Note it does NOT model ImageConcept. ">any_image</a></code> does not fully model ImageConcept. In particular, its <code>view</code> and <code>const_view</code> methods return <code><a class="el" href="classboost_1_1gil_1_1any__image__view.html" title="Represents a run-time specified image view. Models HasDynamicXStepTypeConcept, HasDynamicYStepTypeCon...">any_image_view</a></code>, which does not fully model ImageViewConcept. See <code><a class="el" href="classboost_1_1gil_1_1any__image__view.html" title="Represents a run-time specified image view. Models HasDynamicXStepTypeConcept, HasDynamicYStepTypeCon...">any_image_view</a></code> for more. </p>
+<p>Represents an image whose type (color space, layout, planar/interleaved organization, etc) can be specified at run time. It is the runtime equivalent of <code>image</code>. Some of the requirements of ImageConcept, such as the <code>value_type</code> alias cannot be fulfilled, since the language does not allow runtime type specification. Other requirements, such as access to the pixels, would be inefficient to provide. Thus <code><a class="el" href="classboost_1_1gil_1_1any__image.html" title="Represents a run-time specified image. Note it does NOT model ImageConcept. ">any_image</a></code> does not fully model ImageConcept. In particular, its <code>view</code> and <code>const_view</code> methods return <code><a class="el" href="classboost_1_1gil_1_1any__image__view.html" title="Represents a run-time specified image view. Models HasDynamicXStepTypeConcept, HasDynamicYStepTypeCon...">any_image_view</a></code>, which does not fully model ImageViewConcept. See <code><a class="el" href="classboost_1_1gil_1_1any__image__view.html" title="Represents a run-time specified image view. Models HasDynamicXStepTypeConcept, HasDynamicYStepTypeCon...">any_image_view</a></code> for more. </p>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="any__image_8hpp_source.html">any_image.hpp</a></li>
 </ul>
@@ -207,7 +204,7 @@ class boost::gil::any_image&lt; ImageTypes &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Dec 15 2018 20:34:09 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sun Dec 16 2018 01:20:33 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

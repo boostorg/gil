@@ -182,7 +182,7 @@
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="keyword">struct </span>fill_pixels_fn {</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    fill_pixels_fn(<span class="keyword">const</span> Value&amp; val) : _val(val) {}</div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <span class="keyword">typedef</span> <span class="keywordtype">void</span> result_type;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <span class="keyword">using</span> result_type = void;</div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> V&gt; result_type operator()(<span class="keyword">const</span> V&amp; img_view)<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        fill_pixels_fn1&lt;pixels_are_compatible&lt;typename V::value_type, Value&gt;::value&gt;::apply(img_view,_val);</div>
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    }</div>
@@ -211,7 +211,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Dec 15 2018 20:34:08 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sun Dec 16 2018 01:20:32 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
