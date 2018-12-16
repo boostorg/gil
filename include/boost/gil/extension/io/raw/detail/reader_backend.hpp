@@ -27,7 +27,7 @@ struct reader_backend< Device
 {
 public:
 
-    typedef raw_tag format_tag_t;
+    using format_tag_t = raw_tag;
 
 public:
 

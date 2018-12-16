@@ -35,15 +35,11 @@ struct writer_backend< Device
 
 private:
 
-    typedef writer_backend< Device
-                          , png_tag
-                          > this_t;
+    using this_t = writer_backend<Device, png_tag>;
 
 public:
 
-    typedef png_tag format_tag_t;
-
-public:
+    using format_tag_t = png_tag;
 
     ///
     /// Constructor
@@ -102,9 +98,11 @@ protected:
     template< typename View >
     void write_header( const View& view )
     {
-        typedef detail::png_write_support< typename channel_type< typename get_pixel_type< View >::type >::type
-                                         , typename color_space_type< View >::type
-                                         > png_rw_info_t;
+        using png_rw_info_t = detail::png_write_support
+            <
+                typename channel_type<typename get_pixel_type<View>::type>::type,
+                typename color_space_type<View>::type
+            >;
 
         // Set the image information here.  Width and height are up to 2^31,
         // bit_depth is one of 1, 2, 4, 8, or 16, but valid values also depend on

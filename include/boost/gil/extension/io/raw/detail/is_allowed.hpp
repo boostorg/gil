@@ -18,9 +18,9 @@ bool is_allowed( const image_read_info< raw_tag >& info
                , mpl::true_   // is read_and_no_convert
                )
 {
-    typedef typename get_pixel_type< View >::type pixel_t;
-    typedef typename num_channels< pixel_t >::value_type num_channel_t;
-    typedef typename channel_traits< typename element_type< typename View::value_type >::type >::value_type channel_t;
+    using pixel_t = typename get_pixel_type<View>::type;
+    using num_channel_t = typename num_channels<pixel_t>::value_type;
+    using channel_t = typename channel_traits<typename element_type<typename View::value_type>::type>::value_type;
 
     const num_channel_t dst_samples_per_pixel = num_channels< pixel_t >::value;
     const unsigned int  dst_bits_per_pixel    = detail::unsigned_integral_num_bits< channel_t >::value;

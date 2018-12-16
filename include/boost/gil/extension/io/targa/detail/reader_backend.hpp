@@ -27,7 +27,7 @@ struct reader_backend< Device
 {
 public:
 
-    typedef targa_tag format_tag_t;
+    using format_tag_t = targa_tag;
 
 public:
 

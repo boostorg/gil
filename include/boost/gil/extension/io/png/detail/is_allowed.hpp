@@ -20,10 +20,9 @@ bool is_allowed( const image_read_info< png_tag >& info
                , mpl::true_   // is read_and_no_convert
                )
 {
-    typedef typename get_pixel_type< View >::type pixel_t;
+    using pixel_t = typename get_pixel_type<View>::type;
 
-    typedef typename channel_traits<
-                typename element_type< pixel_t >::type >::value_type channel_t;
+    using channel_t = typename channel_traits<typename element_type<pixel_t>::type>::value_type;
 
     const png_num_channels::type dst_num_channels = num_channels< pixel_t >::value;
     const png_bitdepth::type     dst_bit_depth    = detail::unsigned_integral_num_bits< channel_t >::value;

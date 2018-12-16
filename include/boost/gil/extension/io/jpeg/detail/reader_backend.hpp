@@ -80,7 +80,7 @@ struct reader_backend< Device
 {
 public:
 
-    typedef jpeg_tag format_tag_t;
+    using format_tag_t = jpeg_tag;
 
 public:
     //

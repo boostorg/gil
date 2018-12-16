@@ -27,8 +27,8 @@ namespace boost { namespace gil {
 namespace detail {
 
 template < int N > struct get_targa_view_type {};
-template <> struct get_targa_view_type< 3 > { typedef bgr8_view_t type; };
-template <> struct get_targa_view_type< 4 > { typedef bgra8_view_t type; };
+template <> struct get_targa_view_type< 3 > { using type = bgr8_view_t; };
+template <> struct get_targa_view_type< 4 > { using type = bgra8_view_t; };
 
 struct targa_write_is_supported
 {
@@ -54,7 +54,7 @@ class writer< Device
                            >
 {
 private:
-     typedef writer_backend< Device, targa_tag > backend_t;
+    using backend_t = writer_backend<Device, targa_tag>;
 
 public:
 
@@ -151,9 +151,7 @@ class dynamic_image_writer< Device
                    , targa_tag
                    >
 {
-    typedef writer< Device
-                  , targa_tag
-                  > parent_t;
+    using parent_t = writer<Device, targa_tag>;
 
 public:
 

@@ -27,7 +27,7 @@ struct reader_backend< Device
 {
 public:
 
-    typedef tiff_tag format_tag_t;
+    using format_tag_t = tiff_tag;
 
 public:
 

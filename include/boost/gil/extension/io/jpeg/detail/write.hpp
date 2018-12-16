@@ -53,9 +53,7 @@ class writer< Device
 {
 public:
 
-    typedef writer_backend< Device
-                          , jpeg_tag
-                          > backend_t;
+    using backend_t = writer_backend<Device, jpeg_tag>;
 
 public:
 
@@ -89,7 +87,7 @@ private:
         //       the setjmp.
         if( setjmp( this->_mark )) { this->raise_error(); }
 
-        typedef typename channel_type< typename View::value_type >::type channel_t;
+        using channel_t = typename channel_type<typename View::value_type>::type;
 
         this->get()->image_width      = JDIMENSION( view.width()  );
         this->get()->image_height     = JDIMENSION( view.height() );
@@ -148,9 +146,7 @@ class dynamic_image_writer< Device
                    , jpeg_tag
                    >
 {
-    typedef writer< Device
-                  , jpeg_tag
-                  > parent_t;
+    using parent_t = writer<Device, jpeg_tag>;
 
 public:
 

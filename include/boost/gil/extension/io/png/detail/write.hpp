@@ -54,7 +54,7 @@ class writer< Device
 
 public:
 
-    typedef writer_backend< Device , png_tag > backend_t;
+    using backend_t = writer_backend<Device, png_tag>;
 
     writer( const Device&                      io_dev
           , const image_write_info< png_tag >& info
@@ -86,11 +86,13 @@ private:
                    ,  mpl::false_       // is bit aligned
                    )
     {
-        typedef typename get_pixel_type< View >::type pixel_t;
+        using pixel_t = typename get_pixel_type<View>::type;
 
-        typedef detail::png_write_support< typename channel_type    < pixel_t >::type
-                                         , typename color_space_type< pixel_t >::type
-                                         > png_rw_info;
+        using png_rw_info = detail::png_write_support
+            <
+                typename channel_type<pixel_t>::type,
+                typename color_space_type<pixel_t>::type
+            >;
 
         if( little_endian() )
         {
@@ -124,11 +126,11 @@ private:
                    , mpl::true_         // is bit aligned
                    )
     {
-        typedef detail::png_write_support< typename kth_semantic_element_type< typename View::value_type
-                                                                             , 0
-                                                                             >::type
-                                         , typename color_space_type<View>::type
-                                         > png_rw_info;
+        using png_rw_info = detail::png_write_support
+            <
+                typename kth_semantic_element_type<typename View::value_type, 0>::type,
+                typename color_space_type<View>::type
+            >;
 
         if (little_endian() )
         {
@@ -197,9 +199,7 @@ class dynamic_image_writer< Device
                    , png_tag
                    >
 {
-    typedef writer< Device
-                  , png_tag
-                  > parent_t;
+    using parent_t = writer<Device, png_tag>;
 
 public:
 

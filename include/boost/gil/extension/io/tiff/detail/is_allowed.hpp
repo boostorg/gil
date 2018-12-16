@@ -15,7 +15,7 @@
 
 namespace boost { namespace gil { namespace detail {
 
-typedef std::vector< tiff_bits_per_sample::type > channel_sizes_t;
+using channel_sizes_t = std::vector<tiff_bits_per_sample::type>;
 
 template< typename View, typename Channel, typename Enable = void > struct Format_Type {};
 
@@ -99,9 +99,8 @@ bool compare_channel_sizes( const channel_sizes_t& channel_sizes // in bits
                           , mpl::true_                           // is_homogeneous
                           )
 {
-    typedef typename View::value_type pixel_t;
-    typedef typename channel_traits<
-                typename element_type< pixel_t >::type >::value_type channel_t;
+    using pixel_t = typename View::value_type;
+    using channel_t = typename channel_traits<typename element_type<pixel_t>::type>::value_type;
 
     unsigned int s = detail::unsigned_integral_num_bits< channel_t >::value;
 
@@ -115,9 +114,9 @@ bool compare_channel_sizes( const channel_sizes_t& channel_sizes // in bits
                           , mpl::true_                           // is_homogeneous
                           )
 {
-    typedef typename View::reference ref_t;
+    using ref_t = typename View::reference;
 
-    typedef typename channel_traits< typename element_type< ref_t >::type >::value_type channel_t;
+    using channel_t = typename channel_traits<typename element_type<ref_t>::type>::value_type;
     channel_t c;
 
     unsigned int s = detail::unsigned_integral_num_bits< channel_t >::value;
@@ -149,10 +148,10 @@ template< typename T >
 struct channel_sizes_type {};
 
 template< typename B, typename C, typename L, bool M >
-struct channel_sizes_type< bit_aligned_pixel_reference< B, C, L, M > > { typedef C type; };
+struct channel_sizes_type< bit_aligned_pixel_reference< B, C, L, M > > { using type = C; };
 
 template< typename B, typename C, typename L, bool M >
-struct channel_sizes_type< const bit_aligned_pixel_reference< B, C, L, M > > { typedef C type; };
+struct channel_sizes_type< const bit_aligned_pixel_reference< B, C, L, M > > { using type = C; };
 
 template< typename View >
 bool compare_channel_sizes( channel_sizes_t& channel_sizes // in bits
@@ -162,8 +161,8 @@ bool compare_channel_sizes( channel_sizes_t& channel_sizes // in bits
 {
     // loop through all channels and compare
 
-    typedef typename View::reference ref_t;
-    typedef typename channel_sizes_type< ref_t >::type cs_t;
+    using ref_t = typename View::reference;
+    using cs_t = typename channel_sizes_type<ref_t>::type;
 
     compare_channel_sizes_fn fn( &channel_sizes.front() );
     mpl::for_each< cs_t >( fn );
@@ -180,11 +179,10 @@ bool is_allowed( const image_read_info< tiff_tag >& info
                                  , info._bits_per_sample
                                  );
 
-    typedef typename get_pixel_type< View >::type pixel_t;
-    typedef typename channel_traits<
-                typename element_type< pixel_t >::type >::value_type channel_t;
+    using pixel_t = typename get_pixel_type<View>::type;
+    using channel_t = typename channel_traits<typename element_type<pixel_t>::type>::value_type;
 
-    typedef typename num_channels< pixel_t >::value_type num_channel_t;
+    using num_channel_t = typename num_channels<pixel_t>::value_type;
 
     const num_channel_t dst_samples_per_pixel = num_channels< pixel_t >::value;
 
