@@ -52,8 +52,9 @@ public:
 
 /// \brief variable-size kernel
 template <typename T, typename Alloc = std::allocator<T> >
-class kernel_1d : public detail::kernel_1d_adaptor<std::vector<T,Alloc> > {
-    typedef detail::kernel_1d_adaptor<std::vector<T,Alloc> > parent_t;
+class kernel_1d : public detail::kernel_1d_adaptor<std::vector<T,Alloc>>
+{
+    using parent_t = detail::kernel_1d_adaptor<std::vector<T,Alloc>>;
 public:
     kernel_1d() {}
     kernel_1d(std::size_t size_in,std::size_t center_in) : parent_t(size_in,center_in) {}
@@ -66,8 +67,9 @@ public:
 
 /// \brief static-size kernel
 template <typename T,std::size_t Size>
-class kernel_1d_fixed : public detail::kernel_1d_adaptor<std::array<T,Size> > {
-    typedef detail::kernel_1d_adaptor<std::array<T,Size> > parent_t;
+class kernel_1d_fixed : public detail::kernel_1d_adaptor<std::array<T,Size>>
+{
+    using parent_t = detail::kernel_1d_adaptor<std::array<T,Size>>;
 public:
     kernel_1d_fixed() {}
     explicit kernel_1d_fixed(std::size_t center_in) : parent_t(center_in) {}

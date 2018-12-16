@@ -50,7 +50,7 @@ bool sample(nearest_neighbor_sampler, SrcView const& src, point<F> const& p, Dst
 struct cast_channel_fn {
     template <typename SrcChannel, typename DstChannel>
     void operator()(const SrcChannel& src, DstChannel& dst) {
-        typedef typename channel_traits<DstChannel>::value_type dst_value_t;
+        using dst_value_t = typename channel_traits<DstChannel>::value_type;
         dst = dst_value_t(src);
     }
 };
