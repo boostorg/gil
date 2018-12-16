@@ -32,13 +32,8 @@ struct get_writer< String
                                      >::type
                  >
 {
-    typedef typename get_write_device< String
-                                     , FormatTag
-                                     >::type device_t;
-
-    typedef writer< device_t
-                  , FormatTag
-                  > type;
+    using device_t = typename get_write_device<String, FormatTag>::type;
+    using type = writer<device_t, FormatTag>;
 };
 
 template< typename Device
@@ -54,13 +49,8 @@ struct get_writer< Device
                                      >::type
                  >
 {
-    typedef typename get_write_device< Device
-                                     , FormatTag
-                                     >::type device_t;
-
-    typedef writer< device_t
-                  , FormatTag
-                  > type;
+    using device_t = typename get_write_device<Device, FormatTag>::type;
+    using type = writer<device_t, FormatTag>;
 };
 
 
@@ -83,13 +73,8 @@ struct get_dynamic_image_writer< String
                                                    >::type
                                >
 {
-    typedef typename get_write_device< String
-                                     , FormatTag
-                                     >::type device_t;
-
-    typedef dynamic_image_writer< device_t
-                                , FormatTag
-                                > type;
+    using device_t = typename get_write_device<String, FormatTag>::type;
+    using type = dynamic_image_writer<device_t, FormatTag>;
 };
 
 template< typename Device
@@ -105,15 +90,9 @@ struct get_dynamic_image_writer< Device
                                                    >::type
                                >
 {
-    typedef typename get_write_device< Device
-                                     , FormatTag
-                                     >::type device_t;
-
-    typedef dynamic_image_writer< device_t
-                                , FormatTag
-                                > type;
+    using device_t = typename get_write_device<Device, FormatTag>::type;
+    using type = dynamic_image_writer<device_t, FormatTag>;
 };
-
 
 } // namespace gil
 } // namespace boost

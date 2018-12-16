@@ -67,7 +67,7 @@ make_reader( const std::wstring& file_name
                                           , typename detail::file_stream_device< FormatTag >::read_tag()
                                           );
 
-    delete[] str;
+    delete[] str; // TODO: RAII
 
     return typename get_reader< std::wstring
                               , FormatTag

@@ -37,9 +37,11 @@ struct get_write_device< Device
                                            >::type
                        >
 {
-    typedef typename detail::is_adaptable_output_device< FormatTag
-                                                       , Device
-                                                       >::device_type type;
+    using type = typename detail::is_adaptable_output_device
+        <
+            FormatTag,
+            Device
+        >::device_type;
 };
 
 
@@ -54,7 +56,7 @@ struct get_write_device< String
                                            >::type
                        >
 {
-    typedef detail::file_stream_device< FormatTag > type;
+    using type = detail::file_stream_device<FormatTag>;
 };
 
 } // namespace gil

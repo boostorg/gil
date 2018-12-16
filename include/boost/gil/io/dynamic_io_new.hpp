@@ -70,7 +70,7 @@ class dynamic_io_fnobj {
 public:
     dynamic_io_fnobj(OpClass* op) : _op(op) {}
 
-    typedef void result_type;
+    using result_type = void;
 
     template <typename View>
     void operator()(const View& view) {apply(view,typename IsSupported::template apply<View>::type());}
