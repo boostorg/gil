@@ -137,6 +137,9 @@ if(GIL_ENABLE_EXT_IO)
     find_package(JPEG)
     find_package(PNG)
     find_package(TIFF)
+    target_include_directories(gil_dependencies
+      INTERFACE
+        ${JPEG_INCLUDE_DIR})
 
     target_link_libraries(gil_dependencies
       INTERFACE
@@ -144,22 +147,18 @@ if(GIL_ENABLE_EXT_IO)
         PNG::PNG
         TIFF::TIFF)
 
-    target_include_directories(gil_dependencies
-      INTERFACE
-        ${JPEG_INCLUDE_DIR})
-
     if(UNIX)
+      # TODO: FindRAW.cmake
+      find_path(RAW_INCLUDE_DIR NAMES libraw.h PATH_SUFFIXES libraw)
+      find_library(RAW_LIBRARY NAMES raw libraw)
+      target_include_directories(gil_dependencies INTERFACE ${RAW_INCLUDE_DIR})
+      target_link_libraries(gil_dependencies INTERFACE ${RAW_LIBRARY})
+
       # Typically, Linux packages provide C++ stream interface for TIFF
-      find_path(_tiffxx_include_dir NAMES tiffio.hxx)
-      find_library(_tiffxx_library NAMES tiffxx)
-
-      target_link_libraries(gil_dependencies
-        INTERFACE
-          ${_tiffxx_library})
-
-      target_include_directories(gil_dependencies
-        INTERFACE
-          ${_tiffxx_include_dir})
+      find_path(TIFFXX_INCLUDE_DIR NAMES tiffio.hxx)
+      find_library(TIFFXX_LIBRARY NAMES tiffxx)
+      target_include_directories(gil_dependencies INTERFACE ${TIFFXX_INCLUDE_DIR})
+      target_link_libraries(gil_dependencies INTERFACE ${TIFFXX_LIBRARY})
     endif()
 
   endif()
