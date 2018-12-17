@@ -44,7 +44,7 @@ struct reader_backend< Device
 {
 public:
 
-    typedef bmp_tag format_tag_t;
+    using format_tag_t = bmp_tag;
 
 public:
 

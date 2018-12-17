@@ -125,7 +125,7 @@ struct is_adaptable_input_device< FormatTag
                                 >
     : mpl::true_
 {
-    typedef file_stream_device< FormatTag > device_type;
+    using device_type = file_stream_device<FormatTag>;
 };
 
 

@@ -54,13 +54,10 @@ class scanline_reader< Device
 {
 public:
 
-
-    typedef tiff_tag tag_t;
-    typedef reader_backend < Device, tag_t > backend_t;
-    typedef scanline_reader< Device, tag_t > this_t;
-    typedef scanline_read_iterator< this_t > iterator_t;
-
-public:
+    using tag_t = tiff_tag;
+    using backend_t = reader_backend<Device, tag_t>;
+    using this_t = scanline_reader<Device, tag_t>;
+    using iterator_t = scanline_read_iterator<this_t>;
 
     scanline_reader( Device&                                device
                    , const image_read_settings< tiff_tag >& settings
@@ -113,7 +110,7 @@ private:
             {
                 case 1:
                 {
-                    typedef channel_type< get_pixel_type< gray1_image_t::view_t >::type >::type channel_t;
+                    using channel_t = channel_type<get_pixel_type<gray1_image_t::view_t>::type>::type;
 
                     int num_colors = channel_traits< channel_t >::max_value() + 1;
 
@@ -132,7 +129,7 @@ private:
 
                 case 2:
                 {
-                    typedef channel_type< get_pixel_type< gray2_image_t::view_t >::type >::type channel_t;
+                    using channel_t = channel_type<get_pixel_type<gray2_image_t::view_t>::type>::type;
 
                     int num_colors = channel_traits< channel_t >::max_value() + 1;
 
@@ -150,7 +147,7 @@ private:
                 }
                 case 4:
                 {
-                    typedef channel_type< get_pixel_type< gray4_image_t::view_t >::type >::type channel_t;
+                    using channel_t = channel_type<get_pixel_type<gray4_image_t::view_t>::type>::type;
 
                     int num_colors = channel_traits< channel_t >::max_value() + 1;
 
@@ -169,7 +166,7 @@ private:
 
                 case 8:
                 {
-                    typedef channel_type< get_pixel_type< gray8_image_t::view_t >::type >::type channel_t;
+                    using channel_t = channel_type<get_pixel_type<gray8_image_t::view_t>::type>::type;
 
                     int num_colors = channel_traits< channel_t >::max_value() + 1;
 
@@ -188,7 +185,7 @@ private:
 
                 case 16:
                 {
-                    typedef channel_type< get_pixel_type< gray16_image_t::view_t >::type >::type channel_t;
+                    using channel_t = channel_type<get_pixel_type<gray16_image_t::view_t>::type>::type;
 
                     int num_colors = channel_traits< channel_t >::max_value() + 1;
 
@@ -207,7 +204,7 @@ private:
 
                 case 24:
                 {
-                    typedef channel_type< get_pixel_type< gray24_image_t::view_t >::type >::type channel_t;
+                    using channel_t = channel_type<get_pixel_type<gray24_image_t::view_t>::type>::type;
 
                     int num_colors = channel_traits< channel_t >::max_value() + 1;
 
@@ -226,7 +223,7 @@ private:
 
                 case 32:
                 {
-                    typedef channel_type< get_pixel_type< gray32_image_t::view_t >::type >::type channel_t;
+                    using channel_t = channel_type<get_pixel_type<gray32_image_t::view_t>::type>::type;
 
                     int num_colors = channel_traits< channel_t >::max_value() + 1;
 
@@ -362,7 +359,7 @@ private:
     template< typename Src_View >
     void read_n_bits_row( byte_t* dst, int pos )
     {
-        typedef rgb16_view_t dst_view_t;
+        using dst_view_t = rgb16_view_t;
 
         this->_io_dev.read_scanline( _buffer
                                    , pos

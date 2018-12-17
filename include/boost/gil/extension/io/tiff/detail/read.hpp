@@ -59,12 +59,12 @@ struct plane_recursion
                           , ConversionPolicy >* p
                   )
    {
-      typedef typename kth_channel_view_type< K, View >::type plane_t;
-      plane_t plane = kth_channel_view<K>( dst_view );
+        using plane_t = typename kth_channel_view_type<K, View>::type;
+        plane_t plane = kth_channel_view<K>( dst_view );
 
-      p->template read_data< detail::row_buffer_helper_view< plane_t > >( plane, K );
+        p->template read_data< detail::row_buffer_helper_view< plane_t > >( plane, K );
 
-      plane_recursion< K - 1 >::read_plane( dst_view, p );
+        plane_recursion< K - 1 >::read_plane( dst_view, p );
    }
 };
 
@@ -104,18 +104,12 @@ class reader< Device
 {
 private:
 
-    typedef reader< Device
-                  , tiff_tag
-                  , ConversionPolicy
-                  > this_t;
-
-    typedef typename ConversionPolicy::color_converter_type cc_t;
+    using this_t = reader<Device, tiff_tag, ConversionPolicy>;
+    using cc_t = typename ConversionPolicy::color_converter_type;
 
 public:
 
-    typedef reader_backend< Device, tiff_tag > backend_t;
-
-public:
+    using backend_t = reader_backend<Device, tiff_tag>;
 
     reader( const Device&                          io_dev
           , const image_read_settings< tiff_tag >& settings
@@ -179,9 +173,11 @@ public:
             // the tiff type need to compatible. Which means:
             // color_spaces_are_compatible && channels_are_pairwise_compatible
 
-            typedef typename is_same< ConversionPolicy
-                                    , detail::read_and_no_convert
-                                    >::type is_read_only;
+            using is_read_only = typename is_same
+                <
+                    ConversionPolicy,
+                    detail::read_and_no_convert
+                >::type;
 
             io_error_if( !detail::is_allowed< View >( this->_info
                                                     , is_read_only()
@@ -327,9 +323,7 @@ private:
 
       this->_io_dev.get_field_defaulted( red, green, blue );
 
-      typedef typename channel_traits<
-                    typename element_type<
-                            typename Indices_View::value_type >::type >::value_type channel_t;
+      using channel_t = typename channel_traits<typename element_type<typename Indices_View::value_type>::type>::value_type;
 
       int num_colors = channel_traits< channel_t >::max_value();
 
@@ -432,12 +426,12 @@ private:
                                 )
    {
        ///@todo: why is
-       /// typedef Buffer row_buffer_helper_t;
+       /// using row_buffer_helper_t = Buffer;
        /// not working? I get compiler error with MSVC10.
        /// read_stripped_data IS working.
-       typedef detail::row_buffer_helper_view< View > row_buffer_helper_t;
+       using row_buffer_helper_t = detail::row_buffer_helper_view<View>;
 
-       typedef typename row_buffer_helper_t::iterator_t it_t;
+       using it_t = typename row_buffer_helper_t::iterator_t;
 
        tiff_image_width::type  image_width  = this->_info._width;
        tiff_image_height::type image_height = this->_info._height;
@@ -555,12 +549,12 @@ private:
                             )
    {
        ///@todo: why is
-       /// typedef Buffer row_buffer_helper_t;
+       /// using row_buffer_helper_t = Buffer;
        /// not working? I get compiler error with MSVC10.
        /// read_stripped_data IS working.
-       typedef detail::row_buffer_helper_view< View > row_buffer_helper_t;
+       using row_buffer_helper_t = detail::row_buffer_helper_view<View>;
 
-       typedef typename row_buffer_helper_t::iterator_t it_t;
+       using it_t = typename row_buffer_helper_t::iterator_t;
 
        tiff_image_width::type  image_width  = this->_info._width;
        tiff_image_height::type image_height = this->_info._height;
@@ -616,12 +610,11 @@ private:
    void read_stripped_data( const View& dst_view
                           , int         plane     )
    {
-      typedef typename is_bit_aligned< typename View::value_type >::type is_view_bit_aligned_t;
+      using is_view_bit_aligned_t = typename is_bit_aligned<typename View::value_type>::type;
 
-      //typedef detail::row_buffer_helper_view< View > row_buffer_helper_t;
-      typedef Buffer row_buffer_helper_t;
-
-      typedef typename row_buffer_helper_t::iterator_t it_t;
+      //using row_buffer_helper_t =detail::row_buffer_helper_view<View>;
+      using row_buffer_helper_t = Buffer;
+      using it_t = typename row_buffer_helper_t::iterator_t;
 
       std::size_t size_to_allocate = buffer_size< typename View::value_type >( dst_view.width()
                                                                              , is_view_bit_aligned_t() );
@@ -698,7 +691,7 @@ struct tiff_type_format_checker
     template< typename Image >
     bool apply()
     {
-        typedef typename Image::view_t view_t;
+        using view_t = typename Image::view_t;
 
         return is_allowed< view_t >( _info
                                    , mpl::true_()
@@ -737,10 +730,7 @@ class dynamic_image_reader< Device
                    , detail::read_and_no_convert
                    >
 {
-    typedef reader< Device
-                  , tiff_tag
-                  , detail::read_and_no_convert
-                  > parent_t;
+    using parent_t = reader<Device, tiff_tag, detail::read_and_no_convert>;
 
 public:
 

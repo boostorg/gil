@@ -34,7 +34,7 @@ bool is_allowed( const image_read_info< targa_tag >& info
         }
     }
 
-    typedef typename channel_traits< typename element_type< typename View::value_type >::type >::value_type channel_t;
+    using channel_t = typename channel_traits<typename element_type<typename View::value_type>::type>::value_type;
     targa_depth::type dst_bits_per_pixel = detail::unsigned_integral_num_bits< channel_t >::value * num_channels< View >::value;
 
     return ( dst_bits_per_pixel == src_bits_per_pixel );

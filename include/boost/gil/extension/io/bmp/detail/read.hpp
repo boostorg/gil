@@ -52,16 +52,12 @@ class reader< Device
 {
 private:
 
-    typedef reader< Device
-                  , bmp_tag
-                  , ConversionPolicy
-                  > this_t;
-
-    typedef typename ConversionPolicy::color_converter_type cc_t;
+    using this_t = reader<Device, bmp_tag, ConversionPolicy>;
+    using cc_t = typename ConversionPolicy::color_converter_type;
 
 public:
 
-    typedef reader_backend< Device, bmp_tag > backend_t;
+    using backend_t = reader_backend< Device, bmp_tag>;
 
 public:
 
@@ -103,9 +99,11 @@ public:
             io_error( "Image header was not read." );
         }
 
-        typedef typename is_same< ConversionPolicy
-                                , detail::read_and_no_convert
-                                >::type is_read_and_convert_t;
+        using is_read_and_convert_t = typename is_same
+            <
+                ConversionPolicy,
+                detail::read_and_no_convert
+            >::type;
 
         io_error_if( !detail::is_allowed< View >( this->_info
                                                 , is_read_and_convert_t()
@@ -263,8 +261,8 @@ private:
     {
         this->read_palette();
 
-        typedef detail::row_buffer_helper_view< View_Src > rh_t;
-        typedef typename rh_t::iterator_t          it_t;
+        using rh_t = detail::row_buffer_helper_view<View_Src>;
+        using it_t = typename rh_t::iterator_t;
 
         rh_t rh( _pitch, true );
 
@@ -347,8 +345,8 @@ private:
             io_error( "bmp_reader::apply(): unsupported BMP compression" );
         }
 
-        typedef rgb8_image_t image_t;
-        typedef typename image_t::view_t::x_iterator it_t;
+        using image_t = rgb8_image_t;
+        using it_t = typename image_t::view_t::x_iterator;
 
         for( std::ptrdiff_t y = 0
            ; y < this->_settings._dim.y
@@ -463,7 +461,7 @@ private:
         // we need to know the stream position for padding purposes
         std::size_t stream_pos = this->_info._offset;
 
-        typedef std::vector< rgba8_pixel_t > Buf_type;
+        using Buf_type = std::vector<rgba8_pixel_t>;
         Buf_type buf( this->_settings._dim.x );
         Buf_type::iterator dst_it  = buf.begin();
         Buf_type::iterator dst_end = buf.end();
@@ -695,10 +693,7 @@ class dynamic_image_reader< Device
                    , detail::read_and_no_convert
                    >
 {
-    typedef reader< Device
-                  , bmp_tag
-                  , detail::read_and_no_convert
-                  > parent_t;
+    using parent_t = reader<Device, bmp_tag, detail::read_and_no_convert>;
 
 public:
 
