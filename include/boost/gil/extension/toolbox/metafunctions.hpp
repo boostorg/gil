@@ -12,9 +12,6 @@
 #include <boost/gil/extension/toolbox/metafunctions/channel_view.hpp>
 #include <boost/gil/extension/toolbox/metafunctions/get_num_bits.hpp>
 #include <boost/gil/extension/toolbox/metafunctions/get_pixel_type.hpp>
-#include <boost/gil/extension/toolbox/metafunctions/is_bit_aligned.hpp>
-#include <boost/gil/extension/toolbox/metafunctions/is_homogeneous.hpp>
 #include <boost/gil/extension/toolbox/metafunctions/is_similar.hpp>
-#include <boost/gil/extension/toolbox/metafunctions/pixel_bit_size.hpp>
 
 #endif

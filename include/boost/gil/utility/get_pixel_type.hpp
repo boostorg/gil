@@ -5,12 +5,10 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-#ifndef BOOST_GIL_EXTENSION_TOOLBOX_METAFUNCTIONS_GET_PIXEL_TYPE_HPP
-#define BOOST_GIL_EXTENSION_TOOLBOX_METAFUNCTIONS_GET_PIXEL_TYPE_HPP
+#ifndef BOOST_GIL_UTILITY_GET_PIXEL_TYPE_HPP
+#define BOOST_GIL_UTILITY_GET_PIXEL_TYPE_HPP
 
-#include <boost/gil/extension/toolbox/dynamic_images.hpp>
-
-#include <boost/gil/utility/get_pixel_type.hpp>
+#include <boost/gil/utility/is_bit_aligned.hpp>
 
 namespace boost{ namespace gil {
 
@@ -18,10 +16,15 @@ namespace boost{ namespace gil {
 /// \brief Depending on Image this function generates either
 ///        the pixel type or the reference type in case
 ///        the image is bit_aligned.
-template< typename ImageViewTypes >
-struct get_pixel_type< any_image_view< ImageViewTypes > >
+template< typename View >
+struct get_pixel_type
+    : mpl::if_
+        <
+            typename is_bit_aligned<typename View::value_type>::type,
+            typename View::reference,
+            typename View::value_type
+        >
 {
-    typedef any_image_pixel_t type;
 };
 
 } // namespace gil

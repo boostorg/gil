@@ -30,6 +30,7 @@ build-project algorithm ;
 build-project channel ;
 build-project image_view ;
 build-project point ;
+build-project utility ;
 
 alias perf : [ run performance.cpp ] ;
 explicit perf ;

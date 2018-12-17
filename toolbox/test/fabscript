@@ -34,9 +34,9 @@ def gil_test(name, sources, features, condition=True):
 #       for details see https://github.com/boostorg/gil/pull/164
 tests = [gil_test('toolbox',
                   ['test.cpp', 'channel_type.cpp', 'channel_view.cpp', 'cmyka.cpp',
-                   'get_num_bits.cpp', 'get_pixel_type.cpp', 'gray_alpha.cpp', 'gray_to_rgba.cpp',
-                   'hsl_hsv_test.cpp', 'indexed_image_test.cpp', 'is_bit_aligned.cpp',
-                   'is_homogeneous.cpp', 'is_similar.cpp', 'lab_test.cpp', 'pixel_bit_size.cpp',
+                   'get_num_bits.cpp', 'gray_alpha.cpp', 'gray_to_rgba.cpp',
+                   'hsl_hsv_test.cpp', 'indexed_image_test.cpp',
+                   'is_similar.cpp', 'lab_test.cpp',
                    'rgb_to_luminance.cpp', 'xyz_test.cpp'],
                   features=test_features),
 ]

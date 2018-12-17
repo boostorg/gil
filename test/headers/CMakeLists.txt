@@ -17,6 +17,11 @@ file(GLOB _hpp_core RELATIVE
   "${CMAKE_SOURCE_DIR}/include/boost/gil/*.hpp")
 list(APPEND _headers ${_hpp_core})
 
+file(GLOB _hpp_core RELATIVE
+  "${CMAKE_SOURCE_DIR}/include/boost/gil"
+  "${CMAKE_SOURCE_DIR}/include/boost/gil/utility/*.hpp")
+list(APPEND _headers ${_hpp_core})
+
 list(APPEND _ext_dirs extension/dynamic_image/)
 if(GIL_ENABLE_EXT_NUMERIC)
   list(APPEND _ext_dirs extension/numeric)
@@ -48,7 +53,7 @@ file(READ ${CMAKE_CURRENT_LIST_DIR}/main.cpp _main_content)
 
 foreach(_header ${_headers})
   string(REPLACE ".hpp" "" _target ${_header})
-  string(REPLACE "/" "-" _target ${_target})
+  string(REPLACE "/" "_" _target ${_target})
   set(_cpp ${CMAKE_BINARY_DIR}/test/headers/${_target}.cpp)
   set(_target test_header_${_target})
 
