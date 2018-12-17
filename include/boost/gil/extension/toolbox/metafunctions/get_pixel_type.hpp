@@ -26,7 +26,7 @@ struct get_pixel_type : mpl::if_< typename is_bit_aligned< typename View::value_
 template< typename ImageViewTypes >
 struct get_pixel_type< any_image_view< ImageViewTypes > >
 {
-    typedef any_image_pixel_t type;
+    using type = any_image_pixel_t;
 };
 
 } // namespace gil

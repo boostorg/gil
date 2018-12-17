@@ -76,14 +76,14 @@ template< typename Locator
         >
 struct subchroma_image_deref_fn
 {
-    typedef gray8_view_t::locator plane_locator_t;
+    using plane_locator_t = gray8_view_t::locator;
 
-    typedef subchroma_image_deref_fn     const_t;
-    typedef typename Locator::value_type value_type;
-    typedef value_type                   reference;
-    typedef value_type                   const_reference;
-    typedef point_t                      argument_type;
-    typedef reference                    result_type;
+    using const_t = subchroma_image_deref_fn<Locator, Factors>;
+    using value_type = typename Locator::value_type;
+    using reference = value_type;
+    using const_reference = value_type;
+    using argument_type = point_t;
+    using result_type = reference;
 
     static const bool is_mutable = false;
 
@@ -103,10 +103,12 @@ struct subchroma_image_deref_fn
     /// operator()
     result_type operator()( const point_t& p ) const
     {
-        typedef detail::scaling_factors< mpl::at_c< Factors, 0 >::type::value
-                               , mpl::at_c< Factors, 1 >::type::value
-                               , mpl::at_c< Factors, 2 >::type::value
-                               > scaling_factors_t;
+        using scaling_factors_t = detail::scaling_factors
+            <
+                mpl::at_c<Factors, 0>::type::value,
+                mpl::at_c<Factors, 1>::type::value,
+                mpl::at_c<Factors, 2>::type::value
+            >;
 
         plane_locator_t y = _y_locator.xy_at( p );
         plane_locator_t v = _v_locator.xy_at( p.x / scaling_factors_t::ss_X, p.y / scaling_factors_t::ss_X );
@@ -142,13 +144,12 @@ template< typename Locator
         >
 struct subchroma_image_locator
 {
-    typedef virtual_2d_locator< subchroma_image_deref_fn< Locator
-                                                        , Factors
-                                                        > // Deref
-                              , false // IsTransposed
-                              > type;
+    using type = virtual_2d_locator
+        <
+            subchroma_image_deref_fn<Locator, Factors>, // Deref
+            false // IsTransposed
+        >;
 };
-
 
 /////////////////////////////
 //  PixelBasedConcept
@@ -177,7 +178,7 @@ struct is_planar< subchroma_image_locator< Locator, Factors > >
 template < typename Locator, typename Factors >
 struct dynamic_x_step_type< subchroma_image_locator< Locator, Factors > >
 {
-    typedef typename subchroma_image_locator< Locator, Factors >::type type;
+    using type = typename subchroma_image_locator<Locator, Factors>::type;
 };
 
 /////////////////////////////
@@ -187,7 +188,7 @@ struct dynamic_x_step_type< subchroma_image_locator< Locator, Factors > >
 template < typename Locator, typename Factors >
 struct dynamic_y_step_type< subchroma_image_locator< Locator, Factors > >
 {
-    typedef typename subchroma_image_locator< Locator, Factors >::type type;
+    using type = typename subchroma_image_locator<Locator, Factors>::type;
 };
 
 /////////////////////////////
@@ -197,7 +198,7 @@ struct dynamic_y_step_type< subchroma_image_locator< Locator, Factors > >
 template < typename Locator, typename Factors >
 struct transposed_type< subchroma_image_locator< Locator, Factors > >
 {
-    typedef typename subchroma_image_locator< Locator, Factors >::type type;
+    using type = typename subchroma_image_locator<Locator, Factors>::type;
 };
 
 //////////////////////////////////
@@ -215,14 +216,14 @@ class subchroma_image_view : public image_view< Locator >
 {
 public:
 
-    typedef Locator                     locator;
-    typedef typename locator::deref_fn_t         deref_fn_t;
-    typedef typename deref_fn_t::plane_locator_t plane_locator_t;
+    using locator = Locator;
+    using deref_fn_t = typename locator::deref_fn_t;
+    using plane_locator_t = typename deref_fn_t::plane_locator_t;
 
 
-    typedef subchroma_image_view const_t;
+    using const_t = subchroma_image_view<Locator, Factors>;
 
-    typedef image_view< plane_locator_t > plane_view_t;
+    using plane_view_t = image_view<plane_locator_t>;
 
     /// default constructor
     subchroma_image_view()
@@ -302,7 +303,7 @@ struct is_planar< subchroma_image_view< Locator, Factors > >
 template < typename Locator, typename Factors >
 struct dynamic_x_step_type< subchroma_image_view< Locator, Factors > >
 {
-    typedef image_view< typename dynamic_x_step_type< Locator >::type > type;
+    using type = image_view<typename dynamic_x_step_type<Locator>::type>;
 };
 
 /////////////////////////////
@@ -312,7 +313,7 @@ struct dynamic_x_step_type< subchroma_image_view< Locator, Factors > >
 template < typename Locator, typename Factors >
 struct dynamic_y_step_type< subchroma_image_view< Locator, Factors > >
 {
-    typedef image_view< typename dynamic_y_step_type< Locator >::type > type;
+    using type = image_view<typename dynamic_y_step_type<Locator>::type>;
 };
 
 /////////////////////////////
@@ -322,7 +323,7 @@ struct dynamic_y_step_type< subchroma_image_view< Locator, Factors > >
 template < typename Locator, typename Factors >
 struct transposed_type< subchroma_image_view< Locator, Factors > >
 {
-    typedef image_view< typename transposed_type< Locator >::type > type;
+    using type = image_view<typename transposed_type<Locator>::type>;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -350,27 +351,29 @@ private:
 
 public:
 
-    typedef typename channel_type< Pixel >::type channel_t;
-    typedef pixel< channel_t, gray_layout_t> pixel_t;
+    using channel_t = typename channel_type<Pixel>::type;
+    using pixel_t = pixel<channel_t, gray_layout_t>;
 
-    typedef image< pixel_t, false, Allocator > plane_image_t;
+    using plane_image_t = image<pixel_t, false, Allocator>;
 
-    typedef typename plane_image_t::view_t plane_view_t;
-    typedef typename plane_image_t::const_view_t plane_const_view_t;
-    typedef typename plane_view_t::locator plane_locator_t;
+    using plane_view_t = typename plane_image_t::view_t;
+    using plane_const_view_t = typename plane_image_t::const_view_t;
+    using plane_locator_t = typename plane_view_t::locator;
 
-    typedef typename view_type_from_pixel< Pixel >::type pixel_view_t;
-    typedef typename pixel_view_t::locator pixel_locator_t;
+    using pixel_view_t = typename view_type_from_pixel<Pixel>::type;
+    using pixel_locator_t = typename pixel_view_t::locator;
 
-    typedef typename subchroma_image_locator< pixel_locator_t
-                                            , Factors
-                                            >::type locator_t;
+    using locator_t = typename subchroma_image_locator
+        <
+            pixel_locator_t,
+            Factors
+        >::type;
 
-    typedef typename plane_image_t::coord_t x_coord_t;
-    typedef typename plane_image_t::coord_t y_coord_t;
+    using x_coord_t = typename plane_image_t::coord_t;
+    using y_coord_t = typename plane_image_t::coord_t;
 
-    typedef subchroma_image_view< locator_t, Factors > view_t;
-    typedef typename view_t::const_t                   const_view_t;
+    using view_t = subchroma_image_view<locator_t, Factors>;
+    using const_view_t = typename view_t::const_t;
 
 
     /// constructor
@@ -392,9 +395,7 @@ private:
 
     void init()
     {
-        typedef subchroma_image_deref_fn< pixel_locator_t
-                                        , Factors
-                                        > defer_fn_t;
+        using defer_fn_t = subchroma_image_deref_fn<pixel_locator_t, Factors>;
 
         defer_fn_t deref_fn( view( _y_plane ).xy_at( 0, 0 )
                            , view( _v_plane ).xy_at( 0, 0 )
@@ -480,7 +481,11 @@ void fill_pixels( const subchroma_image_view< Locator, Factors >& view
                 , const Pixel&                                    value
                 )
 {
-    typedef typename subchroma_image< Pixel, Factors >::plane_view_t::value_type channel_t;
+    using channel_t = typename subchroma_image
+        <
+            Pixel,
+            Factors
+        >::plane_view_t::value_type;
 
     fill_pixels( view.y_plane_view(), channel_t( at_c< 0 >( value )));
     fill_pixels( view.v_plane_view(), channel_t( at_c< 1 >( value )));
@@ -501,10 +506,12 @@ typename subchroma_image< Pixel
                                                 , unsigned char* y_base
                                                 )
 {
-    typedef detail::scaling_factors< mpl::at_c< Factors, 0 >::type::value
-                           , mpl::at_c< Factors, 1 >::type::value
-                           , mpl::at_c< Factors, 2 >::type::value
-                           > scaling_factors_t;
+    using scaling_factors_t = detail::scaling_factors
+        <
+            mpl::at_c<Factors, 0>::type::value,
+            mpl::at_c<Factors, 1>::type::value,
+            mpl::at_c<Factors, 2>::type::value
+        >;
 
     std::size_t y_channel_size = 1;
     std::size_t u_channel_size = 1;
@@ -513,7 +520,7 @@ typename subchroma_image< Pixel
     unsigned char* v_base = u_base + ( y_width  / scaling_factors_t::ss_X )
                                    * u_channel_size;
 
-    typedef typename subchroma_image< Pixel, Factors >::plane_view_t plane_view_t;
+    using plane_view_t = typename subchroma_image<Pixel, Factors>::plane_view_t;
 
     plane_view_t y_plane = interleaved_view( y_width
                                            , y_height
@@ -533,11 +540,11 @@ typename subchroma_image< Pixel
                                            , y_width                            // rowsize_in_bytes
                                            );
 
-    typedef subchroma_image_deref_fn< typename subchroma_image< Pixel
-                                                              , Factors
-                                                              >::pixel_locator_t
-                                    , Factors
-                                    > defer_fn_t;
+    using defer_fn_t = subchroma_image_deref_fn
+        <
+            typename subchroma_image<Pixel, Factors>::pixel_locator_t,
+            Factors
+        >;
 
     defer_fn_t deref_fn( y_plane.xy_at( 0, 0 )
                        , v_plane.xy_at( 0, 0 )
@@ -545,18 +552,14 @@ typename subchroma_image< Pixel
                        );
 
 
-    typedef typename subchroma_image< Pixel
-                           , Factors
-                           >::locator_t locator_t;
+    using locator_t = typename subchroma_image<Pixel, Factors>::locator_t;
 
     locator_t locator( point_t( 0, 0 ) // p
                      , point_t( 1, 1 ) // step
                      , deref_fn
                      );
 
-    typedef typename subchroma_image< Pixel
-                           , Factors
-                           >::view_t view_t;
+    using view_t = typename subchroma_image<Pixel, Factors>::view_t;
 
     return view_t( point_t(                           y_width,                           y_height )
                  , point_t( y_width / scaling_factors_t::ss_X, y_height / scaling_factors_t::ss_Y )

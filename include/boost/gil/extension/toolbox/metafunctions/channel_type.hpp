@@ -26,10 +26,12 @@ namespace boost{ namespace gil {
 template <typename B, typename C, typename L, bool M>
 struct gen_chan_ref
 {
-    typedef packed_dynamic_channel_reference< B
-                                            , mpl::at_c< C, 0 >::type::value
-                                            , M
-                                            > type;
+    using type = packed_dynamic_channel_reference
+        <
+            B,
+            mpl::at_c<C, 0>::type::value,
+            M
+        >;
 };
 
 //! This implementation works for bit_algined_pixel_reference
@@ -53,10 +55,12 @@ struct channel_type<const bit_aligned_pixel_reference<B,C,L,M> >
 template <typename B, typename C, typename L>
 struct gen_chan_ref_p
 {
-    typedef packed_dynamic_channel_reference< B
-                                            , get_num_bits< typename mpl::at_c<C,0>::type>::value
-                                            , true
-                                            > type;
+    using type = packed_dynamic_channel_reference
+        <
+            B,
+            get_num_bits<typename mpl::at_c<C, 0>::type>::value,
+            true
+        >;
 };
 
 // packed_pixel
@@ -89,7 +93,7 @@ struct channel_type< const packed_pixel< B, C, L > >
 template<>
 struct channel_type< any_image_pixel_t >
 {
-    typedef any_image_channel_t type;
+    using type = any_image_channel_t;
 };
 
 } // namespace gil
