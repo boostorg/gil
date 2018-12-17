@@ -7,7 +7,7 @@
 # Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 ##############################################################################
-version: 2
+version: 2.0
 
 ##############################################################################
 # Docker images
@@ -665,7 +665,9 @@ workflows:
 ##############################################################################
 # Notifications
 ##############################################################################
-# TODO: Waiting for notifications for workflow, not individual jobs
-# notify:
-#   webhooks:
-#     - url: https://webhooks.gitter.im/e/9538066016dc0f9b6511
+# Circle CI 1.0 notifications seem to work for Circle CI 2.0 (not 2.1!)
+# https://github.com/circleci/circleci-docs/issues/2411
+# https://discuss.circleci.com/t/circleci-2-0-notifications-webhooks/19075/9
+notify:
+  webhooks:
+    - url: https://webhooks.gitter.im/e/9538066016dc0f9b6511
