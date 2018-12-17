@@ -18,7 +18,7 @@
 using namespace std;
 using namespace boost::gil;
 
-typedef bmp_tag tag_t;
+using tag_t = bmp_tag;
 
 BOOST_AUTO_TEST_SUITE( gil_io_bmp_tests )
 
@@ -40,9 +40,7 @@ void write( Image&        img
 BOOST_AUTO_TEST_CASE( read_header_test )
 {
     {
-        typedef get_reader_backend< const std::string
-                                  , tag_t
-                                  >::type backend_t;
+        using backend_t = get_reader_backend<std::string const, tag_t>::type;
 
         backend_t backend = read_image_info( bmp_filename
                                            , tag_t()

@@ -17,7 +17,7 @@
 using namespace std;
 using namespace boost::gil;
 
-typedef pnm_tag tag_t;
+using tag_t = pnm_tag;
 
 BOOST_AUTO_TEST_SUITE( gil_io_pnm_tests )
 
@@ -45,9 +45,7 @@ void test_pnm_scanline_reader( string filename )
 BOOST_AUTO_TEST_CASE( read_header_test )
 {
     {
-        typedef get_reader_backend< const std::string
-                                  , tag_t
-                                  >::type backend_t;
+        using backend_t = get_reader_backend<std::string const, tag_t>::type;
 
         backend_t backend = read_image_info( pnm_filename
                                            , tag_t()

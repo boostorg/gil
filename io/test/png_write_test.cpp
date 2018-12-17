@@ -28,7 +28,7 @@ using namespace gil;
 using namespace boost::gil::detail;
 namespace fs = boost::filesystem;
 
-typedef png_tag tag_t;
+using tag_t = png_tag;
 
 BOOST_AUTO_TEST_SUITE( gil_io_png_tests )
 

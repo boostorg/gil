@@ -34,8 +34,14 @@ void test_pixel_iterator()
 
     boost::function_requires<MutablePixelLocatorConcept<memory_based_2d_locator<rgb8_step_ptr_t> > >();
 
-    typedef const bit_aligned_pixel_reference<std::uint8_t, boost::mpl::vector3_c<int,1,2,1>, bgr_layout_t, true>  bgr121_ref_t;
-    typedef bit_aligned_pixel_iterator<bgr121_ref_t> bgr121_ptr_t;
+    using bgr121_ref_t = bit_aligned_pixel_reference
+        <
+            std::uint8_t,
+            boost::mpl::vector3_c<int,1,2,1>,
+            bgr_layout_t,
+            true
+        > const;
+    using bgr121_ptr_t = bit_aligned_pixel_iterator<bgr121_ref_t>;
 
     boost::function_requires<MutablePixelIteratorConcept<bgr121_ptr_t> >();
     boost::function_requires<PixelBasedConcept<bgr121_ptr_t> >();
@@ -53,24 +59,24 @@ void test_pixel_iterator()
     BOOST_STATIC_ASSERT(iterator_is_step< cmyk16_planar_step_ptr_t >::value);
     BOOST_STATIC_ASSERT(!iterator_is_step< cmyk16_planar_ptr_t >::value);
 
-    typedef color_convert_deref_fn<rgb8c_ref_t, gray8_pixel_t> ccv_rgb_g_fn;
-    typedef color_convert_deref_fn<gray8c_ref_t, rgb8_pixel_t> ccv_g_rgb_fn;
+    using ccv_rgb_g_fn = color_convert_deref_fn<rgb8c_ref_t, gray8_pixel_t>;
+    using ccv_g_rgb_fn = color_convert_deref_fn<gray8c_ref_t, rgb8_pixel_t>;
     gil_function_requires<PixelDereferenceAdaptorConcept<ccv_rgb_g_fn> >();
     gil_function_requires<PixelDereferenceAdaptorConcept<deref_compose<ccv_rgb_g_fn,ccv_g_rgb_fn> > >();
 
-    typedef dereference_iterator_adaptor<rgb8_ptr_t, ccv_rgb_g_fn> rgb2gray_ptr;
+    using rgb2gray_ptr = dereference_iterator_adaptor<rgb8_ptr_t, ccv_rgb_g_fn>;
     BOOST_STATIC_ASSERT(!iterator_is_step< rgb2gray_ptr >::value);
 
-    typedef dynamic_x_step_type<rgb2gray_ptr>::type rgb2gray_step_ptr;
+    using rgb2gray_step_ptr = dynamic_x_step_type<rgb2gray_ptr>::type;
     BOOST_STATIC_ASSERT(( boost::is_same< rgb2gray_step_ptr, dereference_iterator_adaptor<rgb8_step_ptr_t, ccv_rgb_g_fn> >::value));
 
     make_step_iterator(rgb2gray_ptr(),2);
 
-    typedef dereference_iterator_adaptor<rgb8_step_ptr_t, ccv_rgb_g_fn> rgb2gray_step_ptr1;
+    using rgb2gray_step_ptr1 = dereference_iterator_adaptor<rgb8_step_ptr_t, ccv_rgb_g_fn>;
     BOOST_STATIC_ASSERT(iterator_is_step< rgb2gray_step_ptr1 >::value);
     BOOST_STATIC_ASSERT(( boost::is_same< rgb2gray_step_ptr1, dynamic_x_step_type<rgb2gray_step_ptr1>::type >::value));
 
-    typedef memory_based_step_iterator<dereference_iterator_adaptor<rgb8_ptr_t, ccv_rgb_g_fn> > rgb2gray_step_ptr2;
+    using rgb2gray_step_ptr2 = memory_based_step_iterator<dereference_iterator_adaptor<rgb8_ptr_t, ccv_rgb_g_fn>>;
     BOOST_STATIC_ASSERT(iterator_is_step< rgb2gray_step_ptr2 >::value);
     BOOST_STATIC_ASSERT(( boost::is_same< rgb2gray_step_ptr2, dynamic_x_step_type<rgb2gray_step_ptr2>::type >::value));
     make_step_iterator(rgb2gray_step_ptr2(),2);
@@ -78,13 +84,19 @@ void test_pixel_iterator()
 // bit_aligned iterators test
 
     // Mutable reference to a BGR232 pixel
-    typedef const bit_aligned_pixel_reference<std::uint8_t, boost::mpl::vector3_c<unsigned,2,3,2>, bgr_layout_t, true>  bgr232_ref_t;
+    using bgr232_ref_t = bit_aligned_pixel_reference
+        <
+            std::uint8_t,
+            boost::mpl::vector3_c<unsigned, 2, 3, 2>,
+            bgr_layout_t,
+            true
+        > const;
 
     // A mutable iterator over BGR232 pixels
-    typedef bit_aligned_pixel_iterator<bgr232_ref_t> bgr232_ptr_t;
+    using bgr232_ptr_t = bit_aligned_pixel_iterator<bgr232_ref_t>;
 
     // BGR232 pixel value. It is a packed_pixel of size 1 byte. (The last bit is unused)
-    typedef std::iterator_traits<bgr232_ptr_t>::value_type bgr232_pixel_t;
+    using bgr232_pixel_t = std::iterator_traits<bgr232_ptr_t>::value_type;
     BOOST_STATIC_ASSERT((sizeof(bgr232_pixel_t)==1));
 
     bgr232_pixel_t red(0,0,3); // = 0RRGGGBB, = 01100000
@@ -98,13 +110,13 @@ void test_pixel_iterator()
     }
 
 	// test cross byte pixel values - meaning when a pixel value is stretched over two bytes
-	typedef bit_aligned_image1_type< 3, gray_layout_t >::type gray3_image_t;
-    typedef gray3_image_t image_t;
+	using gray3_image_t = bit_aligned_image1_type<3, gray_layout_t>::type;
+    using image_t = gray3_image_t;
 
-    typedef image_t::view_t view_t;
-    typedef view_t::reference ref_t;
+    using view_t = image_t::view_t;
+    using ref_t = view_t::reference;
 
-    typedef bit_aligned_pixel_iterator< ref_t > iterator_t;
+    using iterator_t = bit_aligned_pixel_iterator<ref_t>;
 
 	std::vector< unsigned char > buf( 4 );
 	// bit pattern is: 1011 0110  0110 1101  1101 1011
@@ -238,7 +250,7 @@ void test_pixel_iterator() {
     ++pix_img_it_c;
     pix_img_it_c+=10;
     //  *pix_img_it_c=rgb8_pixel_t(1,2,3);        // error: assigning though const iterator
-    typedef iterator_from_2d<rgb8_loc_t>::difference_type dif_t;
+    using dif_t = iterator_from_2d<rgb8_loc_t>::difference_type;
     dif_t dt=0;
     std::ptrdiff_t tdt=dt; ignore_unused_variable_warning(tdt);
 
@@ -273,10 +285,10 @@ void test_pixel_iterator() {
     // planar vs interleaved
 
 // Pixel POINTERS
-//  typedef const iterator_traits<rgb8_ptr_t>::pointer  RGB8ConstPtr;
-    typedef const rgb8_ptr_t  RGB8ConstPtr;
-    typedef const rgb8_planar_ptr_t  RGB8ConstPlanarPtr;
-//  typedef const iterator_traits<rgb8_planar_ptr_t>::pointer RGB8ConstPlanarPtr;
+//  using RGB8ConstPtr = iterator_traits<rgb8_ptr_t>::pointer const;
+    using RGB8ConstPtr = rgb8_ptr_t const;
+    using RGB8ConstPlanarPtr = rgb8_planar_ptr_t const;
+//  using RGB8ConstPlanarPtr = iterator_traits<rgb8_planar_ptr_t>::pointer const;
 
 // constructing from values, references and other pointers
     RGB8ConstPtr rgb8_const_ptr=NULL; ignore_unused_variable_warning(rgb8_const_ptr);

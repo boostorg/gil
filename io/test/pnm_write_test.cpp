@@ -18,7 +18,7 @@
 using namespace std;
 using namespace boost::gil;
 
-typedef pnm_tag tag_t;
+using tag_t = pnm_tag;
 
 BOOST_AUTO_TEST_SUITE( gil_io_pnm_tests )
 
@@ -32,7 +32,7 @@ BOOST_AUTO_TEST_CASE( write_test )
 
     // test writing all supported image types
     {
-        typedef bit_aligned_image1_type< 1, gray_layout_t >::type gray1_image_t;
+        using gray1_image_t = bit_aligned_image1_type<1, gray_layout_t>::type;
         gray1_image_t dst( 200, 200 );
 
         copy_and_convert_pixels( v, view( dst ));

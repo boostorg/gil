@@ -20,17 +20,17 @@ void test_scanline_reader( const char* file_name )
     using namespace boost::gil;
 
     // read image using scanline_read_iterator
-    typedef scanline_reader< typename get_read_device< const char*
-                                                     , FormatTag
-                                                     >::type
-                           , FormatTag
-                           > reader_t;
+    using reader_t = scanline_reader
+        <
+            typename get_read_device<char const*, FormatTag>::type,
+            FormatTag
+        >;
 
     reader_t reader = make_scanline_reader( file_name, FormatTag() );
 
     Image dst( reader._info._width, reader._info._height );
 
-    typedef typename reader_t::iterator_t iterator_t;
+    using iterator_t = typename reader_t::iterator_t;
 
     iterator_t it  = reader.begin();
     iterator_t end = reader.end();

@@ -24,8 +24,8 @@ BOOST_AUTO_TEST_CASE( channel_type_test )
         is_same<float32_t, channel_type<rgba32f_pixel_t>::type>::value));
 
     // channel_type for bit_aligned images doesn't work with standard gil.
-    typedef bit_aligned_image4_type<4, 4, 4, 4, rgb_layout_t>::type image_t;
-    typedef channel_type< image_t::view_t::reference >::type channel_t;
+    using image_t = bit_aligned_image4_type<4, 4, 4, 4, rgb_layout_t>::type;
+    using channel_t = channel_type<image_t::view_t::reference>::type;
 }
 
 BOOST_AUTO_TEST_SUITE_END()

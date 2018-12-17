@@ -18,7 +18,7 @@
 using namespace std;
 using namespace boost::gil;
 
-typedef jpeg_tag tag_t;
+using tag_t = jpeg_tag;
 
 BOOST_AUTO_TEST_SUITE( gil_io_jpeg_tests )
 
@@ -64,7 +64,7 @@ BOOST_AUTO_TEST_CASE( write_test )
 BOOST_AUTO_TEST_CASE( dct_method_write_test )
 {
     {
-        typedef rgb8_image_t image_t;
+        using image_t = rgb8_image_t;
         image_t img;
 
         read_image( jpeg_filename

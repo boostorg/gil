@@ -26,7 +26,7 @@ using namespace boost;
 using namespace gil;
 namespace fs = boost::filesystem;
 
-typedef raw_tag tag_t;
+using tag_t = raw_tag;
 
 BOOST_AUTO_TEST_SUITE( gil_io_raw_tests )
 
@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_CASE( read_image_info_using_string )
   {
     /// raw_tag reader's can only constructed with char*, std::string, and LibRaw object
 
-    typedef get_reader_backend<const char*, tag_t>::type backend_t;
+    using backend_t = get_reader_backend<char const*, tag_t>::type;
 
     backend_t b = make_reader_backend(raw_filename.c_str(),
 				      image_read_settings<raw_tag>());
@@ -48,16 +48,16 @@ BOOST_AUTO_TEST_CASE( read_image_info_using_string )
     BOOST_CHECK_EQUAL( backend._info._height, 1448 );
   }
 
-  {
-    fs::path my_path( raw_filename );
+    {
+        fs::path my_path( raw_filename );
 
-    typedef get_reader_backend<fs::path, tag_t>::type backend_t;
+        using backend_t = get_reader_backend<fs::path, tag_t>::type;
 
         backend_t backend = read_image_info(my_path, tag_t());
 
         BOOST_CHECK_EQUAL( backend._info._width , 2176 );
         BOOST_CHECK_EQUAL( backend._info._height, 1448 );
-  }
+    }
 }
 
 BOOST_AUTO_TEST_CASE( read_image_test )
@@ -110,8 +110,13 @@ BOOST_AUTO_TEST_CASE( read_and_convert_view_test )
 
 BOOST_AUTO_TEST_CASE( dynamic_image_test )
 {
-  typedef mpl::vector<gray8_image_t, gray16_image_t, rgb8_image_t, rgba8_image_t> my_img_types;
-
+  using my_img_types = mpl::vector
+      <
+          gray8_image_t,
+          gray16_image_t,
+          rgb8_image_t,
+          rgba8_image_t
+      >;
 
   any_image< my_img_types > runtime_image;
 

@@ -17,7 +17,7 @@
 using namespace std;
 using namespace boost::gil;
 
-typedef tiff_tag tag_t;
+using tag_t = tiff_tag;
 
 BOOST_AUTO_TEST_SUITE( gil_io_tiff_tests )
 
@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE( two_bit_minisblack_gray_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-minisblack-02.tif" );
 
     {
-        typedef bit_aligned_image1_type< 2, gray_layout_t >::type image_t;
+        using image_t = bit_aligned_image1_type<2, gray_layout_t>::type;
         image_t img;
 
         read_image( filename
@@ -58,7 +58,7 @@ BOOST_AUTO_TEST_CASE( four_bit_minisblack_gray_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-minisblack-04.tif" );
 
     {
-        typedef bit_aligned_image1_type< 4, gray_layout_t >::type image_t;
+        using image_t = bit_aligned_image1_type<4, gray_layout_t>::type;
         image_t img;
 
         read_image( filename
@@ -81,7 +81,7 @@ BOOST_AUTO_TEST_CASE( six_bit_minisblack_gray_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-minisblack-06.tif" );
 
     {
-        typedef bit_aligned_image1_type< 6, gray_layout_t >::type image_t;
+        using image_t = bit_aligned_image1_type<6, gray_layout_t>::type;
         image_t img;
 
         read_image( filename
@@ -104,7 +104,7 @@ BOOST_AUTO_TEST_CASE( eight_bit_minisblack_gray_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-minisblack-08.tif" );
 
     {
-        typedef gray8_image_t image_t;
+        using image_t = gray8_image_t;
         image_t img;
 
         read_image( filename
@@ -127,7 +127,7 @@ BOOST_AUTO_TEST_CASE( ten_bit_minisblack_gray_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-minisblack-10.tif" );
 
     {
-        typedef bit_aligned_image1_type< 10, gray_layout_t >::type image_t;
+        using image_t = bit_aligned_image1_type<10, gray_layout_t>::type;
         image_t img;
 
         read_image( filename
@@ -150,7 +150,7 @@ BOOST_AUTO_TEST_CASE( twelve_bit_minisblack_gray_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-minisblack-12.tif" );
 
     {
-        typedef bit_aligned_image1_type< 12, gray_layout_t >::type image_t;
+        using image_t = bit_aligned_image1_type<12, gray_layout_t>::type;
         image_t img;
 
         read_image( filename
@@ -173,7 +173,7 @@ BOOST_AUTO_TEST_CASE( fourteen_bit_minisblack_gray_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-minisblack-14.tif" );
 
     {
-        typedef bit_aligned_image1_type< 14, gray_layout_t >::type image_t;
+        using image_t = bit_aligned_image1_type<14, gray_layout_t>::type;
         image_t img;
 
         read_image( filename
@@ -196,7 +196,7 @@ BOOST_AUTO_TEST_CASE( sixteen_bit_minisblack_gray_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-minisblack-16.tif" );
 
     {
-        typedef gray16_image_t image_t;
+        using image_t = gray16_image_t;
         image_t img;
 
         read_image( filename
@@ -219,7 +219,7 @@ BOOST_AUTO_TEST_CASE( twentyfour_bit_minisblack_gray_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-minisblack-24.tif" );
 
     {
-        typedef bit_aligned_image1_type< 24, gray_layout_t >::type image_t;
+        using image_t = bit_aligned_image1_type<24, gray_layout_t>::type;
         image_t img;
 
         read_image( filename
@@ -242,7 +242,7 @@ BOOST_AUTO_TEST_CASE( thirtytwo_bit_minisblack_gray_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-minisblack-32.tif" );
 
     {
-        typedef gray32_image_t image_t;
+        using image_t = gray32_image_t;
         image_t img;
 
         read_image( filename
@@ -265,7 +265,7 @@ BOOST_AUTO_TEST_CASE( four_entry_colormapped_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-palette-02.tif" );
 
     {
-        typedef rgb16_image_t image_t;
+        using image_t = rgb16_image_t;
         image_t img;
 
         read_image( filename
@@ -288,7 +288,7 @@ BOOST_AUTO_TEST_CASE( sixteen_entry_colormapped_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-palette-04.tif" );
 
     {
-        typedef rgb16_image_t image_t;
+        using image_t = rgb16_image_t;
         image_t img;
 
         read_image( filename
@@ -311,7 +311,7 @@ BOOST_AUTO_TEST_CASE( twohundred_twenty_five_entry_colormapped_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-palette-08.tif" );
 
     {
-        typedef rgb16_image_t image_t;
+        using image_t = rgb16_image_t;
         image_t img;
 
         read_image( filename
@@ -334,7 +334,7 @@ BOOST_AUTO_TEST_CASE( sixtyfive_thousand_entry_colormapped_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-palette-16.tif" );
 
     {
-        typedef rgb16_image_t image_t;
+        using image_t = rgb16_image_t;
         image_t img;
 
         read_image( filename
@@ -357,7 +357,7 @@ BOOST_AUTO_TEST_CASE( two_bit_contiguous_RGB_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-contig-02.tif" );
 
     {
-        typedef bit_aligned_image3_type< 2, 2, 2, rgb_layout_t >::type image_t;
+        using image_t = bit_aligned_image3_type<2, 2, 2, rgb_layout_t>::type;
         image_t img;
 
         read_image( filename
@@ -380,7 +380,7 @@ BOOST_AUTO_TEST_CASE( four_bit_contiguous_RGB_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-contig-04.tif" );
 
     {
-        typedef bit_aligned_image3_type< 4, 4, 4, rgb_layout_t >::type image_t;
+        using image_t = bit_aligned_image3_type<4, 4, 4, rgb_layout_t>::type;
         image_t img;
 
         read_image( filename
@@ -403,7 +403,7 @@ BOOST_AUTO_TEST_CASE( eight_bit_contiguous_RGB_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-contig-08.tif" );
 
     {
-        typedef rgb8_image_t image_t;
+        using image_t = rgb8_image_t;
         image_t img;
 
         read_image( filename
@@ -426,7 +426,7 @@ BOOST_AUTO_TEST_CASE( ten_bit_contiguous_RGB_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-contig-10.tif" );
 
     {
-        typedef bit_aligned_image3_type< 10, 10, 10, rgb_layout_t >::type image_t;
+        using image_t = bit_aligned_image3_type<10, 10, 10, rgb_layout_t>::type;
         image_t img;
 
         read_image( filename
@@ -449,7 +449,7 @@ BOOST_AUTO_TEST_CASE( twelve_bit_contiguous_RGB_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-contig-12.tif" );
 
     {
-        typedef bit_aligned_image3_type< 12, 12, 12, rgb_layout_t >::type image_t;
+        using image_t = bit_aligned_image3_type<12, 12, 12, rgb_layout_t>::type;
         image_t img;
 
         read_image( filename
@@ -472,7 +472,7 @@ BOOST_AUTO_TEST_CASE( fourteen_bit_contiguous_RGB_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-contig-14.tif" );
 
     {
-        typedef bit_aligned_image3_type< 14, 14, 14, rgb_layout_t >::type image_t;
+        using image_t = bit_aligned_image3_type<14, 14, 14, rgb_layout_t>::type;
         image_t img;
 
         read_image( filename
@@ -495,7 +495,7 @@ BOOST_AUTO_TEST_CASE( sixteen_bit_contiguous_RGB_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-contig-16.tif" );
 
     {
-        typedef rgb16_image_t image_t;
+        using image_t = rgb16_image_t;
         image_t img;
 
         read_image( filename
@@ -518,7 +518,7 @@ BOOST_AUTO_TEST_CASE( twenty_four_bit_contiguous_RGB_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-contig-24.tif" );
 
     {
-        typedef bit_aligned_image3_type< 24, 24, 24, rgb_layout_t >::type image_t;
+        using image_t = bit_aligned_image3_type<24, 24, 24, rgb_layout_t>::type;
         image_t img;
 
         read_image( filename
@@ -541,7 +541,7 @@ BOOST_AUTO_TEST_CASE( thirty_two_bit_contiguous_RGB_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-contig-32.tif" );
 
     {
-        typedef rgb32_image_t image_t;
+        using image_t = rgb32_image_t;
         image_t img;
 
         read_image( filename
@@ -564,7 +564,7 @@ BOOST_AUTO_TEST_CASE( two_bit_seperated_RGB_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-planar-02.tif" );
 
     {
-        typedef bit_aligned_image3_type< 2, 2, 2, rgb_layout_t >::type image_t;
+        using image_t = bit_aligned_image3_type<2, 2, 2, rgb_layout_t>::type;
         image_t img;
 
         read_image( filename
@@ -587,7 +587,7 @@ BOOST_AUTO_TEST_CASE( four_bit_seperated_RGB_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-planar-04.tif" );
 
     {
-        typedef bit_aligned_image3_type< 4, 4, 4, rgb_layout_t >::type image_t;
+        using image_t = bit_aligned_image3_type<4, 4, 4, rgb_layout_t>::type;
         image_t img;
 
         read_image( filename
@@ -610,7 +610,7 @@ BOOST_AUTO_TEST_CASE( eight_bit_seperated_RGB_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-planar-08.tif" );
 
     {
-        typedef rgb8_planar_image_t image_t;
+        using image_t = rgb8_planar_image_t;
         image_t img;
 
         read_image( filename
@@ -633,7 +633,7 @@ BOOST_AUTO_TEST_CASE( ten_bit_seperated_RGB_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-planar-10.tif" );
 
     {
-        typedef bit_aligned_image3_type< 10, 10, 10, rgb_layout_t >::type image_t;
+        using image_t = bit_aligned_image3_type<10, 10, 10, rgb_layout_t>::type;
         image_t img;
 
         read_image( filename
@@ -656,7 +656,7 @@ BOOST_AUTO_TEST_CASE( twelve_bit_seperated_RGB_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-planar-12.tif" );
 
     {
-        typedef bit_aligned_image3_type< 12, 12, 12, rgb_layout_t >::type image_t;
+        using image_t = bit_aligned_image3_type<12, 12, 12, rgb_layout_t>::type;
         image_t img;
 
         read_image( filename
@@ -679,7 +679,7 @@ BOOST_AUTO_TEST_CASE( fourteen_bit_seperated_RGB_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-planar-14.tif" );
 
     {
-        typedef bit_aligned_image3_type< 14, 14, 14, rgb_layout_t >::type image_t;
+        using image_t = bit_aligned_image3_type<14, 14, 14, rgb_layout_t>::type;
         image_t img;
 
         read_image( filename
@@ -702,7 +702,7 @@ BOOST_AUTO_TEST_CASE( sixteen_bit_seperated_RGB_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-planar-16.tif" );
 
     {
-        typedef rgb16_planar_image_t image_t;
+        using image_t = rgb16_planar_image_t;
         image_t img;
 
         read_image( filename
@@ -725,7 +725,7 @@ BOOST_AUTO_TEST_CASE( twenty_four_bit_seperated_RGB_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-planar-24.tif" );
 
     {
-        typedef bit_aligned_image3_type< 24, 24, 24, rgb_layout_t >::type image_t;
+        using image_t = bit_aligned_image3_type<24, 24, 24, rgb_layout_t>::type;
         image_t img;
 
         read_image( filename
@@ -748,7 +748,7 @@ BOOST_AUTO_TEST_CASE( thirty_two_bit_seperated_RGB_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-rgb-planar-32.tif" );
 
     {
-        typedef rgb32_planar_image_t image_t;
+        using image_t = rgb32_planar_image_t;
         image_t img;
 
         read_image( filename
@@ -771,7 +771,7 @@ BOOST_AUTO_TEST_CASE( eight_bit_contiguous_CMYK_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-separated-contig-08.tif" );
 
     {
-        typedef cmyk8_image_t image_t;
+        using image_t = cmyk8_image_t;
         image_t img;
 
         read_image( filename
@@ -794,7 +794,7 @@ BOOST_AUTO_TEST_CASE( sixteen_bit_contiguous_CMYK_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-separated-contig-16.tif" );
 
     {
-        typedef cmyk16_image_t image_t;
+        using image_t = cmyk16_image_t;
         image_t img;
 
         read_image( filename
@@ -817,7 +817,7 @@ BOOST_AUTO_TEST_CASE( eight_bit_separated_CMYK_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-separated-planar-08.tif" );
 
     {
-        typedef cmyk8_planar_image_t image_t;
+        using image_t = cmyk8_planar_image_t;
         image_t img;
 
         read_image( filename
@@ -840,7 +840,7 @@ BOOST_AUTO_TEST_CASE( sixteen_bit_separated_CMYK_image_test )
     std::string filename( tiff_in + "libtiffpic/depth/flower-separated-planar-16.tif" );
 
     {
-        typedef cmyk16_planar_image_t image_t;
+        using image_t = cmyk16_planar_image_t;
         image_t img;
 
         read_image( filename
@@ -866,7 +866,7 @@ BOOST_AUTO_TEST_CASE( tiger_separated_strip_contig_08 )
     std::string filename( tiff_in_GM + "tiger-separated-strip-contig-08.tif" );
 
     {
-        typedef cmyk8_planar_image_t image_t;
+        using image_t = cmyk8_planar_image_t;
         image_t img;
 
         read_image( filename
@@ -888,7 +888,7 @@ BOOST_AUTO_TEST_CASE( tiger_separated_strip_contig_16 )
     std::string filename( tiff_in_GM + "tiger-separated-strip-contig-16.tif" );
 
     {
-        typedef cmyk16_planar_image_t image_t;
+        using image_t = cmyk16_planar_image_t;
         image_t img;
 
         read_image( filename
@@ -910,7 +910,7 @@ BOOST_AUTO_TEST_CASE( tiger_separated_strip_planar_08 )
     std::string filename( tiff_in_GM + "tiger-separated-strip-planar-08.tif" );
 
     {
-        typedef cmyk8_planar_image_t image_t;
+        using image_t = cmyk8_planar_image_t;
         image_t img;
 
         read_image( filename
@@ -932,7 +932,7 @@ BOOST_AUTO_TEST_CASE( tiger_separated_strip_planar_16 )
     std::string filename( tiff_in_GM + "tiger-separated-strip-planar-16.tif" );
 
     {
-        typedef cmyk16_planar_image_t image_t;
+        using image_t = cmyk16_planar_image_t;
         image_t img;
 
         read_image( filename

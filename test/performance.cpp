@@ -46,9 +46,9 @@ double measure_time(Op op, std::size_t num_loops) {
 std::size_t width=1000, height=400;
 
 // macros for standard GIL views
-#define RGB_VIEW(T) image_view<memory_based_2d_locator<memory_based_step_iterator<pixel<T,rgb_layout_t>*> > >
-#define BGR_VIEW(T) image_view<memory_based_2d_locator<memory_based_step_iterator<pixel<T,bgr_layout_t>*> > >
-#define RGB_PLANAR_VIEW(T) image_view<memory_based_2d_locator<memory_based_step_iterator<planar_pixel_iterator<T*,rgb_t> > > >
+#define RGB_VIEW(T) image_view<memory_based_2d_locator<memory_based_step_iterator<pixel<T,rgb_layout_t>*>>>
+#define BGR_VIEW(T) image_view<memory_based_2d_locator<memory_based_step_iterator<pixel<T,bgr_layout_t>*>>>
+#define RGB_PLANAR_VIEW(T) image_view<memory_based_2d_locator<memory_based_step_iterator<planar_pixel_iterator<T*,rgb_t>>>>
 
 template <typename View, typename P>
 struct fill_gil_t {
@@ -59,8 +59,9 @@ struct fill_gil_t {
 };
 template <typename View, typename P> struct fill_nongil_t;
 template <typename T, typename P>
-struct fill_nongil_t<RGB_VIEW(T), P> {
-    typedef RGB_VIEW(T) View;
+struct fill_nongil_t<RGB_VIEW(T), P>
+{
+    using View = RGB_VIEW(T);
     View _v;
     P _p;
     fill_nongil_t(const View& v_in,const P& p_in) : _v(v_in), _p(p_in) {}
@@ -76,9 +77,10 @@ struct fill_nongil_t<RGB_VIEW(T), P> {
     }
 };
 template <typename T1, typename T2>
-struct fill_nongil_t<RGB_VIEW(T1), pixel<T2,bgr_layout_t> > {
-    typedef RGB_VIEW(T1) View;
-    typedef pixel<T2,bgr_layout_t> P;
+struct fill_nongil_t<RGB_VIEW(T1), pixel<T2,bgr_layout_t>>
+{
+    using View = RGB_VIEW(T1);
+    using P = pixel<T2, bgr_layout_t>;
     View _v;
     P _p;
     fill_nongil_t(const View& v_in,const P& p_in) : _v(v_in), _p(p_in) {}
@@ -94,9 +96,10 @@ struct fill_nongil_t<RGB_VIEW(T1), pixel<T2,bgr_layout_t> > {
     }
 };
 template <typename T1, typename T2>
-struct fill_nongil_t<RGB_PLANAR_VIEW(T1), pixel<T2,rgb_layout_t> > {
-    typedef RGB_PLANAR_VIEW(T1) View;
-    typedef pixel<T2,rgb_layout_t> P;
+struct fill_nongil_t<RGB_PLANAR_VIEW(T1), pixel<T2,rgb_layout_t>>
+{
+    using View =  RGB_PLANAR_VIEW(T1);
+    using P = pixel<T2, rgb_layout_t>;
     View _v;
     P _p;
     fill_nongil_t(const View& v_in,const P& p_in) : _v(v_in), _p(p_in) {}
@@ -113,9 +116,10 @@ struct fill_nongil_t<RGB_PLANAR_VIEW(T1), pixel<T2,rgb_layout_t> > {
 };
 
 template <typename T1, typename T2>
-struct fill_nongil_t<RGB_PLANAR_VIEW(T1), pixel<T2,bgr_layout_t> > {
-    typedef RGB_PLANAR_VIEW(T1) View;
-    typedef pixel<T2,bgr_layout_t> P;
+struct fill_nongil_t<RGB_PLANAR_VIEW(T1), pixel<T2,bgr_layout_t>>
+{
+    using View = RGB_PLANAR_VIEW(T1);
+    using P = pixel<T2,bgr_layout_t>;
     View _v;
     P _p;
     fill_nongil_t(const View& v_in,const P& p_in) : _v(v_in), _p(p_in) {}
@@ -152,9 +156,10 @@ struct for_each_gil_t {
 };
 template <typename View, typename F> struct for_each_nongil_t;
 template <typename T, typename T2>
-struct for_each_nongil_t<RGB_VIEW(T), rgb_fr_t<T2> > {
-    typedef RGB_VIEW(T) View;
-    typedef rgb_fr_t<T2> F;
+struct for_each_nongil_t<RGB_VIEW(T), rgb_fr_t<T2>>
+{
+    using View = RGB_VIEW(T);
+    using F = rgb_fr_t<T2>;
     View _v;
     F _f;
     for_each_nongil_t(const View& v_in,const F& f_in) : _v(v_in), _f(f_in) {}
@@ -170,9 +175,10 @@ struct for_each_nongil_t<RGB_VIEW(T), rgb_fr_t<T2> > {
     }
 };
 template <typename T1, typename T2>
-struct for_each_nongil_t<RGB_PLANAR_VIEW(T1), rgb_fr_t<T2> > {
-    typedef RGB_PLANAR_VIEW(T1) View;
-    typedef rgb_fr_t<T2> F;
+struct for_each_nongil_t<RGB_PLANAR_VIEW(T1), rgb_fr_t<T2>>
+{
+    using View = RGB_PLANAR_VIEW(T1);
+    using F = rgb_fr_t<T2>;
     View _v;
     F _f;
     for_each_nongil_t(const View& v_in,const F& f_in) : _v(v_in), _f(f_in) {}
@@ -207,9 +213,10 @@ struct copy_gil_t {
 };
 template <typename View1, typename View2> struct copy_nongil_t;
 template <typename T1, typename T2>
-struct copy_nongil_t<RGB_VIEW(T1),RGB_VIEW(T2)> {
-    typedef RGB_VIEW(T1) View1;
-    typedef RGB_VIEW(T2) View2;
+struct copy_nongil_t<RGB_VIEW(T1),RGB_VIEW(T2)>
+{
+    using View1 = RGB_VIEW(T1);
+    using View2 = RGB_VIEW(T2);
     View1 _v1;
     View2 _v2;
     copy_nongil_t(const View1& v1_in,const View2& v2_in) : _v1(v1_in), _v2(v2_in) {}
@@ -221,9 +228,10 @@ struct copy_nongil_t<RGB_VIEW(T1),RGB_VIEW(T2)> {
     }
 };
 template <typename T1, typename T2>
-struct copy_nongil_t<RGB_VIEW(T1),BGR_VIEW(T2)> {
-    typedef RGB_VIEW(T1) View1;
-    typedef BGR_VIEW(T2) View2;
+struct copy_nongil_t<RGB_VIEW(T1),BGR_VIEW(T2)>
+{
+    using View1 = RGB_VIEW(T1);
+    using View2 = BGR_VIEW(T2);
     View1 _v1;
     View2 _v2;
     copy_nongil_t(const View1& v1_in,const View2& v2_in) : _v1(v1_in), _v2(v2_in) {}
@@ -240,9 +248,10 @@ struct copy_nongil_t<RGB_VIEW(T1),BGR_VIEW(T2)> {
     }
 };
 template <typename T1, typename T2>
-struct copy_nongil_t<RGB_PLANAR_VIEW(T1),RGB_PLANAR_VIEW(T2)> {
-    typedef RGB_PLANAR_VIEW(T1) View1;
-    typedef RGB_PLANAR_VIEW(T2) View2;
+struct copy_nongil_t<RGB_PLANAR_VIEW(T1),RGB_PLANAR_VIEW(T2)>
+{
+    using View1 = RGB_PLANAR_VIEW(T1);
+    using View2 = RGB_PLANAR_VIEW(T2);
     View1 _v1;
     View2 _v2;
     copy_nongil_t(const View1& v1_in,const View2& v2_in) : _v1(v1_in), _v2(v2_in) {}
@@ -260,9 +269,10 @@ struct copy_nongil_t<RGB_PLANAR_VIEW(T1),RGB_PLANAR_VIEW(T2)> {
     }
 };
 template <typename T1, typename T2>
-struct copy_nongil_t<RGB_VIEW(T1),RGB_PLANAR_VIEW(T2)> {
-    typedef RGB_VIEW(T1) View1;
-    typedef RGB_PLANAR_VIEW(T2) View2;
+struct copy_nongil_t<RGB_VIEW(T1),RGB_PLANAR_VIEW(T2)>
+{
+    using View1 = RGB_VIEW(T1);
+    using View2 = RGB_PLANAR_VIEW(T2);
     View1 _v1;
     View2 _v2;
     copy_nongil_t(const View1& v1_in,const View2& v2_in) : _v1(v1_in), _v2(v2_in) {}
@@ -281,9 +291,10 @@ struct copy_nongil_t<RGB_VIEW(T1),RGB_PLANAR_VIEW(T2)> {
     }
 };
 template <typename T1, typename T2>
-struct copy_nongil_t<RGB_PLANAR_VIEW(T1),RGB_VIEW(T2)> {
-    typedef RGB_PLANAR_VIEW(T1) View1;
-    typedef RGB_VIEW(T2) View2;
+struct copy_nongil_t<RGB_PLANAR_VIEW(T1),RGB_VIEW(T2)>
+{
+    using View1 = RGB_PLANAR_VIEW(T1);
+    using View2 = RGB_VIEW(T2);
     View1 _v1;
     View2 _v2;
     copy_nongil_t(const View1& v1_in,const View2& v2_in) : _v1(v1_in), _v2(v2_in) {}
@@ -328,9 +339,10 @@ struct transform_gil_t {
 };
 template <typename View1, typename View2, typename F> struct transform_nongil_t;
 template <typename T1, typename T2, typename F>
-struct transform_nongil_t<RGB_VIEW(T1),RGB_VIEW(T2),F> {
-    typedef RGB_VIEW(T1) View1;
-    typedef RGB_VIEW(T2) View2;
+struct transform_nongil_t<RGB_VIEW(T1),RGB_VIEW(T2),F>
+{
+    using View1 = RGB_VIEW(T1);
+    using View2 = RGB_VIEW(T2);
     View1 _v1;
     View2 _v2;
     F _f;
@@ -348,9 +360,10 @@ struct transform_nongil_t<RGB_VIEW(T1),RGB_VIEW(T2),F> {
     }
 };
 template <typename T1, typename T2, typename F>
-struct transform_nongil_t<RGB_PLANAR_VIEW(T1),RGB_PLANAR_VIEW(T2),F> {
-    typedef RGB_PLANAR_VIEW(T1) View1;
-    typedef RGB_PLANAR_VIEW(T2) View2;
+struct transform_nongil_t<RGB_PLANAR_VIEW(T1),RGB_PLANAR_VIEW(T2),F>
+{
+    using View1 = RGB_PLANAR_VIEW(T1);
+    using View2 = RGB_PLANAR_VIEW(T2);
     View1 _v1;
     View2 _v2;
     F _f;
@@ -371,9 +384,10 @@ struct transform_nongil_t<RGB_PLANAR_VIEW(T1),RGB_PLANAR_VIEW(T2),F> {
     }
 };
 template <typename T1, typename T2, typename F>
-struct transform_nongil_t<RGB_VIEW(T1),RGB_PLANAR_VIEW(T2),F> {
-    typedef RGB_VIEW(T1) View1;
-    typedef RGB_PLANAR_VIEW(T2) View2;
+struct transform_nongil_t<RGB_VIEW(T1),RGB_PLANAR_VIEW(T2),F>
+{
+    using View1 = RGB_VIEW(T1);
+    using View2 = RGB_PLANAR_VIEW(T2);
     View1 _v1;
     View2 _v2;
     F _f;
@@ -393,9 +407,10 @@ struct transform_nongil_t<RGB_VIEW(T1),RGB_PLANAR_VIEW(T2),F> {
     }
 };
 template <typename T1, typename T2, typename F>
-struct transform_nongil_t<RGB_PLANAR_VIEW(T1),RGB_VIEW(T2),F> {
-    typedef RGB_PLANAR_VIEW(T1) View1;
-    typedef RGB_VIEW(T2) View2;
+struct transform_nongil_t<RGB_PLANAR_VIEW(T1),RGB_VIEW(T2),F>
+{
+    using View1 = RGB_PLANAR_VIEW(T1);
+    using View2 = RGB_VIEW(T2);
     View1 _v1;
     View2 _v2;
     F _f;

@@ -19,15 +19,15 @@ BOOST_AUTO_TEST_SUITE( toolbox_tests )
 
 BOOST_AUTO_TEST_CASE( get_num_bits_test )
 {
-    typedef bit_aligned_image4_type<4, 4, 4, 4, rgb_layout_t>::type image_t;
+    using image_t = bit_aligned_image4_type<4, 4, 4, 4, rgb_layout_t>::type;
 
-    typedef channel_type< image_t::view_t::reference >::type channel_t;
+    using channel_t = channel_type<image_t::view_t::reference>::type;
     BOOST_STATIC_ASSERT( get_num_bits< channel_t >::value == 4 );
 
-    typedef channel_type< image_t::const_view_t::reference >::type const_channel_t;
+    using const_channel_t = channel_type<image_t::const_view_t::reference>::type;
     BOOST_STATIC_ASSERT( get_num_bits< const_channel_t >::value == 4 );
 
-    typedef packed_channel_value< 23 > bits_t;
+    using bits_t = packed_channel_value<23>;
     BOOST_STATIC_ASSERT( get_num_bits< bits_t >::value == 23 );
     BOOST_STATIC_ASSERT( get_num_bits< const bits_t >::value == 23 );
 

@@ -17,7 +17,7 @@
 using namespace std;
 using namespace boost::gil;
 
-typedef jpeg_tag tag_t;
+using tag_t = jpeg_tag;
 
 BOOST_AUTO_TEST_SUITE( gil_io_jpeg_tests )
 
@@ -26,9 +26,7 @@ BOOST_AUTO_TEST_SUITE( gil_io_jpeg_tests )
 BOOST_AUTO_TEST_CASE( read_header_test )
 {
     {
-        typedef get_reader_backend< const std::string
-                                  , tag_t
-                                  >::type backend_t;
+        using backend_t = get_reader_backend<std::string const, tag_t>::type;
 
         backend_t backend = read_image_info( jpeg_filename
                                            , tag_t()
@@ -46,9 +44,7 @@ BOOST_AUTO_TEST_CASE( read_header_test )
 
 BOOST_AUTO_TEST_CASE( read_pixel_density_test )
 {
-    typedef get_reader_backend< const std::string
-                              , tag_t
-                              >::type backend_t;
+    using backend_t = get_reader_backend<std::string const, tag_t>::type;
 
     backend_t backend = read_image_info( jpeg_in + "EddDawson/36dpi.jpg"
                                        , tag_t()
@@ -67,9 +63,7 @@ BOOST_AUTO_TEST_CASE( read_pixel_density_test )
     stringstream in_memory( ios_base::in | ios_base::out | ios_base::binary );
     write_view( in_memory, view( img ), write_settings );
 
-    typedef get_reader_backend< stringstream
-                              , tag_t
-                              >::type backend2_t;
+    using backend2_t = get_reader_backend<stringstream, tag_t>::type;
 
     backend2_t backend2 = read_image_info( in_memory
                                          , tag_t()
@@ -86,7 +80,7 @@ BOOST_AUTO_TEST_CASE( read_pixel_density_test )
 
 BOOST_AUTO_TEST_CASE( read_reference_images_test )
 {
-    typedef rgb8_image_t image_t;
+    using image_t = rgb8_image_t;
     image_t img;
 
     read_image( jpeg_filename
@@ -104,7 +98,7 @@ BOOST_AUTO_TEST_CASE( read_reference_images_test )
 
 BOOST_AUTO_TEST_CASE( dct_method_read_test )
 {
-    typedef rgb8_image_t image_t;
+    using image_t = rgb8_image_t;
     image_t img;
 
     image_read_settings< jpeg_tag > settings;

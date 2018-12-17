@@ -20,7 +20,7 @@
 
 #include "paths.hpp"
 
-typedef boost::gil::tiff_tag tag_t;
+using tag_t = boost::gil::tiff_tag;
 
 #define GENERATE_TILE_STRIP_COMPARISON_BIT_ALIGNED_RGB(z, n, data)\
     BOOST_AUTO_TEST_CASE( BOOST_PP_CAT( \

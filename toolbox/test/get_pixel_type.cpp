@@ -19,7 +19,7 @@ BOOST_AUTO_TEST_SUITE( toolbox_tests )
 BOOST_AUTO_TEST_CASE( get_pixel_type_test )
 {
     {
-        typedef bit_aligned_image3_type< 4, 15, 4, rgb_layout_t >::type image_t;
+        using image_t = bit_aligned_image3_type<4, 15, 4, rgb_layout_t>::type;
         BOOST_STATIC_ASSERT(( is_same< get_pixel_type< image_t::view_t >::type
                                      , image_t::view_t::reference
                                      >::value
@@ -27,7 +27,7 @@ BOOST_AUTO_TEST_CASE( get_pixel_type_test )
     }
 
     {
-        typedef rgb8_image_t image_t;
+        using image_t = rgb8_image_t;
         BOOST_STATIC_ASSERT(( is_same< get_pixel_type< image_t::view_t >::type
                                      , image_t::view_t::value_type
                                      >::value
