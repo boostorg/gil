@@ -59,6 +59,8 @@ struct PointNDConcept
         gil_function_requires<Regular<P>>();
 
         using value_type = typename P::value_type;
+        ignore_unused_variable_warning(value_type{});
+
         static const std::size_t N = P::num_dimensions;
         ignore_unused_variable_warning(N);
         using FT = typename P::template axis<0>::coord_t;

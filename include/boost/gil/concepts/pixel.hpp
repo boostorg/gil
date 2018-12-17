@@ -68,7 +68,8 @@ struct PixelConcept
         ignore_unused_variable_warning(is_mutable);
 
         using value_type = typename P::value_type;
-//      gil_function_requires<PixelValueConcept<value_type>>();
+        // TODO: Is the cyclic dependency intentional? --mloskot
+        // gil_function_requires<PixelValueConcept<value_type>>();
 
         using reference = typename P::reference;
         gil_function_requires<PixelConcept

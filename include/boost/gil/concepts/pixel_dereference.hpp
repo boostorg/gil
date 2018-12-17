@@ -72,6 +72,7 @@ struct PixelDereferenceAdaptorConcept
         using value_type = typename D::value_type;
         gil_function_requires<PixelValueConcept<value_type>>();
 
+        // TODO: Should this be concept-checked after "if you remove const and reference"? --mloskot
         using reference = typename D::reference; // == PixelConcept (if you remove const and reference)
         using const_reference = typename D::const_reference; // == PixelConcept (if you remove const and reference)
 

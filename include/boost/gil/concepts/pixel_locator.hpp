@@ -98,12 +98,30 @@ struct RandomAccessNDLocatorConcept
     {
         gil_function_requires<Regular<Loc>>();
 
+        // TODO: Should these be concept-checked instead of ignored? --mloskot
+
         using value_type = typename Loc::value_type;
-        using reference = typename Loc::reference; // result of dereferencing
-        using difference_type = typename Loc::difference_type; // result of operator-(pixel_locator, pixel_locator)
-        using cached_location_t = typename Loc::cached_location_t; // type used to store relative location (to allow for more efficient repeated access)
-        using const_t = typename Loc::const_t; // same as this type, but over const values
-        using point_t = typename Loc::point_t; // same as difference_type
+        ignore_unused_variable_warning(value_type{});
+
+        // result of dereferencing
+        using reference = typename Loc::reference;
+        ignore_unused_variable_warning(reference{});
+
+        // result of operator-(pixel_locator, pixel_locator)
+        using difference_type = typename Loc::difference_type;
+        ignore_unused_variable_warning(difference_type{});
+
+        // type used to store relative location (to allow for more efficient repeated access)
+        using cached_location_t = typename Loc::cached_location_t;
+        ignore_unused_variable_warning(cached_location_t{});
+
+        // same as this type, but over const values
+        using const_t = typename Loc::const_t;
+        ignore_unused_variable_warning(const_t{});
+
+        // same as difference_type
+        using point_t = typename Loc::point_t;
+        ignore_unused_variable_warning(point_t{});
 
         static std::size_t const N = Loc::num_dimensions; ignore_unused_variable_warning(N);
 

@@ -132,6 +132,7 @@ struct HasDynamicXStepTypeConcept
     void constraints()
     {
         using type = typename dynamic_x_step_type<T>::type;
+        ignore_unused_variable_warning(type{});
     }
 };
 
@@ -150,6 +151,7 @@ struct HasDynamicYStepTypeConcept
     void constraints()
     {
         using type = typename dynamic_y_step_type<T>::type;
+        ignore_unused_variable_warning(type{});
     }
 };
 
@@ -168,6 +170,7 @@ struct HasTransposedTypeConcept
     void constraints()
     {
         using type = typename transposed_type<T>::type;
+        ignore_unused_variable_warning(type{});
     }
 };
 
