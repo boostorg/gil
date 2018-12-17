@@ -76,8 +76,8 @@ struct my_color_converter_impl<C1,gray_t> {
 struct my_color_converter {
     template <typename SrcP,typename DstP>
     void operator()(const SrcP& src,DstP& dst) const {
-        typedef typename color_space_type<SrcP>::type src_cs_t;
-        typedef typename color_space_type<DstP>::type dst_cs_t;
+        using src_cs_t = typename color_space_type<SrcP>::type;
+        using dst_cs_t = typename color_space_type<DstP>::type;
         my_color_converter_impl<src_cs_t,dst_cs_t>()(src,dst);
     }
 };
@@ -86,12 +86,12 @@ struct my_color_converter {
 template <typename P>   // Models PixelValueConcept
 struct mandelbrot_fn {
     using point_t = boost::gil::point_t;
-    typedef mandelbrot_fn        const_t;
-    typedef P                    value_type;
-    typedef value_type           reference;
-    typedef value_type           const_reference;
-    typedef point_t              argument_type;
-    typedef reference            result_type;
+    using const_t = mandelbrot_fn<P>;
+    using value_type = P;
+    using reference = value_type;
+    using const_reference = value_type;
+    using argument_type = point_t;
+    using result_type = reference;
     BOOST_STATIC_CONSTANT(bool, is_mutable=false);
 
     value_type                    _in_color,_out_color;
@@ -186,7 +186,7 @@ private:
 // testing image iterators, clone, fill, locators, color convert
 template <typename Img>
 void image_test::basic_test(const string& prefix) {
-    typedef typename Img::view_t View;
+    using View = typename Img::view_t;
 
     // make a 20x20 image
     Img img(typename View::point_t(20,20));
@@ -274,11 +274,12 @@ void image_test::homogeneous_view_transformations_test(const View& img_view, con
     check_view(nth_channel_view(img_view,0),prefix+"0th_n_channel");
 }
 
-void image_test::virtual_view_test() {
-    typedef mandelbrot_fn<rgb8_pixel_t> deref_t;
-    typedef deref_t::point_t            point_t;
-    typedef virtual_2d_locator<deref_t,false> locator_t;
-    typedef image_view<locator_t> my_virt_view_t;
+void image_test::virtual_view_test()
+{
+    using deref_t = mandelbrot_fn<rgb8_pixel_t>;
+    using point_t = deref_t::point_t;
+    using locator_t = virtual_2d_locator<deref_t, false>;
+    using my_virt_view_t = image_view<locator_t>;
 
     boost::function_requires<PixelLocatorConcept<locator_t> >();
     gil_function_requires<StepIteratorConcept<locator_t::x_iterator> >();
@@ -296,9 +297,10 @@ void image_test::virtual_view_test() {
 }
 
 // Test alignment and packed images
-void image_test::packed_image_test() {
-    typedef bit_aligned_image3_type<1,3,1, bgr_layout_t>::type bgr131_image_t;
-    typedef bgr131_image_t::value_type bgr131_pixel_t;
+void image_test::packed_image_test()
+{
+    using bgr131_image_t = bit_aligned_image3_type<1,3,1, bgr_layout_t>::type;
+    using bgr131_pixel_t = bgr131_image_t::value_type;
     bgr131_pixel_t fill_val(1,3,1);
 
     bgr131_image_t bgr131_img(3,10);
@@ -313,9 +315,19 @@ void image_test::packed_image_test() {
     error_if(bgr131_img!=bgr131a_img || bgr131a_img!=bgr131b_img);
 }
 
-void image_test::dynamic_image_test() {
-    typedef any_image<mpl::vector<gray8_image_t, bgr8_image_t, argb8_image_t,
-                                  rgb8_image_t, rgb8_planar_image_t> > any_image_t;
+void image_test::dynamic_image_test()
+{
+    using any_image_t = any_image
+        <
+            mpl::vector
+            <
+                gray8_image_t,
+                bgr8_image_t,
+                argb8_image_t,
+                rgb8_image_t,
+                rgb8_planar_image_t
+            >
+        >;
     rgb8_planar_image_t img(sample_view.dimensions());
     copy_pixels(sample_view, view(img));
     any_image_t any_img=any_image_t(img);
@@ -351,8 +363,14 @@ void image_test::run() {
     image_all_test<rgb8_planar_image_t>("planarrgb8_");
     image_all_test<gray8_image_t>("gray8_");
 
-    typedef const bit_aligned_pixel_reference<boost::uint8_t, mpl::vector3_c<int,1,2,1>, bgr_layout_t, true>  bgr121_ref_t;
-    typedef image<bgr121_ref_t,false> bgr121_image_t;
+    using bgr121_ref_t = bit_aligned_pixel_reference
+        <
+            boost::uint8_t,
+            mpl::vector3_c<int, 1, 2, 1>,
+            bgr_layout_t,
+            true
+        > const;
+    using bgr121_image_t = image<bgr121_ref_t, false>;
     image_all_test<bgr121_image_t>("bgr121_");
 
     // TODO: Remove?
@@ -372,9 +390,10 @@ void image_test::run() {
 ///
 ////////////////////////////////////////////////////
 
-class checksum_image_mgr : public image_test {
+class checksum_image_mgr : public image_test
+{
 protected:
-    typedef map<string,boost::crc_32_type::value_type> crc_map_t;
+    using crc_map_t = map<string, boost::crc_32_type::value_type>;
     crc_map_t _crc_map;
 };
 
@@ -518,13 +537,13 @@ void static_checks() {
     }
 }
 
-typedef checksum_image_test     image_test_t;
-typedef checksum_image_generate image_generate_t;
+using image_test_t = checksum_image_test;
+using image_generate_t = checksum_image_generate;
 
 #ifdef BOOST_GIL_GENERATE_REFERENCE_DATA
-typedef image_generate_t        image_mgr_t;
+using image_mgr_t = image_generate_t;
 #else
-typedef image_test_t            image_mgr_t;
+using image_mgr_t = image_test_t;
 #endif
 
 void test_image(const char* ref_checksum) {

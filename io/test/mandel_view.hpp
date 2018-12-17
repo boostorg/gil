@@ -16,15 +16,16 @@ using namespace gil;
 
 // Models a Unary Function
 template <typename P>   // Models PixelValueConcept
-struct mandelbrot_fn {
+struct mandelbrot_fn
+{
     using point_t = boost::gil::point_t;
-    typedef mandelbrot_fn        const_t;
-    typedef P                    value_type;
-    typedef value_type           reference;
-    typedef value_type           const_reference;
-    typedef point_t              argument_type;
-    typedef reference            result_type;
-    BOOST_STATIC_CONSTANT(bool, is_mutable=false);
+    using const_t = mandelbrot_fn;
+    using value_type = P;
+    using reference = value_type;
+    using const_reference = value_type;
+    using argument_type = point_t;
+    using result_type = reference;
+    BOOST_STATIC_CONSTANT(bool, is_mutable = false);
 
     value_type                    _in_color,_out_color;
     point_t                       _img_size;
@@ -63,11 +64,10 @@ private:
 template< typename Pixel >
 struct mandel_view
 {
-    typedef mandelbrot_fn< Pixel > deref_t;
-    typedef virtual_2d_locator<deref_t,false> locator_t;
-    typedef image_view<locator_t> my_virt_view_t;
-
-    typedef my_virt_view_t type;
+    using deref_t = mandelbrot_fn<Pixel>;
+    using locator_t= virtual_2d_locator<deref_t, false>;
+    using my_virt_view_t = image_view<locator_t>;
+    using type = my_virt_view_t;
 };
 
 template< typename Pixel >
@@ -77,9 +77,9 @@ typename mandel_view< Pixel >::type create_mandel_view( unsigned int width
                                                       , const Pixel& out
                                                       )
 {
-    typedef typename mandel_view< Pixel >::type      view_t;
-    typedef typename mandel_view< Pixel >::deref_t   deref_t;
-    typedef typename mandel_view< Pixel >::locator_t locator_t;
+    using view_t = typename mandel_view<Pixel>::type;
+    using deref_t = typename mandel_view<Pixel>::deref_t;
+    using locator_t = typename mandel_view<Pixel>::locator_t;
 
     point_t dims( width, height );
     return view_t( dims

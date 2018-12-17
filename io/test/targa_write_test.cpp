@@ -20,7 +20,7 @@
 using namespace std;
 using namespace boost::gil;
 
-typedef targa_tag tag_t;
+using tag_t = targa_tag;
 
 BOOST_AUTO_TEST_SUITE( gil_io_targa_tests )
 

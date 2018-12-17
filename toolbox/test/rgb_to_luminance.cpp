@@ -17,8 +17,8 @@ using namespace gil;
 struct double_zero { static double apply() { return 0.0; } };
 struct double_one  { static double apply() { return 1.0; } };
 
-typedef pixel< double, gray_layout_t > gray64f_pixel_t;
-typedef pixel< double, rgb_layout_t  > rgb64f_pixel_t;
+using gray64f_pixel_t = pixel<double, gray_layout_t>;
+using rgb64f_pixel_t = pixel<double, rgb_layout_t >;
 
 BOOST_AUTO_TEST_SUITE( toolbox_tests )
 

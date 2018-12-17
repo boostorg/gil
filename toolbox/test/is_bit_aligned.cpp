@@ -18,7 +18,7 @@ BOOST_AUTO_TEST_SUITE( toolbox_tests )
 
 BOOST_AUTO_TEST_CASE( is_bit_aligned_test )
 {
-    typedef bit_aligned_image1_type< 4, gray_layout_t>::type image_t;
+    using image_t = bit_aligned_image1_type< 4, gray_layout_t>::type;
     BOOST_STATIC_ASSERT(( is_bit_aligned< image_t::view_t::value_type >::value ));
 }
 

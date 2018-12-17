@@ -42,12 +42,13 @@ struct set_to_one{ int operator()() const { return 1; } };
 
 // Construct with two pixel types. They must be compatible and the second must be mutable
 template <typename C1, typename C2>
-struct do_basic_test : public C1, public C2 {
-    typedef typename C1::type               pixel1_t;
-    typedef typename C2::type               pixel2_t;
-    typedef typename C1::pixel_t::value_type pixel1_value_t;
-    typedef typename C2::pixel_t::value_type pixel2_value_t;
-    typedef pixel1_value_t pixel_value_t;
+struct do_basic_test : public C1, public C2
+{
+    using pixel1_t = typename C1::type;
+    using pixel2_t = typename C2::type;
+    using pixel1_value_t = typename C1::pixel_t::value_type;
+    using pixel2_value_t = typename C2::pixel_t::value_type;
+    using pixel_value_t = pixel1_value_t;
 
     do_basic_test(const pixel_value_t& v) : C1(v), C2(v) {}
 
@@ -104,7 +105,7 @@ struct do_basic_test : public C1, public C2 {
 
         // Test swap if both are mutable and if their value type is the same
         // (We know the second one is mutable)
-        typedef typename boost::add_reference<typename C1::type>::type p1_ref;
+        using p1_ref = typename boost::add_reference<typename C1::type>::type;
         test_swap(
             boost::mpl::bool_<
                 pixel_reference_is_mutable<p1_ref>::value &&
@@ -125,10 +126,11 @@ struct do_basic_test : public C1, public C2 {
 };
 
 template <typename PixelValue, int Tag=0>
-class value_core {
+class value_core
+{
 public:
-    typedef PixelValue type;
-    typedef type        pixel_t;
+    using type = PixelValue;
+    using pixel_t = type;
     type _pixel;
 
     value_core() : _pixel(0) {}
@@ -139,11 +141,12 @@ public:
 };
 
 template <typename PixelRef, int Tag=0>
-class reference_core : public value_core<typename boost::remove_reference<PixelRef>::type::value_type, Tag> {
+class reference_core : public value_core<typename boost::remove_reference<PixelRef>::type::value_type, Tag>
+{
 public:
-    typedef PixelRef type;
-    typedef typename boost::remove_reference<PixelRef>::type pixel_t;
-    typedef value_core<typename pixel_t::value_type, Tag> parent_t;
+    using type = PixelRef;
+    using pixel_t = typename boost::remove_reference<PixelRef>::type;
+    using parent_t = value_core<typename pixel_t::value_type, Tag>;
 
     type _pixel;
 
@@ -153,10 +156,10 @@ public:
     }
 };
 
-
 // Use a subset of pixel models that covers all color spaces, channel depths, reference/value, planar/interleaved, const/mutable
 // color conversion will be invoked on pairs of them. Having an exhaustive binary check would be too big/expensive.
-typedef mpl::vector<
+using representative_pixels_t = mpl::vector
+<
     value_core<gray8_pixel_t>,
     reference_core<gray16_pixel_t&>,
     value_core<bgr8_pixel_t>,
@@ -165,8 +168,7 @@ typedef mpl::vector<
     reference_core<cmyk32f_pixel_t&>,
     reference_core<abgr16c_ref_t>,           // immutable reference
     reference_core<rgb32fc_planar_ref_t>
-> representative_pixels_t;
-
+>;
 
 template <typename Vector, typename Fun, int K>
 struct for_each_impl {
@@ -190,7 +192,7 @@ template <typename Pixel1>
 struct ccv2 {
     template <typename P1, typename P2>
     void color_convert_compatible(const P1& p1, P2& p2, mpl::true_) {
-        typedef typename P1::value_type value_t;
+        using value_t = typename P1::value_type;
         p2 = p1;
         value_t converted;
         color_convert(p1, converted);
@@ -212,9 +214,9 @@ struct ccv2 {
     void operator()(Pixel2) {
         // convert from Pixel1 to Pixel2 (or, if Pixel2 is immutable, to its value type)
         static const int p2_is_mutable = pixel_reference_is_mutable<typename Pixel2::type>::type::value;
-        typedef typename boost::remove_reference<typename Pixel2::type>::type pixel_model_t;
-        typedef typename pixel_model_t::value_type p2_value_t;
-        typedef typename mpl::if_c<p2_is_mutable, Pixel2, value_core<p2_value_t> >::type pixel2_mutable;
+        using pixel_model_t = typename boost::remove_reference<typename Pixel2::type>::type;
+        using p2_value_t = typename pixel_model_t::value_type;
+        using pixel2_mutable = typename mpl::if_c<p2_is_mutable, Pixel2, value_core<p2_value_t>>::type;
 
         Pixel1 p1;
         pixel2_mutable p2;
@@ -234,14 +236,15 @@ void test_color_convert() {
    for_each<representative_pixels_t>(ccv1());
 }
 
-void test_packed_pixel() {
-    typedef packed_pixel_type<uint16_t, mpl::vector3_c<unsigned,5,6,5>, rgb_layout_t>::type rgb565_pixel_t;
+void test_packed_pixel()
+{
+    using rgb565_pixel_t = packed_pixel_type<uint16_t, mpl::vector3_c<unsigned,5,6,5>, rgb_layout_t>::type;
 
     boost::function_requires<PixelValueConcept<rgb565_pixel_t> >();
     BOOST_STATIC_ASSERT((sizeof(rgb565_pixel_t)==2));
 
     // define a bgr556 pixel
-    typedef packed_pixel_type<uint16_t, mpl::vector3_c<unsigned,5,6,5>, bgr_layout_t>::type bgr556_pixel_t;
+    using bgr556_pixel_t = packed_pixel_type<uint16_t, mpl::vector3_c<unsigned,5,6,5>, bgr_layout_t>::type;
     boost::function_requires<PixelValueConcept<bgr556_pixel_t> >();
 
     // Create a zero packed pixel and a full regular unpacked pixel.
@@ -263,9 +266,9 @@ void test_packed_pixel() {
     color_convert(rgb_full,r565);
 
     // Test bit-aligned pixel reference
-    typedef const bit_aligned_pixel_reference<std::uint8_t, boost::mpl::vector3_c<int,1,2,1>, bgr_layout_t, true>  bgr121_ref_t;
-    typedef const bit_aligned_pixel_reference<std::uint8_t, boost::mpl::vector3_c<int,1,2,1>, rgb_layout_t, true>  rgb121_ref_t;
-    typedef rgb121_ref_t::value_type rgb121_pixel_t;
+    using bgr121_ref_t = const bit_aligned_pixel_reference<std::uint8_t, boost::mpl::vector3_c<int,1,2,1>, bgr_layout_t, true>;
+    using rgb121_ref_t = const bit_aligned_pixel_reference<std::uint8_t, boost::mpl::vector3_c<int,1,2,1>, rgb_layout_t, true>;
+    using rgb121_pixel_t = rgb121_ref_t::value_type;
     rgb121_pixel_t p121;
     do_basic_test<reference_core<bgr121_ref_t,0>, reference_core<rgb121_ref_t,1> >(p121).test_heterogeneous();
     do_basic_test<value_core<rgb121_pixel_t,0>, reference_core<rgb121_ref_t,1> >(p121).test_heterogeneous();

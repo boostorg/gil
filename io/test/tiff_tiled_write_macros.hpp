@@ -20,7 +20,7 @@
 
 #include "paths.hpp"
 
-typedef boost::gil::tiff_tag tag_t;
+using tag_t = boost::gil::tiff_tag;
 
 #ifdef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
 

@@ -20,7 +20,7 @@
 using namespace std;
 using namespace boost::gil;
 
-typedef bmp_tag tag_t;
+using tag_t = bmp_tag;
 
 BOOST_AUTO_TEST_SUITE( gil_io_bmp_tests )
 

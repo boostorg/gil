@@ -25,7 +25,7 @@ BOOST_AUTO_TEST_CASE( read_tile_and_compare_with_rgb_planar_strip_32 )
     string filename_strip( tiff_in_GM + "tiger-rgb-strip-planar-32.tif" );
     string filename_tile ( tiff_in_GM + "tiger-rgb-tile-planar-32.tif"  );
 
-    typedef pixel< unsigned int, rgb_layout_t > rgb32_pixel_t;
+    using rgb32_pixel_t = pixel<unsigned int, rgb_layout_t>;
     image< rgb32_pixel_t, false > img_strip, img_tile;
 
     read_image( filename_strip, img_strip, tag_t() );
@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_CASE( read_tile_and_compare_with_rgb_planar_strip_64 )
     string filename_strip( tiff_in_GM + "tiger-rgb-strip-planar-64.tif" );
     string filename_tile ( tiff_in_GM + "tiger-rgb-tile-planar-64.tif"  );
 
-    typedef pixel< uint64_t, rgb_layout_t > rgb64_pixel_t;
+    using rgb64_pixel_t = pixel<uint64_t, rgb_layout_t>;
     image< rgb64_pixel_t, false > img_strip, img_tile;
 
     read_image( filename_strip, img_strip, tag_t() );

@@ -23,7 +23,7 @@ using namespace std;
 using namespace boost;
 using namespace gil;
 
-typedef pnm_tag tag_t;
+using tag_t = pnm_tag;
 
 BOOST_AUTO_TEST_SUITE( gil_io_pnm_tests )
 
@@ -32,9 +32,7 @@ BOOST_AUTO_TEST_SUITE( gil_io_pnm_tests )
 BOOST_AUTO_TEST_CASE( read_image_info_using_string )
 {
     {
-        typedef get_reader_backend< const std::string
-                                  , tag_t
-                                  >::type backend_t;
+        using backend_t = get_reader_backend<std::string const, tag_t>::type;
 
         backend_t backend = read_image_info( pnm_filename
                                            , tag_t()
@@ -47,9 +45,7 @@ BOOST_AUTO_TEST_CASE( read_image_info_using_string )
     {
         ifstream in( pnm_filename.c_str(), ios::binary );
 
-        typedef get_reader_backend< ifstream
-                                  , tag_t
-                                  >::type backend_t;
+        using backend_t = get_reader_backend<ifstream, tag_t>::type;
 
         backend_t backend = read_image_info( in
                                            , tag_t()
@@ -62,9 +58,7 @@ BOOST_AUTO_TEST_CASE( read_image_info_using_string )
     {
         FILE* file = fopen( pnm_filename.c_str(), "rb" );
 
-        typedef get_reader_backend< FILE*
-                                  , tag_t
-                                  >::type backend_t;
+        using backend_t = get_reader_backend<FILE*, tag_t>::type;
 
         backend_t backend = read_image_info( file
                                            , tag_t()
@@ -307,12 +301,13 @@ BOOST_AUTO_TEST_CASE( subimage_test )
 
 BOOST_AUTO_TEST_CASE( dynamic_image_test )
 {
-    typedef mpl::vector< gray8_image_t
-                       , gray16_image_t
-                       , rgb8_image_t
-                       , gray1_image_t
-                       > my_img_types;
-
+    using my_img_types = mpl::vector
+        <
+            gray8_image_t,
+            gray16_image_t,
+            rgb8_image_t,
+            gray1_image_t
+        >;
 
     any_image< my_img_types > runtime_image;
 

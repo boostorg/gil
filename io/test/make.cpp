@@ -131,9 +131,7 @@ BOOST_AUTO_TEST_CASE( make_dynamic_image_reader_test )
 BOOST_AUTO_TEST_CASE( make_writer_test )
 {
     {
-        typedef get_writer< const char*
-                          , bmp_tag
-                          >::type writer_t;
+        using writer_t = get_writer<char const*, bmp_tag>::type;
 
         BOOST_STATIC_ASSERT(( boost::is_same< gil::detail::is_writer< writer_t >::type, boost::mpl::true_ >::value ));
     }

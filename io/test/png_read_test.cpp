@@ -27,15 +27,15 @@ using namespace gil;
 using namespace boost::gil::detail;
 namespace fs = boost::filesystem;
 
-typedef png_tag tag_t;
+using tag_t = png_tag;
 
 BOOST_AUTO_TEST_SUITE( gil_io_png_tests )
 
-typedef pixel< uint8_t, gray_alpha_layout_t > gray_alpha8_pixel_t;
-typedef image< gray_alpha8_pixel_t, false   > gray_alpha8_image_t;
+using gray_alpha8_pixel_t = pixel<uint8_t, gray_alpha_layout_t>;
+using gray_alpha8_image_t= image<gray_alpha8_pixel_t, false>;
 
-typedef pixel< uint16_t, gray_alpha_layout_t > gray_alpha16_pixel_t;
-typedef image< gray_alpha16_pixel_t, false   > gray_alpha16_image_t;
+using gray_alpha16_pixel_t = pixel<uint16_t, gray_alpha_layout_t>;
+using gray_alpha16_image_t = image<gray_alpha16_pixel_t, false>;
 
 template< typename Image >
 void test_file( string filename )
@@ -47,9 +47,7 @@ void test_file( string filename )
     settings._read_transparency_data = true;
 
 
-    typedef get_reader_backend< const std::string
-                              , tag_t
-                              >::type backend_t;
+    using backend_t = get_reader_backend<std::string const, tag_t>::type;
 
     backend_t backend = read_image_info( png_in + filename
                                         , settings
@@ -91,9 +89,7 @@ void test_png_scanline_reader( string filename )
 
 BOOST_AUTO_TEST_CASE( read_header_test )
 {
-    typedef get_reader_backend< const std::string
-                              , tag_t
-                              >::type backend_t;
+    using backend_t = get_reader_backend<std::string const, tag_t>::type;
 
     backend_t backend = read_image_info( png_filename
                                        , tag_t()
@@ -121,9 +117,7 @@ BOOST_AUTO_TEST_CASE( read_pixel_per_meter )
     image_read_settings< png_tag > settings;
     settings.set_read_members_true();
 
-    typedef get_reader_backend< const std::string
-                             , tag_t
-                             >::type backend_t;
+    using backend_t = get_reader_backend<std::string const, tag_t>::type;
 
     backend_t backend = read_image_info( png_base_in + "EddDawson/36dpi.png"
                                       , settings

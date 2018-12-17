@@ -17,7 +17,7 @@ using namespace std;
 using namespace boost;
 using namespace gil;
 
-typedef tiff_tag tag_t;
+using tag_t = tiff_tag;
 
 BOOST_AUTO_TEST_SUITE( gil_io_tiff_tests )
 

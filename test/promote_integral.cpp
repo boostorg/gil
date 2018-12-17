@@ -136,10 +136,10 @@ struct test_promote_integral
     template <typename Type, typename ExpectedPromotedType>
     static inline void apply(std::string const& case_id)
     {
-        typedef typename bg::promote_integral
+        using promoted_integral_type = typename bg::promote_integral
             <
                 Type, PromoteUnsignedToUnsigned
-            >::type promoted_integral_type;
+            >::type;
 
         bool const same_types = std::is_same
             <
@@ -205,7 +205,7 @@ struct test_promotion
                   << " -> signed ***" << std::endl;
 #endif
 
-        typedef test_promote_integral<PromoteUnsignedToUnsigned> tester;
+        using tester = test_promote_integral<PromoteUnsignedToUnsigned>;
 
         case_id += (PromoteUnsignedToUnsigned ? "-t" : "-f");
 
@@ -254,7 +254,7 @@ struct test_promotion<T, true, false>
 #endif
         case_id += "-t";
 
-        typedef test_promote_integral<true> tester;
+        using tester = test_promote_integral<true>;
 
         std::size_t min_size = 2 * bit_size<T>();
 
@@ -343,8 +343,8 @@ BOOST_AUTO_TEST_CASE( test_long_long )
 
 BOOST_AUTO_TEST_CASE( test_floating_point )
 {
-    typedef test_promote_integral<true> tester1;
-    typedef test_promote_integral<false> tester2;
+    using tester1 = test_promote_integral<true>;
+    using tester2 = test_promote_integral<false>;
 
     // for floating-point types we do not do any promotion
     tester1::apply<float, float>("fp-f");

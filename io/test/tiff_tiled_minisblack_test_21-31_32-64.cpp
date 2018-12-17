@@ -26,7 +26,7 @@ BOOST_AUTO_TEST_CASE( read_tile_and_compare_with_minisblack_strip_32 )
     string filename_strip( tiff_in_GM + "tiger-minisblack-strip-32.tif" );
     string filename_tile ( tiff_in_GM + "tiger-minisblack-tile-32.tif"  );
 
-    typedef pixel< unsigned int, gray_layout_t > gray32_pixel_t;
+    using gray32_pixel_t = pixel<unsigned int, gray_layout_t>;
     image< gray32_pixel_t, false > img_strip, img_tile;
 
     read_image( filename_strip, img_strip, tag_t() );
@@ -44,7 +44,7 @@ BOOST_AUTO_TEST_CASE( read_tile_and_compare_with_minisblack_strip_64 )
     string filename_strip( tiff_in_GM + "tiger-minisblack-strip-64.tif" );
     string filename_tile ( tiff_in_GM + "tiger-minisblack-tile-64.tif"  );
 
-    typedef pixel< uint64_t, gray_layout_t > gray64_pixel_t;
+    using gray64_pixel_t = pixel<uint64_t, gray_layout_t>;
     image< gray64_pixel_t, false > img_strip, img_tile;
 
     read_image( filename_strip, img_strip, tag_t() );

@@ -22,7 +22,7 @@ using namespace std;
 using namespace boost;
 using namespace gil;
 
-typedef tiff_tag tag_t;
+using tag_t = tiff_tag;
 
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/stringize.hpp>
@@ -99,7 +99,7 @@ BOOST_AUTO_TEST_CASE( subimage_test_16 )
 
 BOOST_AUTO_TEST_CASE( subimage_test_32 )
 {
-    typedef pixel< unsigned int, gray_layout_t > gray32_pixel_t;
+    using gray32_pixel_t = pixel<unsigned int, gray_layout_t>;
     image< gray32_pixel_t, false > img1, img2, img3;
 
     point_t top_left( 10, 10 );
