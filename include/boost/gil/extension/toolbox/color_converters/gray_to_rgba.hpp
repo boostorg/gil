@@ -26,7 +26,7 @@ struct default_color_converter_impl<gray_t,rgba_t>
         get_color(dst,blue_t()) =
             channel_convert<typename color_element_type<P2, blue_t >::type>(get_color(src,gray_color_t()));
 
-        typedef typename channel_type< P2 >::type channel_t;
+        using channel_t = typename channel_type<P2>::type;
         get_color(dst,alpha_t()) = channel_traits< channel_t >::max_value();
     }
 };

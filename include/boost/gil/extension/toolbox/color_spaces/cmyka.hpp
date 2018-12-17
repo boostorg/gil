@@ -37,7 +37,7 @@ GIL_DEFINE_ALL_TYPEDEFS(32f, float32_t, cmyka)
 //struct default_color_converter_impl<cmyka_t,C2> {
 //    template <typename P1, typename P2>
 //    void operator()(const P1& src, P2& dst) const {
-//        typedef typename channel_type<P1>::type T1;
+//        using T1 = typename channel_type<P1>::type;
 //        default_color_converter_impl<cmyk_t,C2>()(
 //            pixel<T1,cmyk_layout_t>(channel_multiply(get_color(src,cyan_t()),  get_color(src,alpha_t())),
 //                                    channel_multiply(get_color(src,magenta_t()),get_color(src,alpha_t())),
@@ -50,7 +50,7 @@ template <>
 struct default_color_converter_impl<cmyka_t,rgba_t> {
     template <typename P1, typename P2>
     void operator()(const P1& src, P2& dst) const {
-        typedef typename channel_type<P1>::type T1;
+        using T1 = typename channel_type<P1>::type;
         default_color_converter_impl<cmyk_t,rgba_t>()(
             pixel<T1,cmyk_layout_t>(get_color(src,cyan_t()),
                                     get_color(src,magenta_t()),

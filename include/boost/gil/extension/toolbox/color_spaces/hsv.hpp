@@ -34,13 +34,15 @@ struct value_t {};
 /// \}
 
 /// \ingroup ColorSpaceModel
-typedef mpl::vector3< hsv_color_space::hue_t
-                    , hsv_color_space::saturation_t
-                    , hsv_color_space::value_t
-                    > hsv_t;
+using hsv_t = mpl::vector3
+    <
+        hsv_color_space::hue_t,
+        hsv_color_space::saturation_t,
+        hsv_color_space::value_t
+    >;
 
 /// \ingroup LayoutModel
-typedef layout<hsv_t> hsv_layout_t;
+using hsv_layout_t = layout<hsv_t>;
 
 GIL_DEFINE_ALL_TYPEDEFS(32f, float32_t, hsv)
 

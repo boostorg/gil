@@ -31,13 +31,15 @@ struct b_color_opponent_t {};
 /// \}
 
 /// \ingroup ColorSpaceModel
-typedef mpl::vector3< lab_color_space::luminance_t
-                    , lab_color_space::a_color_opponent_t
-                    , lab_color_space::b_color_opponent_t
-                    > lab_t;
+using lab_t = mpl::vector3
+    <
+        lab_color_space::luminance_t,
+        lab_color_space::a_color_opponent_t,
+        lab_color_space::b_color_opponent_t
+    >;
 
 /// \ingroup LayoutModel
-typedef layout<lab_t> lab_layout_t;
+using lab_layout_t = layout<lab_t>;
 
 GIL_DEFINE_ALL_TYPEDEFS(32f, float32_t, lab)
 

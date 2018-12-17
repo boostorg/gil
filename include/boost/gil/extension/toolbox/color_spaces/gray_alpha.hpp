@@ -17,10 +17,10 @@
 
 namespace boost{ namespace gil {
 
-typedef mpl::vector2<gray_color_t,alpha_t> gray_alpha_t;
+using gray_alpha_t = mpl::vector2<gray_color_t,alpha_t>;
 
-typedef layout<gray_alpha_t> gray_alpha_layout_t;
-typedef layout<gray_alpha_layout_t, mpl::vector2_c<int,1,0> > alpha_gray_layout_t;
+using gray_alpha_layout_t = layout<gray_alpha_t>;
+using alpha_gray_layout_t = layout<gray_alpha_layout_t, mpl::vector2_c<int,1,0>>;
 
 GIL_DEFINE_BASE_TYPEDEFS(8, uint8_t, alpha_gray)
 GIL_DEFINE_BASE_TYPEDEFS(8s, int8_t, alpha_gray)
