@@ -7,7 +7,7 @@
 //
 #include <boost/gil/image.hpp>
 #include <boost/gil/typedefs.hpp>
-#include <boost/gil/extension/io/jpeg_io.hpp>
+#include <boost/gil/extension/io/jpeg.hpp>
 
 // Example for convolve_rows() and convolve_cols() in the numeric extension
 
@@ -57,7 +57,8 @@ private:
     }
 };
 
-int main() {
+int main()
+{
     typedef mandelbrot_fn<rgb8_pixel_t> deref_t;
     typedef deref_t::point_t            point_t;
     typedef virtual_2d_locator<deref_t,false> locator_t;
@@ -68,7 +69,7 @@ int main() {
 
     point_t dims(200,200);
     my_virt_view_t mandel(dims, locator_t(point_t(0,0), point_t(1,1), deref_t(dims, rgb8_pixel_t(255,0,255), rgb8_pixel_t(0,255,0))));
-    jpeg_write_view("out-mandelbrot.jpg",mandel);
+    write_view("out-mandelbrot.jpg",mandel, jpeg_tag{});
 
     return 0;
 }
