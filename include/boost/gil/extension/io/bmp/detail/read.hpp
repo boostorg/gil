@@ -24,6 +24,7 @@
 #include <boost/type_traits/is_same.hpp>
 #include <boost/utility/enable_if.hpp>
 
+#include <type_traits>
 #include <vector>
 
 namespace boost { namespace gil {
@@ -129,11 +130,11 @@ public:
             {
                 this->_scanline_length = ( this->_info._width * num_channels< rgba8_view_t >::value + 3 ) & ~3;
 
-                read_palette_image< gray1_image_t::view_t
-                                  , detail::mirror_bits< byte_vector_t
-                                                       , mpl::true_
-                                                       >
-                                  > ( dst_view );
+                read_palette_image
+                    <
+                        gray1_image_t::view_t,
+                        detail::mirror_bits<byte_vector_t, std::true_type>
+                    >(dst_view);
                 break;
             }
 
@@ -155,11 +156,11 @@ public:
                     {
                         this->_scanline_length = ( this->_info._width * num_channels< rgba8_view_t >::value + 3 ) & ~3;
 
-                        read_palette_image< gray4_image_t::view_t
-                                          , detail::swap_half_bytes< byte_vector_t
-                                                                   , mpl::true_
-                                                                   >
-                                          > ( dst_view );
+                        read_palette_image
+                            <
+                                gray4_image_t::view_t,
+                                detail::swap_half_bytes<byte_vector_t, std::true_type>
+                            >(dst_view);
                         break;
                     }
 
