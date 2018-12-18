@@ -306,9 +306,11 @@ jobs:
           command: |
             git clone -b master --depth 1 https://github.com/boostorg/boost.git
             cd boost
-            git submodule update --init tools/build
-            git submodule update --init libs/config
-            git submodule update --init tools/boostdep
+            git submodule --quiet update --init tools/build
+            git submodule --quiet update --init tools/boost_install
+            git submodule --quiet update --init tools/boostdep
+            git submodule --quiet update --init libs/headers
+            git submodule --quiet update --init libs/config
             rm -rf libs/gil && mkdir -p libs/gil
             mv -t libs/gil/ ../Jamfile ../example ../include ../io ../numeric ../test ../toolbox
             python tools/boostdep/depinst/depinst.py gil

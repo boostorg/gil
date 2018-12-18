@@ -194,7 +194,9 @@ install:
   - cd boost-root
   # List all (recursive) dependencies explicitly to control any new additions
   - git submodule --quiet update --init tools/build
+  - git submodule --quiet update --init tools/boost_install
   - git submodule --quiet update --init tools/boostdep
+  - git submodule --quiet update --init libs/headers
   ## Direct
   - git submodule --quiet update --init libs/algorithm
   - git submodule --quiet update --init libs/bind
