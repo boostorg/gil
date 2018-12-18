@@ -3,7 +3,8 @@
     "name": "GIL",
     "authors": [
         "Lubomir Bourdev",
-        "Hailin Jin"
+        "Hailin Jin",
+        "Christian Henning"
     ],
     "description": "Generic Image Library",
     "category": [
@@ -14,6 +15,7 @@
         "Iterators"
     ],
     "maintainers": [
-	"Stefan Seefeld <stefan -at- seefeld.name>"
+        "Stefan Seefeld <stefan -at- seefeld.name>",
+        "Mateusz Loskot <mateusz -at- loskot.net>"
     ]
 }
