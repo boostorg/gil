@@ -22,8 +22,7 @@
 #include <boost/gil/io/row_buffer_helper.hpp>
 #include <boost/gil/io/typedefs.hpp>
 
-#include <boost/bind.hpp>
-
+#include <type_traits>
 #include <vector>
 
 namespace boost { namespace gil {
@@ -311,13 +310,17 @@ private:
 
         // For bit_aligned images we need to negate all bytes in the row_buffer
         // to make sure that 0 is black and 255 is white.
-        detail::negate_bits< typename rh_t::buffer_t
-                           , is_bit_aligned_t
-                           > neg;
+        detail::negate_bits
+            <
+                typename rh_t::buffer_t,
+                std::integral_constant<bool, is_bit_aligned_t::value> // TODO: Simplify after MPL removal
+            > neg;
 
-        detail::swap_half_bytes< typename rh_t::buffer_t
-                               , is_bit_aligned_t
-                               > swhb;
+        detail::swap_half_bytes
+            <
+                typename rh_t::buffer_t,
+                std::integral_constant<bool, is_bit_aligned_t::value> // TODO: Simplify after MPL removal
+            > swhb;
 
         //Skip scanlines if necessary.
         for( y_t y = 0; y < this->_settings._top_left.y; ++y )

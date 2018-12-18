@@ -141,28 +141,16 @@ private:
         using x_it_t = typename View::x_iterator;
         x_it_t row_it = x_it_t( &( *row.begin() ));
 
-        detail::negate_bits< byte_vector_t
-                           , mpl::true_
-                           > neg;
-
-        detail::mirror_bits< byte_vector_t
-                           , mpl::true_
-                           > mirror;
-
-
-        for( typename View::y_coord_t y = 0; y < src.height(); ++y )
+        detail::negate_bits<byte_vector_t, std::true_type> negate;
+        detail::mirror_bits<byte_vector_t, std::true_type> mirror;
+        for (typename View::y_coord_t y = 0; y < src.height(); ++y)
         {
-            std::copy( src.row_begin( y )
-                     , src.row_end( y )
-                     , row_it
-                     );
+            std::copy(src.row_begin(y), src.row_end(y), row_it);
 
-            mirror( row );
-            neg   ( row );
+            mirror(row);
+            negate(row);
 
-            this->_io_dev.write( &row.front()
-                               , pitch / 8
-                               );
+            this->_io_dev.write(&row.front(), pitch / 8);
         }
     }
 

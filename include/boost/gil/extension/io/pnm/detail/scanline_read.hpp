@@ -21,9 +21,9 @@
 #include <boost/gil/io/scanline_read_iterator.hpp>
 #include <boost/gil/io/typedefs.hpp>
 
-#include <boost/bind.hpp>
 #include <boost/function.hpp>
 
+#include <type_traits>
 #include <vector>
 
 namespace boost { namespace gil {
@@ -233,11 +233,11 @@ private:
 
     // For bit_aligned images we need to negate all bytes in the row_buffer
     // to make sure that 0 is black and 255 is white.
-    detail::negate_bits    < std::vector< byte_t >, mpl::true_ > _negate_bits;
-    detail::swap_half_bytes< std::vector< byte_t >, mpl::true_ > _swap_half_bytes;
+    detail::negate_bits<std::vector<byte_t>, std::true_type> _negate_bits;
+    detail::swap_half_bytes<std::vector<byte_t>, std::true_type> _swap_half_bytes;
 
-    boost::function< void ( this_t*, byte_t* ) > _read_function;
-    boost::function< void ( this_t* )          > _skip_function;
+    boost::function<void(this_t*, byte_t*)> _read_function;
+    boost::function<void(this_t*)> _skip_function;
 };
 
 

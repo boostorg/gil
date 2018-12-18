@@ -10,71 +10,50 @@
 
 #include <boost/gil/io/typedefs.hpp>
 
-#include <boost/bind.hpp>
-#include <boost/mpl/bool.hpp>
-
-#include <cstddef>
 #include <array>
+#include <cstddef>
+#include <type_traits>
 
 namespace boost { namespace gil { namespace detail {
 
 // 1110 1100 -> 0011 0111
-template< typename Buffer
-        , typename IsBitAligned
-        >
+template <typename Buffer, typename IsBitAligned>
 struct mirror_bits
 {
-   mirror_bits( bool ) {}
+    mirror_bits(bool) {};
 
-   void operator() ( Buffer& ) {}
-
-
-    void operator() ( byte_t* , std::size_t )
-    {
-    }
+    void operator()(Buffer&) {}
+    void operator()(byte_t*, std::size_t){}
 };
-
 
 // The functor will generate a lookup table since the
 // mirror operation is quite costly.
-template< typename Buffer >
-struct mirror_bits< Buffer
-                  , mpl::true_
-                  >
+template <typename Buffer>
+struct mirror_bits<Buffer, std::true_type>
 {
-   mirror_bits( bool apply_operation = true )
-   : _apply_operation( apply_operation )
-   {
-        if( _apply_operation == true )
+    mirror_bits(bool apply_operation = true)
+        : apply_operation_(apply_operation)
+    {
+        if(apply_operation_)
         {
             byte_t i = 0;
             do
             {
-                _lookup[i] = mirror( i );
+                lookup_[i] = mirror(i);
             }
-            while( i++ != 255 );
+            while (i++ != 255);
         }
    }
 
-   void operator() ( Buffer& buf )
-   {
-        if( _apply_operation == true )
-        {
-            for_each( buf.begin()
-                    , buf.end()
-                    , boost::bind( &mirror_bits< Buffer
-                                               , mpl::true_
-                                               >::lookup
-                                 , *this
-                                 , ::_1
-                                 )
-                    );
-        }
-   }
-
-    void operator() ( byte_t* dst, std::size_t size )
+    void operator()(Buffer& buffer)
     {
-        for( std::size_t i = 0; i < size; ++i )
+        if (apply_operation_)
+            for_each(buffer.begin(), buffer.end(), [this](byte_t& c) { lookup(c); });
+    }
+
+    void operator()(byte_t *dst, std::size_t size)
+    {
+        for (std::size_t i = 0; i < size; ++i)
         {
             lookup(*dst);
             ++dst;
@@ -83,55 +62,48 @@ struct mirror_bits< Buffer
 
 private:
 
-    void lookup( byte_t& c )
+    void lookup(byte_t& c)
     {
-        c = _lookup[ c ];
+        c = lookup_[c];
     }
 
-    static byte_t mirror( byte_t c )
+    static byte_t mirror(byte_t c)
     {
         byte_t result = 0;
-        for( int i = 0; i < 8; ++i )
+        for (int i = 0; i < 8; ++i)
         {
             result = result << 1;
-            result |= ( c & 1 );
+            result |= (c & 1);
             c = c >> 1;
         }
 
         return result;
     }
 
-private:
+    std::array<byte_t, 256> lookup_;
+    bool apply_operation_;
 
-    bool _apply_operation;
-
-    std::array< byte_t, 256 > _lookup;
 };
-
 
 // 0011 1111 -> 1100 0000
-template< typename Buffer
-        , typename IsBitAligned
-        >
+template <typename Buffer, typename IsBitAligned>
 struct negate_bits
 {
-    void operator() ( Buffer& ) {}
+    void operator()(Buffer&) {};
 };
 
-template< typename Buffer >
-struct negate_bits< Buffer, mpl::true_ >
+template <typename Buffer>
+struct negate_bits<Buffer, std::true_type>
 {
-    void operator() ( Buffer& buf )
+    void operator()(Buffer& buffer)
     {
-        for_each( buf.begin()
-                , buf.end()
-                , negate_bits< Buffer, mpl::true_ >::negate
-                );
+        for_each(buffer.begin(), buffer.end(),
+            negate_bits<Buffer, std::true_type>::negate);
     }
 
-    void operator() ( byte_t* dst, std::size_t size )
+    void operator()(byte_t* dst, std::size_t size)
     {
-        for( std::size_t i = 0; i < size; ++i )
+        for (std::size_t i = 0; i < size; ++i)
         {
             negate(*dst);
             ++dst;
@@ -140,72 +112,61 @@ struct negate_bits< Buffer, mpl::true_ >
 
 private:
 
-    static void negate( byte_t& b )
+    static void negate(byte_t& b)
     {
         b = ~b;
     }
 };
 
-
 // 11101100 -> 11001110
-template< typename Buffer
-        , typename IsBitAligned
-        >
+template <typename Buffer, typename IsBitAligned>
 struct swap_half_bytes
 {
-    void operator() ( Buffer& ) {}
+    void operator()(Buffer&) {};
 };
 
-template< typename Buffer >
-struct swap_half_bytes< Buffer
-                      , mpl::true_
-                      >
+template <typename Buffer>
+struct swap_half_bytes<Buffer, std::true_type>
 {
-    void operator() ( Buffer& buf )
+    void operator()(Buffer& buffer)
     {
-        for_each( buf.begin()
-                , buf.end()
-                , swap_half_bytes< Buffer, mpl::true_ >::swap
-                );
+        for_each(buffer.begin(), buffer.end(),
+            swap_half_bytes<Buffer, std::true_type>::swap);
     }
 
-    void operator() ( byte_t* dst, std::size_t size )
+    void operator()(byte_t* dst, std::size_t size)
     {
-        for( std::size_t i = 0; i < size; ++i )
+        for (std::size_t i = 0; i < size; ++i)
         {
             swap(*dst);
             ++dst;
         }
     }
 
-
 private:
 
-    static void swap( byte_t& c )
+    static void swap(byte_t& c)
     {
-        c = (( c << 4 ) & 0xF0 ) | (( c >> 4 ) & 0x0F );
+        c = ((c << 4) & 0xF0) | ((c >> 4) & 0x0F);
     }
 };
 
-template< typename Buffer >
+template <typename Buffer>
 struct do_nothing
 {
-   do_nothing() {}
+   do_nothing() = default;
 
-   void operator() ( Buffer& ) {}
+   void operator()(Buffer&) {}
 };
 
 /// Count consecutive zeros on the right
-template< typename T >
-inline
-unsigned int trailing_zeros( T x )
-throw()
+template <typename T>
+inline unsigned int trailing_zeros(T x) noexcept
 {
     unsigned int n = 0;
 
     x = ~x & (x - 1);
-
-    while( x )
+    while (x)
     {
         n = n + 1;
         x = x >> 1;
@@ -215,14 +176,13 @@ throw()
 }
 
 /// Counts ones in a bit-set
-template< typename T >
+template <typename T>
 inline
-unsigned int count_ones( T x )
-throw()
+unsigned int count_ones(T x) noexcept
 {
     unsigned int n = 0;
 
-    while( x )
+    while (x)
     {
         // clear the least significant bit set
         x &= x - 1;
@@ -232,9 +192,6 @@ throw()
     return n;
 }
 
-
-} // namespace detail
-} // namespace gil
-} // namespace boost
+}}} // namespace boost::gil::detail
 
 #endif

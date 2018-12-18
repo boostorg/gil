@@ -25,6 +25,7 @@
 
 #include <algorithm>
 #include <string>
+#include <type_traits>
 #include <vector>
 
 // taken from jpegxx - https://bitbucket.org/edd/jpegxx/src/ea2492a1a4a6/src/ijg_headers.hpp
@@ -437,11 +438,9 @@ private:
 
 private:
 
-    std::vector< byte_t > _buffer;
-
-    detail::mirror_bits< std::vector< byte_t >, mpl::true_ > _mirror_bites;
-
-    boost::function< void ( this_t*, byte_t*, int ) > _read_function;
+    std::vector< byte_t> _buffer;
+    detail::mirror_bits<std::vector<byte_t>, std::true_type> _mirror_bites;
+    boost::function<void(this_t*, byte_t*, int)> _read_function;
 };
 
 } // namespace gil
