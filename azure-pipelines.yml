@@ -1,0 +1,23 @@
+# C/C++ with GCC
+# Build your C/C++ project with GCC using make.
+# Add steps that publish test results, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/c-cpp/gcc
+
+trigger:
+- master
+- develop
+
+pool:
+  vmImage: 'Ubuntu-16.04'
+
+steps:
+  - script: echo "Install dependencies"
+    displayName: 'TOOD: install'
+  - script: echo "git clone"
+    displayName: 'TOOD: git clone'
+  - script: echo "git submodule"
+    displayName: 'TOOD: git submodule'
+  - script: echo "bootstrap"
+    displayName: 'TOOD: bootstrap'
+  - script: echo "b2 headers"
+    displayName: 'TOOD: b2 headers'
