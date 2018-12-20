@@ -208,7 +208,7 @@
 <div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;</div>
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Types&gt;</div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> variant&lt;Types&gt;&amp; x, <span class="keyword">const</span> variant&lt;Types&gt;&amp; y) {</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="keywordflow">return</span> x._index==y._index &amp;&amp; <a class="code" href="group___variant.html#ga8ffab42c2958f3a64c262d4db56a8ae1">apply_operation</a>(x,detail::equal_to_fn&lt;<span class="keyword">typename</span> variant&lt;Types&gt;::base_t&gt;(y._bits));</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="keywordflow">return</span> x._index==y._index &amp;&amp; <a class="code" href="group___variant.html#ga129f97ced806cc92ba0e3bfa64dc39d7">apply_operation</a>(x,detail::equal_to_fn&lt;<span class="keyword">typename</span> variant&lt;Types&gt;::base_t&gt;(y._bits));</div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;}</div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;</div>
 <div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> C&gt;</div>
@@ -220,8 +220,8 @@
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;</div>
 <div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="group___packed_channel_reference_model_html_gaa0bd7927a859ab0e44df1df898b68e7c"><div class="ttname"><a href="group___packed_channel_reference_model.html#gaa0bd7927a859ab0e44df1df898b68e7c">std::swap</a></div><div class="ttdeci">void swap(const boost::gil::packed_channel_reference&lt; BF, FB, NB, M &gt; x, R &amp;y)</div><div class="ttdoc">swap for packed_channel_reference </div><div class="ttdef"><b>Definition:</b> channel.hpp:481</div></div>
-<div class="ttc" id="group___variant_html_ga8ffab42c2958f3a64c262d4db56a8ae1"><div class="ttname"><a href="group___variant.html#ga8ffab42c2958f3a64c262d4db56a8ae1">boost::gil::apply_operation</a></div><div class="ttdeci">BOOST_FORCEINLINE UnaryOp::result_type apply_operation(variant&lt; Types &gt; &amp;arg, UnaryOp op)</div><div class="ttdoc">Invokes a generic mutable operation (represented as a unary function object) on a variant...</div><div class="ttdef"><b>Definition:</b> apply_operation.hpp:31</div></div>
 <div class="ttc" id="classboost_1_1gil_1_1variant_html"><div class="ttname"><a href="classboost_1_1gil_1_1variant.html">boost::gil::variant</a></div><div class="ttdoc">Represents a concrete instance of a run-time specified type from a set of typesA concept is typically...</div><div class="ttdef"><b>Definition:</b> variant.hpp:80</div></div>
+<div class="ttc" id="group___variant_html_ga129f97ced806cc92ba0e3bfa64dc39d7"><div class="ttname"><a href="group___variant.html#ga129f97ced806cc92ba0e3bfa64dc39d7">boost::gil::apply_operation</a></div><div class="ttdeci">BOOST_FORCEINLINE auto apply_operation(variant&lt; Types &gt; &amp;arg, UnaryOp op) -&gt; typename UnaryOp::result_type</div><div class="ttdoc">Invokes a generic mutable operation (represented as a unary function object) on a variant...</div><div class="ttdef"><b>Definition:</b> apply_operation.hpp:32</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1detail_1_1type__to__index_html"><div class="ttname"><a href="structboost_1_1gil_1_1detail_1_1type__to__index.html">boost::gil::detail::type_to_index</a></div><div class="ttdoc">Returns the index corresponding to the first occurrance of a given given type in. ...</div><div class="ttdef"><b>Definition:</b> utilities.hpp:233</div></div>
 </div><!-- fragment --></div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
@@ -229,7 +229,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Dec 19 2018 09:06:22 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Thu Dec 20 2018 22:38:16 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

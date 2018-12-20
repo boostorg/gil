@@ -255,17 +255,17 @@
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;};</div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;</div>
 <div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Types, <span class="keyword">typename</span> UnaryOp&gt;</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;BOOST_FORCEINLINE <span class="keyword">typename</span> UnaryOp::result_type <a class="code" href="group___variant.html#ga8ffab42c2958f3a64c262d4db56a8ae1">apply_operation</a>(variant&lt;Types&gt;&amp; arg, UnaryOp op) {</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;BOOST_FORCEINLINE <span class="keyword">typename</span> UnaryOp::result_type <a class="code" href="group___variant.html#ga129f97ced806cc92ba0e3bfa64dc39d7">apply_operation</a>(variant&lt;Types&gt;&amp; arg, UnaryOp op) {</div>
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    <span class="keywordflow">return</span> unary_reduce&lt;Types,UnaryOp&gt;::template apply(arg._bits, arg._index ,op);</div>
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;}</div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;</div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Types, <span class="keyword">typename</span> UnaryOp&gt;</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;BOOST_FORCEINLINE <span class="keyword">typename</span> UnaryOp::result_type <a class="code" href="group___variant.html#ga8ffab42c2958f3a64c262d4db56a8ae1">apply_operation</a>(<span class="keyword">const</span> variant&lt;Types&gt;&amp; arg, UnaryOp op) {</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;BOOST_FORCEINLINE <span class="keyword">typename</span> UnaryOp::result_type <a class="code" href="group___variant.html#ga129f97ced806cc92ba0e3bfa64dc39d7">apply_operation</a>(<span class="keyword">const</span> variant&lt;Types&gt;&amp; arg, UnaryOp op) {</div>
 <div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    <span class="keywordflow">return</span> unary_reduce&lt;Types,UnaryOp&gt;::template applyc(arg._bits, arg._index ,op);</div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;}</div>
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;</div>
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Types1, <span class="keyword">typename</span> Types2, <span class="keyword">typename</span> BinaryOp&gt;</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;BOOST_FORCEINLINE <span class="keyword">typename</span> BinaryOp::result_type <a class="code" href="group___variant.html#ga8ffab42c2958f3a64c262d4db56a8ae1">apply_operation</a>(<span class="keyword">const</span> variant&lt;Types1&gt;&amp; arg1, <span class="keyword">const</span> variant&lt;Types2&gt;&amp; arg2, BinaryOp op) {</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;BOOST_FORCEINLINE <span class="keyword">typename</span> BinaryOp::result_type <a class="code" href="group___variant.html#ga129f97ced806cc92ba0e3bfa64dc39d7">apply_operation</a>(<span class="keyword">const</span> variant&lt;Types1&gt;&amp; arg1, <span class="keyword">const</span> variant&lt;Types2&gt;&amp; arg2, BinaryOp op) {</div>
 <div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    <span class="keywordflow">return</span> binary_reduce&lt;Types1,Types2,BinaryOp&gt;::template apply(arg1._bits, arg1._index, arg2._bits, arg2._index, op);</div>
 <div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;}</div>
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;</div>
@@ -719,14 +719,14 @@
 <div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="group___color_base_model_homogeneous_html_ga6fb9de37a524b47bd591e1528809b24f"><div class="ttname"><a href="group___color_base_model_homogeneous.html#ga6fb9de37a524b47bd591e1528809b24f">boost::gil::at_c</a></div><div class="ttdeci">add_reference&lt; E &gt;::type at_c(detail::homogeneous_color_base&lt; E, L, N &gt; &amp;p)</div><div class="ttdoc">Provides mutable access to the K-th element, in physical order. </div><div class="ttdef"><b>Definition:</b> color_base.hpp:381</div></div>
-<div class="ttc" id="group___variant_html_ga8ffab42c2958f3a64c262d4db56a8ae1"><div class="ttname"><a href="group___variant.html#ga8ffab42c2958f3a64c262d4db56a8ae1">boost::gil::apply_operation</a></div><div class="ttdeci">BOOST_FORCEINLINE UnaryOp::result_type apply_operation(variant&lt; Types &gt; &amp;arg, UnaryOp op)</div><div class="ttdoc">Invokes a generic mutable operation (represented as a unary function object) on a variant...</div><div class="ttdef"><b>Definition:</b> apply_operation.hpp:31</div></div>
+<div class="ttc" id="group___variant_html_ga129f97ced806cc92ba0e3bfa64dc39d7"><div class="ttname"><a href="group___variant.html#ga129f97ced806cc92ba0e3bfa64dc39d7">boost::gil::apply_operation</a></div><div class="ttdeci">BOOST_FORCEINLINE auto apply_operation(variant&lt; Types &gt; &amp;arg, UnaryOp op) -&gt; typename UnaryOp::result_type</div><div class="ttdoc">Invokes a generic mutable operation (represented as a unary function object) on a variant...</div><div class="ttdef"><b>Definition:</b> apply_operation.hpp:32</div></div>
 </div><!-- fragment --></div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
      <!-- start footer part -->
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Dec 19 2018 09:06:22 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Thu Dec 20 2018 22:38:16 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

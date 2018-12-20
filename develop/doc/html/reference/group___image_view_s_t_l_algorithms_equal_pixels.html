@@ -55,29 +55,126 @@ template&lt;typename View1 , typename View2 &gt; </td></tr>
 <tr class="memitem:gaf92f26110623cac64ee3c1165b9781be"><td class="memTemplItemLeft" align="right" valign="top">BOOST_FORCEINLINE bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_s_t_l_algorithms_equal_pixels.html#gaf92f26110623cac64ee3c1165b9781be">equal_pixels</a> (const View1 &amp;v1, const View2 &amp;v2)</td></tr>
 <tr class="memdesc:gaf92f26110623cac64ee3c1165b9781be"><td class="mdescLeft">&#160;</td><td class="mdescRight">std::equal for image views <br/></td></tr>
 <tr class="separator:gaf92f26110623cac64ee3c1165b9781be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaebb85290101d76dadfaaf55a70255654"><td class="memTemplParams" colspan="2"><a class="anchor" id="gaebb85290101d76dadfaaf55a70255654"></a>
-template&lt;typename Types1 , typename View2 &gt; </td></tr>
-<tr class="memitem:gaebb85290101d76dadfaaf55a70255654"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>equal_pixels</b> (const any_image_view&lt; Types1 &gt; &amp;src, const View2 &amp;dst)</td></tr>
-<tr class="separator:gaebb85290101d76dadfaaf55a70255654"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga74b6acf7a017a3217426bdd9622ff278"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga74b6acf7a017a3217426bdd9622ff278"></a>
-template&lt;typename View1 , typename Types2 &gt; </td></tr>
-<tr class="memitem:ga74b6acf7a017a3217426bdd9622ff278"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>equal_pixels</b> (const View1 &amp;src, const any_image_view&lt; Types2 &gt; &amp;dst)</td></tr>
-<tr class="separator:ga74b6acf7a017a3217426bdd9622ff278"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad8fb7b84a1b2eb7ef36d2dbee5c8fdc1"><td class="memTemplParams" colspan="2"><a class="anchor" id="gad8fb7b84a1b2eb7ef36d2dbee5c8fdc1"></a>
-template&lt;typename Types1 , typename Types2 &gt; </td></tr>
-<tr class="memitem:gad8fb7b84a1b2eb7ef36d2dbee5c8fdc1"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>equal_pixels</b> (const any_image_view&lt; Types1 &gt; &amp;src, const any_image_view&lt; Types2 &gt; &amp;dst)</td></tr>
-<tr class="separator:gad8fb7b84a1b2eb7ef36d2dbee5c8fdc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3d3e8bd57960cf2abdc39590049fe136"><td class="memTemplParams" colspan="2">template&lt;typename Types , typename View &gt; </td></tr>
+<tr class="memitem:ga3d3e8bd57960cf2abdc39590049fe136"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_s_t_l_algorithms_equal_pixels.html#ga3d3e8bd57960cf2abdc39590049fe136">equal_pixels</a> (any_image_view&lt; Types &gt; const &amp;src, View const &amp;dst)</td></tr>
+<tr class="separator:ga3d3e8bd57960cf2abdc39590049fe136"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaad5a1acd892e6398d2c24056c8e5655"><td class="memTemplParams" colspan="2">template&lt;typename View , typename Types &gt; </td></tr>
+<tr class="memitem:gaaad5a1acd892e6398d2c24056c8e5655"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_s_t_l_algorithms_equal_pixels.html#gaaad5a1acd892e6398d2c24056c8e5655">equal_pixels</a> (View const &amp;src, any_image_view&lt; Types &gt; const &amp;dst)</td></tr>
+<tr class="separator:gaaad5a1acd892e6398d2c24056c8e5655"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaba3545b4f45b4a4c93cf655f1ae29264"><td class="memTemplParams" colspan="2">template&lt;typename Types1 , typename Types2 &gt; </td></tr>
+<tr class="memitem:gaba3545b4f45b4a4c93cf655f1ae29264"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_s_t_l_algorithms_equal_pixels.html#gaba3545b4f45b4a4c93cf655f1ae29264">equal_pixels</a> (any_image_view&lt; Types1 &gt; const &amp;src, any_image_view&lt; Types2 &gt; const &amp;dst)</td></tr>
+<tr class="separator:gaba3545b4f45b4a4c93cf655f1ae29264"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>std::equal for image views </p>
 <p>std::equal and gil::equal_pixels for GIL constructs </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga3d3e8bd57960cf2abdc39590049fe136"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool boost::gil::equal_pixels </td>
+          <td>(</td>
+          <td class="paramtype">any_image_view&lt; Types &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">View const &amp;&#160;</td>
+          <td class="paramname"><em>dst</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Types</td><td>Model MPL Random Access Container of models of ImageViewConcept </td></tr>
+    <tr><td class="paramname">View</td><td>Model MutableImageViewConcept </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaaad5a1acd892e6398d2c24056c8e5655"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool boost::gil::equal_pixels </td>
+          <td>(</td>
+          <td class="paramtype">View const &amp;&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">any_image_view&lt; Types &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>dst</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">View</td><td>Model ImageViewConcept </td></tr>
+    <tr><td class="paramname">Types</td><td>Model MPL Random Access Container of models of MutableImageViewConcept </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaba3545b4f45b4a4c93cf655f1ae29264"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool boost::gil::equal_pixels </td>
+          <td>(</td>
+          <td class="paramtype">any_image_view&lt; Types1 &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">any_image_view&lt; Types2 &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>dst</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Types1</td><td>Model MPL Random Access Container of models of ImageViewConcept </td></tr>
+    <tr><td class="paramname">Types2</td><td>Model MPL Random Access Container of models of MutableImageViewConcept </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
      <!-- start footer part -->
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Dec 19 2018 09:06:22 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Thu Dec 20 2018 22:38:16 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
