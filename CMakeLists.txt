@@ -44,6 +44,8 @@ option(GIL_USE_CONAN "Use Conan to install dependencies" OFF)
 option(GIL_USE_CLANG_TIDY "Set CMAKE_CXX_CLANG_TIDY property on targets to enable clang-tidy linting" OFF)
 option(GIL_DOWNLOAD_FINDBOOST "Download FindBoost.cmake from latest CMake release" OFF)
 
+list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_BINARY_DIR}/cmake)
+
 #-----------------------------------------------------------------------------
 # Dependency target
 #-----------------------------------------------------------------------------
@@ -72,7 +74,6 @@ if(GIL_DOWNLOAD_FINDBOOST)
       "https://gitlab.kitware.com/cmake/cmake/raw/release/Modules/FindBoost.cmake"
       "${CMAKE_BINARY_DIR}/cmake/FindBoost.cmake")
   endif()
-  list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_BINARY_DIR}/cmake)
 endif()
 
 if(NOT DEFINED BOOST_ROOT AND NOT DEFINED ENV{BOOST_ROOT})
@@ -134,9 +135,9 @@ if(GIL_ENABLE_EXT_IO)
         CONAN_PKG::libpng
         CONAN_PKG::libtiff)
   else()
-    find_package(JPEG)
-    find_package(PNG)
-    find_package(TIFF)
+    find_package(JPEG REQUIRED)
+    find_package(PNG REQUIRED)
+    find_package(TIFF REQUIRED)
     target_include_directories(gil_dependencies
       INTERFACE
         ${JPEG_INCLUDE_DIR})
@@ -148,11 +149,17 @@ if(GIL_ENABLE_EXT_IO)
         TIFF::TIFF)
 
     if(UNIX)
-      # TODO: FindRAW.cmake
-      find_path(RAW_INCLUDE_DIR NAMES libraw.h PATH_SUFFIXES libraw)
-      find_library(RAW_LIBRARY NAMES raw libraw)
-      target_include_directories(gil_dependencies INTERFACE ${RAW_INCLUDE_DIR})
-      target_link_libraries(gil_dependencies INTERFACE ${RAW_LIBRARY})
+      if(NOT EXISTS "${CMAKE_BINARY_DIR}/cmake/FindLibRaw.cmake")
+        message(STATUS "Boost.GIL: Downloading FindLibRaw.cmake from https://github.com/LibRaw/LibRaw-cmake")
+        file(DOWNLOAD
+          "https://raw.githubusercontent.com/LibRaw/LibRaw-cmake/master/cmake/modules/FindLibRaw.cmake"
+          "${CMAKE_BINARY_DIR}/cmake/FindLibRaw.cmake")
+      endif()
+      find_package(LibRaw REQUIRED)
+
+      target_include_directories(gil_dependencies INTERFACE ${LibRaw_INCLUDE_DIR})
+      target_link_libraries(gil_dependencies INTERFACE ${LibRaw_LIBRARIES})
+      target_compile_definitions(gil_dependencies INTERFACE ${LibRaw_DEFINITIONS})
 
       # Typically, Linux packages provide C++ stream interface for TIFF
       find_path(TIFFXX_INCLUDE_DIR NAMES tiffio.hxx)
