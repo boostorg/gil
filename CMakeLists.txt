@@ -101,9 +101,12 @@ message(STATUS "Boost.GIL: Using Boost_LIBRARY_DIRS=${Boost_LIBRARY_DIRS}")
 
 target_link_libraries(gil_dependencies
   INTERFACE
-    Boost::disable_autolinking
     Boost::filesystem
     Boost::unit_test_framework)
+
+target_compile_definitions(gil_dependencies
+  INTERFACE
+    $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:BOOST_TEST_DYN_LINK>)
 
 #-----------------------------------------------------------------------------
 # Dependency: libpng, libjpeg, libtiff via Vcpkg or Conan

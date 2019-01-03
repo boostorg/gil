@@ -5,8 +5,8 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-#ifndef BOOST_GIL_TEST_TEST_TOOLS_HPP
-#define BOOST_GIL_TEST_TEST_TOOLS_HPP
+#ifndef BOOST_GIL_TEST_GIL_TEST_COMMON_HPP
+#define BOOST_GIL_TEST_GIL_TEST_COMMON_HPP
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -21,7 +21,7 @@
 #pragma GCC diagnostic ignored "-Wshadow"
 #endif
 
-#include <boost/test/included/unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

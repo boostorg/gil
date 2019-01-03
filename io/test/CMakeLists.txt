@@ -28,8 +28,7 @@ foreach(_name
   target_compile_definitions(${_target}
     PRIVATE
       BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES
-      BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
-      $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:BOOST_TEST_DYN_LINK>)
+      BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES)
   add_test(test.ext.io.${_name} ${_target})
 
   unset(_name)

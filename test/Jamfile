@@ -20,7 +20,7 @@ project
     <include>.
   ;
 
-run promote_integral.cpp ;
+run promote_integral.cpp /boost/test//boost_unit_test_framework : : : <link>shared:<define>BOOST_TEST_DYN_LINK=1 ;
 run image.cpp sample_image.cpp error_if.cpp : : gil_reference_checksums.txt ;
 run channel.cpp error_if.cpp ;
 run pixel.cpp error_if.cpp ;

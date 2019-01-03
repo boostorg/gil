@@ -24,6 +24,7 @@ project
     <library>/boost/test//boost_unit_test_framework
     <library>/boost/system//boost_system
     <library>/boost/filesystem//boost_filesystem
+    <link>shared:<define>BOOST_TEST_DYN_LINK=1
     ;
 
 alias simple
