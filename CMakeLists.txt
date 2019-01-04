@@ -8,6 +8,17 @@
 cmake_minimum_required(VERSION 3.10)
 
 #-----------------------------------------------------------------------------
+# Options
+#-----------------------------------------------------------------------------
+option(GIL_BUILD_EXAMPLES "Build examples" ON)
+option(GIL_ENABLE_EXT_IO "Enable IO extension, tests and examples (require libjpeg, libpng, libtiff)" ON)
+option(GIL_ENABLE_EXT_NUMERIC "Enable Numeric extension, tests and examples" ON)
+option(GIL_ENABLE_EXT_TOOLBOX "Enable Toolbox extension, tests and examples" ON)
+option(GIL_USE_CONAN "Use Conan to install dependencies" OFF)
+option(GIL_USE_CLANG_TIDY "Set CMAKE_CXX_CLANG_TIDY property on targets to enable clang-tidy linting" OFF)
+option(GIL_DOWNLOAD_FINDBOOST "Download FindBoost.cmake from latest CMake release" OFF)
+
+#-----------------------------------------------------------------------------
 # Version
 #-----------------------------------------------------------------------------
 file(STRINGS
@@ -31,20 +42,48 @@ project(Boost.GIL
   DESCRIPTION "Boost.GIL - Generic Image Library | Requires C++11 since Boost 1.68")
 
 message(STATUS "Boost.GIL: Version ${PROJECT_VERSION}")
+list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_BINARY_DIR}/cmake)
 
+
+#-----------------------------------------------------------------------------
+# C++ language version and compilation flags
+#-----------------------------------------------------------------------------
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-option(GIL_BUILD_EXAMPLES "Build examples" OFF) # FIXME: Switch to ON after https://github.com/boostorg/gil/issues/40
-option(GIL_ENABLE_EXT_IO "Enable IO extension, tests and examples (require libjpeg, libpng, libtiff)" ON)
-option(GIL_ENABLE_EXT_NUMERIC "Enable Numeric extension, tests and examples" ON)
-option(GIL_ENABLE_EXT_TOOLBOX "Enable Toolbox extension, tests and examples" ON)
-option(GIL_USE_CONAN "Use Conan to install dependencies" OFF)
-option(GIL_USE_CLANG_TIDY "Set CMAKE_CXX_CLANG_TIDY property on targets to enable clang-tidy linting" OFF)
-option(GIL_DOWNLOAD_FINDBOOST "Download FindBoost.cmake from latest CMake release" OFF)
+add_library(gil_compile_options INTERFACE)
+target_compile_features(gil_compile_options INTERFACE cxx_std_11)
 
-list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_BINARY_DIR}/cmake)
+# See https://cmake.org/pipermail/cmake/2018-December/068716.html
+if(MSVC)
+  string(REGEX REPLACE "/W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
+  string(REGEX REPLACE "-W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
+endif()
+
+# See https://svn.boost.org/trac10/wiki/Guidelines/WarningsGuidelines
+
+target_compile_options(gil_compile_options
+  INTERFACE
+    $<$<CXX_COMPILER_ID:MSVC>:-W4>
+    $<$<CXX_COMPILER_ID:MSVC>:-bigobj>
+    $<$<CXX_COMPILER_ID:MSVC>:-FC> # Need absolute path for __FILE__ used in tests
+    $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-fstrict-aliasing -pedantic>)
+
+# Do not mix warnings due to strict compilation level with linter warnings
+if(NOT CMAKE_CXX_CLANG_TIDY)
+  target_compile_options(gil_compile_options
+    INTERFACE
+      $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-Wall -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter>)
+endif()
+
+target_compile_definitions(gil_compile_options
+  INTERFACE
+    $<$<CXX_COMPILER_ID:MSVC>:_CRT_NONSTDC_NO_DEPRECATE>
+    $<$<CXX_COMPILER_ID:MSVC>:_SCL_SECURE_NO_DEPRECATE>
+    $<$<CXX_COMPILER_ID:MSVC>:_CRT_SECURE_NO_WARNINGS>
+    $<$<CXX_COMPILER_ID:MSVC>:NOMINMAX>
+    $<$<CXX_COMPILER_ID:MSVC>:BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE>)
 
 #-----------------------------------------------------------------------------
 # Dependency target
@@ -191,41 +230,6 @@ if(GIL_USE_CLANG_TIDY AND CMAKE_VERSION VERSION_GREATER_EQUAL 3.6)
   endif()
   unset(_clang_tidy)
 endif()
-
-#-----------------------------------------------------------------------------
-# Common C++ compilation flags
-# Follows https://svn.boost.org/trac10/wiki/Guidelines/WarningsGuidelines
-#-----------------------------------------------------------------------------
-add_library(gil_compile_options INTERFACE)
-target_compile_features(gil_compile_options INTERFACE cxx_std_11)
-
-# see https://cmake.org/pipermail/cmake/2018-December/068716.html
-if(MSVC)
-  string(REGEX REPLACE "/W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
-  string(REGEX REPLACE "-W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
-endif()
-
-target_compile_options(gil_compile_options
-  INTERFACE
-    $<$<CXX_COMPILER_ID:MSVC>:-W4>
-    $<$<CXX_COMPILER_ID:MSVC>:-bigobj>
-    $<$<CXX_COMPILER_ID:MSVC>:-FC> # Need absolute path for __FILE__ used in tests
-    $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-fstrict-aliasing -pedantic>)
-
-# Do not mix warnings due to strict compilation level with linter warnings
-if(NOT CMAKE_CXX_CLANG_TIDY)
-  target_compile_options(gil_compile_options
-    INTERFACE
-      $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-Wall -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter>)
-endif()
-
-target_compile_definitions(gil_compile_options
-  INTERFACE
-    $<$<CXX_COMPILER_ID:MSVC>:_CRT_NONSTDC_NO_DEPRECATE>
-    $<$<CXX_COMPILER_ID:MSVC>:_SCL_SECURE_NO_DEPRECATE>
-    $<$<CXX_COMPILER_ID:MSVC>:_CRT_SECURE_NO_WARNINGS>
-    $<$<CXX_COMPILER_ID:MSVC>:NOMINMAX>
-    $<$<CXX_COMPILER_ID:MSVC>:BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE>)
 
 #-----------------------------------------------------------------------------
 # Common include directories
