@@ -109,7 +109,7 @@ target_compile_definitions(gil_dependencies
     $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:BOOST_TEST_DYN_LINK>)
 
 #-----------------------------------------------------------------------------
-# Dependency: libpng, libjpeg, libtiff via Vcpkg or Conan
+# Dependency: libpng, libjpeg, libtiff, libraw via Vcpkg or Conan
 #-----------------------------------------------------------------------------
 if(GIL_ENABLE_EXT_IO)
   if(GIL_USE_CONAN)
@@ -152,18 +152,6 @@ if(GIL_ENABLE_EXT_IO)
         TIFF::TIFF)
 
     if(UNIX)
-      if(NOT EXISTS "${CMAKE_BINARY_DIR}/cmake/FindLibRaw.cmake")
-        message(STATUS "Boost.GIL: Downloading FindLibRaw.cmake from https://github.com/LibRaw/LibRaw-cmake")
-        file(DOWNLOAD
-          "https://raw.githubusercontent.com/LibRaw/LibRaw-cmake/master/cmake/modules/FindLibRaw.cmake"
-          "${CMAKE_BINARY_DIR}/cmake/FindLibRaw.cmake")
-      endif()
-      find_package(LibRaw REQUIRED)
-
-      target_include_directories(gil_dependencies INTERFACE ${LibRaw_INCLUDE_DIR})
-      target_link_libraries(gil_dependencies INTERFACE ${LibRaw_LIBRARIES})
-      target_compile_definitions(gil_dependencies INTERFACE ${LibRaw_DEFINITIONS})
-
       # Typically, Linux packages provide C++ stream interface for TIFF
       find_path(TIFFXX_INCLUDE_DIR NAMES tiffio.hxx)
       find_library(TIFFXX_LIBRARY NAMES tiffxx)
@@ -171,6 +159,20 @@ if(GIL_ENABLE_EXT_IO)
       target_link_libraries(gil_dependencies INTERFACE ${TIFFXX_LIBRARY})
     endif()
 
+    # LibRaw is optional, because it is not easy to install pre-built libraw on Windows and Mac OSX
+    if(NOT EXISTS "${CMAKE_BINARY_DIR}/cmake/FindLibRaw.cmake")
+      message(STATUS "Boost.GIL: Downloading FindLibRaw.cmake from https://github.com/LibRaw/LibRaw-cmake")
+      file(DOWNLOAD
+        "https://raw.githubusercontent.com/LibRaw/LibRaw-cmake/master/cmake/modules/FindLibRaw.cmake"
+        "${CMAKE_BINARY_DIR}/cmake/FindLibRaw.cmake")
+    endif()
+    find_package(LibRaw)
+    set(GIL_ENABLE_EXT_IO_RAW ${LibRaw_FOUND} CACHE BOOL "Enable IO RAW extension (requires libraw)" FORCE)
+    if(GIL_ENABLE_EXT_IO_RAW)
+      target_include_directories(gil_dependencies INTERFACE ${LibRaw_INCLUDE_DIR})
+      target_link_libraries(gil_dependencies INTERFACE ${LibRaw_LIBRARIES})
+      target_compile_definitions(gil_dependencies INTERFACE ${LibRaw_DEFINITIONS})
+    endif()
   endif()
 endif()
 

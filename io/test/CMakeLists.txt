@@ -8,15 +8,20 @@
 #
 message(STATUS "Boost.GIL: Configuring IO extension tests")
 
-foreach(_name
+set(_formats
   bmp
   jpeg
   png
   pnm
-  raw
   simple
   targa
   tiff)
+
+if(GIL_ENABLE_EXT_IO_RAW)
+  list(APPEND _formats raw)
+endif()
+
+foreach(_name ${_formats})
   set(_target test_ext_io_${_name})
 
   add_executable(${_target} "")
@@ -34,6 +39,8 @@ foreach(_name
   unset(_name)
   unset(_target)
 endforeach()
+
+unset(_formats)
 
 target_sources(test_ext_io_simple
   PRIVATE
@@ -55,9 +62,11 @@ target_sources(test_ext_io_pnm
   PRIVATE
     pnm_test.cpp pnm_old_test.cpp pnm_read_test.cpp pnm_write_test.cpp)
 
-target_sources(test_ext_io_raw
-  PRIVATE
-    raw_test.cpp)
+if(GIL_ENABLE_EXT_IO_RAW)
+  target_sources(test_ext_io_raw
+    PRIVATE
+      raw_test.cpp)
+endif()
 
 target_sources(test_ext_io_targa
   PRIVATE
