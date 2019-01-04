@@ -1,0 +1,25 @@
+# Azure Pipelines for Boost.GIL
+#
+# Copyright 2018-2019 Mateusz Loskot <mateusz at loskot dot net>
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or copy at http://boost.org/LICENSE_1_0.txt)
+#
+parameters:
+  # defaults, if not specified
+  configuration: 'Release'
+  get_findboost: 'no'
+  enable_ext_io: 'no'
+  enable_ext_numeric: 'yes'
+  enable_ext_toolbox: 'yes'
+  use_conan: 'no'
+
+steps:
+  - script: |
+      cmake -H. -B_build -DCMAKE_BUILD_TYPE=${{ parameters.configuration }} -DCMAKE_VERBOSE_MAKEFILE=ON -DGIL_DOWNLOAD_FINDBOOST=${{ parameters.get_findboost }} -DGIL_USE_CONAN=ON -DGIL_ENABLE_EXT_IO=${{ parameters.enable_ext_io }} -DGIL_ENABLE_EXT_NUMERIC=${{ parameters.enable_ext_numeric }} -DGIL_ENABLE_EXT_TOOLBOX=${{ parameters.enable_ext_toolbox }}
+    displayName: 'Run CMake to configure build'
+
+  - script: cmake --build _build --config ${{ parameters.configuration }} -j 4
+    displayName: 'Run CMake to build'
+
+  - script: cd _build && ctest --build-config ${{ parameters.configuration }} -VV --output-on-failure
+    displayName: 'Run CTest to test'

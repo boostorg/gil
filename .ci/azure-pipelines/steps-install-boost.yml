@@ -1,0 +1,30 @@
+# Azure Pipelines for Boost.GIL
+#
+# Copyright 2018-2019 Mateusz Loskot <mateusz at loskot dot net>
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or copy at http://boost.org/LICENSE_1_0.txt)
+#
+parameters:
+  # defaults, if not specified
+  variant: 'release'
+  toolset: 'gcc'
+
+steps:
+  - bash: |
+      curl -L https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.gz -o boost.tar.gz
+      tar -xf boost.tar.gz
+    displayName: 'Download Boost'
+
+  - script: |
+      cd boost_*
+      ./bootstrap.sh
+      sudo ./b2 -j4 variant=${{ parameters.variant }} toolset=${{ parameters.toolset }} --with-filesystem --with-test install
+    displayName: 'Install Boost on Unix'
+    condition: ne(variables['Agent.OS'], 'Windows_NT')
+
+  - script: |
+      cd boost_*
+      call .\bootstrap.bat
+      .\b2 -j4 variant=${{ parameters.variant }} --with-filesystem --with-test install
+    displayName: 'Install Boost on Windows'
+    condition: eq(variables['Agent.OS'], 'Windows_NT')
