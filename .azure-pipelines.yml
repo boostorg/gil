@@ -1,23 +1,55 @@
-# C/C++ with GCC
-# Build your C/C++ project with GCC using make.
-# Add steps that publish test results, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/apps/c-cpp/gcc
+# Azure Pipelines for Boost.GIL
+#
+# Copyright 2018-2019 Mateusz Loskot <mateusz at loskot dot net>
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or copy at http://boost.org/LICENSE_1_0.txt)
+#
+variables:
+  configuration: release
 
 trigger:
-- master
-- develop
+  - master
+  - develop
+  - azure-pipelines
 
-pool:
-  vmImage: 'Ubuntu-16.04'
+jobs:
+  - job: 'ubuntu1604_gcc54_cmake312'
+    pool:
+      vmImage: 'ubuntu-16.04'
+    steps:
+      - script: which g++ && g++ --version
+        displayName: 'Check GCC'
+      - template: .ci/azure-pipelines/steps-check-cmake.yml
+      - script: |
+          sudo apt-get install libjpeg-dev libpng16-dev libtiff5-dev libraw-dev
+        displayName: 'Install dependencies'
+      - template: .ci/azure-pipelines/steps-install-boost.yml
+      - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
 
-steps:
-  - script: echo "Install dependencies"
-    displayName: 'TOOD: install'
-  - script: echo "git clone"
-    displayName: 'TOOD: git clone'
-  - script: echo "git submodule"
-    displayName: 'TOOD: git submodule'
-  - script: echo "bootstrap"
-    displayName: 'TOOD: bootstrap'
-  - script: echo "b2 headers"
-    displayName: 'TOOD: b2 headers'
+  - job: 'win2016_vs2017_cmake312'
+    pool:
+      vmImage: 'vs2017-win2016'
+    steps:
+      - template: .ci/azure-pipelines/steps-check-cmake.yml
+      - template: .ci/azure-pipelines/steps-install-conan.yml
+      - template: .ci/azure-pipelines/steps-install-boost.yml
+      - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
+        parameters:
+          use_conan: 'yes'
+
+  - job: 'macos1013_xcode91_cmake313'
+    pool:
+      vmImage: 'macOS-10.13'
+    steps:
+      - script: which clang++ && clang++ --version
+        displayName: 'Check clang'
+      - template: .ci/azure-pipelines/steps-check-cmake.yml
+      - template: .ci/azure-pipelines/steps-install-conan.yml
+        parameters:
+          python: python3
+      - template: .ci/azure-pipelines/steps-install-boost.yml
+        parameters:
+          toolset: darwin
+      - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
+        parameters:
+          use_conan: 'yes'
