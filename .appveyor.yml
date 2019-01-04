@@ -40,7 +40,6 @@ environment:
       GENERATOR: "Visual Studio 15 2017 Win64"
       CMAKE_CONFIG: Debug
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-      APPVEYOR_SAVE_CACHE_ON_ERROR: true
 
 matrix:
   fast_finish: true
@@ -50,16 +49,11 @@ matrix:
       VARIANT: release
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     - TOOLSET: msvc-14.1
-      ARCH: x86
-      VARIANT: release
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    - TOOLSET: msvc-14.1
       ARCH: x86_64
       VARIANT: debug
       GENERATOR: "Visual Studio 15 2017 Win64"
       CMAKE_CONFIG: Debug
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-      APPVEYOR_SAVE_CACHE_ON_ERROR: true
 
 cache:
   - c:\tools\vcpkg\installed\
