@@ -13,7 +13,7 @@
  msvc++     | VS2017 15.9 | VS2017 15.8 |   |   |
  clang      |   | Xcode 9.4.1 | 3.9, 5.0, Xcode 9.4.1 | 3.9, 4.0, 5.0 |
  gcc        |   | 5.4 | 5.5, 6.5, 7.4 | 4.8-9, 5.1-5, 6.1-4, 7.1-3, 8.2 |
- <br />     | Boost.Build, CMake | CMake + Boost 1.68.0 | Boost.Build, clang + ubsan | Boost.Build |
+ <br />     | Boost.Build, CMake | CMake, Boost 1.68 | Boost.Build, UBSan | Boost.Build |
 
 # Boost.GIL
 
