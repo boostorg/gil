@@ -36,6 +36,10 @@ foreach(_dir ${_ext_dirs})
   list(APPEND _headers ${_hpp})
 endforeach()
 
+if(NOT GIL_ENABLE_EXT_IO_RAW)
+  list(FILTER _headers EXCLUDE REGEX "\\/raw[\\.\\/]")
+endif()
+
 #-----------------------------------------------------------------------------
 # Target: test_headers_self_contained
 # Bundles all targets of self-contained header tests,
