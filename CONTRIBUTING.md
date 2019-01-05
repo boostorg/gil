@@ -285,6 +285,10 @@ Run I/O extension tests bundled in target called `simple`:
 
 Maintainer: [@mloskot](https://github.com/mloskot)
 
+**WARNING:** The CMake configuration is only provided for convenience
+of contributors. It does not export or install any targets, deploy
+config files or support subproject workflow.
+
 **NOTE:** CMake configuration does not build any dependencies required by
 Boost.GIL like Boost.Test and Boost.Filesystem libraries or any
 third-party image format libraries used by the I/O extension.

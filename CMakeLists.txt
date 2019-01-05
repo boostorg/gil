@@ -5,6 +5,11 @@
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 #
+# **WARNING:**
+# The CMake configuration is only provided for convenience
+# of contributors. It does not export or install any targets,
+# deploy config files or support subproject workflow.
+#
 cmake_minimum_required(VERSION 3.10)
 
 #-----------------------------------------------------------------------------
