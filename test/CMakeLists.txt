@@ -37,11 +37,7 @@ add_test(test.core.image
   test_core_image
   ${CMAKE_CURRENT_SOURCE_DIR}/gil_reference_checksums.txt)
 
-# On CI services, test the self-contained headers on-demand only to avoid build timeouts.
-# CI environment is common for Travis CI, AppVeyor, CircleCI, etc.
-# On Boost regression builds, CMake does not run, but Boost.Build,
-# so the header tests are not enabled there either.
-if(NOT DEFINED ENV{CI})
+if(GIL_BUILD_HEADERS_TESTS)
   add_subdirectory(headers)
 endif()
 

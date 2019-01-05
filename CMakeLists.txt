@@ -11,6 +11,7 @@ cmake_minimum_required(VERSION 3.10)
 # Options
 #-----------------------------------------------------------------------------
 option(GIL_BUILD_EXAMPLES "Build examples" ON)
+option(GIL_BUILD_HEADERS_TESTS "Enable self-contained header tests" ON)
 option(GIL_ENABLE_EXT_IO "Enable IO extension, tests and examples (require libjpeg, libpng, libtiff)" ON)
 option(GIL_ENABLE_EXT_NUMERIC "Enable Numeric extension, tests and examples" ON)
 option(GIL_ENABLE_EXT_TOOLBOX "Enable Toolbox extension, tests and examples" ON)
@@ -248,6 +249,14 @@ target_include_directories(gil_include_directories
 # Tests
 #-----------------------------------------------------------------------------
 enable_testing()
+
+# On CI services, test the self-contained headers on-demand only to avoid build timeouts.
+# CI environment is common for Travis CI, AppVeyor, CircleCI, etc.
+# On Boost regression builds, CMake does not run, but Boost.Build,
+# so the header tests are not enabled there either.
+if(DEFINED ENV{CI})
+  set(GIL_BUILD_HEADERS_TESTS OFF)
+endif()
 add_subdirectory(test)
 
 if(GIL_ENABLE_EXT_IO)
