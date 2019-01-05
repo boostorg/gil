@@ -347,6 +347,11 @@ Here is an example of such lightweight workflow in Linux environment (Debian-bas
     cmake ..
     ```
 
+    **TIP:** By default, tests and examples are compiled using the minimum required
+            C++11. Specify `-DCMAKE_CXX_STANDARD=14|17|20` to use newer version.
+            For more CMake options available for GIL, check `option`-s defined
+            in the top-level `CMakeLists.txt`.
+
     **TIP:** If CMake is failing to find Boost libraries, especially built with
         `--layout=versioned`, you can try a few hacks:
 
