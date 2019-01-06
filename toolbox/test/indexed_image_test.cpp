@@ -31,49 +31,19 @@ BOOST_AUTO_TEST_CASE( index_image_test )
 
         image_t img( 640, 480, 256 );
 
-
-#if __cplusplus >= 201103L
-        generate_pixels( img.get_indices_view()
-                       , [] () -> uint8_t
-                        {
-                            static uint8_t i = 0;
-                            i = (i == 256) ? 0 : (i + 1);
-
-                            return gray8_pixel_t( i );
-                        }
-                       );
-
-
-        generate_pixels( img.get_palette_view()
-                       , [] () ->rgb8_pixel_t
-                        {
-                            static uint8_t i = 0;
-                            i = (i == 256) ? 0 : (i + 1);
-
-                            return rgb8_pixel_t( i, i, i );
-                        }
-                       );
-#else
-
-        image_t::indices_view_t indices = img.get_indices_view();
-
-        for( image_t::indices_view_t::iterator it = indices.begin(); it != indices.end(); ++it )
+        generate_pixels(img.get_indices_view(), []() -> uint8_t
         {
             static uint8_t i = 0;
             i = (i == 256) ? 0 : (i + 1);
+            return gray8_pixel_t(i);
+        });
 
-            *it = gray8_pixel_t( i );
-        }
-
-        image_t::palette_view_t colors = img.get_palette_view();
-        for( image_t::palette_view_t::iterator it = colors.begin(); it != colors.end(); ++it )
+        generate_pixels(img.get_palette_view(), []() -> rgb8_pixel_t
         {
             static uint8_t i = 0;
             i = (i == 256) ? 0 : (i + 1);
-
-            *it = rgb8_pixel_t( i, i, i );
-        }
-#endif
+            return rgb8_pixel_t(i, i, i);
+        });
 
         gray8_pixel_t index = *img.get_indices_view().xy_at( 10   , 1 );
         rgb8_pixel_t  color = *img.get_palette_view().xy_at( index, 0 );
@@ -85,45 +55,19 @@ BOOST_AUTO_TEST_CASE( index_image_test )
         using image_t = indexed_image<gray8_pixel_t, rgb8_pixel_t>;
         image_t img( 640, 480, 256 );
 
-#if __cplusplus >= 201103L
-        generate_pixels( img.get_indices_view()
-                       , [] () -> uint8_t
-                       {
-                            static uint8_t i = 0;
-                            i = (i == 256) ? 0 : (i + 1);
-                            return i;
-                       }
-                       );
-
-
-        generate_pixels( img.get_palette_view()
-                       , [] () ->rgb8_pixel_t
-                       {
-                          static uint8_t i = 0;
-                           i = (i == 256) ? 0 : (i + 1);
-
-                          return rgb8_pixel_t( i, i, i );
-                       }
-                       );
-#else
-        image_t::indices_view_t indices = img.get_indices_view();
-        for( image_t::indices_view_t::iterator it = indices.begin(); it != indices.end(); ++it )
+        generate_pixels(img.get_indices_view(), []() -> uint8_t
         {
             static uint8_t i = 0;
             i = (i == 256) ? 0 : (i + 1);
+            return i;
+        });
 
-            *it = gray8_pixel_t( i );
-        }
-
-        image_t::palette_view_t colors = img.get_palette_view();
-        for( image_t::palette_view_t::iterator it = colors.begin(); it != colors.end(); ++it )
+        generate_pixels(img.get_palette_view(), []() -> rgb8_pixel_t
         {
             static uint8_t i = 0;
             i = (i == 256) ? 0 : (i + 1);
-
-            *it = rgb8_pixel_t( i, i, i );
-        }
-#endif
+            return rgb8_pixel_t(i, i, i);
+        });
 
         uint8_t      index = *img.get_indices_view().xy_at( 10   , 1 );
         rgb8_pixel_t color = *img.get_palette_view().xy_at( index, 0 );
