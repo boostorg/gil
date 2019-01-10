@@ -625,6 +625,7 @@ workflows:
             - gcc73_11_core
           filters: { branches: { only: [ develop, master ] } }
 
+      ### GCC 8.x ############################################################
       - gcc82_11_core:
           requires:
             - bootstrap_gcc
