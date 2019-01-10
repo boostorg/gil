@@ -229,7 +229,7 @@ struct HomogeneousColorBaseConcept
         using T0 = typename kth_element_type<ColorBase, 0>::type;
         using TN = typename kth_element_type<ColorBase, num_elements - 1>::type;
 
-        BOOST_STATIC_ASSERT((is_same<T0, TN>::value));   // better than nothing
+        static_assert(is_same<T0, TN>::value, "");   // better than nothing
 
         using R0 = typename kth_element_const_reference_type<ColorBase, 0>::type;
         R0 r = dynamic_at_c(cb, 0);
@@ -296,11 +296,11 @@ struct ColorBasesCompatibleConcept
 {
     void constraints()
     {
-        BOOST_STATIC_ASSERT((is_same
+        static_assert(is_same
             <
                 typename ColorBase1::layout_t::color_space_t,
                 typename ColorBase2::layout_t::color_space_t
-            >::value));
+            >::value, "");
 
 //        using e1 = typename kth_semantic_element_type<ColorBase1,0>::type;
 //        using e2 = typename kth_semantic_element_type<ColorBase2,0>::type;

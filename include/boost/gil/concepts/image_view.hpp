@@ -120,22 +120,22 @@ struct RandomAccessNDImageViewConcept
         gil_function_requires<boost_concepts::RandomAccessTraversalConcept<first_it_type>>();
         gil_function_requires<boost_concepts::RandomAccessTraversalConcept<last_it_type>>();
 
-//        BOOST_STATIC_ASSERT((typename std::iterator_traits<first_it_type>::difference_type, typename point_t::template axis<0>::coord_t>::value));
-//        BOOST_STATIC_ASSERT((typename std::iterator_traits<last_it_type>::difference_type, typename point_t::template axis<N-1>::coord_t>::value));
+//        static_assert(typename std::iterator_traits<first_it_type>::difference_type, typename point_t::template axis<0>::coord_t>::value, "");
+//        static_assert(typename std::iterator_traits<last_it_type>::difference_type, typename point_t::template axis<N-1>::coord_t>::value, "");
 
         // point_t must be an N-dimensional point, each dimension of which must have the same type as difference_type of the corresponding iterator
         gil_function_requires<PointNDConcept<point_t>>();
-        BOOST_STATIC_ASSERT(point_t::num_dimensions==N);
-        BOOST_STATIC_ASSERT((is_same
+        static_assert(point_t::num_dimensions == N, "");
+        static_assert(is_same
             <
                 typename std::iterator_traits<first_it_type>::difference_type,
                 typename point_t::template axis<0>::coord_t
-            >::value));
-        BOOST_STATIC_ASSERT((is_same
+            >::value, "");
+        static_assert(is_same
             <
                 typename std::iterator_traits<last_it_type>::difference_type,
                 typename point_t::template axis<N-1>::coord_t
-            >::value));
+            >::value, "");
 
         point_t p;
         locator lc;
@@ -215,7 +215,7 @@ struct RandomAccess2DImageViewConcept
     void constraints()
     {
         gil_function_requires<RandomAccessNDImageViewConcept<View>>();
-        BOOST_STATIC_ASSERT(View::num_dimensions==2);
+        static_assert(View::num_dimensions == 2, "");
 
         // TODO: This executes the requirements for RandomAccessNDLocatorConcept again. Fix it to improve compile time
         gil_function_requires<RandomAccess2DLocatorConcept<typename View::locator>>();
@@ -373,7 +373,7 @@ struct ImageViewConcept
         // TODO: This executes the requirements for RandomAccess2DLocatorConcept again. Fix it to improve compile time
         gil_function_requires<PixelLocatorConcept<typename View::xy_locator>>();
 
-        BOOST_STATIC_ASSERT((is_same<typename View::x_coord_t, typename View::y_coord_t>::value));
+        static_assert(is_same<typename View::x_coord_t, typename View::y_coord_t>::value, "");
 
         using coord_t = typename View::coord_t; // 1D difference type (same for all dimensions)
         std::size_t num_chan = view.num_channels(); ignore_unused_variable_warning(num_chan);
@@ -532,7 +532,7 @@ struct ViewsCompatibleConcept
 {
     void constraints()
     {
-        BOOST_STATIC_ASSERT((views_are_compatible<V1, V2>::value));
+        static_assert(views_are_compatible<V1, V2>::value, "");
     }
 };
 

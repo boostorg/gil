@@ -96,7 +96,6 @@ before_build:
   - git submodule --quiet update --init libs/numeric/conversion
   - git submodule --quiet update --init libs/preprocessor
   - git submodule --quiet update --init libs/smart_ptr
-  - git submodule --quiet update --init libs/static_assert
   - git submodule --quiet update --init libs/test
   - git submodule --quiet update --init libs/type_traits
   ## Transitive
@@ -120,6 +119,7 @@ before_build:
   - git submodule --quiet update --init libs/ratio
   - git submodule --quiet update --init libs/rational
   - git submodule --quiet update --init libs/regex
+  - git submodule --quiet update --init libs/static_assert
   - git submodule --quiet update --init libs/system
   - git submodule --quiet update --init libs/throw_exception
   - git submodule --quiet update --init libs/timer

@@ -241,7 +241,7 @@ void test_packed_pixel()
     using rgb565_pixel_t = packed_pixel_type<uint16_t, mpl::vector3_c<unsigned,5,6,5>, rgb_layout_t>::type;
 
     boost::function_requires<PixelValueConcept<rgb565_pixel_t> >();
-    BOOST_STATIC_ASSERT((sizeof(rgb565_pixel_t)==2));
+    static_assert(sizeof(rgb565_pixel_t) == 2, "");
 
     // define a bgr556 pixel
     using bgr556_pixel_t = packed_pixel_type<uint16_t, mpl::vector3_c<unsigned,5,6,5>, bgr_layout_t>::type;
@@ -273,24 +273,24 @@ void test_packed_pixel()
     do_basic_test<reference_core<bgr121_ref_t,0>, reference_core<rgb121_ref_t,1> >(p121).test_heterogeneous();
     do_basic_test<value_core<rgb121_pixel_t,0>, reference_core<rgb121_ref_t,1> >(p121).test_heterogeneous();
 
-    BOOST_STATIC_ASSERT((pixel_reference_is_proxy<rgb8_planar_ref_t>::value));
-    BOOST_STATIC_ASSERT((pixel_reference_is_proxy<bgr121_ref_t>::value));
+    static_assert(pixel_reference_is_proxy<rgb8_planar_ref_t>::value, "");
+    static_assert(pixel_reference_is_proxy<bgr121_ref_t>::value, "");
 
-    BOOST_STATIC_ASSERT(!(pixel_reference_is_proxy<rgb8_pixel_t>::value));
-    BOOST_STATIC_ASSERT(!(pixel_reference_is_proxy<rgb8_pixel_t&>::value));
-    BOOST_STATIC_ASSERT(!(pixel_reference_is_proxy<const rgb8_pixel_t&>::value));
+    static_assert(!pixel_reference_is_proxy<rgb8_pixel_t>::value, "");
+    static_assert(!pixel_reference_is_proxy<rgb8_pixel_t&>::value, "");
+    static_assert(!pixel_reference_is_proxy<rgb8_pixel_t const&>::value, "");
 
-    BOOST_STATIC_ASSERT( (pixel_reference_is_mutable<      rgb8_pixel_t&>::value));
-    BOOST_STATIC_ASSERT(!(pixel_reference_is_mutable<const rgb8_pixel_t&>::value));
+    static_assert(pixel_reference_is_mutable<rgb8_pixel_t&>::value, "");
+    static_assert(!pixel_reference_is_mutable<rgb8_pixel_t const&>::value, "");
 
-    BOOST_STATIC_ASSERT((pixel_reference_is_mutable<const rgb8_planar_ref_t&>::value));
-    BOOST_STATIC_ASSERT((pixel_reference_is_mutable<      rgb8_planar_ref_t >::value));
+    static_assert(pixel_reference_is_mutable<rgb8_planar_ref_t>::value, "");
+    static_assert(pixel_reference_is_mutable<rgb8_planar_ref_t const&>::value, "");
 
-    BOOST_STATIC_ASSERT(!(pixel_reference_is_mutable<const rgb8c_planar_ref_t&>::value));
-    BOOST_STATIC_ASSERT(!(pixel_reference_is_mutable<      rgb8c_planar_ref_t >::value));
+    static_assert(!pixel_reference_is_mutable<rgb8c_planar_ref_t>::value, "");
+    static_assert(!pixel_reference_is_mutable<rgb8c_planar_ref_t const&>::value, "");
 
-    BOOST_STATIC_ASSERT( (pixel_reference_is_mutable<bgr121_ref_t>::value));
-    BOOST_STATIC_ASSERT(!(pixel_reference_is_mutable<bgr121_ref_t::const_reference>::value));
+    static_assert(pixel_reference_is_mutable<bgr121_ref_t>::value, "");
+    static_assert(!pixel_reference_is_mutable<bgr121_ref_t::const_reference>::value, "");
 
 }
 

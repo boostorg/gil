@@ -21,7 +21,7 @@ BOOST_AUTO_TEST_CASE( pixel_bit_size_test )
         <
             16, 16, 16, 8, 8, devicen_layout_t<5>
         >::type;
-    BOOST_STATIC_ASSERT(( pixel_bit_size<image_t::view_t::reference>::value == 64 ));
+    static_assert(pixel_bit_size<image_t::view_t::reference>::value == 64, "");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

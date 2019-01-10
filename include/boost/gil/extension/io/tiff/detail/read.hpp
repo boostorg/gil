@@ -20,8 +20,6 @@
 #include <boost/gil/io/reader_base.hpp>
 #include <boost/gil/io/row_buffer_helper.hpp>
 
-#include <boost/static_assert.hpp>
-
 #include <algorithm>
 #include <string>
 #include <vector>

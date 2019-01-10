@@ -57,7 +57,7 @@ struct ColorSpacesCompatibleConcept
 {
     void constraints()
     {
-        BOOST_STATIC_ASSERT((color_spaces_are_compatible<CS1, CS2>::value));
+        static_assert(color_spaces_are_compatible<CS1, CS2>::value, "");
     }
 };
 

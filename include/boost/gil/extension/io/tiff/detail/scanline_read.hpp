@@ -21,7 +21,6 @@
 #include <boost/gil/io/scanline_read_iterator.hpp>
 
 #include <boost/function.hpp>
-#include <boost/static_assert.hpp>
 
 #include <algorithm>
 #include <string>
