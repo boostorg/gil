@@ -140,7 +140,7 @@ struct ChannelValueConcept
 /// Example:
 ///
 /// \code
-/// BOOST_STATIC_ASSERT((channels_are_compatible<uint8_t, const uint8_t&>::value));
+/// static_assert(channels_are_compatible<uint8_t, const uint8_t&>::value, "");
 /// \endcode
 /// \ingroup ChannelAlgorithm
 template <typename T1, typename T2>  // Models GIL Pixel
@@ -167,7 +167,7 @@ struct ChannelsCompatibleConcept
 {
     void constraints()
     {
-        BOOST_STATIC_ASSERT((channels_are_compatible<Channel1, Channel2>::value));
+        static_assert(channels_are_compatible<Channel1, Channel2>::value, "");
     }
 };
 

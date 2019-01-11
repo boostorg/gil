@@ -130,8 +130,10 @@ struct bit_aligned_pixel_reference {
     template <bool IsMutable2> bit_aligned_pixel_reference(const bit_aligned_pixel_reference<BitField,ChannelBitSizes,Layout,IsMutable2>& p) : _bit_range(p._bit_range) {}
 
     // Grayscale references can be constructed from the channel reference
-    explicit bit_aligned_pixel_reference(const typename kth_element_type<bit_aligned_pixel_reference,0>::type channel0) : _bit_range(static_cast<data_ptr_t>(&channel0), channel0.first_bit()) {
-        BOOST_STATIC_ASSERT((num_channels<bit_aligned_pixel_reference>::value==1));
+    explicit bit_aligned_pixel_reference(typename kth_element_type<bit_aligned_pixel_reference,0>::type const channel0)
+        : _bit_range(static_cast<data_ptr_t>(&channel0), channel0.first_bit())
+    {
+        static_assert(num_channels<bit_aligned_pixel_reference>::value == 1, "");
     }
 
     // Construct from another compatible pixel type
@@ -159,7 +161,11 @@ private:
     template <typename Pixel> bool  equal(const Pixel& p, mpl::true_) const { check_compatible<Pixel>(); return static_equal(*this,p); }
 
 private:
-    static void check_gray() {  BOOST_STATIC_ASSERT((is_same<typename Layout::color_space_t, gray_t>::value)); }
+    static void check_gray()
+    {
+        static_assert(is_same<typename Layout::color_space_t, gray_t>::value, "");
+    }
+
     template <typename Channel> void assign(const Channel& chan, mpl::false_) const { check_gray(); gil::at_c<0>(*this)=chan; }
     template <typename Channel> bool equal (const Channel& chan, mpl::false_) const { check_gray(); return gil::at_c<0>(*this)==chan; }
 };

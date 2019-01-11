@@ -15,7 +15,6 @@
 #include <boost/mpl/size.hpp>
 #include <boost/iterator/iterator_adaptor.hpp>
 #include <boost/iterator/iterator_facade.hpp>
-#include <boost/static_assert.hpp>
 #include <boost/type_traits.hpp>
 
 #include <algorithm>

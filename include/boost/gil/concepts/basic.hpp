@@ -168,7 +168,7 @@ struct SameType
 {
     void constraints()
     {
-        BOOST_STATIC_ASSERT((boost::is_same<T, U>::value_core));
+        static_assert(boost::is_same<T, U>::value_core, "");
     }
 };
 

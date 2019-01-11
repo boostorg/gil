@@ -354,7 +354,7 @@ struct IteratorAdaptorConcept
         using base_t = typename iterator_adaptor_get_base<Iterator>::type;
         gil_function_requires<boost_concepts::ForwardTraversalConcept<base_t>>();
 
-        BOOST_STATIC_ASSERT(is_iterator_adaptor<Iterator>::value);
+        static_assert(is_iterator_adaptor<Iterator>::value, "");
         using rebind_t = typename iterator_adaptor_rebind<Iterator, void*>::type;
 
         base_t base = it.base();

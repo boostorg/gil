@@ -133,17 +133,17 @@ struct RandomAccessNDLocatorConcept
         // point_t must be an N-dimensional point, each dimension of which must
         // have the same type as difference_type of the corresponding iterator
         gil_function_requires<PointNDConcept<point_t>>();
-        BOOST_STATIC_ASSERT(point_t::num_dimensions==N);
-        BOOST_STATIC_ASSERT((is_same
+        static_assert(point_t::num_dimensions == N, "");
+        static_assert(is_same
             <
                 typename std::iterator_traits<first_it_type>::difference_type,
                 typename point_t::template axis<0>::coord_t
-            >::value));
-        BOOST_STATIC_ASSERT((is_same
+            >::value, "");
+        static_assert(is_same
             <
                 typename std::iterator_traits<last_it_type>::difference_type,
                 typename point_t::template axis<N-1>::coord_t
-            >::value));
+            >::value, "");
 
         difference_type d;
         loc += d;
@@ -214,7 +214,7 @@ struct RandomAccess2DLocatorConcept
     void constraints()
     {
         gil_function_requires<RandomAccessNDLocatorConcept<Loc>>();
-        BOOST_STATIC_ASSERT(Loc::num_dimensions==2);
+        static_assert(Loc::num_dimensions == 2, "");
 
         using dynamic_x_step_t = typename dynamic_x_step_type<Loc>::type;
         using dynamic_y_step_t = typename dynamic_y_step_type<Loc>::type;
@@ -287,7 +287,7 @@ struct PixelLocatorConcept
         gil_function_requires<PixelIteratorConcept<typename Loc::x_iterator>>();
         gil_function_requires<PixelIteratorConcept<typename Loc::y_iterator>>();
         using coord_t = typename Loc::coord_t;
-        BOOST_STATIC_ASSERT((is_same<typename Loc::x_coord_t, typename Loc::y_coord_t>::value));
+        static_assert(is_same<typename Loc::x_coord_t, typename Loc::y_coord_t>::value, "");
     }
     Loc loc;
 };

@@ -501,25 +501,25 @@ const string ref_dir=in_dir+"image-ref/";  // reference directory to compare wri
 void static_checks() {
     gil_function_requires<ImageConcept<rgb8_image_t> >();
 
-    BOOST_STATIC_ASSERT(view_is_basic<rgb8_step_view_t>::value);
-    BOOST_STATIC_ASSERT(view_is_basic<cmyk8c_planar_step_view_t>::value);
-    BOOST_STATIC_ASSERT(view_is_basic<rgb8_planar_view_t>::value);
+    static_assert(view_is_basic<rgb8_step_view_t>::value, "");
+    static_assert(view_is_basic<cmyk8c_planar_step_view_t>::value, "");
+    static_assert(view_is_basic<rgb8_planar_view_t>::value, "");
 
-    BOOST_STATIC_ASSERT(view_is_step_in_x<rgb8_step_view_t>::value);
-    BOOST_STATIC_ASSERT(view_is_step_in_x<cmyk8c_planar_step_view_t>::value);
-    BOOST_STATIC_ASSERT(!view_is_step_in_x<rgb8_planar_view_t>::value);
+    static_assert(view_is_step_in_x<rgb8_step_view_t>::value, "");
+    static_assert(view_is_step_in_x<cmyk8c_planar_step_view_t>::value, "");
+    static_assert(!view_is_step_in_x<rgb8_planar_view_t>::value, "");
 
-    BOOST_STATIC_ASSERT(!is_planar<rgb8_step_view_t>::value);
-    BOOST_STATIC_ASSERT(is_planar<cmyk8c_planar_step_view_t>::value);
-    BOOST_STATIC_ASSERT(is_planar<rgb8_planar_view_t>::value);
+    static_assert(!is_planar<rgb8_step_view_t>::value, "");
+    static_assert(is_planar<cmyk8c_planar_step_view_t>::value, "");
+    static_assert(is_planar<rgb8_planar_view_t>::value, "");
 
-    BOOST_STATIC_ASSERT(view_is_mutable<rgb8_step_view_t>::value);
-    BOOST_STATIC_ASSERT(!view_is_mutable<cmyk8c_planar_step_view_t>::value);
-    BOOST_STATIC_ASSERT(view_is_mutable<rgb8_planar_view_t>::value);
+    static_assert(view_is_mutable<rgb8_step_view_t>::value, "");
+    static_assert(!view_is_mutable<cmyk8c_planar_step_view_t>::value, "");
+    static_assert(view_is_mutable<rgb8_planar_view_t>::value, "");
 
-    BOOST_STATIC_ASSERT((boost::is_same<derived_view_type<cmyk8c_planar_step_view_t>::type, cmyk8c_planar_step_view_t>::value));
-    BOOST_STATIC_ASSERT((boost::is_same<derived_view_type<cmyk8c_planar_step_view_t, std::uint16_t, rgb_layout_t>::type,  rgb16c_planar_step_view_t>::value));
-    BOOST_STATIC_ASSERT((boost::is_same<derived_view_type<cmyk8c_planar_step_view_t, use_default, rgb_layout_t, mpl::false_, use_default, mpl::false_>::type,  rgb8c_step_view_t>::value));
+    static_assert(boost::is_same<derived_view_type<cmyk8c_planar_step_view_t>::type, cmyk8c_planar_step_view_t>::value, "");
+    static_assert(boost::is_same<derived_view_type<cmyk8c_planar_step_view_t, std::uint16_t, rgb_layout_t>::type,  rgb16c_planar_step_view_t>::value, "");
+    static_assert(boost::is_same<derived_view_type<cmyk8c_planar_step_view_t, use_default, rgb_layout_t, mpl::false_, use_default, mpl::false_>::type,  rgb8c_step_view_t>::value, "");
 
     // test view get raw data (mostly compile-time test)
     {

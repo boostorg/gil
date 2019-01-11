@@ -262,7 +262,7 @@ using bits4 = packed_channel_value<4>;
 assert(channel_traits<bits4>::min_value()==0);
 assert(channel_traits<bits4>::max_value()==15);
 assert(sizeof(bits4)==1);
-BOOST_STATIC_ASSERT((boost::is_integral<bits4>::value));
+static_assert(boost::is_integral<bits4>::value, "");
 \endcode
 */
 

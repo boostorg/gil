@@ -28,10 +28,11 @@ BOOST_AUTO_TEST_CASE( channel_view_test )
     using channel_view_t = channel_view_type<red_t, rgb8_view_t::const_t>::type;
     channel_view_t red_ = channel_view< red_t >( const_view( img ));
 
-    BOOST_STATIC_ASSERT(( is_same< kth_channel_view_type< 0, const rgb8_view_t>::type
-                                 , channel_view_type< red_t, const rgb8_view_t>::type
-                                 >::value
-                       ));
+    static_assert(is_same
+        <
+            kth_channel_view_type<0, rgb8_view_t const>::type,
+            channel_view_type<red_t, rgb8_view_t const>::type
+        >::value, "");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

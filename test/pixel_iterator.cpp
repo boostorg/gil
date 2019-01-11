@@ -49,15 +49,15 @@ void test_pixel_iterator()
     boost::function_requires<HasDynamicXStepTypeConcept<bgr121_ptr_t> >();
 
 // TEST dynamic_step_t
-    BOOST_STATIC_ASSERT(( boost::is_same<cmyk16_step_ptr_t,dynamic_x_step_type<cmyk16_step_ptr_t>::type>::value ));
-    BOOST_STATIC_ASSERT(( boost::is_same<cmyk16_planar_step_ptr_t,dynamic_x_step_type<cmyk16_planar_ptr_t>::type>::value ));
+    static_assert(boost::is_same<cmyk16_step_ptr_t, dynamic_x_step_type<cmyk16_step_ptr_t>::type>::value, "");
+    static_assert(boost::is_same<cmyk16_planar_step_ptr_t, dynamic_x_step_type<cmyk16_planar_ptr_t>::type>::value, "");
 
-    BOOST_STATIC_ASSERT(( boost::is_same<iterator_type<uint8_t,gray_layout_t,false,false,false>::type,gray8c_ptr_t>::value ));
+    static_assert(boost::is_same<iterator_type<uint8_t,gray_layout_t,false,false,false>::type,gray8c_ptr_t>::value, "");
 
 // TEST iterator_is_step
-    BOOST_STATIC_ASSERT(iterator_is_step< cmyk16_step_ptr_t >::value);
-    BOOST_STATIC_ASSERT(iterator_is_step< cmyk16_planar_step_ptr_t >::value);
-    BOOST_STATIC_ASSERT(!iterator_is_step< cmyk16_planar_ptr_t >::value);
+    static_assert(iterator_is_step<cmyk16_step_ptr_t>::value, "");
+    static_assert(iterator_is_step<cmyk16_planar_step_ptr_t>::value, "");
+    static_assert(!iterator_is_step<cmyk16_planar_ptr_t>::value, "");
 
     using ccv_rgb_g_fn = color_convert_deref_fn<rgb8c_ref_t, gray8_pixel_t>;
     using ccv_g_rgb_fn = color_convert_deref_fn<gray8c_ref_t, rgb8_pixel_t>;
@@ -65,20 +65,20 @@ void test_pixel_iterator()
     gil_function_requires<PixelDereferenceAdaptorConcept<deref_compose<ccv_rgb_g_fn,ccv_g_rgb_fn> > >();
 
     using rgb2gray_ptr = dereference_iterator_adaptor<rgb8_ptr_t, ccv_rgb_g_fn>;
-    BOOST_STATIC_ASSERT(!iterator_is_step< rgb2gray_ptr >::value);
+    static_assert(!iterator_is_step<rgb2gray_ptr>::value, "");
 
     using rgb2gray_step_ptr = dynamic_x_step_type<rgb2gray_ptr>::type;
-    BOOST_STATIC_ASSERT(( boost::is_same< rgb2gray_step_ptr, dereference_iterator_adaptor<rgb8_step_ptr_t, ccv_rgb_g_fn> >::value));
+    static_assert(boost::is_same<rgb2gray_step_ptr, dereference_iterator_adaptor<rgb8_step_ptr_t, ccv_rgb_g_fn>>::value, "");
 
     make_step_iterator(rgb2gray_ptr(),2);
 
     using rgb2gray_step_ptr1 = dereference_iterator_adaptor<rgb8_step_ptr_t, ccv_rgb_g_fn>;
-    BOOST_STATIC_ASSERT(iterator_is_step< rgb2gray_step_ptr1 >::value);
-    BOOST_STATIC_ASSERT(( boost::is_same< rgb2gray_step_ptr1, dynamic_x_step_type<rgb2gray_step_ptr1>::type >::value));
+    static_assert(iterator_is_step<rgb2gray_step_ptr1>::value, "");
+    static_assert(boost::is_same<rgb2gray_step_ptr1, dynamic_x_step_type<rgb2gray_step_ptr1>::type>::value, "");
 
     using rgb2gray_step_ptr2 = memory_based_step_iterator<dereference_iterator_adaptor<rgb8_ptr_t, ccv_rgb_g_fn>>;
-    BOOST_STATIC_ASSERT(iterator_is_step< rgb2gray_step_ptr2 >::value);
-    BOOST_STATIC_ASSERT(( boost::is_same< rgb2gray_step_ptr2, dynamic_x_step_type<rgb2gray_step_ptr2>::type >::value));
+    static_assert(iterator_is_step<rgb2gray_step_ptr2 >::value, "");
+    static_assert(boost::is_same<rgb2gray_step_ptr2, dynamic_x_step_type<rgb2gray_step_ptr2>::type>::value, "");
     make_step_iterator(rgb2gray_step_ptr2(),2);
 
 // bit_aligned iterators test
@@ -97,7 +97,7 @@ void test_pixel_iterator()
 
     // BGR232 pixel value. It is a packed_pixel of size 1 byte. (The last bit is unused)
     using bgr232_pixel_t = std::iterator_traits<bgr232_ptr_t>::value_type;
-    BOOST_STATIC_ASSERT((sizeof(bgr232_pixel_t)==1));
+    static_assert(sizeof(bgr232_pixel_t) == 1, "");
 
     bgr232_pixel_t red(0,0,3); // = 0RRGGGBB, = 01100000
 

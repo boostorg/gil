@@ -141,10 +141,10 @@ struct ImageConcept
         gil_function_requires<RandomAccess2DImageConcept<Image>>();
         gil_function_requires<MutableImageViewConcept<typename Image::view_t>>();
         using coord_t = typename Image::coord_t;
-        BOOST_STATIC_ASSERT(num_channels<Image>::value == mpl::size<typename color_space_type<Image>::type>::value);
+        static_assert(num_channels<Image>::value == mpl::size<typename color_space_type<Image>::type>::value, "");
 
-        BOOST_STATIC_ASSERT((is_same<coord_t, typename Image::x_coord_t>::value));
-        BOOST_STATIC_ASSERT((is_same<coord_t, typename Image::y_coord_t>::value));
+        static_assert(is_same<coord_t, typename Image::x_coord_t>::value, "");
+        static_assert(is_same<coord_t, typename Image::y_coord_t>::value, "");
     }
     Image image;
 };

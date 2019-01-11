@@ -89,8 +89,8 @@ namespace detail {
 /// \brief Returns C pointer to the the channels of an interleaved homogeneous view.
 template <typename HomogeneousView>
 typename detail::channel_pointer_type<HomogeneousView>::type interleaved_view_get_raw_data(const HomogeneousView& view) {
-    BOOST_STATIC_ASSERT((!is_planar<HomogeneousView>::value && view_is_basic<HomogeneousView>::value));
-    BOOST_STATIC_ASSERT((boost::is_pointer<typename HomogeneousView::x_iterator>::value));
+    static_assert(!is_planar<HomogeneousView>::value && view_is_basic<HomogeneousView>::value, "");
+    static_assert(boost::is_pointer<typename HomogeneousView::x_iterator>::value, "");
 
     return &gil::at_c<0>(view(0,0));
 }
@@ -99,7 +99,7 @@ typename detail::channel_pointer_type<HomogeneousView>::type interleaved_view_ge
 /// \brief Returns C pointer to the the channels of a given color plane of a planar homogeneous view.
 template <typename HomogeneousView>
 typename detail::channel_pointer_type<HomogeneousView>::type planar_view_get_raw_data(const HomogeneousView& view, int plane_index) {
-    BOOST_STATIC_ASSERT((is_planar<HomogeneousView>::value && view_is_basic<HomogeneousView>::value));
+    static_assert(is_planar<HomogeneousView>::value && view_is_basic<HomogeneousView>::value, "");
     return dynamic_at_c(view.row_begin(0),plane_index);
 }
 
