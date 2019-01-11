@@ -26,23 +26,21 @@ namespace boost { namespace gil {
 /// \ingroup ColorBaseModel
 /// \brief A heterogeneous color base whose elements are reference proxies to channels in a pixel. Models ColorBaseValueConcept. This class is used to model packed pixels, such as 16-bit packed RGB.
 
-/**
-\defgroup PixelModelPackedPixel packed_pixel
-\ingroup PixelModel
-\brief A heterogeneous pixel used to represent packed pixels with non-byte-aligned channels. Models PixelValueConcept
-
-Example:
-\code
-using rgb565_pixel_t = packed_pixel_type<uint16_t, mpl::vector3_c<unsigned,5,6,5>, rgb_layout_t>::type;
-static_assert(sizeof(rgb565_pixel_t) == 2, "");
-
-rgb565_pixel_t r565;
-get_color(r565,red_t())   = 31;
-get_color(r565,green_t()) = 63;
-get_color(r565,blue_t())  = 31;
-assert(r565 == rgb565_pixel_t((uint16_t)0xFFFF));
-\endcode
-*/
+/// \defgroup PixelModelPackedPixel packed_pixel
+/// \ingroup PixelModel
+/// \brief A heterogeneous pixel used to represent packed pixels with non-byte-aligned channels. Models PixelValueConcept
+///
+/// Example:
+/// \code
+/// using rgb565_pixel_t = packed_pixel_type<uint16_t, mpl::vector3_c<unsigned,5,6,5>, rgb_layout_t>::type;
+/// static_assert(sizeof(rgb565_pixel_t) == 2, "");
+///
+/// rgb565_pixel_t r565;
+/// get_color(r565,red_t())   = 31;
+/// get_color(r565,green_t()) = 63;
+/// get_color(r565,blue_t())  = 31;
+/// assert(r565 == rgb565_pixel_t((uint16_t)0xFFFF));
+/// \endcode
 
 /// \ingroup ColorBaseModelPackedPixel PixelModelPackedPixel PixelBasedModel
 /// \brief Heterogeneous pixel value whose channel references can be constructed from the pixel bitfield and their index. Models ColorBaseValueConcept, PixelValueConcept, PixelBasedConcept

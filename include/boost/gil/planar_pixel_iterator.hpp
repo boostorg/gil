@@ -13,7 +13,6 @@
 
 #include <boost/iterator/iterator_facade.hpp>
 
-#include <cassert>
 #include <iterator>
 
 namespace boost { namespace gil {

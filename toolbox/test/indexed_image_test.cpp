@@ -8,12 +8,12 @@
 #include <boost/gil.hpp>
 #include <boost/gil/extension/toolbox/image_types/indexed_image.hpp>
 
+#include <boost/assert.hpp>
 #include <boost/test/unit_test.hpp>
 
 using namespace std;
 using namespace boost;
 using namespace gil;
-
 
 BOOST_AUTO_TEST_SUITE( toolbox_tests )
 
@@ -129,13 +129,13 @@ BOOST_AUTO_TEST_CASE(index_image_view_test)
     auto p = ii_view(point_t(0, 0));
     auto q = *ii_view.at(point_t(0, 0));
 
-    assert(get_color(p, red_t()) == 70);
-    assert(get_color(p, green_t()) == 80);
-    assert(get_color(p, blue_t()) == 90);
+    BOOST_ASSERT(get_color(p, red_t()) == 70);
+    BOOST_ASSERT(get_color(p, green_t()) == 80);
+    BOOST_ASSERT(get_color(p, blue_t()) == 90);
 
-    assert(get_color(q, red_t()) == 70);
-    assert(get_color(q, green_t()) == 80);
-    assert(get_color(q, blue_t()) == 90);
+    BOOST_ASSERT(get_color(q, red_t()) == 70);
+    BOOST_ASSERT(get_color(q, green_t()) == 80);
+    BOOST_ASSERT(get_color(q, blue_t()) == 90);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

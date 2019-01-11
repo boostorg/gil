@@ -64,31 +64,30 @@ struct unsigned_integral_num_bits<packed_channel_value<K> >
 
 } // namespace detail
 
-/**
-\defgroup ChannelConvertAlgorithm channel_convert
-\brief Converting from one channel type to another
-\ingroup ChannelAlgorithm
+/// \defgroup ChannelConvertAlgorithm channel_convert
+/// \brief Converting from one channel type to another
+/// \ingroup ChannelAlgorithm
+///
+/// Conversion is done as a simple linear mapping of one channel range to the other,
+/// such that the minimum/maximum value of the source maps to the minimum/maximum value of the destination.
+/// One implication of this is that the value 0 of signed channels may not be preserved!
+///
+/// When creating new channel models, it is often a good idea to provide specializations for the channel conversion algorithms, for
+/// example, for performance optimizations. If the new model is an integral type that can be signed, it is easier to define the conversion
+/// only for the unsigned type (\p channel_converter_unsigned) and provide specializations of \p detail::channel_convert_to_unsigned
+/// and \p detail::channel_convert_from_unsigned to convert between the signed and unsigned type.
+///
+/// Example:
+/// \code
+/// // float32_t is a floating point channel with range [0.0f ... 1.0f]
+/// float32_t src_channel = channel_traits<float32_t>::max_value();
+/// assert(src_channel == 1);
+///
+/// // uint8_t is 8-bit unsigned integral channel (aliased from unsigned char)
+/// uint8_t dst_channel = channel_convert<uint8_t>(src_channel);
+/// assert(dst_channel == 255);     // max value goes to max value
+/// \endcode
 
-Conversion is done as a simple linear mapping of one channel range to the other,
-such that the minimum/maximum value of the source maps to the minimum/maximum value of the destination.
-One implication of this is that the value 0 of signed channels may not be preserved!
-
-When creating new channel models, it is often a good idea to provide specializations for the channel conversion algorithms, for
-example, for performance optimizations. If the new model is an integral type that can be signed, it is easier to define the conversion
-only for the unsigned type (\p channel_converter_unsigned) and provide specializations of \p detail::channel_convert_to_unsigned
-and \p detail::channel_convert_from_unsigned to convert between the signed and unsigned type.
-
-Example:
-\code
-// float32_t is a floating point channel with range [0.0f ... 1.0f]
-float32_t src_channel = channel_traits<float32_t>::max_value();
-assert(src_channel == 1);
-
-// uint8_t is 8-bit unsigned integral channel (aliased from unsigned char)
-uint8_t dst_channel = channel_convert<uint8_t>(src_channel);
-assert(dst_channel == 255);     // max value goes to max value
-\endcode
-*/
 
 /**
 \defgroup ChannelConvertUnsignedAlgorithm channel_converter_unsigned
@@ -419,19 +418,17 @@ namespace detail {
     inline uint32_t div32768(uint32_t in) { return (in+16384)>>15; }
 }
 
-/**
-\defgroup ChannelMultiplyAlgorithm channel_multiply
-\ingroup ChannelAlgorithm
-\brief Multiplying unsigned channel values of the same type. Performs scaled multiplication result = a * b / max_value
-
-Example:
-\code
-uint8_t x=128;
-uint8_t y=128;
-uint8_t mul = channel_multiply(x,y);
-assert(mul == 64);    // 64 = 128 * 128 / 255
-\endcode
-*/
+/// \defgroup ChannelMultiplyAlgorithm channel_multiply
+/// \ingroup ChannelAlgorithm
+/// \brief Multiplying unsigned channel values of the same type. Performs scaled multiplication result = a * b / max_value
+///
+/// Example:
+/// \code
+/// uint8_t x=128;
+/// uint8_t y=128;
+/// uint8_t mul = channel_multiply(x,y);
+/// assert(mul == 64);    // 64 = 128 * 128 / 255
+/// \endcode
 /// @{
 
 /// \brief This is the default implementation. Performance specializatons are provided
@@ -490,19 +487,17 @@ inline typename channel_traits<Channel>::value_type channel_multiply(Channel a, 
 }
 /// @}
 
-/**
-\defgroup ChannelInvertAlgorithm channel_invert
-\ingroup ChannelAlgorithm
-\brief Returns the inverse of a channel. result = max_value - x + min_value
-
-Example:
-\code
-// uint8_t == uint8_t == unsigned char
-uint8_t x=255;
-uint8_t inv = channel_invert(x);
-assert(inv == 0);
-\endcode
-*/
+/// \defgroup ChannelInvertAlgorithm channel_invert
+/// \ingroup ChannelAlgorithm
+/// \brief Returns the inverse of a channel. result = max_value - x + min_value
+///
+/// Example:
+/// \code
+/// // uint8_t == uint8_t == unsigned char
+/// uint8_t x=255;
+/// uint8_t inv = channel_invert(x);
+/// assert(inv == 0);
+/// \endcode
 
 /// \brief Default implementation. Provide overloads for performance
 /// \ingroup ChannelInvertAlgorithm channel_invert

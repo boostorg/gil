@@ -10,6 +10,8 @@
 
 #include <boost/gil/extension/io/png/tags.hpp>
 
+#include <boost/assert.hpp>
+
 #include <memory>
 
 namespace boost { namespace gil { namespace detail {
@@ -60,7 +62,7 @@ private:
     {
         if( png_ptr )
         {
-            assert( png_ptr->_struct && png_ptr->_info );
+            BOOST_ASSERT(png_ptr->_struct && png_ptr->_info);
 
             png_destroy_read_struct( &png_ptr->_struct
                                    , &png_ptr->_info
@@ -76,7 +78,7 @@ private:
     {
         if( png_ptr )
         {
-            assert( png_ptr->_struct && png_ptr->_info );
+            BOOST_ASSERT(png_ptr->_struct && png_ptr->_info);
 
             png_destroy_write_struct( &png_ptr->_struct
                                     , &png_ptr->_info

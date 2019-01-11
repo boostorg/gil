@@ -7,9 +7,9 @@
 //
 #include <boost/gil.hpp>
 
+#include <boost/assert.hpp>
 #include <boost/mpl/vector.hpp>
 
-#include <cassert>
 #include <exception>
 #include <iostream>
 #include <vector>
@@ -146,14 +146,14 @@ void test_pixel_iterator()
     unsigned char v8 = get_color( p8, gray_color_t() );
 
 	// all values should be 110b ( 6 );
-    assert( v1 == 6 );
-    assert( v2 == 6 );
-    assert( v3 == 6 );
-    assert( v4 == 6 );
-    assert( v5 == 6 );
-    assert( v6 == 6 );
-    assert( v7 == 6 );
-    assert( v8 == 6 );
+    BOOST_ASSERT(v1 == 6);
+    BOOST_ASSERT(v2 == 6);
+    BOOST_ASSERT(v3 == 6);
+    BOOST_ASSERT(v4 == 6);
+    BOOST_ASSERT(v5 == 6);
+    BOOST_ASSERT(v6 == 6);
+    BOOST_ASSERT(v7 == 6);
+    BOOST_ASSERT(v8 == 6);
 }
 
 // TODO: Make better tests. Use some code from below.

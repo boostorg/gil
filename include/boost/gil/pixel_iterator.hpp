@@ -12,7 +12,6 @@
 #include <boost/gil/utilities.hpp>
 #include <boost/gil/pixel.hpp>
 
-#include <cassert>
 #include <iterator>
 
 namespace boost { namespace gil {

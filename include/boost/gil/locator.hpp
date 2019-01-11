@@ -11,7 +11,8 @@
 #include <boost/gil/pixel_iterator.hpp>
 #include <boost/gil/point.hpp>
 
-#include <cassert>
+#include <boost/assert.hpp>
+
 #include <cstddef>
 
 namespace boost { namespace gil {
@@ -287,9 +288,10 @@ public:
     bool                   is_1d_traversable(x_coord_t width)   const { return row_size()-pixel_size()*width==0; }   // is there no gap at the end of each row?
 
     // Returns the vertical distance (it2.y-it1.y) between two x_iterators given the difference of their x positions
-    std::ptrdiff_t y_distance_to(const this_t& p2, x_coord_t xDiff) const {
-        std::ptrdiff_t rowDiff=memunit_distance(x(),p2.x())-pixel_size()*xDiff;
-        assert(( rowDiff % row_size())==0);
+    std::ptrdiff_t y_distance_to(this_t const& p2, x_coord_t xDiff) const
+    {
+        std::ptrdiff_t rowDiff = memunit_distance(x(), p2.x()) - pixel_size() * xDiff;
+        BOOST_ASSERT((rowDiff % row_size()) == 0);
         return rowDiff / row_size();
     }
 

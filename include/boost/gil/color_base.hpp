@@ -11,14 +11,13 @@
 #include <boost/gil/utilities.hpp>
 #include <boost/gil/concepts.hpp>
 
+#include <boost/assert.hpp>
 #include <boost/config.hpp>
 #include <boost/mpl/range_c.hpp>
 #include <boost/mpl/size.hpp>
 #include <boost/mpl/vector_c.hpp>
 #include <boost/type_traits.hpp>
 #include <boost/utility/enable_if.hpp>
-
-#include <cassert>
 
 namespace boost { namespace gil {
 
@@ -334,29 +333,30 @@ public:
 
 template <typename Element, typename Layout, int K>
 typename element_reference_type<homogeneous_color_base<Element,Layout,K> >::type
-dynamic_at_c(homogeneous_color_base<Element,Layout,K>& cb, std::size_t i) {
-    assert(i<K);
+dynamic_at_c(homogeneous_color_base<Element,Layout,K>& cb, std::size_t i)
+{
+    BOOST_ASSERT(i < K);
     return (gil_reinterpret_cast<Element*>(&cb))[i];
 }
 
 template <typename Element, typename Layout, int K>
 typename element_const_reference_type<homogeneous_color_base<Element,Layout,K> >::type
 dynamic_at_c(const homogeneous_color_base<Element,Layout,K>& cb, std::size_t i) {
-    assert(i<K);
+    BOOST_ASSERT(i < K);
     return (gil_reinterpret_cast_c<const Element*>(&cb))[i];
 }
 
 template <typename Element, typename Layout, int K>
 typename element_reference_type<homogeneous_color_base<Element&,Layout,K> >::type
 dynamic_at_c(const homogeneous_color_base<Element&,Layout,K>& cb, std::size_t i) {
-    assert(i<K);
+    BOOST_ASSERT(i < K);
     return cb.at_c_dynamic(i);
 }
 
 template <typename Element, typename Layout, int K>
 typename element_const_reference_type<homogeneous_color_base<const Element&,Layout,K> >::type
 dynamic_at_c(const homogeneous_color_base<const Element&,Layout,K>& cb, std::size_t i) {
-    assert(i<K);
+    BOOST_ASSERT(i < K);
     return cb.at_c_dynamic(i);
 }
 

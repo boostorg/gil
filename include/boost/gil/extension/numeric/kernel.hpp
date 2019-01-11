@@ -10,9 +10,10 @@
 
 #include <boost/gil/utilities.hpp>
 
+#include <boost/assert.hpp>
+
 #include <algorithm>
 #include <array>
-#include <cassert>
 #include <cstddef>
 #include <memory>
 #include <vector>
@@ -32,19 +33,41 @@ private:
     std::size_t _center;
 public:
     kernel_1d_adaptor() : _center(0) {}
-    explicit kernel_1d_adaptor(std::size_t center_in) : _center(center_in) {assert(_center<this->size());}
-    kernel_1d_adaptor(std::size_t size_in,std::size_t center_in) :
-        Core(size_in), _center(center_in) {assert(_center<this->size());}
-    kernel_1d_adaptor(const kernel_1d_adaptor& k_in) : Core(k_in), _center(k_in._center) {}
+
+    explicit kernel_1d_adaptor(std::size_t center_in)
+        : _center(center_in)
+    {
+        BOOST_ASSERT(_center < this->size());
+    }
+
+    kernel_1d_adaptor(std::size_t size_in, std::size_t center_in)
+        : Core(size_in)
+        , _center(center_in)
+    {
+        BOOST_ASSERT(_center < this->size());
+    }
+
+    kernel_1d_adaptor(kernel_1d_adaptor const& k_in) : Core(k_in), _center(k_in._center) {}
 
     kernel_1d_adaptor& operator=(const kernel_1d_adaptor& k_in) {
         Core::operator=(k_in);
         _center=k_in._center;
         return *this;
     }
-    std::size_t left_size() const {assert(_center<this->size());return _center;}
-    std::size_t right_size() const {assert(_center<this->size());return this->size()-_center-1;}
-          std::size_t& center()       {return _center;}
+
+    std::size_t left_size() const
+    {
+        BOOST_ASSERT(_center < this->size());
+        return _center;
+    }
+
+    std::size_t right_size() const
+    {
+        BOOST_ASSERT(_center < this->size());
+        return this->size() - _center - 1;
+    }
+
+    std::size_t& center()       {return _center;}
     const std::size_t& center() const {return _center;}
 };
 

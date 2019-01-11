@@ -199,6 +199,8 @@ install:
   - git submodule --quiet update --init libs/headers
   ## Direct
   - git submodule --quiet update --init libs/algorithm
+  - git submodule --quiet update --init libs/assert
+  - git submodule --quiet update --init libs/array
   - git submodule --quiet update --init libs/bind
   - git submodule --quiet update --init libs/concept_check
   - git submodule --quiet update --init libs/config
@@ -215,8 +217,6 @@ install:
   - git submodule --quiet update --init libs/test
   - git submodule --quiet update --init libs/type_traits
   ## Transitive
-  - git submodule --quiet update --init libs/assert
-  - git submodule --quiet update --init libs/array
   - git submodule --quiet update --init libs/atomic
   - git submodule --quiet update --init libs/chrono
   - git submodule --quiet update --init libs/container
