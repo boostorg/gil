@@ -58,7 +58,7 @@ Classes</h2></td></tr>
 <p>A heterogeneous pixel used to represent packed pixels with non-byte-aligned channels. Models PixelValueConcept. </p>
 <p>Example: </p>
 <div class="fragment"><div class="line"><span class="keyword">using</span> rgb565_pixel_t = packed_pixel_type&lt;uint16_t, mpl::vector3_c&lt;unsigned,5,6,5&gt;, rgb_layout_t&gt;::type;</div>
-<div class="line">BOOST_STATIC_ASSERT((<span class="keyword">sizeof</span>(rgb565_pixel_t)==2));</div>
+<div class="line">static_assert(<span class="keyword">sizeof</span>(rgb565_pixel_t) == 2, <span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line"></div>
 <div class="line">rgb565_pixel_t r565;</div>
 <div class="line"><a class="code" href="group___color_base_algorithm_color.html#gab2d1dda637cb2b7c32cc87f199ea1dc0">get_color</a>(r565,red_t())   = 31;</div>
@@ -71,7 +71,7 @@ Classes</h2></td></tr>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sun Jan 6 2019 14:41:08 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Fri Jan 11 2019 10:01:44 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

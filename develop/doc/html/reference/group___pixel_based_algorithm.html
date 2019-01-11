@@ -57,21 +57,21 @@ Classes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>PixelBased algorithms, metafunctions and utility functions. </p>
 <p>Example: </p>
-<div class="fragment"><div class="line">BOOST_STATIC_ASSERT((num_channels&lt;rgb8_view_t&gt;::value==3));</div>
-<div class="line">BOOST_STATIC_ASSERT((num_channels&lt;cmyk16_planar_ptr_t&gt;::value==4));</div>
+<div class="fragment"><div class="line">static_assert(num_channels&lt;rgb8_view_t&gt;::value == 3, <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line">static_assert(num_channels&lt;cmyk16_planar_ptr_t&gt;::value == 4, <span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line"></div>
-<div class="line">BOOST_STATIC_ASSERT((is_planar&lt;rgb16_planar_image_t&gt;::value));</div>
-<div class="line">BOOST_STATIC_ASSERT((is_same&lt;color_space_type&lt;rgb8_planar_ref_t&gt;::type, rgb_t&gt;::value));</div>
-<div class="line">BOOST_STATIC_ASSERT((is_same&lt;channel_mapping_type&lt;cmyk8_pixel_t&gt;::type,</div>
-<div class="line">                             channel_mapping_type&lt;rgba8_pixel_t&gt;::type&gt;::value));</div>
-<div class="line">BOOST_STATIC_ASSERT((is_same&lt;channel_type&lt;bgr8_pixel_t&gt;::type, uint8_t&gt;::value));</div>
+<div class="line">static_assert(is_planar&lt;rgb16_planar_image_t&gt;::value));</div>
+<div class="line">static_assert(is_same&lt;color_space_type&lt;rgb8_planar_ref_t&gt;::type, rgb_t&gt;::value, <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line">static_assert(is_same&lt;channel_mapping_type&lt;cmyk8_pixel_t&gt;::type,</div>
+<div class="line">                             channel_mapping_type&lt;rgba8_pixel_t&gt;::type&gt;::value, <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line">static_assert(is_same&lt;channel_type&lt;bgr8_pixel_t&gt;::type, uint8_t&gt;::value, <span class="stringliteral">&quot;&quot;</span>);</div>
 </div><!-- fragment --> </div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
      <!-- start footer part -->
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sun Jan 6 2019 14:41:08 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Fri Jan 11 2019 10:01:44 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

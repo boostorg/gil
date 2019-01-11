@@ -808,7 +808,7 @@ provides a model for such packed pixel formats::
   typedef packed_pixel_type<uint16_t, mpl::vector3_c<unsigned,5,6,5>, rgb_layout_t>::type rgb565_pixel_t;
 
   function_requires<PixelValueConcept<rgb565_pixel_t> >();
-  BOOST_STATIC_ASSERT((sizeof(rgb565_pixel_t)==2));
+  static_assert(sizeof(rgb565_pixel_t) == 2, "");
 
   // define a bgr556 pixel
   typedef packed_pixel_type<uint16_t, mpl::vector3_c<unsigned,5,6,5>, bgr_layout_t>::type bgr556_pixel_t;
@@ -838,7 +838,7 @@ pixels and pixel iterators::
 
   // BGR232 pixel value. It is a packed_pixel of size 1 byte. (The last bit is unused)
   typedef std::iterator_traits<bgr232_ptr_t>::value_type bgr232_pixel_t;
-  BOOST_STATIC_ASSERT((sizeof(bgr232_pixel_t)==1));
+  static_assert(sizeof(bgr232_pixel_t) == 1, "");
 
   bgr232_pixel_t red(0,0,3); // = 0RRGGGBB, = 01100000 = 0x60
 
@@ -1959,7 +1959,7 @@ an example::
   #include <boost/gil/extension/dynamic_image/dynamic_image_all.hpp>
   using namespace boost;
 
-  #define ASSERT_SAME(A,B) BOOST_STATIC_ASSERT((is_same< A,B >::value))
+  #define ASSERT_SAME(A,B) static_assert(is_same< A,B >::value, "")
 
   // Define the set of allowed images
   typedef mpl::vector<rgb8_image_t, cmyk16_planar_image_t> my_images_t;
@@ -2380,7 +2380,7 @@ HomogeneousPixelBasedConcept and metafunctions built on top of them::
 These are metafunctions, some of which return integral types which can
 be evaluated like this::
 
-  BOOST_STATIC_ASSERT(is_planar<rgb8_planar_view_t>::value == true);
+  static_assert(is_planar<rgb8_planar_view_t>::value == true, "");
 
 GIL also supports type analysis metafunctions of the form:
 [pixel_reference/iterator/locator/view/image] + "_is_" +
@@ -2537,10 +2537,10 @@ Here is how to use pixels in generic code::
     gil_function_requires<MutableHomogeneousPixelConcept<RGBPixel> >();
 
     typedef typename color_space_type<GrayPixel>::type gray_cs_t;
-    BOOST_STATIC_ASSERT((boost::is_same<gray_cs_t,gray_t>::value));
+    static_assert(boost::is_same<gray_cs_t,gray_t>::value, "");
 
     typedef typename color_space_type<RGBPixel>::type  rgb_cs_t;
-    BOOST_STATIC_ASSERT((boost::is_same<rgb_cs_t,rgb_t>::value));
+    static_assert(boost::is_same<rgb_cs_t,rgb_t>::value, "");
 
     typedef typename channel_type<GrayPixel>::type gray_channel_t;
     typedef typename channel_type<RGBPixel>::type  rgb_channel_t;

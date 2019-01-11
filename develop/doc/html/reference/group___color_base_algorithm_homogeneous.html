@@ -65,14 +65,14 @@ Classes</h2></td></tr>
 <p><a class="el" href="structboost_1_1gil_1_1element__type.html" title="Specifies the element type of a homogeneous color base. ">element_type</a>, <a class="el" href="structboost_1_1gil_1_1element__reference__type.html" title="Specifies the return type of the mutable element accessor at_c of a homogeneous color base...">element_reference_type</a>, <a class="el" href="structboost_1_1gil_1_1element__const__reference__type.html" title="Specifies the return type of the constant element accessor at_c of a homogeneous color base...">element_const_reference_type</a>: Support for homogeneous color bases</p>
 <p>Example: </p>
 <div class="fragment"><div class="line"><span class="keyword">using</span> element_t = element_type&lt;rgb8c_planar_ptr_t&gt;::type;</div>
-<div class="line">BOOST_STATIC_ASSERT((boost::is_same&lt;element_t, const uint8_t*&gt;::value));</div>
+<div class="line">static_assert(boost::is_same&lt;element_t, const uint8_t*&gt;::value, <span class="stringliteral">&quot;&quot;</span>);</div>
 </div><!-- fragment --> </div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
      <!-- start footer part -->
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sun Jan 6 2019 14:41:08 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Fri Jan 11 2019 10:01:44 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

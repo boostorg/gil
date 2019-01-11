@@ -86,7 +86,7 @@ template&lt;typename ColorBase , typename Color &gt; </td></tr>
 <div class="fragment"><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Pixel&gt;</div>
 <div class="line"><span class="keywordtype">void</span> set_red_to_max(Pixel&amp; pixel) {</div>
 <div class="line">    boost::function_requires&lt;MutablePixelConcept&lt;Pixel&gt; &gt;();</div>
-<div class="line">    BOOST_STATIC_ASSERT((contains_color&lt;Pixel, red_t&gt;::value));</div>
+<div class="line">    static_assert(contains_color&lt;Pixel, red_t&gt;::value, <span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line"></div>
 <div class="line">    <span class="keyword">using</span> red_channel_t = <span class="keyword">typename</span> color_element_type&lt;Pixel, red_t&gt;::type;</div>
 <div class="line">    <a class="code" href="group___color_base_algorithm_color.html#gab2d1dda637cb2b7c32cc87f199ea1dc0">get_color</a>(pixel, red_t()) = channel_traits&lt;red_channel_t&gt;::max_value();</div>
@@ -97,7 +97,7 @@ template&lt;typename ColorBase , typename Color &gt; </td></tr>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sun Jan 6 2019 14:41:08 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Fri Jan 11 2019 10:01:44 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
