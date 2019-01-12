@@ -82,9 +82,11 @@ struct my_color_converter {
     }
 };
 
-// Models a Unary Function
-template <typename P>   // Models PixelValueConcept
-struct mandelbrot_fn {
+/// Models a Unary Function
+/// \tparam P models PixelValueConcept
+template <typename P>
+struct mandelbrot_fn
+{
     using point_t = boost::gil::point_t;
     using const_t = mandelbrot_fn<P>;
     using value_type = P;
@@ -92,7 +94,7 @@ struct mandelbrot_fn {
     using const_reference = value_type;
     using argument_type = point_t;
     using result_type = reference;
-    BOOST_STATIC_CONSTANT(bool, is_mutable=false);
+    static bool constexpr is_mutable = false;
 
     value_type                    _in_color,_out_color;
     point_t                       _img_size;

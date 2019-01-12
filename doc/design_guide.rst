@@ -2794,7 +2794,7 @@ called when we dereference a pixel iterator.  It will call
     typedef const value_type&   const_reference;
     typedef SrcConstRefP        argument_type;
     typedef reference           result_type;
-    BOOST_STATIC_CONSTANT(bool, is_mutable=false);
+    static bool constexpr is_mutable = false;
 
     result_type operator()(argument_type srcP) const {
         result_type dstP;

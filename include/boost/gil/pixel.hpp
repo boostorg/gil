@@ -98,7 +98,7 @@ public:
     using value_type = pixel<ChannelValue, Layout>;
     using reference = value_type&;
     using const_reference = value_type const&;
-    BOOST_STATIC_CONSTANT(bool,                 is_mutable = channel_traits<channel_t>::is_mutable);
+    static bool constexpr is_mutable = channel_traits<channel_t>::is_mutable;
 
     pixel(){}
     explicit pixel(channel_t v) : parent_t(v) {}  // sets all channels to v

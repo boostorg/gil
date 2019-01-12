@@ -42,8 +42,9 @@ private:
     // These three are only defined for homogeneous pixels
     using channel_t = typename channel_traits<ChannelReference>::value_type;
     using channel_const_reference = typename channel_traits<ChannelReference>::const_reference;
+
 public:
-    BOOST_STATIC_CONSTANT(bool, is_mutable = channel_traits<ChannelReference>::is_mutable);
+    static bool constexpr is_mutable = channel_traits<ChannelReference>::is_mutable;
     using value_type = pixel<channel_t,layout<ColorSpace>>;
     using reference = planar_pixel_reference<ChannelReference, ColorSpace>;
     using const_reference = planar_pixel_reference<channel_const_reference,ColorSpace>;
