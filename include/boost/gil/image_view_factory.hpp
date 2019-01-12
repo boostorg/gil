@@ -312,16 +312,18 @@ namespace detail {
     template <typename View, bool IsBasic> struct __nth_channel_view;
 
     // For basic (memory-based) views dispatch to __nth_channel_view_basic
-    template <typename View> struct __nth_channel_view<View,true> {
+    template <typename View>
+    struct __nth_channel_view<View,true>
+    {
     private:
         using src_x_iterator = typename View::x_iterator;
 
         // Determines whether the channels of a given pixel iterator are adjacent in memory.
         // Planar and grayscale iterators have channels adjacent in memory, whereas multi-channel interleaved and iterators with non-fundamental step do not.
-        BOOST_STATIC_CONSTANT(bool, adjacent=
-                              !iterator_is_step<src_x_iterator>::value &&
-                              (is_planar<src_x_iterator>::value ||
-                              num_channels<View>::value==1));
+        static bool constexpr adjacent =
+            !iterator_is_step<src_x_iterator>::value &&
+            (is_planar<src_x_iterator>::value || num_channels<View>::value == 1);
+
     public:
         using type = typename __nth_channel_view_basic<View,adjacent>::type;
 
@@ -336,8 +338,10 @@ namespace detail {
     /// If the input is a pixel value or constant reference, the function object is immutable. Otherwise it is mutable (and returns non-const reference to the n-th channel)
     template <typename SrcP>        // SrcP is a reference to PixelConcept (could be pixel value or const/non-const reference)
                                     // Examples: pixel<T,L>, pixel<T,L>&, const pixel<T,L>&, planar_pixel_reference<T&,L>, planar_pixel_reference<const T&,L>
-    struct nth_channel_deref_fn {
-        BOOST_STATIC_CONSTANT(bool, is_mutable=pixel_is_reference<SrcP>::value && pixel_reference_is_mutable<SrcP>::value);
+    struct nth_channel_deref_fn
+    {
+        static bool constexpr is_mutable =
+            pixel_is_reference<SrcP>::value && pixel_reference_is_mutable<SrcP>::value;
     private:
         using src_pixel_t = typename remove_reference<SrcP>::type;
         using channel_t = typename channel_type<src_pixel_t>::type;
@@ -443,16 +447,17 @@ namespace detail {
     template <int K, typename View, bool IsBasic> struct __kth_channel_view;
 
     // For basic (memory-based) views dispatch to __kth_channel_view_basic
-    template <int K, typename View> struct __kth_channel_view<K,View,true> {
+    template <int K, typename View> struct __kth_channel_view<K,View,true>
+    {
     private:
         using src_x_iterator = typename View::x_iterator;
 
         // Determines whether the channels of a given pixel iterator are adjacent in memory.
         // Planar and grayscale iterators have channels adjacent in memory, whereas multi-channel interleaved and iterators with non-fundamental step do not.
-        BOOST_STATIC_CONSTANT(bool, adjacent=
-                              !iterator_is_step<src_x_iterator>::value &&
-                              (is_planar<src_x_iterator>::value ||
-                              num_channels<View>::value==1));
+        static bool constexpr adjacent =
+            !iterator_is_step<src_x_iterator>::value &&
+            (is_planar<src_x_iterator>::value || num_channels<View>::value == 1);
+
     public:
         using type = typename __kth_channel_view_basic<K,View,adjacent>::type;
 
@@ -465,15 +470,20 @@ namespace detail {
     /// \ingroup PixelDereferenceAdaptorModel
     ///
     /// If the input is a pixel value or constant reference, the function object is immutable. Otherwise it is mutable (and returns non-const reference to the k-th channel)
-    template <int K, typename SrcP>        // SrcP is a reference to PixelConcept (could be pixel value or const/non-const reference)
-                                    // Examples: pixel<T,L>, pixel<T,L>&, const pixel<T,L>&, planar_pixel_reference<T&,L>, planar_pixel_reference<const T&,L>
-    struct kth_channel_deref_fn {
-        BOOST_STATIC_CONSTANT(bool, is_mutable=pixel_is_reference<SrcP>::value && pixel_reference_is_mutable<SrcP>::value);
+    /// \tparam SrcP reference to PixelConcept (could be pixel value or const/non-const reference)
+    /// Examples: pixel<T,L>, pixel<T,L>&, const pixel<T,L>&, planar_pixel_reference<T&,L>, planar_pixel_reference<const T&,L>
+    template <int K, typename SrcP>
+    struct kth_channel_deref_fn
+    {
+        static bool constexpr is_mutable =
+            pixel_is_reference<SrcP>::value && pixel_reference_is_mutable<SrcP>::value;
+
     private:
         using src_pixel_t = typename remove_reference<SrcP>::type;
         using channel_t = typename kth_element_type<src_pixel_t, K>::type;
         using const_ref_t = typename src_pixel_t::const_reference;
         using ref_t = typename pixel_reference_type<channel_t,gray_layout_t,false,is_mutable>::type;
+
     public:
         using const_t = kth_channel_deref_fn<K,const_ref_t>;
         using value_type = typename pixel_value_type<channel_t,gray_layout_t>::type;

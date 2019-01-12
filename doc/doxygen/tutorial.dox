@@ -587,7 +587,7 @@ struct mandelbrot_fn {
     typedef value_type          const_reference;
     typedef point_t             argument_type;
     typedef reference           result_type;
-    BOOST_STATIC_CONSTANT(bool, is_mutable=false);
+    static bool constexpr is_mutable = false;
 
     mandelbrot_fn() {}
     mandelbrot_fn(const point_t& sz) : _img_size(sz) {}

@@ -79,7 +79,7 @@ namespace detail {
         using pointer = typename T::pointer;
         using const_reference = typename T::const_reference;
         using const_pointer = typename T::const_pointer;
-        BOOST_STATIC_CONSTANT(bool, is_mutable=T::is_mutable);
+        static bool constexpr is_mutable = T::is_mutable;
         static value_type min_value() { return T::min_value(); }
         static value_type max_value() { return T::max_value(); }
     };
@@ -92,7 +92,7 @@ namespace detail {
         using pointer = T*;
         using const_reference = T const&;
         using const_pointer = T const*;
-        BOOST_STATIC_CONSTANT(bool, is_mutable=true);
+        static bool constexpr is_mutable = true;
         static value_type min_value() { return (std::numeric_limits<T>::min)(); }
         static value_type max_value() { return (std::numeric_limits<T>::max)(); }
     };
@@ -102,7 +102,7 @@ namespace detail {
     struct channel_traits_impl<const T, false> : public channel_traits_impl<T, false> {
         using reference = const T &;
         using pointer = const T *;
-        BOOST_STATIC_CONSTANT(bool, is_mutable=false);
+        static bool constexpr is_mutable = false;
     };
 }
 
@@ -131,10 +131,12 @@ struct channel_traits : public detail::channel_traits_impl<T, is_class<T>::value
 template <typename T> struct channel_traits<T&> : public channel_traits<T> {};
 
 // Channel traits for constant C++ reference type
-template <typename T> struct channel_traits<T const&> : public channel_traits<T> {
+template <typename T>
+struct channel_traits<T const&> : public channel_traits<T>
+{
     using reference = typename channel_traits<T>::const_reference;
     using pointer = typename channel_traits<T>::const_pointer;
-    BOOST_STATIC_CONSTANT(bool, is_mutable=false);
+    static bool constexpr is_mutable = false;
 };
 
 ///////////////////////////////////////////
@@ -163,15 +165,18 @@ template <typename T> struct channel_traits<T const&> : public channel_traits<T>
 
 /// \ingroup ScopedChannelValue
 /// \brief A channel adaptor that modifies the range of the source channel. Models: ChannelValueConcept
-template <typename BaseChannelValue,        // base channel (models ChannelValueConcept)
-          typename MinVal, typename MaxVal> // classes with a static apply() function returning the minimum/maximum channel values
-struct scoped_channel_value {
+/// \tparam BaseChannelValue base channel (models ChannelValueConcept)
+/// \tparam MinVal class with a static apply() function returning the minimum channel values
+/// \tparam MaxVal class with a static apply() function returning the maximum channel values
+template <typename BaseChannelValue, typename MinVal, typename MaxVal>
+struct scoped_channel_value
+{
     using value_type = scoped_channel_value<BaseChannelValue, MinVal, MaxVal>;
     using reference = value_type&;
     using pointer = value_type*;
     using const_reference = value_type const&;
     using const_pointer = value_type const*;
-    BOOST_STATIC_CONSTANT(bool, is_mutable=channel_traits<BaseChannelValue>::is_mutable);
+    static bool constexpr is_mutable = channel_traits<BaseChannelValue>::is_mutable;
 
     using base_channel_t = BaseChannelValue;
 
@@ -275,16 +280,15 @@ public:
     using const_reference = value_type const&;
     using pointer = value_type*;
     using const_pointer = value_type const*;
+    static bool constexpr is_mutable = true;
 
     static value_type min_value() { return 0; }
     static value_type max_value() { return low_bits_mask_t< NumBits >::sig_bits; }
 
-    BOOST_STATIC_CONSTANT(bool, is_mutable=true);
-
     packed_channel_value() {}
-
     packed_channel_value(integer_t v) { _value = static_cast< integer_t >( v & low_bits_mask_t<NumBits>::sig_bits_fast ); }
-    template <typename Scalar> packed_channel_value(Scalar v) { _value = packed_channel_value( static_cast< integer_t >( v ) ); }
+    template <typename Scalar>
+    packed_channel_value(Scalar v) { _value = packed_channel_value( static_cast< integer_t >( v ) ); }
 
     static unsigned int num_bits() { return NumBits; }
 
@@ -319,8 +323,8 @@ public:
     using reference = const Derived;
     using pointer = value_type *;
     using const_pointer = const value_type *;
-    BOOST_STATIC_CONSTANT(int,  num_bits=NumBits);
-    BOOST_STATIC_CONSTANT(bool, is_mutable=Mutable);
+    static int constexpr num_bits = NumBits;
+    static bool constexpr is_mutable = Mutable;
 
     static value_type min_value()       { return channel_traits<value_type>::min_value(); }
     static value_type max_value()       { return channel_traits<value_type>::max_value(); }

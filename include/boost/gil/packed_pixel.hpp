@@ -57,7 +57,8 @@ struct packed_pixel
     using reference = value_type&;
     using const_reference = value_type const&;
 
-    BOOST_STATIC_CONSTANT(bool, is_mutable = channel_traits<typename mpl::front<ChannelRefVec>::type>::is_mutable);
+    static bool constexpr is_mutable =
+        channel_traits<typename mpl::front<ChannelRefVec>::type>::is_mutable;
 
     packed_pixel(){}
     explicit packed_pixel(const BitField& bitfield) : _bitfield(bitfield) {}

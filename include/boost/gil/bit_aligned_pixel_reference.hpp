@@ -110,12 +110,22 @@ public:
 ///
 /// \ingroup ColorBaseModelNonAlignedPixel PixelModelNonAlignedPixel PixelBasedModel
 /// \brief Heterogeneous pixel reference corresponding to non-byte-aligned bit range. Models ColorBaseConcept, PixelConcept, PixelBasedConcept
-template <typename BitField,
-          typename ChannelBitSizes,  // MPL integral vector defining the number of bits for each channel. For example, for 565RGB, vector_c<int,5,6,5>
-          typename Layout,
-          bool IsMutable>
-struct bit_aligned_pixel_reference {
-    BOOST_STATIC_CONSTANT(int, bit_size = (mpl::accumulate<ChannelBitSizes, mpl::int_<0>, mpl::plus<mpl::_1, mpl::_2> >::type::value));
+///
+/// \tparam BitField
+/// \tparam ChannelBitSizes MPL integral vector defining the number of bits for each channel. For example, for 565RGB, vector_c<int,5,6,5>
+/// \tparam Layout
+/// \tparam IsMutable
+template <typename BitField, typename ChannelBitSizes, typename Layout, bool IsMutable>
+struct bit_aligned_pixel_reference
+{
+    static int constexpr bit_size =
+            mpl::accumulate
+            <
+                ChannelBitSizes,
+                mpl::int_<0>,
+                mpl::plus<mpl::_1, mpl::_2>
+            >::type::value;
+
     using bit_range_t = boost::gil::bit_range<bit_size,IsMutable>;
     using bitfield_t = BitField;
     using data_ptr_t =typename mpl::if_c<IsMutable,unsigned char*,const unsigned char*>::type;
@@ -126,7 +136,7 @@ struct bit_aligned_pixel_reference {
     using reference = const bit_aligned_pixel_reference<BitField, ChannelBitSizes, Layout, IsMutable>;
     using const_reference = bit_aligned_pixel_reference<BitField,ChannelBitSizes,Layout,false> const;
 
-    BOOST_STATIC_CONSTANT(bool, is_mutable = IsMutable);
+    static bool constexpr is_mutable = IsMutable;
 
     bit_aligned_pixel_reference(){}
     bit_aligned_pixel_reference(data_ptr_t data_ptr, int bit_offset)   : _bit_range(data_ptr, bit_offset) {}

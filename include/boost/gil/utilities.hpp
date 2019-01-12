@@ -94,7 +94,7 @@ struct deref_base
     using value_type = Value;
     using reference = Reference;
     using const_reference = ConstReference;
-    BOOST_STATIC_CONSTANT(bool, is_mutable = IsMutable);
+    static bool constexpr is_mutable = IsMutable;
 };
 
 /// \brief Composes two dereference function objects. Similar to std::unary_compose but needs to pull some aliases from the component types.  Models: PixelDereferenceAdaptorConcept
