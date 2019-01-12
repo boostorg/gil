@@ -20,6 +20,8 @@
 #include <boost/gil/io/reader_base.hpp>
 #include <boost/gil/io/row_buffer_helper.hpp>
 
+#include <boost/assert.hpp>
+
 #include <algorithm>
 #include <string>
 #include <vector>
@@ -495,9 +497,9 @@ private:
                    std::ptrdiff_t tile_x1 = img_x1 - x;
                    std::ptrdiff_t tile_y1 = img_y1 - y;
 
-                   assert( tile_x0 >= 0 && tile_y0 >= 0 && tile_x1 >= 0 && tile_y1 >= 0 );
-                   assert( tile_x0 <= img_x1 && tile_y0 <= img_y1 );
-                   assert( tile_x0 < tile_width && tile_y0 < tile_height && tile_x1 < tile_width && tile_y1 < tile_height );
+                   BOOST_ASSERT(tile_x0 >= 0 && tile_y0 >= 0 && tile_x1 >= 0 && tile_y1 >= 0);
+                   BOOST_ASSERT(tile_x0 <= img_x1 && tile_y0 <= img_y1);
+                   BOOST_ASSERT(tile_x0 < tile_width && tile_y0 < tile_height && tile_x1 < tile_width && tile_y1 < tile_height);
 
                    std::ptrdiff_t tile_subimage_view_width  = tile_x1 - tile_x0 + 1;
                    std::ptrdiff_t tile_subimage_view_height = tile_y1 - tile_y0 + 1;
@@ -505,7 +507,7 @@ private:
                    // convert to dst_view coordinates
                    std::ptrdiff_t dst_x0 = img_x0 - subimage_x;
                    std::ptrdiff_t dst_y0 = img_y0 - subimage_y;
-                   assert( dst_x0 >= 0 && dst_y0 >= 0 );
+                   BOOST_ASSERT(dst_x0 >= 0 && dst_y0 >= 0);
 
                    View dst_subimage_view = subimage_view( dst_view
                                                          , (int) dst_x0

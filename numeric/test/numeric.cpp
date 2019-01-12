@@ -13,6 +13,7 @@
 #include <boost/gil/extension/numeric/resample.hpp>
 #include <boost/gil/extension/numeric/sampler.hpp>
 
+#include <boost/assert.hpp>
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 
@@ -151,27 +152,27 @@ BOOST_AUTO_TEST_CASE(bilinear_sampler_test)
 
     TestMapFn<double,rgb8_image_t::coord_t> mf;
 
-    resample_pixels( const_view(img), view(dimg), mf, bilinear_sampler() );
+    resample_pixels(const_view(img), view(dimg), mf, bilinear_sampler());
 
-    assert( rgb8_pixel_t(128,0,0) == dv(0,0) );
-    assert( rgb8_pixel_t(64,64,0) == dv(0,1) );
-    assert( rgb8_pixel_t(0,64,64) == dv(0,2) );
-    assert( rgb8_pixel_t(0,0,128) == dv(0,3) );
+    BOOST_ASSERT(rgb8_pixel_t(128,0,0) == dv(0,0));
+    BOOST_ASSERT(rgb8_pixel_t(64,64,0) == dv(0,1));
+    BOOST_ASSERT(rgb8_pixel_t(0,64,64) == dv(0,2));
+    BOOST_ASSERT(rgb8_pixel_t(0,0,128) == dv(0,3));
 
-    assert( rgb8_pixel_t(64,64,0) == dv(1,0) );
-    assert( rgb8_pixel_t(64,96,32) == dv(1,1) );
-    assert( rgb8_pixel_t(64,64,64) == dv(1,2) );
-    assert( rgb8_pixel_t(64,0,64) == dv(1,3) );
+    BOOST_ASSERT(rgb8_pixel_t(64,64,0) == dv(1,0));
+    BOOST_ASSERT(rgb8_pixel_t(64,96,32) == dv(1,1));
+    BOOST_ASSERT(rgb8_pixel_t(64,64,64) == dv(1,2));
+    BOOST_ASSERT(rgb8_pixel_t(64,0,64) == dv(1,3));
 
-    assert( rgb8_pixel_t(0,64,64) == dv(2,0) );
-    assert( rgb8_pixel_t(64,64,64) == dv(2,1) );
-    assert( rgb8_pixel_t(96,64,32) == dv(2,2) );
-    assert( rgb8_pixel_t(64,64,0) == dv(2,3) );
+    BOOST_ASSERT(rgb8_pixel_t(0,64,64) == dv(2,0));
+    BOOST_ASSERT(rgb8_pixel_t(64,64,64) == dv(2,1));
+    BOOST_ASSERT(rgb8_pixel_t(96,64,32) == dv(2,2));
+    BOOST_ASSERT(rgb8_pixel_t(64,64,0) == dv(2,3));
 
-    assert( rgb8_pixel_t(0,0,128) == dv(3,0) );
-    assert( rgb8_pixel_t(64,0,64) == dv(3,1) );
-    assert( rgb8_pixel_t(64,64,0) == dv(3,2) );
-    assert( rgb8_pixel_t(0,128,0) == dv(3,3) );
+    BOOST_ASSERT(rgb8_pixel_t(0,0,128) == dv(3,0));
+    BOOST_ASSERT(rgb8_pixel_t(64,0,64) == dv(3,1));
+    BOOST_ASSERT(rgb8_pixel_t(64,64,0) == dv(3,2));
+    BOOST_ASSERT(rgb8_pixel_t(0,128,0) == dv(3,3));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

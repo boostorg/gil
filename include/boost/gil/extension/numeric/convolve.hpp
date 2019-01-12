@@ -16,8 +16,9 @@
 #include <boost/gil/image_view_factory.hpp>
 #include <boost/gil/metafunctions.hpp>
 
+#include <boost/assert.hpp>
+
 #include <algorithm>
-#include <cassert>
 #include <cstddef>
 #include <functional>
 #include <type_traits>
@@ -43,8 +44,8 @@ template <typename PixelAccum,typename SrcView,typename Kernel,typename DstView,
 void correlate_rows_imp(const SrcView& src, const Kernel& ker, const DstView& dst,
                         convolve_boundary_option option,
                         Correlator correlator) {
-    assert(src.dimensions()==dst.dimensions());
-    assert(ker.size()!=0);
+    BOOST_ASSERT(src.dimensions() == dst.dimensions());
+    BOOST_ASSERT(ker.size() != 0);
 
     using PIXEL_SRC_REF = typename pixel_proxy<typename SrcView::value_type>::type;
     using PIXEL_DST_REF = typename pixel_proxy<typename DstView::value_type>::type;

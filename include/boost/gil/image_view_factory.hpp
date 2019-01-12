@@ -13,7 +13,8 @@
 #include <boost/gil/metafunctions.hpp>
 #include <boost/gil/point.hpp>
 
-#include <cassert>
+#include <boost/assert.hpp>
+
 #include <cstddef>
 
 /// Methods for creating shallow image views from raw pixel data or from other image views -
@@ -262,8 +263,9 @@ inline View subimage_view(const View& src, int xMin, int yMin, int width, int he
 
 /// \ingroup ImageViewTransformationsSubsampled
 template <typename View>
-inline typename dynamic_xy_step_type<View>::type subsampled_view(const View& src, typename View::coord_t xStep, typename View::coord_t yStep) {
-    assert(xStep>0 && yStep>0);
+inline typename dynamic_xy_step_type<View>::type subsampled_view(const View& src, typename View::coord_t xStep, typename View::coord_t yStep)
+{
+    BOOST_ASSERT(xStep > 0 && yStep > 0);
     using RView = typename dynamic_xy_step_type<View>::type;
     return RView((src.width()+(xStep-1))/xStep,(src.height()+(yStep-1))/yStep,
                                           typename RView::xy_locator(src.xy_at(0,0),xStep,yStep));

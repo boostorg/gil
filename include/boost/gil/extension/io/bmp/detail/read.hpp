@@ -20,6 +20,7 @@
 #include <boost/gil/io/row_buffer_helper.hpp>
 #include <boost/gil/io/typedefs.hpp>
 
+#include <boost/assert.hpp>
 #include <boost/mpl/and.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/utility/enable_if.hpp>
@@ -450,9 +451,9 @@ private:
     template< typename View_Dst >
     void read_palette_image_rle( const View_Dst& view )
     {
-        assert(  this->_info._compression == bmp_compression::_rle4
-              || this->_info._compression == bmp_compression::_rle8
-              );
+        BOOST_ASSERT(
+            this->_info._compression == bmp_compression::_rle4 ||
+            this->_info._compression == bmp_compression::_rle8);
 
         this->read_palette();
 

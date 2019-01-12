@@ -81,6 +81,7 @@ before_build:
   ## Direct
   - git submodule --quiet update --init libs/algorithm
   - git submodule --quiet update --init libs/array
+  - git submodule --quiet update --init libs/assert
   - git submodule --quiet update --init libs/bind
   - git submodule --quiet update --init libs/concept_check
   - git submodule --quiet update --init libs/config
@@ -91,15 +92,12 @@ before_build:
   - git submodule --quiet update --init libs/integer
   - git submodule --quiet update --init libs/iterator
   - git submodule --quiet update --init libs/lambda
-  - git submodule --quiet update --init libs/lexical_cast
   - git submodule --quiet update --init libs/mpl
   - git submodule --quiet update --init libs/numeric/conversion
   - git submodule --quiet update --init libs/preprocessor
-  - git submodule --quiet update --init libs/smart_ptr
   - git submodule --quiet update --init libs/test
   - git submodule --quiet update --init libs/type_traits
   ## Transitive
-  - git submodule --quiet update --init libs/assert
   - git submodule --quiet update --init libs/atomic
   - git submodule --quiet update --init libs/chrono
   - git submodule --quiet update --init libs/container
@@ -120,6 +118,7 @@ before_build:
   - git submodule --quiet update --init libs/rational
   - git submodule --quiet update --init libs/regex
   - git submodule --quiet update --init libs/static_assert
+  - git submodule --quiet update --init libs/smart_ptr
   - git submodule --quiet update --init libs/system
   - git submodule --quiet update --init libs/throw_exception
   - git submodule --quiet update --init libs/timer
