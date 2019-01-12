@@ -11,8 +11,7 @@
 #endif
 
 #include <boost/gil/extension/dynamic_image/dynamic_image_all.hpp>
-#include <boost/lambda/bind.hpp>
-#include <boost/lambda/lambda.hpp>
+
 #include <boost/mpl/vector.hpp>
 #include <boost/test/unit_test.hpp>
 

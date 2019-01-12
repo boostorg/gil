@@ -12,7 +12,6 @@
 
 #include <boost/gil/utilities.hpp>
 
-#include <boost/bind.hpp>
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/fold.hpp>

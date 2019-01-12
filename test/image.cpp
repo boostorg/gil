@@ -14,8 +14,6 @@
 
 #include <boost/core/ignore_unused.hpp>
 #include <boost/crc.hpp>
-#include <boost/lambda/bind.hpp>
-#include <boost/lambda/lambda.hpp>
 #include <boost/mpl/vector.hpp>
 
 #include <ios>
@@ -50,10 +48,15 @@ void error_if(bool condition);
 ////////////////////////////////////////////////////
 
 template <typename GrayView, typename R>
-void gray_image_hist(const GrayView& img_view, R& hist) {
-//    for_each_pixel(img_view,++lambda::var(hist)[lambda::_1]);
-    for (typename GrayView::iterator it=img_view.begin(); it!=img_view.end(); ++it)
+void gray_image_hist(GrayView const& img_view, R& hist)
+{
+    for (auto it = img_view.begin(); it != img_view.end(); ++it)
         ++hist[*it];
+
+    // Alternatively, prefer the algorithm with lambda
+    // for_each_pixel(img_view, [&hist](gray8_pixel_t const& pixel) {
+    //     ++hist[pixel];
+    // });
 }
 
 template <typename V, typename R>

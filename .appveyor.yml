@@ -82,7 +82,6 @@ before_build:
   - git submodule --quiet update --init libs/algorithm
   - git submodule --quiet update --init libs/array
   - git submodule --quiet update --init libs/assert
-  - git submodule --quiet update --init libs/bind
   - git submodule --quiet update --init libs/concept_check
   - git submodule --quiet update --init libs/config
   - git submodule --quiet update --init libs/core
@@ -91,7 +90,6 @@ before_build:
   - git submodule --quiet update --init libs/function
   - git submodule --quiet update --init libs/integer
   - git submodule --quiet update --init libs/iterator
-  - git submodule --quiet update --init libs/lambda
   - git submodule --quiet update --init libs/mpl
   - git submodule --quiet update --init libs/numeric/conversion
   - git submodule --quiet update --init libs/preprocessor
@@ -99,6 +97,7 @@ before_build:
   - git submodule --quiet update --init libs/type_traits
   ## Transitive
   - git submodule --quiet update --init libs/atomic
+  - git submodule --quiet update --init libs/bind
   - git submodule --quiet update --init libs/chrono
   - git submodule --quiet update --init libs/container
   - git submodule --quiet update --init libs/container_hash
@@ -109,6 +108,7 @@ before_build:
   - git submodule --quiet update --init libs/fusion
   - git submodule --quiet update --init libs/intrusive
   - git submodule --quiet update --init libs/io
+  - git submodule --quiet update --init libs/lambda
   - git submodule --quiet update --init libs/math
   - git submodule --quiet update --init libs/move
   - git submodule --quiet update --init libs/optional
