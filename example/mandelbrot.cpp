@@ -18,12 +18,12 @@ template <typename P>   // Models PixelValueConcept
 struct mandelbrot_fn
 {
     using point_t = boost::gil::point_t;
-    typedef mandelbrot_fn        const_t;
-    typedef P                    value_type;
-    typedef value_type           reference;
-    typedef value_type           const_reference;
-    typedef point_t              argument_type;
-    typedef reference            result_type;
+    using const_t = mandelbrot_fn;
+    using value_type = P;
+    using reference = value_type;
+    using const_reference = value_type;
+    using argument_type = point_t;
+    using result_type = reference;
     BOOST_STATIC_CONSTANT(bool, is_mutable=false);
 
     value_type                    _in_color,_out_color;
@@ -59,13 +59,13 @@ private:
 
 int main()
 {
-    typedef mandelbrot_fn<rgb8_pixel_t> deref_t;
-    typedef deref_t::point_t            point_t;
-    typedef virtual_2d_locator<deref_t,false> locator_t;
-    typedef image_view<locator_t> my_virt_view_t;
+    using deref_t = mandelbrot_fn<rgb8_pixel_t>;
+    using point_t = deref_t::point_t;
+    using locator_t = virtual_2d_locator<deref_t,false>;
+    using my_virt_view_t = image_view<locator_t>;
 
-    boost::function_requires<PixelLocatorConcept<locator_t> >();
-    gil_function_requires<StepIteratorConcept<locator_t::x_iterator> >();
+    boost::function_requires<PixelLocatorConcept<locator_t>>();
+    gil_function_requires<StepIteratorConcept<locator_t::x_iterator>>();
 
     point_t dims(200,200);
     my_virt_view_t mandel(dims, locator_t(point_t(0,0), point_t(1,1), deref_t(dims, rgb8_pixel_t(255,0,255), rgb8_pixel_t(0,255,0))));
