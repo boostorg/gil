@@ -54,6 +54,7 @@
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="structboost_1_1gil_1_1packed__pixel-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">packed_pixel&lt; BitField, ChannelRefVec, Layout &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group___color_base_model_packed_pixel.html">packed_pixel</a> &#124; <a class="el" href="group___pixel_model_packed_pixel.html">packed_pixel</a> &#124; <a class="el" href="group___pixel_based_model.html">Models</a></div></div>  </div>
@@ -82,9 +83,6 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>const_reference</b> 
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a14c0e5abaf758efea57a44870b1dfd81"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a14c0e5abaf758efea57a44870b1dfd81"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>BOOST_STATIC_CONSTANT</b> (bool, is_mutable=channel_traits&lt; typename mpl::front&lt; ChannelRefVec &gt;::type &gt;::is_mutable)</td></tr>
-<tr class="separator:a14c0e5abaf758efea57a44870b1dfd81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a0f92a9c16bae51843b51bc403d4f66"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7a0f92a9c16bae51843b51bc403d4f66"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>packed_pixel</b> (const BitField &amp;bitfield)</td></tr>
 <tr class="separator:a7a0f92a9c16bae51843b51bc403d4f66"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -134,13 +132,41 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:abe60dad4ae2eb0daf0d399e66fc2c11a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe60dad4ae2eb0daf0d399e66fc2c11a"></a>
 BitField&#160;</td><td class="memItemRight" valign="bottom"><b>_bitfield</b></td></tr>
 <tr class="separator:abe60dad4ae2eb0daf0d399e66fc2c11a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a2e5e2ca4a64c78a6f709a8bf20eed3e8"><td class="memItemLeft" align="right" valign="top">static bool constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>is_mutable</b></td></tr>
+<tr class="separator:a2e5e2ca4a64c78a6f709a8bf20eed3e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename BitField, typename ChannelRefVec, typename Layout&gt;<br/>
 struct boost::gil::packed_pixel&lt; BitField, ChannelRefVec, Layout &gt;</h3>
 
 <p>Heterogeneous pixel value whose channel references can be constructed from the pixel bitfield and their index. Models ColorBaseValueConcept, PixelValueConcept, PixelBasedConcept Typical use for this is a model of a packed pixel (like 565 RGB) </p>
-</div><hr/>The documentation for this struct was generated from the following files:<ul>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a2e5e2ca4a64c78a6f709a8bf20eed3e8"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool constexpr is_mutable</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">        channel_traits&lt;typename mpl::front&lt;ChannelRefVec&gt;::type&gt;::is_mutable</div>
+</div><!-- fragment -->
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following files:<ul>
 <li><a class="el" href="metafunctions_8hpp_source.html">metafunctions.hpp</a></li>
 <li><a class="el" href="packed__pixel_8hpp_source.html">packed_pixel.hpp</a></li>
 </ul>
@@ -150,7 +176,7 @@ struct boost::gil::packed_pixel&lt; BitField, ChannelRefVec, Layout &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Jan 12 2019 17:14:16 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Jan 12 2019 23:25:30 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

@@ -2818,7 +2818,7 @@ called when we dereference a pixel iterator.  It will call
   <span class="k">typedef</span> <span class="k">const</span> <span class="n">value_type</span><span class="o">&amp;</span>   <span class="n">const_reference</span><span class="p">;</span>
   <span class="k">typedef</span> <span class="n">SrcConstRefP</span>        <span class="n">argument_type</span><span class="p">;</span>
   <span class="k">typedef</span> <span class="n">reference</span>           <span class="n">result_type</span><span class="p">;</span>
-  <span class="n">BOOST_STATIC_CONSTANT</span><span class="p">(</span><span class="kt">bool</span><span class="p">,</span> <span class="n">is_mutable</span><span class="o">=</span><span class="nb">false</span><span class="p">);</span>
+  <span class="k">static</span> <span class="kt">bool</span> <span class="k">constexpr</span> <span class="n">is_mutable</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
 
   <span class="n">result_type</span> <span class="nf">operator</span><span class="p">()(</span><span class="n">argument_type</span> <span class="n">srcP</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
       <span class="n">result_type</span> <span class="n">dstP</span><span class="p">;</span>

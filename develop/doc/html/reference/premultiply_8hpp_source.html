@@ -131,7 +131,7 @@
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keyword">using</span> const_reference = <span class="keyword">const</span> value_type &amp;;</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keyword">using</span> argument_type = SrcConstRefP;</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keyword">using</span> result_type = reference;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    BOOST_STATIC_CONSTANT(<span class="keywordtype">bool</span>, is_mutable=<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">bool</span> constexpr is_mutable = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    result_type operator()(argument_type srcP)<span class="keyword"> const</span></div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keyword">    </span>{</div>
@@ -163,14 +163,14 @@
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="group___channel_multiply_algorithm_html_ga0af81efbbb77846afe2570f242d2b974"><div class="ttname"><a href="group___channel_multiply_algorithm.html#ga0af81efbbb77846afe2570f242d2b974">boost::gil::channel_multiply</a></div><div class="ttdeci">channel_traits&lt; Channel &gt;::value_type channel_multiply(Channel a, Channel b)</div><div class="ttdoc">A function multiplying two channels. result = a * b / max_value. </div><div class="ttdef"><b>Definition:</b> channel_algorithm.hpp:485</div></div>
-<div class="ttc" id="group___color_base_algorithm_color_html_gab2d1dda637cb2b7c32cc87f199ea1dc0"><div class="ttname"><a href="group___color_base_algorithm_color.html#gab2d1dda637cb2b7c32cc87f199ea1dc0">boost::gil::get_color</a></div><div class="ttdeci">color_element_reference_type&lt; ColorBase, Color &gt;::type get_color(ColorBase &amp;cb, Color=Color())</div><div class="ttdoc">Mutable accessor to the element associated with a given color name. </div><div class="ttdef"><b>Definition:</b> color_base_algorithm.hpp:170</div></div>
+<div class="ttc" id="group___color_base_algorithm_color_html_gab2d1dda637cb2b7c32cc87f199ea1dc0"><div class="ttname"><a href="group___color_base_algorithm_color.html#gab2d1dda637cb2b7c32cc87f199ea1dc0">boost::gil::get_color</a></div><div class="ttdeci">color_element_reference_type&lt; ColorBase, Color &gt;::type get_color(ColorBase &amp;cb, Color=Color())</div><div class="ttdoc">Mutable accessor to the element associated with a given color name. </div><div class="ttdef"><b>Definition:</b> color_base_algorithm.hpp:187</div></div>
 </div><!-- fragment --></div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
      <!-- start footer part -->
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Jan 12 2019 17:14:15 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Jan 12 2019 23:25:30 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

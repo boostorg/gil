@@ -54,6 +54,7 @@
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="structboost_1_1gil_1_1detail_1_1nth__channel__deref__fn-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">nth_channel_deref_fn&lt; SrcP &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group___pixel_dereference_adaptor_model.html">Models</a></div></div>  </div>
@@ -88,9 +89,6 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>result_type</b> = re
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af775f083d7bf091fec5c1a27680dc5c8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af775f083d7bf091fec5c1a27680dc5c8"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>BOOST_STATIC_CONSTANT</b> (bool, is_mutable=<a class="el" href="structboost_1_1gil_1_1pixel__is__reference.html">pixel_is_reference</a>&lt; SrcP &gt;::value &amp;&amp;<a class="el" href="structboost_1_1gil_1_1pixel__reference__is__mutable.html">pixel_reference_is_mutable</a>&lt; SrcP &gt;::value)</td></tr>
-<tr class="separator:af775f083d7bf091fec5c1a27680dc5c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaddab96793b55b507de7b81ba1ddc280"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaddab96793b55b507de7b81ba1ddc280"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>nth_channel_deref_fn</b> (int n=0)</td></tr>
 <tr class="separator:aaddab96793b55b507de7b81ba1ddc280"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -107,6 +105,11 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:ada0e3adfe5f3db62623fb73a49c120b3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ada0e3adfe5f3db62623fb73a49c120b3"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>_n</b></td></tr>
 <tr class="separator:ada0e3adfe5f3db62623fb73a49c120b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a2e5e2ca4a64c78a6f709a8bf20eed3e8"><td class="memItemLeft" align="right" valign="top">static bool constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>is_mutable</b></td></tr>
+<tr class="separator:a2e5e2ca4a64c78a6f709a8bf20eed3e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename SrcP&gt;<br/>
@@ -114,7 +117,30 @@ struct boost::gil::detail::nth_channel_deref_fn&lt; SrcP &gt;</h3>
 
 <p>Function object that returns a grayscale reference of the N-th channel of a given reference. Models: PixelDereferenceAdaptorConcept.</p>
 <p>If the input is a pixel value or constant reference, the function object is immutable. Otherwise it is mutable (and returns non-const reference to the n-th channel) </p>
-</div><hr/>The documentation for this struct was generated from the following file:<ul>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a2e5e2ca4a64c78a6f709a8bf20eed3e8"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool constexpr is_mutable</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">            pixel_is_reference&lt;SrcP&gt;::value &amp;&amp; pixel_reference_is_mutable&lt;SrcP&gt;::value</div>
+</div><!-- fragment -->
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following file:<ul>
 <li><a class="el" href="image__view__factory_8hpp_source.html">image_view_factory.hpp</a></li>
 </ul>
 </div><!-- contents -->
@@ -123,7 +149,7 @@ struct boost::gil::detail::nth_channel_deref_fn&lt; SrcP &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Jan 12 2019 17:14:16 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Jan 12 2019 23:25:31 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

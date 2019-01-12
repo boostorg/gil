@@ -109,7 +109,7 @@
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;          bit_range_t&amp; bit_range()       { <span class="keywordflow">return</span> _bit_range; }</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keyword">private</span>:</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    bit_range_t _bit_range;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    BOOST_STATIC_CONSTANT(<span class="keywordtype">int</span>, bit_size = NonAlignedPixelReference::bit_size);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> constexpr bit_size = NonAlignedPixelReference::bit_size;</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keyword">friend</span> <span class="keyword">class </span>boost::iterator_core_access;</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    reference dereference()<span class="keyword">     const </span>{ <span class="keywordflow">return</span> NonAlignedPixelReference(_bit_range); }</div>
@@ -224,7 +224,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Jan 12 2019 17:14:15 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Jan 12 2019 23:25:30 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

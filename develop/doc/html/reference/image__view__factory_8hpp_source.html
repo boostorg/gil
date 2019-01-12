@@ -292,207 +292,215 @@
 <div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> View, <span class="keywordtype">bool</span> IsBasic&gt; <span class="keyword">struct </span>__nth_channel_view;</div>
 <div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;</div>
 <div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;    <span class="comment">// For basic (memory-based) views dispatch to __nth_channel_view_basic</span></div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> View&gt; <span class="keyword">struct </span>__nth_channel_view&lt;View,true&gt; {</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;        <span class="keyword">using</span> src_x_iterator = <span class="keyword">typename</span> View::x_iterator;</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;        <span class="comment">// Determines whether the channels of a given pixel iterator are adjacent in memory.</span></div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;        <span class="comment">// Planar and grayscale iterators have channels adjacent in memory, whereas multi-channel interleaved and iterators with non-fundamental step do not.</span></div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;        BOOST_STATIC_CONSTANT(<span class="keywordtype">bool</span>, adjacent=</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;                              !iterator_is_step&lt;src_x_iterator&gt;::value &amp;&amp;</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;                              (is_planar&lt;src_x_iterator&gt;::value ||</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;                              num_channels&lt;View&gt;::value==1));</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;        <span class="keyword">using</span> type = <span class="keyword">typename</span> __nth_channel_view_basic&lt;View,adjacent&gt;::type;</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;        <span class="keyword">static</span> type make(<span class="keyword">const</span> View&amp; src, <span class="keywordtype">int</span> n) {</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;            <span class="keywordflow">return</span> __nth_channel_view_basic&lt;View,adjacent&gt;::make(src,n);</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;        }</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    };</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> SrcP&gt;        <span class="comment">// SrcP is a reference to PixelConcept (could be pixel value or const/non-const reference)</span></div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;                                    <span class="comment">// Examples: pixel&lt;T,L&gt;, pixel&lt;T,L&gt;&amp;, const pixel&lt;T,L&gt;&amp;, planar_pixel_reference&lt;T&amp;,L&gt;, planar_pixel_reference&lt;const T&amp;,L&gt;</span></div>
-<div class="line"><a name="l00339"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1detail_1_1nth__channel__deref__fn.html">  339</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1detail_1_1nth__channel__deref__fn.html">nth_channel_deref_fn</a> {</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;        BOOST_STATIC_CONSTANT(<span class="keywordtype">bool</span>, is_mutable=<a class="code" href="structboost_1_1gil_1_1pixel__is__reference.html">pixel_is_reference&lt;SrcP&gt;::value</a> &amp;&amp; <a class="code" href="structboost_1_1gil_1_1pixel__reference__is__mutable.html">pixel_reference_is_mutable&lt;SrcP&gt;::value</a>);</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;        <span class="keyword">using</span> src_pixel_t = <span class="keyword">typename</span> remove_reference&lt;SrcP&gt;::type;</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;        <span class="keyword">using</span> channel_t = <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1channel__type.html">channel_type&lt;src_pixel_t&gt;::type</a>;</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;        <span class="keyword">using</span> const_ref_t = <span class="keyword">typename</span> src_pixel_t::const_reference;</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;        <span class="keyword">using</span> ref_t = <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1pixel__reference__type.html">pixel_reference_type&lt;channel_t,gray_layout_t,false,is_mutable&gt;::type</a>;</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;        <span class="keyword">using</span> <a class="code" href="structboost_1_1gil_1_1detail_1_1nth__channel__deref__fn.html">const_t</a> = <a class="code" href="structboost_1_1gil_1_1detail_1_1nth__channel__deref__fn.html">nth_channel_deref_fn&lt;const_ref_t&gt;</a>;</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;        <span class="keyword">using</span> value_type = <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1pixel.html">pixel_value_type&lt;channel_t,gray_layout_t&gt;::type</a>;</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;        <span class="keyword">using</span> const_reference = <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1pixel__reference__type.html">pixel_reference_type&lt;channel_t,gray_layout_t,false,false&gt;::type</a>;</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;        <span class="keyword">using</span> argument_type = SrcP;</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;        <span class="keyword">using</span> reference = <span class="keyword">typename</span> mpl::if_c&lt;is_mutable, ref_t, value_type&gt;::type;</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;        <span class="keyword">using</span> result_type = reference;</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;        <a class="code" href="structboost_1_1gil_1_1detail_1_1nth__channel__deref__fn.html">nth_channel_deref_fn</a>(<span class="keywordtype">int</span> n=0) : _n(n) {}</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> P&gt; <a class="code" href="structboost_1_1gil_1_1detail_1_1nth__channel__deref__fn.html">nth_channel_deref_fn</a>(<span class="keyword">const</span> <a class="code" href="structboost_1_1gil_1_1detail_1_1nth__channel__deref__fn.html">nth_channel_deref_fn&lt;P&gt;</a>&amp; d) : _n(d._n) {}</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;        <span class="keywordtype">int</span> _n;        <span class="comment">// the channel to use</span></div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;        result_type operator()(argument_type srcP)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;            <span class="keywordflow">return</span> result_type(srcP[_n]);</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;        }</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    };</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> View&gt; <span class="keyword">struct </span>__nth_channel_view&lt;View,false&gt; {</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;        <span class="keyword">using</span> deref_t = <a class="code" href="structboost_1_1gil_1_1detail_1_1nth__channel__deref__fn.html">nth_channel_deref_fn&lt;typename View::reference&gt;</a>;</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;        <span class="keyword">using</span> AD = <span class="keyword">typename</span> View::template add_deref&lt;deref_t&gt;;</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;        <span class="keyword">using</span> type = <span class="keyword">typename</span> AD::type;</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;        <span class="keyword">static</span> type make(<span class="keyword">const</span> View&amp; src, <span class="keywordtype">int</span> n) {</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;            <span class="keywordflow">return</span> AD::make(src, deref_t(n));</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;        }</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    };</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;} <span class="comment">// namespace detail</span></div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> View&gt;</div>
-<div class="line"><a name="l00383"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1nth__channel__view__type.html">  383</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1nth__channel__view__type.html">nth_channel_view_type</a> {</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;    GIL_CLASS_REQUIRE(View, boost::gil, ImageViewConcept)</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;    <span class="keyword">using</span> VB = detail::__nth_channel_view&lt;View,view_is_basic&lt;View&gt;::value&gt;;</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;    <span class="keyword">using</span> type = <span class="keyword">typename</span> VB::type;</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;    <span class="keyword">static</span> type make(<span class="keyword">const</span> View&amp; src, <span class="keywordtype">int</span> n) { <span class="keywordflow">return</span> VB::make(src,n); }</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;};</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> View&gt;</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;<span class="keyword">typename</span> nth_channel_view_type&lt;View&gt;::type nth_channel_view(<span class="keyword">const</span> View&amp; src, <span class="keywordtype">int</span> n) {</div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="structboost_1_1gil_1_1nth__channel__view__type.html">nth_channel_view_type&lt;View&gt;::make</a>(src,n);</div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;}</div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;</div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;</div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;</div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> View&gt;</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    <span class="keyword">struct </span>__nth_channel_view&lt;View,true&gt;</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    {</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;        <span class="keyword">using</span> src_x_iterator = <span class="keyword">typename</span> View::x_iterator;</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;        <span class="comment">// Determines whether the channels of a given pixel iterator are adjacent in memory.</span></div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;        <span class="comment">// Planar and grayscale iterators have channels adjacent in memory, whereas multi-channel interleaved and iterators with non-fundamental step do not.</span></div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">bool</span> constexpr adjacent =</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;            !iterator_is_step&lt;src_x_iterator&gt;::value &amp;&amp;</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;            (is_planar&lt;src_x_iterator&gt;::value || num_channels&lt;View&gt;::value == 1);</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;        <span class="keyword">using</span> type = <span class="keyword">typename</span> __nth_channel_view_basic&lt;View,adjacent&gt;::type;</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;        <span class="keyword">static</span> type make(<span class="keyword">const</span> View&amp; src, <span class="keywordtype">int</span> n) {</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;            <span class="keywordflow">return</span> __nth_channel_view_basic&lt;View,adjacent&gt;::make(src,n);</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;        }</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    };</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> SrcP&gt;        <span class="comment">// SrcP is a reference to PixelConcept (could be pixel value or const/non-const reference)</span></div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;                                    <span class="comment">// Examples: pixel&lt;T,L&gt;, pixel&lt;T,L&gt;&amp;, const pixel&lt;T,L&gt;&amp;, planar_pixel_reference&lt;T&amp;,L&gt;, planar_pixel_reference&lt;const T&amp;,L&gt;</span></div>
+<div class="line"><a name="l00341"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1detail_1_1nth__channel__deref__fn.html">  341</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1detail_1_1nth__channel__deref__fn.html">nth_channel_deref_fn</a></div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    {</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">bool</span> constexpr is_mutable =</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;            <a class="code" href="structboost_1_1gil_1_1pixel__is__reference.html">pixel_is_reference&lt;SrcP&gt;::value</a> &amp;&amp; <a class="code" href="structboost_1_1gil_1_1pixel__reference__is__mutable.html">pixel_reference_is_mutable&lt;SrcP&gt;::value</a>;</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;        <span class="keyword">using</span> src_pixel_t = <span class="keyword">typename</span> remove_reference&lt;SrcP&gt;::type;</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;        <span class="keyword">using</span> channel_t = <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1channel__type.html">channel_type&lt;src_pixel_t&gt;::type</a>;</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;        <span class="keyword">using</span> const_ref_t = <span class="keyword">typename</span> src_pixel_t::const_reference;</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;        <span class="keyword">using</span> ref_t = <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1pixel__reference__type.html">pixel_reference_type&lt;channel_t,gray_layout_t,false,is_mutable&gt;::type</a>;</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;        <span class="keyword">using</span> <a class="code" href="structboost_1_1gil_1_1detail_1_1nth__channel__deref__fn.html">const_t</a> = <a class="code" href="structboost_1_1gil_1_1detail_1_1nth__channel__deref__fn.html">nth_channel_deref_fn&lt;const_ref_t&gt;</a>;</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;        <span class="keyword">using</span> value_type = <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1pixel.html">pixel_value_type&lt;channel_t,gray_layout_t&gt;::type</a>;</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;        <span class="keyword">using</span> const_reference = <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1pixel__reference__type.html">pixel_reference_type&lt;channel_t,gray_layout_t,false,false&gt;::type</a>;</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;        <span class="keyword">using</span> argument_type = SrcP;</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;        <span class="keyword">using</span> reference = <span class="keyword">typename</span> mpl::if_c&lt;is_mutable, ref_t, value_type&gt;::type;</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;        <span class="keyword">using</span> result_type = reference;</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;        <a class="code" href="structboost_1_1gil_1_1detail_1_1nth__channel__deref__fn.html">nth_channel_deref_fn</a>(<span class="keywordtype">int</span> n=0) : _n(n) {}</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> P&gt; <a class="code" href="structboost_1_1gil_1_1detail_1_1nth__channel__deref__fn.html">nth_channel_deref_fn</a>(<span class="keyword">const</span> <a class="code" href="structboost_1_1gil_1_1detail_1_1nth__channel__deref__fn.html">nth_channel_deref_fn&lt;P&gt;</a>&amp; d) : _n(d._n) {}</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;        <span class="keywordtype">int</span> _n;        <span class="comment">// the channel to use</span></div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;        result_type operator()(argument_type srcP)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;            <span class="keywordflow">return</span> result_type(srcP[_n]);</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;        }</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    };</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> View&gt; <span class="keyword">struct </span>__nth_channel_view&lt;View,false&gt; {</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;        <span class="keyword">using</span> deref_t = <a class="code" href="structboost_1_1gil_1_1detail_1_1nth__channel__deref__fn.html">nth_channel_deref_fn&lt;typename View::reference&gt;</a>;</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;        <span class="keyword">using</span> AD = <span class="keyword">typename</span> View::template add_deref&lt;deref_t&gt;;</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;        <span class="keyword">using</span> type = <span class="keyword">typename</span> AD::type;</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;        <span class="keyword">static</span> type make(<span class="keyword">const</span> View&amp; src, <span class="keywordtype">int</span> n) {</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;            <span class="keywordflow">return</span> AD::make(src, deref_t(n));</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;        }</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    };</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;} <span class="comment">// namespace detail</span></div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> View&gt;</div>
+<div class="line"><a name="l00387"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1nth__channel__view__type.html">  387</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1nth__channel__view__type.html">nth_channel_view_type</a> {</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;    GIL_CLASS_REQUIRE(View, boost::gil, ImageViewConcept)</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;    <span class="keyword">using</span> VB = detail::__nth_channel_view&lt;View,view_is_basic&lt;View&gt;::value&gt;;</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    <span class="keyword">using</span> type = <span class="keyword">typename</span> VB::type;</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;    <span class="keyword">static</span> type make(<span class="keyword">const</span> View&amp; src, <span class="keywordtype">int</span> n) { <span class="keywordflow">return</span> VB::make(src,n); }</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;};</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> View&gt;</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;<span class="keyword">typename</span> nth_channel_view_type&lt;View&gt;::type nth_channel_view(<span class="keyword">const</span> View&amp; src, <span class="keywordtype">int</span> n) {</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="structboost_1_1gil_1_1nth__channel__view__type.html">nth_channel_view_type&lt;View&gt;::make</a>(src,n);</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;}</div>
 <div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;</div>
 <div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;</div>
 <div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;</div>
 <div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;</div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;<span class="keyword">namespace </span>detail {</div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K, <span class="keyword">typename</span> View, <span class="keywordtype">bool</span> AreChannelsTogether&gt; <span class="keyword">struct </span>__kth_channel_view_basic;</div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;</div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;    <span class="comment">// kth_channel_view when the channels are not adjacent in memory. This can happen for multi-channel interleaved images</span></div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;    <span class="comment">// or images with a step</span></div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K, <span class="keyword">typename</span> View&gt;</div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;    <span class="keyword">struct </span>__kth_channel_view_basic&lt;K,View,false&gt; {</div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;        <span class="keyword">using</span> channel_t = <span class="keyword">typename</span> kth_element_type&lt;typename View::value_type,K&gt;::type;</div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;        <span class="keyword">using</span> type = <span class="keyword">typename</span> view_type&lt;channel_t, gray_layout_t, false, true, view_is_mutable&lt;View&gt;::value&gt;::type;</div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;</div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;        <span class="keyword">static</span> type make(<span class="keyword">const</span> View&amp; src) {</div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;            <span class="keyword">using</span> locator_t = <span class="keyword">typename</span> type::xy_locator;</div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;            <span class="keyword">using</span> x_iterator_t = <span class="keyword">typename</span> type::x_iterator;</div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;            <span class="keyword">using</span> x_iterator_base_t = <span class="keyword">typename</span> iterator_adaptor_get_base&lt;x_iterator_t&gt;::type;</div>
-<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;            x_iterator_t sit(x_iterator_base_t(&amp;gil::at_c&lt;K&gt;(src(0,0))),src.pixels().pixel_size());</div>
-<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;            <span class="keywordflow">return</span> type(src.dimensions(),locator_t(sit, src.pixels().row_size()));</div>
-<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;        }</div>
-<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;    };</div>
-<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;</div>
-<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;    <span class="comment">// kth_channel_view when the channels are together in memory (true for simple grayscale or planar images)</span></div>
-<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K, <span class="keyword">typename</span> View&gt;</div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;    <span class="keyword">struct </span>__kth_channel_view_basic&lt;K,View,true&gt; {</div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;        <span class="keyword">using</span> channel_t = <span class="keyword">typename</span> kth_element_type&lt;typename View::value_type, K&gt;::type;</div>
-<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;        <span class="keyword">using</span> type = <span class="keyword">typename</span> view_type&lt;channel_t, gray_layout_t, false, false, view_is_mutable&lt;View&gt;::value&gt;::type;</div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;        <span class="keyword">static</span> type make(<span class="keyword">const</span> View&amp; src) {</div>
-<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;            <span class="keyword">using</span> x_iterator_t = <span class="keyword">typename</span> type::x_iterator;</div>
-<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="group___image_view_constructors.html#gaa66973da554475f3c8ac4087e97f7fa9">interleaved_view</a>(src.width(),src.height(),(x_iterator_t)&amp;gil::at_c&lt;K&gt;(src(0,0)), src.pixels().row_size());</div>
-<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;        }</div>
-<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;    };</div>
-<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;</div>
-<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K, <span class="keyword">typename</span> View, <span class="keywordtype">bool</span> IsBasic&gt; <span class="keyword">struct </span>__kth_channel_view;</div>
-<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;</div>
-<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;    <span class="comment">// For basic (memory-based) views dispatch to __kth_channel_view_basic</span></div>
-<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K, <span class="keyword">typename</span> View&gt; <span class="keyword">struct </span>__kth_channel_view&lt;K,View,true&gt; {</div>
-<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;        <span class="keyword">using</span> src_x_iterator = <span class="keyword">typename</span> View::x_iterator;</div>
-<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;</div>
-<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;        <span class="comment">// Determines whether the channels of a given pixel iterator are adjacent in memory.</span></div>
-<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;        <span class="comment">// Planar and grayscale iterators have channels adjacent in memory, whereas multi-channel interleaved and iterators with non-fundamental step do not.</span></div>
-<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;        BOOST_STATIC_CONSTANT(<span class="keywordtype">bool</span>, adjacent=</div>
-<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;                              !iterator_is_step&lt;src_x_iterator&gt;::value &amp;&amp;</div>
-<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;                              (is_planar&lt;src_x_iterator&gt;::value ||</div>
-<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;                              num_channels&lt;View&gt;::value==1));</div>
-<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;        <span class="keyword">using</span> type = <span class="keyword">typename</span> __kth_channel_view_basic&lt;K,View,adjacent&gt;::type;</div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;</div>
-<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;        <span class="keyword">static</span> type make(<span class="keyword">const</span> View&amp; src) {</div>
-<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;            <span class="keywordflow">return</span> __kth_channel_view_basic&lt;K,View,adjacent&gt;::make(src);</div>
-<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;        }</div>
-<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;    };</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;<span class="keyword">namespace </span>detail {</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K, <span class="keyword">typename</span> View, <span class="keywordtype">bool</span> AreChannelsTogether&gt; <span class="keyword">struct </span>__kth_channel_view_basic;</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;    <span class="comment">// kth_channel_view when the channels are not adjacent in memory. This can happen for multi-channel interleaved images</span></div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;    <span class="comment">// or images with a step</span></div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K, <span class="keyword">typename</span> View&gt;</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;    <span class="keyword">struct </span>__kth_channel_view_basic&lt;K,View,false&gt; {</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;        <span class="keyword">using</span> channel_t = <span class="keyword">typename</span> kth_element_type&lt;typename View::value_type,K&gt;::type;</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;        <span class="keyword">using</span> type = <span class="keyword">typename</span> view_type&lt;channel_t, gray_layout_t, false, true, view_is_mutable&lt;View&gt;::value&gt;::type;</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;        <span class="keyword">static</span> type make(<span class="keyword">const</span> View&amp; src) {</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;            <span class="keyword">using</span> locator_t = <span class="keyword">typename</span> type::xy_locator;</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;            <span class="keyword">using</span> x_iterator_t = <span class="keyword">typename</span> type::x_iterator;</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;            <span class="keyword">using</span> x_iterator_base_t = <span class="keyword">typename</span> iterator_adaptor_get_base&lt;x_iterator_t&gt;::type;</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;            x_iterator_t sit(x_iterator_base_t(&amp;gil::at_c&lt;K&gt;(src(0,0))),src.pixels().pixel_size());</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;            <span class="keywordflow">return</span> type(src.dimensions(),locator_t(sit, src.pixels().row_size()));</div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;        }</div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;    };</div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;</div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;    <span class="comment">// kth_channel_view when the channels are together in memory (true for simple grayscale or planar images)</span></div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K, <span class="keyword">typename</span> View&gt;</div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;    <span class="keyword">struct </span>__kth_channel_view_basic&lt;K,View,true&gt; {</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;        <span class="keyword">using</span> channel_t = <span class="keyword">typename</span> kth_element_type&lt;typename View::value_type, K&gt;::type;</div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;        <span class="keyword">using</span> type = <span class="keyword">typename</span> view_type&lt;channel_t, gray_layout_t, false, false, view_is_mutable&lt;View&gt;::value&gt;::type;</div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;        <span class="keyword">static</span> type make(<span class="keyword">const</span> View&amp; src) {</div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;            <span class="keyword">using</span> x_iterator_t = <span class="keyword">typename</span> type::x_iterator;</div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="group___image_view_constructors.html#gaa66973da554475f3c8ac4087e97f7fa9">interleaved_view</a>(src.width(),src.height(),(x_iterator_t)&amp;gil::at_c&lt;K&gt;(src(0,0)), src.pixels().row_size());</div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;        }</div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;    };</div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;</div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K, <span class="keyword">typename</span> View, <span class="keywordtype">bool</span> IsBasic&gt; <span class="keyword">struct </span>__kth_channel_view;</div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;    <span class="comment">// For basic (memory-based) views dispatch to __kth_channel_view_basic</span></div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K, <span class="keyword">typename</span> View&gt; <span class="keyword">struct </span>__kth_channel_view&lt;K,View,true&gt;</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;    {</div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;        <span class="keyword">using</span> src_x_iterator = <span class="keyword">typename</span> View::x_iterator;</div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;</div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;        <span class="comment">// Determines whether the channels of a given pixel iterator are adjacent in memory.</span></div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;        <span class="comment">// Planar and grayscale iterators have channels adjacent in memory, whereas multi-channel interleaved and iterators with non-fundamental step do not.</span></div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">bool</span> constexpr adjacent =</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;            !iterator_is_step&lt;src_x_iterator&gt;::value &amp;&amp;</div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;            (is_planar&lt;src_x_iterator&gt;::value || num_channels&lt;View&gt;::value == 1);</div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;</div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;        <span class="keyword">using</span> type = <span class="keyword">typename</span> __kth_channel_view_basic&lt;K,View,adjacent&gt;::type;</div>
 <div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;</div>
-<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K, <span class="keyword">typename</span> SrcP&gt;        <span class="comment">// SrcP is a reference to PixelConcept (could be pixel value or const/non-const reference)</span></div>
-<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;                                    <span class="comment">// Examples: pixel&lt;T,L&gt;, pixel&lt;T,L&gt;&amp;, const pixel&lt;T,L&gt;&amp;, planar_pixel_reference&lt;T&amp;,L&gt;, planar_pixel_reference&lt;const T&amp;,L&gt;</span></div>
-<div class="line"><a name="l00470"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1detail_1_1kth__channel__deref__fn.html">  470</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1detail_1_1kth__channel__deref__fn.html">kth_channel_deref_fn</a> {</div>
-<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;        BOOST_STATIC_CONSTANT(<span class="keywordtype">bool</span>, is_mutable=<a class="code" href="structboost_1_1gil_1_1pixel__is__reference.html">pixel_is_reference&lt;SrcP&gt;::value</a> &amp;&amp; <a class="code" href="structboost_1_1gil_1_1pixel__reference__is__mutable.html">pixel_reference_is_mutable&lt;SrcP&gt;::value</a>);</div>
-<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;        <span class="keyword">using</span> src_pixel_t = <span class="keyword">typename</span> remove_reference&lt;SrcP&gt;::type;</div>
-<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;        <span class="keyword">using</span> channel_t = <span class="keyword">typename</span> kth_element_type&lt;src_pixel_t, K&gt;::type;</div>
-<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;        <span class="keyword">using</span> const_ref_t = <span class="keyword">typename</span> src_pixel_t::const_reference;</div>
-<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;        <span class="keyword">using</span> ref_t = <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1pixel__reference__type.html">pixel_reference_type&lt;channel_t,gray_layout_t,false,is_mutable&gt;::type</a>;</div>
-<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;        <span class="keyword">using</span> <a class="code" href="structboost_1_1gil_1_1detail_1_1kth__channel__deref__fn.html">const_t</a> = <a class="code" href="structboost_1_1gil_1_1detail_1_1kth__channel__deref__fn.html">kth_channel_deref_fn&lt;K,const_ref_t&gt;</a>;</div>
-<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;        <span class="keyword">using</span> value_type = <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1pixel.html">pixel_value_type&lt;channel_t,gray_layout_t&gt;::type</a>;</div>
-<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;        <span class="keyword">using</span> const_reference = <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1pixel__reference__type.html">pixel_reference_type&lt;channel_t,gray_layout_t,false,false&gt;::type</a>;</div>
-<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;        <span class="keyword">using</span> argument_type = SrcP;</div>
-<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;        <span class="keyword">using</span> reference = <span class="keyword">typename</span> mpl::if_c&lt;is_mutable, ref_t, value_type&gt;::type;</div>
-<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;        <span class="keyword">using</span> result_type = reference;</div>
-<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;</div>
-<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;        <a class="code" href="structboost_1_1gil_1_1detail_1_1kth__channel__deref__fn.html">kth_channel_deref_fn</a>() {}</div>
-<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> P&gt; <a class="code" href="structboost_1_1gil_1_1detail_1_1kth__channel__deref__fn.html">kth_channel_deref_fn</a>(<span class="keyword">const</span> <a class="code" href="structboost_1_1gil_1_1detail_1_1kth__channel__deref__fn.html">kth_channel_deref_fn&lt;K,P&gt;</a>&amp;) {}</div>
-<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;</div>
-<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;        result_type operator()(argument_type srcP)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;            <span class="keywordflow">return</span> result_type(gil::at_c&lt;K&gt;(srcP));</div>
-<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;        }</div>
-<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;    };</div>
-<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;</div>
-<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K, <span class="keyword">typename</span> View&gt; <span class="keyword">struct </span>__kth_channel_view&lt;K,View,false&gt; {</div>
-<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;        <span class="keyword">using</span> deref_t = <a class="code" href="structboost_1_1gil_1_1detail_1_1kth__channel__deref__fn.html">kth_channel_deref_fn&lt;K,typename View::reference&gt;</a>;</div>
-<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;        <span class="keyword">using</span> AD = <span class="keyword">typename</span> View::template add_deref&lt;deref_t&gt;;</div>
-<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;        <span class="keyword">using</span> type = <span class="keyword">typename</span> AD::type;</div>
-<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;        <span class="keyword">static</span> type make(<span class="keyword">const</span> View&amp; src) {</div>
-<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;            <span class="keywordflow">return</span> AD::make(src, deref_t());</div>
-<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;        }</div>
-<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;    };</div>
-<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;} <span class="comment">// namespace detail</span></div>
-<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;</div>
-<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;<span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K, <span class="keyword">typename</span> View&gt;</div>
-<div class="line"><a name="l00512"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1kth__channel__view__type.html">  512</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1kth__channel__view__type.html">kth_channel_view_type</a> {</div>
-<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;    GIL_CLASS_REQUIRE(View, boost::gil, ImageViewConcept)</div>
-<div class="line"><a name="l00515"></a><span class="lineno">  515</span>&#160;    <span class="keyword">using</span> VB = detail::__kth_channel_view&lt;K,View,view_is_basic&lt;View&gt;::value&gt;;</div>
-<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;    <span class="keyword">using</span> type = <span class="keyword">typename</span> VB::type;</div>
-<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;    <span class="keyword">static</span> type make(<span class="keyword">const</span> View&amp; src) { <span class="keywordflow">return</span> VB::make(src); }</div>
-<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;};</div>
-<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;</div>
-<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;<span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K, <span class="keyword">typename</span> View&gt;</div>
-<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;<span class="keyword">typename</span> kth_channel_view_type&lt;K,View&gt;::type kth_channel_view(<span class="keyword">const</span> View&amp; src) {</div>
-<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="structboost_1_1gil_1_1kth__channel__view__type.html">kth_channel_view_type&lt;K,View&gt;::make</a>(src);</div>
-<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;}</div>
-<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;</div>
-<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;} }  <span class="comment">// namespace boost::gil</span></div>
-<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;</div>
-<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;        <span class="keyword">static</span> type make(<span class="keyword">const</span> View&amp; src) {</div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;            <span class="keywordflow">return</span> __kth_channel_view_basic&lt;K,View,adjacent&gt;::make(src);</div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;        }</div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;    };</div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;</div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K, <span class="keyword">typename</span> SrcP&gt;</div>
+<div class="line"><a name="l00476"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1detail_1_1kth__channel__deref__fn.html">  476</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1detail_1_1kth__channel__deref__fn.html">kth_channel_deref_fn</a></div>
+<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;    {</div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">bool</span> constexpr is_mutable =</div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;            <a class="code" href="structboost_1_1gil_1_1pixel__is__reference.html">pixel_is_reference&lt;SrcP&gt;::value</a> &amp;&amp; <a class="code" href="structboost_1_1gil_1_1pixel__reference__is__mutable.html">pixel_reference_is_mutable&lt;SrcP&gt;::value</a>;</div>
+<div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;</div>
+<div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;        <span class="keyword">using</span> src_pixel_t = <span class="keyword">typename</span> remove_reference&lt;SrcP&gt;::type;</div>
+<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;        <span class="keyword">using</span> channel_t = <span class="keyword">typename</span> kth_element_type&lt;src_pixel_t, K&gt;::type;</div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;        <span class="keyword">using</span> const_ref_t = <span class="keyword">typename</span> src_pixel_t::const_reference;</div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;        <span class="keyword">using</span> ref_t = <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1pixel__reference__type.html">pixel_reference_type&lt;channel_t,gray_layout_t,false,is_mutable&gt;::type</a>;</div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;</div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;        <span class="keyword">using</span> <a class="code" href="structboost_1_1gil_1_1detail_1_1kth__channel__deref__fn.html">const_t</a> = <a class="code" href="structboost_1_1gil_1_1detail_1_1kth__channel__deref__fn.html">kth_channel_deref_fn&lt;K,const_ref_t&gt;</a>;</div>
+<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;        <span class="keyword">using</span> value_type = <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1pixel.html">pixel_value_type&lt;channel_t,gray_layout_t&gt;::type</a>;</div>
+<div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;        <span class="keyword">using</span> const_reference = <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1pixel__reference__type.html">pixel_reference_type&lt;channel_t,gray_layout_t,false,false&gt;::type</a>;</div>
+<div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;        <span class="keyword">using</span> argument_type = SrcP;</div>
+<div class="line"><a name="l00492"></a><span class="lineno">  492</span>&#160;        <span class="keyword">using</span> reference = <span class="keyword">typename</span> mpl::if_c&lt;is_mutable, ref_t, value_type&gt;::type;</div>
+<div class="line"><a name="l00493"></a><span class="lineno">  493</span>&#160;        <span class="keyword">using</span> result_type = reference;</div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;</div>
+<div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;        <a class="code" href="structboost_1_1gil_1_1detail_1_1kth__channel__deref__fn.html">kth_channel_deref_fn</a>() {}</div>
+<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> P&gt; <a class="code" href="structboost_1_1gil_1_1detail_1_1kth__channel__deref__fn.html">kth_channel_deref_fn</a>(<span class="keyword">const</span> <a class="code" href="structboost_1_1gil_1_1detail_1_1kth__channel__deref__fn.html">kth_channel_deref_fn&lt;K,P&gt;</a>&amp;) {}</div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;</div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;        result_type operator()(argument_type srcP)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;            <span class="keywordflow">return</span> result_type(gil::at_c&lt;K&gt;(srcP));</div>
+<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;        }</div>
+<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;    };</div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;</div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K, <span class="keyword">typename</span> View&gt; <span class="keyword">struct </span>__kth_channel_view&lt;K,View,false&gt; {</div>
+<div class="line"><a name="l00504"></a><span class="lineno">  504</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00505"></a><span class="lineno">  505</span>&#160;        <span class="keyword">using</span> deref_t = <a class="code" href="structboost_1_1gil_1_1detail_1_1kth__channel__deref__fn.html">kth_channel_deref_fn&lt;K,typename View::reference&gt;</a>;</div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;        <span class="keyword">using</span> AD = <span class="keyword">typename</span> View::template add_deref&lt;deref_t&gt;;</div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;        <span class="keyword">using</span> type = <span class="keyword">typename</span> AD::type;</div>
+<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;        <span class="keyword">static</span> type make(<span class="keyword">const</span> View&amp; src) {</div>
+<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;            <span class="keywordflow">return</span> AD::make(src, deref_t());</div>
+<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;        }</div>
+<div class="line"><a name="l00512"></a><span class="lineno">  512</span>&#160;    };</div>
+<div class="line"><a name="l00513"></a><span class="lineno">  513</span>&#160;} <span class="comment">// namespace detail</span></div>
+<div class="line"><a name="l00514"></a><span class="lineno">  514</span>&#160;</div>
+<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;<span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K, <span class="keyword">typename</span> View&gt;</div>
+<div class="line"><a name="l00522"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1kth__channel__view__type.html">  522</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1kth__channel__view__type.html">kth_channel_view_type</a> {</div>
+<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00524"></a><span class="lineno">  524</span>&#160;    GIL_CLASS_REQUIRE(View, boost::gil, ImageViewConcept)</div>
+<div class="line"><a name="l00525"></a><span class="lineno">  525</span>&#160;    <span class="keyword">using</span> VB = detail::__kth_channel_view&lt;K,View,view_is_basic&lt;View&gt;::value&gt;;</div>
+<div class="line"><a name="l00526"></a><span class="lineno">  526</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;    <span class="keyword">using</span> type = <span class="keyword">typename</span> VB::type;</div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;    <span class="keyword">static</span> type make(<span class="keyword">const</span> View&amp; src) { <span class="keywordflow">return</span> VB::make(src); }</div>
+<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;};</div>
+<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;</div>
+<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;<span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K, <span class="keyword">typename</span> View&gt;</div>
+<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;<span class="keyword">typename</span> kth_channel_view_type&lt;K,View&gt;::type kth_channel_view(<span class="keyword">const</span> View&amp; src) {</div>
+<div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="structboost_1_1gil_1_1kth__channel__view__type.html">kth_channel_view_type&lt;K,View&gt;::make</a>(src);</div>
+<div class="line"><a name="l00535"></a><span class="lineno">  535</span>&#160;}</div>
+<div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;</div>
+<div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;} }  <span class="comment">// namespace boost::gil</span></div>
+<div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160;</div>
+<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="structboost_1_1gil_1_1dynamic__xy__step__transposed__type_html"><div class="ttname"><a href="structboost_1_1gil_1_1dynamic__xy__step__transposed__type.html">boost::gil::dynamic_xy_step_transposed_type</a></div><div class="ttdoc">Returns the type of a transposed view that has a dynamic step along both X and Y. ...</div><div class="ttdef"><b>Definition:</b> image_view_factory.hpp:47</div></div>
 <div class="ttc" id="classboost_1_1gil_1_1image__view_html"><div class="ttname"><a href="classboost_1_1gil_1_1image__view.html">boost::gil::image_view</a></div><div class="ttdoc">A lightweight object that interprets memory as a 2D array of pixels. Models ImageViewConcept,PixelBasedConcept,HasDynamicXStepTypeConcept,HasDynamicYStepTypeConcept,HasTransposedTypeConcept. </div><div class="ttdef"><b>Definition:</b> image_view.hpp:50</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1pixel_html"><div class="ttname"><a href="structboost_1_1gil_1_1pixel.html">boost::gil::pixel</a></div><div class="ttdoc">Represents a pixel value (a container of channels). Models: HomogeneousColorBaseValueConcept, PixelValueConcept, HomogeneousPixelBasedConcept. </div><div class="ttdef"><b>Definition:</b> metafunctions.hpp:30</div></div>
 <div class="ttc" id="classboost_1_1gil_1_1color__convert__deref__fn_html"><div class="ttname"><a href="classboost_1_1gil_1_1color__convert__deref__fn.html">boost::gil::color_convert_deref_fn</a></div><div class="ttdoc">Function object that given a source pixel, returns it converted to a given color space and channel de...</div><div class="ttdef"><b>Definition:</b> image_view_factory.hpp:117</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1dynamic__xy__step__type_html"><div class="ttname"><a href="structboost_1_1gil_1_1dynamic__xy__step__type.html">boost::gil::dynamic_xy_step_type</a></div><div class="ttdoc">Returns the type of a view that has a dynamic step along both X and Y. </div><div class="ttdef"><b>Definition:</b> image_view_factory.hpp:42</div></div>
-<div class="ttc" id="structboost_1_1gil_1_1nth__channel__view__type_html"><div class="ttname"><a href="structboost_1_1gil_1_1nth__channel__view__type.html">boost::gil::nth_channel_view_type</a></div><div class="ttdoc">Given a source image view type View, returns the type of an image view over a single channel of ViewI...</div><div class="ttdef"><b>Definition:</b> image_view_factory.hpp:383</div></div>
+<div class="ttc" id="structboost_1_1gil_1_1nth__channel__view__type_html"><div class="ttname"><a href="structboost_1_1gil_1_1nth__channel__view__type.html">boost::gil::nth_channel_view_type</a></div><div class="ttdoc">Given a source image view type View, returns the type of an image view over a single channel of ViewI...</div><div class="ttdef"><b>Definition:</b> image_view_factory.hpp:387</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1deref__base_html"><div class="ttname"><a href="structboost_1_1gil_1_1deref__base.html">boost::gil::deref_base</a></div><div class="ttdoc">Helper base class for pixel dereference adaptors. </div><div class="ttdef"><b>Definition:</b> utilities.hpp:89</div></div>
-<div class="ttc" id="structboost_1_1gil_1_1detail_1_1kth__channel__deref__fn_html"><div class="ttname"><a href="structboost_1_1gil_1_1detail_1_1kth__channel__deref__fn.html">boost::gil::detail::kth_channel_deref_fn</a></div><div class="ttdoc">Function object that returns a grayscale reference of the K-th channel (specified as a template param...</div><div class="ttdef"><b>Definition:</b> image_view_factory.hpp:470</div></div>
+<div class="ttc" id="structboost_1_1gil_1_1detail_1_1kth__channel__deref__fn_html"><div class="ttname"><a href="structboost_1_1gil_1_1detail_1_1kth__channel__deref__fn.html">boost::gil::detail::kth_channel_deref_fn</a></div><div class="ttdoc">Function object that returns a grayscale reference of the K-th channel (specified as a template param...</div><div class="ttdef"><b>Definition:</b> image_view_factory.hpp:476</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1color__converted__view__type_html"><div class="ttname"><a href="structboost_1_1gil_1_1color__converted__view__type.html">boost::gil::color_converted_view_type</a></div><div class="ttdoc">Returns the type of a view that does color conversion upon dereferencing its pixels. </div><div class="ttdef"><b>Definition:</b> image_view_factory.hpp:155</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1pixel__reference__is__mutable_html"><div class="ttname"><a href="structboost_1_1gil_1_1pixel__reference__is__mutable.html">boost::gil::pixel_reference_is_mutable</a></div><div class="ttdoc">Determines if the given pixel reference is mutable (i.e. its channels can be changed) ...</div><div class="ttdef"><b>Definition:</b> metafunctions.hpp:170</div></div>
-<div class="ttc" id="structboost_1_1gil_1_1detail_1_1nth__channel__deref__fn_html"><div class="ttname"><a href="structboost_1_1gil_1_1detail_1_1nth__channel__deref__fn.html">boost::gil::detail::nth_channel_deref_fn</a></div><div class="ttdoc">Function object that returns a grayscale reference of the N-th channel of a given reference...</div><div class="ttdef"><b>Definition:</b> image_view_factory.hpp:339</div></div>
+<div class="ttc" id="structboost_1_1gil_1_1detail_1_1nth__channel__deref__fn_html"><div class="ttname"><a href="structboost_1_1gil_1_1detail_1_1nth__channel__deref__fn.html">boost::gil::detail::nth_channel_deref_fn</a></div><div class="ttdoc">Function object that returns a grayscale reference of the N-th channel of a given reference...</div><div class="ttdef"><b>Definition:</b> image_view_factory.hpp:341</div></div>
 <div class="ttc" id="group___image_view_constructors_html_gac0fe3f405534dd13886583e99dd5ba38"><div class="ttname"><a href="group___image_view_constructors.html#gac0fe3f405534dd13886583e99dd5ba38">boost::gil::planar_view_get_raw_data</a></div><div class="ttdeci">detail::channel_pointer_type&lt; HomogeneousView &gt;::type planar_view_get_raw_data(const HomogeneousView &amp;view, int plane_index)</div><div class="ttdoc">Returns C pointer to the the channels of a given color plane of a planar homogeneous view...</div><div class="ttdef"><b>Definition:</b> image_view_factory.hpp:102</div></div>
 <div class="ttc" id="group___image_view_constructors_html_gaa66973da554475f3c8ac4087e97f7fa9"><div class="ttname"><a href="group___image_view_constructors.html#gaa66973da554475f3c8ac4087e97f7fa9">boost::gil::interleaved_view</a></div><div class="ttdeci">auto interleaved_view(point&lt; std::size_t &gt; dim, Iterator pixels, std::ptrdiff_t rowsize_in_bytes) -&gt; typename type_from_x_iterator&lt; Iterator &gt;::view_t</div><div class="ttdoc">Constructing image views from raw interleaved pixel data. </div><div class="ttdef"><b>Definition:</b> image_view_factory.hpp:63</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1pixel__reference__type_html"><div class="ttname"><a href="structboost_1_1gil_1_1pixel__reference__type.html">boost::gil::pixel_reference_type</a></div><div class="ttdoc">Returns the type of a homogeneous pixel reference given the channel type, layout, whether it operates...</div><div class="ttdef"><b>Definition:</b> metafunctions.hpp:203</div></div>
@@ -503,7 +511,7 @@
 <div class="ttc" id="structboost_1_1gil_1_1pixel__is__reference_html"><div class="ttname"><a href="structboost_1_1gil_1_1pixel__is__reference.html">boost::gil::pixel_is_reference</a></div><div class="ttdoc">Given a model of a pixel, determines whether the model represents a pixel reference (as opposed to pi...</div><div class="ttdef"><b>Definition:</b> metafunctions.hpp:160</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1default__color__converter_html"><div class="ttname"><a href="structboost_1_1gil_1_1default__color__converter.html">boost::gil::default_color_converter</a></div><div class="ttdoc">class for color-converting one pixel to another </div><div class="ttdef"><b>Definition:</b> color_convert.hpp:282</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1view__is__basic_html"><div class="ttname"><a href="structboost_1_1gil_1_1view__is__basic.html">boost::gil::view_is_basic</a></div><div class="ttdoc">Basic views must be over basic locators. </div><div class="ttdef"><b>Definition:</b> metafunctions.hpp:100</div></div>
-<div class="ttc" id="structboost_1_1gil_1_1kth__channel__view__type_html"><div class="ttname"><a href="structboost_1_1gil_1_1kth__channel__view__type.html">boost::gil::kth_channel_view_type</a></div><div class="ttdoc">Given a source image view type View, returns the type of an image view over a given channel of View...</div><div class="ttdef"><b>Definition:</b> image_view_factory.hpp:512</div></div>
+<div class="ttc" id="structboost_1_1gil_1_1kth__channel__view__type_html"><div class="ttname"><a href="structboost_1_1gil_1_1kth__channel__view__type.html">boost::gil::kth_channel_view_type</a></div><div class="ttdoc">Given a source image view type View, returns the type of an image view over a given channel of View...</div><div class="ttdef"><b>Definition:</b> image_view_factory.hpp:522</div></div>
 <div class="ttc" id="classboost_1_1gil_1_1point_html"><div class="ttname"><a href="classboost_1_1gil_1_1point.html">boost::gil::point</a></div><div class="ttdoc">2D point both axes of which have the same dimension typeModels: Point2DConcept </div><div class="ttdef"><b>Definition:</b> locator.hpp:27</div></div>
 </div><!-- fragment --></div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
@@ -511,7 +519,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Jan 12 2019 17:14:15 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sat Jan 12 2019 23:25:30 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

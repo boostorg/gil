@@ -776,7 +776,7 @@ location (x,y) in the image:</p>
   <span class="k">typedef</span> <span class="n">value_type</span>          <span class="n">const_reference</span><span class="p">;</span>
   <span class="k">typedef</span> <span class="n">point_t</span>             <span class="n">argument_type</span><span class="p">;</span>
   <span class="k">typedef</span> <span class="n">reference</span>           <span class="n">result_type</span><span class="p">;</span>
-  <span class="n">BOOST_STATIC_CONSTANT</span><span class="p">(</span><span class="kt">bool</span><span class="p">,</span> <span class="n">is_mutable</span><span class="o">=</span><span class="nb">false</span><span class="p">);</span>
+  <span class="k">static</span> <span class="kt">bool</span> <span class="k">constexpr</span> <span class="n">is_mutable</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
 
   <span class="n">mandelbrot_fn</span><span class="p">()</span> <span class="p">{}</span>
   <span class="n">mandelbrot_fn</span><span class="p">(</span><span class="k">const</span> <span class="n">point_t</span><span class="o">&amp;</span> <span class="n">sz</span><span class="p">)</span> <span class="o">:</span> <span class="n">_img_size</span><span class="p">(</span><span class="n">sz</span><span class="p">)</span> <span class="p">{}</span>
