@@ -8,12 +8,12 @@
 #ifndef BOOST_GIL_ITERATOR_FROM_2D_HPP
 #define BOOST_GIL_ITERATOR_FROM_2D_HPP
 
+#include <boost/gil/assert.hpp>
 #include <boost/gil/concepts.hpp>
 #include <boost/gil/locator.hpp>
 #include <boost/gil/pixel_iterator.hpp>
 #include <boost/gil/point.hpp>
 
-#include <boost/assert.hpp>
 #include <boost/iterator/iterator_facade.hpp>
 
 namespace boost { namespace gil {

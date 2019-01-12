@@ -7,7 +7,6 @@
 //
 #include <boost/gil.hpp>
 
-#include <boost/assert.hpp>
 #include <boost/mpl/vector.hpp>
 
 #include <exception>

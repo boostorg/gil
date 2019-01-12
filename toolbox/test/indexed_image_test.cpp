@@ -8,7 +8,6 @@
 #include <boost/gil.hpp>
 #include <boost/gil/extension/toolbox/image_types/indexed_image.hpp>
 
-#include <boost/assert.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <cstdint>

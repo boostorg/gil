@@ -8,9 +8,9 @@
 #ifndef BOOST_GIL_IO_DEVICE_HPP
 #define BOOST_GIL_IO_DEVICE_HPP
 
+#include <boost/gil/assert.hpp>
 #include <boost/gil/io/base.hpp>
 
-#include <boost/assert.hpp>
 #include <boost/core/ignore_unused.hpp>
 
 #include <cstdio>

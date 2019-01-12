@@ -10,7 +10,7 @@
 
 #include <boost/gil/extension/io/png/tags.hpp>
 
-#include <boost/assert.hpp>
+#include <boost/gil/assert.hpp>
 
 #include <memory>
 

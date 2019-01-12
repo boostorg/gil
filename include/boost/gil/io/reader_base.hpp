@@ -8,9 +8,8 @@
 #ifndef BOOST_GIL_IO_READER_BASE_HPP
 #define BOOST_GIL_IO_READER_BASE_HPP
 
+#include <boost/gil/assert.hpp>
 #include <boost/gil/io/base.hpp>
-
-#include <boost/assert.hpp>
 
 namespace boost { namespace gil {
 

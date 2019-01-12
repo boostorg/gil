@@ -8,9 +8,8 @@
 #ifndef BOOST_GIL_EXTENSION_NUMERIC_KERNEL_HPP
 #define BOOST_GIL_EXTENSION_NUMERIC_KERNEL_HPP
 
+#include <boost/gil/assert.hpp>
 #include <boost/gil/utilities.hpp>
-
-#include <boost/assert.hpp>
 
 #include <algorithm>
 #include <array>

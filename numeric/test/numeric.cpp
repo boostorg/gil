@@ -7,13 +7,13 @@
 
 /// \brief Unit test for Numeric extension
 
+#include <boost/gil/assert.hpp>
 #include <boost/gil/image.hpp>
 #include <boost/gil/typedefs.hpp>
 
 #include <boost/gil/extension/numeric/resample.hpp>
 #include <boost/gil/extension/numeric/sampler.hpp>
 
-#include <boost/assert.hpp>
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 

@@ -10,6 +10,7 @@
 #define BOOST_GIL_HPP
 
 #include <boost/gil/algorithm.hpp>
+#include <boost/gil/assert.hpp>
 #include <boost/gil/bit_aligned_pixel_iterator.hpp>
 #include <boost/gil/channel_algorithm.hpp>
 #include <boost/gil/color_convert.hpp>

@@ -8,10 +8,9 @@
 #ifndef BOOST_GIL_LOCATOR_HPP
 #define BOOST_GIL_LOCATOR_HPP
 
+#include <boost/gil/assert.hpp>
 #include <boost/gil/pixel_iterator.hpp>
 #include <boost/gil/point.hpp>
-
-#include <boost/assert.hpp>
 
 #include <cstddef>
 

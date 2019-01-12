@@ -13,10 +13,9 @@
 #include <boost/gil/extension/numeric/pixel_numeric_operations.hpp>
 
 #include <boost/gil/algorithm.hpp>
+#include <boost/gil/assert.hpp>
 #include <boost/gil/image_view_factory.hpp>
 #include <boost/gil/metafunctions.hpp>
-
-#include <boost/assert.hpp>
 
 #include <algorithm>
 #include <cstddef>

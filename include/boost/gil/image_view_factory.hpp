@@ -8,12 +8,11 @@
 #ifndef BOOST_GIL_IMAGE_VIEW_FACTORY_HPP
 #define BOOST_GIL_IMAGE_VIEW_FACTORY_HPP
 
+#include <boost/gil/assert.hpp>
 #include <boost/gil/color_convert.hpp>
 #include <boost/gil/gray.hpp>
 #include <boost/gil/metafunctions.hpp>
 #include <boost/gil/point.hpp>
-
-#include <boost/assert.hpp>
 
 #include <cstddef>
 

@@ -9,12 +9,12 @@
 #define BOOST_GIL_ALGORITHM_HPP
 
 #include <boost/gil/bit_aligned_pixel_iterator.hpp>
+#include <boost/gil/assert.hpp>
 #include <boost/gil/color_base_algorithm.hpp>
 #include <boost/gil/concepts.hpp>
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/image_view_factory.hpp>
 
-#include <boost/assert.hpp>
 #include <boost/config.hpp>
 #include <boost/mpl/and.hpp>
 #include <boost/mpl/or.hpp>

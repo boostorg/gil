@@ -8,9 +8,9 @@
 #ifndef BOOST_GIL_CHANNEL_HPP
 #define BOOST_GIL_CHANNEL_HPP
 
+#include <boost/gil/assert.hpp>
 #include <boost/gil/utilities.hpp>
 
-#include <boost/assert.hpp>
 #include <boost/config.hpp>
 #include <boost/config/pragma_message.hpp>
 #include <boost/integer/integer_mask.hpp>

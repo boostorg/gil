@@ -8,9 +8,9 @@
 #ifndef BOOST_GIL_VIRTUAL_LOCATOR_HPP
 #define BOOST_GIL_VIRTUAL_LOCATOR_HPP
 
+#include <boost/gil/assert.hpp>
 #include <boost/gil/position_iterator.hpp>
 
-#include <boost/assert.hpp>
 #include <boost/iterator/iterator_facade.hpp>
 
 namespace boost { namespace gil {

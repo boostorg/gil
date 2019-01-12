@@ -12,6 +12,7 @@
 #include <boost/gil/extension/io/tiff/detail/is_allowed.hpp>
 #include <boost/gil/extension/io/tiff/detail/reader_backend.hpp>
 
+#include <boost/gil/assert.hpp>
 #include <boost/gil/io/base.hpp>
 #include <boost/gil/io/bit_operations.hpp>
 #include <boost/gil/io/conversion_policies.hpp>
@@ -20,7 +21,6 @@
 #include <boost/gil/io/reader_base.hpp>
 #include <boost/gil/io/row_buffer_helper.hpp>
 
-#include <boost/assert.hpp>
 
 #include <algorithm>
 #include <string>

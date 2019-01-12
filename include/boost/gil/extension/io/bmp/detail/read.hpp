@@ -11,6 +11,7 @@
 #include <boost/gil/extension/io/bmp/detail/is_allowed.hpp>
 #include <boost/gil/extension/io/bmp/detail/reader_backend.hpp>
 
+#include <boost/gil/assert.hpp>
 #include <boost/gil/io/base.hpp>
 #include <boost/gil/io/bit_operations.hpp>
 #include <boost/gil/io/conversion_policies.hpp>
@@ -20,7 +21,7 @@
 #include <boost/gil/io/row_buffer_helper.hpp>
 #include <boost/gil/io/typedefs.hpp>
 
-#include <boost/assert.hpp>
+#include <boost/mpl/and.hpp>
 #include <boost/type_traits/is_same.hpp>
 
 #include <type_traits>

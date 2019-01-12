@@ -10,10 +10,10 @@
 
 #include <boost/gil/extension/numeric/pixel_numeric_operations.hpp>
 
+#include <boost/gil/assert.hpp>
 #include <boost/gil/metafunctions.hpp>
 #include <boost/gil/pixel_iterator.hpp>
 
-#include <boost/assert.hpp>
 
 #include <algorithm>
 #include <iterator>

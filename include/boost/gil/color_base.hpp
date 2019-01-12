@@ -8,10 +8,10 @@
 #ifndef BOOST_GIL_COLOR_BASE_HPP
 #define BOOST_GIL_COLOR_BASE_HPP
 
-#include <boost/gil/utilities.hpp>
+#include <boost/gil/assert.hpp>
 #include <boost/gil/concepts.hpp>
+#include <boost/gil/utilities.hpp>
 
-#include <boost/assert.hpp>
 #include <boost/config.hpp>
 #include <boost/mpl/range_c.hpp>
 #include <boost/mpl/size.hpp>
