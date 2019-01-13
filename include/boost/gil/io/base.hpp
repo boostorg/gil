@@ -17,7 +17,6 @@
 #include <boost/gil/io/error.hpp>
 #include <boost/gil/io/typedefs.hpp>
 
-#include <boost/bind.hpp>
 #include <boost/type_traits/is_base_of.hpp>
 
 #include <istream>

@@ -11,8 +11,8 @@
 #include <boost/gil/extension/numeric/affine.hpp>
 #include <boost/gil/extension/dynamic_image/dynamic_image_all.hpp>
 
-#include <boost/lambda/bind.hpp>
-#include <boost/lambda/lambda.hpp>
+#include <algorithm>
+#include <functional>
 
 namespace boost { namespace gil {
 
@@ -71,16 +71,25 @@ namespace detail {
 ///        If invoked on incompatible views, throws std::bad_cast()
 /// \ingroup ImageAlgorithms
 template <typename Sampler, typename Types1, typename V2, typename MapFn>
-void resample_pixels(const any_image_view<Types1>& src, const V2& dst, const MapFn& dst_to_src, Sampler sampler=Sampler()) {
-    apply_operation(src,bind(detail::resample_pixels_fn<Sampler,MapFn>(dst_to_src,sampler), _1, dst));
+void resample_pixels(const any_image_view<Types1>& src, const V2& dst, const MapFn& dst_to_src, Sampler sampler=Sampler())
+{
+    apply_operation(src, std::bind(
+        detail::resample_pixels_fn<Sampler, MapFn>(dst_to_src, sampler),
+        std::placeholders::_1,
+        dst));
 }
 
 /// \brief resample_pixels when the destination is run-time specified
 ///        If invoked on incompatible views, throws std::bad_cast()
 /// \ingroup ImageAlgorithms
 template <typename Sampler, typename V1, typename Types2, typename MapFn>
-void resample_pixels(const V1& src, const any_image_view<Types2>& dst, const MapFn& dst_to_src, Sampler sampler=Sampler()) {
-    apply_operation(dst,bind(detail::resample_pixels_fn<Sampler,MapFn>(dst_to_src,sampler), src, _1));
+void resample_pixels(const V1& src, const any_image_view<Types2>& dst, const MapFn& dst_to_src, Sampler sampler=Sampler())
+{
+    using namespace std::placeholders;
+    apply_operation(dst, std::bind(
+        detail::resample_pixels_fn<Sampler, MapFn>(dst_to_src, sampler),
+        src,
+        std::placeholders::_1));
 }
 
 /// \brief resample_pixels when both the source and the destination are run-time specified
