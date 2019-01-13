@@ -689,11 +689,11 @@
 <div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;    <span class="comment">//resize_clobber_image_fnobj</span></div>
 <div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;    <span class="comment">//image_default_construct_fnobj</span></div>
 <div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;    <span class="comment">//fill_converted_pixels_fn</span></div>
-<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;    <span class="comment">//bind(gil::detail::copy_pixels_fn(), _1, dst)</span></div>
-<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;    <span class="comment">//bind(gil::detail::copy_pixels_fn(), src,_1)</span></div>
+<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;    <span class="comment">//std::bind(gil::detail::copy_pixels_fn(), std::placeholders::_1, dst)</span></div>
+<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;    <span class="comment">//std::bind(gil::detail::copy_pixels_fn(), src, std::placeholders::_1)</span></div>
 <div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160;</div>
-<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160;    <span class="comment">//bind(detail::copy_and_convert_pixels_fn(), _1, dst)</span></div>
-<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;    <span class="comment">//bind(detail::copy_and_convert_pixels_fn(), src, _1)</span></div>
+<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160;    <span class="comment">//std::bind(detail::copy_and_convert_pixels_fn(), std::placeholders::_1, dst)</span></div>
+<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;    <span class="comment">//std::bind(detail::copy_and_convert_pixels_fn(), src, std::placeholders::_1)</span></div>
 <div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;    <span class="comment">//gil::detail::fill_pixels_fn&lt;Value&gt;(val)</span></div>
 <div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160;</div>
 <div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;    <span class="comment">//detail::copy_construct_in_place_fn&lt;base_t&gt;</span></div>
@@ -726,7 +726,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sat Jan 12 2019 23:25:30 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Sun Jan 13 2019 01:30:23 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
