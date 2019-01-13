@@ -20,8 +20,7 @@
 #include <boost/gil/io/scanline_read_iterator.hpp>
 #include <boost/gil/io/typedefs.hpp>
 
-#include <boost/function.hpp>
-
+#include <functional>
 #include <type_traits>
 #include <vector>
 
@@ -122,7 +121,7 @@ private:
                 read_palette();
                 _buffer.resize( _pitch );
 
-                _read_function = boost::mem_fn( &this_t::read_1_bit_row );
+                _read_function = std::mem_fn(&this_t::read_1_bit_row);
 
                 break;
             }
@@ -145,7 +144,7 @@ private:
                         read_palette();
                         _buffer.resize( _pitch );
 
-                        _read_function = boost::mem_fn( &this_t::read_4_bits_row );
+                        _read_function = std::mem_fn(&this_t::read_4_bits_row);
 
                         break;
                     }
@@ -176,7 +175,7 @@ private:
                         read_palette();
                         _buffer.resize( _pitch );
 
-                        _read_function = boost::mem_fn( &this_t::read_8_bits_row );
+                        _read_function = std::mem_fn(&this_t::read_8_bits_row);
 
                         break;
                     }
@@ -239,7 +238,7 @@ private:
                 }
 
 
-                _read_function = boost::mem_fn( &this_t::read_15_bits_row );
+                _read_function = std::mem_fn(&this_t::read_15_bits_row);
 
                 break;
             }
@@ -247,7 +246,7 @@ private:
             case 24:
             {
                 this->_scanline_length = ( this->_info._width * num_channels< rgb8_view_t >::value + 3 ) & ~3;
-                _read_function = boost::mem_fn( &this_t::read_row );
+                _read_function = std::mem_fn(&this_t::read_row);
 
                 break;
             }
@@ -255,7 +254,7 @@ private:
             case 32:
             {
                 this->_scanline_length = ( this->_info._width * num_channels< rgba8_view_t >::value + 3 ) & ~3;
-                _read_function = boost::mem_fn( &this_t::read_row );
+                _read_function = std::mem_fn(&this_t::read_row);
 
                 break;
             }
@@ -406,7 +405,7 @@ private:
     detail::mirror_bits <std::vector<byte_t>, std::true_type> _mirror_bits;
     detail::swap_half_bytes<std::vector<byte_t>, std::true_type> _swap_half_bytes;
 
-    boost::function<void(this_t*, byte_t*)> _read_function;
+    std::function<void(this_t*, byte_t*)> _read_function;
 };
 
 } // namespace gil

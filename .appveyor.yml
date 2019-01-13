@@ -78,7 +78,7 @@ before_build:
   - git submodule --quiet update --init tools/boost_install
   - git submodule --quiet update --init tools/boostdep
   - git submodule --quiet update --init libs/headers
-  ## Direct
+  ## Direct (of GIL headers only)
   - git submodule --quiet update --init libs/algorithm
   - git submodule --quiet update --init libs/array
   - git submodule --quiet update --init libs/assert
@@ -87,7 +87,6 @@ before_build:
   - git submodule --quiet update --init libs/core
   - git submodule --quiet update --init libs/crc
   - git submodule --quiet update --init libs/filesystem
-  - git submodule --quiet update --init libs/function
   - git submodule --quiet update --init libs/integer
   - git submodule --quiet update --init libs/iterator
   - git submodule --quiet update --init libs/mpl
@@ -95,7 +94,7 @@ before_build:
   - git submodule --quiet update --init libs/preprocessor
   - git submodule --quiet update --init libs/test
   - git submodule --quiet update --init libs/type_traits
-  ## Transitive
+  ## Transitive (of GIL tests too)
   - git submodule --quiet update --init libs/atomic
   - git submodule --quiet update --init libs/bind
   - git submodule --quiet update --init libs/chrono
@@ -104,6 +103,7 @@ before_build:
   - git submodule --quiet update --init libs/conversion
   - git submodule --quiet update --init libs/detail
   - git submodule --quiet update --init libs/exception
+  - git submodule --quiet update --init libs/function
   - git submodule --quiet update --init libs/function_types
   - git submodule --quiet update --init libs/fusion
   - git submodule --quiet update --init libs/intrusive
