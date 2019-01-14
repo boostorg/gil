@@ -97,7 +97,7 @@ struct mandelbrot_fn
     using const_reference = value_type;
     using argument_type = point_t;
     using result_type = reference;
-    static bool constexpr is_mutable = false;
+    static constexpr bool is_mutable = false;
 
     value_type                    _in_color,_out_color;
     point_t                       _img_size;

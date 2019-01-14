@@ -91,10 +91,10 @@ struct property_base
 
 } // namespace detail
 
-struct read_support_true  { static bool constexpr is_supported = true; };
-struct read_support_false { static bool constexpr is_supported = false; };
-struct write_support_true { static bool constexpr is_supported = true; };
-struct write_support_false{ static bool constexpr is_supported = false; };
+struct read_support_true  { static constexpr bool is_supported = true; };
+struct read_support_false { static constexpr bool is_supported = false; };
+struct write_support_true { static constexpr bool is_supported = true; };
+struct write_support_false{ static constexpr bool is_supported = false; };
 
 class no_log {};
 

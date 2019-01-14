@@ -331,7 +331,7 @@ template
 struct bit_aligned_image_type
 {
 private:
-    static int constexpr bit_size =
+    static constexpr int bit_size =
         mpl::accumulate
         <
             ChannelBitSizeVector,

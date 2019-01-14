@@ -47,14 +47,14 @@ struct scaling_factors
                                             >
                                   >::type::value, "");
 
-    static int constexpr ss_X =
+    static constexpr int ss_X =
         mpl::divides
         <
             mpl::int_<J>,
             mpl::int_<A>
         >::type::value;
 
-    static int constexpr ss_Y =
+    static constexpr int ss_Y =
         mpl::if_
         <
             mpl::equal_to<mpl::int_<B>, mpl::int_<0>>,

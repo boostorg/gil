@@ -81,7 +81,7 @@ red_channel = channel_traits<red_channel_reference_t>::max_value();
 template <typename ColorBase, int K>
 struct kth_semantic_element_type
 {
-    static int constexpr semantic_index =
+    static constexpr int semantic_index =
         mpl::at_c<typename ColorBase::layout_t::channel_mapping_t, K>::type::value;
     using type = typename kth_element_type<ColorBase, semantic_index>::type;
 };
@@ -91,7 +91,7 @@ struct kth_semantic_element_type
 template <typename ColorBase, int K>
 struct kth_semantic_element_reference_type
 {
-    static int constexpr semantic_index =
+    static constexpr int semantic_index =
         mpl::at_c
         <
             typename ColorBase::layout_t::channel_mapping_t,
@@ -106,7 +106,7 @@ struct kth_semantic_element_reference_type
 /// \ingroup ColorBaseAlgorithmSemanticAtC
 template <typename ColorBase, int K> struct kth_semantic_element_const_reference_type
 {
-	static int constexpr semantic_index =
+	static constexpr int semantic_index =
         mpl::at_c
         <
             typename ColorBase::layout_t::channel_mapping_t,

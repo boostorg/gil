@@ -118,7 +118,7 @@ public:
 template <typename BitField, typename ChannelBitSizes, typename Layout, bool IsMutable>
 struct bit_aligned_pixel_reference
 {
-    static int constexpr bit_size =
+    static constexpr int bit_size =
             mpl::accumulate
             <
                 ChannelBitSizes,
@@ -136,7 +136,7 @@ struct bit_aligned_pixel_reference
     using reference = const bit_aligned_pixel_reference<BitField, ChannelBitSizes, Layout, IsMutable>;
     using const_reference = bit_aligned_pixel_reference<BitField,ChannelBitSizes,Layout,false> const;
 
-    static bool constexpr is_mutable = IsMutable;
+    static constexpr bool is_mutable = IsMutable;
 
     bit_aligned_pixel_reference(){}
     bit_aligned_pixel_reference(data_ptr_t data_ptr, int bit_offset)   : _bit_range(data_ptr, bit_offset) {}

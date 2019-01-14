@@ -52,7 +52,7 @@ struct channel_archetype
     using const_reference   = channel_archetype const;
     using pointer           = channel_value_archetype*;
     using const_pointer     = channel_value_archetype const*;
-    static bool constexpr is_mutable = true;
+    static constexpr bool is_mutable = true;
 
     static value_type min_value();
     static value_type max_value();
