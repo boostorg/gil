@@ -82,7 +82,7 @@
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> ColorBase, <span class="keywordtype">int</span> K&gt;</div>
 <div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1kth__semantic__element__type.html">   82</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1kth__semantic__element__type.html">kth_semantic_element_type</a></div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;{</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> constexpr semantic_index =</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keyword">static</span> constexpr <span class="keywordtype">int</span> semantic_index =</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        mpl::at_c&lt;typename ColorBase::layout_t::channel_mapping_t, K&gt;::type::value;</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keyword">using</span> type = <span class="keyword">typename</span> kth_element_type&lt;ColorBase, semantic_index&gt;::type;</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;};</div>
@@ -90,7 +90,7 @@
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> ColorBase, <span class="keywordtype">int</span> K&gt;</div>
 <div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1kth__semantic__element__reference__type.html">   92</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1kth__semantic__element__reference__type.html">kth_semantic_element_reference_type</a></div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;{</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> constexpr semantic_index =</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keyword">static</span> constexpr <span class="keywordtype">int</span> semantic_index =</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <a class="code" href="group___color_base_model_homogeneous.html#ga6fb9de37a524b47bd591e1528809b24f">mpl::at_c</a></div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        &lt;</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            <span class="keyword">typename</span> ColorBase::layout_t::channel_mapping_t,</div>
@@ -103,7 +103,7 @@
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
 <div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1kth__semantic__element__const__reference__type.html">  107</a></span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> ColorBase, <span class="keywordtype">int</span> K&gt; <span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1kth__semantic__element__const__reference__type.html">kth_semantic_element_const_reference_type</a></div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;{</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">int</span> constexpr semantic_index =</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keyword">static</span> constexpr <span class="keywordtype">int</span> semantic_index =</div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <a class="code" href="group___color_base_model_homogeneous.html#ga6fb9de37a524b47bd591e1528809b24f">mpl::at_c</a></div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        &lt;</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            <span class="keyword">typename</span> ColorBase::layout_t::channel_mapping_t,</div>
@@ -529,7 +529,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sun Jan 13 2019 05:59:22 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Tue Jan 15 2019 09:36:38 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

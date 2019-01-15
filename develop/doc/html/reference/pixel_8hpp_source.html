@@ -112,7 +112,7 @@
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keyword">using</span> value_type = pixel&lt;ChannelValue, Layout&gt;;</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keyword">using</span> reference = value_type&amp;;</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keyword">using</span> const_reference = value_type <span class="keyword">const</span>&amp;;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">bool</span> constexpr is_mutable = channel_traits&lt;channel_t&gt;::is_mutable;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keyword">static</span> constexpr <span class="keywordtype">bool</span> is_mutable = channel_traits&lt;channel_t&gt;::is_mutable;</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    pixel(){}</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keyword">explicit</span> pixel(channel_t v) : parent_t(v) {}  <span class="comment">// sets all channels to v</span></div>
@@ -220,7 +220,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sun Jan 13 2019 05:59:22 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Tue Jan 15 2019 09:36:38 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

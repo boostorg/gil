@@ -300,7 +300,7 @@
 <div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;</div>
 <div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;        <span class="comment">// Determines whether the channels of a given pixel iterator are adjacent in memory.</span></div>
 <div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;        <span class="comment">// Planar and grayscale iterators have channels adjacent in memory, whereas multi-channel interleaved and iterators with non-fundamental step do not.</span></div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">bool</span> constexpr adjacent =</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;        <span class="keyword">static</span> constexpr <span class="keywordtype">bool</span> adjacent =</div>
 <div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;            !iterator_is_step&lt;src_x_iterator&gt;::value &amp;&amp;</div>
 <div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;            (is_planar&lt;src_x_iterator&gt;::value || num_channels&lt;View&gt;::value == 1);</div>
 <div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;</div>
@@ -316,7 +316,7 @@
 <div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;                                    <span class="comment">// Examples: pixel&lt;T,L&gt;, pixel&lt;T,L&gt;&amp;, const pixel&lt;T,L&gt;&amp;, planar_pixel_reference&lt;T&amp;,L&gt;, planar_pixel_reference&lt;const T&amp;,L&gt;</span></div>
 <div class="line"><a name="l00341"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1detail_1_1nth__channel__deref__fn.html">  341</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1detail_1_1nth__channel__deref__fn.html">nth_channel_deref_fn</a></div>
 <div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    {</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">bool</span> constexpr is_mutable =</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;        <span class="keyword">static</span> constexpr <span class="keywordtype">bool</span> is_mutable =</div>
 <div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;            <a class="code" href="structboost_1_1gil_1_1pixel__is__reference.html">pixel_is_reference&lt;SrcP&gt;::value</a> &amp;&amp; <a class="code" href="structboost_1_1gil_1_1pixel__reference__is__mutable.html">pixel_reference_is_mutable&lt;SrcP&gt;::value</a>;</div>
 <div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;        <span class="keyword">using</span> src_pixel_t = <span class="keyword">typename</span> remove_reference&lt;SrcP&gt;::type;</div>
@@ -420,7 +420,7 @@
 <div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;</div>
 <div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;        <span class="comment">// Determines whether the channels of a given pixel iterator are adjacent in memory.</span></div>
 <div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;        <span class="comment">// Planar and grayscale iterators have channels adjacent in memory, whereas multi-channel interleaved and iterators with non-fundamental step do not.</span></div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">bool</span> constexpr adjacent =</div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;        <span class="keyword">static</span> constexpr <span class="keywordtype">bool</span> adjacent =</div>
 <div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;            !iterator_is_step&lt;src_x_iterator&gt;::value &amp;&amp;</div>
 <div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;            (is_planar&lt;src_x_iterator&gt;::value || num_channels&lt;View&gt;::value == 1);</div>
 <div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;</div>
@@ -435,7 +435,7 @@
 <div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K, <span class="keyword">typename</span> SrcP&gt;</div>
 <div class="line"><a name="l00476"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1detail_1_1kth__channel__deref__fn.html">  476</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1detail_1_1kth__channel__deref__fn.html">kth_channel_deref_fn</a></div>
 <div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;    {</div>
-<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">bool</span> constexpr is_mutable =</div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;        <span class="keyword">static</span> constexpr <span class="keywordtype">bool</span> is_mutable =</div>
 <div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;            <a class="code" href="structboost_1_1gil_1_1pixel__is__reference.html">pixel_is_reference&lt;SrcP&gt;::value</a> &amp;&amp; <a class="code" href="structboost_1_1gil_1_1pixel__reference__is__mutable.html">pixel_reference_is_mutable&lt;SrcP&gt;::value</a>;</div>
 <div class="line"><a name="l00480"></a><span class="lineno">  480</span>&#160;</div>
 <div class="line"><a name="l00481"></a><span class="lineno">  481</span>&#160;    <span class="keyword">private</span>:</div>
@@ -519,7 +519,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sun Jan 13 2019 05:59:22 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Tue Jan 15 2019 09:36:38 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

@@ -85,7 +85,7 @@
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">using</span> channel_const_reference = <span class="keyword">typename</span> channel_traits&lt;ChannelReference&gt;::const_reference;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">bool</span> constexpr is_mutable = channel_traits&lt;ChannelReference&gt;::is_mutable;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keyword">static</span> constexpr <span class="keywordtype">bool</span> is_mutable = channel_traits&lt;ChannelReference&gt;::is_mutable;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">using</span> value_type = pixel&lt;channel_t,layout&lt;ColorSpace&gt;&gt;;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">using</span> reference = planar_pixel_reference&lt;ChannelReference, ColorSpace&gt;;</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keyword">using</span> const_reference = planar_pixel_reference&lt;channel_const_reference,ColorSpace&gt;;</div>
@@ -212,7 +212,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sun Jan 13 2019 05:59:22 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Tue Jan 15 2019 09:36:38 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
