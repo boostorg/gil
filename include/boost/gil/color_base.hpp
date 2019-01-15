@@ -17,7 +17,6 @@
 #include <boost/mpl/size.hpp>
 #include <boost/mpl/vector_c.hpp>
 #include <boost/type_traits.hpp>
-#include <boost/utility/enable_if.hpp>
 
 namespace boost { namespace gil {
 
@@ -26,7 +25,14 @@ template <typename P> P* memunit_advanced(const P* p, std::ptrdiff_t diff);
 
 // Forward-declare semantic_at_c
 template <int K, typename ColorBase>
-typename disable_if<is_const<ColorBase>,typename kth_semantic_element_reference_type<ColorBase,K>::type>::type semantic_at_c(ColorBase& p);
+auto semantic_at_c(ColorBase& p)
+    -> typename std::enable_if
+    <
+        !std::is_const<ColorBase>::value,
+        typename kth_semantic_element_reference_type<ColorBase, K>::type
+    >::type;
+
+
 template <int K, typename ColorBase>
 typename kth_semantic_element_const_reference_type<ColorBase,K>::type semantic_at_c(const ColorBase& p);
 

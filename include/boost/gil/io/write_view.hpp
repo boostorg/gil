@@ -16,301 +16,217 @@
 
 #include <boost/mpl/and.hpp>
 #include <boost/type_traits/is_base_and_derived.hpp>
-#include <boost/utility/enable_if.hpp>
 
-////////////////////////////////////////////////////////////////////////////////////////
-/// \file
-/// \brief
-/// \author Christian Henning, Andreas Pokorny, Lubomir Bourdev \n
-///
-/// \date   2007-2012 \n
-///
-////////////////////////////////////////////////////////////////////////////////////////
+#include <type_traits>
 
 namespace boost{ namespace gil {
 
 /// \ingroup IO
-
-template< typename Writer
-        , typename View
-        >
+template<typename Writer, typename View>
 inline
-void write_view( Writer&     writer
-               , const View& view
-               , typename enable_if< typename mpl::and_< typename detail::is_writer< Writer >::type
-                                                       , typename is_format_tag< typename Writer::format_tag_t >::type
-                                                       , typename is_write_supported< typename get_pixel_type< View >::type
-                                                                                    , typename Writer::format_tag_t
-                                                                                    >::type
-                                                       >::type
-                                   >::type* /* ptr */ = nullptr
-               )
+void write_view(Writer& writer, View const& view,
+    typename std::enable_if
+    <
+        mpl::and_
+        <
+            typename detail::is_writer<Writer>::type,
+            typename is_format_tag<typename Writer::format_tag_t>::type,
+            typename is_write_supported
+            <
+                typename get_pixel_type<View>::type,
+                typename Writer::format_tag_t
+            >::type
+        >::type::value
+    >::type* /* ptr */ = nullptr)
 {
-    writer.apply( view );
-}
-
-template< typename Device
-        , typename View
-        , typename FormatTag
-        >
-inline
-void write_view( Device&          device
-               , const View&      view
-               , const FormatTag& tag
-               , typename enable_if< typename mpl::and_< typename detail::is_write_device< FormatTag
-                                                                                         , Device
-                                                                                         >::type
-                                                       , typename is_format_tag< FormatTag >::type
-                                                       , typename is_write_supported< typename get_pixel_type< View >::type
-                                                                                    , FormatTag
-                                                                                    >::type
-                                                       >::type
-                                   >::type* /* ptr */ = nullptr
-               )
-{
-    using writer_t = typename get_writer<Device, FormatTag>::type;
-
-    writer_t writer = make_writer( device
-                                 , tag
-                                 );
-
-    write_view( writer
-              , view
-              );
-}
-
-template< typename String
-        , typename View
-        , typename FormatTag
-        >
-inline
-void write_view( const String&    file_name
-               , const View&      view
-               , const FormatTag& tag
-               , typename enable_if< typename mpl::and_< typename detail::is_supported_path_spec< String >::type
-                                                       , typename is_format_tag< FormatTag >::type
-                                                       , typename is_write_supported< typename get_pixel_type< View >::type
-                                                                                    , FormatTag
-                                                                                    >::type
-                                                       >::type
-                                   >::type* /* ptr */ = nullptr
-               )
-{
-    using writer_t = typename get_writer<String, FormatTag>::type;
-
-    writer_t writer = make_writer( file_name
-                                 , tag
-                                 );
-
-    write_view( writer
-              , view
-              );
+    writer.apply(view);
 }
 
 /// \ingroup IO
-template< typename Device
-        , typename View
-        , typename FormatTag
-        , typename Log
-        >
+template<typename Device, typename View, typename FormatTag>
 inline
-void write_view( Device&                                 device
-               , const View&                             view
-               , const image_write_info<FormatTag, Log>& info
-               , typename enable_if< typename mpl::and_< typename detail::is_write_device< FormatTag
-                                                                                         , Device
-                                                                                         >::type
-                                                       , typename is_format_tag< FormatTag >::type
-                                                       , typename is_write_supported< typename get_pixel_type< View >::type
-                                                                                    , FormatTag
-                                                                                    >::type
-                                                       >::type
-                                   >::type* /* ptr */ = nullptr
-               )
+void write_view(Device& device, View const& view, FormatTag const& tag,
+    typename std::enable_if
+    <
+        mpl::and_
+        <
+            typename detail::is_write_device<FormatTag, Device>::type,
+            typename is_format_tag<FormatTag>::type,
+            typename is_write_supported
+            <
+                typename get_pixel_type<View>::type,
+                FormatTag
+            >::type
+        >::type::value
+    >::type* /* ptr */ = nullptr)
 {
     using writer_t = typename get_writer<Device, FormatTag>::type;
-
-    writer_t writer = make_writer( device
-                                 , info
-                                 );
-
-    write_view( writer
-              , view
-              );
+    writer_t writer = make_writer(device, tag);
+    write_view(writer, view);
 }
 
-template< typename String
-        , typename View
-        , typename FormatTag
-        , typename Log
-        >
+/// \ingroup IO
+template<typename String, typename View, typename FormatTag>
 inline
-void write_view( const String&                             file_name
-               , const View&                               view
-               , const image_write_info< FormatTag, Log >& info
-               , typename enable_if< typename mpl::and_< typename detail::is_supported_path_spec< String >::type
-                                                       , typename is_format_tag< FormatTag >::type
-                                                       , typename is_write_supported< typename get_pixel_type< View >::type
-                                                                                    , FormatTag
-                                                                                    >::type
-                                                       >::type
-                                   >::type* /* ptr */ = nullptr
-               )
+void write_view(String const& file_name, View const& view, FormatTag const& tag,
+    typename std::enable_if
+    <
+        mpl::and_
+        <
+            typename detail::is_supported_path_spec<String>::type,
+            typename is_format_tag<FormatTag>::type,
+            typename is_write_supported
+            <
+                typename get_pixel_type<View>::type,
+                FormatTag
+            >::type
+        >::type::value
+    >::type* /* ptr */ = nullptr)
 {
     using writer_t = typename get_writer<String, FormatTag>::type;
-
-    writer_t writer = make_writer( file_name
-                                 , info
-                                 );
-
-    write_view( writer
-              , view
-              );
+    writer_t writer = make_writer(file_name, tag);
+    write_view(writer, view);
 }
 
+/// \ingroup IO
+template<typename Device, typename View, typename FormatTag, typename Log>
+inline
+void write_view(
+    Device& device, View const& view, image_write_info<FormatTag, Log> const& info,
+    typename std::enable_if
+    <
+        mpl::and_
+        <
+            typename detail::is_write_device<FormatTag, Device>::type,
+            typename is_format_tag<FormatTag>::type,
+            typename is_write_supported
+            <
+                typename get_pixel_type<View>::type,
+                FormatTag
+            >::type
+        >::type::value
+    >::type* /* ptr */ = nullptr)
+{
+    using writer_t = typename get_writer<Device, FormatTag>::type;
+    writer_t writer = make_writer(device, info);
+    write_view(writer, view);
+}
+
+/// \ingroup IO
+template<typename String, typename View, typename FormatTag, typename Log>
+inline
+void write_view(
+    String const& file_name, View const& view, image_write_info<FormatTag, Log> const& info,
+    typename std::enable_if
+    <
+        mpl::and_
+        <
+            typename detail::is_supported_path_spec<String>::type,
+            typename is_format_tag<FormatTag>::type,
+            typename is_write_supported
+            <
+                typename get_pixel_type<View>::type,
+                FormatTag
+            >::type
+        >::type::value
+    >::type* /* ptr */ = nullptr)
+{
+    using writer_t = typename get_writer<String, FormatTag>::type;
+    writer_t writer = make_writer(file_name, info);
+    write_view(writer, view);
+}
 
 ////////////////////////////////////// dynamic_image
 
 // without image_write_info
-template< typename Writer
-        , typename Views
-        >
+template <typename Writer, typename Views>
 inline
-void write_view( Writer&                        writer
-               , const any_image_view< Views >& view
-               , typename enable_if< typename mpl::and_< typename detail::is_dynamic_image_writer< Writer >::type
-                                                       , typename is_format_tag< typename Writer::format_tag_t >::type
-                                                       >::type
-                                   >::type* /* ptr */ = nullptr
-               )
+void write_view(Writer& writer, any_image_view<Views> const& view,
+    typename std::enable_if
+    <
+        mpl::and_
+        <
+            typename detail::is_dynamic_image_writer<Writer>::type,
+            typename is_format_tag<typename Writer::format_tag_t>::type
+        >::type::value
+    >::type * /* ptr */ = nullptr)
 {
-    writer.apply( view );
+    writer.apply(view);
 }
 
 // without image_write_info
-
-template< typename Device
-        , typename Views
-        , typename FormatTag
-        >
+template <typename Device, typename Views, typename FormatTag>
 inline
-void write_view( Device&                        device
-               , const any_image_view< Views >& views
-               , const FormatTag&               tag
-               , typename enable_if< typename mpl::and_< typename detail::is_write_device< FormatTag
-                                                                                         , Device
-                                                                                         >::type
-                                                       , typename is_format_tag< FormatTag >::type
-                                                       >::type
-                                   >::type* /* ptr */ = 0
-               )
+void write_view(
+    Device& device, any_image_view<Views> const& views, FormatTag const& tag,
+    typename std::enable_if
+    <
+        mpl::and_
+        <
+            typename detail::is_write_device<FormatTag, Device>::type,
+            typename is_format_tag<FormatTag>::type
+        >::type::value
+    >::type * /* ptr */ = 0)
 {
     using writer_t = typename get_dynamic_image_writer<Device, FormatTag>::type;
-
-    writer_t writer = make_dynamic_image_writer( device
-                                               , tag
-                                               );
-
-    write_view( writer
-              , views
-              );
+    writer_t writer = make_dynamic_image_writer(device, tag);
+    write_view(writer, views);
 }
 
-template< typename String
-        , typename Views
-        , typename FormatTag
-        >
+template <typename String, typename Views, typename FormatTag>
 inline
-void write_view( const String&                  file_name
-               , const any_image_view< Views >& views
-               , const FormatTag&               tag
-               , typename enable_if< typename mpl::and_< typename detail::is_supported_path_spec< String >::type
-                                                       , typename is_format_tag< FormatTag >::type
-                                                       >::type
-                                   >::type* /* ptr */ = nullptr
-               )
-{
-    using writer_t = typename get_dynamic_image_writer
+void write_view(
+    String const& file_name, any_image_view<Views> const& views, FormatTag const& tag,
+    typename std::enable_if
+    <
+        mpl::and_
         <
-            String,
-            FormatTag
-        >::type;
-
-    writer_t writer = make_dynamic_image_writer( file_name
-                                               , tag
-                                               );
-
-    write_view( writer
-              , views
-              );
+            typename detail::is_supported_path_spec<String>::type,
+            typename is_format_tag<FormatTag>::type
+        >::type::value
+    >::type * /* ptr */ = nullptr)
+{
+    using writer_t = typename get_dynamic_image_writer<String, FormatTag>::type;
+    writer_t writer = make_dynamic_image_writer(file_name, tag);
+    write_view(writer, views);
 }
 
 // with image_write_info
 /// \ingroup IO
-template< typename Device
-        , typename Views
-        , typename FormatTag
-        , typename Log
-        >
+template <typename Device, typename Views, typename FormatTag, typename Log>
 inline
-void write_view( Device&                           device
-               , const any_image_view< Views >&    views
-               , const image_write_info< FormatTag
-                                       , Log
-                                       >&           info
-               , typename enable_if< typename mpl::and_< typename detail::is_write_device< FormatTag
-                                                                                         , Device
-                                                                                         >::type
-                                                       , typename is_format_tag< FormatTag >::type
-                                                       >::type
-                                   >::type* /* ptr */ = 0
-               )
-{
-    using writer_t = typename get_dynamic_image_writer
+void write_view(
+    Device& device, any_image_view<Views> const& views, image_write_info<FormatTag, Log> const& info,
+    typename std::enable_if
+    <
+        mpl::and_
         <
-            Device,
-            FormatTag
-        >::type;
-
-    writer_t writer = make_dynamic_image_writer( device
-                                               , info
-                                               );
-
-    write_view( writer
-              , views
-              );
+            typename detail::is_write_device<FormatTag, Device>::type,
+            typename is_format_tag<FormatTag>::type
+        >::type::value
+    >::type * /* ptr */ = 0)
+{
+    using writer_t = typename get_dynamic_image_writer<Device, FormatTag>::type;
+    writer_t writer = make_dynamic_image_writer(device, info);
+    write_view(writer, views);
 }
 
-template< typename String
-        , typename Views
-        , typename FormatTag
-        , typename Log
-        >
+template <typename String, typename Views, typename FormatTag, typename Log>
 inline
-void write_view( const String&                      file_name
-               , const any_image_view< Views >&     views
-               , const image_write_info< FormatTag
-                                       , Log
-                                       >&           info
-               , typename enable_if< typename mpl::and_< typename detail::is_supported_path_spec< String >::type
-                                                       , typename is_format_tag< FormatTag >::type
-                                                       >::type
-                                   >::type* /* ptr */ = nullptr
-               )
-{
-    using writer_t = typename get_dynamic_image_writer
+void write_view(
+    String const& file_name, any_image_view<Views> const& views, image_write_info<FormatTag, Log> const& info,
+    typename std::enable_if
+    <
+        mpl::and_
         <
-            String,
-            FormatTag
-        >::type;
-
-    writer_t writer = make_dynamic_image_writer( file_name
-                                               , info
-                                               );
-
-    write_view( writer
-              , views
-              );
+            typename detail::is_supported_path_spec<String>::type,
+            typename is_format_tag<FormatTag>::type
+        >::type::value
+    >::type * /* ptr */ = nullptr)
+{
+    using writer_t = typename get_dynamic_image_writer<String, FormatTag>::type;
+    writer_t writer = make_dynamic_image_writer(file_name, info);
+    write_view(writer, views);
 }
 
 }} // namespace boost::gil

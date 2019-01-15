@@ -10,141 +10,152 @@
 
 #include <boost/gil/io/get_read_device.hpp>
 
+#include <boost/mpl/and.hpp>
+
+#include <type_traits>
+
 namespace boost { namespace gil {
 
 /// \brief Helper metafunction to generate image reader type.
-template< typename T
-        , typename FormatTag
-        , typename ConversionPolicy
-        , class Enable = void
-        >
-struct get_reader
-{};
+template
+<
+    typename T,
+    typename FormatTag,
+    typename ConversionPolicy,
+    class Enable = void
+>
+struct get_reader {};
 
-template< typename String
-        , typename FormatTag
-        , typename ConversionPolicy
-        >
-struct get_reader< String
-                 , FormatTag
-                 , ConversionPolicy
-                 , typename enable_if< mpl::and_< detail::is_supported_path_spec< String >
-                                                , is_format_tag< FormatTag >
-                                                >
-                                     >::type
-                 >
+template <typename String, typename FormatTag, typename ConversionPolicy>
+struct get_reader
+<
+    String,
+    FormatTag,
+    ConversionPolicy,
+    typename std::enable_if
+    <
+        mpl::and_
+        <
+            detail::is_supported_path_spec<String>,
+            is_format_tag<FormatTag>
+        >::type::value
+    >::type
+>
 {
     using device_t = typename get_read_device<String, FormatTag>::type;
     using type = reader<device_t, FormatTag, ConversionPolicy>;
 };
 
-template< typename Device
-        , typename FormatTag
-        , typename ConversionPolicy
-        >
-struct get_reader< Device
-                 , FormatTag
-                 , ConversionPolicy
-                 , typename enable_if< mpl::and_< detail::is_adaptable_input_device< FormatTag
-                                                                                   , Device
-                                                                                   >
-                                                , is_format_tag< FormatTag >
-                                                >
-                                     >::type
-                 >
+template <typename Device, typename FormatTag, typename ConversionPolicy>
+struct get_reader
+<
+    Device,
+    FormatTag,
+    ConversionPolicy,
+    typename std::enable_if
+    <
+        mpl::and_
+        <
+            detail::is_adaptable_input_device<FormatTag, Device>,
+            is_format_tag<FormatTag>
+        >::type::value
+    >::type
+>
 {
     using device_t = typename get_read_device<Device, FormatTag>::type;
     using type = reader<device_t, FormatTag, ConversionPolicy>;
 };
-
 
 /// \brief Helper metafunction to generate dynamic image reader type.
-template< typename T
-        , typename FormatTag
-        , class Enable = void
-        >
+template <typename T, typename FormatTag, class Enable = void>
 struct get_dynamic_image_reader
-{};
+{
+};
 
-template< typename String
-        , typename FormatTag
-        >
-struct get_dynamic_image_reader< String
-                               , FormatTag
-                               , typename enable_if< mpl::and_< detail::is_supported_path_spec< String >
-                                                              , is_format_tag< FormatTag >
-                                                              >
-                                                   >::type
-                               >
+template <typename String, typename FormatTag>
+struct get_dynamic_image_reader
+<
+    String,
+    FormatTag,
+    typename std::enable_if
+    <
+        mpl::and_
+        <
+            detail::is_supported_path_spec<String>,
+            is_format_tag<FormatTag>
+        >::type::value
+    >::type
+>
 {
     using device_t = typename get_read_device<String, FormatTag>::type;
     using type = dynamic_image_reader<device_t, FormatTag>;
 };
 
-template< typename Device
-        , typename FormatTag
-        >
-struct get_dynamic_image_reader< Device
-                               , FormatTag
-                               , typename enable_if< mpl::and_< detail::is_adaptable_input_device< FormatTag
-                                                                                                 , Device
-                                                                                                 >
-                                                              , is_format_tag< FormatTag >
-                                                              >
-                                                   >::type
-                               >
+template <typename Device, typename FormatTag>
+struct get_dynamic_image_reader
+<
+    Device,
+    FormatTag,
+    typename std::enable_if
+    <
+        mpl::and_
+        <
+            detail::is_adaptable_input_device<FormatTag, Device>,
+            is_format_tag<FormatTag>
+        >::type::value
+    >::type
+>
 {
     using device_t = typename get_read_device<Device, FormatTag>::type;
     using type = dynamic_image_reader<device_t, FormatTag>;
 };
 
-
-/////////////////////////////////////////////////////////////
-
 /// \brief Helper metafunction to generate image backend type.
-template< typename T
-        , typename FormatTag
-        , class Enable = void
-        >
+template <typename T, typename FormatTag, class Enable = void>
 struct get_reader_backend
-{};
+{
+};
 
-template< typename String
-        , typename FormatTag
-        >
-struct get_reader_backend< String
-                         , FormatTag
-                         , typename enable_if< mpl::and_< detail::is_supported_path_spec< String >
-                                                        , is_format_tag< FormatTag >
-                                                        >
-                                             >::type
-                         >
+template <typename String, typename FormatTag>
+struct get_reader_backend
+<
+    String,
+    FormatTag,
+    typename std::enable_if
+    <
+        mpl::and_
+        <
+            detail::is_supported_path_spec<String>,
+            is_format_tag<FormatTag>
+        >::type::value
+    >::type
+>
 {
     using device_t = typename get_read_device<String, FormatTag>::type;
     using type = reader_backend<device_t, FormatTag>;
 };
 
-template< typename Device
-        , typename FormatTag
-        >
-struct get_reader_backend< Device
-                         , FormatTag
-                         , typename enable_if< mpl::and_< detail::is_adaptable_input_device< FormatTag
-                                                                                           , Device
-                                                                                           >
-                                                        , is_format_tag< FormatTag >
-                                                        >
-                                             >::type
-                         >
+template <typename Device, typename FormatTag>
+struct get_reader_backend
+<
+    Device,
+    FormatTag,
+    typename std::enable_if
+    <
+        mpl::and_
+        <
+            detail::is_adaptable_input_device<FormatTag, Device>,
+            is_format_tag<FormatTag>
+        >::type::value
+    >::type
+>
 {
     using device_t = typename get_read_device<Device, FormatTag>::type;
     using type = reader_backend<device_t, FormatTag>;
 };
 
 /// \brief Helper metafunction to generate image scanline_reader type.
-template< typename T
-        , typename FormatTag
-        >
+template <typename T, typename FormatTag>
 struct get_scanline_reader
 {
     using device_t = typename get_read_device<T, FormatTag>::type;

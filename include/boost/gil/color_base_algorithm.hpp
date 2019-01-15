@@ -15,9 +15,9 @@
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/contains.hpp>
 #include <boost/type_traits.hpp>
-#include <boost/utility/enable_if.hpp>
 
 #include <algorithm>
+#include <type_traits>
 
 namespace boost { namespace gil {
 
@@ -119,9 +119,15 @@ template <typename ColorBase, int K> struct kth_semantic_element_const_reference
 
 /// \brief A mutable accessor to the K-th semantic element of a color base
 /// \ingroup ColorBaseAlgorithmSemanticAtC
-template <int K, typename ColorBase> inline
-typename disable_if<is_const<ColorBase>,typename kth_semantic_element_reference_type<ColorBase,K>::type>::type
-semantic_at_c(ColorBase& p) {
+template <int K, typename ColorBase>
+inline
+auto semantic_at_c(ColorBase& p)
+    -> typename std::enable_if
+    <
+        !std::is_const<ColorBase>::value,
+        typename kth_semantic_element_reference_type<ColorBase, K>::type
+    >::type
+{
     return kth_semantic_element_reference_type<ColorBase,K>::get(p);
 }
 

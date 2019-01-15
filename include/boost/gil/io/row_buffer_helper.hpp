@@ -16,9 +16,9 @@
 #include <boost/gil/io/typedefs.hpp>
 
 #include <boost/mpl/and.hpp>
-#include <boost/utility/enable_if.hpp>
 
 #include <cstddef>
+#include <type_traits>
 #include <vector>
 
 namespace boost { namespace gil { namespace detail {
@@ -50,38 +50,33 @@ private:
     buffer_t _row_buffer;
 };
 
-template<typename Pixel >
-struct row_buffer_helper< Pixel
-                        , typename enable_if< typename is_bit_aligned< Pixel >::type >::type
-                        >
+template <typename Pixel>
+struct row_buffer_helper
+<
+    Pixel,
+    typename std::enable_if
+    <
+        is_bit_aligned<Pixel>::type::value
+    >::type
+>
 {
     using element_t = byte_t;
     using buffer_t = std::vector<element_t>;
     using pixel_type = Pixel;
     using iterator_t = bit_aligned_pixel_iterator<pixel_type>;
 
-    row_buffer_helper( std::size_t width
-                     , bool        in_bytes
-                     )
-    : _c( ( width
-          * pixel_bit_size< pixel_type >::value
-          )
-          >> 3
-        )
-
-    , _r( width
-          * pixel_bit_size< pixel_type >::value
-        - ( _c << 3 )
-       )
+    row_buffer_helper(std::size_t width, bool in_bytes)
+        : _c{( width * pixel_bit_size< pixel_type >::value) >> 3}
+        , _r{width * pixel_bit_size< pixel_type >::value - (_c << 3)}
     {
-        if( in_bytes )
+        if (in_bytes)
         {
-            _row_buffer.resize( width );
+            _row_buffer.resize(width);
         }
         else
         {
             // add one byte if there are remaining bits
-            _row_buffer.resize( _c + ( _r!=0 ));
+            _row_buffer.resize(_c + (_r != 0));
         }
     }
 
@@ -111,13 +106,13 @@ template<typename Pixel>
 struct row_buffer_helper
 <
     Pixel,
-    typename boost::enable_if
+    typename std::enable_if
     <
-        typename mpl::and_
+        mpl::and_
         <
             typename is_bit_aligned<Pixel>::type,
             typename is_homogeneous<Pixel>::type
-        >::type
+        >::type::value
     >
 >
 {
@@ -175,34 +170,26 @@ private:
     buffer_t _row_buffer;
 };
 
-template< typename View
-        , typename D = void
-        >
-struct row_buffer_helper_view : row_buffer_helper< typename View::value_type >
+template <typename View, typename D = void>
+struct row_buffer_helper_view : row_buffer_helper<typename View::value_type>
 {
-    row_buffer_helper_view( std::size_t width
-                          , bool        in_bytes
-                          )
-    :  row_buffer_helper< typename View::value_type >( width
-                                                     , in_bytes
-                                                     )
+    row_buffer_helper_view(std::size_t width, bool in_bytes)
+        : row_buffer_helper<typename View::value_type>(width, in_bytes)
     {}
 };
 
-
-template< typename View >
-struct row_buffer_helper_view< View
-                             , typename enable_if< typename is_bit_aligned< typename View::value_type
-                                                                          >::type
-                                                 >::type
-                             > : row_buffer_helper< typename View::reference >
+template <typename View>
+struct row_buffer_helper_view
+<
+    View,
+    typename std::enable_if
+    <
+        is_bit_aligned<typename View::value_type>::type::value
+    >::type
+> : row_buffer_helper<typename View::reference>
 {
-    row_buffer_helper_view( std::size_t width
-                          , bool        in_bytes
-                          )
-    : row_buffer_helper< typename View::reference >( width
-                                                   , in_bytes
-                                                   )
+    row_buffer_helper_view(std::size_t width, bool in_bytes)
+        : row_buffer_helper<typename View::reference>(width, in_bytes)
     {}
 };
 
