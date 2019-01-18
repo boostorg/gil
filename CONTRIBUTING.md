@@ -47,9 +47,10 @@ please follow the workflow explained in this document.
   (e.g. core headers versus extensions).
   Separate real product/test code changes from larger code formatting/dead code removal changes,
   unless the former are extensive enough to justify such refactoring, then also mention it.
-* **DO NOT** submit PRs with "work in progress" (WIP). A PR should only be submitted when
-  it is considered ready for review and subsequent merging by the contributor. PRs may
-  receive [status/work-in-progress] label if review reveals the work is incomplete.
+* **DO** start PR subject with "WIP:" tag if you submit it as "work in progress".
+  A PR should preferable be submitted when it is considered ready for review and subsequent
+  merging by the contributor. Otherwise, clearly indicate it is not yet ready.
+  The "WIP:" tag will also help maintainers to label your PR with [status/work-in-progress].
 * **DO** give PRs short-but-descriptive names (e.g. "Add test for algorithm XXX", not "Fix #1234").
 * **DO** [refer] to any relevant issues, and include the [keywords] that automatically
   close issues when the PR is merged.
