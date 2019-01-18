@@ -14,7 +14,6 @@
 #include <boost/gil/concepts/fwd.hpp>
 
 #include <boost/type_traits.hpp>
-#include <boost/utility/enable_if.hpp>
 
 #if BOOST_GCC >= 40700
 #pragma GCC diagnostic push
@@ -64,9 +63,9 @@ inline auto at_c(bit_aligned_pixel_reference<B, C, L, M> const& p)
 // Forward declarations of semantic_at_c
 template <int K, typename ColorBase>
 auto semantic_at_c(ColorBase& p)
-    -> typename disable_if
+    -> typename std::enable_if
         <
-            is_const<ColorBase>,
+            !std::is_const<ColorBase>::value,
             typename kth_semantic_element_reference_type<ColorBase, K>::type
         >::type;
 

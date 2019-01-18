@@ -11,11 +11,11 @@
 #include <boost/gil/pixel.hpp>
 
 #include <boost/core/ignore_unused.hpp>
-#include <boost/utility/enable_if.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/front.hpp>
 
 #include <functional>
+#include <type_traits>
 
 namespace boost { namespace gil {
 
@@ -65,10 +65,15 @@ struct packed_pixel
 
     // Construct from another compatible pixel type
     packed_pixel(const packed_pixel& p) : _bitfield(p._bitfield) {}
-    template <typename P> packed_pixel(const P& p, typename enable_if_c<is_pixel<P>::value>::type* d=nullptr) {
-        check_compatible<P>(); static_copy(p,*this);
-        boost::ignore_unused(d);
+
+    template <typename P>
+    packed_pixel(P const& p,
+        typename std::enable_if<is_pixel<P>::value>::type* /*dummy*/ = nullptr)
+    {
+        check_compatible<P>();
+        static_copy(p, *this);
     }
+
     packed_pixel(int chan0, int chan1) : _bitfield(0) {
         static_assert(num_channels<packed_pixel>::value == 2, "");
         gil::at_c<0>(*this)=chan0; gil::at_c<1>(*this)=chan1;

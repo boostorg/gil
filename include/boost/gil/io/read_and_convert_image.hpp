@@ -15,8 +15,9 @@
 #include <boost/gil/io/path_spec.hpp>
 
 #include <boost/mpl/and.hpp>
-#include <boost/utility/enable_if.hpp>
 #include <boost/type_traits/is_base_and_derived.hpp>
+
+#include <type_traits>
 
 namespace boost{ namespace gil {
 
@@ -28,23 +29,20 @@ namespace boost{ namespace gil {
 /// \param settings  Specifies read settings depending on the image format.
 /// \param cc        Color converter function object.
 /// \throw std::ios_base::failure
-template< typename Reader
-        , typename Image
-        >
+template <typename Reader, typename Image>
 inline
-void read_and_convert_image( Reader&                                 reader
-                           , Image&                                  img
-                           , typename enable_if< mpl::and_< detail::is_reader< Reader >
-                                                          , is_format_tag< typename Reader::format_tag_t >
-                                                          >
-                           >::type* /* ptr */ = nullptr
-                           )
+void read_and_convert_image(Reader& reader, Image& img,
+    typename std::enable_if
+    <
+        mpl::and_
+        <
+            detail::is_reader<Reader>,
+            is_format_tag<typename Reader::format_tag_t>
+        >::type::value
+    >::type* /*dummy*/ = nullptr)
 {
-    reader.init_image( img
-                     , reader._settings
-                     );
-
-    reader.apply( view( img ));
+    reader.init_image(img, reader._settings);
+    reader.apply(view(img));
 }
 
 /// \brief Reads and color-converts an image. Image memory is allocated.
@@ -53,39 +51,27 @@ void read_and_convert_image( Reader&                                 reader
 /// \param settings  Specifies read settings depending on the image format.
 /// \param cc        Color converter function object.
 /// \throw std::ios_base::failure
-template< typename Device
-        , typename Image
-        , typename ColorConverter
-        , typename FormatTag
-        >
+template <typename Device, typename Image, typename ColorConverter, typename FormatTag>
 inline
-void read_and_convert_image( Device&                                 device
-                           , Image&                                  img
-                           , const image_read_settings< FormatTag >& settings
-                           , const ColorConverter&                   cc
-                           , typename enable_if< mpl::and_< detail::is_read_device< FormatTag
-                                                                                  , Device
-                                                                                  >
-                                                          , is_format_tag< FormatTag >
-                                                          >
-                                                >::type* /* ptr */ = 0
-                           )
-{
-    using reader_t = typename get_reader
+void read_and_convert_image(
+    Device& device,
+    Image& img,
+    image_read_settings<FormatTag> const& settings,
+    ColorConverter const& cc,
+    typename std::enable_if
+    <
+        mpl::and_
         <
-            Device,
-            FormatTag,
-            detail::read_and_convert<ColorConverter>
-        >::type;
+            detail::is_read_device<FormatTag, Device>,
+            is_format_tag<FormatTag>
+        >::type::value
+    >::type* /*dummy*/ = nullptr)
+{
+    using read_and_convert_t = detail::read_and_convert<ColorConverter>;
+    using reader_t = typename get_reader<Device, FormatTag, read_and_convert_t>::type;
 
-    reader_t reader = make_reader( device
-                                 , settings
-                                 , detail::read_and_convert< ColorConverter >( cc )
-                                 );
-
-    read_and_convert_image( reader
-                          , img
-                          );
+    reader_t reader = make_reader(device, settings, read_and_convert_t{cc});
+    read_and_convert_image(reader, img);
 }
 
 /// \brief Reads and color-converts an image. Image memory is allocated.
@@ -94,37 +80,27 @@ void read_and_convert_image( Device&                                 device
 /// \param settings  Specifies read settings depending on the image format.
 /// \param cc        Color converter function object.
 /// \throw std::ios_base::failure
-template < typename String
-         , typename Image
-         , typename ColorConverter
-         , typename FormatTag
-         >
+template <typename String, typename Image, typename ColorConverter, typename FormatTag>
 inline
-void read_and_convert_image( const String&                           file_name
-                           , Image&                                  img
-                           , const image_read_settings< FormatTag >& settings
-                           , const ColorConverter&                   cc
-                           , typename enable_if< mpl::and_< is_format_tag< FormatTag >
-                                                          , detail::is_supported_path_spec< String >
-                                                          >
-                                               >::type* /* ptr */ = 0
-                           )
-{
-    using reader_t = typename get_reader
+void read_and_convert_image(
+    String const& file_name,
+    Image& img,
+    image_read_settings<FormatTag> const& settings,
+    ColorConverter const& cc,
+    typename std::enable_if
+    <
+        mpl::and_
         <
-            String,
-            FormatTag,
-            detail::read_and_convert<ColorConverter>
-        >::type;
+            is_format_tag<FormatTag>,
+            detail::is_supported_path_spec<String>
+        >::type::value
+    >::type* /*dummy*/ = nullptr)
+{
+    using read_and_convert_t = detail::read_and_convert<ColorConverter>;
+    using reader_t = typename get_reader<String, FormatTag, read_and_convert_t>::type;
 
-    reader_t reader = make_reader( file_name
-                                 , settings
-                                 , detail::read_and_convert< ColorConverter >( cc )
-                                 );
-
-    read_and_convert_image( reader
-                          , img
-                          );
+    reader_t reader = make_reader(file_name, settings, read_and_convert_t{cc});
+    read_and_convert_image(reader, img);
 }
 
 /// \brief Reads and color-converts an image. Image memory is allocated.
@@ -133,37 +109,27 @@ void read_and_convert_image( const String&                           file_name
 /// \param cc        Color converter function object.
 /// \param tag       Defines the image format. Must satisfy is_format_tag metafunction.
 /// \throw std::ios_base::failure
-template < typename String
-         , typename Image
-         , typename ColorConverter
-         , typename FormatTag
-         >
+template <typename String, typename Image, typename ColorConverter, typename FormatTag>
 inline
-void read_and_convert_image( const String&         file_name
-                           , Image&                img
-                           , const ColorConverter& cc
-                           , const FormatTag&      tag
-                           , typename enable_if< mpl::and_< is_format_tag< FormatTag >
-                                                          , detail::is_supported_path_spec< String >
-                                                          >
-                                               >::type* /* ptr */ = 0
-                           )
-{
-    using reader_t = typename get_reader
+void read_and_convert_image(
+    String const& file_name,
+    Image& img,
+    ColorConverter const& cc,
+    FormatTag const& tag,
+    typename std::enable_if
+    <
+        mpl::and_
         <
-            String,
-            FormatTag,
-            detail::read_and_convert<ColorConverter>
-        >::type;
+            is_format_tag<FormatTag>,
+            detail::is_supported_path_spec<String>
+        >::type::value
+    >::type* /*dummy*/ = nullptr)
+{
+    using read_and_convert_t = detail::read_and_convert<ColorConverter>;
+    using reader_t = typename get_reader<String, FormatTag, read_and_convert_t>::type;
 
-    reader_t reader = make_reader( file_name
-                                 , tag
-                                 , detail::read_and_convert< ColorConverter >( cc )
-                                 );
-
-    read_and_convert_image( reader
-                          , img
-                          );
+    reader_t reader = make_reader(file_name, tag, read_and_convert_t{cc});
+    read_and_convert_image(reader, img);
 }
 
 /// \brief Reads and color-converts an image. Image memory is allocated.
@@ -172,39 +138,27 @@ void read_and_convert_image( const String&         file_name
 /// \param cc     Color converter function object.
 /// \param tag    Defines the image format. Must satisfy is_format_tag metafunction.
 /// \throw std::ios_base::failure
-template < typename Device
-         , typename Image
-         , typename ColorConverter
-         , typename FormatTag
-         >
+template <typename Device, typename Image, typename ColorConverter, typename FormatTag>
 inline
-void read_and_convert_image( Device&               device
-                           , Image&                img
-                           , const ColorConverter& cc
-                           , const FormatTag&      tag
-                           , typename enable_if< mpl::and_< detail::is_read_device< FormatTag
-                                                                                  , Device
-                                                                                  >
-                                                          , is_format_tag< FormatTag >
-                                                          >
-                                               >::type* /* ptr */ = 0
-                           )
-{
-    using reader_t = typename get_reader
+void read_and_convert_image(
+    Device& device,
+    Image& img,
+    ColorConverter const& cc,
+    FormatTag const& tag,
+    typename std::enable_if
+    <
+        mpl::and_
         <
-            Device,
-            FormatTag,
-            detail::read_and_convert<ColorConverter>
-        >::type;
+            detail::is_read_device<FormatTag, Device>,
+            is_format_tag<FormatTag>
+        >::type::value
+    >::type* /*dummy*/ = nullptr)
+{
+    using read_and_convert_t = detail::read_and_convert<ColorConverter>;
+    using reader_t = typename get_reader<Device, FormatTag, read_and_convert_t>::type;
 
-    reader_t reader = make_reader( device
-                                 , tag
-                                 , detail::read_and_convert< ColorConverter >( cc )
-                                 );
-
-    read_and_convert_image( reader
-                          , img
-                          );
+    reader_t reader = make_reader(device, tag, read_and_convert_t{cc});
+    read_and_convert_image(reader, img);
 }
 
 /// \brief Reads and color-converts an image. Image memory is allocated. Default color converter is used.
@@ -212,34 +166,25 @@ void read_and_convert_image( Device&               device
 /// \param img       The image in which the data is read into.
 /// \param settings  Specifies read settings depending on the image format.
 /// \throw std::ios_base::failure
-template < typename String
-         , typename Image
-         , typename FormatTag
-         >
-inline
-void read_and_convert_image( const String&                           file_name
-                           , Image&                                  img
-                           , const image_read_settings< FormatTag >& settings
-                           , typename enable_if< mpl::and_< is_format_tag< FormatTag >
-                                                          , detail::is_supported_path_spec< String >
-                                                          >
-                                               >::type* /* ptr */ = 0
-                           )
-{
-    using reader_t = typename get_reader
+template <typename String, typename Image, typename FormatTag>
+inline void read_and_convert_image(
+    String const& file_name,
+    Image& img,
+    image_read_settings<FormatTag> const& settings,
+    typename std::enable_if
+    <
+        mpl::and_
         <
-           String, FormatTag,
-           detail::read_and_convert<default_color_converter>
-       >::type;
+            is_format_tag<FormatTag>,
+            detail::is_supported_path_spec<String>
+        >::type::value
+    >::type* /*dummy*/ = nullptr)
+{
+    using read_and_convert_t = detail::read_and_convert<default_color_converter>;
+    using reader_t = typename get_reader<String, FormatTag, read_and_convert_t>::type;
 
-    reader_t reader = make_reader( file_name
-                                 , settings
-                                 , detail::read_and_convert< default_color_converter >()
-                                 );
-
-    read_and_convert_image( reader
-                          , img
-                          );
+    reader_t reader = make_reader(file_name, settings, read_and_convert_t{});
+    read_and_convert_image(reader, img);
 }
 
 /// \brief Reads and color-converts an image. Image memory is allocated. Default color converter is used.
@@ -247,37 +192,25 @@ void read_and_convert_image( const String&                           file_name
 /// \param img       The image in which the data is read into.
 /// \param settings  Specifies read settings depending on the image format.
 /// \throw std::ios_base::failure
-template < typename Device
-         , typename Image
-         , typename FormatTag
-         >
-inline
-void read_and_convert_image( Device&                                 device
-                           , Image&                                  img
-                           , const image_read_settings< FormatTag >& settings
-                           , typename enable_if< mpl::and_< detail::is_read_device< FormatTag
-                                                                                  , Device
-                                                                                  >
-                                                          , is_format_tag< FormatTag >
-                                                          >
-                                               >::type* /* ptr */ = 0
-                           )
-{
-    using reader_t = typename get_reader
+template <typename Device, typename Image, typename FormatTag>
+inline void read_and_convert_image(
+    Device& device,
+    Image& img,
+    image_read_settings<FormatTag> const& settings,
+    typename std::enable_if
+    <
+        mpl::and_
         <
-            Device,
-            FormatTag,
-            detail::read_and_convert<default_color_converter>
-        >::type;
+            detail::is_read_device<FormatTag, Device>,
+            is_format_tag<FormatTag>
+        >::type::value
+    >::type* /*dummy*/ = nullptr)
+{
+    using read_and_convert_t = detail::read_and_convert<default_color_converter>;
+    using reader_t = typename get_reader<Device, FormatTag, read_and_convert_t>::type;
 
-    reader_t reader = make_reader( device
-                                 , settings
-                                 , detail::read_and_convert< default_color_converter >()
-                                 );
-
-    read_and_convert_image( reader
-                          , img
-                          );
+    reader_t reader = make_reader(device, settings, read_and_convert_t{});
+    read_and_convert_image(reader, img);
 }
 
 /// \brief Reads and color-converts an image. Image memory is allocated. Default color converter is used.
@@ -285,35 +218,26 @@ void read_and_convert_image( Device&                                 device
 /// \param img       The image in which the data is read into.
 /// \param tag       Defines the image format. Must satisfy is_format_tag metafunction.
 /// \throw std::ios_base::failure
-template < typename String
-         , typename Image
-         , typename FormatTag
-         >
+template <typename String, typename Image, typename FormatTag>
 inline
-void read_and_convert_image( const String&    file_name
-                           , Image&           img
-                           , const FormatTag& tag
-                           , typename enable_if< mpl::and_< is_format_tag< FormatTag >
-                                                          , detail::is_supported_path_spec< String >
-                                                          >
-                                               >::type* /* ptr */ = nullptr
-                           )
-{
-    using reader_t = typename get_reader
+void read_and_convert_image(
+    String const& file_name,
+    Image& img,
+    FormatTag const& tag,
+    typename std::enable_if
+    <
+        mpl::and_
         <
-            String,
-            FormatTag,
-            detail::read_and_convert<default_color_converter>
-        >::type;
+            is_format_tag<FormatTag>,
+            detail::is_supported_path_spec<String>
+        >::type::value
+    >::type* /*dummy*/ = nullptr)
+{
+    using read_and_convert_t = detail::read_and_convert<default_color_converter>;
+    using reader_t = typename get_reader<String, FormatTag, read_and_convert_t>::type;
 
-    reader_t reader = make_reader( file_name
-                                 , tag
-                                 , detail::read_and_convert< default_color_converter >()
-                                 );
-
-    read_and_convert_image( reader
-                          , img
-                          );
+    reader_t reader = make_reader(file_name, tag, read_and_convert_t{});
+    read_and_convert_image(reader, img);
 }
 
 /// \brief Reads and color-converts an image. Image memory is allocated. Default color converter is used.
@@ -321,40 +245,27 @@ void read_and_convert_image( const String&    file_name
 /// \param img       The image in which the data is read into.
 /// \param tag       Defines the image format. Must satisfy is_format_tag metafunction.
 /// \throw std::ios_base::failure
-template < typename Device
-         , typename Image
-         , typename FormatTag
-         >
-inline
-void read_and_convert_image( Device&          device
-                           , Image&           img
-                           , const FormatTag& tag
-                           , typename enable_if< mpl::and_< detail::is_read_device< FormatTag
-                                                                                  , Device
-                                                                                  >
-                                                          , is_format_tag< FormatTag >
-                                                          >
-                                               >::type* /* ptr */ = nullptr
-                           )
-{
-    using reader_t = typename get_reader
+template <typename Device, typename Image, typename FormatTag>
+inline void read_and_convert_image(
+    Device& device,
+    Image& img,
+    FormatTag const& tag,
+    typename std::enable_if
+    <
+        mpl::and_
         <
-            Device,
-            FormatTag,
-            detail::read_and_convert<default_color_converter>
-        >::type;
+            detail::is_read_device<FormatTag, Device>,
+            is_format_tag<FormatTag>
+        >::type::value
+    >::type* /*dummy*/ = nullptr)
+{
+    using read_and_convert_t = detail::read_and_convert<default_color_converter>;
+    using reader_t = typename get_reader<Device, FormatTag, read_and_convert_t>::type;
 
-    reader_t reader = make_reader( device
-                                 , tag
-                                 , detail::read_and_convert< default_color_converter >()
-                                 );
-
-    read_and_convert_image( reader
-                          , img
-                          );
+    reader_t reader = make_reader(device, tag, read_and_convert_t{});
+    read_and_convert_image(reader, img);
 }
 
-} // namespace gil
-} // namespace boost
+}} // namespace boost::gil
 
 #endif

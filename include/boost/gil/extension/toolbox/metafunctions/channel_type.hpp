@@ -16,7 +16,7 @@
 #include <boost/gil/channel.hpp>
 
 #include <boost/mpl/at.hpp>
-#include <boost/utility/enable_if.hpp>
+#include <boost/utility/enable_if.hpp> // boost::lazy_enable_if
 
 namespace boost{ namespace gil {
 

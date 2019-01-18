@@ -19,9 +19,9 @@
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/front.hpp>
 #include <boost/type_traits.hpp>
-#include <boost/utility/enable_if.hpp>
 
 #include <functional>
+#include <type_traits>
 
 namespace boost { namespace gil {
 
@@ -112,9 +112,12 @@ public:
     pixel&                       operator=(const pixel& p)       { static_copy(p,*this); return *this; }
 
     // Construct from another compatible pixel type
-    template <typename Pixel>    pixel(const Pixel& p, typename enable_if_c<is_pixel<Pixel>::value>::type* dummy = nullptr) : parent_t(p) {
+    template <typename Pixel>
+    pixel(Pixel const& p,
+        typename std::enable_if<is_pixel<Pixel>::value>::type* /*dummy*/ = nullptr)
+        : parent_t(p)
+    {
         check_compatible<Pixel>();
-        boost::ignore_unused(dummy);
     }
 
     template <typename P> pixel& operator=(const P& p)           { assign(p, mpl::bool_<is_pixel<P>::value>()); return *this; }

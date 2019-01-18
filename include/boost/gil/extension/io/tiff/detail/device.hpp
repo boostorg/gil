@@ -15,7 +15,6 @@
 #include <boost/gil/io/device.hpp>
 
 #include <boost/mpl/size.hpp>
-#include <boost/utility/enable_if.hpp>
 
 #include <algorithm>
 #include <memory>

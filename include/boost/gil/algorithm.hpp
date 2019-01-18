@@ -18,13 +18,13 @@
 #include <boost/config.hpp>
 #include <boost/mpl/and.hpp>
 #include <boost/mpl/or.hpp>
-#include <boost/utility/enable_if.hpp>
 
 #include <algorithm>
 #include <cstddef>
 #include <cstring>
 #include <iterator>
 #include <memory>
+#include <type_traits>
 #include <typeinfo>
 
 namespace boost { namespace gil {
@@ -411,39 +411,53 @@ void fill_pixels(const View& img_view, const Value& val) {
 /// \brief invokes the destructor on every pixel of an image view
 
 namespace detail {
-template <typename It> BOOST_FORCEINLINE
-void destruct_range_impl( It first
-                        , It last
-                        , typename enable_if< mpl::and_< is_pointer< It >
-                                                       , mpl::not_< boost::has_trivial_destructor< typename std::iterator_traits<It>::value_type > >
-                                                       >
-                                            >::type* /*ptr*/ = 0
-                        )
+template <typename Iterator>
+BOOST_FORCEINLINE
+void destruct_range_impl(Iterator first, Iterator last,
+    typename std::enable_if
+    <
+        mpl::and_
+        <
+            is_pointer<Iterator>,
+            mpl::not_<std::is_trivially_destructible<typename std::iterator_traits<Iterator>::value_type>>
+        >::type::value
+    >::type* /*ptr*/ = 0)
 {
-    while (first!=last) {
+    while (first != last)
+    {
         first->~value_t();
         ++first;
     }
 }
 
-template <typename It> BOOST_FORCEINLINE
-void destruct_range_impl( It
-                        , It
-                        , typename enable_if< mpl::or_< mpl::not_< is_pointer< It > >
-                                                      , boost::has_trivial_destructor< typename std::iterator_traits< It >::value_type >
-                                                      >
-                                            >::type* /* ptr */ = nullptr)
-{}
-
-template <typename It> BOOST_FORCEINLINE
-void destruct_range(It first, It last) {
-    destruct_range_impl( first
-                       , last
-                       );
+template <typename Iterator>
+BOOST_FORCEINLINE
+void destruct_range_impl(Iterator first, Iterator last,
+    typename std::enable_if
+    <
+        mpl::or_
+        <
+            mpl::not_<is_pointer<Iterator>>,
+            std::is_trivially_destructible<typename std::iterator_traits<Iterator>::value_type>
+        >::type::value
+    >::type* /* ptr */ = nullptr)
+{
 }
 
-struct std_destruct_t {
-    template <typename It> void operator()(It first, It last) const { destruct_range(first,last); }
+template <typename Iterator>
+BOOST_FORCEINLINE
+void destruct_range(Iterator first, Iterator last)
+{
+    destruct_range_impl(first, last);
+}
+
+struct std_destruct_t
+{
+    template <typename Iterator>
+    void operator()(Iterator first, Iterator last) const
+    {
+        destruct_range(first,last);
+    }
 };
 
 /// destruct for planar iterators
@@ -602,13 +616,12 @@ struct has_trivial_pixel_constructor<View, true> : public boost::has_trivial_con
 } // namespace detail
 
 namespace detail {
-template< typename View, bool B > BOOST_FORCEINLINE
-void default_construct_pixels_impl( const View& img_view
-                                  , boost::enable_if< is_same< mpl::bool_< B >
-                                                             , mpl::false_
-                                                             >
-                                                    >* /* ptr */ = nullptr
-                                  )
+
+template<typename View, bool IsTriviallyConstructible>
+BOOST_FORCEINLINE
+void default_construct_pixels_impl(
+    View const& img_view,
+    std::enable_if<!IsTriviallyConstructible>* /* ptr */ = nullptr)
 {
     if( img_view.is_1d_traversable() )
     {

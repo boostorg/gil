@@ -13,53 +13,95 @@
 
 #include <boost/mpl/for_each.hpp>
 
+#include <type_traits>
+
 namespace boost { namespace gil { namespace detail {
 
 using channel_sizes_t = std::vector<tiff_bits_per_sample::type>;
 
-template< typename View, typename Channel, typename Enable = void > struct Format_Type {};
+template <typename View, typename Channel, typename Enable = void>
+struct Format_Type {};
 
 // is_bit_aligned< View >
-template< typename View, typename Channel > struct Format_Type< View
-                                                              , Channel
-                                                              , typename boost::enable_if< typename is_bit_aligned< typename get_pixel_type< View >::type >::type >::type
-                                                              >
+template <typename View, typename Channel>
+struct Format_Type
+<
+    View,
+    Channel,
+    typename std::enable_if
+    <
+        is_bit_aligned
+        <
+            typename get_pixel_type<View>::type
+        >::type::value
+    >::type
+>
 {
     static const int value = SAMPLEFORMAT_UINT;
 };
 
 // is_not_bit_aligned< View > && is_unsigned< Channel >
-template< typename View, typename Channel > struct Format_Type< View
-                                                              , Channel
-                                                              , typename boost::enable_if< mpl::and_< mpl::not_< typename is_bit_aligned< typename get_pixel_type< View >::type >::type >
-                                                                                                    , is_unsigned< Channel >
-                                                                                                    >
-                                                                                         >::type
-                                                              >
+template <typename View, typename Channel>
+struct Format_Type
+<
+    View,
+    Channel,
+    typename std::enable_if
+    <
+        mpl::and_
+        <
+            mpl::not_
+            <
+                typename is_bit_aligned<typename get_pixel_type<View>::type>::type
+            >,
+            is_unsigned<Channel>
+        >::type::value
+    >::type
+>
 {
     static const int value = SAMPLEFORMAT_UINT;
 };
 
 // is_not_bit_aligned< View > && is_signed< Channel >
-template< typename View, typename Channel > struct Format_Type< View
-                                                              , Channel
-                                                              , typename boost::enable_if< mpl::and_< mpl::not_< typename is_bit_aligned< typename get_pixel_type< View >::type >::type >
-                                                                                                    , is_signed< Channel >
-                                                                                                    >
-                                                                                         >::type
-                                                              >
+template <typename View, typename Channel>
+struct Format_Type
+<
+    View,
+    Channel,
+    typename std::enable_if
+    <
+        mpl::and_
+        <
+            mpl::not_
+            <
+                typename is_bit_aligned<typename get_pixel_type<View>::type>::type
+            >,
+            is_signed<Channel>
+        >::type::value
+    >::type
+>
 {
     static const int value = SAMPLEFORMAT_INT;
 };
 
 // is_not_bit_aligned< View > && is_floating_point< Channel >
-template< typename View, typename Channel > struct Format_Type< View
-                                                              , Channel
-                                                              , typename boost::enable_if< mpl::and_< mpl::not_< typename is_bit_aligned< typename get_pixel_type< View >::type >::type >
-                                                                                                    , is_floating_point< Channel >
-                                                                                                    >
-                                                                                         >::type
-                                                              >
+template <typename View, typename Channel>
+struct Format_Type
+<
+    View,
+    Channel,
+    typename std::enable_if
+    <
+        mpl::and_
+        <
+            mpl::not_
+            <
+                typename is_bit_aligned<typename get_pixel_type<View>::type>::type
+            >,
+            is_floating_point<Channel>
+        >::type::value
+    >::type
+>
 {
     static const int value = SAMPLEFORMAT_IEEEFP;
 };

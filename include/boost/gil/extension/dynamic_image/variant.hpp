@@ -19,7 +19,6 @@
 #include <boost/mpl/size.hpp>
 #include <boost/mpl/sizeof.hpp>
 #include <boost/mpl/transform.hpp>
-#include <boost/utility/enable_if.hpp>
 
 #include <algorithm>
 #include <cstddef>

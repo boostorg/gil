@@ -14,8 +14,6 @@
 #include <boost/gil/io/base.hpp>
 #include <boost/gil/io/device.hpp>
 
-#include <boost/utility/enable_if.hpp>
-
 #include <memory>
 #include <string>
 

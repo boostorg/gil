@@ -16,7 +16,6 @@
 
 #include <boost/mpl/if.hpp>
 #include <boost/type_traits/is_integral.hpp>
-#include <boost/utility/enable_if.hpp>
 
 #include <cstddef>
 #include <memory>
@@ -104,37 +103,31 @@ struct indexed_image_deref_fn : indexed_image_deref_fn_base< IndicesLoc
 };
 
 
-template< typename IndicesLoc
-        , typename PaletteLoc
-        >
-struct indexed_image_deref_fn< IndicesLoc
-                             , PaletteLoc
-                             , typename boost::enable_if< boost::is_integral< typename IndicesLoc::value_type > >::type
-                             > : indexed_image_deref_fn_base< IndicesLoc
-                                                            , PaletteLoc
-                                                            >
+template <typename IndicesLoc, typename PaletteLoc>
+struct indexed_image_deref_fn
+<
+    IndicesLoc,
+    PaletteLoc,
+    typename std::enable_if
+    <
+        std::is_integral<typename IndicesLoc::value_type>::value
+    >::type
+> : indexed_image_deref_fn_base<IndicesLoc, PaletteLoc>
 {
-    using base_t = indexed_image_deref_fn_base
-        <
-            IndicesLoc,
-            PaletteLoc
-        >;
+    using base_t = indexed_image_deref_fn_base<IndicesLoc, PaletteLoc>;
 
-    indexed_image_deref_fn()
-    : base_t()
-    {}
+    indexed_image_deref_fn() : base_t() {}
 
-    indexed_image_deref_fn( const typename base_t::indices_locator_t& indices_loc
-                          , const typename base_t::palette_locator_t& palette_loc
-                          )
-    : base_t( indices_loc
-            , palette_loc
-            )
-    {}
-
-    typename base_t::result_type operator()( const point_t& p ) const
+    indexed_image_deref_fn(
+        typename base_t::indices_locator_t const& indices_loc,
+        typename base_t::palette_locator_t const& palette_loc)
+        : base_t(indices_loc, palette_loc)
     {
-        return *this->_palette_loc.xy_at( *this->_indices_loc.xy_at( p ), 0 );
+    }
+
+    typename base_t::result_type operator()(point_t const& p) const
+    {
+        return *this->_palette_loc.xy_at(*this->_indices_loc.xy_at(p), 0);
     }
 };
 
