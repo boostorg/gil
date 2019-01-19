@@ -11,28 +11,32 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/type_traits/is_same.hpp>
 
-using namespace boost;
-using namespace gil;
+namespace bg = boost::gil;
 
-BOOST_AUTO_TEST_SUITE( toolbox_tests )
+BOOST_AUTO_TEST_SUITE(toolbox_tests)
 
-BOOST_AUTO_TEST_CASE( channel_view_test )
+BOOST_AUTO_TEST_CASE(channel_view_test)
 {
-    using image_t = rgb8_image_t;
+    using image_t = bg::rgb8_image_t;
+    image_t img(100, 100);
 
-    image_t img( 100, 100 );
+    using kth_channel_view_t
+        = bg::kth_channel_view_type<0, bg::rgb8_view_t::const_t>::type;
+    using channel_view_t
+        = bg::channel_view_type<bg::red_t, bg::rgb8_view_t::const_t>::type;
 
-    using view_t = kth_channel_view_type<0, rgb8_view_t::const_t>::type;
-    view_t red = kth_channel_view<0>( const_view( img ));
-
-    using channel_view_t = channel_view_type<red_t, rgb8_view_t::const_t>::type;
-    channel_view_t red_ = channel_view< red_t >( const_view( img ));
-
-    static_assert(is_same
+    static_assert(boost::is_same
         <
-            kth_channel_view_type<0, rgb8_view_t const>::type,
-            channel_view_type<red_t, rgb8_view_t const>::type
-        >::value, "");
+            kth_channel_view_t,
+            channel_view_t
+        >::value,
+        "");
+
+    kth_channel_view_t const kth0 = bg::kth_channel_view<0>(bg::const_view(img));
+    BOOST_TEST(kth0.num_channels() == 1);
+
+    channel_view_t const red = bg::channel_view<bg::red_t>(bg::const_view(img));
+    BOOST_TEST(red.num_channels() == 1);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
