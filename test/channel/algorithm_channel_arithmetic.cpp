@@ -27,6 +27,7 @@ void test_channel_arithmetic_mutable(boost::mpl::true_)
     using channel_value_t = typename fixture_t::channel_value_t;
     fixture_t f;
     channel_value_t const v = f.min_v_;
+    channel_value_t const one = 1;
 
     ++f.min_v_;
     f.min_v_++;
@@ -34,16 +35,16 @@ void test_channel_arithmetic_mutable(boost::mpl::true_)
     f.min_v_--;
     BOOST_TEST(v == f.min_v_);
 
-    f.min_v_ += 1;
-    f.min_v_ -= 1;
+    f.min_v_ += one;
+    f.min_v_ -= one;
     BOOST_TEST(v == f.min_v_);
 
-    f.min_v_ *= 1;
-    f.min_v_ /= 1;
+    f.min_v_ *= one;
+    f.min_v_ /= one;
     BOOST_TEST(v == f.min_v_);
 
-    f.min_v_ = 1; // assignable to scalar
-    BOOST_TEST(f.min_v_ == 1);
+    f.min_v_ = one; // assignable to scalar
+    BOOST_TEST(f.min_v_ == one);
     f.min_v_ = v; // and to value type
     BOOST_TEST(f.min_v_ == v);
 
