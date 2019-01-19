@@ -13,43 +13,14 @@ trigger:
   - azure-pipelines
 
 jobs:
-  - job: 'ubuntu1604_gcc54_cmake312'
+  # TODO: Restore CMake-based builds before mergin!
+
+  - job: 'ubuntu1604_gcc54_faber'
     pool:
       vmImage: 'ubuntu-16.04'
     steps:
       - script: which g++ && g++ --version
         displayName: 'Check GCC'
-      - template: .ci/azure-pipelines/steps-check-cmake.yml
-      - script: |
-          sudo apt-get install libjpeg-dev libpng16-dev libtiff5-dev libraw-dev
-        displayName: 'Install dependencies'
-      - template: .ci/azure-pipelines/steps-install-boost.yml
-      - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
-
-  - job: 'win2016_vs2017_cmake312'
-    pool:
-      vmImage: 'vs2017-win2016'
-    steps:
-      - template: .ci/azure-pipelines/steps-check-cmake.yml
-      - template: .ci/azure-pipelines/steps-install-conan.yml
-      - template: .ci/azure-pipelines/steps-install-boost.yml
-      - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
-        parameters:
-          use_conan: 'yes'
-
-  - job: 'macos1013_xcode91_cmake313'
-    pool:
-      vmImage: 'macOS-10.13'
-    steps:
-      - script: which clang++ && clang++ --version
-        displayName: 'Check clang'
-      - template: .ci/azure-pipelines/steps-check-cmake.yml
-      - template: .ci/azure-pipelines/steps-install-conan.yml
+      - template: .ci/azure-pipelines/steps-install-faber.yml
         parameters:
           python: python3
-      - template: .ci/azure-pipelines/steps-install-boost.yml
-        parameters:
-          toolset: darwin
-      - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
-        parameters:
-          use_conan: 'yes'

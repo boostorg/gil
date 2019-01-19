@@ -1,0 +1,21 @@
+# Azure Pipelines for Boost.GIL
+#
+# Copyright 2018-2019 Mateusz Loskot <mateusz at loskot dot net>
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or copy at http://boost.org/LICENSE_1_0.txt)
+#
+parameters:
+  python: 'python' # default, if not specified
+
+steps:
+  - bash: |
+      git clone --depth=1 https://github.com/stefanseefeld/faber.git
+    displayName: 'Download Faber'
+
+  - script: |
+      ${{ parameters.python }} --version
+      cd faber
+      sudo ${{ parameters.python }} setup.py install
+      faber --version
+    displayName: 'Install Faber on Unix'
+    condition: ne(variables['Agent.OS'], 'Windows_NT')
