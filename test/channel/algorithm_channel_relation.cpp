@@ -18,14 +18,18 @@ namespace fixture = boost::gil::test::fixture;
 template <typename ChannelFixtureBase>
 void test_channel_relation()
 {
-    fixture::channel<ChannelFixtureBase> f;
+    using fixture_t = fixture::channel<ChannelFixtureBase>;
+    using channel_value_t = typename fixture_t::channel_value_t;
+    channel_value_t const one = 1;
+
+    fixture_t f;
     BOOST_TEST(f.min_v_ <= f.max_v_);
     BOOST_TEST(f.max_v_ >= f.min_v_);
     BOOST_TEST(f.min_v_ < f.max_v_);
     BOOST_TEST(f.max_v_ > f.min_v_);
     BOOST_TEST(f.max_v_ != f.min_v_);
     BOOST_TEST(f.min_v_ == f.min_v_);
-    BOOST_TEST(f.min_v_ != 1); // comparable to integral
+    BOOST_TEST(f.min_v_ != one); // comparable to integral
 }
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(channel_value, Channel, fixture::channel_byte_types)
