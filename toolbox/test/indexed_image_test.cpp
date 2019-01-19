@@ -110,10 +110,6 @@ BOOST_AUTO_TEST_CASE(index_image_view_test)
     palette[2] = rgb8_pixel_t(70, 80, 90);
 
     // create image views from raw memory
-    using indices_loc_t = gray8_image_t::view_t::locator;
-    using palette_loc_t = rgb8_image_t::view_t::locator;
-
-
     auto indices_view = interleaved_view(width, height
         , (gray8_image_t::view_t::x_iterator) indices.data()
         , width // row size in bytes
