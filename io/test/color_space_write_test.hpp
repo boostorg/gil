@@ -10,6 +10,9 @@
 
 #include <boost/gil.hpp>
 
+#ifndef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
+#include <boost/core/ignore_unused.hpp>
+#endif
 #include <string>
 
 #include "cmp_view.hpp"
@@ -41,6 +44,11 @@ void color_space_write_test( const std::string& file_name_1
 
     cmp_view( view( rgb_1 ), view( rgb_2 ));
 #endif // BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
+
+#ifndef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
+    boost::ignore_unused(file_name_1);
+    boost::ignore_unused(file_name_2);
+#endif
 }
 
 #endif
