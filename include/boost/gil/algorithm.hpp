@@ -432,7 +432,7 @@ void destruct_range_impl(Iterator first, Iterator last,
 
 template <typename Iterator>
 BOOST_FORCEINLINE
-void destruct_range_impl(Iterator first, Iterator last,
+void destruct_range_impl(Iterator /*first*/, Iterator /*last*/,
     typename std::enable_if
     <
         mpl::or_
