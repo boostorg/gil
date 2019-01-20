@@ -1,15 +1,19 @@
 ![Boost Generic Image Library (GIL)](https://raw.githubusercontent.com/boostorg/gil/develop/doc/_static/gil.png)
 
-[![Licence](https://img.shields.io/badge/license-boost-4480cc.png)](http://www.boost.org/LICENSE_1_0.txt)
-[![Documentation](https://img.shields.io/badge/gil-documentation-4480cc.png)](http://boostorg.github.com/gil/)
-[![Wiki](https://img.shields.io/badge/gil-wiki-4480cc.png)](https://github.com/boostorg/gil/wiki)
-[![Mailing List](https://img.shields.io/badge/gil-mailing%20list-4eb899.png)](https://lists.boost.org/mailman/listinfo.cgi/boost-gil)
-[![Gitter](https://img.shields.io/badge/gil-chat%20on%20gitter-4eb899.png)](https://gitter.im/boostorg/gil)
+[![Language](https://img.shields.io/badge/C%2B%2B-11-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B#Standardization)
+[![License](https://img.shields.io/badge/license-BSL-blue.svg)](https://opensource.org/licenses/BSL-1.0)
+[![Documentation](https://img.shields.io/badge/gil-documentation-blue.svg)](http://boostorg.github.com/gil/)
+[![Wiki](https://img.shields.io/badge/gil-wiki-blue.svg)](https://github.com/boostorg/gil/wiki)
+[![Mailing List](https://img.shields.io/badge/gil-mailing%20list-4eb899.svg)](https://lists.boost.org/mailman/listinfo.cgi/boost-gil)
+[![Gitter](https://img.shields.io/badge/gil-chat%20on%20gitter-4eb899.svg)](https://gitter.im/boostorg/gil)
+[![Try it online](https://img.shields.io/badge/on-wandbox-blue.svg)](https://wandbox.org/permlink/isNgnMuqWcqTqzy7)
+[![Conan](https://img.shields.io/badge/on-conan-blue.svg)](https://bintray.com/bincrafters/public-conan/boost_gil%3Abincrafters)
+[![Vcpkg](https://img.shields.io/badge/on-vcpkg-blue.svg)](https://github.com/Microsoft/vcpkg/tree/master/ports/boost-gil)
 
    <br />   | AppVeyor        | Azure Pipelines | Travis CI       | CircleCI        | Regression
 ------------|-----------------|-----------------|-----------------|-----------------|------------
-**develop** | [![AppVeyor](https://ci.appveyor.com/api/projects/status/w4k19d8io2af168h/branch/develop?svg=true)](https://ci.appveyor.com/project/stefanseefeld/gil/branch/develop) | [![Azure](https://dev.azure.com/boostorg/gil/_apis/build/status/boostorg.gil?branchName=develop)](https://dev.azure.com/boostorg/gil/_build/latest?definitionId=4?branchName=develop) | [![Travis](https://travis-ci.org/boostorg/gil.svg?branch=develop)](https://travis-ci.org/boostorg/gil) | [![CircleCI](https://circleci.com/gh/boostorg/gil/tree/develop.svg?style=shield)](https://circleci.com/gh/boostorg/workflows/gil/tree/develop) | [![gil](https://img.shields.io/badge/gil-develop-4480cc.png)](http://www.boost.org/development/tests/develop/developer/gil.html)
-**master**  | [![AppVeyor](https://ci.appveyor.com/api/projects/status/w4k19d8io2af168h?svg=true)](https://ci.appveyor.com/project/stefanseefeld/gil/branch/master) | [![Azure](https://dev.azure.com/boostorg/gil/_apis/build/status/boostorg.gil?branchName=master)](https://dev.azure.com/boostorg/gil/_build/latest?definitionId=4?branchName=master) | [![Travis](https://travis-ci.org/boostorg/gil.svg?branch=master)](https://travis-ci.org/boostorg/gil) | [![CircleCI](https://circleci.com/gh/boostorg/gil/tree/master.svg?style=shield)](https://circleci.com/gh/boostorg/workflows/gil/tree/master) | [![gil](https://img.shields.io/badge/gil-master-4480cc.png)](http://www.boost.org/development/tests/master/developer/gil.html)
+**develop** | [![AppVeyor](https://ci.appveyor.com/api/projects/status/w4k19d8io2af168h/branch/develop?svg=true)](https://ci.appveyor.com/project/stefanseefeld/gil/branch/develop) | [![Azure](https://dev.azure.com/boostorg/gil/_apis/build/status/boostorg.gil?branchName=develop)](https://dev.azure.com/boostorg/gil/_build/latest?definitionId=4?branchName=develop) | [![Travis](https://travis-ci.org/boostorg/gil.svg?branch=develop)](https://travis-ci.org/boostorg/gil) | [![CircleCI](https://circleci.com/gh/boostorg/gil/tree/develop.svg?style=shield)](https://circleci.com/gh/boostorg/workflows/gil/tree/develop) | [![gil](https://img.shields.io/badge/gil-develop-blue.svg)](http://www.boost.org/development/tests/develop/developer/gil.html)
+**master**  | [![AppVeyor](https://ci.appveyor.com/api/projects/status/w4k19d8io2af168h?svg=true)](https://ci.appveyor.com/project/stefanseefeld/gil/branch/master) | [![Azure](https://dev.azure.com/boostorg/gil/_apis/build/status/boostorg.gil?branchName=master)](https://dev.azure.com/boostorg/gil/_build/latest?definitionId=4?branchName=master) | [![Travis](https://travis-ci.org/boostorg/gil.svg?branch=master)](https://travis-ci.org/boostorg/gil) | [![CircleCI](https://circleci.com/gh/boostorg/gil/tree/master.svg?style=shield)](https://circleci.com/gh/boostorg/workflows/gil/tree/master) | [![gil](https://img.shields.io/badge/gil-master-blue.svg)](http://www.boost.org/development/tests/master/developer/gil.html)
  msvc++     | VS2017 15.9 | VS2017 15.8 |   |   |
  clang      |   | Xcode 9.4.1 | 3.9, 5.0, Xcode 9.4.1 | 3.9, 4.0, 5.0 |
  gcc        |   | 5.4 | 5.5, 6.5, 7.4 | 4.8-9, 5.1-5, 6.1-4, 7.1-3, 8.2 |
