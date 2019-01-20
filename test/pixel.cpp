@@ -106,10 +106,11 @@ struct do_basic_test : public C1, public C2
         // Test swap if both are mutable and if their value type is the same
         // (We know the second one is mutable)
         using p1_ref = typename boost::add_reference<typename C1::type>::type;
-        test_swap(
-            boost::mpl::bool_<
+        test_swap(boost::mpl::bool_
+            <
                 pixel_reference_is_mutable<p1_ref>::value &&
-                boost::is_same<pixel1_value_t,pixel2_value_t>::value> ());
+                std::is_same<pixel1_value_t,pixel2_value_t>::value
+            >());
     }
 
     void test_swap(boost::mpl::false_) {}

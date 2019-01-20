@@ -22,6 +22,7 @@
 #include <boost/mpl/vector.hpp>
 
 #include <functional>
+#include <type_traits>
 
 namespace boost { namespace gil {
 
@@ -177,7 +178,7 @@ private:
 private:
     static void check_gray()
     {
-        static_assert(is_same<typename Layout::color_space_t, gray_t>::value, "");
+        static_assert(std::is_same<typename Layout::color_space_t, gray_t>::value, "");
     }
 
     template <typename Channel> void assign(const Channel& chan, mpl::false_) const { check_gray(); gil::at_c<0>(*this)=chan; }
