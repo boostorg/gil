@@ -14,7 +14,6 @@
 #include <boost/gil/extension/io/tiff.hpp>
 
 #include <boost/test/unit_test.hpp>
-#include <boost/filesystem.hpp>
 
 #include "paths.hpp"
 

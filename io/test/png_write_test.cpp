@@ -12,7 +12,6 @@
 
 #include <boost/gil/extension/io/png.hpp>
 
-#include <boost/filesystem/convenience.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <cstdint>
@@ -26,7 +25,6 @@ using namespace std;
 using namespace boost;
 using namespace gil;
 using namespace boost::gil::detail;
-namespace fs = boost::filesystem;
 
 using tag_t = png_tag;
 

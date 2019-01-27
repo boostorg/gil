@@ -9,8 +9,23 @@
 #define BOOST_GIL_IO_PATH_SPEC_HPP
 
 #ifdef BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
+// Disable warning: conversion to 'std::atomic<int>::__integral_type {aka int}' from 'long int' may alter its value
+#if defined(BOOST_CLANG)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wshorten-64-to-32"
+#elif defined(BOOST_GCC)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+#endif
+
 #define BOOST_FILESYSTEM_VERSION 3
 #include <boost/filesystem/path.hpp>
+
+#if defined(BOOST_CLANG)
+#pragma clang diagnostic pop
+#elif defined(BOOST_GCC)
+#pragma GCC diagnostic pop
+#endif
 #endif // BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
 
 #include <boost/mpl/bool.hpp> // for complete types of true_ and false_
