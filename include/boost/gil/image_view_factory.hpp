@@ -16,6 +16,7 @@
 #include <boost/assert.hpp>
 
 #include <cstddef>
+#include <type_traits>
 
 /// Methods for creating shallow image views from raw pixel data or from other image views -
 /// flipping horizontally or vertically, axis-aligned rotation, a subimage, subsampled
@@ -91,7 +92,7 @@ namespace detail {
 template <typename HomogeneousView>
 typename detail::channel_pointer_type<HomogeneousView>::type interleaved_view_get_raw_data(const HomogeneousView& view) {
     static_assert(!is_planar<HomogeneousView>::value && view_is_basic<HomogeneousView>::value, "");
-    static_assert(boost::is_pointer<typename HomogeneousView::x_iterator>::value, "");
+    static_assert(std::is_pointer<typename HomogeneousView::x_iterator>::value, "");
 
     return &gil::at_c<0>(view(0,0));
 }
