@@ -19,6 +19,7 @@
 #include <boost/mpl/vector_c.hpp>
 
 #include <cstdint>
+#include <type_traits>
 
 namespace boost{ namespace gil {
 
@@ -102,11 +103,11 @@ struct default_color_converter_impl<ycbcr_601__t, rgb_t>
 	void operator()( const SRCP& src, DSTP& dst ) const
 	{
         using dst_channel_t = typename channel_type<DSTP>::type;
-        convert( src, dst
-               , typename boost::is_same< typename mpl::int_< sizeof( dst_channel_t ) >::type
-                                        , typename mpl::int_<1>::type
-                                        >::type()
-               );
+        convert(src, dst, typename std::is_same
+            <
+                typename mpl::int_<sizeof(dst_channel_t)>::type,
+                typename mpl::int_<1>::type
+            >::type());
 	}
 
 private:

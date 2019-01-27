@@ -9,7 +9,8 @@
 #include <boost/gil/extension/toolbox/metafunctions/channel_view.hpp>
 
 #include <boost/test/unit_test.hpp>
-#include <boost/type_traits/is_same.hpp>
+
+#include <type_traits>
 
 namespace bg = boost::gil;
 
@@ -25,7 +26,7 @@ BOOST_AUTO_TEST_CASE(channel_view_test)
     using channel_view_t
         = bg::channel_view_type<bg::red_t, bg::rgb8_view_t::const_t>::type;
 
-    static_assert(boost::is_same
+    static_assert(std::is_same
         <
             kth_channel_view_t,
             channel_view_t
