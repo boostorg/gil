@@ -11,7 +11,6 @@
 
 #include <boost/gil/extension/io/tiff.hpp>
 
-#include <boost/filesystem/convenience.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <fstream>

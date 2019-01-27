@@ -14,7 +14,6 @@
 #include <boost/gil/extension/io/jpeg.hpp>
 
 #include <boost/test/unit_test.hpp>
-#include <boost/filesystem/path.hpp>
 
 #include <fstream>
 
@@ -24,7 +23,6 @@
 
 using namespace boost;
 using namespace gil;
-using namespace filesystem;
 
 using tag_t = jpeg_tag;
 
@@ -77,11 +75,12 @@ BOOST_AUTO_TEST_CASE( read_image_info_test )
     }
 
     {
-        using backend_t = get_reader_backend<path, tag_t>::type;
+        using backend_t = get_reader_backend<boost::filesystem::path, tag_t>::type;
 
-        backend_t backend = boost::gil::read_image_info( path( jpeg_filename )
-                                                       , tag_t()
-                                                       );
+        backend_t backend =
+            boost::gil::read_image_info(
+                 boost::filesystem::path(jpeg_filename),
+                 tag_t());
 
         BOOST_CHECK_EQUAL( backend._info._width , 1000u );
         BOOST_CHECK_EQUAL( backend._info._height,  600u );

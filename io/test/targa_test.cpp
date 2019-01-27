@@ -11,7 +11,6 @@
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/targa.hpp>
 
-#include <boost/filesystem/convenience.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <fstream>

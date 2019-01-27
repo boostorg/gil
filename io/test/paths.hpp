@@ -8,13 +8,20 @@
 #ifndef BOOST_GIL_IO_TEST_PATHS_HPP
 #define BOOST_GIL_IO_TEST_PATHS_HPP
 
+#if defined(BOOST_GCC)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion" // conversion to 'std::atomic<int>::__integral_type {aka int}' from 'long int' may alter its value
+#endif
+
+#define BOOST_FILESYSTEM_VERSION 3
 #include <boost/filesystem.hpp>
 
-namespace fs = boost::filesystem;
+#if defined(BOOST_GCC)
+#pragma GCC diagnostic pop
+#endif
 
 // `base` holds the path to ../.., i.e. the directory containing `test_images`
-static const std::string base =
-  (fs::absolute(fs::path(__FILE__)).parent_path().parent_path().string()) + "/";
+static const std::string base = (boost::filesystem::absolute(boost::filesystem::path(__FILE__)).parent_path().parent_path().string()) + "/";
 
 static const std::string bmp_in  = base + "test_images/bmp/";
 static const std::string bmp_out = base + "output/bmp/";

@@ -12,7 +12,6 @@
 
 #include <boost/gil/extension/io/png.hpp>
 
-#include <boost/filesystem/convenience.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include "paths.hpp"

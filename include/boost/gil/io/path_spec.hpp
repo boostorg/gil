@@ -9,8 +9,17 @@
 #define BOOST_GIL_IO_PATH_SPEC_HPP
 
 #ifdef BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
+#if defined(BOOST_GCC)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion" // conversion to 'std::atomic<int>::__integral_type {aka int}' from 'long int' may alter its value
+#endif
+
 #define BOOST_FILESYSTEM_VERSION 3
 #include <boost/filesystem/path.hpp>
+
+#if defined(BOOST_GCC)
+#pragma GCC diagnostic pop
+#endif
 #endif // BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
 
 #include <boost/mpl/bool.hpp> // for complete types of true_ and false_
