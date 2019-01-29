@@ -63,6 +63,8 @@ GENERATE_APPLY_FWD_OPS generates for every N functions that look like this (for 
 #define GIL_FWD_CASE_WITH_INFO(z, N, SUM)       case N: return op(*gil_reinterpret_cast<typename mpl::deref<T##N>::type*>(&bits), info);
 #define GIL_FWD_CONST_CASE_WITH_INFO(z, N, SUM) case N: return op(*gil_reinterpret_cast_c<const typename mpl::deref<T##N>::type*>(&bits), info);
 
+#if defined(BOOST_NO_CXX14_RETURN_TYPE_DEDUCTION)
+
 #define GIL_APPLY_FWD_OP(z, N, text)                                                                        \
     template <> struct apply_operation_fwd_fn<BOOST_PP_ADD(N,1)> {                                      \
         template <typename Types, typename Bits, typename UnaryOp>                                     \
@@ -162,6 +164,108 @@ template <typename Types1, typename Types2, typename Bits1, typename Bits2, type
 static typename Op::result_type BOOST_FORCEINLINE apply_operation_base(const Bits1& bits1, std::size_t index1, const Bits2& bits2, std::size_t index2, Op op) {
     return apply_operation_basec<Types2>(bits2,index2,detail::reduce_bind2<Types1,Bits1,Op>(bits1,index1,op));
 }
+
+#else
+
+#define GIL_APPLY_FWD_OP(z, N, text)                                                                        \
+    template <> struct apply_operation_fwd_fn<BOOST_PP_ADD(N,1)> {                                      \
+        template <typename Types, typename Bits, typename UnaryOp>                                     \
+        auto apply(Bits& bits, std::size_t index, UnaryOp op) const {        \
+            typedef typename mpl::begin<Types>::type                                             \
+            BOOST_PP_REPEAT(N, GIL_FWD_TYPEDEFS, BOOST_PP_EMPTY)                                            \
+            T##N;                                                                                       \
+            switch (index) {                                                                            \
+                BOOST_PP_REPEAT(BOOST_PP_ADD(N,1), GIL_FWD_CASE, BOOST_PP_EMPTY)                            \
+            }                                                                                           \
+            throw;                                                                                      \
+        }                                                                                               \
+        template <typename Types, typename Bits, typename UnaryOp>                                     \
+        auto applyc(const Bits& bits, std::size_t index, UnaryOp op) const { \
+            typedef typename mpl::begin<Types>::type                                             \
+            BOOST_PP_REPEAT(N, GIL_FWD_TYPEDEFS, BOOST_PP_EMPTY)                                            \
+            T##N;                                                                                       \
+            switch (index) {                                                                            \
+                BOOST_PP_REPEAT(BOOST_PP_ADD(N,1), GIL_FWD_CONST_CASE,BOOST_PP_EMPTY)                       \
+            }                                                                                           \
+            throw;                                                                                      \
+        }                                                                                               \
+        template <typename Types, typename Info, typename Bits, typename UnaryOp>                                     \
+        auto apply(Bits& bits, std::size_t index, const Info& info, UnaryOp op) const {        \
+            typedef typename mpl::begin<Types>::type                                             \
+            BOOST_PP_REPEAT(N, GIL_FWD_TYPEDEFS, BOOST_PP_EMPTY)                                            \
+            T##N;                                                                                       \
+            switch (index) {                                                                            \
+                BOOST_PP_REPEAT(BOOST_PP_ADD(N,1), GIL_FWD_CASE_WITH_INFO, BOOST_PP_EMPTY)                            \
+            }                                                                                           \
+            throw;                                                                                      \
+        }                                                                                               \
+        template <typename Types, typename Bits, typename Info, typename UnaryOp>                                     \
+        auto applyc(const Bits& bits, std::size_t index, const Info& info, UnaryOp op) const { \
+            typedef typename mpl::begin<Types>::type                                             \
+            BOOST_PP_REPEAT(N, GIL_FWD_TYPEDEFS, BOOST_PP_EMPTY)                                            \
+            T##N;                                                                                       \
+            switch (index) {                                                                            \
+                BOOST_PP_REPEAT(BOOST_PP_ADD(N,1), GIL_FWD_CONST_CASE_WITH_INFO,BOOST_PP_EMPTY)                       \
+            }                                                                                           \
+            throw;                                                                                      \
+        }                                                                                               \
+    };
+
+#define GIL_GENERATE_APPLY_FWD_OPS(N) BOOST_PP_REPEAT(N, GIL_APPLY_FWD_OP, BOOST_PP_EMPTY)
+
+namespace detail {
+	template <std::size_t N> struct apply_operation_fwd_fn {};
+
+	// Create specializations of apply_operation_fn for each N 0..100
+	GIL_GENERATE_APPLY_FWD_OPS(99)
+} // namespace detail
+
+// unary application
+template <typename Types, typename Bits, typename Op>
+auto BOOST_FORCEINLINE apply_operation_basec(const Bits& bits, std::size_t index, Op op) {
+	return detail::apply_operation_fwd_fn<mpl::size<Types>::value>().template applyc<Types>(bits, index, op);
+}
+
+// unary application
+template <typename Types, typename Bits, typename Op>
+auto BOOST_FORCEINLINE apply_operation_base(Bits& bits, std::size_t index, Op op) {
+	return detail::apply_operation_fwd_fn<mpl::size<Types>::value>().template apply<Types>(bits, index, op);
+}
+
+namespace detail {
+	template <typename T2, typename Op>
+	struct reduce_bind1 {
+		const T2& _t2;
+		Op&  _op;
+
+		typedef typename Op::result_type result_type;
+
+		reduce_bind1(const T2& t2, Op& op) : _t2(t2), _op(op) {}
+
+		template <typename T1> BOOST_FORCEINLINE result_type operator()(const T1& t1) { return _op(t1, _t2); }
+	};
+
+	template <typename Types1, typename Bits1, typename Op>
+	struct reduce_bind2 {
+		const Bits1& _bits1;
+		std::size_t _index1;
+		Op&  _op;
+
+		reduce_bind2(const Bits1& bits1, std::size_t index1, Op& op) : _bits1(bits1), _index1(index1), _op(op) {}
+
+		template <typename T2> BOOST_FORCEINLINE auto operator()(const T2& t2) {
+			return apply_operation_basec<Types1>(_bits1, _index1, reduce_bind1<T2, Op>(t2, _op));
+		}
+	};
+} // namespace detail
+
+// Binary application by applying on each dimension separately
+template <typename Types1, typename Types2, typename Bits1, typename Bits2, typename Op>
+static auto BOOST_FORCEINLINE apply_operation_base(const Bits1& bits1, std::size_t index1, const Bits2& bits2, std::size_t index2, Op op) {
+	return apply_operation_basec<Types2>(bits2, index2, detail::reduce_bind2<Types1, Bits1, Op>(bits1, index1, op));
+}
+
+#endif //defined(BOOST_NO_CXX14_RETURN_TYPE_DEDUCTION)
 
 #undef GIL_FWD_TYPEDEFS
 #undef GIL_FWD_CASE

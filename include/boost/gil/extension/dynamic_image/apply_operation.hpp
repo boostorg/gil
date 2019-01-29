@@ -25,6 +25,8 @@
 
 namespace boost { namespace gil {
 
+#if defined(BOOST_NO_CXX14_RETURN_TYPE_DEDUCTION)
+
 /// \ingroup Variant
 /// \brief Invokes a generic mutable operation (represented as a unary function object) on a variant
 template <typename Types, typename UnaryOp>
@@ -58,6 +60,41 @@ auto apply_operation(
     return apply_operation_base<Types1, Types2>(
         arg1._bits, arg1._index, arg2._bits, arg2._index, op);
 }
+
+#else
+
+/// \ingroup Variant
+/// \brief Invokes a generic mutable operation (represented as a unary function object) on a variant
+template <typename Types, typename UnaryOp>
+BOOST_FORCEINLINE
+auto apply_operation(variant<Types>& arg, UnaryOp op)
+{
+    return apply_operation_base<Types>(arg._bits, arg._index, op);
+}
+
+/// \ingroup Variant
+/// \brief Invokes a generic constant operation (represented as a unary function object) on a variant
+template <typename Types, typename UnaryOp>
+BOOST_FORCEINLINE
+auto apply_operation(variant<Types> const& arg, UnaryOp op)
+{
+    return apply_operation_basec<Types>(arg._bits, arg._index, op);
+}
+
+/// \ingroup Variant
+/// \brief Invokes a generic constant operation (represented as a binary function object) on two variants
+template <typename Types1, typename Types2, typename BinaryOp>
+BOOST_FORCEINLINE
+auto apply_operation(
+    variant<Types1> const& arg1,
+    variant<Types2> const& arg2,
+    BinaryOp op)
+{
+    return apply_operation_base<Types1, Types2>(
+        arg1._bits, arg1._index, arg2._bits, arg2._index, op);
+}
+
+#endif //defined(BOOST_NO_CXX14_RETURN_TYPE_DEDUCTION)
 
 }}  // namespace boost::gil
 
