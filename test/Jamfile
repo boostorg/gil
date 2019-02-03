@@ -18,6 +18,7 @@ project
   : requirements
     <include>$(BOOST_ROOT)
     <include>.
+    <define>BOOST_GIL_USE_CONCEPT_CHECK
   ;
 
 run promote_integral.cpp /boost/test//boost_unit_test_framework : : : <link>shared:<define>BOOST_TEST_DYN_LINK=1 ;
