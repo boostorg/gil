@@ -87,7 +87,8 @@ target_compile_definitions(gil_compile_options
     $<$<CXX_COMPILER_ID:MSVC>:_SCL_SECURE_NO_DEPRECATE>
     $<$<CXX_COMPILER_ID:MSVC>:_CRT_SECURE_NO_WARNINGS>
     $<$<CXX_COMPILER_ID:MSVC>:NOMINMAX>
-    $<$<CXX_COMPILER_ID:MSVC>:BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE>)
+    $<$<CXX_COMPILER_ID:MSVC>:BOOST_CONFIG_SUPPRESS_OUTDATED_MESSAGE>
+    BOOST_GIL_USE_CONCEPT_CHECK)
 
 #-----------------------------------------------------------------------------
 # Dependency target
