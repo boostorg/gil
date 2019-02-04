@@ -77,11 +77,11 @@ public:
     template <typename T> explicit any_image(const T& obj)               : parent_t(obj) {}
     template <typename T> explicit any_image(T& obj, bool do_swap)       : parent_t(obj,do_swap) {}
     any_image(const any_image& v)                                        : parent_t((const parent_t&)v)    {}
-    template <typename Types> any_image(const any_image<Types>& v)       : parent_t((const variant<Types>&)v)    {}
+    template <typename Types> any_image(const any_image<Types>& v)       : parent_t((const typename make_variant_over<Types>::type&)v)    {}
 
     template <typename T> any_image& operator=(const T& obj)                  { parent_t::operator=(obj); return *this; }
     any_image&                       operator=(const any_image& v)            { parent_t::operator=((const parent_t&)v); return *this;}
-    template <typename Types> any_image& operator=(const any_image<Types>& v) { parent_t::operator=((const variant<Types>&)v); return *this;}
+    template <typename Types> any_image& operator=(const any_image<Types>& v) { parent_t::operator=((const typename make_variant_over<Types>::type&)v); return *this;}
 
     void recreate(const point_t& dims, unsigned alignment=1)
     {
