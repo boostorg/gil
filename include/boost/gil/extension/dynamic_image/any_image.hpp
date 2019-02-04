@@ -9,6 +9,7 @@
 #define BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_ANY_IMAGE_HPP
 
 #include <boost/gil/extension/dynamic_image/any_image_view.hpp>
+#include <boost/gil/extension/dynamic_image/apply_operation.hpp>
 
 #include <boost/gil/image.hpp>
 
@@ -63,8 +64,8 @@ namespace detail {
 /// In particular, its \p view and \p const_view methods return \p any_image_view, which does not fully model ImageViewConcept. See \p any_image_view for more.
 ////////////////////////////////////////////////////////////////////////////////////////
 template <typename ImageTypes>
-class any_image : public variant<ImageTypes> {
-    using parent_t = variant<ImageTypes>;
+class any_image : public make_variant_over<ImageTypes>::type {
+    using parent_t = typename make_variant_over<ImageTypes>::type;
 public:
     using const_view_t = any_image_view<typename detail::images_get_const_views_t<ImageTypes>::type>;
     using view_t = any_image_view<typename detail::images_get_views_t<ImageTypes>::type>;

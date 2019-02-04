@@ -8,7 +8,7 @@
 #ifndef BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_ANY_IMAGE_VIEW_HPP
 #define BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_ANY_IMAGE_VIEW_HPP
 
-#include <boost/gil/extension/dynamic_image/variant.hpp>
+#include <boost/variant.hpp>
 
 #include <boost/gil/image.hpp>
 #include <boost/gil/image_view.hpp>
@@ -57,8 +57,8 @@ namespace detail {
 /// To perform an algorithm on any_image_view, put the algorithm in a function object and invoke it by calling \p apply_operation(runtime_view, algorithm_fn);
 ////////////////////////////////////////////////////////////////////////////////////////
 template <typename ImageViewTypes>
-class any_image_view : public variant<ImageViewTypes> {
-    using parent_t = variant<ImageViewTypes>;
+class any_image_view : public make_variant_over<ImageViewTypes>::type {
+    using parent_t = typename make_variant_over<ImageViewTypes>::type;
 public:
     using const_t = any_image_view<typename detail::views_get_const_t<ImageViewTypes>::type>;
     using x_coord_t = std::ptrdiff_t;

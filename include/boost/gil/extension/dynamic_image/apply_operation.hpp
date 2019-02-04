@@ -8,8 +8,7 @@
 #ifndef BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_APPLY_OPERATION_HPP
 #define BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_APPLY_OPERATION_HPP
 
-#include <boost/gil/extension/dynamic_image/apply_operation_base.hpp>
-#include <boost/gil/extension/dynamic_image/variant.hpp>
+#include <boost/variant/apply_visitor.hpp>
 
 #ifdef BOOST_GIL_DOXYGEN_ONLY
 #undef BOOST_GIL_REDUCE_CODE_BLOAT
@@ -32,7 +31,7 @@ BOOST_FORCEINLINE
 auto apply_operation(variant<Types>& arg, UnaryOp op)
     -> typename UnaryOp::result_type
 {
-    return apply_operation_base<Types>(arg._bits, arg._index ,op);
+    return apply_visitor(op, arg);
 }
 
 /// \ingroup Variant
@@ -42,7 +41,7 @@ BOOST_FORCEINLINE
 auto apply_operation(variant<Types> const& arg, UnaryOp op)
     -> typename UnaryOp::result_type
 {
-    return apply_operation_basec<Types>(arg._bits, arg._index ,op);
+    return apply_visitor(op, arg);
 }
 
 /// \ingroup Variant
@@ -55,8 +54,8 @@ auto apply_operation(
     BinaryOp op)
     -> typename BinaryOp::result_type
 {
-    return apply_operation_base<Types1, Types2>(
-        arg1._bits, arg1._index, arg2._bits, arg2._index, op);
+    return apply_visitor(
+        op, arg1, arg2);
 }
 
 }}  // namespace boost::gil
