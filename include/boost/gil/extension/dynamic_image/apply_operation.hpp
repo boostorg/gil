@@ -29,7 +29,9 @@ namespace boost { namespace gil {
 template <typename Types, typename UnaryOp>
 BOOST_FORCEINLINE
 auto apply_operation(variant<Types>& arg, UnaryOp op)
+#if defined(BOOST_NO_CXX14_DECLTYPE_AUTO) || defined(BOOST_NO_CXX11_DECLTYPE_N3276)
     -> typename UnaryOp::result_type
+#endif
 {
     return apply_visitor(op, arg);
 }
@@ -39,7 +41,9 @@ auto apply_operation(variant<Types>& arg, UnaryOp op)
 template <typename Types, typename UnaryOp>
 BOOST_FORCEINLINE
 auto apply_operation(variant<Types> const& arg, UnaryOp op)
+#if defined(BOOST_NO_CXX14_DECLTYPE_AUTO) || defined(BOOST_NO_CXX11_DECLTYPE_N3276)
     -> typename UnaryOp::result_type
+#endif
 {
     return apply_visitor(op, arg);
 }
@@ -52,7 +56,9 @@ auto apply_operation(
     variant<Types1> const& arg1,
     variant<Types2> const& arg2,
     BinaryOp op)
+#if defined(BOOST_NO_CXX14_DECLTYPE_AUTO) || defined(BOOST_NO_CXX11_DECLTYPE_N3276)
     -> typename BinaryOp::result_type
+#endif
 {
     return apply_visitor(
         op, arg1, arg2);
