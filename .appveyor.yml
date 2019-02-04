@@ -94,6 +94,7 @@ before_build:
   - git submodule --quiet update --init libs/preprocessor
   - git submodule --quiet update --init libs/test
   - git submodule --quiet update --init libs/type_traits
+  - git submodule --quiet update --init libs/variant
   ## Transitive (of GIL tests too)
   - git submodule --quiet update --init libs/atomic
   - git submodule --quiet update --init libs/bind
