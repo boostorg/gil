@@ -13,11 +13,16 @@
 #include <exception>
 #include <iostream>
 
-#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#if defined(BOOST_CLANG)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wfloat-equal"
+#elif BOOST_GCC >= 40700
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wfloat-equal"
+#elif BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
 #pragma warning(push)
 #pragma warning(disable:4512) //assignment operator could not be generated
 #endif
-
 
 using namespace boost::gil;
 using namespace std;
