@@ -8,7 +8,27 @@
 #ifndef BOOST_GIL_CONCEPTS_CONCEPTS_CHECK_HPP
 #define BOOST_GIL_CONCEPTS_CONCEPTS_CHECK_HPP
 
+#if defined(BOOST_CLANG)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wfloat-equal"
+#pragma clang diagnostic ignored "-Wuninitialized"
+#endif
+
+#if defined(BOOST_GCC) && (BOOST_GCC >= 40600)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wfloat-equal"
+#pragma GCC diagnostic ignored "-Wuninitialized"
+#endif
+
 #include <boost/concept_check.hpp>
+
+#if defined(BOOST_CLANG)
+#pragma clang diagnostic pop
+#endif
+
+#if defined(BOOST_GCC) && (BOOST_GCC >= 40600)
+#pragma GCC diagnostic pop
+#endif
 
 // TODO: Document BOOST_GIL_USE_CONCEPT_CHECK here
 

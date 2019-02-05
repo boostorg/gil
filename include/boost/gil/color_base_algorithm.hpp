@@ -241,11 +241,12 @@ template <int N>
 struct element_recursion
 {
 
-#if defined(BOOST_GCC)
+#if defined(BOOST_GCC) && (BOOST_GCC >= 40600)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wconversion"
 #pragma GCC diagnostic ignored "-Wfloat-equal"
 #endif
+
     template <typename P1,typename P2>
     static bool static_equal(const P1& p1, const P2& p2)
     {
@@ -273,7 +274,8 @@ struct element_recursion
         element_recursion<N-1>::static_generate(dst,op);
         semantic_at_c<N-1>(dst)=op();
     }
-#if defined(BOOST_GCC)
+
+#if defined(BOOST_GCC) && (BOOST_GCC >= 40600)
 #pragma GCC diagnostic pop
 #endif
 
