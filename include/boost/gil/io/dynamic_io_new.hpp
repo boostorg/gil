@@ -25,7 +25,7 @@ struct construct_matched_t {
     static bool apply(any_image<Images>& im,Pred pred) {
         if (pred.template apply<typename mpl::at_c<Images,N-1>::type>()) {
             typename mpl::at_c<Images,N-1>::type x;
-            im.move_in(x);
+            im = std::move(x);
             return true;
         } else return construct_matched_t<N-1>::apply(im,pred);
     }

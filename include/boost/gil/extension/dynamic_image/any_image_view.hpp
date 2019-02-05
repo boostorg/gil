@@ -8,7 +8,7 @@
 #ifndef BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_ANY_IMAGE_VIEW_HPP
 #define BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_ANY_IMAGE_VIEW_HPP
 
-#include <boost/gil/extension/dynamic_image/variant.hpp>
+#include <boost/variant.hpp>
 
 #include <boost/gil/image.hpp>
 #include <boost/gil/image_view.hpp>
@@ -57,8 +57,8 @@ namespace detail {
 /// To perform an algorithm on any_image_view, put the algorithm in a function object and invoke it by calling \p apply_operation(runtime_view, algorithm_fn);
 ////////////////////////////////////////////////////////////////////////////////////////
 template <typename ImageViewTypes>
-class any_image_view : public variant<ImageViewTypes> {
-    using parent_t = variant<ImageViewTypes>;
+class any_image_view : public make_variant_over<ImageViewTypes>::type {
+    using parent_t = typename make_variant_over<ImageViewTypes>::type;
 public:
     using const_t = any_image_view<typename detail::views_get_const_t<ImageViewTypes>::type>;
     using x_coord_t = std::ptrdiff_t;
@@ -68,11 +68,11 @@ public:
     any_image_view()                                                          : parent_t() {}
     template <typename T> explicit any_image_view(const T& obj)               : parent_t(obj) {}
     any_image_view(const any_image_view& v)                                   : parent_t((const parent_t&)v)    {}
-    template <typename Types> any_image_view(const any_image_view<Types>& v)  : parent_t((const variant<Types>&)v)    {}
+    template <typename Types> any_image_view(const any_image_view<Types>& v)  : parent_t((const typename make_variant_over<Types>::type&)v)    {}
 
     template <typename T> any_image_view&     operator=(const T& obj)                   { parent_t::operator=(obj); return *this; }
     any_image_view&                           operator=(const any_image_view& v)        { parent_t::operator=((const parent_t&)v); return *this;}
-    template <typename Types> any_image_view& operator=(const any_image_view<Types>& v) { parent_t::operator=((const variant<Types>&)v); return *this;}
+    template <typename Types> any_image_view& operator=(const any_image_view<Types>& v) { parent_t::operator=((const typename make_variant_over<Types>::type&)v); return *this;}
 
     std::size_t num_channels()  const { return apply_operation(*this, detail::any_type_get_num_channels()); }
     point_t     dimensions()    const { return apply_operation(*this, detail::any_type_get_dimensions()); }

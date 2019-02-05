@@ -11,7 +11,6 @@
 #include <boost/gil/extension/dynamic_image/algorithm.hpp>
 #include <boost/gil/extension/dynamic_image/any_image.hpp>
 #include <boost/gil/extension/dynamic_image/apply_operation.hpp>
-#include <boost/gil/extension/dynamic_image/variant.hpp>
 #include <boost/gil/extension/dynamic_image/image_view_factory.hpp>
 #include <boost/gil.hpp> // FIXME: Include what you use!
 
