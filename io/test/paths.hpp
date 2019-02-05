@@ -12,7 +12,9 @@
 #if defined(BOOST_CLANG)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wshorten-64-to-32"
-#elif defined(BOOST_GCC)
+#endif
+
+#if defined(BOOST_GCC) && (BOOST_GCC >= 40600)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wconversion"
 #endif
@@ -22,7 +24,9 @@
 
 #if defined(BOOST_CLANG)
 #pragma clang diagnostic pop
-#elif defined(BOOST_GCC)
+#endif
+
+#if defined(BOOST_GCC) && (BOOST_GCC >= 40600)
 #pragma GCC diagnostic pop
 #endif
 

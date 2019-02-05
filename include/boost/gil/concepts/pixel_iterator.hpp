@@ -21,7 +21,12 @@
 #include <cstddef>
 #include <iterator>
 
-#if BOOST_GCC >= 40700
+#if defined(BOOST_CLANG)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-local-typedefs"
+#endif
+
+#if defined(BOOST_GCC) && (BOOST_GCC >= 40600)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-local-typedefs"
 #endif
@@ -381,7 +386,11 @@ struct MutableIteratorAdaptorConcept
 
 }} // namespace boost::gil
 
-#if BOOST_GCC >= 40700
+#if defined(BOOST_CLANG)
+#pragma clang diagnostic pop
+#endif
+
+#if defined(BOOST_GCC) && (BOOST_GCC >= 40600)
 #pragma GCC diagnostic pop
 #endif
 

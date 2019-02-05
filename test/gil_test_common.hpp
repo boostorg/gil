@@ -11,10 +11,13 @@
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4702) // unreachable code
-#elif defined(__clang__) && defined(__has_warning)
+#endif
+
+#if defined(BOOST_CLANG)
 #pragma clang diagnostic push
-#elif defined(__GNUC__) && \
-    !(defined(__INTEL_COMPILER) || defined(__ICL) || defined(__ICC) || defined(__ECC))
+#endif
+
+#if defined(BOOST_GCC) && (BOOST_GCC >= 40600)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wconversion"
 #pragma GCC diagnostic ignored "-Wfloat-equal"
@@ -25,10 +28,13 @@
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
-#elif defined(__clang__) && defined(__has_warning)
+#endif
+
+#if defined(BOOST_CLANG)
 #pragma clang diagnostic pop
-#elif defined(__GNUC__) && \
-    !(defined(__INTEL_COMPILER) || defined(__ICL) || defined(__ICC) || defined(__ECC))
+#endif
+
+#if defined(BOOST_GCC) && (BOOST_GCC >= 40600)
 #pragma GCC diagnostic pop
 #endif
 
