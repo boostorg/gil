@@ -6,6 +6,18 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
+#include <boost/config.hpp>
+
+#if defined(BOOST_CLANG)
+#pragma clang diagnostic push
+#pragma GCC diagnostic ignored "-Wuninitialized"
+#endif
+
+#if defined(BOOST_GCC) && (BOOST_GCC >= 40600)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wuninitialized"
+#endif
+
 #include <boost/gil/concepts.hpp>
 #include <cstdint>
 

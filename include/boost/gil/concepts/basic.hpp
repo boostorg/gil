@@ -8,20 +8,24 @@
 #ifndef BOOST_GIL_CONCEPTS_BASIC_HPP
 #define BOOST_GIL_CONCEPTS_BASIC_HPP
 
-#include <boost/gil/concepts/concept_check.hpp>
-
-#include <type_traits>
-#include <utility> // std::swap
+#include <boost/config.hpp>
 
 #if defined(BOOST_CLANG)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-local-typedefs"
+#pragma clang diagnostic ignored "-Wuninitialized"
 #endif
 
 #if defined(BOOST_GCC) && (BOOST_GCC >= 40600)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-local-typedefs"
+#pragma GCC diagnostic ignored "-Wuninitialized"
 #endif
+
+#include <boost/gil/concepts/concept_check.hpp>
+
+#include <type_traits>
+#include <utility> // std::swap
 
 namespace boost { namespace gil {
 
