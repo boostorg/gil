@@ -20,7 +20,7 @@ BOOST_AUTO_TEST_SUITE(toolbox_tests)
 BOOST_AUTO_TEST_CASE(index_image_test)
 {
     auto const pixel_generator = []() -> bg::rgb8_pixel_t {
-        static std::uint16_t i = 0;
+        static int i = 0;
         i = (i > 255) ? 0 : (i + 1);
         auto const i8 = static_cast<std::uint8_t>(i);
         return bg::rgb8_pixel_t(i8, i8, i8);
@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_CASE(index_image_test)
 
         generate_pixels(img.get_indices_view(), []() -> bg::gray8_pixel_t
         {
-            static std::uint16_t i = 0;
+            static int i = 0;
             i = (i > 255) ? 0 : (i + 1);
             auto const i8 = static_cast<std::uint8_t>(i);
             return bg::gray8_pixel_t(i8);
@@ -71,7 +71,7 @@ BOOST_AUTO_TEST_CASE(index_image_test)
 
         generate_pixels(img.get_indices_view(), []() -> uint8_t
         {
-            static uint16_t i = 0;
+            static int i = 0;
             i = (i > 255) ? 0 : (i + 1);
             return static_cast<std::uint8_t>(i);
         });
