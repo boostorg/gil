@@ -14,6 +14,17 @@
 #include <boost/gil/extension/numeric/sampler.hpp>
 
 #include <boost/assert.hpp>
+
+#if defined(BOOST_CLANG)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wfloat-equal"
+#endif
+
+#if defined(BOOST_GCC) && (BOOST_GCC >= 40600)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wfloat-equal"
+#endif
+
 #define BOOST_TEST_MAIN
 #include <boost/test/unit_test.hpp>
 

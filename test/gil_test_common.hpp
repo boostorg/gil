@@ -8,6 +8,8 @@
 #ifndef BOOST_GIL_TEST_GIL_TEST_COMMON_HPP
 #define BOOST_GIL_TEST_GIL_TEST_COMMON_HPP
 
+#include <boost/config.hpp>
+
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4702) // unreachable code
@@ -15,6 +17,7 @@
 
 #if defined(BOOST_CLANG)
 #pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wfloat-equal"
 #endif
 
 #if defined(BOOST_GCC) && (BOOST_GCC >= 40600)
