@@ -50,7 +50,8 @@ struct ForwardIteratorIsMutableConcept
 {
     void constraints()
     {
-        *i++ = *i; // require postincrement and assignment
+        auto const tmp = *i;
+        *i++ = tmp; // require postincrement and assignment
     }
     TT i;
 };
@@ -62,7 +63,8 @@ struct BidirectionalIteratorIsMutableConcept
     void constraints()
     {
         gil_function_requires< ForwardIteratorIsMutableConcept<TT>>();
-        *i-- = *i; // require postdecrement and assignment
+        auto const tmp = *i;
+        *i-- = tmp; // require postdecrement and assignment
     }
     TT i;
 };
