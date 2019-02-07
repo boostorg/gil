@@ -11,6 +11,7 @@
 
 #include <boost/gil/extension/io/tiff.hpp>
 
+#include <boost/mp11.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <fstream>
@@ -333,10 +334,9 @@ BOOST_AUTO_TEST_CASE( subimage_test )
 
 BOOST_AUTO_TEST_CASE( dynamic_image_test )
 {
-    // This test has been disabled for now because of
-    // compilation issues with MSVC10.
+    // FIXME: This test has been disabled for now because of compilation issues with MSVC10.
 
-    using my_img_types = mpl::vector
+    using my_img_types = mp11::mp_list
         <
             gray8_image_t,
             gray16_image_t,

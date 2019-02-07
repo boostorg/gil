@@ -7,8 +7,6 @@
 //
 #include <boost/test/unit_test.hpp>
 
-#include <boost/type_traits/is_same.hpp>
-
 #include <boost/gil.hpp>
 #include <boost/gil/extension/toolbox/color_converters/gray_to_rgba.hpp>
 

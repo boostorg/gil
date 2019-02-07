@@ -21,6 +21,8 @@
 #include <boost/gil/io/row_buffer_helper.hpp>
 #include <boost/gil/io/typedefs.hpp>
 
+#include <type_traits>
+
 namespace boost { namespace gil {
 
 #if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
@@ -232,7 +234,7 @@ private:
 
         using it_t = typename row_buffer_helper_t::iterator_t;
 
-        using is_read_and_convert_t = typename is_same
+        using is_read_and_convert_t = typename std::is_same
             <
                 ConversionPolicy,
                 detail::read_and_no_convert

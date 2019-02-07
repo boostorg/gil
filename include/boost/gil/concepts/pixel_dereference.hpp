@@ -15,9 +15,9 @@
 #include <boost/gil/concepts/detail/type_traits.hpp>
 
 #include <boost/concept_check.hpp>
-#include <boost/type_traits.hpp>
 
 #include <cstddef>
+#include <type_traits>
 
 #if defined(BOOST_CLANG)
 #pragma clang diagnostic push
@@ -93,8 +93,8 @@ struct PixelDereferenceAdaptorArchetype
     using argument_type = P;
     using result_type = P;
     using const_t = PixelDereferenceAdaptorArchetype;
-    using value_type = typename remove_reference<P>::type;
-    using reference = typename add_reference<P>::type;
+    using value_type = typename std::remove_reference<P>::type;
+    using reference = typename std::add_lvalue_reference<P>::type;
     using const_reference = reference;
 
     static const bool is_mutable = false;

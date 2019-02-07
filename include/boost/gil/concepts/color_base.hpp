@@ -14,7 +14,7 @@
 #include <boost/gil/concepts/fwd.hpp>
 
 #include <boost/core/ignore_unused.hpp>
-#include <boost/type_traits.hpp>
+#include <type_traits>
 
 #if defined(BOOST_CLANG)
 #pragma clang diagnostic push
@@ -38,11 +38,11 @@ struct homogeneous_color_base;
 
 template <int K, typename E, typename L, int N>
 auto at_c(detail::homogeneous_color_base<E, L, N>& p)
-    -> typename add_reference<E>::type;
+    -> typename std::add_lvalue_reference<E>::type;
 
 template <int K, typename E, typename L, int N>
 auto at_c(detail::homogeneous_color_base<E, L, N> const& p)
-    -> typename add_reference<typename add_const<E>::type>::type;
+    -> typename std::add_lvalue_reference<typename std::add_const<E>::type>::type;
 
 template <typename P, typename C, typename L>
 struct packed_pixel;
@@ -144,7 +144,7 @@ struct ColorBaseConcept
         gil_function_requires<ColorSpaceConcept<color_space_t>>();
 
         using channel_mapping_t = typename ColorBase::layout_t::channel_mapping_t;
-        // TODO: channel_mapping_t must be an MPL RandomAccessSequence
+        // TODO: channel_mapping_t must be an Boost.MP11-compatible random access sequence
 
         static const int num_elements = size<ColorBase>::value;
 
@@ -152,7 +152,7 @@ struct ColorBaseConcept
         using RN = typename kth_element_const_reference_type<ColorBase, num_elements - 1>::type;
 
         RN r = gil::at_c<num_elements - 1>(cb);
-        ignore_unused_variable_warning(r);
+        boost::ignore_unused(r);
 
         // functions that work for every pixel (no need to require them)
         semantic_at_c<0>(cb);
@@ -234,7 +234,7 @@ struct HomogeneousColorBaseConcept
         using T0 = typename kth_element_type<ColorBase, 0>::type;
         using TN = typename kth_element_type<ColorBase, num_elements - 1>::type;
 
-        static_assert(is_same<T0, TN>::value, "");   // better than nothing
+        static_assert(std::is_same<T0, TN>::value, "");   // better than nothing
 
         using R0 = typename kth_element_const_reference_type<ColorBase, 0>::type;
         R0 r = dynamic_at_c(cb, 0);
@@ -303,7 +303,7 @@ struct ColorBasesCompatibleConcept
 {
     void constraints()
     {
-        static_assert(is_same
+        static_assert(std::is_same
             <
                 typename ColorBase1::layout_t::color_space_t,
                 typename ColorBase2::layout_t::color_space_t

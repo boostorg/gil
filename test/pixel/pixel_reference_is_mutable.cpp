@@ -5,13 +5,8 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-//#include <boost/gil/concepts/pixel.hpp>
-//#include <boost/gil/metafunctions.hpp>
-//#include <boost/gil/pixel.hpp>
-//#include <boost/gil/typedefs.hpp>
 #include <boost/gil.hpp>
 #include <boost/mp11.hpp>
-#include <boost/mp11/mpl.hpp>
 
 #include "test_fixture.hpp"
 

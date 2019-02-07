@@ -10,7 +10,7 @@
 
 #include <boost/gil/concepts/concept_check.hpp>
 
-#include <boost/type_traits.hpp>
+#include <type_traits>
 
 #if defined(BOOST_CLANG)
 #pragma clang diagnostic push
@@ -29,7 +29,7 @@ namespace boost { namespace gil {
 /// \code
 /// concept ColorSpaceConcept<MPLRandomAccessSequence CS>
 /// {
-///    // An MPL Random Access Sequence, whose elements are color tags
+///    // Boost.MP11-compatible list, whose elements are color tags.
 /// };
 /// \endcode
 template <typename CS>
@@ -37,7 +37,7 @@ struct ColorSpaceConcept
 {
     void constraints()
     {
-        // An MPL Random Access Sequence, whose elements are color tags
+        // Boost.MP11-compatible list, whose elements are color tags
 
         // TODO: Is this incomplete?
     }
@@ -45,9 +45,7 @@ struct ColorSpaceConcept
 
 // Models ColorSpaceConcept
 template <typename CS1, typename CS2>
-struct color_spaces_are_compatible : is_same<CS1, CS2>
-{
-};
+struct color_spaces_are_compatible : std::is_same<CS1, CS2> {};
 
 /// \ingroup ColorSpaceAndLayoutConcept
 /// \brief Two color spaces are compatible if they are the same
@@ -71,7 +69,7 @@ struct ColorSpacesCompatibleConcept
 /// \code
 /// concept ChannelMappingConcept<MPLRandomAccessSequence CM>
 /// {
-///     // An MPL Random Access Sequence, whose elements
+///     // Boost.MP11-compatible list, whose elements
 ///     // model MPLIntegralConstant representing a permutation
 /// };
 /// \endcode
@@ -80,7 +78,7 @@ struct ChannelMappingConcept
 {
     void constraints()
     {
-        // An MPL Random Access Sequence, whose elements model
+        // Boost.MP11-compatible list, whose elements model
         // MPLIntegralConstant representing a permutation.
 
         // TODO: Is this incomplete?

@@ -9,25 +9,26 @@
 #include <boost/gil/gray.hpp>
 #include <boost/gil/rgb.hpp>
 #include <boost/gil/rgba.hpp>
-#include <boost/mpl/int.hpp>
+
 #include <boost/core/typeinfo.hpp>
+
+#include <type_traits>
 
 #define BOOST_TEST_MODULE test_channel_traits
 #include "unit_test.hpp"
 
 namespace gil = boost::gil;
-namespace mpl = boost::mpl;
 
 namespace {
 
 template <int N>
 using color_base = gil::detail::homogeneous_color_base<std::uint8_t, gil::gray_layout_t, N>;
 
-mpl::int_<0> e0;
-mpl::int_<1> e1;
-mpl::int_<2> e2;
-mpl::int_<3> e3;
-mpl::int_<4> e4;
+std::integral_constant<int, 0> e0;
+std::integral_constant<int, 1> e1;
+std::integral_constant<int, 2> e2;
+std::integral_constant<int, 3> e3;
+std::integral_constant<int, 4> e4;
 
 } // unnamed namespace
 
@@ -71,7 +72,6 @@ BOOST_AUTO_TEST_CASE(homogeneous_color_base_3_default_constructor)
     BOOST_TEST(f.at(e1) == std::uint8_t{0});
     BOOST_TEST(f.at(e2) == std::uint8_t{0});
 }
-
 
 BOOST_AUTO_TEST_CASE(homogeneous_color_base_3_value_constructor)
 {

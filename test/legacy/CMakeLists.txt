@@ -37,10 +37,13 @@ foreach(_name
 endforeach()
 
 # Add extra source files accompanying image.cpp
-target_sources(legacy_image
-  PRIVATE
+foreach(_name
+  image)
+  set(_target legacy_${_name})
+  target_sources(${_target} PRIVATE
     error_if.cpp
     sample_image.cpp)
-add_test(test.legacy.image
-  legacy_image
-  ${CMAKE_CURRENT_SOURCE_DIR}/gil_reference_checksums.txt)
+  add_test(test.legacy.${_name}
+    ${_target}
+    ${CMAKE_CURRENT_SOURCE_DIR}/gil_reference_checksums.txt)
+endforeach()
