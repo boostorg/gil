@@ -7,8 +7,15 @@
 #
 foreach(_name
   collection
-  image_view_concepts)
-  set(_target test_core_${_name})
+  concepts
+  derived_view_type
+  is_planar
+  view_is_basic
+  view_is_mutable
+  view_is_step
+  view_type
+  view_type_from_pixel)
+  set(_target test_core_image_view_${_name})
 
   add_executable(${_target} "")
   target_sources(${_target} PRIVATE ${_name}.cpp)

@@ -14,5 +14,13 @@ project
     <include>..
     ;
 
-compile image_view_concepts.cpp ;
+compile concepts.cpp ;
+compile derived_view_type.cpp ;
+compile is_planar.cpp ;
+compile view_is_basic.cpp ;
+compile view_is_mutable.cpp ;
+compile view_is_step.cpp ;
+compile view_type.cpp ;
+compile view_type_from_pixel.cpp ;
+
 run collection.cpp ;
