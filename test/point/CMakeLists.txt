@@ -6,9 +6,9 @@
 # http://www.boost.org/LICENSE_1_0.txt)
 #
 foreach(_name
-  point
-  point_concepts)
-  set(_target test_core_${_name})
+  concepts
+  point)
+  set(_target test_core_point_${_name})
 
   add_executable(${_target} "")
   target_sources(${_target} PRIVATE ${_name}.cpp)
