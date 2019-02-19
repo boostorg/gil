@@ -12,7 +12,7 @@ import testing ;
 
 using libjpeg : : : : true ; # work around bug on master
 
-project boost-gil-example
+project
     : # requirements
     ;
 

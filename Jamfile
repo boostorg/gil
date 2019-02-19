@@ -9,7 +9,7 @@
 
 # TODO: Remove -Wno-unused below once tests have been cleaned up, and no longer use of assert() macro, etc.
 
-project boost-gil
+project
     :
     requirements
         # MSVC: Since VS2017, default is -std:c++14, so no explicit switch is required.
@@ -28,7 +28,7 @@ project boost-gil
         <toolset>darwin:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wcast-align -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter "
     ;
 
-variant ubsan_integer
+variant gil_ubsan_integer
     : release
     :
     <cxxflags>"-std=c++11 -Wno-unused -fstrict-aliasing -fno-omit-frame-pointer -fsanitize=integer -fno-sanitize-recover=integer -fsanitize-blacklist=libs/gil/.ci/blacklist.supp"
@@ -37,7 +37,7 @@ variant ubsan_integer
     <define>BOOST_USE_ASAN=1
     ;
 
-variant ubsan_nullability
+variant gil_ubsan_nullability
     : release
     :
     <cxxflags>"-std=c++11 -Wno-unused -fstrict-aliasing -fno-omit-frame-pointer -fsanitize=nullability -fno-sanitize-recover=nullability -fsanitize-blacklist=libs/gil/.ci/blacklist.supp"
@@ -46,7 +46,7 @@ variant ubsan_nullability
     <define>BOOST_USE_ASAN=1
     ;
 
-variant ubsan_undefined
+variant gil_ubsan_undefined
     : release
     :
     <cxxflags>"-std=c++11 -Wno-unused -fstrict-aliasing -fno-omit-frame-pointer -fsanitize=undefined -fno-sanitize-recover=undefined -fsanitize-blacklist=libs/gil/.ci/blacklist.supp"

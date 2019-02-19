@@ -15,6 +15,14 @@ platform: x64
 
 shallow_clone: true
 
+env:
+  global:
+    - if [ "$TRAVIS_BRANCH" == "master" ]; then
+          BOOST_BRANCH=master;
+      else
+          BOOST_BRANCH=develop;
+      fi
+
 environment:
   matrix:
     - TOOLSET: msvc-14.1
@@ -69,10 +77,13 @@ install:
   - if NOT DEFINED GENERATOR set VCPKG_I=C:\Tools\vcpkg\installed\%TRIPLET%\include
   - if NOT DEFINED GENERATOR set VCPKG_L=C:\Tools\vcpkg\installed\%TRIPLET%\lib
   - if NOT DEFINED GENERATOR set LIBPNG_NAME=libpng16
+  - set BOOST_BRANCH=develop
+  - if "%APPVEYOR_REPO_BRANCH%" == "master" set BOOST_BRANCH=master
 
 before_build:
-  - git clone --quiet -b develop --depth 1 https://github.com/boostorg/boost.git c:\projects\boost
+  - git clone --quiet -b %BOOST_BRANCH% --depth 1 https://github.com/boostorg/boost.git c:\projects\boost
   - cd c:\projects\boost
+  - git branch
   # List all (recursive) dependencies explicitly to control any new additions
   - git submodule --quiet update --init tools/build
   - git submodule --quiet update --init tools/boost_install

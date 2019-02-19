@@ -302,10 +302,14 @@ jobs:
     steps:
       - checkout
       - run:
+          # CONTRIBUTING.md: Modular Boost Library Maintenance guide, for more realistic
+          # test environment, recommends to develop and test individual Boost library
+          # against other Boost libraries as defined by the Boost super-project master branch
           name: Checkout Boost superproject
           command: |
             git clone -b master --depth 1 https://github.com/boostorg/boost.git
             cd boost
+            git branch
             git submodule --quiet update --init tools/build
             git submodule --quiet update --init tools/boost_install
             git submodule --quiet update --init tools/boostdep

@@ -29,7 +29,9 @@ run pixel_iterator.cpp error_if.cpp ;
 
 build-project algorithm ;
 build-project channel ;
+build-project image ;
 build-project image_view ;
+build-project pixel ;
 build-project point ;
 
 alias perf : [ run performance.cpp ] ;
