@@ -9,6 +9,7 @@
 #define BOOST_GIL_METAFUNCTIONS_HPP
 
 #include <boost/gil/channel.hpp>
+#include <boost/gil/dynamic_step.hpp>
 #include <boost/gil/concepts.hpp>
 
 #include <boost/mpl/accumulate.hpp>

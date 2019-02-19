@@ -123,45 +123,6 @@ struct PixelIteratorIsMutableConcept
 
 } // namespace detail
 
-/// \ingroup PixelIteratorConcept
-/// \brief Concept for iterators, locators and views that can define a type just like the given iterator/locator/view, except it supports runtime specified step along the X navigation
-///
-/// \code
-/// concept HasDynamicXStepTypeConcept<typename T>
-/// {
-///     typename dynamic_x_step_type<T>;
-///         where Metafunction<dynamic_x_step_type<T> >;
-/// };
-/// \endcode
-template <typename T>
-struct HasDynamicXStepTypeConcept
-{
-    void constraints()
-    {
-        using type = typename dynamic_x_step_type<T>::type;
-        ignore_unused_variable_warning(type{});
-    }
-};
-
-/// \ingroup PixelLocatorConcept
-/// \brief Concept for locators and views that can define a type just like the given locator or view, except it supports runtime specified step along the Y navigation
-/// \code
-/// concept HasDynamicYStepTypeConcept<typename T>
-/// {
-///     typename dynamic_y_step_type<T>;
-///         where Metafunction<dynamic_y_step_type<T> >;
-/// };
-/// \endcode
-template <typename T>
-struct HasDynamicYStepTypeConcept
-{
-    void constraints()
-    {
-        using type = typename dynamic_y_step_type<T>::type;
-        ignore_unused_variable_warning(type{});
-    }
-};
-
 /// \ingroup PixelLocatorConcept
 /// \brief Concept for locators and views that can define a type just like the given locator or view, except X and Y is swapped
 /// \code

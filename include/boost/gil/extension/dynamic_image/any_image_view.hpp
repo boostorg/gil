@@ -8,11 +8,12 @@
 #ifndef BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_ANY_IMAGE_VIEW_HPP
 #define BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_ANY_IMAGE_VIEW_HPP
 
-#include <boost/variant.hpp>
-
+#include <boost/gil/dynamic_step.hpp>
 #include <boost/gil/image.hpp>
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/point.hpp>
+
+#include <boost/variant.hpp>
 
 namespace boost { namespace gil {
 
@@ -20,7 +21,7 @@ namespace detail {
     template <typename View> struct get_const_t { using type = typename View::const_t; };
     template <typename Views> struct views_get_const_t : public mpl::transform<Views, get_const_t<mpl::_1> > {};
 }
-template <typename View> struct dynamic_xy_step_type;
+
 template <typename View> struct dynamic_xy_step_transposed_type;
 
 namespace detail {

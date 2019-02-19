@@ -8,6 +8,7 @@
 #ifndef BOOST_GIL_IMAGE_VIEW_HPP
 #define BOOST_GIL_IMAGE_VIEW_HPP
 
+#include <boost/gil/dynamic_step.hpp>
 #include <boost/gil/iterator_from_2d.hpp>
 
 #include <cstddef>

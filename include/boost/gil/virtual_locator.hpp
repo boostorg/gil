@@ -8,6 +8,7 @@
 #ifndef BOOST_GIL_VIRTUAL_LOCATOR_HPP
 #define BOOST_GIL_VIRTUAL_LOCATOR_HPP
 
+#include <boost/gil/dynamic_step.hpp>
 #include <boost/gil/position_iterator.hpp>
 
 #include <boost/assert.hpp>

@@ -9,6 +9,7 @@
 #define BOOST_GIL_PIXEL_ITERATOR_HPP
 
 #include <boost/gil/concepts.hpp>
+#include <boost/gil/dynamic_step.hpp>
 #include <boost/gil/utilities.hpp>
 #include <boost/gil/pixel.hpp>
 
@@ -19,8 +20,6 @@ namespace boost { namespace gil {
 //forwarded declaration (as this file is included in step_iterator.hpp)
 template <typename Iterator>
 class memory_based_step_iterator;
-
-template <typename Iterator> struct dynamic_x_step_type;
 
 /// \brief metafunction predicate determining whether the given iterator is a plain one or an adaptor over another iterator.
 /// Examples of adaptors are the step iterator and the dereference iterator adaptor.

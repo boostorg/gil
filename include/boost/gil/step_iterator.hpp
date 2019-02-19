@@ -8,6 +8,7 @@
 #ifndef BOOST_GIL_STEP_ITERATOR_HPP
 #define BOOST_GIL_STEP_ITERATOR_HPP
 
+#include <boost/gil/dynamic_step.hpp>
 #include <boost/gil/pixel_iterator.hpp>
 #include <boost/gil/pixel_iterator_adaptor.hpp>
 #include <boost/gil/utilities.hpp>
