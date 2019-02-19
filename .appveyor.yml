@@ -15,14 +15,6 @@ platform: x64
 
 shallow_clone: true
 
-env:
-  global:
-    - if [ "$TRAVIS_BRANCH" == "master" ]; then
-          BOOST_BRANCH=master;
-      else
-          BOOST_BRANCH=develop;
-      fi
-
 environment:
   matrix:
     - TOOLSET: msvc-14.1
