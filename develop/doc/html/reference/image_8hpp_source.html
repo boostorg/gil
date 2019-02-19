@@ -31,6 +31,7 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -514,7 +515,7 @@
 <div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;}}  <span class="comment">// namespace boost::gil</span></div>
 <div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;</div>
 <div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="structboost_1_1gil_1_1byte__to__memunit_html"><div class="ttname"><a href="structboost_1_1gil_1_1byte__to__memunit.html">boost::gil::byte_to_memunit</a></div><div class="ttdef"><b>Definition:</b> pixel_iterator.hpp:111</div></div>
+<div class="ttc" id="structboost_1_1gil_1_1byte__to__memunit_html"><div class="ttname"><a href="structboost_1_1gil_1_1byte__to__memunit.html">boost::gil::byte_to_memunit</a></div><div class="ttdef"><b>Definition:</b> pixel_iterator.hpp:110</div></div>
 <div class="ttc" id="group___image_view_s_t_l_algorithms_uninitialized_fill_pixels_html_gac76b077c590caecf1e37fcaba34eec62"><div class="ttname"><a href="group___image_view_s_t_l_algorithms_uninitialized_fill_pixels.html#gac76b077c590caecf1e37fcaba34eec62">boost::gil::uninitialized_fill_pixels</a></div><div class="ttdeci">void uninitialized_fill_pixels(const View &amp;img_view, const Value &amp;val)</div><div class="ttdoc">std::uninitialized_fill for image views. Does not support planar heterogeneous views. If an exception is thrown destructs any in-place copy-constructed pixels </div><div class="ttdef"><b>Definition:</b> algorithm.hpp:537</div></div>
 <div class="ttc" id="group___packed_channel_reference_model_html_gaa0bd7927a859ab0e44df1df898b68e7c"><div class="ttname"><a href="group___packed_channel_reference_model.html#gaa0bd7927a859ab0e44df1df898b68e7c">std::swap</a></div><div class="ttdeci">void swap(const boost::gil::packed_channel_reference&lt; BF, FB, NB, M &gt; x, R &amp;y)</div><div class="ttdoc">swap for packed_channel_reference </div><div class="ttdef"><b>Definition:</b> channel.hpp:485</div></div>
 <div class="ttc" id="group___image_view_s_t_l_algorithms_equal_pixels_html_gaf92f26110623cac64ee3c1165b9781be"><div class="ttname"><a href="group___image_view_s_t_l_algorithms_equal_pixels.html#gaf92f26110623cac64ee3c1165b9781be">boost::gil::equal_pixels</a></div><div class="ttdeci">BOOST_FORCEINLINE bool equal_pixels(const View1 &amp;v1, const View2 &amp;v2)</div><div class="ttdoc">std::equal for image views </div><div class="ttdef"><b>Definition:</b> algorithm.hpp:951</div></div>
@@ -525,16 +526,16 @@
 <div class="ttc" id="group___image_model_html_ga633557dbbff2d21c784b73412b47bb38"><div class="ttname"><a href="group___image_model.html#ga633557dbbff2d21c784b73412b47bb38">boost::gil::view</a></div><div class="ttdeci">const image&lt; Pixel, IsPlanar, Alloc &gt;::view_t &amp; view(image&lt; Pixel, IsPlanar, Alloc &gt; &amp;img)</div><div class="ttdoc">Returns the non-constant-pixel view of an image. </div><div class="ttdef"><b>Definition:</b> image.hpp:460</div></div>
 <div class="ttc" id="group___image_view_s_t_l_algorithms_uninitialized_copy_pixels_html_gac0963c67027b3d50eb96f511e5a0c9fb"><div class="ttname"><a href="group___image_view_s_t_l_algorithms_uninitialized_copy_pixels.html#gac0963c67027b3d50eb96f511e5a0c9fb">boost::gil::uninitialized_copy_pixels</a></div><div class="ttdeci">void uninitialized_copy_pixels(const View1 &amp;view1, const View2 &amp;view2)</div><div class="ttdoc">std::uninitialized_copy for image views. Does not support planar heterogeneous views. If an exception is thrown destructs any in-place copy-constructed objects </div><div class="ttdef"><b>Definition:</b> algorithm.hpp:719</div></div>
 <div class="ttc" id="group___image_model_html_ga0505866ffb317dcd320e74be9874f950"><div class="ttname"><a href="group___image_model.html#ga0505866ffb317dcd320e74be9874f950">boost::gil::const_view</a></div><div class="ttdeci">const image&lt; Pixel, IsPlanar, Alloc &gt;::const_view_t const_view(const image&lt; Pixel, IsPlanar, Alloc &gt; &amp;img)</div><div class="ttdoc">Returns the constant-pixel view of an image. </div><div class="ttdef"><b>Definition:</b> image.hpp:464</div></div>
-<div class="ttc" id="structboost_1_1gil_1_1num__channels_html"><div class="ttname"><a href="structboost_1_1gil_1_1num__channels.html">boost::gil::num_channels</a></div><div class="ttdoc">Returns the number of channels of a pixel-based GIL construct. </div><div class="ttdef"><b>Definition:</b> locator.hpp:39</div></div>
+<div class="ttc" id="structboost_1_1gil_1_1num__channels_html"><div class="ttname"><a href="structboost_1_1gil_1_1num__channels.html">boost::gil::num_channels</a></div><div class="ttdoc">Returns the number of channels of a pixel-based GIL construct. </div><div class="ttdef"><b>Definition:</b> locator.hpp:38</div></div>
 <div class="ttc" id="group___image_view_s_t_l_algorithms_destruct_pixels_html_ga7df65edbc2f8666fceab53f12c805056"><div class="ttname"><a href="group___image_view_s_t_l_algorithms_destruct_pixels.html#ga7df65edbc2f8666fceab53f12c805056">boost::gil::destruct_pixels</a></div><div class="ttdeci">BOOST_FORCEINLINE void destruct_pixels(const View &amp;img_view)</div><div class="ttdoc">Invokes the in-place destructor on every pixel of the view. </div><div class="ttdef"><b>Definition:</b> algorithm.hpp:480</div></div>
-<div class="ttc" id="structboost_1_1gil_1_1view__type__from__pixel_html"><div class="ttname"><a href="structboost_1_1gil_1_1view__type__from__pixel.html">boost::gil::view_type_from_pixel</a></div><div class="ttdoc">Returns the type of a view the pixel type, whether it operates on planar data and whether it has a st...</div><div class="ttdef"><b>Definition:</b> metafunctions.hpp:427</div></div>
+<div class="ttc" id="structboost_1_1gil_1_1view__type__from__pixel_html"><div class="ttname"><a href="structboost_1_1gil_1_1view__type__from__pixel.html">boost::gil::view_type_from_pixel</a></div><div class="ttdoc">Returns the type of a view the pixel type, whether it operates on planar data and whether it has a st...</div><div class="ttdef"><b>Definition:</b> metafunctions.hpp:428</div></div>
 </div><!-- fragment --></div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
      <!-- start footer part -->
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Tue Feb 19 2019 02:34:03 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Tue Feb 19 2019 22:09:55 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
