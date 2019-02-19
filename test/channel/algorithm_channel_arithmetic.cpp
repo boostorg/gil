@@ -11,7 +11,7 @@
 #include <utility>
 
 #define BOOST_TEST_MODULE test_algorithm_channel_arithmetic
-#include <gil_test_common.hpp>
+#include "unit_test.hpp"
 #include "channel_test_fixture.hpp"
 
 namespace gil = boost::gil;

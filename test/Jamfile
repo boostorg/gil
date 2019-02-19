@@ -2,30 +2,20 @@
 #
 # Copyright (c) 2007-2015 Andrey Semashev
 # Copyright (c) 2008 Lubomir Bourdev, Hailin Jin
-# Copyright (c) 2018 Mateusz Loskot <mateusz@loskot.net>
+# Copyright (c) 2018-2019 Mateusz Loskot <mateusz@loskot.net>
 # Copyright (c) 2018 Dmitry Arkhipov
 #
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or
 # copy at http://www.boost.org/LICENSE_1_0.txt)
 
-import os ;
-import path ;
-import regex ;
 import testing ;
 
 project
   : requirements
-    <include>$(BOOST_ROOT)
     <include>.
     <define>BOOST_GIL_USE_CONCEPT_CHECK
   ;
-
-run promote_integral.cpp /boost/test//boost_unit_test_framework : : : <link>shared:<define>BOOST_TEST_DYN_LINK=1 ;
-run image.cpp sample_image.cpp error_if.cpp : : gil_reference_checksums.txt ;
-run channel.cpp error_if.cpp ;
-run pixel.cpp error_if.cpp ;
-run pixel_iterator.cpp error_if.cpp ;
 
 build-project algorithm ;
 build-project channel ;
@@ -33,6 +23,6 @@ build-project image ;
 build-project image_view ;
 build-project pixel ;
 build-project point ;
+build-project legacy ;
 
-alias perf : [ run performance.cpp ] ;
-explicit perf ;
+run promote_integral.cpp /boost/test//boost_unit_test_framework : : : <link>shared:<define>BOOST_TEST_DYN_LINK=1 ;

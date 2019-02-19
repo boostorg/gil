@@ -11,7 +11,7 @@
 #include <limits>
 
 #define BOOST_TEST_MODULE test_channel_traits
-#include <gil_test_common.hpp>
+#include "unit_test.hpp"
 
 namespace gil = boost::gil;
 

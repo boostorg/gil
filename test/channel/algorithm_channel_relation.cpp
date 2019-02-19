@@ -9,7 +9,7 @@
 #include <boost/gil/channel_algorithm.hpp>
 
 #define BOOST_TEST_MODULE test_algorithm_channel_relation
-#include <gil_test_common.hpp>
+#include "unit_test.hpp"
 #include "channel_test_fixture.hpp"
 
 namespace gil = boost::gil;
