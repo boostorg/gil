@@ -8,6 +8,7 @@
 #ifndef BOOST_GIL_LOCATOR_HPP
 #define BOOST_GIL_LOCATOR_HPP
 
+#include <boost/gil/dynamic_step.hpp>
 #include <boost/gil/pixel_iterator.hpp>
 #include <boost/gil/point.hpp>
 
@@ -29,8 +30,6 @@ namespace detail {
     // helper class specialized for each axis of pixel_2d_locator
     template <std::size_t D, typename Loc>  class locator_axis;
 }
-template <typename T> struct dynamic_x_step_type;
-template <typename T> struct dynamic_y_step_type;
 
 template <typename T> struct channel_type;
 template <typename T> struct color_space_type;
@@ -38,9 +37,14 @@ template <typename T> struct channel_mapping_type;
 template <typename T> struct is_planar;
 template <typename T> struct num_channels;
 
-// The type of a locator or a view that has X and Y swapped. By default it is the same
-template <typename T>
-struct transposed_type { using type = T; };
+/// Base template for types that model HasTransposedTypeConcept.
+/// The type of a locator or a view that has X and Y swapped.
+/// By default it is the same.
+template <typename LocatorOrView>
+struct transposed_type
+{
+    using type = LocatorOrView;
+};
 
 /// \class pixel_2d_locator_base
 /// \brief base class for models of PixelLocatorConcept

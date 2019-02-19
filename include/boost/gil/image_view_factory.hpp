@@ -9,6 +9,7 @@
 #define BOOST_GIL_IMAGE_VIEW_FACTORY_HPP
 
 #include <boost/gil/color_convert.hpp>
+#include <boost/gil/dynamic_step.hpp>
 #include <boost/gil/gray.hpp>
 #include <boost/gil/metafunctions.hpp>
 #include <boost/gil/point.hpp>
@@ -33,8 +34,6 @@
 namespace boost { namespace gil {
 struct default_color_converter;
 
-template <typename T> struct dynamic_x_step_type;
-template <typename T> struct dynamic_y_step_type;
 template <typename T> struct transposed_type;
 
 /// \brief Returns the type of a view that has a dynamic step along both X and Y
