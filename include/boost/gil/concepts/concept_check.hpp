@@ -8,6 +8,8 @@
 #ifndef BOOST_GIL_CONCEPTS_CONCEPTS_CHECK_HPP
 #define BOOST_GIL_CONCEPTS_CONCEPTS_CHECK_HPP
 
+#include <boost/config.hpp>
+
 #if defined(BOOST_CLANG)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wfloat-equal"
