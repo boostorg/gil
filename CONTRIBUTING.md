@@ -63,6 +63,8 @@ please follow the workflow explained in this document.
 * **DO** assume that the [Squash and Merge] will be used to merge your commit unless you
   request otherwise in the PR.
 * **DO** NOT fix merge conflicts using a merge commit. Prefer git rebase.
+* **DO** NOT submit changes to the original legacy tests, see
+  [test/legacy/README.md](test/legacy/README.md).
 
 ### Merging Pull Requests (for maintainers with write access)
 

@@ -13,7 +13,7 @@
 #include <limits>
 
 #define BOOST_TEST_MODULE test_scoped_channel_value
-#include <gil_test_common.hpp>
+#include "unit_test.hpp"
 
 namespace gil = boost::gil;
 

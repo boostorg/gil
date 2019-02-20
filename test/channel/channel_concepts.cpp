@@ -22,7 +22,7 @@
 #include <cstdint>
 
 #define BOOST_TEST_MODULE test_channel_concepts
-#include <gil_test_common.hpp>
+#include "unit_test.hpp"
 #include "channel_test_fixture.hpp"
 
 namespace gil = boost::gil;
