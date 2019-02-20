@@ -1,5 +1,5 @@
 //
-// Copyright 2018 Mateusz Loskot <mateusz at loskot dot net>
+// Copyright 2019 Mateusz Loskot <mateusz at loskot dot net>
 //
 // Distributed under the Boost Software License, Version 1.0
 // See accompanying file LICENSE_1_0.txt or copy at
