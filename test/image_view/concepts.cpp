@@ -5,6 +5,9 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
+#ifndef BOOST_GIL_USE_CONCEPT_CHECK
+#error Compile with BOOST_GIL_USE_CONCEPT_CHECK defined
+#endif
 // FIXME: There are missing headers internally, leading to incomplete types
 #if 0
 #include <boost/gil/image_view.hpp>
