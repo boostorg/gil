@@ -7,25 +7,34 @@
 # Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 
-# TODO: Remove -Wno-unused below once tests have been cleaned up, and no longer use of assert() macro, etc.
+import os ;
+
+# Travsi CI, AppVeyor
+if ! [ os.environ CI ] && ! [ os.environ AGENT_JOBSTATUS ]
+{
+    EXTRA_WARNINGS =
+      <toolset>msvc:<cxxflags>/W4
+      <toolset>gcc:<cxxflags>"-Wcast-align -Wconversion -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter"
+      <toolset>clang,<variant>debug:<cxxflags>"-Wcast-align -Wconversion -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter -Wsign-conversion"
+      <toolset>clang,<variant>release:<cxxflags>"-Wcast-align -Wconversion -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter -Wsign-conversion"
+      <toolset>darwin:<cxxflags>"-Wcast-align -Wconversion -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter"
+      ;
+}
 
 project
     :
     requirements
         # MSVC: Since VS2017, default is -std:c++14, so no explicit switch is required.
         <toolset>msvc:<asynch-exceptions>on
-        <toolset>msvc:<cxxflags>/W4
         <toolset>msvc:<cxxflags>/bigobj
         <toolset>msvc:<define>_SCL_SECURE_NO_DEPRECATE <define>_CRT_SECURE_NO_WARNINGS <define>_CRT_NONSTDC_NO_DEPRECATE <define>NOMINMAX
         <toolset>intel:<debug-symbols>off
-        # GCC default flags with warnings sugested by https://svn.boost.org/trac10/wiki/Guidelines/WarningsGuidelines
-        <toolset>gcc:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wcast-align -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter"
-        # GCC default flags extended with warnings suggested by https://svn.boost.org/trac10/ticket/4014
-        #<toolset>gcc:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wall -Wcast-align -Wconversion -Wctor-dtor-privacy -Wdisabled-optimization -Werror=non-virtual-dtor -Werror=return-type -Wextra -Wfloat-equal -Winit-self -Winvalid-pch -Wmissing-format-attribute -Wmissing-include-dirs -Wmissing-noreturn -Wno-multichar -Woverloaded-virtual -Wpacked -Wredundant-decls -Wshadow -Wsign-promo -Wstrict-aliasing -Wswitch-default -Wundef -Wunused-parameter -Wwrite-strings"
+        <toolset>gcc:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wextra"
+        <toolset>darwin:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wextra"
         # variant filter for clang is necessary to allow ubsan_* variants declare distinct set of <cxxflags>
-        <toolset>clang,<variant>debug:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wcast-align -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter -Wsign-conversion"
-        <toolset>clang,<variant>release:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wcast-align -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter -Wsign-conversion"
-        <toolset>darwin:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wcast-align -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter "
+        <toolset>clang,<variant>debug:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wextra"
+        <toolset>clang,<variant>release:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wextra"
+        $(EXTRA_WARNINGS)
     ;
 
 variant gil_ubsan_integer
