@@ -6,7 +6,7 @@
 # http://www.boost.org/LICENSE_1_0.txt)
 #
 foreach(_name
-  channel_concepts
+  concepts
   channel_test_fixture
   channel_traits
   scoped_channel_value

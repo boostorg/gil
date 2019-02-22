@@ -15,7 +15,7 @@ project
     <link>shared:<define>BOOST_TEST_DYN_LINK=1
     ;
 
-compile channel_concepts.cpp ;
+compile concepts.cpp ;
 run channel_test_fixture.cpp ;
 run channel_traits.cpp ;
 run scoped_channel_value.cpp ;
