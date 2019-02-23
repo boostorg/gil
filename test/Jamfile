@@ -17,12 +17,13 @@ project
     <define>BOOST_GIL_USE_CONCEPT_CHECK
   ;
 
-build-project algorithm ;
+build-project point ;
 build-project channel ;
+build-project pixel ;
+build-project locator ;
 build-project image ;
 build-project image_view ;
-build-project pixel ;
-build-project point ;
+build-project algorithm ;
 build-project legacy ;
 
 run promote_integral.cpp /boost/test//boost_unit_test_framework : : : <link>shared:<define>BOOST_TEST_DYN_LINK=1 ;
