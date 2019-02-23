@@ -9,7 +9,7 @@ message(STATUS "Boost.GIL: Configuring core tests")
 
 foreach(_name
   promote_integral)
-  set(_target all_in_one_${_name})
+  set(_target utility_${_name})
 
   add_executable(${_target} "")
   target_sources(${_target} PRIVATE ${_name}.cpp)
@@ -19,7 +19,7 @@ foreach(_name
       gil_include_directories
       gil_dependencies)
   target_compile_definitions(${_target} PRIVATE BOOST_GIL_USE_CONCEPT_CHECK)
-  add_test(test.all_in_one.${_name} ${_target})
+  add_test(test.utility.${_name} ${_target})
 
   unset(_target)
   unset(_name)
@@ -32,6 +32,7 @@ endif()
 add_subdirectory(point)
 add_subdirectory(channel)
 add_subdirectory(pixel)
+add_subdirectory(iterator)
 add_subdirectory(locator)
 add_subdirectory(image)
 add_subdirectory(image_view)

@@ -20,6 +20,7 @@ project
 build-project point ;
 build-project channel ;
 build-project pixel ;
+build-project iterator ;
 build-project locator ;
 build-project image ;
 build-project image_view ;
