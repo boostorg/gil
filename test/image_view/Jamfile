@@ -15,6 +15,7 @@ project
 
 compile concepts.cpp ;
 compile derived_view_type.cpp ;
+compile dynamic_step.cpp ;
 compile is_planar.cpp ;
 compile view_is_basic.cpp ;
 compile view_is_mutable.cpp ;
