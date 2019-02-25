@@ -9,6 +9,7 @@ foreach(_name
   collection
   concepts
   derived_view_type
+  dynamic_step
   is_planar
   view_is_basic
   view_is_mutable
