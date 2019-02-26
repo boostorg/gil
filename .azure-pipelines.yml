@@ -5,6 +5,7 @@
 # (See accompanying file LICENSE_1_0.txt or copy at http://boost.org/LICENSE_1_0.txt)
 #
 variables:
+  #system.debug: true
   configuration: release
 
 trigger:
@@ -46,6 +47,12 @@ jobs:
     pool:
       vmImage: 'vs2017-win2016'
     steps:
+      - task: UsePythonVersion@0
+        displayName: 'Setup Python'
+        inputs:
+          versionSpec: '3.6'
+          addToPath: true
+          architecture: 'x64'
       - template: .ci/azure-pipelines/steps-check-cmake.yml
       - template: .ci/azure-pipelines/steps-install-conan.yml
       - template: .ci/azure-pipelines/steps-install-boost.yml
@@ -57,6 +64,12 @@ jobs:
     pool:
       vmImage: 'vs2017-win2016'
     steps:
+      - task: UsePythonVersion@0
+        displayName: 'Setup Python'
+        inputs:
+          versionSpec: '3.6'
+          addToPath: true
+          architecture: 'x64'
       - template: .ci/azure-pipelines/steps-check-cmake.yml
       - template: .ci/azure-pipelines/steps-install-conan.yml
       - template: .ci/azure-pipelines/steps-install-boost.yml
