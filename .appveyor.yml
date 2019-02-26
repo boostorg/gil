@@ -92,6 +92,7 @@ before_build:
   - git submodule --quiet update --init libs/filesystem
   - git submodule --quiet update --init libs/integer
   - git submodule --quiet update --init libs/iterator
+  - git submodule --quiet update --init libs/mp11
   - git submodule --quiet update --init libs/mpl
   - git submodule --quiet update --init libs/numeric/conversion
   - git submodule --quiet update --init libs/preprocessor
