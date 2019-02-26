@@ -6,7 +6,8 @@
 # http://www.boost.org/LICENSE_1_0.txt)
 #
 foreach(_name
-  concepts)
+  concepts
+  pixels_are_compatible)
   set(_target test_core_pixel_${_name})
 
   add_executable(${_target} "")
