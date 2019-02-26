@@ -14,4 +14,7 @@ project
     ;
 
 compile concepts.cpp ;
+compile is_pixel.cpp ;
+compile is_planar.cpp ;
+compile num_channels.cpp ;
 compile pixels_are_compatible.cpp ;
