@@ -60,7 +60,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_library(gil_compile_options INTERFACE)
 
 # See https://cmake.org/pipermail/cmake/2018-December/068716.html
-if(MSVC)
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
   string(REGEX REPLACE "/W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
   string(REGEX REPLACE "-W3" "" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
 endif()
@@ -130,7 +130,7 @@ if(NOT DEFINED BOOST_ROOT AND NOT DEFINED ENV{BOOST_ROOT})
 endif()
 
 set(Boost_DETAILED_FAILURE_MSG ON)
-if(MSVC)
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
   set(Boost_USE_STATIC_LIBS ON)
   set(Boost_USE_STATIC_RUNTIME OFF)
 endif()
@@ -146,6 +146,10 @@ target_link_libraries(gil_dependencies
   INTERFACE
     Boost::filesystem
     Boost::unit_test_framework)
+
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+  target_link_libraries(gil_dependencies INTERFACE Boost::disable_autolinking)
+endif()
 
 target_compile_definitions(gil_dependencies
   INTERFACE
