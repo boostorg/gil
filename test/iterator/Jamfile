@@ -15,4 +15,4 @@ project
 
 compile concepts.cpp ;
 compile dynamic_step.cpp ;
-compile is_planar ;
+compile is_planar.cpp ;
