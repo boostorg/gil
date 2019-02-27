@@ -14,5 +14,4 @@ project
     ;
 
 compile concepts.cpp ;
-compile dynamic_step.cpp ;
-compile is_planar.cpp ;
+compile color_spaces_are_compatible.cpp ;

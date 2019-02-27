@@ -7,11 +7,8 @@
 #
 foreach(_name
   concepts
-  is_pixel
-  is_planar
-  num_channels
-  pixels_are_compatible)
-  set(_target test_core_pixel_${_name})
+  color_spaces_are_compatible)
+  set(_target test_core_color_${_name})
 
   add_executable(${_target} "")
   target_sources(${_target} PRIVATE ${_name}.cpp)

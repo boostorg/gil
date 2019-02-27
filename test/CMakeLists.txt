@@ -31,6 +31,7 @@ endif()
 
 add_subdirectory(point)
 add_subdirectory(channel)
+add_subdirectory(color)
 add_subdirectory(pixel)
 add_subdirectory(iterator)
 add_subdirectory(locator)

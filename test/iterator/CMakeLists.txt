@@ -7,7 +7,8 @@
 #
 foreach(_name
   concepts
-  dynamic_step)
+  dynamic_step
+  is_planar)
   set(_target test_core_iterator_${_name})
 
   add_executable(${_target} "")

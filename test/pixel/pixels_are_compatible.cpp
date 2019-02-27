@@ -11,6 +11,8 @@
 
 #include <boost/mp11.hpp>
 
+#include <type_traits>
+
 namespace gil = boost::gil;
 using namespace boost::mp11;
 
