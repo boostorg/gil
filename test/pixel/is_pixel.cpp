@@ -26,7 +26,6 @@ int main()
         gil::gray16c_pixel_t,
         gil::gray16s_pixel_t,
         gil::gray16sc_pixel_t,
-        gil::gray16_pixel_t,
         gil::gray32_pixel_t,
         gil::gray32c_pixel_t,
         gil::gray32f_pixel_t,
