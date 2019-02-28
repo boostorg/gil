@@ -10,7 +10,9 @@ foreach(_name
   is_pixel
   is_planar
   num_channels
-  pixels_are_compatible)
+  pixel_reference_is_mutable
+  pixels_are_compatible
+  test_fixture)
   set(_target test_core_pixel_${_name})
 
   add_executable(${_target} "")
