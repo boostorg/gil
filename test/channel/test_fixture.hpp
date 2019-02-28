@@ -6,9 +6,13 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
+#ifndef BOOST_GIL_TEST_TEST_FIXTURE_HPP
+#define BOOST_GIL_TEST_TEST_FIXTURE_HPP
+
 #include <boost/gil/channel.hpp>
 #include <boost/gil/concepts.hpp>
 #include <boost/gil/typedefs.hpp>
+
 #include <cstdint>
 #include <tuple>
 #include <type_traits>
@@ -224,3 +228,5 @@ struct packed_dynamic_channels565
 };
 
 }}}} // namespace boost::gil::test::fixture
+
+#endif

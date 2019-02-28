@@ -10,7 +10,7 @@
 
 #define BOOST_TEST_MODULE test_algorithm_channel_relation
 #include "unit_test.hpp"
-#include "channel_test_fixture.hpp"
+#include "test_fixture.hpp"
 
 namespace gil = boost::gil;
 namespace fixture = boost::gil::test::fixture;

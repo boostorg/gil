@@ -9,7 +9,7 @@
 
 #define BOOST_TEST_MODULE test_channel_test_fixture
 #include "unit_test.hpp"
-#include "channel_test_fixture.hpp"
+#include "test_fixture.hpp"
 
 namespace fixture = boost::gil::test::fixture;
 

@@ -6,15 +6,15 @@
 # http://www.boost.org/LICENSE_1_0.txt)
 #
 foreach(_name
-  concepts
-  channel_test_fixture
-  channel_traits
-  scoped_channel_value
   algorithm_channel_arithmetic
   algorithm_channel_convert
   algorithm_channel_invert
   algorithm_channel_multiply
-  algorithm_channel_relation)
+  algorithm_channel_relation
+  channel_traits
+  concepts
+  scoped_channel_value
+  test_fixture)
   set(_target test_core_${_name})
 
   add_executable(${_target} "")
