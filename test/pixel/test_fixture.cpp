@@ -27,7 +27,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(pixel_value_default_constructor, Pixel, fixture::p
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(pixel_value_parameterized_constructor, Pixel, fixture::pixel_types)
 {
-    using channel_t = gil::channel_type<Pixel>::type;
+    using channel_t = typename gil::channel_type<Pixel>::type;
     auto const channel1_max = std::numeric_limits<channel_t>::max();
     Pixel const pixel{channel1_max};
     fixture::pixel_value<Pixel> fix{pixel};
@@ -44,7 +44,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(pixel_reference_default_constructor, Pixel, fixtur
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(pixel_reference_parameterized_constructor, Pixel, fixture::pixel_types)
 {
-    using channel_t = gil::channel_type<Pixel>::type;
+    using channel_t = typename gil::channel_type<Pixel>::type;
     auto const channel1_max = std::numeric_limits<channel_t>::max();
     Pixel const pixel{channel1_max};
     fixture::pixel_reference<Pixel&> fix{pixel};
