@@ -22,7 +22,7 @@ namespace boost { namespace gil {
 
 // Pixel has to implement operator<< to be printable for BOOST_TEST()
 template <typename ChannelValue, typename Layout>
-std::ostream& operator<<(std::ostream& os, pixel<ChannelValue, Layout> const& p)
+std::ostream& operator<<(std::ostream& os, pixel<ChannelValue, Layout> const& /*p*/)
 {
     // TODO: Print {v1, v2...} channel values
     os << "pixel<"
