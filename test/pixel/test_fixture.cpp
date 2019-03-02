@@ -28,12 +28,12 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(pixel_value_default_constructor, Pixel, fixture::p
 BOOST_AUTO_TEST_CASE_TEMPLATE(pixel_value_parameterized_constructor, Pixel, fixture::pixel_types)
 {
     using channel_t = typename gil::channel_type<Pixel>::type;
-    auto const channel1_max = std::numeric_limits<channel_t>::max();
-    Pixel const pixel{channel1_max};
-    fixture::pixel_value<Pixel> fix{pixel};
+    Pixel sample_pixel;
+    gil::static_fill(sample_pixel, std::numeric_limits<channel_t>::max());
+    fixture::pixel_value<Pixel> fix{sample_pixel};
     // FIXME: Default value of pixel/homogeneous_color_base is undermined
     // Despite initialising first channel, rest of channels remain undetermined.
-    //BOOST_TEST(fix.pixel_ == pixel);
+    BOOST_TEST(fix.pixel_ == sample_pixel);
 }
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(pixel_reference_default_constructor, Pixel, fixture::pixel_types)
@@ -47,8 +47,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(pixel_reference_default_constructor, Pixel, fixtur
 BOOST_AUTO_TEST_CASE_TEMPLATE(pixel_reference_parameterized_constructor, Pixel, fixture::pixel_types)
 {
     using channel_t = typename gil::channel_type<Pixel>::type;
-    auto const channel1_max = std::numeric_limits<channel_t>::max();
-    Pixel const pixel{channel1_max};
-    fixture::pixel_reference<Pixel&> fix{pixel};
-    BOOST_TEST(fix.pixel_ == pixel);
+    Pixel sample_pixel;
+    gil::static_fill(sample_pixel, std::numeric_limits<channel_t>::max());
+    fixture::pixel_reference<Pixel&> fix{sample_pixel};
+    BOOST_TEST(fix.pixel_ == sample_pixel);
 }
