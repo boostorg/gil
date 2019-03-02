@@ -35,12 +35,7 @@ struct print_color_base
     template <typename Element>
     void operator()(Element& c)
     {
-        using value_type = typename gil::channel_traits<Element>::value_type;
-        static_assert(
-            std::is_arithmetic<value_type>::value,
-            "color element should be an arithmetic type");
-
-        typename gil::promote_integral<value_type>::type const v(c);
+        typename gil::promote_integral<Element>::type const v(c);
         if (element_index_ > 0) os_ << ", ";
         os_ << "v" << element_index_ << "=" << v;
         ++element_index_;
@@ -143,10 +138,6 @@ using representative_pixel_types= ::boost::mp11::mp_list
 
 // List of all core pixel types (i.e. without cv-qualifiers)
 using pixel_types = ::boost::mp11::mp_list
-<
-    gil::gray32f_pixel_t
->;
-using pixel_types2 = ::boost::mp11::mp_list
 <
     gil::gray8_pixel_t,
     gil::gray8s_pixel_t,

@@ -50,5 +50,5 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(pixel_reference_parameterized_constructor, Pixel, 
     Pixel sample_pixel;
     gil::static_fill(sample_pixel, std::numeric_limits<channel_t>::max());
     fixture::pixel_reference<Pixel&> fix{sample_pixel};
-    //BOOST_TEST(fix.pixel_ == sample_pixel);
+    BOOST_TEST(fix.pixel_ == sample_pixel);
 }
