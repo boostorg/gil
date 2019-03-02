@@ -5,6 +5,20 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
+#include <boost/config.hpp>
+
+#if defined(BOOST_CLANG)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wconversion"
+#pragma clang diagnostic ignored "-Wfloat-equal"
+#pragma clang diagnostic ignored "-Wsign-conversion"
+#elif BOOST_GCC >= 40700
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+#pragma GCC diagnostic ignored "-Wfloat-equal"
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+#endif
+
 #include <boost/gil/channel.hpp>
 
 #include <limits>
@@ -28,11 +42,11 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(pixel_value_default_constructor, Pixel, fixture::p
 BOOST_AUTO_TEST_CASE_TEMPLATE(pixel_value_parameterized_constructor, Pixel, fixture::pixel_types)
 {
     using channel_t = typename gil::channel_type<Pixel>::type;
+    // Sample channel value, simplified, could be min, max, random
+    channel_t const sample_channel = 2;
     Pixel sample_pixel;
-    gil::static_fill(sample_pixel, std::numeric_limits<channel_t>::max());
+    gil::static_fill(sample_pixel, sample_channel);
     fixture::pixel_value<Pixel> fix{sample_pixel};
-    // FIXME: Default value of pixel/homogeneous_color_base is undermined
-    // Despite initialising first channel, rest of channels remain undetermined.
     BOOST_TEST(fix.pixel_ == sample_pixel);
 }
 
@@ -47,8 +61,10 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(pixel_reference_default_constructor, Pixel, fixtur
 BOOST_AUTO_TEST_CASE_TEMPLATE(pixel_reference_parameterized_constructor, Pixel, fixture::pixel_types)
 {
     using channel_t = typename gil::channel_type<Pixel>::type;
+    // Sample channel value, simplified, could be min, max, random
+    channel_t const sample_channel = 3;
     Pixel sample_pixel;
-    gil::static_fill(sample_pixel, std::numeric_limits<channel_t>::max());
+    gil::static_fill(sample_pixel, sample_channel);
     fixture::pixel_reference<Pixel&> fix{sample_pixel};
     BOOST_TEST(fix.pixel_ == sample_pixel);
 }
