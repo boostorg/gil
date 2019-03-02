@@ -6,30 +6,58 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
+#include <boost/gil/color_base_algorithm.hpp>
 #include <boost/gil/concepts/pixel.hpp>
 #include <boost/gil/pixel.hpp>
 #include <boost/gil/planar_pixel_reference.hpp>
+#include <boost/gil/promote_integral.hpp>
 #include <boost/gil/typedefs.hpp>
 
 #include <boost/core/typeinfo.hpp>
 #include <boost/mp11.hpp>
 #include <boost/mp11/mpl.hpp> // for compatibility with Boost.Test
 
+#include <cstdint>
 #include <tuple>
 #include <type_traits>
 
 namespace boost { namespace gil {
 
+namespace detail {
+
+struct print_color_base
+{
+    std::ostream& os_;
+    std::size_t element_index_{0};
+    print_color_base(std::ostream& os) : os_(os) {}
+
+    template <typename Element>
+    void operator()(Element& c)
+    {
+        static_assert(
+            std::is_arithmetic<Element>::value,
+            "color element should be an arithmetic type");
+
+        typename gil::promote_integral<Element>::type const v(c);
+        if (element_index_ > 0) os_ << ", ";
+        os_ << "v" << element_index_ << "=" << v;
+        ++element_index_;
+    }
+};
+
+} // namespace detail
+
 // Pixel has to implement operator<< to be printable for BOOST_TEST()
 template <typename ChannelValue, typename Layout>
-std::ostream& operator<<(std::ostream& os, pixel<ChannelValue, Layout> const& /*p*/)
+std::ostream& operator<<(std::ostream& os, pixel<ChannelValue, Layout> const& p)
 {
-    // TODO: Print {v1, v2...} channel values
     os << "pixel<"
        << "Channel=" << boost::core::demangled_name(typeid(ChannelValue))
        << ", Layout=" << boost::core::demangled_name(typeid(Layout))
-       << ">"
-       << std::endl;
+       << ">(";
+
+    gil::static_for_each(p, detail::print_color_base{os});
+    os << ")" << std::endl;
     return os;
 }
 
