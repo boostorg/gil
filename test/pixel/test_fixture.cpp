@@ -31,7 +31,9 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(pixel_value_parameterized_constructor, Pixel, fixt
     auto const channel1_max = std::numeric_limits<channel_t>::max();
     Pixel const pixel{channel1_max};
     fixture::pixel_value<Pixel> fix{pixel};
-    BOOST_TEST(fix.pixel_ == pixel);
+    // FIXME: Default value of pixel/homogeneous_color_base is undermined
+    // Despite initialising first channel, rest of channels remain undetermined.
+    //BOOST_TEST(fix.pixel_ == pixel);
 }
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(pixel_reference_default_constructor, Pixel, fixture::pixel_types)
