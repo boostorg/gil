@@ -15,7 +15,7 @@ foreach(_name
   concepts
   scoped_channel_value
   test_fixture)
-  set(_target test_core_${_name})
+  set(_target test_core_channel_${_name})
 
   add_executable(${_target} "")
   target_sources(${_target} PRIVATE ${_name}.cpp)
@@ -25,7 +25,7 @@ foreach(_name
       gil_include_directories
       gil_dependencies)
   target_compile_definitions(${_target} PRIVATE BOOST_GIL_USE_CONCEPT_CHECK)
-  add_test(test.core.${_name} ${_target})
+  add_test(test.core.channel.${_name} ${_target})
 
   unset(_name)
   unset(_target)
