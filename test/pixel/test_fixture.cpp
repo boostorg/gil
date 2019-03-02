@@ -10,7 +10,7 @@
 #include <limits>
 #include <ostream>
 
-#define BOOST_TEST_MODULE test_channel_test_fixture
+#define BOOST_TEST_MODULE test_pixel_test_fixture
 #include "unit_test.hpp"
 #include "test_fixture.hpp"
 
