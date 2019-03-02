@@ -11,17 +11,36 @@
 #include <boost/gil.hpp>
 
 #include <boost/concept_check.hpp>
+#include <boost/mp11.hpp>
 #include <boost/mpl/vector_c.hpp>
+
+#include "test_fixture.hpp"
 
 namespace mpl = boost::mpl;
 namespace gil = boost::gil;
 using boost::function_requires;
+using namespace boost::mp11;
+
+template <template<typename> typename Concept>
+struct assert_concept
+{
+    template <typename Pixel>
+    void operator()(Pixel&&)
+    {
+        function_requires<Concept<Pixel>>();
+    }
+};
+
+template <template<typename> typename Concept, typename... Pixels>
+void test_concept()
+{
+    mp_for_each<Pixels...>(assert_concept<Concept>());
+}
 
 int main()
 {
-    function_requires<gil::PixelConcept<gil::gray8_pixel_t>>();
-    function_requires<gil::PixelConcept<gil::rgb8_pixel_t>>();
-    function_requires<gil::PixelConcept<gil::bgr8_pixel_t>>();
+    test_concept<gil::PixelConcept, gil::test::fixture::pixel_typedefs>();
+    test_concept<gil::MutablePixelConcept, gil::test::fixture::pixel_typedefs>();
 
     using rgb565_pixel_t = gil::packed_pixel_type
         <

@@ -17,7 +17,7 @@ foreach(_name
       gil_compile_options
       gil_include_directories
       gil_dependencies)
-  add_test(test.core.${_name} ${_target})
+  add_test(test.core.algorithm.${_name} ${_target})
 
   unset(_name)
   unset(_target)

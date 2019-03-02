@@ -26,7 +26,7 @@ foreach(_name
       gil_include_directories
       gil_dependencies)
   target_compile_definitions(${_target} PRIVATE BOOST_GIL_USE_CONCEPT_CHECK)
-  add_test(test.core.${_name} ${_target})
+  add_test(test.core.image_view.${_name} ${_target})
 
   unset(_name)
   unset(_target)
