@@ -68,49 +68,49 @@
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &lt;boost/config.hpp&gt;</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;boost/mpl/at.hpp&gt;</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;boost/mpl/contains.hpp&gt;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;boost/type_traits.hpp&gt;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;type_traits&gt;</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">namespace </span>boost { <span class="keyword">namespace </span>gil {</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> ColorBase&gt;</div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1size.html">   45</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1size.html">size</a> : <span class="keyword">public</span> mpl::size&lt;typename ColorBase::layout_t::color_space_t&gt; {};</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> ColorBase, <span class="keywordtype">int</span> K&gt;</div>
-<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1kth__semantic__element__type.html">   82</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1kth__semantic__element__type.html">kth_semantic_element_type</a></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;{</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keyword">static</span> constexpr <span class="keywordtype">int</span> semantic_index =</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        mpl::at_c&lt;typename ColorBase::layout_t::channel_mapping_t, K&gt;::type::value;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keyword">using</span> type = <span class="keyword">typename</span> kth_element_type&lt;ColorBase, semantic_index&gt;::type;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;};</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;boost/mpl/size.hpp&gt;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;boost/type_traits.hpp&gt;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;algorithm&gt;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;type_traits&gt;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">namespace </span>boost { <span class="keyword">namespace </span>gil {</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> ColorBase&gt;</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1size.html">   46</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1size.html">size</a> : <span class="keyword">public</span> mpl::size&lt;typename ColorBase::layout_t::color_space_t&gt; {};</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> ColorBase, <span class="keywordtype">int</span> K&gt;</div>
+<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1kth__semantic__element__type.html">   83</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1kth__semantic__element__type.html">kth_semantic_element_type</a></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;{</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keyword">using</span> channel_mapping_t = <span class="keyword">typename</span> ColorBase::layout_t::channel_mapping_t;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    static_assert(K &lt; mpl::size&lt;channel_mapping_t&gt;::value,</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="stringliteral">&quot;K index should be less than size of channel_mapping_t sequence&quot;</span>);</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> ColorBase, <span class="keywordtype">int</span> K&gt;</div>
-<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1kth__semantic__element__reference__type.html">   92</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1kth__semantic__element__reference__type.html">kth_semantic_element_reference_type</a></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;{</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keyword">static</span> constexpr <span class="keywordtype">int</span> semantic_index =</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <a class="code" href="group___color_base_model_homogeneous.html#ga6fb9de37a524b47bd591e1528809b24f">mpl::at_c</a></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        &lt;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            <span class="keyword">typename</span> ColorBase::layout_t::channel_mapping_t,</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            K</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        &gt;::type::value;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keyword">using</span> type = <span class="keyword">typename</span> kth_element_reference_type&lt;ColorBase,semantic_index&gt;::type;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keyword">static</span> type <span class="keyword">get</span>(ColorBase&amp; cb) { <span class="keywordflow">return</span> gil::at_c&lt;semantic_index&gt;(cb); }</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;};</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
-<div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1kth__semantic__element__const__reference__type.html">  107</a></span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> ColorBase, <span class="keywordtype">int</span> K&gt; <span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1kth__semantic__element__const__reference__type.html">kth_semantic_element_const_reference_type</a></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;{</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keyword">static</span> constexpr <span class="keywordtype">int</span> semantic_index =</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <a class="code" href="group___color_base_model_homogeneous.html#ga6fb9de37a524b47bd591e1528809b24f">mpl::at_c</a></div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        &lt;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            <span class="keyword">typename</span> ColorBase::layout_t::channel_mapping_t,</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            K</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        &gt;::type::value;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keyword">static</span> constexpr <span class="keywordtype">int</span> semantic_index = mpl::at_c&lt;channel_mapping_t, K&gt;::type::value;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keyword">using</span> type = <span class="keyword">typename</span> kth_element_type&lt;ColorBase, semantic_index&gt;::type;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;};</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> ColorBase, <span class="keywordtype">int</span> K&gt;</div>
+<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1kth__semantic__element__reference__type.html">   96</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1kth__semantic__element__reference__type.html">kth_semantic_element_reference_type</a></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;{</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keyword">using</span> channel_mapping_t = <span class="keyword">typename</span> ColorBase::layout_t::channel_mapping_t;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    static_assert(K &lt; mpl::size&lt;channel_mapping_t&gt;::value,</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="stringliteral">&quot;K index should be less than size of channel_mapping_t sequence&quot;</span>);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keyword">static</span> constexpr <span class="keywordtype">int</span> semantic_index = mpl::at_c&lt;channel_mapping_t, K&gt;::type::value;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keyword">using</span> type = <span class="keyword">typename</span> kth_element_reference_type&lt;ColorBase, semantic_index&gt;::type;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keyword">static</span> type <span class="keyword">get</span>(ColorBase&amp; cb) { <span class="keywordflow">return</span> gil::at_c&lt;semantic_index&gt;(cb); }</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;};</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
+<div class="line"><a name="l00109"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1kth__semantic__element__const__reference__type.html">  109</a></span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> ColorBase, <span class="keywordtype">int</span> K&gt; <span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1kth__semantic__element__const__reference__type.html">kth_semantic_element_const_reference_type</a></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;{</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <span class="keyword">using</span> channel_mapping_t = <span class="keyword">typename</span> ColorBase::layout_t::channel_mapping_t;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    static_assert(K &lt; mpl::size&lt;channel_mapping_t&gt;::value,</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <span class="stringliteral">&quot;K index should be less than size of channel_mapping_t sequence&quot;</span>);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keyword">static</span> constexpr <span class="keywordtype">int</span> semantic_index = mpl::at_c&lt;channel_mapping_t, K&gt;::type::value;</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keyword">using</span> type = <span class="keyword">typename</span> kth_element_const_reference_type&lt;ColorBase,semantic_index&gt;::type;</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keyword">static</span> type <span class="keyword">get</span>(<span class="keyword">const</span> ColorBase&amp; cb) { <span class="keywordflow">return</span> gil::at_c&lt;semantic_index&gt;(cb); }</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;};</div>
@@ -520,17 +520,16 @@
 <div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="group___color_base_algorithm_semantic_at_c_html_ga80509fbd39bd6ed8e5d0535979a8aedc"><div class="ttname"><a href="group___color_base_algorithm_semantic_at_c.html#ga80509fbd39bd6ed8e5d0535979a8aedc">boost::gil::semantic_at_c</a></div><div class="ttdeci">auto semantic_at_c(ColorBase &amp;p) -&gt; typename std::enable_if&lt; !std::is_const&lt; ColorBase &gt;::value, typename kth_semantic_element_reference_type&lt; ColorBase, K &gt;::type &gt;::type</div><div class="ttdoc">A mutable accessor to the K-th semantic element of a color base. </div><div class="ttdef"><b>Definition:</b> color_base_algorithm.hpp:124</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1color__element__const__reference__type_html"><div class="ttname"><a href="structboost_1_1gil_1_1color__element__const__reference__type.html">boost::gil::color_element_const_reference_type</a></div><div class="ttdoc">Specifies the return type of the constant element accessor by color name, get_color(color_base, Color());. </div><div class="ttdef"><b>Definition:</b> color_base_algorithm.hpp:188</div></div>
-<div class="ttc" id="group___color_base_model_homogeneous_html_ga6fb9de37a524b47bd591e1528809b24f"><div class="ttname"><a href="group___color_base_model_homogeneous.html#ga6fb9de37a524b47bd591e1528809b24f">boost::gil::at_c</a></div><div class="ttdeci">add_reference&lt; E &gt;::type at_c(detail::homogeneous_color_base&lt; E, L, N &gt; &amp;p)</div><div class="ttdoc">Provides mutable access to the K-th element, in physical order. </div><div class="ttdef"><b>Definition:</b> color_base.hpp:387</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1element__type_html"><div class="ttname"><a href="structboost_1_1gil_1_1element__type.html">boost::gil::element_type</a></div><div class="ttdoc">Specifies the element type of a homogeneous color base. </div><div class="ttdef"><b>Definition:</b> color_base_algorithm.hpp:224</div></div>
-<div class="ttc" id="structboost_1_1gil_1_1kth__semantic__element__type_html"><div class="ttname"><a href="structboost_1_1gil_1_1kth__semantic__element__type.html">boost::gil::kth_semantic_element_type</a></div><div class="ttdoc">Specifies the type of the K-th semantic element of a color base. </div><div class="ttdef"><b>Definition:</b> color_base_algorithm.hpp:82</div></div>
-<div class="ttc" id="structboost_1_1gil_1_1kth__semantic__element__reference__type_html"><div class="ttname"><a href="structboost_1_1gil_1_1kth__semantic__element__reference__type.html">boost::gil::kth_semantic_element_reference_type</a></div><div class="ttdoc">Specifies the return type of the mutable semantic_at_c&lt;K&gt;(color_base);. </div><div class="ttdef"><b>Definition:</b> color_base_algorithm.hpp:92</div></div>
+<div class="ttc" id="structboost_1_1gil_1_1kth__semantic__element__type_html"><div class="ttname"><a href="structboost_1_1gil_1_1kth__semantic__element__type.html">boost::gil::kth_semantic_element_type</a></div><div class="ttdoc">Specifies the type of the K-th semantic element of a color base. </div><div class="ttdef"><b>Definition:</b> color_base_algorithm.hpp:83</div></div>
+<div class="ttc" id="structboost_1_1gil_1_1kth__semantic__element__reference__type_html"><div class="ttname"><a href="structboost_1_1gil_1_1kth__semantic__element__reference__type.html">boost::gil::kth_semantic_element_reference_type</a></div><div class="ttdoc">Specifies the return type of the mutable semantic_at_c&lt;K&gt;(color_base);. </div><div class="ttdef"><b>Definition:</b> color_base_algorithm.hpp:96</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1contains__color_html"><div class="ttname"><a href="structboost_1_1gil_1_1contains__color.html">boost::gil::contains_color</a></div><div class="ttdoc">A predicate metafunction determining whether a given color base contains a given color. </div><div class="ttdef"><b>Definition:</b> color_base_algorithm.hpp:170</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1element__reference__type_html"><div class="ttname"><a href="structboost_1_1gil_1_1element__reference__type.html">boost::gil::element_reference_type</a></div><div class="ttdoc">Specifies the return type of the mutable element accessor at_c of a homogeneous color base...</div><div class="ttdef"><b>Definition:</b> color_base.hpp:40</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1color__element__type_html"><div class="ttname"><a href="structboost_1_1gil_1_1color__element__type.html">boost::gil::color_element_type</a></div><div class="ttdoc">Specifies the type of the element associated with a given color tag. </div><div class="ttdef"><b>Definition:</b> color_base_algorithm.hpp:178</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1color__element__reference__type_html"><div class="ttname"><a href="structboost_1_1gil_1_1color__element__reference__type.html">boost::gil::color_element_reference_type</a></div><div class="ttdoc">Specifies the return type of the mutable element accessor by color name, get_color(color_base, Color());. </div><div class="ttdef"><b>Definition:</b> color_base_algorithm.hpp:183</div></div>
-<div class="ttc" id="structboost_1_1gil_1_1size_html"><div class="ttname"><a href="structboost_1_1gil_1_1size.html">boost::gil::size</a></div><div class="ttdoc">Returns an MPL integral type specifying the number of elements in a color base. </div><div class="ttdef"><b>Definition:</b> color_base_algorithm.hpp:45</div></div>
-<div class="ttc" id="structboost_1_1gil_1_1kth__semantic__element__const__reference__type_html"><div class="ttname"><a href="structboost_1_1gil_1_1kth__semantic__element__const__reference__type.html">boost::gil::kth_semantic_element_const_reference_type</a></div><div class="ttdoc">Specifies the return type of the constant semantic_at_c&lt;K&gt;(color_base);. </div><div class="ttdef"><b>Definition:</b> color_base_algorithm.hpp:107</div></div>
-<div class="ttc" id="structboost_1_1gil_1_1detail_1_1type__to__index_html"><div class="ttname"><a href="structboost_1_1gil_1_1detail_1_1type__to__index.html">boost::gil::detail::type_to_index</a></div><div class="ttdoc">Returns the index corresponding to the first occurrance of a given given type in. ...</div><div class="ttdef"><b>Definition:</b> utilities.hpp:232</div></div>
+<div class="ttc" id="structboost_1_1gil_1_1size_html"><div class="ttname"><a href="structboost_1_1gil_1_1size.html">boost::gil::size</a></div><div class="ttdoc">Returns an MPL integral type specifying the number of elements in a color base. </div><div class="ttdef"><b>Definition:</b> color_base_algorithm.hpp:46</div></div>
+<div class="ttc" id="structboost_1_1gil_1_1kth__semantic__element__const__reference__type_html"><div class="ttname"><a href="structboost_1_1gil_1_1kth__semantic__element__const__reference__type.html">boost::gil::kth_semantic_element_const_reference_type</a></div><div class="ttdoc">Specifies the return type of the constant semantic_at_c&lt;K&gt;(color_base);. </div><div class="ttdef"><b>Definition:</b> color_base_algorithm.hpp:109</div></div>
+<div class="ttc" id="structboost_1_1gil_1_1detail_1_1type__to__index_html"><div class="ttname"><a href="structboost_1_1gil_1_1detail_1_1type__to__index.html">boost::gil::detail::type_to_index</a></div><div class="ttdoc">Returns the index corresponding to the first occurrance of a given given type in. ...</div><div class="ttdef"><b>Definition:</b> utilities.hpp:233</div></div>
 <div class="ttc" id="group___color_base_algorithm_color_html_ga3f358408ca48aa4ac1c869044ca60e7c"><div class="ttname"><a href="group___color_base_algorithm_color.html#ga3f358408ca48aa4ac1c869044ca60e7c">boost::gil::get_color</a></div><div class="ttdeci">color_element_const_reference_type&lt; ColorBase, Color &gt;::type get_color(const ColorBase &amp;cb, Color=Color())</div><div class="ttdoc">Constant accessor to the element associated with a given color name. </div><div class="ttdef"><b>Definition:</b> color_base_algorithm.hpp:200</div></div>
 </div><!-- fragment --></div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
@@ -538,7 +537,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sun Mar 3 2019 02:51:19 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Mon Mar 4 2019 20:29:24 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

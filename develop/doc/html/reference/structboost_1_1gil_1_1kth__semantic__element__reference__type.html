@@ -68,9 +68,12 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:aa907cfd3fdd0d6811a0e6204866cdd09"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa907cfd3fdd0d6811a0e6204866cdd09"></a>
+<tr class="memitem:acd31378a3c68a446f44310b7bf6a2e0d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acd31378a3c68a446f44310b7bf6a2e0d"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>channel_mapping_t</b> = typename ColorBase::layout_t::channel_mapping_t</td></tr>
+<tr class="separator:acd31378a3c68a446f44310b7bf6a2e0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a198536bf1679b5b470a2a687ac77d54c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a198536bf1679b5b470a2a687ac77d54c"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>type</b> = typename kth_element_reference_type&lt; ColorBase, semantic_index &gt;::type</td></tr>
-<tr class="separator:aa907cfd3fdd0d6811a0e6204866cdd09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a198536bf1679b5b470a2a687ac77d54c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -80,7 +83,8 @@ static type&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> (Color
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:a2fb4d19aeffcefcf70e5fd1ed24b04de"><td class="memItemLeft" align="right" valign="top">static constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>semantic_index</b></td></tr>
+<tr class="memitem:a2fb4d19aeffcefcf70e5fd1ed24b04de"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2fb4d19aeffcefcf70e5fd1ed24b04de"></a>
+static constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>semantic_index</b> = mpl::at_c&lt;channel_mapping_t, K&gt;::type::value</td></tr>
 <tr class="separator:a2fb4d19aeffcefcf70e5fd1ed24b04de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -88,34 +92,7 @@ Static Public Attributes</h2></td></tr>
 struct boost::gil::kth_semantic_element_reference_type&lt; ColorBase, K &gt;</h3>
 
 <p>Specifies the return type of the mutable semantic_at_c&lt;K&gt;(color_base);. </p>
-</div><h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="a2fb4d19aeffcefcf70e5fd1ed24b04de"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr int semantic_index</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div>
-<div class="line">        <a class="code" href="group___color_base_model_homogeneous.html#ga6fb9de37a524b47bd591e1528809b24f">mpl::at_c</a></div>
-<div class="line">        &lt;</div>
-<div class="line">            <span class="keyword">typename</span> ColorBase::layout_t::channel_mapping_t,</div>
-<div class="line">            K</div>
-<div class="line">        &gt;::type::value</div>
-</div><!-- fragment -->
-</div>
-</div>
-<hr/>The documentation for this struct was generated from the following file:<ul>
+</div><hr/>The documentation for this struct was generated from the following file:<ul>
 <li><a class="el" href="color__base__algorithm_8hpp_source.html">color_base_algorithm.hpp</a></li>
 </ul>
 </div><!-- contents -->
@@ -124,7 +101,7 @@ struct boost::gil::kth_semantic_element_reference_type&lt; ColorBase, K &gt;</h3
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Sun Mar 3 2019 02:51:19 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Mon Mar 4 2019 20:29:24 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
