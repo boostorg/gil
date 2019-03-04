@@ -197,7 +197,7 @@ struct default_color_converter_impl<cmyk_t,gray_t> {
     template <typename P1, typename P2>
     void operator()(const P1& src, P2& dst) const  {
         get_color(dst,gray_color_t())=
-            channel_convert<typename color_element_type<P2,gray_t>::type>(
+            channel_convert<typename color_element_type<P2,gray_color_t>::type>(
                 channel_multiply(
                     channel_invert(
                        detail::rgb_to_luminance<typename color_element_type<P1,black_t>::type>(

@@ -14,6 +14,7 @@
 #include <boost/config.hpp>
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/contains.hpp>
+#include <boost/mpl/size.hpp>
 #include <boost/type_traits.hpp>
 
 #include <algorithm>
@@ -81,8 +82,11 @@ red_channel = channel_traits<red_channel_reference_t>::max_value();
 template <typename ColorBase, int K>
 struct kth_semantic_element_type
 {
-    static constexpr int semantic_index =
-        mpl::at_c<typename ColorBase::layout_t::channel_mapping_t, K>::type::value;
+    using channel_mapping_t = typename ColorBase::layout_t::channel_mapping_t;
+    static_assert(K < mpl::size<channel_mapping_t>::value,
+        "K index should be less than size of channel_mapping_t sequence");
+
+    static constexpr int semantic_index = mpl::at_c<channel_mapping_t, K>::type::value;
     using type = typename kth_element_type<ColorBase, semantic_index>::type;
 };
 
@@ -91,14 +95,12 @@ struct kth_semantic_element_type
 template <typename ColorBase, int K>
 struct kth_semantic_element_reference_type
 {
-    static constexpr int semantic_index =
-        mpl::at_c
-        <
-            typename ColorBase::layout_t::channel_mapping_t,
-            K
-        >::type::value;
+    using channel_mapping_t = typename ColorBase::layout_t::channel_mapping_t;
+    static_assert(K < mpl::size<channel_mapping_t>::value,
+        "K index should be less than size of channel_mapping_t sequence");
 
-    using type = typename kth_element_reference_type<ColorBase,semantic_index>::type;
+    static constexpr int semantic_index = mpl::at_c<channel_mapping_t, K>::type::value;
+    using type = typename kth_element_reference_type<ColorBase, semantic_index>::type;
     static type get(ColorBase& cb) { return gil::at_c<semantic_index>(cb); }
 };
 
@@ -106,13 +108,11 @@ struct kth_semantic_element_reference_type
 /// \ingroup ColorBaseAlgorithmSemanticAtC
 template <typename ColorBase, int K> struct kth_semantic_element_const_reference_type
 {
-	static constexpr int semantic_index =
-        mpl::at_c
-        <
-            typename ColorBase::layout_t::channel_mapping_t,
-            K
-        >::type::value;
+    using channel_mapping_t = typename ColorBase::layout_t::channel_mapping_t;
+    static_assert(K < mpl::size<channel_mapping_t>::value,
+        "K index should be less than size of channel_mapping_t sequence");
 
+    static constexpr int semantic_index = mpl::at_c<channel_mapping_t, K>::type::value;
     using type = typename kth_element_const_reference_type<ColorBase,semantic_index>::type;
     static type get(const ColorBase& cb) { return gil::at_c<semantic_index>(cb); }
 };
