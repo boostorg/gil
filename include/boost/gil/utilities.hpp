@@ -9,6 +9,7 @@
 #define BOOST_GIL_UTILITIES_HPP
 
 #include <boost/mpl/begin.hpp>
+#include <boost/mpl/contains.hpp>
 #include <boost/mpl/distance.hpp>
 #include <boost/mpl/find.hpp>
 #include <boost/mpl/range_c.hpp>
@@ -236,6 +237,7 @@ struct type_to_index
             typename mpl::find<Types,T>::type
         >::type
     {
+        static_assert(mpl::contains<Types, T>::type::value, "T should be element of Types");
     };
 } // namespace detail
 
