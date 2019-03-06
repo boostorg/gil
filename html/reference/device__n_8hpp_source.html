@@ -31,6 +31,7 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -90,40 +91,44 @@
 <div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1devicen__layout__t.html">   51</a></span>&#160;<span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt; <span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1devicen__layout__t.html">devicen_layout_t</a> : <span class="keyword">public</span> <a class="code" href="structboost_1_1gil_1_1layout.html">layout</a>&lt;devicen_t&lt;N&gt; &gt; {};</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> IC&gt;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keyword">inline</span> <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1type__from__x__iterator.html">type_from_x_iterator&lt;planar_pixel_iterator&lt;IC,devicen_t&lt;2&gt;</a> &gt; &gt;::view_t</div>
-<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="group___image_view_constructors.html#ga772354350229fa94e1e80466be41b571">   57</a></span>&#160;<a class="code" href="group___image_view_constructors.html#ga2f63988d27c4a8c9d67474d0e94c12a2">planar_devicen_view</a>(std::size_t width, std::size_t height, IC c0, IC c1, std::ptrdiff_t rowsize_in_bytes) {</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1type__from__x__iterator.html">type_from_x_iterator&lt;planar_pixel_iterator&lt;IC,devicen_t&lt;2&gt;</a> &gt; &gt;::view_t view_t;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordflow">return</span> view_t(width, height, <span class="keyword">typename</span> view_t::locator(<span class="keyword">typename</span> view_t::x_iterator(c0,c1), rowsize_in_bytes));</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;}</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> IC&gt;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">inline</span> <span class="keyword">typename</span> type_from_x_iterator&lt;planar_pixel_iterator&lt;IC,devicen_t&lt;3&gt; &gt; &gt;::view_t</div>
-<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="group___image_view_constructors.html#gaaa80d9c079c27004cfac8ddafce692b7">   66</a></span>&#160;<a class="code" href="group___image_view_constructors.html#ga2f63988d27c4a8c9d67474d0e94c12a2">planar_devicen_view</a>(std::size_t width, std::size_t height, IC c0, IC c1, IC c2, std::ptrdiff_t rowsize_in_bytes) {</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1type__from__x__iterator.html">type_from_x_iterator&lt;planar_pixel_iterator&lt;IC,devicen_t&lt;3&gt;</a> &gt; &gt;::view_t view_t;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordflow">return</span> view_t(width, height, <span class="keyword">typename</span> view_t::locator(<span class="keyword">typename</span> view_t::x_iterator(c0,c1,c2), rowsize_in_bytes));</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;}</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> IC&gt;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keyword">inline</span> <span class="keyword">typename</span> type_from_x_iterator&lt;planar_pixel_iterator&lt;IC,devicen_t&lt;4&gt; &gt; &gt;::view_t</div>
-<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="group___image_view_constructors.html#ga62cb53531a28ac11dd0714b1c017c4d6">   75</a></span>&#160;<a class="code" href="group___image_view_constructors.html#ga2f63988d27c4a8c9d67474d0e94c12a2">planar_devicen_view</a>(std::size_t width, std::size_t height, IC c0, IC c1, IC c2, IC c3, std::ptrdiff_t rowsize_in_bytes) {</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1type__from__x__iterator.html">type_from_x_iterator&lt;planar_pixel_iterator&lt;IC,devicen_t&lt;4&gt;</a> &gt; &gt;::view_t view_t;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordflow">return</span> view_t(width, height, <span class="keyword">typename</span> view_t::locator(<span class="keyword">typename</span> view_t::x_iterator(c0,c1,c2,c3), rowsize_in_bytes));</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;}</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> IC&gt;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="keyword">inline</span> <span class="keyword">typename</span> type_from_x_iterator&lt;planar_pixel_iterator&lt;IC,devicen_t&lt;5&gt; &gt; &gt;::view_t</div>
-<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="group___image_view_constructors.html#ga2f63988d27c4a8c9d67474d0e94c12a2">   84</a></span>&#160;<a class="code" href="group___image_view_constructors.html#ga2f63988d27c4a8c9d67474d0e94c12a2">planar_devicen_view</a>(std::size_t width, std::size_t height, IC c0, IC c1, IC c2, IC c3, IC c4, std::ptrdiff_t rowsize_in_bytes) {</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1type__from__x__iterator.html">type_from_x_iterator&lt;planar_pixel_iterator&lt;IC,devicen_t&lt;5&gt;</a> &gt; &gt;::view_t view_t;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordflow">return</span> view_t(width, height, <span class="keyword">typename</span> view_t::locator(<span class="keyword">typename</span> view_t::x_iterator(c0,c1,c2,c3,c4), rowsize_in_bytes));</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;}</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;} }  <span class="comment">// namespace boost::gil</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="group___image_view_constructors_html_ga2f63988d27c4a8c9d67474d0e94c12a2"><div class="ttname"><a href="group___image_view_constructors.html#ga2f63988d27c4a8c9d67474d0e94c12a2">boost::gil::planar_devicen_view</a></div><div class="ttdeci">type_from_x_iterator&lt; planar_pixel_iterator&lt; IC, devicen_t&lt; 5 &gt; &gt; &gt;::view_t planar_devicen_view(std::size_t width, std::size_t height, IC c0, IC c1, IC c2, IC c3, IC c4, std::ptrdiff_t rowsize_in_bytes)</div><div class="ttdoc">from 5-channel planar data </div><div class="ttdef"><b>Definition:</b> device_n.hpp:84</div></div>
-<div class="ttc" id="structboost_1_1gil_1_1type__from__x__iterator_html"><div class="ttname"><a href="structboost_1_1gil_1_1type__from__x__iterator.html">boost::gil::type_from_x_iterator</a></div><div class="ttdoc">Given a pixel iterator defining access to pixels along a row, returns the types of the corresponding ...</div><div class="ttdef"><b>Definition:</b> metafunctions.hpp:238</div></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keyword">inline</span> <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1type__from__x__iterator.html">type_from_x_iterator&lt;planar_pixel_iterator&lt;IC,devicen_t&lt;2&gt;</a>&gt;&gt;::view_t</div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="group___image_view_constructors.html#ga772354350229fa94e1e80466be41b571">   57</a></span>&#160;<a class="code" href="group___image_view_constructors.html#ga2f63988d27c4a8c9d67474d0e94c12a2">planar_devicen_view</a>(std::size_t width, std::size_t height, IC c0, IC c1, std::ptrdiff_t rowsize_in_bytes)</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;{</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">using</span> view_t = <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1type__from__x__iterator.html">type_from_x_iterator&lt;planar_pixel_iterator&lt;IC,devicen_t&lt;2&gt;</a>&gt;&gt;::view_t;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordflow">return</span> view_t(width, height, <span class="keyword">typename</span> view_t::locator(<span class="keyword">typename</span> view_t::x_iterator(c0,c1), rowsize_in_bytes));</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> IC&gt;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keyword">inline</span> <span class="keyword">typename</span> type_from_x_iterator&lt;planar_pixel_iterator&lt;IC,devicen_t&lt;3&gt;&gt;&gt;::view_t</div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="group___image_view_constructors.html#gaaa80d9c079c27004cfac8ddafce692b7">   67</a></span>&#160;<a class="code" href="group___image_view_constructors.html#ga2f63988d27c4a8c9d67474d0e94c12a2">planar_devicen_view</a>(std::size_t width, std::size_t height, IC c0, IC c1, IC c2, std::ptrdiff_t rowsize_in_bytes)</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;{</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keyword">using</span> view_t = <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1type__from__x__iterator.html">type_from_x_iterator&lt;planar_pixel_iterator&lt;IC,devicen_t&lt;3&gt;</a>&gt;&gt;::view_t;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordflow">return</span> view_t(width, height, <span class="keyword">typename</span> view_t::locator(<span class="keyword">typename</span> view_t::x_iterator(c0,c1,c2), rowsize_in_bytes));</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> IC&gt;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="keyword">inline</span> <span class="keyword">typename</span> type_from_x_iterator&lt;planar_pixel_iterator&lt;IC,devicen_t&lt;4&gt;&gt;&gt;::view_t</div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="group___image_view_constructors.html#ga62cb53531a28ac11dd0714b1c017c4d6">   77</a></span>&#160;<a class="code" href="group___image_view_constructors.html#ga2f63988d27c4a8c9d67474d0e94c12a2">planar_devicen_view</a>(std::size_t width, std::size_t height, IC c0, IC c1, IC c2, IC c3, std::ptrdiff_t rowsize_in_bytes)</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;{</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keyword">using</span> view_t = <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1type__from__x__iterator.html">type_from_x_iterator&lt;planar_pixel_iterator&lt;IC,devicen_t&lt;4&gt;</a>&gt;&gt;::view_t;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keywordflow">return</span> view_t(width, height, <span class="keyword">typename</span> view_t::locator(<span class="keyword">typename</span> view_t::x_iterator(c0,c1,c2,c3), rowsize_in_bytes));</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;}</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> IC&gt;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="keyword">inline</span> <span class="keyword">typename</span> type_from_x_iterator&lt;planar_pixel_iterator&lt;IC,devicen_t&lt;5&gt;&gt;&gt;::view_t</div>
+<div class="line"><a name="l00087"></a><span class="lineno"><a class="line" href="group___image_view_constructors.html#ga2f63988d27c4a8c9d67474d0e94c12a2">   87</a></span>&#160;<a class="code" href="group___image_view_constructors.html#ga2f63988d27c4a8c9d67474d0e94c12a2">planar_devicen_view</a>(std::size_t width, std::size_t height, IC c0, IC c1, IC c2, IC c3, IC c4, std::ptrdiff_t rowsize_in_bytes)</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;{</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keyword">using</span> view_t = <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1type__from__x__iterator.html">type_from_x_iterator&lt;planar_pixel_iterator&lt;IC,devicen_t&lt;5&gt;</a>&gt;&gt;::view_t;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordflow">return</span> view_t(width, height, <span class="keyword">typename</span> view_t::locator(<span class="keyword">typename</span> view_t::x_iterator(c0,c1,c2,c3,c4), rowsize_in_bytes));</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;}</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;} }  <span class="comment">// namespace boost::gil</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="group___image_view_constructors_html_ga2f63988d27c4a8c9d67474d0e94c12a2"><div class="ttname"><a href="group___image_view_constructors.html#ga2f63988d27c4a8c9d67474d0e94c12a2">boost::gil::planar_devicen_view</a></div><div class="ttdeci">type_from_x_iterator&lt; planar_pixel_iterator&lt; IC, devicen_t&lt; 5 &gt; &gt; &gt;::view_t planar_devicen_view(std::size_t width, std::size_t height, IC c0, IC c1, IC c2, IC c3, IC c4, std::ptrdiff_t rowsize_in_bytes)</div><div class="ttdoc">from 5-channel planar data </div><div class="ttdef"><b>Definition:</b> device_n.hpp:87</div></div>
+<div class="ttc" id="structboost_1_1gil_1_1type__from__x__iterator_html"><div class="ttname"><a href="structboost_1_1gil_1_1type__from__x__iterator.html">boost::gil::type_from_x_iterator</a></div><div class="ttdoc">Given a pixel iterator defining access to pixels along a row, returns the types of the corresponding ...</div><div class="ttdef"><b>Definition:</b> metafunctions.hpp:239</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1devicen__color__t_html"><div class="ttname"><a href="structboost_1_1gil_1_1devicen__color__t.html">boost::gil::devicen_color_t</a></div><div class="ttdoc">unnamed color </div><div class="ttdef"><b>Definition:</b> device_n.hpp:25</div></div>
-<div class="ttc" id="structboost_1_1gil_1_1layout_html"><div class="ttname"><a href="structboost_1_1gil_1_1layout.html">boost::gil::layout</a></div><div class="ttdoc">Represents a color space and ordering of channels in memory. </div><div class="ttdef"><b>Definition:</b> utilities.hpp:246</div></div>
+<div class="ttc" id="structboost_1_1gil_1_1layout_html"><div class="ttname"><a href="structboost_1_1gil_1_1layout.html">boost::gil::layout</a></div><div class="ttdoc">Represents a color space and ordering of channels in memory. </div><div class="ttdef"><b>Definition:</b> utilities.hpp:247</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1devicen__layout__t_html"><div class="ttname"><a href="structboost_1_1gil_1_1devicen__layout__t.html">boost::gil::devicen_layout_t</a></div><div class="ttdoc">unnamed color layout of up to five channels </div><div class="ttdef"><b>Definition:</b> device_n.hpp:51</div></div>
 </div><!-- fragment --></div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
@@ -131,7 +136,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Nov 7 2018 15:28:41 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Wed Mar 6 2019 16:42:06 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

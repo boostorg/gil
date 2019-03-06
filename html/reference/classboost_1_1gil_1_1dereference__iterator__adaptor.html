@@ -31,6 +31,7 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -60,7 +61,7 @@
 </div><!--header-->
 <div class="contents">
 
-<p>An adaptor over an existing iterator that provides for custom filter on dereferencing the object. Models: <a class="el" href="structboost_1_1gil_1_1_iterator_adaptor_concept.html" title="Iterator adaptor is a forward iterator adapting another forward iterator. ">IteratorAdaptorConcept</a>, <a class="el" href="structboost_1_1gil_1_1_pixel_iterator_concept.html" title="An STL random access traversal iterator over a model of PixelConcept. ">PixelIteratorConcept</a>.  
+<p>An adaptor over an existing iterator that provides for custom filter on dereferencing the object. Models: IteratorAdaptorConcept, PixelIteratorConcept.  
  <a href="classboost_1_1gil_1_1dereference__iterator__adaptor.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="pixel__iterator__adaptor_8hpp_source.html">pixel_iterator_adaptor.hpp</a>&gt;</code></p>
@@ -69,26 +70,18 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:aef282683ebc91efec6c187477fbadaf9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aef282683ebc91efec6c187477fbadaf9"></a>
-typedef iterator_adaptor<br class="typebreak"/>
-&lt; <a class="el" href="classboost_1_1gil_1_1dereference__iterator__adaptor.html">dereference_iterator_adaptor</a><br class="typebreak"/>
-&lt; Iterator, DFn &gt;, Iterator, <br class="typebreak"/>
-typename DFn::value_type, <br class="typebreak"/>
-typename std::iterator_traits<br class="typebreak"/>
-&lt; Iterator &gt;<br class="typebreak"/>
-::iterator_category, typename <br class="typebreak"/>
-DFn::reference, use_default &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>parent_t</b></td></tr>
-<tr class="separator:aef282683ebc91efec6c187477fbadaf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a925a77333811e037f4a6d8646999518b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a925a77333811e037f4a6d8646999518b"></a>
-typedef DFn::result_type&#160;</td><td class="memItemRight" valign="bottom"><b>reference</b></td></tr>
-<tr class="separator:a925a77333811e037f4a6d8646999518b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e6780c1f76e61ef32d8d9682be7cf9f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2e6780c1f76e61ef32d8d9682be7cf9f"></a>
-typedef std::iterator_traits<br class="typebreak"/>
-&lt; Iterator &gt;::difference_type&#160;</td><td class="memItemRight" valign="bottom"><b>difference_type</b></td></tr>
-<tr class="separator:a2e6780c1f76e61ef32d8d9682be7cf9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac82fa666cbc2cbbc0edea3c495001a39"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac82fa666cbc2cbbc0edea3c495001a39"></a>
-typedef DFn&#160;</td><td class="memItemRight" valign="bottom"><b>dereference_fn</b></td></tr>
-<tr class="separator:ac82fa666cbc2cbbc0edea3c495001a39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a917b3e18694fd92be89afed1a07f7d5c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a917b3e18694fd92be89afed1a07f7d5c"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>parent_t</b> = iterator_adaptor&lt; <a class="el" href="classboost_1_1gil_1_1dereference__iterator__adaptor.html">dereference_iterator_adaptor</a>&lt; Iterator, DFn &gt;, Iterator, typename DFn::value_type, typename std::iterator_traits&lt; Iterator &gt;::iterator_category, typename DFn::reference, use_default &gt;</td></tr>
+<tr class="separator:a917b3e18694fd92be89afed1a07f7d5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85f484e03440df49a4e4aeca7054ab45"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a85f484e03440df49a4e4aeca7054ab45"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>reference</b> = typename DFn::result_type</td></tr>
+<tr class="separator:a85f484e03440df49a4e4aeca7054ab45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad050e8e82b0962bb9ebd0e7c23b436ac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad050e8e82b0962bb9ebd0e7c23b436ac"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>difference_type</b> = typename std::iterator_traits&lt; Iterator &gt;::difference_type</td></tr>
+<tr class="separator:ad050e8e82b0962bb9ebd0e7c23b436ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7477c088f1b796b376e4615e1c487ea7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7477c088f1b796b376e4615e1c487ea7"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>dereference_fn</b> = DFn</td></tr>
+<tr class="separator:a7477c088f1b796b376e4615e1c487ea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -147,7 +140,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::iterator_core
 <div class="textblock"><h3>template&lt;typename Iterator, typename DFn&gt;<br/>
 class boost::gil::dereference_iterator_adaptor&lt; Iterator, DFn &gt;</h3>
 
-<p>An adaptor over an existing iterator that provides for custom filter on dereferencing the object. Models: <a class="el" href="structboost_1_1gil_1_1_iterator_adaptor_concept.html" title="Iterator adaptor is a forward iterator adapting another forward iterator. ">IteratorAdaptorConcept</a>, <a class="el" href="structboost_1_1gil_1_1_pixel_iterator_concept.html" title="An STL random access traversal iterator over a model of PixelConcept. ">PixelIteratorConcept</a>. </p>
+<p>An adaptor over an existing iterator that provides for custom filter on dereferencing the object. Models: IteratorAdaptorConcept, PixelIteratorConcept. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="ade1279c4ed222b6efb0867c038765ea1"></a>
 <div class="memitem">
@@ -183,7 +176,7 @@ class boost::gil::dereference_iterator_adaptor&lt; Iterator, DFn &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Nov 7 2018 15:28:42 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Wed Mar 6 2019 16:42:07 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

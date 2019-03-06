@@ -313,16 +313,7 @@ channels, such as support for arithmetic operations.</p>
 </div>
 <div class="section" id="id1">
 <h3>Models</h3>
-<p>All built-in integral and floating point types are valid channels. GIL
-provides standard type aliases for some integral channels:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="n">boost</span><span class="o">::</span><span class="kt">uint8_t</span>  <span class="n">bits8</span><span class="p">;</span>
-<span class="k">typedef</span> <span class="n">boost</span><span class="o">::</span><span class="kt">uint16_t</span> <span class="n">bits16</span><span class="p">;</span>
-<span class="k">typedef</span> <span class="n">boost</span><span class="o">::</span><span class="kt">uint32_t</span> <span class="n">bits32</span><span class="p">;</span>
-<span class="k">typedef</span> <span class="n">boost</span><span class="o">::</span><span class="kt">int8_t</span>   <span class="n">bits8s</span><span class="p">;</span>
-<span class="k">typedef</span> <span class="n">boost</span><span class="o">::</span><span class="kt">int16_t</span>  <span class="n">bits16s</span><span class="p">;</span>
-<span class="k">typedef</span> <span class="n">boost</span><span class="o">::</span><span class="kt">int32_t</span>  <span class="n">bits32s</span><span class="p">;</span>
-</pre></div>
-</div>
+<p>All C++11 fundamental integer and float point types are valid channels.</p>
 <p>The minimum and maximum values of a channel modeled by a built-in type
 correspond to the minimum and maximum physical range of the built-in
 type, as specified by its <code class="docutils literal notranslate"><span class="pre">std::numeric_limits</span></code>. Sometimes the
@@ -876,7 +867,7 @@ provides a model for such packed pixel formats:</p>
 <span class="k">typedef</span> <span class="n">packed_pixel_type</span><span class="o">&lt;</span><span class="kt">uint16_t</span><span class="p">,</span> <span class="n">mpl</span><span class="o">::</span><span class="n">vector3_c</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">5</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">rgb_layout_t</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">rgb565_pixel_t</span><span class="p">;</span>
 
 <span class="n">function_requires</span><span class="o">&lt;</span><span class="n">PixelValueConcept</span><span class="o">&lt;</span><span class="n">rgb565_pixel_t</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">();</span>
-<span class="n">BOOST_STATIC_ASSERT</span><span class="p">((</span><span class="k">sizeof</span><span class="p">(</span><span class="n">rgb565_pixel_t</span><span class="p">)</span><span class="o">==</span><span class="mi">2</span><span class="p">));</span>
+<span class="k">static_assert</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">rgb565_pixel_t</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
 
 <span class="c1">// define a bgr556 pixel</span>
 <span class="k">typedef</span> <span class="n">packed_pixel_type</span><span class="o">&lt;</span><span class="kt">uint16_t</span><span class="p">,</span> <span class="n">mpl</span><span class="o">::</span><span class="n">vector3_c</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">5</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">bgr_layout_t</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">bgr556_pixel_t</span><span class="p">;</span>
@@ -906,7 +897,7 @@ pixels and pixel iterators:</p>
 
 <span class="c1">// BGR232 pixel value. It is a packed_pixel of size 1 byte. (The last bit is unused)</span>
 <span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">iterator_traits</span><span class="o">&lt;</span><span class="n">bgr232_ptr_t</span><span class="o">&gt;::</span><span class="n">value_type</span> <span class="n">bgr232_pixel_t</span><span class="p">;</span>
-<span class="n">BOOST_STATIC_ASSERT</span><span class="p">((</span><span class="k">sizeof</span><span class="p">(</span><span class="n">bgr232_pixel_t</span><span class="p">)</span><span class="o">==</span><span class="mi">1</span><span class="p">));</span>
+<span class="k">static_assert</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">bgr232_pixel_t</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
 
 <span class="n">bgr232_pixel_t</span> <span class="nf">red</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span> <span class="c1">// = 0RRGGGBB, = 01100000 = 0x60</span>
 
@@ -2006,7 +1997,7 @@ an example:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;boost/gil/extension/dynamic_image/dynamic_image_all.hpp&gt;</span><span class="cp"></span>
 <span class="k">using</span> <span class="k">namespace</span> <span class="n">boost</span><span class="p">;</span>
 
-<span class="cp">#define ASSERT_SAME(A,B) BOOST_STATIC_ASSERT((is_same&lt; A,B &gt;::value))</span>
+<span class="cp">#define ASSERT_SAME(A,B) static_assert(is_same&lt; A,B &gt;::value, &quot;&quot;)</span>
 
 <span class="c1">// Define the set of allowed images</span>
 <span class="k">typedef</span> <span class="n">mpl</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">rgb8_image_t</span><span class="p">,</span> <span class="n">cmyk16_planar_image_t</span><span class="o">&gt;</span> <span class="n">my_images_t</span><span class="p">;</span>
@@ -2422,7 +2413,7 @@ HomogeneousPixelBasedConcept and metafunctions built on top of them:</p>
 </div>
 <p>These are metafunctions, some of which return integral types which can
 be evaluated like this:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">BOOST_STATIC_ASSERT</span><span class="p">(</span><span class="n">is_planar</span><span class="o">&lt;</span><span class="n">rgb8_planar_view_t</span><span class="o">&gt;::</span><span class="n">value</span> <span class="o">==</span> <span class="nb">true</span><span class="p">);</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">static_assert</span><span class="p">(</span><span class="n">is_planar</span><span class="o">&lt;</span><span class="n">rgb8_planar_view_t</span><span class="o">&gt;::</span><span class="n">value</span> <span class="o">==</span> <span class="nb">true</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>GIL also supports type analysis metafunctions of the form:
@@ -2581,10 +2572,10 @@ pointers and references:</p>
   <span class="n">gil_function_requires</span><span class="o">&lt;</span><span class="n">MutableHomogeneousPixelConcept</span><span class="o">&lt;</span><span class="n">RGBPixel</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">();</span>
 
   <span class="k">typedef</span> <span class="k">typename</span> <span class="n">color_space_type</span><span class="o">&lt;</span><span class="n">GrayPixel</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">gray_cs_t</span><span class="p">;</span>
-  <span class="n">BOOST_STATIC_ASSERT</span><span class="p">((</span><span class="n">boost</span><span class="o">::</span><span class="n">is_same</span><span class="o">&lt;</span><span class="n">gray_cs_t</span><span class="p">,</span><span class="n">gray_t</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">));</span>
+  <span class="k">static_assert</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">is_same</span><span class="o">&lt;</span><span class="n">gray_cs_t</span><span class="p">,</span><span class="n">gray_t</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
 
   <span class="k">typedef</span> <span class="k">typename</span> <span class="n">color_space_type</span><span class="o">&lt;</span><span class="n">RGBPixel</span><span class="o">&gt;::</span><span class="n">type</span>  <span class="n">rgb_cs_t</span><span class="p">;</span>
-  <span class="n">BOOST_STATIC_ASSERT</span><span class="p">((</span><span class="n">boost</span><span class="o">::</span><span class="n">is_same</span><span class="o">&lt;</span><span class="n">rgb_cs_t</span><span class="p">,</span><span class="n">rgb_t</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">));</span>
+  <span class="k">static_assert</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">is_same</span><span class="o">&lt;</span><span class="n">rgb_cs_t</span><span class="p">,</span><span class="n">rgb_t</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
 
   <span class="k">typedef</span> <span class="k">typename</span> <span class="n">channel_type</span><span class="o">&lt;</span><span class="n">GrayPixel</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">gray_channel_t</span><span class="p">;</span>
   <span class="k">typedef</span> <span class="k">typename</span> <span class="n">channel_type</span><span class="o">&lt;</span><span class="n">RGBPixel</span><span class="o">&gt;::</span><span class="n">type</span>  <span class="n">rgb_channel_t</span><span class="p">;</span>
@@ -2827,7 +2818,7 @@ called when we dereference a pixel iterator.  It will call
   <span class="k">typedef</span> <span class="k">const</span> <span class="n">value_type</span><span class="o">&amp;</span>   <span class="n">const_reference</span><span class="p">;</span>
   <span class="k">typedef</span> <span class="n">SrcConstRefP</span>        <span class="n">argument_type</span><span class="p">;</span>
   <span class="k">typedef</span> <span class="n">reference</span>           <span class="n">result_type</span><span class="p">;</span>
-  <span class="n">BOOST_STATIC_CONSTANT</span><span class="p">(</span><span class="kt">bool</span><span class="p">,</span> <span class="n">is_mutable</span><span class="o">=</span><span class="nb">false</span><span class="p">);</span>
+  <span class="k">static</span> <span class="kt">bool</span> <span class="k">constexpr</span> <span class="n">is_mutable</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
 
   <span class="n">result_type</span> <span class="nf">operator</span><span class="p">()(</span><span class="n">argument_type</span> <span class="n">srcP</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
       <span class="n">result_type</span> <span class="n">dstP</span><span class="p">;</span>

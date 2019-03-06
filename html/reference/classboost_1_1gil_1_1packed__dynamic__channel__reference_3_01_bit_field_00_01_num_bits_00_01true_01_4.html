@@ -31,6 +31,7 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -60,7 +61,7 @@
 </div><!--header-->
 <div class="contents">
 
-<p>Models a mutable subbyte channel reference whose bit offset is a runtime parameter. Models <a class="el" href="structboost_1_1gil_1_1_channel_concept.html" title="A channel is the building block of a color. Color is defined as a mixture of primary colors and a cha...">ChannelConcept</a> Same as packed_channel_reference, except that the offset is a runtime parameter.  
+<p>Models a mutable subbyte channel reference whose bit offset is a runtime parameter. Models ChannelConcept Same as packed_channel_reference, except that the offset is a runtime parameter.  
  <a href="classboost_1_1gil_1_1packed__dynamic__channel__reference_3_01_bit_field_00_01_num_bits_00_01true_01_4.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="channel_8hpp_source.html">channel.hpp</a>&gt;</code></p>
@@ -69,19 +70,15 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:ab8e369d88328c97aeb3e7e40b5e77d24"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab8e369d88328c97aeb3e7e40b5e77d24"></a>
-typedef const <br class="typebreak"/>
-packed_dynamic_channel_reference<br class="typebreak"/>
-&lt; BitField, NumBits, false &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>const_reference</b></td></tr>
-<tr class="separator:ab8e369d88328c97aeb3e7e40b5e77d24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac53d00f323b0e2f236805e18d91877ce"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac53d00f323b0e2f236805e18d91877ce"></a>
-typedef const <br class="typebreak"/>
-packed_dynamic_channel_reference<br class="typebreak"/>
-&lt; BitField, NumBits, true &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>mutable_reference</b></td></tr>
-<tr class="separator:ac53d00f323b0e2f236805e18d91877ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0cb251d2da1e54ca63c938ede6fbd8c8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0cb251d2da1e54ca63c938ede6fbd8c8"></a>
-typedef parent_t::integer_t&#160;</td><td class="memItemRight" valign="bottom"><b>integer_t</b></td></tr>
-<tr class="separator:a0cb251d2da1e54ca63c938ede6fbd8c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7eec9eb32d387cdbb8f867adf290af9e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7eec9eb32d387cdbb8f867adf290af9e"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>const_reference</b> = packed_dynamic_channel_reference&lt; BitField, NumBits, false &gt; const</td></tr>
+<tr class="separator:a7eec9eb32d387cdbb8f867adf290af9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a959468ff7fe89627eb9e28a08bb4a742"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a959468ff7fe89627eb9e28a08bb4a742"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>mutable_reference</b> = packed_dynamic_channel_reference&lt; BitField, NumBits, true &gt; const</td></tr>
+<tr class="separator:a959468ff7fe89627eb9e28a08bb4a742"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc257779d294685f169034a94cc6d1b4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afc257779d294685f169034a94cc6d1b4"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>integer_t</b> = typename parent_t::integer_t</td></tr>
+<tr class="separator:afc257779d294685f169034a94cc6d1b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -91,17 +88,17 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4f683735092b7c064934aab28e6e0e17"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4f683735092b7c064934aab28e6e0e17"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>packed_dynamic_channel_reference</b> (const packed_dynamic_channel_reference &amp;ref)</td></tr>
 <tr class="separator:a4f683735092b7c064934aab28e6e0e17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7a4e5c83585054ab0cd467fed22eded"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac7a4e5c83585054ab0cd467fed22eded"></a>
-const <br class="typebreak"/>
-packed_dynamic_channel_reference &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (integer_t value) const </td></tr>
-<tr class="separator:ac7a4e5c83585054ab0cd467fed22eded"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6925b3fd77202cda76bc71495c20ef4d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6925b3fd77202cda76bc71495c20ef4d"></a>
+packed_dynamic_channel_reference <br class="typebreak"/>
+const &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (integer_t value) const </td></tr>
+<tr class="separator:a6925b3fd77202cda76bc71495c20ef4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a132448d9cae2c97629c7800547e16a90"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a132448d9cae2c97629c7800547e16a90"></a>
 const <br class="typebreak"/>
-packed_dynamic_channel_reference &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classboost_1_1gil_1_1packed__dynamic__channel__reference_3_01_bit_field_00_01_num_bits_00_01true_01_4.html">mutable_reference</a> &amp;ref) const </td></tr>
+packed_dynamic_channel_reference &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const mutable_reference &amp;ref) const </td></tr>
 <tr class="separator:a132448d9cae2c97629c7800547e16a90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe49a05f549a2170ba5c3f89a87d6a41"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe49a05f549a2170ba5c3f89a87d6a41"></a>
 const <br class="typebreak"/>
-packed_dynamic_channel_reference &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classboost_1_1gil_1_1packed__dynamic__channel__reference_3_01_bit_field_00_01_num_bits_00_01false_01_4.html">const_reference</a> &amp;ref) const </td></tr>
+packed_dynamic_channel_reference &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const const_reference &amp;ref) const </td></tr>
 <tr class="separator:abe49a05f549a2170ba5c3f89a87d6a41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a915fb76ba99486526e844815d3bdf701"><td class="memTemplParams" colspan="2"><a class="anchor" id="a915fb76ba99486526e844815d3bdf701"></a>
 template&lt;typename BitField1 , int FirstBit1, bool Mutable1&gt; </td></tr>
@@ -128,7 +125,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>packed_dynamic_chann
 <div class="textblock"><h3>template&lt;typename BitField, int NumBits&gt;<br/>
 class boost::gil::packed_dynamic_channel_reference&lt; BitField, NumBits, true &gt;</h3>
 
-<p>Models a mutable subbyte channel reference whose bit offset is a runtime parameter. Models <a class="el" href="structboost_1_1gil_1_1_channel_concept.html" title="A channel is the building block of a color. Color is defined as a mixture of primary colors and a cha...">ChannelConcept</a> Same as packed_channel_reference, except that the offset is a runtime parameter. </p>
+<p>Models a mutable subbyte channel reference whose bit offset is a runtime parameter. Models ChannelConcept Same as packed_channel_reference, except that the offset is a runtime parameter. </p>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="channel_8hpp_source.html">channel.hpp</a></li>
 </ul>
@@ -138,7 +135,7 @@ class boost::gil::packed_dynamic_channel_reference&lt; BitField, NumBits, true &
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Nov 7 2018 15:28:42 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Wed Mar 6 2019 16:42:06 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

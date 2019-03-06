@@ -31,6 +31,7 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -86,7 +87,7 @@ template&lt;typename P2 , typename P3 , typename Dst , typename Op &gt; </td></t
 <div class="line"></div>
 <div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Pixel1, <span class="keyword">typename</span> Pixel2, <span class="keyword">typename</span> Pixel3&gt;</div>
 <div class="line"><span class="keywordtype">void</span> sum_channels(<span class="keyword">const</span> Pixel1&amp; p1, <span class="keyword">const</span> Pixel2&amp; p2, Pixel3&amp; result) {</div>
-<div class="line">    <span class="keyword">typedef</span> <span class="keyword">typename</span> channel_type&lt;Pixel3&gt;::type result_channel_t;</div>
+<div class="line">    <span class="keyword">using</span> result_channel_t = <span class="keyword">typename</span> channel_type&lt;Pixel3&gt;::type;</div>
 <div class="line">    static_transform(p1,p2,result,my_plus&lt;result_channel_t&gt;());</div>
 <div class="line">}</div>
 <div class="line"></div>
@@ -101,7 +102,7 @@ template&lt;typename P2 , typename P3 , typename Dst , typename Op &gt; </td></t
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Nov 7 2018 15:28:42 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Wed Mar 6 2019 16:42:06 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

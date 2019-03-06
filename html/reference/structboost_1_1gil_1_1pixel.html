@@ -31,6 +31,7 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -53,36 +54,34 @@
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="structboost_1_1gil_1_1pixel-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">pixel&lt; T, L &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group___pixel_model_pixel.html">pixel</a> &#124; <a class="el" href="group___color_base_model_pixel.html">pixel</a> &#124; <a class="el" href="group___pixel_based_model.html">Models</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Represents a pixel value (a container of channels). Models: <a class="el" href="structboost_1_1gil_1_1_homogeneous_color_base_value_concept.html" title="Homogeneous color base that also has a default constructor. Refines Regular. ">HomogeneousColorBaseValueConcept</a>, <a class="el" href="structboost_1_1gil_1_1_pixel_value_concept.html" title="Pixel concept that is a Regular type. ">PixelValueConcept</a>, <a class="el" href="structboost_1_1gil_1_1_homogeneous_pixel_based_concept.html" title="Concept for homogeneous pixel-based GIL constructs. ">HomogeneousPixelBasedConcept</a>.  
+<p>Represents a pixel value (a container of channels). Models: HomogeneousColorBaseValueConcept, PixelValueConcept, HomogeneousPixelBasedConcept.  
  <a href="structboost_1_1gil_1_1pixel.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="pixel_8hpp_source.html">pixel.hpp</a>&gt;</code></p>
 
-<p>Inherits homogeneous_color_base&lt; Element, Layout, K &gt;.</p>
+<p>Inherits homogeneous_color_base&lt; ChannelValue, Layout, mpl::size&lt; Layout::color_space_t &gt;::value &gt;.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a991c5469a9489e9c204bbbdfca11d14d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a991c5469a9489e9c204bbbdfca11d14d"></a>
-typedef <a class="el" href="structboost_1_1gil_1_1pixel.html">pixel</a>&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b></td></tr>
-<tr class="separator:a991c5469a9489e9c204bbbdfca11d14d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe8933d436779a43cb5c1896ff5f2918"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe8933d436779a43cb5c1896ff5f2918"></a>
-typedef <a class="el" href="structboost_1_1gil_1_1pixel.html">value_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>reference</b></td></tr>
-<tr class="separator:abe8933d436779a43cb5c1896ff5f2918"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afdb67657e63a66ed3fae7b0c9fd81b48"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afdb67657e63a66ed3fae7b0c9fd81b48"></a>
-typedef const <a class="el" href="structboost_1_1gil_1_1pixel.html">value_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>const_reference</b></td></tr>
-<tr class="separator:afdb67657e63a66ed3fae7b0c9fd81b48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41e636d5aab49f830310d96cc20a62e4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a41e636d5aab49f830310d96cc20a62e4"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b> = <a class="el" href="structboost_1_1gil_1_1pixel.html">pixel</a>&lt; ChannelValue, Layout &gt;</td></tr>
+<tr class="separator:a41e636d5aab49f830310d96cc20a62e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74202cdd96628bc49a756e5fc87d22de"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a74202cdd96628bc49a756e5fc87d22de"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>reference</b> = <a class="el" href="structboost_1_1gil_1_1pixel.html">value_type</a> &amp;</td></tr>
+<tr class="separator:a74202cdd96628bc49a756e5fc87d22de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4780295ff953151e0121aebfbcade4da"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4780295ff953151e0121aebfbcade4da"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>const_reference</b> = <a class="el" href="structboost_1_1gil_1_1pixel.html">value_type</a> const &amp;</td></tr>
+<tr class="separator:a4780295ff953151e0121aebfbcade4da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad6e6575c49a3008e0b845426bcd27578"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad6e6575c49a3008e0b845426bcd27578"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>BOOST_STATIC_CONSTANT</b> (bool, is_mutable=channel_traits&lt; channel_t &gt;::is_mutable)</td></tr>
-<tr class="separator:ad6e6575c49a3008e0b845426bcd27578"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39970d76708fe02233e30494f8bfcc08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a39970d76708fe02233e30494f8bfcc08"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>pixel</b> (channel_t v)</td></tr>
 <tr class="separator:a39970d76708fe02233e30494f8bfcc08"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -107,10 +106,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aaa2847e638313bb5400af18c5a6c24e6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa2847e638313bb5400af18c5a6c24e6"></a>
 <a class="el" href="structboost_1_1gil_1_1pixel.html">pixel</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="structboost_1_1gil_1_1pixel.html">pixel</a> &amp;p)</td></tr>
 <tr class="separator:aaa2847e638313bb5400af18c5a6c24e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a87098649d3d3387ca10220ba4c2aa5a3"><td class="memTemplParams" colspan="2"><a class="anchor" id="a87098649d3d3387ca10220ba4c2aa5a3"></a>
+<tr class="memitem:a61332efa3f596341a1a36170c71033da"><td class="memTemplParams" colspan="2"><a class="anchor" id="a61332efa3f596341a1a36170c71033da"></a>
 template&lt;typename Pixel &gt; </td></tr>
-<tr class="memitem:a87098649d3d3387ca10220ba4c2aa5a3"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>pixel</b> (const Pixel &amp;p, typename enable_if_c&lt; is_pixel&lt; Pixel &gt;::value &gt;::type *dummy=0)</td></tr>
-<tr class="separator:a87098649d3d3387ca10220ba4c2aa5a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61332efa3f596341a1a36170c71033da"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>pixel</b> (Pixel const &amp;p, typename std::enable_if&lt; is_pixel&lt; Pixel &gt;::value &gt;::type *=nullptr)</td></tr>
+<tr class="separator:a61332efa3f596341a1a36170c71033da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91f57c9bd6a9c25b6cc757725bd05bea"><td class="memTemplParams" colspan="2"><a class="anchor" id="a91f57c9bd6a9c25b6cc757725bd05bea"></a>
 template&lt;typename P &gt; </td></tr>
 <tr class="memitem:a91f57c9bd6a9c25b6cc757725bd05bea"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structboost_1_1gil_1_1pixel.html">pixel</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator=</b> (const P &amp;p)</td></tr>
@@ -129,7 +128,7 @@ channel_traits&lt; channel_t &gt;<br class="typebreak"/>
 <tr class="separator:ab0d5a816a18cd4779d89c9f8afac47c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ab78490d6874a0ff45e23ccafb98f6f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9ab78490d6874a0ff45e23ccafb98f6f"></a>
 channel_traits&lt; channel_t &gt;<br class="typebreak"/>
-::<a class="el" href="structboost_1_1gil_1_1pixel.html">const_reference</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (std::size_t i) const </td></tr>
+::const_reference&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (std::size_t i) const </td></tr>
 <tr class="separator:a9ab78490d6874a0ff45e23ccafb98f6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa756430767fc3449e130ccb898570dfa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa756430767fc3449e130ccb898570dfa"></a>
 <a class="el" href="structboost_1_1gil_1_1pixel.html">pixel</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (channel_t chan)</td></tr>
@@ -137,13 +136,19 @@ channel_traits&lt; channel_t &gt;<br class="typebreak"/>
 <tr class="memitem:ab873112c42a94cc3c75a816513f776b0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab873112c42a94cc3c75a816513f776b0"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (channel_t chan) const </td></tr>
 <tr class="separator:ab873112c42a94cc3c75a816513f776b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:ada04709db53ded2c170444a3f1c4e5d4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ada04709db53ded2c170444a3f1c4e5d4"></a>
+static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_mutable</b> = channel_traits&lt;channel_t&gt;::is_mutable</td></tr>
+<tr class="separator:ada04709db53ded2c170444a3f1c4e5d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename T, typename L&gt;<br/>
 struct boost::gil::pixel&lt; T, L &gt;</h3>
 
-<p>Represents a pixel value (a container of channels). Models: <a class="el" href="structboost_1_1gil_1_1_homogeneous_color_base_value_concept.html" title="Homogeneous color base that also has a default constructor. Refines Regular. ">HomogeneousColorBaseValueConcept</a>, <a class="el" href="structboost_1_1gil_1_1_pixel_value_concept.html" title="Pixel concept that is a Regular type. ">PixelValueConcept</a>, <a class="el" href="structboost_1_1gil_1_1_homogeneous_pixel_based_concept.html" title="Concept for homogeneous pixel-based GIL constructs. ">HomogeneousPixelBasedConcept</a>. </p>
-<p>A pixel is a set of channels defining the color at a given point in an image. Conceptually, a pixel is little more than a color base whose elements model <code><a class="el" href="structboost_1_1gil_1_1_channel_concept.html" title="A channel is the building block of a color. Color is defined as a mixture of primary colors and a cha...">ChannelConcept</a></code>. The class <code>pixel</code> defines a simple, homogeneous pixel value. It is used to store the value of a color. The built-in C++ references to <code>pixel</code>, <code>pixel&amp;</code> and <code>const</code> <code>pixel&amp;</code> are used to represent a reference to a pixel inside an interleaved image view (a view in which all channels are together in memory). Similarly, built-in pointer types <code>pixel*</code> and <code>const</code> <code>pixel*</code> are used as the standard iterator over a row of interleaved homogeneous pixels.</p>
+<p>Represents a pixel value (a container of channels). Models: HomogeneousColorBaseValueConcept, PixelValueConcept, HomogeneousPixelBasedConcept. </p>
+<p>A pixel is a set of channels defining the color at a given point in an image. Conceptually, a pixel is little more than a color base whose elements model <code>ChannelConcept</code>. The class <code>pixel</code> defines a simple, homogeneous pixel value. It is used to store the value of a color. The built-in C++ references to <code>pixel</code>, <code>pixel&amp;</code> and <code>const</code> <code>pixel&amp;</code> are used to represent a reference to a pixel inside an interleaved image view (a view in which all channels are together in memory). Similarly, built-in pointer types <code>pixel*</code> and <code>const</code> <code>pixel*</code> are used as the standard iterator over a row of interleaved homogeneous pixels.</p>
 <p>Since <code>pixel</code> inherits the properties of color base, assigning, equality comparison and copy-construcion are allowed between compatible pixels. This means that an 8-bit RGB pixel may be assigned to an 8-bit BGR pixel, or to an 8-bit planar reference. The channels are properly paired semantically.</p>
 <p>The single-channel (grayscale) instantiation of the class pixel, (i.e. <code>pixel&lt;T,gray_layout_t&gt;</code>) is also convertible to/from a channel value. This allows grayscale pixels to be used in simpler expressions like *gray_pix1 = *gray_pix2 instead of more complicated at_c&lt;0&gt;(gray_pix1) = at_c&lt;0&gt;(gray_pix2) or get_color&lt;gray_color_t&gt;(gray_pix1) = get_color&lt;gray_color_t&gt;(gray_pix2) </p>
 </div><hr/>The documentation for this struct was generated from the following files:<ul>
@@ -156,7 +161,7 @@ struct boost::gil::pixel&lt; T, L &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Nov 7 2018 15:28:42 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Wed Mar 6 2019 16:42:06 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

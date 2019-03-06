@@ -31,6 +31,7 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -52,8 +53,8 @@
 <div class="header">
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
-<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="structboost_1_1gil_1_1kth__semantic__element__reference__type-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">kth_semantic_element_reference_type&lt; ColorBase, K &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group___color_base_algorithm_semantic_at_c.html">kth_semantic_element_type, kth_semantic_element_reference_type, kth_semantic_element_const_reference_type, semantic_at_c</a></div></div>  </div>
@@ -67,24 +68,24 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:af348c94781925f6629faa1b4132cf977"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af348c94781925f6629faa1b4132cf977"></a>
-typedef <br class="typebreak"/>
-kth_element_reference_type<br class="typebreak"/>
-&lt; ColorBase, semantic_index &gt;<br class="typebreak"/>
-::type&#160;</td><td class="memItemRight" valign="bottom"><b>type</b></td></tr>
-<tr class="separator:af348c94781925f6629faa1b4132cf977"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:ac8173c609b0dabc5c884e715b5b60bf6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac8173c609b0dabc5c884e715b5b60bf6"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>BOOST_STATIC_CONSTANT</b> (int, semantic_index=(mpl::at_c&lt; typename ColorBase::layout_t::channel_mapping_t, K &gt;::type::value))</td></tr>
-<tr class="separator:ac8173c609b0dabc5c884e715b5b60bf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd31378a3c68a446f44310b7bf6a2e0d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acd31378a3c68a446f44310b7bf6a2e0d"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>channel_mapping_t</b> = typename ColorBase::layout_t::channel_mapping_t</td></tr>
+<tr class="separator:acd31378a3c68a446f44310b7bf6a2e0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a198536bf1679b5b470a2a687ac77d54c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a198536bf1679b5b470a2a687ac77d54c"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>type</b> = typename kth_element_reference_type&lt; ColorBase, semantic_index &gt;::type</td></tr>
+<tr class="separator:a198536bf1679b5b470a2a687ac77d54c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a6e24ea1fe377e64753004f82204c8570"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6e24ea1fe377e64753004f82204c8570"></a>
 static type&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> (ColorBase &amp;cb)</td></tr>
 <tr class="separator:a6e24ea1fe377e64753004f82204c8570"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a2fb4d19aeffcefcf70e5fd1ed24b04de"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2fb4d19aeffcefcf70e5fd1ed24b04de"></a>
+static constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>semantic_index</b> = mpl::at_c&lt;channel_mapping_t, K&gt;::type::value</td></tr>
+<tr class="separator:a2fb4d19aeffcefcf70e5fd1ed24b04de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename ColorBase, int K&gt;<br/>
@@ -100,7 +101,7 @@ struct boost::gil::kth_semantic_element_reference_type&lt; ColorBase, K &gt;</h3
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Nov 7 2018 15:28:42 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Wed Mar 6 2019 16:42:06 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

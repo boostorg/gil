@@ -31,6 +31,7 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -65,19 +66,15 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:adcbb7e52dea76837939f7731d54bf8e9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adcbb7e52dea76837939f7731d54bf8e9"></a>
-typedef <br class="typebreak"/>
-<a class="el" href="classboost_1_1gil_1_1memory__based__step__iterator.html">memory_based_step_iterator</a><br class="typebreak"/>
-&lt; XIterator &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>step_iterator_t</b></td></tr>
-<tr class="separator:adcbb7e52dea76837939f7731d54bf8e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1cd44f6cf1bfe9c3436def24a7dd0d94"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1cd44f6cf1bfe9c3436def24a7dd0d94"></a>
-typedef <br class="typebreak"/>
-<a class="el" href="classboost_1_1gil_1_1memory__based__2d__locator.html">memory_based_2d_locator</a><br class="typebreak"/>
-&lt; <a class="el" href="classboost_1_1gil_1_1memory__based__step__iterator.html">step_iterator_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>xy_locator_t</b></td></tr>
-<tr class="separator:a1cd44f6cf1bfe9c3436def24a7dd0d94"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10d1020b6a6a137051ceb3f0a4efb621"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a10d1020b6a6a137051ceb3f0a4efb621"></a>
-typedef <a class="el" href="classboost_1_1gil_1_1image__view.html">image_view</a>&lt; <a class="el" href="classboost_1_1gil_1_1memory__based__2d__locator.html">xy_locator_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>view_t</b></td></tr>
-<tr class="separator:a10d1020b6a6a137051ceb3f0a4efb621"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59f41dbe818d8eeb3071bcee63f2f422"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a59f41dbe818d8eeb3071bcee63f2f422"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>step_iterator_t</b> = <a class="el" href="classboost_1_1gil_1_1memory__based__step__iterator.html">memory_based_step_iterator</a>&lt; XIterator &gt;</td></tr>
+<tr class="separator:a59f41dbe818d8eeb3071bcee63f2f422"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29b7d5cee14d1bd611a45f827d95253e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a29b7d5cee14d1bd611a45f827d95253e"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>xy_locator_t</b> = <a class="el" href="classboost_1_1gil_1_1memory__based__2d__locator.html">memory_based_2d_locator</a>&lt; <a class="el" href="classboost_1_1gil_1_1memory__based__step__iterator.html">step_iterator_t</a> &gt;</td></tr>
+<tr class="separator:a29b7d5cee14d1bd611a45f827d95253e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc0d52dca851c5b84a81ecdf43390e3b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adc0d52dca851c5b84a81ecdf43390e3b"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>view_t</b> = <a class="el" href="classboost_1_1gil_1_1image__view.html">image_view</a>&lt; <a class="el" href="classboost_1_1gil_1_1memory__based__2d__locator.html">xy_locator_t</a> &gt;</td></tr>
+<tr class="separator:adc0d52dca851c5b84a81ecdf43390e3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename XIterator&gt;<br/>
@@ -93,7 +90,7 @@ struct boost::gil::type_from_x_iterator&lt; XIterator &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Nov 7 2018 15:28:42 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Wed Mar 6 2019 16:42:06 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

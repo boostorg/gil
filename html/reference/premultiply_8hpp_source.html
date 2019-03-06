@@ -31,6 +31,7 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -110,11 +111,11 @@
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> SrcP, <span class="keyword">typename</span> DstP&gt;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordtype">void</span> operator()(<span class="keyword">const</span> SrcP&amp; src, DstP&amp; dst)<span class="keyword"> const</span></div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> color_space_type&lt;SrcP&gt;::type src_colour_space_t;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> color_space_type&lt;DstP&gt;::type dst_colour_space_t;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> mpl::remove &lt;src_colour_space_t, alpha_t&gt;::type src_colour_channels;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keyword">using</span> src_colour_space_t = <span class="keyword">typename</span> color_space_type&lt;SrcP&gt;::type;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keyword">using</span> dst_colour_space_t = <span class="keyword">typename</span> color_space_type&lt;DstP&gt;::type;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keyword">using</span> src_colour_channels = <span class="keyword">typename</span> mpl::remove &lt;src_colour_space_t, alpha_t&gt;::type;</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keyword">typedef</span> mpl::bool_&lt;mpl::contains&lt;dst_colour_space_t, alpha_t&gt;::value&gt; has_alpha_t;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keyword">using</span> has_alpha_t = mpl::bool_&lt;mpl::contains&lt;dst_colour_space_t, alpha_t&gt;::value&gt;;</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        mpl::for_each&lt;src_colour_channels&gt;(channel_premultiply&lt;SrcP, DstP&gt;(src, dst));</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        detail::assign_alpha_if(has_alpha_t(), src, dst);</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    }</div>
@@ -125,13 +126,13 @@
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">class </span>premultiply_deref_fn</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;{</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keyword">typedef</span> premultiply_deref_fn const_t;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">typedef</span> DstP                value_type;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keyword">typedef</span> value_type          reference;      <span class="comment">// read-only dereferencing</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">const</span> value_type&amp;   const_reference;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keyword">typedef</span> SrcConstRefP        argument_type;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keyword">typedef</span> reference           result_type;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    BOOST_STATIC_CONSTANT(<span class="keywordtype">bool</span>, is_mutable=<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keyword">using</span> const_t = premultiply_deref_fn&lt;SrcConstRefP, DstP&gt;;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">using</span> value_type = DstP;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keyword">using</span> reference = value_type;      <span class="comment">// read-only dereferencing</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keyword">using</span> const_reference = <span class="keyword">const</span> value_type &amp;;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keyword">using</span> argument_type = SrcConstRefP;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keyword">using</span> result_type = reference;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keyword">static</span> constexpr <span class="keywordtype">bool</span> is_mutable = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    result_type operator()(argument_type srcP)<span class="keyword"> const</span></div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keyword">    </span>{</div>
@@ -145,11 +146,11 @@
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keyword">struct </span>premultiplied_view_type</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;{</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> SrcView::const_t::reference src_pix_ref;  <span class="comment">// const reference to pixel in SrcView</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keyword">typedef</span> premultiply_deref_fn&lt;src_pix_ref, DstP&gt; deref_t; <span class="comment">// the dereference adaptor that performs color conversion</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> SrcView::template add_deref&lt;deref_t&gt; add_ref_t;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keyword">using</span> src_pix_ref = <span class="keyword">typename</span> SrcView::const_t::reference;  <span class="comment">// const reference to pixel in SrcView</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keyword">using</span> deref_t = premultiply_deref_fn&lt;src_pix_ref, DstP&gt;; <span class="comment">// the dereference adaptor that performs color conversion</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keyword">using</span> add_ref_t = <span class="keyword">typename</span> SrcView::template add_deref&lt;deref_t&gt;;</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> add_ref_t::type type; <span class="comment">// the color converted view type</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keyword">using</span> type = <span class="keyword">typename</span> add_ref_t::type; <span class="comment">// the color converted view type</span></div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keyword">static</span> type make(<span class="keyword">const</span> SrcView&amp; sv) { <span class="keywordflow">return</span> add_ref_t::make(sv, deref_t()); }</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;};</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
@@ -162,15 +163,15 @@
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;}} <span class="comment">// namespace boost::gil</span></div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="group___channel_multiply_algorithm_html_ga0af81efbbb77846afe2570f242d2b974"><div class="ttname"><a href="group___channel_multiply_algorithm.html#ga0af81efbbb77846afe2570f242d2b974">boost::gil::channel_multiply</a></div><div class="ttdeci">channel_traits&lt; Channel &gt;::value_type channel_multiply(Channel a, Channel b)</div><div class="ttdoc">A function multiplying two channels. result = a * b / max_value. </div><div class="ttdef"><b>Definition:</b> channel_algorithm.hpp:488</div></div>
-<div class="ttc" id="group___color_base_algorithm_color_html_gab2d1dda637cb2b7c32cc87f199ea1dc0"><div class="ttname"><a href="group___color_base_algorithm_color.html#gab2d1dda637cb2b7c32cc87f199ea1dc0">boost::gil::get_color</a></div><div class="ttdeci">color_element_reference_type&lt; ColorBase, Color &gt;::type get_color(ColorBase &amp;cb, Color=Color())</div><div class="ttdoc">Mutable accessor to the element associated with a given color name. </div><div class="ttdef"><b>Definition:</b> color_base_algorithm.hpp:169</div></div>
+<div class="ttc" id="group___channel_multiply_algorithm_html_ga0af81efbbb77846afe2570f242d2b974"><div class="ttname"><a href="group___channel_multiply_algorithm.html#ga0af81efbbb77846afe2570f242d2b974">boost::gil::channel_multiply</a></div><div class="ttdeci">channel_traits&lt; Channel &gt;::value_type channel_multiply(Channel a, Channel b)</div><div class="ttdoc">A function multiplying two channels. result = a * b / max_value. </div><div class="ttdef"><b>Definition:</b> channel_algorithm.hpp:485</div></div>
+<div class="ttc" id="group___color_base_algorithm_color_html_gab2d1dda637cb2b7c32cc87f199ea1dc0"><div class="ttname"><a href="group___color_base_algorithm_color.html#gab2d1dda637cb2b7c32cc87f199ea1dc0">boost::gil::get_color</a></div><div class="ttdeci">color_element_reference_type&lt; ColorBase, Color &gt;::type get_color(ColorBase &amp;cb, Color=Color())</div><div class="ttdoc">Mutable accessor to the element associated with a given color name. </div><div class="ttdef"><b>Definition:</b> color_base_algorithm.hpp:193</div></div>
 </div><!-- fragment --></div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
      <!-- start footer part -->
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Nov 7 2018 15:28:41 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Wed Mar 6 2019 16:42:06 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

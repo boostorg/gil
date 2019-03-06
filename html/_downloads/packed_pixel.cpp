@@ -5,7 +5,7 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-#include <boost/gil/extension/io/jpeg_io.hpp>
+#include <boost/gil/extension/io/jpeg.hpp>
 
 #include <algorithm>
 
@@ -31,29 +31,29 @@ using namespace boost::gil;
 
 int main() {
     bgr8_image_t img;
-    jpeg_read_image("test.jpg",img);
+    read_image("test.jpg",img, jpeg_tag{});
 
     ////////////////////////////////
     // define a bgr772 image. It is a "packed" image - its channels are not byte-aligned, but its pixels are.
     ////////////////////////////////
 
-    typedef packed_image3_type<uint16_t, 7,7,2, bgr_layout_t>::type bgr772_image_t;
+    using bgr772_image_t = packed_image3_type<uint16_t, 7,7,2, bgr_layout_t>::type;
     bgr772_image_t bgr772_img(img.dimensions());
     copy_and_convert_pixels(const_view(img),view(bgr772_img));
 
     // Save the result. JPEG I/O does not support the packed pixel format, so convert it back to 8-bit RGB
-    jpeg_write_view("out-packed_pixel_bgr772.jpg",color_converted_view<bgr8_pixel_t>(transposed_view(const_view(bgr772_img))));
+    write_view("out-packed_pixel_bgr772.jpg",color_converted_view<bgr8_pixel_t>(transposed_view(const_view(bgr772_img))), jpeg_tag{});
 
     ////////////////////////////////
     // define a gray1 image (one-bit per pixel). It is a "bit-aligned" image - its pixels are not byte aligned.
     ////////////////////////////////
 
-    typedef bit_aligned_image1_type<1, gray_layout_t>::type gray1_image_t;
+    using gray1_image_t = bit_aligned_image1_type<1, gray_layout_t>::type;
     gray1_image_t gray1_img(img.dimensions());
     copy_and_convert_pixels(const_view(img),view(gray1_img));
 
     // Save the result. JPEG I/O does not support the packed pixel format, so convert it back to 8-bit RGB
-    jpeg_write_view("out-packed_pixel_gray1.jpg",color_converted_view<gray8_pixel_t>(transposed_view(const_view(gray1_img))));
+    write_view("out-packed_pixel_gray1.jpg",color_converted_view<gray8_pixel_t>(transposed_view(const_view(gray1_img))), jpeg_tag{});
 
     return 0;
 }

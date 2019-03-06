@@ -31,6 +31,7 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -58,24 +59,22 @@
 </div><!--header-->
 <div class="contents">
 
-<p>Specifies the color space type of a planar pixel reference. Required by <a class="el" href="structboost_1_1gil_1_1_homogeneous_pixel_based_concept.html" title="Concept for homogeneous pixel-based GIL constructs. ">HomogeneousPixelBasedConcept</a>.  
+<p>Specifies the color space type of a planar pixel reference. Required by HomogeneousPixelBasedConcept.  
  <a href="structboost_1_1gil_1_1channel__type_3_01planar__pixel__reference_3_01_channel_reference_00_01_color_space_01_4_01_4.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="planar__pixel__reference_8hpp_source.html">planar_pixel_reference.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:ae6e816f19d1ae55e58bd3b84b96d9f12"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae6e816f19d1ae55e58bd3b84b96d9f12"></a>
-typedef channel_traits<br class="typebreak"/>
-&lt; ChannelReference &gt;<br class="typebreak"/>
-::value_type&#160;</td><td class="memItemRight" valign="bottom"><b>type</b></td></tr>
-<tr class="separator:ae6e816f19d1ae55e58bd3b84b96d9f12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a138b5572430b7a62fcd200de2e8572b3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a138b5572430b7a62fcd200de2e8572b3"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>type</b> = typename channel_traits&lt; ChannelReference &gt;::value_type</td></tr>
+<tr class="separator:a138b5572430b7a62fcd200de2e8572b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename ChannelReference, typename ColorSpace&gt;<br/>
 struct boost::gil::channel_type&lt; planar_pixel_reference&lt; ChannelReference, ColorSpace &gt; &gt;</h3>
 
-<p>Specifies the color space type of a planar pixel reference. Required by <a class="el" href="structboost_1_1gil_1_1_homogeneous_pixel_based_concept.html" title="Concept for homogeneous pixel-based GIL constructs. ">HomogeneousPixelBasedConcept</a>. </p>
+<p>Specifies the color space type of a planar pixel reference. Required by HomogeneousPixelBasedConcept. </p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
 <li><a class="el" href="planar__pixel__reference_8hpp_source.html">planar_pixel_reference.hpp</a></li>
 </ul>
@@ -85,7 +84,7 @@ struct boost::gil::channel_type&lt; planar_pixel_reference&lt; ChannelReference,
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Nov 7 2018 15:28:42 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Wed Mar 6 2019 16:42:07 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

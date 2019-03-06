@@ -31,6 +31,7 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -51,22 +52,30 @@ Modules</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>A channel adaptor that modifies the range of the source channel. Models: ChannelValueConcept</p>
+<p>A channel adaptor that modifies the range of the source channel. Models: ChannelValueConcept </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">BaseChannelValue</td><td>base channel (models ChannelValueConcept) </td></tr>
+    <tr><td class="paramname">MinVal</td><td>class with a static apply() function returning the minimum channel values </td></tr>
+    <tr><td class="paramname">MaxVal</td><td>class with a static apply() function returning the maximum channel values</td></tr>
+  </table>
+  </dd>
+</dl>
 <p>Represents the value of an unsigned integral channel operating over a bit range. Models: ChannelValueConcept Example: </p>
 <div class="fragment"><div class="line"><span class="comment">// A 4-bit unsigned integral channel.</span></div>
-<div class="line"><span class="keyword">typedef</span> packed_channel_value&lt;4&gt; bits4;</div>
+<div class="line"><span class="keyword">using</span> bits4 = packed_channel_value&lt;4&gt;;</div>
 <div class="line"></div>
 <div class="line">assert(channel_traits&lt;bits4&gt;::min_value()==0);</div>
 <div class="line">assert(channel_traits&lt;bits4&gt;::max_value()==15);</div>
 <div class="line">assert(<span class="keyword">sizeof</span>(bits4)==1);</div>
-<div class="line">BOOST_STATIC_ASSERT((boost::is_integral&lt;bits4&gt;::value));</div>
-</div><!-- fragment --></div><!-- contents -->
+<div class="line">static_assert(boost::is_integral&lt;bits4&gt;::value, <span class="stringliteral">&quot;&quot;</span>);</div>
+</div><!-- fragment --> </div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
      <!-- start footer part -->
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Nov 7 2018 15:28:42 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Wed Mar 6 2019 16:42:06 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

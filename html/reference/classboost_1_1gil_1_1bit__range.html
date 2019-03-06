@@ -31,6 +31,7 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -64,14 +65,12 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a16fa25a99878d44550822e13eb9f9451"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a16fa25a99878d44550822e13eb9f9451"></a>
-typedef mpl::if_c&lt; Mutable, <br class="typebreak"/>
-unsigned char, const unsigned <br class="typebreak"/>
-char &gt;::type&#160;</td><td class="memItemRight" valign="bottom"><b>byte_t</b></td></tr>
-<tr class="separator:a16fa25a99878d44550822e13eb9f9451"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad319fc54a93a2c7058c70e40428ed2e2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad319fc54a93a2c7058c70e40428ed2e2"></a>
-typedef std::ptrdiff_t&#160;</td><td class="memItemRight" valign="bottom"><b>difference_type</b></td></tr>
-<tr class="separator:ad319fc54a93a2c7058c70e40428ed2e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a513c518d4285825f132ddffbe5e6e094"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a513c518d4285825f132ddffbe5e6e094"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>byte_t</b> = typename mpl::if_c&lt; Mutable, unsigned char, const unsigned char &gt;::type</td></tr>
+<tr class="separator:a513c518d4285825f132ddffbe5e6e094"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace405568d0b2f3fad4990044252c7732"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ace405568d0b2f3fad4990044252c7732"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>difference_type</b> = std::ptrdiff_t</td></tr>
+<tr class="separator:ace405568d0b2f3fad4990044252c7732"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -131,7 +130,7 @@ class boost::gil::bit_range&lt; RangeSize, Mutable &gt;</h3>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Nov 7 2018 15:28:42 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Wed Mar 6 2019 16:42:06 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

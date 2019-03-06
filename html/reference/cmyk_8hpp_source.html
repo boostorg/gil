@@ -31,6 +31,7 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -71,33 +72,34 @@
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">namespace </span>boost { <span class="keyword">namespace </span>gil {</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1cyan__t.html">   24</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1cyan__t.html">cyan_t</a> {};    </div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1cyan__t.html">   24</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1cyan__t.html">cyan_t</a> {};</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
 <div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1magenta__t.html">   27</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1magenta__t.html">magenta_t</a> {};</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
-<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1yellow__t.html">   30</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1yellow__t.html">yellow_t</a> {}; </div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1yellow__t.html">   30</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1yellow__t.html">yellow_t</a> {};</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
 <div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1black__t.html">   33</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1black__t.html">black_t</a> {};</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">typedef</span> mpl::vector4&lt;cyan_t,magenta_t,yellow_t,black_t&gt;  cmyk_t;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">using</span> cmyk_t = mpl::vector4&lt;cyan_t,magenta_t,yellow_t,black_t&gt;;</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">typedef</span> <a class="code" href="structboost_1_1gil_1_1layout.html">layout&lt;cmyk_t&gt;</a> <a class="code" href="structboost_1_1gil_1_1layout.html">cmyk_layout_t</a>;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">using</span> <a class="code" href="structboost_1_1gil_1_1layout.html">cmyk_layout_t</a> = <a class="code" href="structboost_1_1gil_1_1layout.html">layout&lt;cmyk_t&gt;</a>;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> IC&gt;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">inline</span> <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1type__from__x__iterator.html">type_from_x_iterator&lt;planar_pixel_iterator&lt;IC,cmyk_t&gt;</a> &gt;::view_t</div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="group___image_view_constructors.html#ga6953d39e284967152854fd96e7cd3e3e">   46</a></span>&#160;<a class="code" href="group___image_view_constructors.html#ga6953d39e284967152854fd96e7cd3e3e">planar_cmyk_view</a>(std::size_t width, std::size_t height, IC c, IC m, IC y, IC k, std::ptrdiff_t rowsize_in_bytes) {</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1type__from__x__iterator.html">type_from_x_iterator&lt;planar_pixel_iterator&lt;IC,cmyk_t&gt;</a> &gt;::view_t RView;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordflow">return</span> RView(width, height, <span class="keyword">typename</span> RView::locator(<a class="code" href="structboost_1_1gil_1_1planar__pixel__iterator.html">planar_pixel_iterator&lt;IC,cmyk_t&gt;</a>(c,m,y,k), rowsize_in_bytes));</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;} }  <span class="comment">// namespace gil</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="group___image_view_constructors.html#ga6953d39e284967152854fd96e7cd3e3e">   46</a></span>&#160;<a class="code" href="group___image_view_constructors.html#ga6953d39e284967152854fd96e7cd3e3e">planar_cmyk_view</a>(std::size_t width, std::size_t height, IC c, IC m, IC y, IC k, std::ptrdiff_t rowsize_in_bytes)</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;{</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">using</span> view_t = <span class="keyword">typename</span> <a class="code" href="structboost_1_1gil_1_1type__from__x__iterator.html">type_from_x_iterator&lt;planar_pixel_iterator&lt;IC,cmyk_t&gt;</a> &gt;::view_t;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordflow">return</span> view_t(width, height, <span class="keyword">typename</span> view_t::locator(<a class="code" href="structboost_1_1gil_1_1planar__pixel__iterator.html">planar_pixel_iterator&lt;IC,cmyk_t&gt;</a>(c,m,y,k), rowsize_in_bytes));</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;}</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;} }  <span class="comment">// namespace gil</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="structboost_1_1gil_1_1magenta__t_html"><div class="ttname"><a href="structboost_1_1gil_1_1magenta__t.html">boost::gil::magenta_t</a></div><div class="ttdoc">Magenta. </div><div class="ttdef"><b>Definition:</b> cmyk.hpp:27</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1yellow__t_html"><div class="ttname"><a href="structboost_1_1gil_1_1yellow__t.html">boost::gil::yellow_t</a></div><div class="ttdoc">Yellow. </div><div class="ttdef"><b>Definition:</b> cmyk.hpp:30</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1planar__pixel__iterator_html"><div class="ttname"><a href="structboost_1_1gil_1_1planar__pixel__iterator.html">boost::gil::planar_pixel_iterator</a></div><div class="ttdoc">An iterator over planar pixels. Models HomogeneousColorBaseConcept, PixelIteratorConcept, HomogeneousPixelBasedConcept, MemoryBasedIteratorConcept, HasDynamicXStepTypeConcept. </div><div class="ttdef"><b>Definition:</b> algorithm.hpp:34</div></div>
-<div class="ttc" id="structboost_1_1gil_1_1type__from__x__iterator_html"><div class="ttname"><a href="structboost_1_1gil_1_1type__from__x__iterator.html">boost::gil::type_from_x_iterator</a></div><div class="ttdoc">Given a pixel iterator defining access to pixels along a row, returns the types of the corresponding ...</div><div class="ttdef"><b>Definition:</b> metafunctions.hpp:238</div></div>
-<div class="ttc" id="structboost_1_1gil_1_1layout_html"><div class="ttname"><a href="structboost_1_1gil_1_1layout.html">boost::gil::layout</a></div><div class="ttdoc">Represents a color space and ordering of channels in memory. </div><div class="ttdef"><b>Definition:</b> utilities.hpp:246</div></div>
+<div class="ttc" id="structboost_1_1gil_1_1type__from__x__iterator_html"><div class="ttname"><a href="structboost_1_1gil_1_1type__from__x__iterator.html">boost::gil::type_from_x_iterator</a></div><div class="ttdoc">Given a pixel iterator defining access to pixels along a row, returns the types of the corresponding ...</div><div class="ttdef"><b>Definition:</b> metafunctions.hpp:239</div></div>
+<div class="ttc" id="structboost_1_1gil_1_1layout_html"><div class="ttname"><a href="structboost_1_1gil_1_1layout.html">boost::gil::layout</a></div><div class="ttdoc">Represents a color space and ordering of channels in memory. </div><div class="ttdef"><b>Definition:</b> utilities.hpp:247</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1black__t_html"><div class="ttname"><a href="structboost_1_1gil_1_1black__t.html">boost::gil::black_t</a></div><div class="ttdoc">Black. </div><div class="ttdef"><b>Definition:</b> cmyk.hpp:33</div></div>
 <div class="ttc" id="structboost_1_1gil_1_1cyan__t_html"><div class="ttname"><a href="structboost_1_1gil_1_1cyan__t.html">boost::gil::cyan_t</a></div><div class="ttdoc">Cyan. </div><div class="ttdef"><b>Definition:</b> cmyk.hpp:24</div></div>
 <div class="ttc" id="group___image_view_constructors_html_ga6953d39e284967152854fd96e7cd3e3e"><div class="ttname"><a href="group___image_view_constructors.html#ga6953d39e284967152854fd96e7cd3e3e">boost::gil::planar_cmyk_view</a></div><div class="ttdeci">type_from_x_iterator&lt; planar_pixel_iterator&lt; IC, cmyk_t &gt; &gt;::view_t planar_cmyk_view(std::size_t width, std::size_t height, IC c, IC m, IC y, IC k, std::ptrdiff_t rowsize_in_bytes)</div><div class="ttdoc">from raw CMYK planar data </div><div class="ttdef"><b>Definition:</b> cmyk.hpp:46</div></div>
@@ -107,7 +109,7 @@
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Nov 7 2018 15:28:41 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Wed Mar 6 2019 16:42:06 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

@@ -31,6 +31,7 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -60,7 +61,7 @@
 </div><!--header-->
 <div class="contents">
 
-<p>An iterator over non-byte-aligned pixels. Models <a class="el" href="structboost_1_1gil_1_1_pixel_iterator_concept.html" title="An STL random access traversal iterator over a model of PixelConcept. ">PixelIteratorConcept</a>, <a class="el" href="structboost_1_1gil_1_1_pixel_based_concept.html" title="Concept for all pixel-based GIL constructs, such as pixels, iterators, locators, views and images who...">PixelBasedConcept</a>, <a class="el" href="structboost_1_1gil_1_1_memory_based_iterator_concept.html" title="Concept of a random-access iterator that can be advanced in memory units (bytes or bits) ...">MemoryBasedIteratorConcept</a>, <a class="el" href="structboost_1_1gil_1_1_has_dynamic_x_step_type_concept.html" title="Concept for iterators, locators and views that can define a type just like the given iterator/locator...">HasDynamicXStepTypeConcept</a>.  
+<p>An iterator over non-byte-aligned pixels. Models PixelIteratorConcept, PixelBasedConcept, MemoryBasedIteratorConcept, HasDynamicXStepTypeConcept.  
  <a href="structboost_1_1gil_1_1bit__aligned__pixel__iterator.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="bit__aligned__pixel__iterator_8hpp_source.html">bit_aligned_pixel_iterator.hpp</a>&gt;</code></p>
@@ -69,12 +70,12 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:aaf1864eda36a1748894be741b3d64bde"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf1864eda36a1748894be741b3d64bde"></a>
-typedef parent_t::difference_type&#160;</td><td class="memItemRight" valign="bottom"><b>difference_type</b></td></tr>
-<tr class="separator:aaf1864eda36a1748894be741b3d64bde"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c80bdd4dcae459dd371e3d941b83468"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6c80bdd4dcae459dd371e3d941b83468"></a>
-typedef parent_t::reference&#160;</td><td class="memItemRight" valign="bottom"><b>reference</b></td></tr>
-<tr class="separator:a6c80bdd4dcae459dd371e3d941b83468"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ae9f9bc144b7bd7d8523c345ac34a58"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2ae9f9bc144b7bd7d8523c345ac34a58"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>difference_type</b> = typename parent_t::difference_type</td></tr>
+<tr class="separator:a2ae9f9bc144b7bd7d8523c345ac34a58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd3670b743c9f80b9c2f6b3ccb5fe37c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd3670b743c9f80b9c2f6b3ccb5fe37c"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>reference</b> = typename parent_t::reference</td></tr>
+<tr class="separator:afd3670b743c9f80b9c2f6b3ccb5fe37c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -120,7 +121,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::iterator_core
 <div class="textblock"><h3>template&lt;typename NonAlignedPixelReference&gt;<br/>
 struct boost::gil::bit_aligned_pixel_iterator&lt; NonAlignedPixelReference &gt;</h3>
 
-<p>An iterator over non-byte-aligned pixels. Models <a class="el" href="structboost_1_1gil_1_1_pixel_iterator_concept.html" title="An STL random access traversal iterator over a model of PixelConcept. ">PixelIteratorConcept</a>, <a class="el" href="structboost_1_1gil_1_1_pixel_based_concept.html" title="Concept for all pixel-based GIL constructs, such as pixels, iterators, locators, views and images who...">PixelBasedConcept</a>, <a class="el" href="structboost_1_1gil_1_1_memory_based_iterator_concept.html" title="Concept of a random-access iterator that can be advanced in memory units (bytes or bits) ...">MemoryBasedIteratorConcept</a>, <a class="el" href="structboost_1_1gil_1_1_has_dynamic_x_step_type_concept.html" title="Concept for iterators, locators and views that can define a type just like the given iterator/locator...">HasDynamicXStepTypeConcept</a>. </p>
+<p>An iterator over non-byte-aligned pixels. Models PixelIteratorConcept, PixelBasedConcept, MemoryBasedIteratorConcept, HasDynamicXStepTypeConcept. </p>
 <p>An iterator over pixels that correspond to non-byte-aligned bit ranges. Examples of such pixels are single bit grayscale pixel, or a 6-bit RGB 222 pixel. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="ade1279c4ed222b6efb0867c038765ea1"></a>
@@ -157,7 +158,7 @@ struct boost::gil::bit_aligned_pixel_iterator&lt; NonAlignedPixelReference &gt;<
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Nov 7 2018 15:28:42 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Wed Mar 6 2019 16:42:06 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>

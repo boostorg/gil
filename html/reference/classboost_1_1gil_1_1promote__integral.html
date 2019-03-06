@@ -31,6 +31,7 @@
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -65,17 +66,9 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a6aa654899dc8fb5dea90a98d2c93f920"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6aa654899dc8fb5dea90a98d2c93f920"></a>
-typedef <br class="typebreak"/>
-detail::promote_integral::promote_to_larger<br class="typebreak"/>
-&lt; T, typename <br class="typebreak"/>
-boost::mpl::begin<br class="typebreak"/>
-&lt; integral_types &gt;::type, <br class="typebreak"/>
-typename boost::mpl::end<br class="typebreak"/>
-&lt; integral_types &gt;::type, <br class="typebreak"/>
-min_bit_size_type::value &gt;<br class="typebreak"/>
-::type&#160;</td><td class="memItemRight" valign="bottom"><b>type</b></td></tr>
-<tr class="separator:a6aa654899dc8fb5dea90a98d2c93f920"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af27ec54d2c78bcc01f45e591d2e4a211"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af27ec54d2c78bcc01f45e591d2e4a211"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>type</b> = typename detail::promote_integral::promote_to_larger&lt; T, typename boost::mpl::begin&lt; integral_types &gt;::type, typename boost::mpl::end&lt; integral_types &gt;::type, min_bit_size_type::value &gt;::type</td></tr>
+<tr class="separator:af27ec54d2c78bcc01f45e591d2e4a211"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename T, bool PromoteUnsignedToUnsigned = false, bool UseCheckedInteger = false, bool IsIntegral = std::is_integral&lt;T&gt;::type::value&gt;<br/>
@@ -97,7 +90,7 @@ class boost::gil::promote_integral&lt; T, PromoteUnsignedToUnsigned, UseCheckedI
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Nov 7 2018 15:28:42 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Wed Mar 6 2019 16:42:07 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
