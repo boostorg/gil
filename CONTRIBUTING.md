@@ -270,8 +270,8 @@ git push username feature/foo
 ## Development
 
 Boost.GIL is a [header-only library](https://en.wikipedia.org/wiki/Header-only)
-which does not require sources compilation. Only test runners and example
-programs have to be compiled.
+which does not require sources compilation. Only test runners and
+[example](example/README.md) programs have to be compiled.
 
 By default, Boost.GIL uses Boost.Build to build all the executables.
 
@@ -397,8 +397,9 @@ Here is an example of such lightweight workflow in Linux environment (Debian-bas
     cmake ..
     ```
 
-    **TIP:** By default, tests and examples are compiled using the minimum required
-            C++11. Specify `-DCMAKE_CXX_STANDARD=14|17|20` to use newer version.
+    **TIP:** By default, tests and [examples](example/README.md) are compiled using
+            the minimum required C++11.
+            Specify `-DCMAKE_CXX_STANDARD=14|17|20` to use newer version.
             For more CMake options available for GIL, check `option`-s defined
             in the top-level `CMakeLists.txt`.
 
@@ -454,7 +455,7 @@ Maintainer: [@stefanseefeld](https://github.com/stefanseefeld)
 [clang-tidy](http://clang.llvm.org/extra/clang-tidy/) can be run on demand to
 diagnose or diagnose and fix or refactor source code issues.
 
-Since the CMake configuration is provided for building tests and examples,
+Since the CMake configuration is provided for building tests and [examples](example/README.md),
 it is easy to run `clang-tidy` using either the integration built-in CMake 3.6+
 as target property `CXX_CLANG_TIDY` or the compile command database which
 can be easily generated.

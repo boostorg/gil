@@ -43,6 +43,11 @@ variety of images with performance similar to hand-writing for a specific image 
 - Latest release: https://boost.org/libs/gil
 - Development: http://boostorg.github.io/gil/
 
+See [CONTRIBUTING.md](CONTRIBUTING.md) for instructions about how to build and
+run tests, examples.
+
+See [example/README.md](example/README.md) for available GIL examples.
+
 ## Requirements
 
 **NOTE:** The library source code is currently being modernized for C++11.
@@ -52,7 +57,7 @@ The Boost Generic Image Library (GIL) requires:
 - C++11 compiler
 - Boost header-only libraries
 
-Optionally, in order to [build and run tests](#contributing-we-need-your-help) and examples
+Optionally, in order to build and run tests and examples:
 
 - Boost.Filesystem
 - Boost.Test
@@ -84,8 +89,8 @@ If you would like to contribute to Boost.GIL, help us improve the library
 and maintain high quality, there is number of ways to do it.
 
 If you would like to test the library, contribute new feature or a bug fix,
-see the [CONTRIBUTING.md](https://github.com/boostorg/gil/blob/develop/CONTRIBUTING.md)
-where the whole development infrastructure and the contributing workflow is explained in details.
+see the [CONTRIBUTING.md](CONTRIBUTING.md) where the whole development
+infrastructure and the contributing workflow is explained in details.
 
 You may consider performing code reviews on active
 [pull requests](https://github.com/boostorg/gil/pulls) or help
