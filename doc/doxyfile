@@ -80,7 +80,8 @@ WARN_LOGFILE           = warnings.txt
 #---------------------------------------------------------------------------
 INPUT                  = . \
                          ../include/boost/gil \
-                         ../include/boost/gil/extension/io \
+                         ../include/boost/gil/concepts \
+                         ../include/boost/gil/io \
                          ../include/boost/gil/extension/dynamic_image
 FILE_PATTERNS          = *.hpp \
                          *.dox
