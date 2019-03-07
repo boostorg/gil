@@ -46,17 +46,17 @@
 </div><!--header-->
 <div class="contents">
 
-<p>A heterogeneous pixel used to represent packed pixels with non-byte-aligned channels. Models PixelValueConcept.  
+<p>A heterogeneous pixel used to represent packed pixels with non-byte-aligned channels. Models <a class="el" href="structboost_1_1gil_1_1_pixel_value_concept.html" title="Pixel concept that is a Regular type. ">PixelValueConcept</a>.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1packed__pixel.html">packed_pixel&lt; BitField, ChannelRefVec, Layout &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Heterogeneous pixel value whose channel references can be constructed from the pixel bitfield and their index. Models ColorBaseValueConcept, PixelValueConcept, PixelBasedConcept Typical use for this is a model of a packed pixel (like 565 RGB)  <a href="structboost_1_1gil_1_1packed__pixel.html#details">More...</a><br/></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Heterogeneous pixel value whose channel references can be constructed from the pixel bitfield and their index. Models <a class="el" href="structboost_1_1gil_1_1_color_base_value_concept.html" title="Color base that also has a default-constructor. Refines Regular. ">ColorBaseValueConcept</a>, <a class="el" href="structboost_1_1gil_1_1_pixel_value_concept.html" title="Pixel concept that is a Regular type. ">PixelValueConcept</a>, <a class="el" href="structboost_1_1gil_1_1_pixel_based_concept.html" title="Concept for all pixel-based GIL constructs. ">PixelBasedConcept</a> Typical use for this is a model of a packed pixel (like 565 RGB)  <a href="structboost_1_1gil_1_1packed__pixel.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>A heterogeneous pixel used to represent packed pixels with non-byte-aligned channels. Models PixelValueConcept. </p>
+<p>A heterogeneous pixel used to represent packed pixels with non-byte-aligned channels. Models <a class="el" href="structboost_1_1gil_1_1_pixel_value_concept.html" title="Pixel concept that is a Regular type. ">PixelValueConcept</a>. </p>
 <p>Example: </p>
 <div class="fragment"><div class="line"><span class="keyword">using</span> rgb565_pixel_t = packed_pixel_type&lt;uint16_t, mpl::vector3_c&lt;unsigned,5,6,5&gt;, rgb_layout_t&gt;::type;</div>
 <div class="line">static_assert(<span class="keyword">sizeof</span>(rgb565_pixel_t) == 2, <span class="stringliteral">&quot;&quot;</span>);</div>
@@ -72,7 +72,7 @@ Classes</h2></td></tr>
      <hr class="footer"/>
      <address class="footer">
       <small>
-        Generated on Wed Mar 6 2019 23:24:46 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
+        Generated on Thu Mar 7 2019 14:15:33 for Generic Image Library by &#160;<a href="http://www.doxygen.org/index.html">doxygen</a> 1.8.6
       </small>
     </address>
   </body>
