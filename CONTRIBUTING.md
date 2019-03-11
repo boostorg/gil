@@ -99,7 +99,7 @@ The preparation involves the following steps:
 1. Clone the Boost super-project
 
     ```shell
-    git clone --recursive --jobs 8 https://github.com/boostorg/boost.git
+    git clone --recurse-submodules --jobs 8 https://github.com/boostorg/boost.git
     ```
 
 2. Switch the Boost super-project to desired branch, `master` or `develop`
