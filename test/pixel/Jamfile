@@ -13,12 +13,12 @@ project
     <include>..
     ;
 
-compile bit_aligned_pixel_reference ;
+compile bit_aligned_pixel_reference.cpp ;
 compile concepts.cpp ;
 compile is_pixel.cpp ;
 compile is_planar.cpp ;
 compile num_channels.cpp ;
-compile packed_pixel ;
+compile packed_pixel.cpp ;
 compile pixel_reference_is_mutable.cpp ;
 compile pixels_are_compatible.cpp ;
 
