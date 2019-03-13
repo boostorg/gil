@@ -7,9 +7,11 @@
 #
 foreach(_name
   concepts
+  bit_aligned_pixel_reference
   is_pixel
   is_planar
   num_channels
+  packed_pixel
   pixel_reference_is_mutable
   pixels_are_compatible
   test_fixture)
