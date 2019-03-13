@@ -1,16 +1,12 @@
-//
-// Copyright 2005-2007 Adobe Systems Incorporated
-//
-// Distributed under the Boost Software License, Version 1.0
-// See accompanying file LICENSE_1_0.txt or copy at
-// http://www.boost.org/LICENSE_1_0.txt
+
 #include <boost/gil/image.hpp>
 #include <boost/gil/typedefs.hpp>
 #include <boost/gil/extension/io/jpeg.hpp>
 #include <boost/gil/extension/numeric/kernel.hpp>
 #include <boost/gil/extension/numeric/convolve.hpp>
 
-// Example for convolve_rows() and convolve_cols() in the numeric extension
+// Example for calculating verticle and horizontal edges of image and store them
+// as different images.
 
 int main() {
     using namespace boost::gil;
