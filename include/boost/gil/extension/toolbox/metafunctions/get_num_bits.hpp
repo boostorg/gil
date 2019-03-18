@@ -10,7 +10,9 @@
 
 #include <boost/gil/channel.hpp>
 
+#include <boost/mpl/and.hpp>
 #include <boost/mpl/int.hpp>
+#include <boost/mpl/not.hpp>
 #include <boost/mpl/size_t.hpp>
 #include <boost/type_traits/is_integral.hpp>
 #include <boost/type_traits/is_class.hpp>
