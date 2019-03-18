@@ -7,6 +7,7 @@
 # Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 
+import ../config/checks/config : requires ;
 import os ;
 
 # Travsi CI, AppVeyor
@@ -35,6 +36,13 @@ project
         <toolset>clang,<variant>debug:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wextra"
         <toolset>clang,<variant>release:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wextra"
         $(EXTRA_WARNINGS)
+        [ requires
+            cxx11_constexpr
+            cxx11_defaulted_functions
+            cxx11_template_aliases
+            cxx11_trailing_result_types  # implies decltype and auto
+            cxx11_variadic_templates
+        ]
     ;
 
 variant gil_ubsan_integer
