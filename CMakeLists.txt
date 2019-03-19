@@ -10,7 +10,7 @@
 # of contributors. It does not export or install any targets,
 # deploy config files or support subproject workflow.
 #
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.7)
 
 #-----------------------------------------------------------------------------
 # Options
