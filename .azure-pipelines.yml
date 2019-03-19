@@ -88,7 +88,6 @@ jobs:
         inputs:
           versionSpec: '2.7'
           addToPath: true
-          architecture: 'x64'
       - template: .ci/azure-pipelines/steps-check-cmake.yml
       - template: .ci/azure-pipelines/steps-install-conan.yml
       - template: .ci/azure-pipelines/steps-install-boost.yml
