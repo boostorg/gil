@@ -25,7 +25,7 @@ auto make_writer(String const& file_name, image_write_info<FormatTag> const& inf
         <
             detail::is_supported_path_spec<String>,
             is_format_tag<FormatTag>
-        >::type::value>::type* /*dummy*/ = nullptr)
+        >::value>::type* /*dummy*/ = nullptr)
     -> typename get_writer<String, FormatTag>::type
 {
     typename get_write_device<String, FormatTag>::type device(
@@ -86,7 +86,7 @@ auto make_writer(Device& file, image_write_info<FormatTag> const& info,
         <
             typename detail::is_adaptable_output_device<FormatTag, Device>::type,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
     -> typename get_writer<Device, FormatTag>::type
 {
@@ -105,7 +105,7 @@ auto make_writer(String const& file_name, FormatTag const&,
         <
             detail::is_supported_path_spec<String>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
     -> typename get_writer<String, FormatTag>::type
 {
@@ -151,7 +151,7 @@ auto make_writer(Device& file, FormatTag const&,
         <
             typename detail::is_adaptable_output_device<FormatTag, Device>::type,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
     -> typename get_writer<Device, FormatTag>::type
 {

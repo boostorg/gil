@@ -28,7 +28,7 @@ auto make_reader(
         <
             detail::is_supported_path_spec<String>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
     -> typename get_reader<String, FormatTag, ConversionPolicy>::type
 {
@@ -104,7 +104,7 @@ auto make_reader(
         <
             detail::is_adaptable_input_device<FormatTag, Device>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
     -> typename get_reader<Device, FormatTag, ConversionPolicy>::type
 {
@@ -128,7 +128,7 @@ auto make_reader(
         <
             detail::is_supported_path_spec<String>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
     ->  typename get_reader<String, FormatTag, ConversionPolicy>::type
 {
@@ -187,7 +187,7 @@ auto make_reader(
         <
             detail::is_adaptable_input_device<FormatTag, Device>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
     -> typename get_reader<Device, FormatTag, ConversionPolicy>::type
 {

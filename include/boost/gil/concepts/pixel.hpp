@@ -40,7 +40,7 @@ namespace boost { namespace gil {
 /// \code
 /// concept PixelConcept<typename P> : ColorBaseConcept<P>, PixelBasedConcept<P>
 /// {
-///     where is_pixel<P>::type::value == true;
+///     where is_pixel<P>::value == true;
 ///     // where for each K [0..size<P>::value - 1]:
 ///     //      ChannelConcept<kth_element_type<P, K>>;
 ///

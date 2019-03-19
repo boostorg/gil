@@ -20,7 +20,7 @@ struct channel_type_to_index
 {
     static const int value = detail::type_to_index< typename color_space_type< View >::type // color (mpl::vector)
                                                   , Channel                                 // channel type
-                                                  >::type::value;                           //< index of the channel in the color (mpl::vector)
+                                                  >::value;                           //< index of the channel in the color (mpl::vector)
 };
 
 template< typename Channel

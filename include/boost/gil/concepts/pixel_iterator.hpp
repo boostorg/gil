@@ -161,8 +161,8 @@ struct HasTransposedTypeConcept
 ///     where PixelValueConcept<value_type>;
 ///     typename const_iterator_type<It>::type;
 ///         where PixelIteratorConcept<const_iterator_type<It>::type>;
-///     static const bool  iterator_is_mutable<It>::type::value;
-///     static const bool  is_iterator_adaptor<It>::type::value;   // is it an iterator adaptor
+///     static const bool  iterator_is_mutable<It>::value;
+///     static const bool  is_iterator_adaptor<It>::value;   // is it an iterator adaptor
 /// };
 /// \endcode
 template <typename Iterator>
@@ -177,7 +177,7 @@ struct PixelIteratorConcept
         gil_function_requires<PixelValueConcept<value_type>>();
 
         using const_t = typename const_iterator_type<Iterator>::type;
-        static bool const is_mutable = iterator_is_mutable<Iterator>::type::value;
+        static bool const is_mutable = iterator_is_mutable<Iterator>::value;
         ignore_unused_variable_warning(is_mutable);
 
         // immutable iterator must be constructible from (possibly mutable) iterator

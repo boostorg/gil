@@ -36,7 +36,7 @@ auto read_image_info(Device& file, image_read_settings<FormatTag> const& setting
         <
             detail::is_adaptable_input_device<FormatTag, Device>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
     -> typename get_reader_backend<Device, FormatTag>::type
 {
@@ -57,7 +57,7 @@ auto read_image_info(Device& file, FormatTag const&,
         <
             detail::is_adaptable_input_device<FormatTag, Device>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
     -> typename get_reader_backend<Device, FormatTag>::type
 {
@@ -79,7 +79,7 @@ auto read_image_info(
         <
             is_format_tag<FormatTag>,
             detail::is_supported_path_spec<String>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
     -> typename get_reader_backend<String, FormatTag>::type
 {
@@ -100,7 +100,7 @@ auto read_image_info(String const& file_name, FormatTag const&,
         <
             is_format_tag<FormatTag>,
             detail::is_supported_path_spec<String>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
     -> typename get_reader_backend<String, FormatTag>::type
 {

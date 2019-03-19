@@ -43,7 +43,7 @@ void read_image(Reader reader, Image& img,
                 typename get_pixel_type<typename Image::view_t>::type,
                 typename Reader::format_tag_t
             >
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
 {
     reader.init_image(img, reader._settings);
@@ -72,7 +72,7 @@ void read_image(
                 typename get_pixel_type<typename Image::view_t>::type,
                 FormatTag
             >
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
 {
     using reader_t =
@@ -101,7 +101,7 @@ void read_image(Device& file, Image& img, FormatTag const& tag,
                 typename get_pixel_type<typename Image::view_t>::type,
                 FormatTag
             >
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
 {
     using reader_t =
@@ -133,7 +133,7 @@ void read_image(
                 typename get_pixel_type<typename Image::view_t>::type,
                 FormatTag
             >
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
 {
     using reader_t =
@@ -160,7 +160,7 @@ void read_image(String const& file_name, Image& img, FormatTag const& tag,
             typename get_pixel_type<typename Image::view_t>::type,
             FormatTag
         >
-    >::type::value
+    >::value
 >::type* /*dummy*/ = nullptr)
 {
     using reader_t =
@@ -181,7 +181,7 @@ void read_image(Reader& reader, any_image<Images>& images,
         <
             detail::is_dynamic_image_reader<Reader>,
             is_format_tag<typename Reader::format_tag_t>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
 {
     reader.apply(images);
@@ -204,7 +204,7 @@ void read_image(
         <
             detail::is_read_device<FormatTag, Device>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
 {
     using reader_t = typename get_dynamic_image_reader<Device, FormatTag>::type;
@@ -227,7 +227,7 @@ void read_image(Device& file, any_image<Images>& images, FormatTag const& tag,
         <
             detail::is_read_device<FormatTag, Device>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
         >::type* /*dummy*/ = nullptr)
 {
     using reader_t = typename get_dynamic_image_reader<Device, FormatTag>::type;
@@ -253,7 +253,7 @@ void read_image(
         <
             detail::is_supported_path_spec<String>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
 {
     using reader_t = typename get_dynamic_image_reader<String, FormatTag>::type;
@@ -276,7 +276,7 @@ void read_image(String const& file_name, any_image<Images>& images, FormatTag co
         <
             detail::is_supported_path_spec<String>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
 {
     using reader_t = typename get_dynamic_image_reader<String, FormatTag>::type;

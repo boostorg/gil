@@ -33,7 +33,7 @@ struct Format_Type
         is_bit_aligned
         <
             typename get_pixel_type<View>::type
-        >::type::value
+        >::value
     >::type
 >
 {
@@ -55,7 +55,7 @@ struct Format_Type
                 typename is_bit_aligned<typename get_pixel_type<View>::type>::type
             >,
             is_unsigned<Channel>
-        >::type::value
+        >::value
     >::type
 >
 {
@@ -77,7 +77,7 @@ struct Format_Type
                 typename is_bit_aligned<typename get_pixel_type<View>::type>::type
             >,
             is_signed<Channel>
-        >::type::value
+        >::value
     >::type
 >
 {
@@ -99,7 +99,7 @@ struct Format_Type
                 typename is_bit_aligned<typename get_pixel_type<View>::type>::type
             >,
             is_floating_point<Channel>
-        >::type::value
+        >::value
     >::type
 >
 {
