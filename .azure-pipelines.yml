@@ -83,12 +83,6 @@ jobs:
     pool:
       vmImage: 'vs2015-win2012r2'
     steps:
-      - task: UsePythonVersion@0
-        displayName: 'Setup Python'
-        inputs:
-          versionSpec: '3.6'
-          addToPath: true
-          architecture: 'x64'
       - template: .ci/azure-pipelines/steps-check-cmake.yml
       - template: .ci/azure-pipelines/steps-install-conan.yml
       - template: .ci/azure-pipelines/steps-install-boost.yml
