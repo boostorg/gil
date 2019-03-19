@@ -83,13 +83,15 @@ jobs:
     pool:
       vmImage: 'vs2015-win2012r2'
     steps:
-      - powershell: |
-          Invoke-WebRequest https://www.python.org/ftp/python/3.7.1/python-3.7.1-amd64-webinstall.exe -OutFile C:\py3-setup.exe
+      - powershell: 'Invoke-WebRequest https://www.python.org/ftp/python/3.7.1/python-3.7.1-amd64-webinstall.exe -OutFile C:\py3-setup.exe'
+        displayName: 'Download Python'
+      - script: |
           C:\py3-setup.exe /quiet PrependPath=1 InstallAllUsers=1 Include_launcher=1 InstallLauncherAllUsers=1 Include_test=0 Include_doc=0 Include_dev=0 Include_debug=0 Include_tcltk=0 TargetDir=C:\Python37
           python.exe --version
           py -3 --version
-          [Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\Python37\Scripts", [System.EnvironmentVariableTarget]::Machine)
-        displayName: 'Setup Python'
+        displayName: 'Install Python'
+      - powershell: '[Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\Python37\Scripts", [System.EnvironmentVariableTarget]::Machine)'
+        displayName: 'Fix Python in PATH'
       - template: .ci/azure-pipelines/steps-check-cmake.yml
       - template: .ci/azure-pipelines/steps-install-conan.yml
         parameters:
