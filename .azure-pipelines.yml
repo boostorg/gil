@@ -91,6 +91,12 @@ jobs:
           @echo ##vso[task.prependpath]C:\Python37
           @echo ##vso[task.prependpath]C:\Python37\Scripts
         displayName: 'Install Python'
+      - powershell: |
+          Invoke-WebRequest https://cmake.org/files/v3.14/cmake-3.14.0-win64-x64.zip -OutFile C:\cmake-3.14.0-win64-x64.zip
+          Expand-Archive C:\cmake.zip -DestinationPath C:\
+          Rename-Item -Path C:\cmake-3.14.0-win64-x64 -NewName C:\cmake
+          Write-Host "##vso[task.prependpath]C:\cmake\bin"
+        displayName: 'Install CMake'
       - template: .ci/azure-pipelines/steps-check-cmake.yml
       - template: .ci/azure-pipelines/steps-install-conan.yml
         parameters:
