@@ -61,7 +61,7 @@ struct get_num_bits
         <
             is_integral<T>,
             mpl::not_<is_class<T>>
-        >::type::value
+        >::value
     >::type
 > : mpl::size_t<sizeof(T) * 8>
 {

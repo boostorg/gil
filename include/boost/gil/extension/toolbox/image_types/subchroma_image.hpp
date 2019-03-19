@@ -32,13 +32,13 @@ namespace detail {
 template< int J, int A, int B>
 struct scaling_factors
 {
-    static_assert(mpl::equal_to< mpl::int_< J >, mpl::int_< 4 > >::type::value, "");
+    static_assert(mpl::equal_to< mpl::int_< J >, mpl::int_< 4 > >::value, "");
 
     static_assert(mpl::or_<mpl::equal_to< mpl::int_<A>, mpl::int_< 4 > >
                                   , mpl::or_< mpl::equal_to< mpl::int_<A>, mpl::int_< 2 > >
                                             , mpl::equal_to< mpl::int_<A>, mpl::int_< 1 > >
                                             >
-                                  >::type::value, "");
+                                  >::value, "");
 
     static_assert(mpl::or_< mpl::equal_to< mpl::int_<B>, mpl::int_< 4 > >
                                   , mpl::or_< mpl::equal_to< mpl::int_<B>, mpl::int_< 2 > >
@@ -46,14 +46,14 @@ struct scaling_factors
                                                       , mpl::equal_to< mpl::int_<B>, mpl::int_< 0 > >
                                                       >
                                             >
-                                  >::type::value, "");
+                                  >::value, "");
 
     static constexpr int ss_X =
         mpl::divides
         <
             mpl::int_<J>,
             mpl::int_<A>
-        >::type::value;
+        >::value;
 
     static constexpr int ss_Y =
         mpl::if_

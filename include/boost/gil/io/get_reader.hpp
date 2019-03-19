@@ -38,7 +38,7 @@ struct get_reader
         <
             detail::is_supported_path_spec<String>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type
 >
 {
@@ -58,7 +58,7 @@ struct get_reader
         <
             detail::is_adaptable_input_device<FormatTag, Device>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type
 >
 {
@@ -83,7 +83,7 @@ struct get_dynamic_image_reader
         <
             detail::is_supported_path_spec<String>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type
 >
 {
@@ -102,7 +102,7 @@ struct get_dynamic_image_reader
         <
             detail::is_adaptable_input_device<FormatTag, Device>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type
 >
 {
@@ -127,7 +127,7 @@ struct get_reader_backend
         <
             detail::is_supported_path_spec<String>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type
 >
 {
@@ -146,7 +146,7 @@ struct get_reader_backend
         <
             detail::is_adaptable_input_device<FormatTag, Device>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type
 >
 {

@@ -214,7 +214,7 @@ struct ccv2 {
     template <typename Pixel2>
     void operator()(Pixel2) {
         // convert from Pixel1 to Pixel2 (or, if Pixel2 is immutable, to its value type)
-        static const int p2_is_mutable = pixel_reference_is_mutable<typename Pixel2::type>::type::value;
+        static const int p2_is_mutable = pixel_reference_is_mutable<typename Pixel2::type>::value;
         using pixel_model_t = typename boost::remove_reference<typename Pixel2::type>::type;
         using p2_value_t = typename pixel_model_t::value_type;
         using pixel2_mutable = typename mpl::if_c<p2_is_mutable, Pixel2, value_core<p2_value_t>>::type;

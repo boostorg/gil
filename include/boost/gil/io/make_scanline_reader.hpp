@@ -25,7 +25,7 @@ auto make_scanline_reader(String const& file_name, FormatTag const&,
         <
             detail::is_supported_path_spec<String>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
     -> typename get_scanline_reader<String, FormatTag>::type
 {
@@ -89,7 +89,7 @@ auto make_scanline_reader(Device& io_dev, FormatTag const&,
         <
             detail::is_adaptable_input_device<FormatTag, Device>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
     -> typename get_scanline_reader<Device, FormatTag>::type
 {

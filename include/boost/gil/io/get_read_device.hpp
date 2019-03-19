@@ -35,7 +35,7 @@ struct get_read_device
         <
             detail::is_adaptable_input_device<FormatTag, Device>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type
 >
 {
@@ -57,7 +57,7 @@ struct get_read_device
         <
             detail::is_supported_path_spec<String>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type
 >
 {

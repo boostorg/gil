@@ -59,7 +59,7 @@ struct PixelBasedConcept
         using channel_mapping_t = typename channel_mapping_type<P>::type ;
         gil_function_requires<ChannelMappingConcept<channel_mapping_t>>();
 
-        static const bool planar = is_planar<P>::type::value;
+        static const bool planar = is_planar<P>::value;
         ignore_unused_variable_warning(planar);
 
         // This is not part of the concept, but should still work
