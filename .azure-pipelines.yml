@@ -83,8 +83,11 @@ jobs:
     pool:
       vmImage: 'vs2015-win2012r2'
     steps:
+      - script: choco install --yes python --version 3.7.1
       - template: .ci/azure-pipelines/steps-check-cmake.yml
       - template: .ci/azure-pipelines/steps-install-conan.yml
+        parameters:
+          python: C:\Python37\python.exe
       - template: .ci/azure-pipelines/steps-install-boost.yml
       - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
         parameters:
