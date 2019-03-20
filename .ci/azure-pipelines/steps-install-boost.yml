@@ -15,6 +15,11 @@ steps:
       tar -xf boost.tar.gz
     displayName: 'Download Boost'
 
+  - bash: |
+      cd boost_*
+      rm -rf libs/gil
+    displayName: 'Delete GIL from Boost 1.68'
+
   - script: |
       cd boost_*
       ./bootstrap.sh
