@@ -18,7 +18,7 @@ steps:
   - bash: |
       cd boost_*
       rm -r libs/gil
-      dir libs
+      ls libs
     displayName: 'Remove libs/gil from Boost 1.68'
 
   - script: |
