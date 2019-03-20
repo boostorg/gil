@@ -10,6 +10,7 @@ parameters:
 steps:
   - script: |
       ${{ parameters.python }} --version
+      ${{ parameters.python }} -m ensurepip
       ${{ parameters.python }} -m pip install --upgrade pip
       ${{ parameters.python }} -m pip install --upgrade conan
       conan --version
