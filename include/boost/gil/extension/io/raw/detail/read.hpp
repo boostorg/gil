@@ -23,6 +23,7 @@
 #include <boost/gil/io/typedefs.hpp>
 
 #include <cstdio>
+#include <sstream>
 #include <vector>
 
 namespace boost { namespace gil {
