@@ -24,11 +24,11 @@ struct channel_premultiply
     {}
 
     template <typename Channel>
-    void operator()(Channel c) const
+    void operator()(Channel /* channel */) const
     {
-        // FIXME: Is c input paramater not used intentionally? Add comment on relation between src_ vs c.
+        // TODO: Explain why 'channel' input paramater is not used, or used as tag only.
 
-        // @todo: need to do a “channel_convert” too, in case the channel types aren't the same?
+        // @todo: need to do a "channel_convert" too, in case the channel types aren't the same?
         get_color(dst_, Channel()) = channel_multiply(get_color(src_,Channel()), alpha_or_max(src_));
     }
     SrcP const & src_;
