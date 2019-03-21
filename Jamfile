@@ -28,7 +28,10 @@ project
         # MSVC: Since VS2017, default is -std:c++14, so no explicit switch is required.
         <toolset>msvc:<asynch-exceptions>on
         <toolset>msvc:<cxxflags>/bigobj
-        <toolset>msvc:<define>_SCL_SECURE_NO_DEPRECATE <define>_CRT_SECURE_NO_WARNINGS <define>_CRT_NONSTDC_NO_DEPRECATE <define>NOMINMAX
+        <toolset>msvc:<define>_SCL_SECURE_NO_DEPRECATE
+        <toolset>msvc:<define>_CRT_SECURE_NO_WARNINGS
+        <toolset>msvc:<define>_CRT_NONSTDC_NO_DEPRECATE
+        <toolset>msvc:<define>NOMINMAX
         <toolset>intel:<debug-symbols>off
         <toolset>gcc:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wextra"
         <toolset>darwin:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wextra"
