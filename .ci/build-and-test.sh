@@ -17,6 +17,10 @@ if [ -z ${VARIANT+x} ]; then
     exit 1
 fi
 
+if [ -z ${CXXSTD+x} ]; then
+    CXXSTD=11
+fi
+
 if [ -z ${B2_OPTIONS+x} ]; then
     B2_OPTIONS=""
 fi
@@ -34,7 +38,7 @@ fi
 echo "Running ./b2 -j $JOBS $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT"
 
 set -euv
-./b2 -j $JOBS $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT libs/gil/test
-./b2 -j $JOBS $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT libs/gil/toolbox/test
-./b2 -j $JOBS $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT libs/gil/numeric/test
-./b2 -j $JOBS $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT libs/gil/io/test//simple
+./b2 -j $JOBS $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT cxxstd=$CXXSTD libs/gil/test
+./b2 -j $JOBS $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT cxxstd=$CXXSTD libs/gil/toolbox/test
+./b2 -j $JOBS $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT cxxstd=$CXXSTD libs/gil/numeric/test
+./b2 -j $JOBS $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT cxxstd=$CXXSTD libs/gil/io/test//simple
