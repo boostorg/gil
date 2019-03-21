@@ -10,15 +10,15 @@
 import ../config/checks/config : requires ;
 import os ;
 
-# Travsi CI, AppVeyor
+# Avoid warnings flood on Travis CI, AppVeyor, CircleCI, Azure Pipelines
 if ! [ os.environ CI ] && ! [ os.environ AGENT_JOBSTATUS ]
 {
-    EXTRA_WARNINGS =
+    DEVELOPMENT_EXTRA_WARNINGS =
       <toolset>msvc:<cxxflags>/W4
-      <toolset>gcc:<cxxflags>"-Wcast-align -Wconversion -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter"
-      <toolset>clang,<variant>debug:<cxxflags>"-Wcast-align -Wconversion -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter -Wsign-conversion"
-      <toolset>clang,<variant>release:<cxxflags>"-Wcast-align -Wconversion -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter -Wsign-conversion"
-      <toolset>darwin:<cxxflags>"-Wcast-align -Wconversion -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter"
+      <toolset>gcc:<cxxflags>"-pedantic -Wcast-align -Wconversion -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter"
+      <toolset>clang,<variant>debug:<cxxflags>"-pedantic -Wcast-align -Wconversion -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter -Wsign-conversion"
+      <toolset>clang,<variant>release:<cxxflags>"-pedantic -Wcast-align -Wconversion -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter -Wsign-conversion"
+      <toolset>darwin:<cxxflags>"-pedantic -Wcast-align -Wconversion -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter"
       ;
 }
 
@@ -33,12 +33,12 @@ project
         <toolset>msvc:<define>_CRT_NONSTDC_NO_DEPRECATE
         <toolset>msvc:<define>NOMINMAX
         <toolset>intel:<debug-symbols>off
-        <toolset>gcc:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wextra"
-        <toolset>darwin:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wextra"
+        <toolset>gcc:<cxxflags>"-std=c++11 -fstrict-aliasing -Wextra"
+        <toolset>darwin:<cxxflags>"-std=c++11 -fstrict-aliasing -Wextra"
         # variant filter for clang is necessary to allow ubsan_* variants declare distinct set of <cxxflags>
-        <toolset>clang,<variant>debug:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wextra"
-        <toolset>clang,<variant>release:<cxxflags>"-std=c++11 -pedantic -fstrict-aliasing -Wextra"
-        $(EXTRA_WARNINGS)
+        <toolset>clang,<variant>debug:<cxxflags>"-std=c++11 -fstrict-aliasing -Wextra"
+        <toolset>clang,<variant>release:<cxxflags>"-std=c++11 -fstrict-aliasing -Wextra"
+        $(DEVELOPMENT_EXTRA_WARNINGS)
         [ requires
             cxx11_constexpr
             cxx11_defaulted_functions
