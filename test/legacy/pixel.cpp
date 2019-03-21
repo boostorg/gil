@@ -138,6 +138,7 @@ public:
     value_core(const type& val) : _pixel(val) {  // test copy constructor
         boost::function_requires<PixelValueConcept<pixel_t> >();
         type p2;            // test default constructor
+        boost::ignore_unused(p2);
     }
 };
 
