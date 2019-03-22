@@ -20,23 +20,28 @@ environment:
     - TOOLSET: msvc-14.1
       ARCH: x86_64
       VARIANT: debug
+      CXXSTD: 11
       TEST_HEADERS: 1
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     - TOOLSET: msvc-14.1
       ARCH: x86_64
       VARIANT: release
+      CXXSTD: 11
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     - TOOLSET: msvc-14.1
       ARCH: x86
       VARIANT: debug
+      CXXSTD: 11
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     - TOOLSET: msvc-14.1
       ARCH: x86
       VARIANT: release
+      CXXSTD: 11
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     - TOOLSET: msvc-14.1
       ARCH: x86_64
       VARIANT: debug
+      CXXSTD: 11
       GENERATOR: "Visual Studio 15 2017 Win64"
       CMAKE_CONFIG: Debug
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
@@ -47,10 +52,12 @@ matrix:
     - TOOLSET: msvc-14.1
       ARCH: x86_64
       VARIANT: release
+      CXXSTD: 11
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     - TOOLSET: msvc-14.1
       ARCH: x86_64
       VARIANT: debug
+      CXXSTD: 11
       GENERATOR: "Visual Studio 15 2017 Win64"
       CMAKE_CONFIG: Debug
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
@@ -136,18 +143,18 @@ before_build:
   - xcopy /s /e /q %APPVEYOR_BUILD_FOLDER% libs\gil
   - cmd /c bootstrap
   - .\b2 headers
-  - if DEFINED GENERATOR .\b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% --with-filesystem --with-test stage
+  - if DEFINED GENERATOR .\b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% cxxstd=%CXXSTD% --with-filesystem --with-test stage
 
 build: off
 
 build_script:
   - cd c:\projects\boost
-  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% libs/gil/test
-  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% libs/gil/toolbox/test
-  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% libs/gil/numeric/test
-  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% include=%VCPKG_I% library-path=%VCPKG_L% libs/gil/io/test//simple
+  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% cxxstd=%CXXSTD% libs/gil/test
+  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% cxxstd=%CXXSTD% libs/gil/toolbox/test
+  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% cxxstd=%CXXSTD% libs/gil/numeric/test
+  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% cxxstd=%CXXSTD% include=%VCPKG_I% library-path=%VCPKG_L% libs/gil/io/test//simple
   - if DEFINED GENERATOR cd libs\gil && md build && cd build
-  - if DEFINED GENERATOR cmake -G "%GENERATOR%" -DBoost_DETAILED_FAILURE_MSG=ON -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+  - if DEFINED GENERATOR cmake -G "%GENERATOR%" -DCMAKE_CXX_STANDARD=%CXXSTD% -DBoost_DETAILED_FAILURE_MSG=ON -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake ..
   - if DEFINED GENERATOR cmake --build . --config %CMAKE_CONFIG %
 
 test_script:

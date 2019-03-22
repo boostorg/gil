@@ -82,7 +82,7 @@ env_gcc_cpp11_dbg: &env_gcc_cpp11_dbg
     - TOOLSET: gcc
     - VARIANT: "variant=debug"
     - OPTIMIZ: ""
-    - CXXFLAG: "-std=c++11"
+    - CXXSTD: "11"
     - LNKFLAG: ""
 
 env_gcc_cpp11_opt_speed: &env_gcc_cpp11_opt_speed
@@ -90,7 +90,7 @@ env_gcc_cpp11_opt_speed: &env_gcc_cpp11_opt_speed
     - TOOLSET: gcc
     - VARIANT: "variant=release"
     - OPTIMIZ: "optimization=speed"
-    - CXXFLAG: "-std=c++11"
+    - CXXSTD: "11"
     - LNKFLAG: ""
 
 env_clang_cpp11_dbg: &env_clang_cpp11_dbg
@@ -98,7 +98,7 @@ env_clang_cpp11_dbg: &env_clang_cpp11_dbg
     - TOOLSET: clang
     - VARIANT: "variant=debug"
     - OPTIMIZ: ""
-    - CXXFLAG: "-std=c++11"
+    - CXXSTD: "11"
     - LNKFLAG: ""
 
 env_clang_cpp11_opt_speed: &env_clang_cpp11_opt_speed
@@ -106,7 +106,7 @@ env_clang_cpp11_opt_speed: &env_clang_cpp11_opt_speed
     - TOOLSET: clang
     - VARIANT: "variant=release"
     - OPTIMIZ: "optimization=speed"
-    - CXXFLAG: "-std=c++11"
+    - CXXSTD: "11"
     - LNKFLAG: ""
 
 ##############################################################################
@@ -255,7 +255,7 @@ run_compiler_version: &run_compiler_version
         echo TOOLSET=$TOOLSET
         echo VARIANT=$VARIANT
         echo OPTIMIZ=$OPTIMIZ
-        echo CXXFLAG=$CXXFLAG
+        echo CXXSTD=$CXXSTD
         echo LNKFLAG=$LNKFLAG
         $TOOLSET --version
 
@@ -273,25 +273,25 @@ steps_test_core: &steps_test_core
   steps:
     - *attach_workspace
     - *run_compiler_version
-    - run: cd boost && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxflags="$CXXFLAG" libs/gil/test
+    - run: cd boost && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/test
 
 steps_test_toolbox: &steps_test_toolbox
   steps:
     - *attach_workspace
     - *run_compiler_version
-    - run: cd boost && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxflags="$CXXFLAG" libs/gil/toolbox/test
+    - run: cd boost && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/toolbox/test
 
 steps_test_numeric: &steps_test_numeric
   steps:
     - *attach_workspace
     - *run_compiler_version
-    - run: cd boost && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxflags="$CXXFLAG" libs/gil/numeric/test
+    - run: cd boost && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/numeric/test
 
 steps_test_io: &steps_test_io
   steps:
     - *attach_workspace
     - *run_compiler_version
-    - run: cd boost && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxflags="$CXXFLAG" libs/gil/io/test//simple
+    - run: cd boost && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/io/test//simple
 
 ##############################################################################
 # Build jobs
