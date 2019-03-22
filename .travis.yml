@@ -105,6 +105,7 @@ matrix:
         apt:
           packages:
             - clang-3.9
+            - libstdc++-6-dev
             - libpng-dev
             - libjpeg-dev
             - libtiff5-dev
@@ -119,6 +120,7 @@ matrix:
         apt:
           packages:
             - clang-3.9
+            - libstdc++-6-dev
             - libpng-dev
             - libjpeg-dev
             - libtiff5-dev
@@ -133,6 +135,7 @@ matrix:
         apt:
           packages:
             - clang-5.0
+            - libstdc++-7-dev
             - libpng-dev
             - libjpeg-dev
             - libtiff5-dev
@@ -147,6 +150,7 @@ matrix:
         apt:
           packages:
             - clang-5.0
+            - libstdc++-7-dev
             - libpng-dev
             - libjpeg-dev
             - libtiff5-dev
@@ -161,6 +165,7 @@ matrix:
         apt:
           packages:
             - clang-5.0
+            - libstdc++-7-dev
             - libpng-dev
             - libjpeg-dev
             - libtiff5-dev
