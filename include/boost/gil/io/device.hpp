@@ -565,7 +565,7 @@ struct is_adaptable_input_device
         <
             is_base_and_derived<std::istream, T>,
             is_same<std::istream, T>
-        >::type::value
+        >::value
     >::type
 > : mpl::true_
 {
@@ -603,7 +603,7 @@ struct is_read_device
         <
             is_input_device<FormatTag>,
             is_adaptable_input_device<FormatTag, T>
-        >::type::value
+        >::value
     >::type
 > : mpl::true_
 {
@@ -636,7 +636,7 @@ struct is_adaptable_output_device
         <
             is_base_and_derived<std::ostream, T>,
             is_same<std::ostream, T>
-        >::type::value
+        >::value
     >::type
 > : mpl::true_
 {
@@ -671,7 +671,7 @@ struct is_write_device
         <
             is_output_device<FormatTag>,
             is_adaptable_output_device<FormatTag, T>
-        >::type::value
+        >::value
     >::type
 > : mpl::true_
 {

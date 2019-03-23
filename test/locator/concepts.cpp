@@ -46,7 +46,7 @@ struct archetype_pixel_dereference
     using argument_type = gil::point_t;
     using result_type = reference;
     static constexpr bool is_mutable = false;
-    result_type operator()(argument_type const&) const {}
+    result_type operator()(argument_type const&) const { return result_type{}; }
 };
 
 template <typename Pixel>

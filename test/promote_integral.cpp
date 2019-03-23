@@ -39,7 +39,7 @@ namespace bg = boost::gil;
 template
 <
     typename T,
-    bool Signed = std::is_fundamental<T>::type::value && !std::is_unsigned<T>::type::value
+    bool Signed = std::is_fundamental<T>::value && !std::is_unsigned<T>::type::value
 >
 struct absolute_value
 {
@@ -62,7 +62,7 @@ template
     <
         typename Integral,
         typename Promoted,
-        bool Signed = !std::is_unsigned<Promoted>::type::value
+        bool Signed = !std::is_unsigned<Promoted>::value
     >
 struct test_max_values
 {
@@ -113,7 +113,7 @@ struct test_max_values<Integral, Promoted, false>
 template
     <
         typename T,
-        bool IsFundamental = std::is_fundamental<T>::type::value
+        bool IsFundamental = std::is_fundamental<T>::value
     >
 struct bit_size_impl : std::integral_constant<std::size_t, 0>
 {};
@@ -125,7 +125,7 @@ struct bit_size_impl<T, true> : bg::detail::promote_integral::bit_size<T>::type
 template <typename T>
 std::size_t bit_size()
 {
-    return bit_size_impl<T>::type::value;
+    return bit_size_impl<T>::value;
 }
 
 template <bool PromoteUnsignedToUnsigned>
@@ -142,7 +142,7 @@ struct test_promote_integral
         bool const same_types = std::is_same
             <
                 promoted_integral_type, ExpectedPromotedType
-            >::type::value;
+            >::value;
 
         BOOST_CHECK_MESSAGE(same_types,
                             "case ID: " << case_id
@@ -152,7 +152,7 @@ struct test_promote_integral
                                         << "; expected: "
                                         << typeid(ExpectedPromotedType).name());
 
-        if (!std::is_same<Type, promoted_integral_type>::type::value)
+        if (!std::is_same<Type, promoted_integral_type>::value)
         {
             test_max_values<Type, promoted_integral_type>::apply();
         }
@@ -191,7 +191,7 @@ template
         <
                 typename T,
                 bool PromoteUnsignedToUnsigned = false,
-                bool IsSigned = !std::is_unsigned<T>::type::value
+                bool IsSigned = !std::is_unsigned<T>::value
         >
 struct test_promotion
 {

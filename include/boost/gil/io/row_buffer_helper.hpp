@@ -56,7 +56,7 @@ struct row_buffer_helper
     Pixel,
     typename std::enable_if
     <
-        is_bit_aligned<Pixel>::type::value
+        is_bit_aligned<Pixel>::value
     >::type
 >
 {
@@ -112,7 +112,7 @@ struct row_buffer_helper
         <
             typename is_bit_aligned<Pixel>::type,
             typename is_homogeneous<Pixel>::type
-        >::type::value
+        >::value
     >
 >
 {
@@ -125,14 +125,14 @@ struct row_buffer_helper
                      , bool        in_bytes
                      )
     : _c( ( width
-          * num_channels< pixel_type >::type::value
+          * num_channels< pixel_type >::value
           * channel_type< pixel_type >::type::num_bits
           )
           >> 3
         )
 
     , _r( width
-        * num_channels< pixel_type >::type::value
+        * num_channels< pixel_type >::value
         * channel_type< pixel_type >::type::num_bits
         - ( _c << 3 )
        )
@@ -184,7 +184,7 @@ struct row_buffer_helper_view
     View,
     typename std::enable_if
     <
-        is_bit_aligned<typename View::value_type>::type::value
+        is_bit_aligned<typename View::value_type>::value
     >::type
 > : row_buffer_helper<typename View::reference>
 {

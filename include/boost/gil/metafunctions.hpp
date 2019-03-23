@@ -129,7 +129,7 @@ namespace detail {
 /// \brief Determines if the given iterator has a step that could be set dynamically
 template <typename I> struct iterator_is_step
     : public detail::iterator_is_step_impl<I,
-        !is_iterator_adaptor<I>::type::value,
+        !is_iterator_adaptor<I>::value,
         is_same<I,typename dynamic_x_step_type<I>::type>::value >{};
 
 /// \ingroup GILIsStep

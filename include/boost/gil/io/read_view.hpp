@@ -42,7 +42,7 @@ void read_view(Reader reader, View const& view,
                 typename get_pixel_type<View>::type,
                 typename Reader::format_tag_t
             >::type
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
 {
     reader.check_image_size(view.dimensions());
@@ -72,7 +72,7 @@ void read_view(
                 typename get_pixel_type<View>::type,
                 FormatTag
             >::type
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
 {
     using reader_t =
@@ -101,7 +101,7 @@ void read_view(Device& file, View const& view, FormatTag const& tag,
                 typename get_pixel_type<View>::type,
                 FormatTag
             >::type
-        >::type::value>::type* /*dummy*/ = nullptr)
+        >::value>::type* /*dummy*/ = nullptr)
 {
     using reader_t =
         typename get_reader<Device, FormatTag, detail::read_and_no_convert>::type;
@@ -132,7 +132,7 @@ void read_view(
                 typename get_pixel_type<View>::type,
                 FormatTag
             >::type
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
 {
     using reader_t =
@@ -161,7 +161,7 @@ void read_view(String const& file_name, View const& view, FormatTag const& tag,
                 typename get_pixel_type<View>::type,
                 FormatTag
             >::type
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
 {
     using reader_t =

@@ -89,7 +89,7 @@ protected:
         this->_io_dev.template set_property<tiff_bits_per_sample>( bits_per_sample );
 
         // write sample format
-        tiff_sample_format::type sampl_format = detail::sample_format< channel_t >::type::value;
+        tiff_sample_format::type sampl_format = detail::sample_format< channel_t >::value;
         this->_io_dev.template set_property<tiff_sample_format>( sampl_format );
 
         // write photometric format

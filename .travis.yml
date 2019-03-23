@@ -22,7 +22,7 @@ matrix:
     - env: BOGUS_JOB=true
   include:
     - os: linux
-      env: COMPILER=g++-5 VARIANT=debug TOOLSET=gcc CXXSTD=c++11 TEST_HEADERS=1
+      env: COMPILER=g++-5 VARIANT=debug TOOLSET=gcc CXXSTD=11 TEST_HEADERS=1
       addons:
         apt:
           packages:
@@ -35,7 +35,7 @@ matrix:
             - ubuntu-toolchain-r-test
 
     - os: linux
-      env: COMPILER=g++-5 VARIANT=release TOOLSET=gcc CXXSTD=c++11
+      env: COMPILER=g++-5 VARIANT=release TOOLSET=gcc CXXSTD=11
       addons:
         apt:
           packages:
@@ -48,7 +48,7 @@ matrix:
             - ubuntu-toolchain-r-test
 
     - os: linux
-      env: COMPILER=g++-6 VARIANT=debug TOOLSET=gcc CXXSTD=c++11
+      env: COMPILER=g++-6 VARIANT=debug TOOLSET=gcc CXXSTD=11
       addons:
         apt:
           packages:
@@ -61,7 +61,7 @@ matrix:
             - ubuntu-toolchain-r-test
 
     - os: linux
-      env: COMPILER=g++-6 VARIANT=release TOOLSET=gcc CXXSTD=c++11
+      env: COMPILER=g++-6 VARIANT=release TOOLSET=gcc CXXSTD=11
       addons:
         apt:
           packages:
@@ -74,7 +74,7 @@ matrix:
             - ubuntu-toolchain-r-test
 
     - os: linux
-      env: COMPILER=g++-7 VARIANT=debug TOOLSET=gcc CXXSTD=c++11
+      env: COMPILER=g++-7 VARIANT=debug TOOLSET=gcc CXXSTD=11
       addons:
         apt:
           packages:
@@ -87,7 +87,7 @@ matrix:
             - ubuntu-toolchain-r-test
 
     - os: linux
-      env: COMPILER=g++-7 VARIANT=release TOOLSET=gcc CXXSTD=c++11
+      env: COMPILER=g++-7 VARIANT=release TOOLSET=gcc CXXSTD=11
       addons:
         apt:
           packages:
@@ -100,11 +100,12 @@ matrix:
             - ubuntu-toolchain-r-test
 
     - os: linux
-      env: COMPILER=clang++-3.9 VARIANT=debug TOOLSET=clang CXXSTD=c++11
+      env: COMPILER=clang++-3.9 VARIANT=debug TOOLSET=clang CXXSTD=11
       addons:
         apt:
           packages:
             - clang-3.9
+            - libstdc++-6-dev
             - libpng-dev
             - libjpeg-dev
             - libtiff5-dev
@@ -114,11 +115,12 @@ matrix:
             - llvm-toolchain-precise-3.9
 
     - os: linux
-      env: COMPILER=clang++-3.9 VARIANT=release TOOLSET=clang CXXSTD=c++11
+      env: COMPILER=clang++-3.9 VARIANT=release TOOLSET=clang CXXSTD=11
       addons:
         apt:
           packages:
             - clang-3.9
+            - libstdc++-6-dev
             - libpng-dev
             - libjpeg-dev
             - libtiff5-dev
@@ -128,11 +130,12 @@ matrix:
             - llvm-toolchain-precise-3.9
 
     - os: linux
-      env: COMPILER=clang++-5.0 VARIANT=gil_ubsan_integer TOOLSET=clang CXXSTD=c++11 B2_OPTIONS="visibility=global" UBSAN_OPTIONS='print_stacktrace=1'
+      env: COMPILER=clang++-5.0 VARIANT=gil_ubsan_integer TOOLSET=clang CXXSTD=11 B2_OPTIONS="visibility=global" UBSAN_OPTIONS='print_stacktrace=1'
       addons:
         apt:
           packages:
             - clang-5.0
+            - libstdc++-7-dev
             - libpng-dev
             - libjpeg-dev
             - libtiff5-dev
@@ -142,11 +145,12 @@ matrix:
             - llvm-toolchain-trusty-5.0
 
     - os: linux
-      env: COMPILER=clang++-5.0 VARIANT=gil_ubsan_nullability TOOLSET=clang CXXSTD=c++11 B2_OPTIONS="visibility=global" UBSAN_OPTIONS='print_stacktrace=1'
+      env: COMPILER=clang++-5.0 VARIANT=gil_ubsan_nullability TOOLSET=clang CXXSTD=11 B2_OPTIONS="visibility=global" UBSAN_OPTIONS='print_stacktrace=1'
       addons:
         apt:
           packages:
             - clang-5.0
+            - libstdc++-7-dev
             - libpng-dev
             - libjpeg-dev
             - libtiff5-dev
@@ -156,11 +160,12 @@ matrix:
             - llvm-toolchain-trusty-5.0
 
     - os: linux
-      env: COMPILER=clang++-5.0 VARIANT=gil_ubsan_undefined TOOLSET=clang CXXSTD=c++11 B2_OPTIONS="visibility=global" UBSAN_OPTIONS='print_stacktrace=1'
+      env: COMPILER=clang++-5.0 VARIANT=gil_ubsan_undefined TOOLSET=clang CXXSTD=11 B2_OPTIONS="visibility=global" UBSAN_OPTIONS='print_stacktrace=1'
       addons:
         apt:
           packages:
             - clang-5.0
+            - libstdc++-7-dev
             - libpng-dev
             - libjpeg-dev
             - libtiff5-dev
@@ -170,10 +175,10 @@ matrix:
             - llvm-toolchain-trusty-5.0
 
     - os: osx
-      env: COMPILER=clang++ VARIANT=debug TOOLSET=clang CXXSTD=c++11
+      env: COMPILER=clang++ VARIANT=debug TOOLSET=clang CXXSTD=11
 
     - os: osx
-      env: COMPILER=clang++ VARIANT=release TOOLSET=clang CXXSTD=c++11
+      env: COMPILER=clang++ VARIANT=release TOOLSET=clang CXXSTD=11
 
     - env: DOC=1
       addons:
@@ -182,7 +187,7 @@ matrix:
             - doxygen
 
   allow_failures:
-    - env: COMPILER=clang++-5.0 VARIANT=gil_ubsan_integer TOOLSET=clang CXXSTD=c++11 B2_OPTIONS="visibility=global" UBSAN_OPTIONS='print_stacktrace=1'
+    - env: COMPILER=clang++-5.0 VARIANT=gil_ubsan_integer TOOLSET=clang CXXSTD=11 B2_OPTIONS="visibility=global" UBSAN_OPTIONS='print_stacktrace=1'
 
 install:
   - |-
@@ -266,7 +271,7 @@ script:
       ./b2 libs/gil/doc
     fi
   - |-
-    echo "using $TOOLSET : : $COMPILER : <cxxflags>-std=$CXXSTD ;" > ~/user-config.jam
+    echo "using $TOOLSET : : $COMPILER : ;" > ~/user-config.jam
   - travis_retry libs/gil/.ci/build-and-test.sh
 
 after_success:

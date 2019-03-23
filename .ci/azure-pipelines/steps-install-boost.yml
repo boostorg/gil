@@ -15,16 +15,22 @@ steps:
       tar -xf boost.tar.gz
     displayName: 'Download Boost'
 
+  - bash: |
+      cd boost_*
+      rm -r libs/gil
+      ls libs
+    displayName: 'Remove libs/gil from Boost 1.68'
+
   - script: |
       cd boost_*
       ./bootstrap.sh
-      sudo ./b2 -d0 -j4 variant=${{ parameters.variant }} toolset=${{ parameters.toolset }} --with-filesystem --with-test install
+      sudo ./b2 -j4 variant=${{ parameters.variant }} toolset=${{ parameters.toolset }} --with-filesystem --with-test install
     displayName: 'Install Boost on Unix'
     condition: ne(variables['Agent.OS'], 'Windows_NT')
 
   - script: |
       cd boost_*
       call .\bootstrap.bat
-      .\b2 -d0 -j4 variant=${{ parameters.variant }} --with-filesystem --with-test install
+      .\b2 -j4 variant=${{ parameters.variant }} --with-filesystem --with-test install
     displayName: 'Install Boost on Windows'
     condition: eq(variables['Agent.OS'], 'Windows_NT')

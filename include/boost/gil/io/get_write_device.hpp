@@ -31,7 +31,7 @@ struct get_write_device
         <
             detail::is_adaptable_output_device<FormatTag, Device>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type
 >
 {
@@ -50,7 +50,7 @@ struct get_write_device
         <
             detail::is_supported_path_spec<String>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type
 >
 {

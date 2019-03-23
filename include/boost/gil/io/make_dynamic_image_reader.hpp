@@ -26,7 +26,7 @@ auto make_dynamic_image_reader(
         <
             detail::is_supported_path_spec<String>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
     -> typename get_dynamic_image_reader<String, FormatTag>::type
 {
@@ -76,7 +76,7 @@ auto make_dynamic_image_reader(
         <
             detail::is_adaptable_input_device<FormatTag, Device>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
     -> typename get_dynamic_image_reader<Device, FormatTag>::type
 {
@@ -95,7 +95,7 @@ auto make_dynamic_image_reader(String const& file_name, FormatTag const&,
         <
             detail::is_supported_path_spec<String>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
     -> typename get_dynamic_image_reader<String, FormatTag>::type
 {
@@ -129,7 +129,7 @@ auto make_dynamic_image_reader(Device& file, FormatTag const&,
         <
             detail::is_adaptable_input_device<FormatTag, Device>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
     ->  typename get_dynamic_image_reader<Device, FormatTag>::type
 {

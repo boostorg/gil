@@ -26,7 +26,7 @@ auto make_dynamic_image_writer(
         <
             detail::is_supported_path_spec<String>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
     -> typename get_dynamic_image_writer<String, FormatTag>::type
 {
@@ -89,7 +89,7 @@ auto make_dynamic_image_writer(Device& file, image_write_info<FormatTag> const& 
         <
             typename detail::is_adaptable_output_device<FormatTag, Device>::type,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
     -> typename get_dynamic_image_writer<Device, FormatTag>::type
 {
@@ -108,7 +108,7 @@ auto make_dynamic_image_writer(String const& file_name, FormatTag const&,
         <
             detail::is_supported_path_spec<String>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
     -> typename get_dynamic_image_writer<String, FormatTag>::type
 {
@@ -155,7 +155,7 @@ auto make_dynamic_image_writer(Device& file, FormatTag const&,
         <
             typename detail::is_adaptable_output_device<FormatTag, Device>::type,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
     -> typename get_dynamic_image_writer<Device, FormatTag>::type
 {

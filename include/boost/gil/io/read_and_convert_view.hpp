@@ -38,7 +38,7 @@ void read_and_convert_view(Reader& reader, View const& view,
         <
             detail::is_reader<Reader>,
             is_format_tag<typename Reader::format_tag_t>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
 {
     reader.check_image_size(view.dimensions());
@@ -65,7 +65,7 @@ void read_and_convert_view(
         <
             detail::is_read_device<FormatTag, Device>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
 {
     using read_and_convert_t = detail::read_and_convert<ColorConverter>;
@@ -94,7 +94,7 @@ void read_and_convert_view(
         <
             is_format_tag<FormatTag>,
             detail::is_supported_path_spec<String>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
 {
     using read_and_convert_t = detail::read_and_convert<ColorConverter>;
@@ -123,7 +123,7 @@ void read_and_convert_view(
         <
             is_format_tag<FormatTag>,
             detail::is_supported_path_spec<String>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
 {
     using read_and_convert_t = detail::read_and_convert<ColorConverter>;
@@ -152,7 +152,7 @@ void read_and_convert_view(
         <
             detail::is_read_device<FormatTag, Device>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
 {
     using read_and_convert_t = detail::read_and_convert<ColorConverter>;
@@ -179,7 +179,7 @@ void read_and_convert_view(
         <
             is_format_tag<FormatTag>,
             detail::is_supported_path_spec<String>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
 {
     using read_and_convert_t = detail::read_and_convert<default_color_converter>;
@@ -206,7 +206,7 @@ void read_and_convert_view(
         <
             detail::is_read_device<FormatTag, Device>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
 {
     using read_and_convert_t = detail::read_and_convert<default_color_converter>;
@@ -233,7 +233,7 @@ void read_and_convert_view(
         <
             is_format_tag<FormatTag>,
             detail::is_supported_path_spec<String>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
 {
     using read_and_convert_t = detail::read_and_convert<default_color_converter>;
@@ -260,7 +260,7 @@ void read_and_convert_view(
         <
             detail::is_read_device<FormatTag, Device>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
 {
     using read_and_convert_t = detail::read_and_convert<default_color_converter>;

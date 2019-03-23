@@ -36,7 +36,7 @@ namespace detail { namespace promote_integral
 template
 <
     typename T,
-    bool IsFundamental = std::is_fundamental<T>::type::value
+    bool IsFundamental = std::is_fundamental<T>::value
 >
 struct bit_size {};
 
@@ -57,7 +57,7 @@ struct promote_to_larger
 
     using type = typename std::conditional
         <
-            (bit_size<current_type>::type::value >= MinSize),
+            (bit_size<current_type>::value >= MinSize),
             current_type,
             typename promote_to_larger
                 <
@@ -118,12 +118,12 @@ template
     typename T,
     bool PromoteUnsignedToUnsigned = false,
     bool UseCheckedInteger = false,
-    bool IsIntegral = std::is_integral<T>::type::value
+    bool IsIntegral = std::is_integral<T>::value
 >
 class promote_integral
 {
 private:
-    static bool const is_unsigned = std::is_unsigned<T>::type::value;
+    static bool const is_unsigned = std::is_unsigned<T>::value;
 
     using bit_size_type = detail::promote_integral::bit_size<T>;
 

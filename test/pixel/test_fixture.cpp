@@ -6,6 +6,7 @@
 // http://www.boost.org/LICENSE_1_0.txt
 //
 #include <boost/config.hpp>
+#include <boost/core/ignore_unused.hpp>
 
 #if defined(BOOST_CLANG)
 #pragma clang diagnostic push
@@ -36,6 +37,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(pixel_value_default_constructor, Pixel, fixture::p
     fixture::pixel_value<Pixel> fix;
     Pixel const default_value{};
     // FIXME: Default value of pixel/homogeneous_color_base is undermined
+    boost::ignore_unused(fix);
+    boost::ignore_unused(default_value);
     //BOOST_TEST(fix.pixel_ == default_value);
 }
 
@@ -55,6 +58,8 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(pixel_reference_default_constructor, Pixel, fixtur
     fixture::pixel_reference<Pixel&> fix;
     Pixel const default_value{};
     // FIXME: Default value of pixel/homogeneous_color_base is undermined
+    boost::ignore_unused(fix);
+    boost::ignore_unused(default_value);
     //BOOST_TEST(fix.pixel_ == Pixel{});
 }
 

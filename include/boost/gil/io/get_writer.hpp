@@ -32,7 +32,7 @@ struct get_writer
         <
             detail::is_supported_path_spec<String>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type
 >
 {
@@ -51,7 +51,7 @@ struct get_writer
         <
             detail::is_adaptable_output_device<FormatTag, Device>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type
 >
 {
@@ -74,7 +74,7 @@ struct get_dynamic_image_writer
         <
             detail::is_supported_path_spec<String>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type
 >
 {
@@ -93,7 +93,7 @@ struct get_dynamic_image_writer
         <
             detail::is_write_device<FormatTag, Device>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type
 >
 {

@@ -685,7 +685,7 @@ Pixels model the following concepts::
 
   concept PixelConcept<typename P> : ColorBaseConcept<P>, PixelBasedConcept<P>
   {
-    where is_pixel<P>::type::value==true;
+    where is_pixel<P>::value==true;
     // where for each K [0..size<P>::value-1]:
     //      ChannelConcept<kth_element_type<K> >;
 
@@ -920,8 +920,8 @@ iterators or adaptors over another pixel iterator::
     where PixelValueConcept<value_type>;
     typename const_iterator_type<It>::type;
         where PixelIteratorConcept<const_iterator_type<It>::type>;
-    static const bool  iterator_is_mutable<It>::type::value;
-    static const bool  is_iterator_adaptor<It>::type::value;   // is it an iterator adaptor
+    static const bool  iterator_is_mutable<It>::value;
+    static const bool  is_iterator_adaptor<It>::value;   // is it an iterator adaptor
   };
 
   template <typename Iterator>

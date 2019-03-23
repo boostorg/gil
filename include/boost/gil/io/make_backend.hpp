@@ -27,7 +27,7 @@ auto make_reader_backend(
         <
             detail::is_supported_path_spec<String>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
     -> typename get_reader_backend<String, FormatTag>::type
 {
@@ -77,7 +77,7 @@ auto make_reader_backend(Device& io_dev, image_read_settings<FormatTag> const& s
         <
             detail::is_adaptable_input_device<FormatTag, Device>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
     -> typename get_reader_backend<Device, FormatTag>::type
 {
@@ -96,7 +96,7 @@ auto make_reader_backend(String const& file_name, FormatTag const&,
         <
             detail::is_supported_path_spec<String>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
     -> typename get_reader_backend<String, FormatTag>::type
 {
@@ -112,7 +112,7 @@ auto make_reader_backend(Device& io_dev, FormatTag const&,
         <
             detail::is_adaptable_input_device<FormatTag, Device>,
             is_format_tag<FormatTag>
-        >::type::value
+        >::value
     >::type* /*dummy*/ = nullptr)
     -> typename get_reader_backend<Device, FormatTag>::type
 {
