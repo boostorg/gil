@@ -10,12 +10,12 @@
 using namespace std;
 using namespace boost::gil;
 
-// TOP_VALUE - value of strong edge pixel
-#define TOP_VALUE 255
-// MIDDLE_VALUE - value of weak (maybe edge) pixel
-#define MIDDLE_VALUE 150
-// BOTTOM_VALUE - value of definitely not-edge pixel
-#define BOTTOM_VALUE 0
+// value of strong edge pixel
+static const int TOP_VALUE = 255;
+// value of weak (maybe edge) pixel
+static const int MIDDLE_VALUE = 150;
+// value of definitely not-edge pixel
+static const int BOTTOM_VALUE = 0;
 
 // Example how to detect edges via Canny algorithm
 // Read more about Canny edge detection algorithm on
@@ -197,8 +197,8 @@ void canny_edge_detection(const rgb8c_view_t &src,
 
 int main(int argc, char *argv[])
 {
-    char *input = "/home/salen/testGil/test.jpg";
-    char *output = "/home/salen/cannyGil/canny.jpg";
+    char *input = "test.jpg";
+    char *output = "canny.jpg";
     int min_threshold_value = 30;
     int max_threshold_value = 70;
 
