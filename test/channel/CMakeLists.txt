@@ -13,6 +13,8 @@ foreach(_name
   algorithm_channel_relation
   channel_traits
   concepts
+  is_integral
+  packed_channel_value
   scoped_channel_value
   test_fixture)
   set(_target test_core_channel_${_name})
