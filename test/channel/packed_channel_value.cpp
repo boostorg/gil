@@ -91,3 +91,35 @@ BOOST_AUTO_TEST_CASE(packed_channel_value_with_num_bits15)
     BOOST_TEST(gil::channel_traits<bits15>::min_value() == 0u);
     BOOST_TEST(gil::channel_traits<bits15>::max_value() == 32767u);
 }
+
+using fixture = gil::packed_channel_value<8>;
+
+BOOST_AUTO_TEST_CASE(packed_channel_value_default_constructor)
+{
+    fixture f;
+    std::uint8_t v = f;
+    BOOST_TEST(v == std::uint8_t{0});
+}
+
+BOOST_AUTO_TEST_CASE(packed_channel_value_user_defined_constructors)
+{
+    fixture f{1};
+    std::uint8_t v = f;
+    BOOST_TEST(v == std::uint8_t{1});
+}
+
+BOOST_AUTO_TEST_CASE(packed_channel_value_copy_constructors)
+{
+    fixture f1{128};
+    fixture f2{f1};
+
+    BOOST_TEST(std::uint8_t{f1} == std::uint8_t{128});
+    BOOST_TEST(std::uint8_t{f1} == std::uint8_t{f2});
+}
+
+BOOST_AUTO_TEST_CASE(packed_channel_value_assignment)
+{
+    fixture f;
+    f = 64;
+    BOOST_TEST(f == std::uint8_t{64});
+}

@@ -100,7 +100,7 @@ public:
     using const_reference = value_type const&;
     static constexpr bool is_mutable = channel_traits<channel_t>::is_mutable;
 
-    pixel(){}
+    pixel() = default;
     explicit pixel(channel_t v) : parent_t(v) {}  // sets all channels to v
     pixel(channel_t v0, channel_t v1)                                                         : parent_t(v0,v1) {}
     pixel(channel_t v0, channel_t v1, channel_t v2)                                           : parent_t(v0,v1,v2) {}

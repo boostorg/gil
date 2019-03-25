@@ -183,25 +183,25 @@ struct scoped_channel_value
     static value_type min_value() { return MinVal::apply(); }
     static value_type max_value() { return MaxVal::apply(); }
 
-    scoped_channel_value() {}
-    scoped_channel_value(const scoped_channel_value& c) : _value(c._value) {}
-    scoped_channel_value(BaseChannelValue val) : _value(val) {}
+    scoped_channel_value() = default;
+    scoped_channel_value(const scoped_channel_value& c) : value_(c.value_) {}
+    scoped_channel_value(BaseChannelValue val) : value_(val) {}
 
-    scoped_channel_value& operator++() { ++_value; return *this; }
-    scoped_channel_value& operator--() { --_value; return *this; }
+    scoped_channel_value& operator++() { ++value_; return *this; }
+    scoped_channel_value& operator--() { --value_; return *this; }
 
     scoped_channel_value operator++(int) { scoped_channel_value tmp=*this; this->operator++(); return tmp; }
     scoped_channel_value operator--(int) { scoped_channel_value tmp=*this; this->operator--(); return tmp; }
 
-    template <typename Scalar2> scoped_channel_value& operator+=(Scalar2 v) { _value+=v; return *this; }
-    template <typename Scalar2> scoped_channel_value& operator-=(Scalar2 v) { _value-=v; return *this; }
-    template <typename Scalar2> scoped_channel_value& operator*=(Scalar2 v) { _value*=v; return *this; }
-    template <typename Scalar2> scoped_channel_value& operator/=(Scalar2 v) { _value/=v; return *this; }
+    template <typename Scalar2> scoped_channel_value& operator+=(Scalar2 v) { value_+=v; return *this; }
+    template <typename Scalar2> scoped_channel_value& operator-=(Scalar2 v) { value_-=v; return *this; }
+    template <typename Scalar2> scoped_channel_value& operator*=(Scalar2 v) { value_*=v; return *this; }
+    template <typename Scalar2> scoped_channel_value& operator/=(Scalar2 v) { value_/=v; return *this; }
 
-    scoped_channel_value& operator=(BaseChannelValue v) { _value=v; return *this; }
-    operator BaseChannelValue() const { return _value; }
+    scoped_channel_value& operator=(BaseChannelValue v) { value_=v; return *this; }
+    operator BaseChannelValue() const { return value_; }
 private:
-    BaseChannelValue _value;
+    BaseChannelValue value_{};
 };
 
 template <typename T>
@@ -285,16 +285,24 @@ public:
     static value_type min_value() { return 0; }
     static value_type max_value() { return low_bits_mask_t< NumBits >::sig_bits; }
 
-    packed_channel_value() {}
-    packed_channel_value(integer_t v) { _value = static_cast< integer_t >( v & low_bits_mask_t<NumBits>::sig_bits_fast ); }
+    packed_channel_value() = default;
+    packed_channel_value(integer_t v)
+    {
+        value_ = static_cast<integer_t>(v & low_bits_mask_t<NumBits>::sig_bits_fast);
+    }
+
     template <typename Scalar>
-    packed_channel_value(Scalar v) { _value = packed_channel_value( static_cast< integer_t >( v ) ); }
+    packed_channel_value(Scalar v)
+    {
+        value_ = packed_channel_value(static_cast<integer_t>(v));
+    }
 
     static unsigned int num_bits() { return NumBits; }
 
-    operator integer_t() const { return _value; }
+    operator integer_t() const { return value_; }
+
 private:
-    integer_t _value;
+    integer_t value_{};
 };
 
 namespace detail {

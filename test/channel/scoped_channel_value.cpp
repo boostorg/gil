@@ -17,7 +17,44 @@
 
 namespace gil = boost::gil;
 
-BOOST_AUTO_TEST_CASE(scoped_channel_float32_t)
+struct int_minus_value  { static std::int8_t apply() { return -64; } };
+struct int_plus_value   { static std::int8_t apply() { return  64; } };
+using fixture = gil::scoped_channel_value
+    <
+        std::uint8_t, int_minus_value, int_plus_value
+    >;
+
+BOOST_AUTO_TEST_CASE(scoped_channel_value_default_constructor)
+{
+    fixture f;
+    std::uint8_t v = f;
+    BOOST_TEST(v == std::uint8_t{0});
+}
+
+BOOST_AUTO_TEST_CASE(scoped_channel_value_user_defined_constructors)
+{
+    fixture f{1};
+    std::uint8_t v = f;
+    BOOST_TEST(v == std::uint8_t{1});
+}
+
+BOOST_AUTO_TEST_CASE(scoped_channel_value_copy_constructors)
+{
+    fixture f1{128};
+    fixture f2{f1};
+
+    BOOST_TEST(std::uint8_t{f1} == std::uint8_t{128});
+    BOOST_TEST(std::uint8_t{f1} == std::uint8_t{f2});
+}
+
+BOOST_AUTO_TEST_CASE(scoped_channel_value_assignment)
+{
+    fixture f;
+    f = 64;
+    BOOST_TEST(f == std::uint8_t{64});
+}
+
+BOOST_AUTO_TEST_CASE(scoped_channel_value_float32_t)
 {
     auto const tolerance = btt::tolerance(std::numeric_limits<float>::epsilon());
     // min
@@ -28,7 +65,7 @@ BOOST_AUTO_TEST_CASE(scoped_channel_float32_t)
     BOOST_TEST(gil::channel_traits<gil::float32_t>::max_value() == 1.0);
 }
 
-BOOST_AUTO_TEST_CASE(scoped_channel_float64_t)
+BOOST_AUTO_TEST_CASE(scoped_channel_value_float64_t)
 {
     auto const tolerance = btt::tolerance(std::numeric_limits<double>::epsilon());
     // min
@@ -39,7 +76,7 @@ BOOST_AUTO_TEST_CASE(scoped_channel_float64_t)
     BOOST_TEST(gil::channel_traits<gil::float64_t>::max_value() == 1.0, tolerance);
 }
 
-BOOST_AUTO_TEST_CASE(scoped_channel_halfs)
+BOOST_AUTO_TEST_CASE(scoped_channel_value_halfs)
 {
     // Create a double channel with range [-0.5 .. 0.5]
     struct minus_half { static double apply() { return -0.5; } };
