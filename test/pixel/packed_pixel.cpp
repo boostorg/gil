@@ -123,9 +123,17 @@ BOOST_AUTO_TEST_CASE(packed_pixel_gray_equality)
 
 BOOST_AUTO_TEST_CASE(packed_pixel_gray3_assignment_gray_channel)
 {
-    packed_pixel_gray3 p1{0};
-    p1 = int{5};
-    BOOST_TEST(p1._bitfield == int{5});
+    {
+        packed_pixel_gray3 p1; // default-initialized
+        p1 = int{5};
+        BOOST_TEST(p1._bitfield == int{5});
+    }
+
+    {
+        packed_pixel_gray3 p1{0}; // value-initialized
+        p1 = int{5};
+        BOOST_TEST(p1._bitfield == int{5});
+    }
 }
 
 BOOST_AUTO_TEST_CASE(packed_pixel_gray_equality_gray_channel)
