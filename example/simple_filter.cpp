@@ -10,15 +10,15 @@
 //changes in intensities so difference between neighbouring pixels will be more. Hence
 //pixels with higher intensity(brighter pixels) depict the presence of an edge.
 
-int main(int argc,char *argv[]) {
+int main() {
     using namespace boost::gil;
-    if(argc!=2){
-        std::cerr<<"Usage: simple_filter <image_path>";
-        return -1;
-    }
+    // if(argc!=2){
+    //     std::cerr<<"Usage: simple_filter <image_path>";
+    //     return -1;
+    // }
     rgb8_image_t img;
     
-    read_image(*argv[1], img, jpeg_tag{});
+    read_image("test.jpg", img, jpeg_tag{});
 
     
     gray8_image_t convolved(img.dimensions());

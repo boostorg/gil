@@ -23,6 +23,7 @@ local sources =
     dynamic_image.cpp
     histogram.cpp
     simple_filter.cpp
+    
     ;
 
 local targets ;
