@@ -51,7 +51,8 @@ BOOST_AUTO_TEST_CASE(scoped_channel_value_assignment)
 {
     fixture f;
     f = 64;
-    BOOST_TEST(f == std::uint8_t{64});
+    std::uint8_t v = f;
+    BOOST_TEST(v == std::uint8_t{64});
 }
 
 BOOST_AUTO_TEST_CASE(scoped_channel_value_float32_t)
