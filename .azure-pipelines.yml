@@ -24,7 +24,6 @@ jobs:
       - script: |
           sudo apt-get install libjpeg-dev libpng16-dev libtiff5-dev libraw-dev
         displayName: 'Install dependencies'
-      - template: .ci/azure-pipelines/steps-install-boost.yml
       - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
 
   - job: 'ubuntu1604_gcc8_cxx14_cmake'
@@ -38,7 +37,6 @@ jobs:
       - script: |
           sudo apt-get install libjpeg-dev libpng16-dev libtiff5-dev libraw-dev
         displayName: 'Install dependencies'
-      - template: .ci/azure-pipelines/steps-install-boost.yml
       - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
         parameters:
           cxxver: '14'
@@ -55,10 +53,9 @@ jobs:
           architecture: 'x64'
       - template: .ci/azure-pipelines/steps-check-cmake.yml
       - template: .ci/azure-pipelines/steps-install-conan.yml
-      - template: .ci/azure-pipelines/steps-install-boost.yml
       - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
         parameters:
-          use_conan: 'yes'
+          use_conan: 'ON'
 
   - job: 'win2016_vs2017_cxx17_cmake'
     pool:
@@ -72,10 +69,9 @@ jobs:
           architecture: 'x64'
       - template: .ci/azure-pipelines/steps-check-cmake.yml
       - template: .ci/azure-pipelines/steps-install-conan.yml
-      - template: .ci/azure-pipelines/steps-install-boost.yml
       - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
         parameters:
-          use_conan: 'yes'
+          use_conan: 'ON'
           cxxver: '17'
 
   - job: 'win2012_vs2015_cmake'
@@ -101,7 +97,7 @@ jobs:
       - template: .ci/azure-pipelines/steps-install-boost.yml
       - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
         parameters:
-          use_conan: 'yes'
+          use_conan: 'ON'
 
   - job: 'macos1013_xcode91_cmake'
     pool:
@@ -118,4 +114,4 @@ jobs:
           toolset: darwin
       - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
         parameters:
-          use_conan: 'yes'
+          use_conan: 'ON'

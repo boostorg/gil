@@ -8,15 +8,29 @@ parameters:
   # defaults, if not specified
   configuration: 'Release'
   cxxver: '11'
-  get_findboost: 'no'
-  enable_ext_io: 'no'
-  enable_ext_numeric: 'yes'
-  enable_ext_toolbox: 'yes'
-  use_conan: 'no'
+  get_findboost: 'ON'
+  enable_ext_io: 'OFF'
+  enable_ext_numeric: 'ON'
+  enable_ext_toolbox: 'ON'
+  use_conan: 'OFF'
 
 steps:
   - script: |
-      cmake -H. -B_build -DCMAKE_BUILD_TYPE=${{ parameters.configuration }} -DCMAKE_CXX_STANDARD=${{ parameters.cxxver }} -DCMAKE_VERBOSE_MAKEFILE=ON -DGIL_DOWNLOAD_FINDBOOST=${{ parameters.get_findboost }} -DGIL_USE_CONAN=ON -DGIL_ENABLE_EXT_IO=${{ parameters.enable_ext_io }} -DGIL_ENABLE_EXT_NUMERIC=${{ parameters.enable_ext_numeric }} -DGIL_ENABLE_EXT_TOOLBOX=${{ parameters.enable_ext_toolbox }}
+      export BOOST_ROOT=/usr/local/share/boost/1.69.0
+      export BOOST_INCLUDEDIR=$BOOST_ROOT/include
+      export BOOST_LIBRARYDIR=$BOOST_ROOT/lib
+
+      cmake -H. -B_build -DCMAKE_BUILD_TYPE=${{ parameters.configuration }} -DCMAKE_CXX_STANDARD=${{ parameters.cxxver }} -DCMAKE_VERBOSE_MAKEFILE=ON -DBoost_DEBUG=ON -DBoost_ARCHITECTURE=-x64 -DGIL_DOWNLOAD_FINDBOOST=${{ parameters.get_findboost }} -DGIL_USE_CONAN=ON -DGIL_ENABLE_EXT_IO=${{ parameters.enable_ext_io }} -DGIL_ENABLE_EXT_NUMERIC=${{ parameters.enable_ext_numeric }} -DGIL_ENABLE_EXT_TOOLBOX=${{ parameters.enable_ext_toolbox }}
+    condition: ne(variables['Agent.OS'], 'Windows_NT')
+    displayName: 'Run CMake to configure build'
+
+  - script: |
+      set BOOST_ROOT="C:\Program Files\Boost\1.69.0"
+      set BOOST_INCLUDEDIR=%BOOST_ROOT%\include
+      set BOOST_LIBRARYDIR=%BOOST_ROOT%\lib
+
+      cmake -H. -B_build -A x64 -DCMAKE_BUILD_TYPE=${{ parameters.configuration }} -DCMAKE_CXX_STANDARD=${{ parameters.cxxver }} -DCMAKE_VERBOSE_MAKEFILE=ON -DBoost_DEBUG=ON -DBoost_ARCHITECTURE=-x64 -DGIL_DOWNLOAD_FINDBOOST=${{ parameters.get_findboost }} -DGIL_USE_CONAN=ON -DGIL_ENABLE_EXT_IO=${{ parameters.enable_ext_io }} -DGIL_ENABLE_EXT_NUMERIC=${{ parameters.enable_ext_numeric }} -DGIL_ENABLE_EXT_TOOLBOX=${{ parameters.enable_ext_toolbox }}
+    condition: eq(variables['Agent.OS'], 'Windows_NT')
     displayName: 'Run CMake to configure build'
 
   - script: cmake --build _build --config ${{ parameters.configuration }} -j 4
