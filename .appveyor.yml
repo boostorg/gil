@@ -20,28 +20,39 @@ environment:
     - TOOLSET: msvc-14.1
       ARCH: x86_64
       VARIANT: debug
-      CXXSTD: 11
+      CXXSTD: 17
       TEST_HEADERS: 1
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     - TOOLSET: msvc-14.1
       ARCH: x86_64
       VARIANT: release
-      CXXSTD: 11
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    - TOOLSET: msvc-14.1
-      ARCH: x86
-      VARIANT: debug
-      CXXSTD: 11
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    - TOOLSET: msvc-14.1
-      ARCH: x86
-      VARIANT: release
-      CXXSTD: 11
+      CXXSTD: 17
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     - TOOLSET: msvc-14.1
       ARCH: x86_64
       VARIANT: debug
-      CXXSTD: 11
+      CXXSTD: 14
+      TEST_HEADERS: 1
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - TOOLSET: msvc-14.1
+      ARCH: x86_64
+      VARIANT: release
+      CXXSTD: 14
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - TOOLSET: msvc-14.1
+      ARCH: x86
+      VARIANT: debug
+      CXXSTD: 14
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - TOOLSET: msvc-14.1
+      ARCH: x86
+      VARIANT: release
+      CXXSTD: 14
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - TOOLSET: msvc-14.1
+      ARCH: x86_64
+      VARIANT: debug
+      CXXSTD: 14
       GENERATOR: "Visual Studio 15 2017 Win64"
       CMAKE_CONFIG: Debug
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
@@ -52,12 +63,17 @@ matrix:
     - TOOLSET: msvc-14.1
       ARCH: x86_64
       VARIANT: release
-      CXXSTD: 11
+      CXXSTD: 17
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    - TOOLSET: msvc-14.1
+      ARCH: x86_64
+      VARIANT: release
+      CXXSTD: 14
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     - TOOLSET: msvc-14.1
       ARCH: x86_64
       VARIANT: debug
-      CXXSTD: 11
+      CXXSTD: 14
       GENERATOR: "Visual Studio 15 2017 Win64"
       CMAKE_CONFIG: Debug
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
