@@ -263,41 +263,42 @@ steps_bootstrap: &steps_bootstrap
   steps:
     - *attach_workspace
     - *run_compiler_version
-    - run: cd boost && ./bootstrap.sh -with-toolset=$TOOLSET || cat ./bootstrap.log
-    - run: cd boost && ./b2 headers
+    - run: cd boost-root && ./bootstrap.sh -with-toolset=$TOOLSET || cat ./bootstrap.log
+    - run: cd boost-root && ./b2 headers > /dev/null
     - persist_to_workspace:
         root: ~/project
-        paths: boost
+        paths: boost-root
 
 steps_test_core: &steps_test_core
   steps:
     - *attach_workspace
     - *run_compiler_version
-    - run: cd boost && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/test
+    - run: cd boost-root && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/test
 
 steps_test_toolbox: &steps_test_toolbox
   steps:
     - *attach_workspace
     - *run_compiler_version
-    - run: cd boost && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/toolbox/test
+    - run: cd boost-root && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/toolbox/test
 
 steps_test_numeric: &steps_test_numeric
   steps:
     - *attach_workspace
     - *run_compiler_version
-    - run: cd boost && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/numeric/test
+    - run: cd boost-root && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/numeric/test
 
 steps_test_io: &steps_test_io
   steps:
     - *attach_workspace
     - *run_compiler_version
-    - run: cd boost && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/io/test//simple
+    - run: cd boost-root && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/io/test//simple
 
 ##############################################################################
 # Build jobs
 ##############################################################################
 jobs:
   bootstrap_checkout:
+    working_directory: ~/project/gil
     <<: *config_gcc48_cpp11_opt_speed
     steps:
       - checkout
@@ -307,20 +308,14 @@ jobs:
           # against other Boost libraries as defined by the Boost super-project master branch
           name: Checkout Boost superproject
           command: |
-            git clone -b master --depth 1 https://github.com/boostorg/boost.git
-            cd boost
-            git branch
-            git submodule --quiet update --init tools/build
-            git submodule --quiet update --init tools/boost_install
-            git submodule --quiet update --init tools/boostdep
-            git submodule --quiet update --init libs/headers
-            git submodule --quiet update --init libs/config
-            rm -rf libs/gil && mkdir -p libs/gil
-            mv -t libs/gil/ ../Jamfile ../example ../include ../io ../numeric ../test ../toolbox
-            python tools/boostdep/depinst/depinst.py gil
+            echo $PWD && ls -a $PWD
+            cd ..
+            echo $PWD && ls -a $PWD
+            ~/project/gil/.ci/get-boost.sh $CIRCLE_BRANCH ~/project/gil
+            cd boost-root
       - persist_to_workspace:
           root: ~/project
-          paths: boost
+          paths: boost-root
 
   bootstrap_gcc:
     <<: *config_gcc48_cpp11_opt_speed
@@ -483,7 +478,11 @@ jobs:
 
 ##############################################################################
 # Workflows
+#
+# Example of regex in filters:
+#   { branches: { only: [ develop, master, "/ml.*/" ] } }
 ##############################################################################
+
 workflows:
   version: 2
   build-and-test:
@@ -675,6 +674,9 @@ workflows:
 # Circle CI 1.0 notifications seem to work for Circle CI 2.0 (not 2.1!)
 # https://github.com/circleci/circleci-docs/issues/2411
 # https://discuss.circleci.com/t/circleci-2-0-notifications-webhooks/19075/9
-notify:
-  webhooks:
-    - url: https://webhooks.gitter.im/e/9538066016dc0f9b6511
+#
+# TODO: Disabled until CircleCI supports single notification per whole workflow.
+#       Currently, it floods the webhook with a notification per job.
+#notify:
+#  webhooks:
+#    - url: https://webhooks.gitter.im/e/9538066016dc0f9b6511
