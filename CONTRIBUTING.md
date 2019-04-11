@@ -363,6 +363,8 @@ Using the installed Boost enables a lightweight mode for the library development
 inside a stand-alone clone Boost.GIL repository and without any need to clone the
 whole Boost super-project.
 
+**TIP:** For the lightweight setup, prefer latest release of Boost.
+
 For available custom CMake options, open the top-level `CMakeLists.txt`
 and search for `option`.
 
@@ -443,6 +445,19 @@ Here is an example of such lightweight workflow in Linux environment (Debian-bas
     ```shell
     ctest -R gil.tests.core.pixel
     ```
+
+#### CMake integration for Visual Studio
+
+If you are going to use the CMake integration for Visual Studio 2017 or 2019, we provide
+[example/cmake/CMakeSettings.json](https://github.com/boostorg/gil/blob/develop/example/cmake/CMakeSettings.json)
+with reasonable default settings for the CMake integration for Visual Studio.
+Copy the file next to the top-level `CMakeLists.txt` of GIL and run CMake from within Visual Studio.
+
+Go to [CMake support in Visual Studio](https://go.microsoft.com//fwlink//?linkid=834763)
+to learn more about the integration.
+
+Go to [CMakeSettings.json schema reference](https://docs.microsoft.com/en-us/cpp/build/cmakesettings-reference?view=vs-2017)
+to learn about the configuration file itself.
 
 ### Using Faber
 
