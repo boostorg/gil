@@ -12,9 +12,6 @@ parameters:
 steps:
   # The $BSD_DIR is the same path as $(Build.SourcesDirectory)
   # but guaranteed in Unix format /a/b/c on every OS.
-  #
-  # FIXME: Replace 'master' below with $(Build.SourceBranchName) as soon as the C++
-  #        port of Boost.Build setup has been fixed in Boost 'develop' (boostrap is failing).
   - bash: |
       export BSD_DIR=$PWD
       cd ..
@@ -22,7 +19,7 @@ steps:
       echo "Copying $BSD_DIR to $GIL_DIR"
       cp -a $BSD_DIR $GIL_DIR
       cd $BSD_DIR
-      $GIL_DIR/.ci/get-boost.sh master $GIL_DIR
+      $GIL_DIR/.ci/get-boost.sh $(Build.SourceBranchName) $GIL_DIR
     displayName: 'Download Boost'
 
   - script: |
