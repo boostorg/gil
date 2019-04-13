@@ -16,23 +16,37 @@ parameters:
 
 steps:
   - script: |
-      export BOOST_ROOT=/usr/local
-      export BOOST_INCLUDEDIR=$BOOST_ROOT/include
+      export BOOST_ROOT=$(Build.SourcesDirectory)/boost-root
+      export BOOST_INCLUDEDIR=$BOOST_ROOT
       export BOOST_LIBRARYDIR=$BOOST_ROOT/lib
-      cmake -H. -B_build -DCMAKE_BUILD_TYPE=${{ parameters.configuration }} -DCMAKE_CXX_STANDARD=${{ parameters.cxxver }} -DCMAKE_VERBOSE_MAKEFILE=ON -DBoost_DEBUG=ON -DBoost_NO_SYSTEM_PATHS=ON -DGIL_DOWNLOAD_FINDBOOST=${{ parameters.get_findboost }} -DGIL_USE_CONAN=ON -DGIL_ENABLE_EXT_IO=${{ parameters.enable_ext_io }} -DGIL_ENABLE_EXT_NUMERIC=${{ parameters.enable_ext_numeric }} -DGIL_ENABLE_EXT_TOOLBOX=${{ parameters.enable_ext_toolbox }}
+      cmake -H. -B_build -DCMAKE_BUILD_TYPE=${{ parameters.configuration }} -DCMAKE_CXX_STANDARD=${{ parameters.cxxver }} -DCMAKE_VERBOSE_MAKEFILE=ON -DBoost_DEBUG=ON -DBoost_NO_SYSTEM_PATHS=ON -DGIL_DOWNLOAD_FINDBOOST=${{ parameters.get_findboost }} -DGIL_USE_CONAN=${{ parameters.use_conan }} -DGIL_ENABLE_EXT_IO=${{ parameters.enable_ext_io }} -DGIL_ENABLE_EXT_NUMERIC=${{ parameters.enable_ext_numeric }} -DGIL_ENABLE_EXT_TOOLBOX=${{ parameters.enable_ext_toolbox }}
+    workingDirectory: $(Build.SourcesDirectory)/boost-root/libs/gil
     displayName: 'Run CMake to configure build on Unix'
     condition: ne(variables['Agent.OS'], 'Windows_NT')
 
   - script: |
-      set BOOST_ROOT=C:\Boost
-      set BOOST_INCLUDEDIR=%BOOST_ROOT%\include\boost-1_68
+      set BOOST_ROOT=$(Build.SourcesDirectory)\boost-root
+      set BOOST_INCLUDEDIR=%BOOST_ROOT%
       set BOOST_LIBRARYDIR=%BOOST_ROOT%\lib
-      cmake -H. -B_build -DCMAKE_BUILD_TYPE=${{ parameters.configuration }} -DCMAKE_CXX_STANDARD=${{ parameters.cxxver }} -DCMAKE_VERBOSE_MAKEFILE=ON -DBoost_DEBUG=ON -DBoost_NO_SYSTEM_PATHS=ON -DGIL_DOWNLOAD_FINDBOOST=${{ parameters.get_findboost }} -DGIL_USE_CONAN=ON -DGIL_ENABLE_EXT_IO=${{ parameters.enable_ext_io }} -DGIL_ENABLE_EXT_NUMERIC=${{ parameters.enable_ext_numeric }} -DGIL_ENABLE_EXT_TOOLBOX=${{ parameters.enable_ext_toolbox }}
+      cmake -H. -B_build -DCMAKE_BUILD_TYPE=${{ parameters.configuration }} -DCMAKE_CXX_STANDARD=${{ parameters.cxxver }} -DCMAKE_VERBOSE_MAKEFILE=ON -DBoost_DEBUG=ON -DBoost_ADDITIONAL_VERSIONS="1.70;1.71" -DBoost_ARCHITECTURE=-x32 -DBoost_NO_SYSTEM_PATHS=ON -DGIL_DOWNLOAD_FINDBOOST=${{ parameters.get_findboost }} -DGIL_USE_CONAN=${{ parameters.use_conan }} -DGIL_ENABLE_EXT_IO=${{ parameters.enable_ext_io }} -DGIL_ENABLE_EXT_NUMERIC=${{ parameters.enable_ext_numeric }} -DGIL_ENABLE_EXT_TOOLBOX=${{ parameters.enable_ext_toolbox }}
+    workingDirectory: $(Build.SourcesDirectory)/boost-root/libs/gil
     displayName: 'Run CMake to configure build on Windows'
     condition: eq(variables['Agent.OS'], 'Windows_NT')
 
   - script: cmake --build _build --config ${{ parameters.configuration }} -j 4
+    workingDirectory: $(Build.SourcesDirectory)/boost-root/libs/gil
     displayName: 'Run CMake to build'
 
   - script: cd _build && ctest --build-config ${{ parameters.configuration }} -VV --output-on-failure
+    workingDirectory: $(Build.SourcesDirectory)/boost-root/libs/gil
     displayName: 'Run CTest to test'
+    condition: ne(variables['Agent.OS'], 'Darwin')
+
+  - script: |
+      # Set DYLD_FALLBACK_LIBRARY_PATH to avoid 'dyld: Library not loaded: libboost_*.dylib' error
+      export DYLD_FALLBACK_LIBRARY_PATH=$(Build.SourcesDirectory)/boost-root/stage/lib:$DYLD_FALLBACK_LIBRARY_PATH
+      echo "DYLD_FALLBACK_LIBRARY_PATH=$DYLD_FALLBACK_LIBRARY_PATH"
+      cd _build && ctest --build-config ${{ parameters.configuration }} -VV --output-on-failure
+    workingDirectory: $(Build.SourcesDirectory)/boost-root/libs/gil
+    displayName: 'Run CTest to test on macOS'
+    condition: eq(variables['Agent.OS'], 'Darwin')

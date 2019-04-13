@@ -138,6 +138,7 @@ endif()
 find_package(Boost 1.65.0 REQUIRED
   COMPONENTS
     filesystem
+    system
     unit_test_framework)
 message(STATUS "Boost.GIL: Using Boost_INCLUDE_DIRS=${Boost_INCLUDE_DIRS}")
 message(STATUS "Boost.GIL: Using Boost_LIBRARY_DIRS=${Boost_LIBRARY_DIRS}")
