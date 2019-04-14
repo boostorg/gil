@@ -32,31 +32,30 @@
 #endif
 #endif // BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
 
-#include <boost/mpl/bool.hpp> // for complete types of true_ and false_
-
 #include <cstdlib>
 #include <string>
+#include <type_traits>
 
 namespace boost { namespace gil { namespace detail {
 
-template<typename P> struct is_supported_path_spec              : mpl::false_ {};
-template<> struct is_supported_path_spec< std::string >         : mpl::true_ {};
-template<> struct is_supported_path_spec< const std::string >   : mpl::true_ {};
-template<> struct is_supported_path_spec< std::wstring >        : mpl::true_ {};
-template<> struct is_supported_path_spec< const std::wstring >  : mpl::true_ {};
-template<> struct is_supported_path_spec< const char* >         : mpl::true_ {};
-template<> struct is_supported_path_spec< char* >               : mpl::true_ {};
-template<> struct is_supported_path_spec< const wchar_t* >      : mpl::true_ {};
-template<> struct is_supported_path_spec< wchar_t* >            : mpl::true_ {};
+template<typename P> struct is_supported_path_spec              : std::false_type {};
+template<> struct is_supported_path_spec< std::string >         : std::true_type {};
+template<> struct is_supported_path_spec< const std::string >   : std::true_type {};
+template<> struct is_supported_path_spec< std::wstring >        : std::true_type {};
+template<> struct is_supported_path_spec< const std::wstring >  : std::true_type {};
+template<> struct is_supported_path_spec< const char* >         : std::true_type {};
+template<> struct is_supported_path_spec< char* >               : std::true_type {};
+template<> struct is_supported_path_spec< const wchar_t* >      : std::true_type {};
+template<> struct is_supported_path_spec< wchar_t* >            : std::true_type {};
 
-template<int i> struct is_supported_path_spec<const char [i]>       : mpl::true_ {};
-template<int i> struct is_supported_path_spec<char [i]>             : mpl::true_ {};
-template<int i> struct is_supported_path_spec<const wchar_t [i]>    : mpl::true_ {};
-template<int i> struct is_supported_path_spec<wchar_t [i]>          : mpl::true_ {};
+template<int i> struct is_supported_path_spec<const char [i]>       : std::true_type {};
+template<int i> struct is_supported_path_spec<char [i]>             : std::true_type {};
+template<int i> struct is_supported_path_spec<const wchar_t [i]>    : std::true_type {};
+template<int i> struct is_supported_path_spec<wchar_t [i]>          : std::true_type {};
 
 #ifdef BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
-template<> struct is_supported_path_spec< filesystem::path > : mpl::true_ {};
-template<> struct is_supported_path_spec< const filesystem::path > : mpl::true_ {};
+template<> struct is_supported_path_spec< filesystem::path > : std::true_type {};
+template<> struct is_supported_path_spec< const filesystem::path > : std::true_type {};
 #endif // BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
 
 

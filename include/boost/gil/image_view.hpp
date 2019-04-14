@@ -212,8 +212,9 @@ struct is_planar<image_view<L> > : public is_planar<L> {};
 /////////////////////////////
 
 template <typename L>
-struct dynamic_x_step_type<image_view<L> > {
-    using type = image_view<typename dynamic_x_step_type<L>::type>;
+struct dynamic_x_step_type<image_view<L>>
+{
+    using type = image_view<typename gil::dynamic_x_step_type<L>::type>;
 };
 
 /////////////////////////////
@@ -221,8 +222,9 @@ struct dynamic_x_step_type<image_view<L> > {
 /////////////////////////////
 
 template <typename L>
-struct dynamic_y_step_type<image_view<L> > {
-    using type = image_view<typename dynamic_y_step_type<L>::type>;
+struct dynamic_y_step_type<image_view<L>>
+{
+    using type = image_view<typename gil::dynamic_y_step_type<L>::type>;
 };
 
 /////////////////////////////
@@ -230,7 +232,8 @@ struct dynamic_y_step_type<image_view<L> > {
 /////////////////////////////
 
 template <typename L>
-struct transposed_type<image_view<L> > {
+struct transposed_type<image_view<L>>
+{
     using type = image_view<typename transposed_type<L>::type>;
 };
 

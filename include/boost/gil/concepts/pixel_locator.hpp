@@ -18,6 +18,7 @@
 
 #include <cstddef>
 #include <iterator>
+#include <type_traits>
 
 #if defined(BOOST_CLANG)
 #pragma clang diagnostic push
@@ -140,12 +141,12 @@ struct RandomAccessNDLocatorConcept
         // have the same type as difference_type of the corresponding iterator
         gil_function_requires<PointNDConcept<point_t>>();
         static_assert(point_t::num_dimensions == N, "");
-        static_assert(is_same
+        static_assert(std::is_same
             <
                 typename std::iterator_traits<first_it_type>::difference_type,
                 typename point_t::template axis<0>::coord_t
             >::value, "");
-        static_assert(is_same
+        static_assert(std::is_same
             <
                 typename std::iterator_traits<last_it_type>::difference_type,
                 typename point_t::template axis<N-1>::coord_t
@@ -293,7 +294,7 @@ struct PixelLocatorConcept
         gil_function_requires<PixelIteratorConcept<typename Loc::x_iterator>>();
         gil_function_requires<PixelIteratorConcept<typename Loc::y_iterator>>();
         using coord_t = typename Loc::coord_t;
-        static_assert(is_same<typename Loc::x_coord_t, typename Loc::y_coord_t>::value, "");
+        static_assert(std::is_same<typename Loc::x_coord_t, typename Loc::y_coord_t>::value, "");
     }
     Loc loc;
 };

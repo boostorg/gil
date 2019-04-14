@@ -5,10 +5,14 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
+#ifdef _MSC_VER
+#pragma warning(disable : 4244) // 'argument': conversion from 'int' to 'unsigned char', possible loss of data
+#endif
+
 #include <boost/gil.hpp>
 
 #include <boost/assert.hpp>
-#include <boost/mpl/vector.hpp>
+#include <boost/mp11.hpp>
 
 #include <exception>
 #include <iostream>
@@ -38,7 +42,7 @@ void test_pixel_iterator()
     using bgr121_ref_t = bit_aligned_pixel_reference
         <
             std::uint8_t,
-            boost::mpl::vector3_c<int,1,2,1>,
+            boost::mp11::mp_list_c<int,1,2,1>,
             bgr_layout_t,
             true
         > const;
@@ -88,7 +92,7 @@ void test_pixel_iterator()
     using bgr232_ref_t = bit_aligned_pixel_reference
         <
             std::uint8_t,
-            boost::mpl::vector3_c<unsigned, 2, 3, 2>,
+            boost::mp11::mp_list_c<unsigned, 2, 3, 2>,
             bgr_layout_t,
             true
         > const;
@@ -203,9 +207,9 @@ void test_pixel_iterator() {
     rgb8_step_ptr_t stepIt3(&rgb8,5);
 
     rgb8_pixel_t& ref1=stepIt3[5];
-//  bool v=boost::is_POD<iterator_traits<memory_based_step_iterator<rgb8_ptr_t> >::value_type>::value;
-//  v=boost::is_POD<rgb8_pixel_t>::value;
-//  v=boost::is_POD<int>::value;
+//  bool v=std::is_pod<iterator_traits<memory_based_step_iterator<rgb8_ptr_t> >::value_type>::value;
+//  v=std::is_pod<rgb8_pixel_t>::value;
+//  v=std::is_pod<int>::value;
 
     rgb8_step_ptr_t rgb8StepIt(ptr1, 10);
     rgb8_step_ptr_t rgb8StepIt2=rgb8StepIt;

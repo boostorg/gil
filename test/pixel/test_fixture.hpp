@@ -14,6 +14,7 @@
 #include <boost/gil/promote_integral.hpp>
 #include <boost/gil/typedefs.hpp>
 
+#include <boost/core/ignore_unused.hpp>
 #include <boost/core/typeinfo.hpp>
 #include <boost/mp11.hpp>
 #include <boost/mp11/mpl.hpp> // for compatibility with Boost.Test
@@ -74,6 +75,7 @@ public:
         : pixel_(pixel) // test copy constructor
     {
         type temp_pixel; // test default constructor
+        boost::ignore_unused(temp_pixel);
         boost::function_requires<PixelValueConcept<pixel_t> >();
     }
 };

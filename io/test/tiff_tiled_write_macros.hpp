@@ -11,7 +11,6 @@
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/tiff.hpp>
 
-#include <boost/mpl/vector.hpp>
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/stringize.hpp>
 #include <boost/preprocessor/tuple/elem.hpp>
@@ -21,6 +20,8 @@
 #include "paths.hpp"
 
 using tag_t = boost::gil::tiff_tag;
+
+// TODO: Rename the macros to BOOST_GIL_*
 
 #ifdef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
 

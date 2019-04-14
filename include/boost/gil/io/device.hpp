@@ -8,6 +8,7 @@
 #ifndef BOOST_GIL_IO_DEVICE_HPP
 #define BOOST_GIL_IO_DEVICE_HPP
 
+#include <boost/gil/detail/mp11.hpp>
 #include <boost/gil/io/base.hpp>
 
 #include <boost/assert.hpp>
@@ -544,15 +545,15 @@ private:
  * Metafunction to detect input devices.
  * Should be replaced by an external facility in the future.
  */
-template< typename IODevice  > struct is_input_device : mpl::false_{};
-template< typename FormatTag > struct is_input_device< file_stream_device< FormatTag > > : mpl::true_{};
-template< typename FormatTag > struct is_input_device<     istream_device< FormatTag > > : mpl::true_{};
+template< typename IODevice  > struct is_input_device : std::false_type{};
+template< typename FormatTag > struct is_input_device< file_stream_device< FormatTag > > : std::true_type{};
+template< typename FormatTag > struct is_input_device<     istream_device< FormatTag > > : std::true_type{};
 
 template< typename FormatTag
         , typename T
         , typename D = void
         >
-struct is_adaptable_input_device : mpl::false_{};
+struct is_adaptable_input_device : std::false_type{};
 
 template <typename FormatTag, typename T>
 struct is_adaptable_input_device
@@ -561,13 +562,13 @@ struct is_adaptable_input_device
     T,
     typename std::enable_if
     <
-        mpl::or_
+        mp11::mp_or
         <
-            is_base_and_derived<std::istream, T>,
-            is_same<std::istream, T>
+            std::is_base_of<std::istream, T>,
+            std::is_same<std::istream, T>
         >::value
     >::type
-> : mpl::true_
+> : std::true_type
 {
     using device_type = istream_device<FormatTag>;
 };
@@ -577,7 +578,7 @@ struct is_adaptable_input_device< FormatTag
                                 , FILE*
                                 , void
                                 >
-    : mpl::true_
+    : std::true_type
 {
     using device_type = file_stream_device<FormatTag>;
 };
@@ -589,7 +590,7 @@ template< typename FormatTag
         , typename T
         , typename D = void
         >
-struct is_read_device : mpl::false_
+struct is_read_device : std::false_type
 {};
 
 template <typename FormatTag, typename T>
@@ -599,13 +600,13 @@ struct is_read_device
     T,
     typename std::enable_if
     <
-        mpl::or_
+        mp11::mp_or
         <
             is_input_device<FormatTag>,
             is_adaptable_input_device<FormatTag, T>
         >::value
     >::type
-> : mpl::true_
+> : std::true_type
 {
 };
 
@@ -614,16 +615,16 @@ struct is_read_device
  * Metafunction to detect output devices.
  * Should be replaced by an external facility in the future.
  */
-template<typename IODevice> struct is_output_device : mpl::false_{};
+template<typename IODevice> struct is_output_device : std::false_type{};
 
-template< typename FormatTag > struct is_output_device< file_stream_device< FormatTag > > : mpl::true_{};
-template< typename FormatTag > struct is_output_device< ostream_device    < FormatTag > > : mpl::true_{};
+template< typename FormatTag > struct is_output_device< file_stream_device< FormatTag > > : std::true_type{};
+template< typename FormatTag > struct is_output_device< ostream_device    < FormatTag > > : std::true_type{};
 
 template< typename FormatTag
         , typename IODevice
         , typename D = void
         >
-struct is_adaptable_output_device : mpl::false_ {};
+struct is_adaptable_output_device : std::false_type {};
 
 template <typename FormatTag, typename T>
 struct is_adaptable_output_device
@@ -632,19 +633,19 @@ struct is_adaptable_output_device
     T,
     typename std::enable_if
     <
-        mpl::or_
+        mp11::mp_or
         <
-            is_base_and_derived<std::ostream, T>,
-            is_same<std::ostream, T>
+            std::is_base_of<std::ostream, T>,
+            std::is_same<std::ostream, T>
         >::value
     >::type
-> : mpl::true_
+> : std::true_type
 {
     using device_type = ostream_device<FormatTag>;
 };
 
 template<typename FormatTag> struct is_adaptable_output_device<FormatTag,FILE*,void>
-  : mpl::true_
+  : std::true_type
 {
     using device_type = file_stream_device<FormatTag>;
 };
@@ -657,7 +658,7 @@ template< typename FormatTag
         , typename T
         , typename D = void
         >
-struct is_write_device : mpl::false_
+struct is_write_device : std::false_type
 {};
 
 template <typename FormatTag, typename T>
@@ -667,13 +668,13 @@ struct is_write_device
     T,
     typename std::enable_if
     <
-        mpl::or_
+        mp11::mp_or
         <
             is_output_device<FormatTag>,
             is_adaptable_output_device<FormatTag, T>
         >::value
     >::type
-> : mpl::true_
+> : std::true_type
 {
 };
 
@@ -691,7 +692,7 @@ template< typename Device, typename FormatTag, typename Log = no_log > class dyn
 namespace detail {
 
 template< typename T >
-struct is_reader : mpl::false_
+struct is_reader : std::false_type
 {};
 
 template< typename Device
@@ -702,11 +703,11 @@ struct is_reader< reader< Device
                         , FormatTag
                         , ConversionPolicy
                         >
-                > : mpl::true_
+                > : std::true_type
 {};
 
 template< typename T >
-struct is_dynamic_image_reader : mpl::false_
+struct is_dynamic_image_reader : std::false_type
 {};
 
 template< typename Device
@@ -715,11 +716,11 @@ template< typename Device
 struct is_dynamic_image_reader< dynamic_image_reader< Device
                                                     , FormatTag
                                                     >
-                              > : mpl::true_
+                              > : std::true_type
 {};
 
 template< typename T >
-struct is_writer : mpl::false_
+struct is_writer : std::false_type
 {};
 
 template< typename Device
@@ -728,11 +729,11 @@ template< typename Device
 struct is_writer< writer< Device
                         , FormatTag
                         >
-                > : mpl::true_
+                > : std::true_type
 {};
 
 template< typename T >
-struct is_dynamic_image_writer : mpl::false_
+struct is_dynamic_image_writer : std::false_type
 {};
 
 template< typename Device
@@ -741,7 +742,7 @@ template< typename Device
 struct is_dynamic_image_writer< dynamic_image_writer< Device
                                                     , FormatTag
                                                     >
-                > : mpl::true_
+                > : std::true_type
 {};
 
 } // namespace detail

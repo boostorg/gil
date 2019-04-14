@@ -12,6 +12,7 @@
 #include <cstdint>
 #include <exception>
 #include <iostream>
+#include <type_traits>
 
 #if defined(BOOST_CLANG)
 #pragma clang diagnostic push
@@ -62,8 +63,8 @@ struct do_test : public ChannelTestCore {
         test_channel_math();
     }
 
-    void test_mutable(boost::mpl::false_) {}
-    void test_mutable(boost::mpl::true_) {
+    void test_mutable(std::false_type) {}
+    void test_mutable(std::true_type) {
         channel_value_t mv=this->_min_v;
         ++this->_min_v; this->_min_v++;
         --this->_min_v; this->_min_v--;
@@ -107,7 +108,7 @@ struct do_test : public ChannelTestCore {
         error_if(this->_min_v != 1 && this->_min_v==1);  // comparable to integral
 
 
-        test_mutable(boost::mpl::bool_<channel_traits<channel_t>::is_mutable>());
+        test_mutable(std::integral_constant<bool, channel_traits<channel_t>::is_mutable>());
     }
 
 

@@ -12,14 +12,12 @@
 
 #include <boost/concept_check.hpp>
 #include <boost/mp11.hpp>
-#include <boost/mpl/vector_c.hpp>
 
 #include "test_fixture.hpp"
 
-namespace mpl = boost::mpl;
 namespace gil = boost::gil;
+namespace mp11 = boost::mp11;
 using boost::function_requires;
-using namespace boost::mp11;
 
 template <template<typename> class Concept>
 struct assert_concept
@@ -34,7 +32,7 @@ struct assert_concept
 template <template<typename> class Concept, typename... Pixels>
 void test_concept()
 {
-    mp_for_each<Pixels...>(assert_concept<Concept>());
+    mp11::mp_for_each<Pixels...>(assert_concept<Concept>());
 }
 
 int main()
@@ -45,7 +43,7 @@ int main()
     using rgb565_pixel_t = gil::packed_pixel_type
         <
             std::uint16_t,
-            mpl::vector3_c<unsigned, 5, 6, 5>,
+            mp11::mp_list_c<unsigned, 5, 6, 5>,
             gil::rgb_layout_t
         >::type;
     function_requires<gil::PixelConcept<rgb565_pixel_t>>();
@@ -54,7 +52,7 @@ int main()
     using bgr556_pixel_t = gil::packed_pixel_type
         <
             std::uint16_t,
-            mpl::vector3_c<unsigned, 5, 6, 5>,
+            mp11::mp_list_c<unsigned, 5, 6, 5>,
             gil::bgr_layout_t>::type;
     function_requires<gil::PixelConcept<bgr556_pixel_t>>();
     function_requires<gil::PixelValueConcept<bgr556_pixel_t>>();
