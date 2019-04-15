@@ -20,4 +20,5 @@ stdcerr
 /.idea
 
 # Python
-.venv
+/.venv
+/.env
