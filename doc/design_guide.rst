@@ -1324,7 +1324,7 @@ GIL provides two models of ``PixelLocatorConcept`` - a memory-based
 locator, ``memory_based_2d_locator`` and a virtual locator
 ``virtual_2d_locator``.
 
-``memory_based_2d_locator`` is a locator over planar or interleaved
+The ``memory_based_2d_locator`` is a locator over planar or interleaved
 images that have their pixels in memory.  It takes a model of
 ``StepIteratorConcept`` over pixels as a template parameter. (When
 instantiated with a model of ``MutableStepIteratorConcept``, it models
@@ -1368,7 +1368,13 @@ obtain a 2D pixel locator, as the diagram indicates:
 
 .. image:: images/step_iterator.gif
 
-``virtual_2d_locator`` is a locator that is instantiated with a
+The ``memory_based_2d_locator`` also offers `cached_location_t` as mechanism to
+store relative locations for optimized repeated access of neighborhood pixels.
+The 2D coordinates of relative locations are cached as 1-dimensional raw byte offsets.
+This provides efficient access if a neighboring locations relative to a given
+locator are read or written frequently (e.g. in filters).
+
+The ``virtual_2d_locator`` is a locator that is instantiated with a
 function object invoked upon dereferencing a pixel. It returns the
 value of a pixel given its X,Y coordinates. Virtual locators can be
 used to implement virtual image views that can model any user-defined
