@@ -1,5 +1,9 @@
 ### Minimal Working Example (in C++)
 
+```cpp
+// your code
+```
+
 ### Actual behavior
 
 ### Expected  behavior
@@ -8,6 +12,6 @@
 
 All relevant information like:
 
-- Boost version (see `<boost/version.hpp>`):
 - Compiler version:
 - Build settings:
+- GIL Version (Git ref or `<boost/version.hpp>`):
