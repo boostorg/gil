@@ -278,15 +278,4 @@ struct iterator_is_mutable<const packed_pixel<P, C, L>*> : std::false_type {};
 
 }}  // namespace boost::gil
 
-namespace std
-{
-
-// TODO: Avoid polluting std namespace?
-template <typename P, typename C, typename L>
-struct is_trivially_default_constructible<boost::gil::packed_pixel<P, C, L>>
-    : std::is_trivially_default_constructible<P>
-{};
-
-} // namespace std
-
 #endif

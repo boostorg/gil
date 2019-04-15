@@ -173,7 +173,7 @@ public:
     }
 
     auto operator[](std::size_t index) const
-        -> typename channel_traits<channel_t>::const_reference 
+        -> typename channel_traits<channel_t>::const_reference
     {
         return dynamic_at_c(*this, index);
     }
@@ -297,15 +297,5 @@ struct channel_type<pixel<ChannelValue, Layout>>
 };
 
 }}  // namespace boost::gil
-
-namespace std {
-
-// TODO: Avoid polluting std namespace
-template <typename ChannelValue, typename Layout>
-struct is_trivially_default_constructible<boost::gil::pixel<ChannelValue, Layout>>
-    : ::std::is_trivially_default_constructible<ChannelValue>
-{};
-
-} // namespace std
 
 #endif
