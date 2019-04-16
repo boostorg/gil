@@ -9,9 +9,10 @@
 message(STATUS "Boost.GIL: Configuring Numeric extension tests")
 
 foreach(_name
+  matrix3x2
   numeric)
 
-  set(_target test_ext_${_name})
+  set(_target test_ext_numeric_${_name})
   add_executable(${_target} "")
   target_sources(${_target} PRIVATE ${_name}.cpp)
   target_link_libraries(${_target}

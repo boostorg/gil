@@ -10,9 +10,10 @@ import testing ;
 
 project
     : requirements
-    <include>$(BOOST_ROOT)
+    <include>../../test
     <library>/boost/test//boost_unit_test_framework
     <link>shared:<define>BOOST_TEST_DYN_LINK=1
     ;
 
+run matrix3x2.cpp ;
 run numeric.cpp ;
