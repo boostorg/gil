@@ -1165,7 +1165,7 @@ of the pixel upon dereferencing. It models ``PixelIteratorConcept``
 and ``StepIteratorConcept`` but not ``MemoryBasedIteratorConcept``.
 
 Pixel Locator
-~~~~~~~~~~~~~
+-------------
 
 A Locator allows for navigation in two or more dimensions. Locators
 are N-dimensional iterators in spirit, but we use a different name
