@@ -478,35 +478,26 @@ jobs:
 
 ##############################################################################
 # Workflows
-#
-# Example of regex in filters:
-#   { branches: { only: [ develop, master, "/ml.*/" ] } }
 ##############################################################################
-
 workflows:
   version: 2
   build-and-test:
     jobs:
-      - bootstrap_checkout:
-          filters: { branches: { only: [ develop, master ] } }
+      - bootstrap_checkout
       - bootstrap_gcc:
           requires:
             - bootstrap_checkout
-          filters: { branches: { only: [ develop, master ] } }
       - bootstrap_clang:
           requires:
             - bootstrap_checkout
-          filters: { branches: { only: [ develop, master ] } }
 
       ### GCC 4.x ############################################################
       - gcc48_11_core:
           requires:
             - bootstrap_gcc
-          filters: { branches: { only: [ develop, master ] } }
       - gcc48_11_core_speed:
           requires:
             - gcc48_11_core
-          filters: { branches: { only: [ develop, master ] } }
 
       - gcc49_11_core:
           requires:
@@ -515,158 +506,125 @@ workflows:
       - gcc49_11_core_speed:
           requires:
             - gcc49_11_core
-          filters: { branches: { only: [ develop, master ] } }
 
       ### GCC 5.x ############################################################
       - gcc51_11_core:
           requires:
             - bootstrap_gcc
-          filters: { branches: { only: [ develop, master ] } }
       - gcc51_11_core_speed:
           requires:
             - gcc51_11_core
-          filters: { branches: { only: [ develop, master ] } }
 
       - gcc52_11_core:
           requires:
             - bootstrap_gcc
-          filters: { branches: { only: [ develop, master ] } }
       - gcc52_11_core_speed:
           requires:
             - gcc52_11_core
-          filters: { branches: { only: [ develop, master ] } }
 
       - gcc53_11_core:
           requires:
             - bootstrap_gcc
-          filters: { branches: { only: [ develop, master ] } }
       - gcc53_11_core_speed:
           requires:
             - gcc53_11_core
-          filters: { branches: { only: [ develop, master ] } }
 
       - gcc54_11_core:
           requires:
             - bootstrap_gcc
-          filters: { branches: { only: [ develop, master ] } }
       - gcc54_11_core_speed:
           requires:
             - gcc54_11_core
-          filters: { branches: { only: [ develop, master ] } }
 
       - gcc55_11_core:
           requires:
             - bootstrap_gcc
-          filters: { branches: { only: [ develop, master ] } }
       - gcc55_11_core_speed:
           requires:
             - gcc55_11_core
-          filters: { branches: { only: [ develop, master ] } }
 
       ### GCC 6.x ############################################################
       - gcc61_11_core:
           requires:
             - bootstrap_gcc
-          filters: { branches: { only: [ develop, master ] } }
       - gcc61_11_core_speed:
           requires:
             - gcc61_11_core
-          filters: { branches: { only: [ develop, master ] } }
 
       - gcc62_11_core:
           requires:
             - bootstrap_gcc
-          filters: { branches: { only: [ develop, master ] } }
       - gcc62_11_core_speed:
           requires:
             - gcc62_11_core
-          filters: { branches: { only: [ develop, master ] } }
 
       - gcc63_11_core:
           requires:
             - bootstrap_gcc
-          filters: { branches: { only: [ develop, master ] } }
       - gcc63_11_core_speed:
           requires:
             - gcc63_11_core
-          filters: { branches: { only: [ develop, master ] } }
 
       - gcc64_11_core:
           requires:
             - bootstrap_gcc
-          filters: { branches: { only: [ develop, master ] } }
       - gcc64_11_core_speed:
           requires:
             - gcc64_11_core
-          filters: { branches: { only: [ develop, master ] } }
 
       ### GCC 7.x ############################################################
       - gcc71_11_core:
           requires:
             - bootstrap_gcc
-          filters: { branches: { only: [ develop, master ] } }
       - gcc71_11_core_speed:
           requires:
             - gcc71_11_core
-          filters: { branches: { only: [ develop, master ] } }
 
       - gcc72_11_core:
           requires:
             - bootstrap_gcc
-          filters: { branches: { only: [ develop, master ] } }
       - gcc72_11_core_speed:
           requires:
             - gcc72_11_core
-          filters: { branches: { only: [ develop, master ] } }
 
       - gcc73_11_core:
           requires:
             - bootstrap_gcc
-          filters: { branches: { only: [ develop, master ] } }
       - gcc73_11_core_speed:
           requires:
             - gcc73_11_core
-          filters: { branches: { only: [ develop, master ] } }
 
       ### GCC 8.x ############################################################
       - gcc82_11_core:
           requires:
             - bootstrap_gcc
-          filters: { branches: { only: [ develop, master ] } }
       - gcc82_11_core_speed:
           requires:
             - gcc82_11_core
-          filters: { branches: { only: [ develop, master ] } }
 
       ### clang 3.9 ##########################################################
       - clang39_11_core:
           requires:
             - bootstrap_clang
-          filters: { branches: { only: [ develop, master ] } }
       - clang39_11_core_speed:
           requires:
             - clang39_11_core
-          filters: { branches: { only: [ develop, master ] } }
 
       ### clang 4.0 ##########################################################
       - clang40_11_core:
           requires:
             - bootstrap_clang
-          filters: { branches: { only: [ develop, master ] } }
       - clang40_11_core_speed:
           requires:
             - clang40_11_core
-          filters: { branches: { only: [ develop, master ] } }
 
       ### clang 5.0 ##########################################################
       - clang50_11_core:
           requires:
             - bootstrap_clang
-          filters: { branches: { only: [ develop, master ] } }
       - clang50_11_core_speed:
           requires:
             - clang50_11_core
-          filters: { branches: { only: [ develop, master ] } }
 
 ##############################################################################
 # Notifications
