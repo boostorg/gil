@@ -440,7 +440,7 @@ void destruct_range_impl(Iterator first, Iterator last,
             std::is_pointer<Iterator>,
             mp11::mp_not
             <
-                std::is_trivially_destructible<typename std::iterator_traits<Iterator>>
+                std::is_trivially_destructible<typename std::iterator_traits<Iterator>::value_type>
             >
         >::value
     >::type* /*ptr*/ = 0)
@@ -460,7 +460,7 @@ void destruct_range_impl(Iterator /*first*/, Iterator /*last*/,
         mp11::mp_or
         <
             mp11::mp_not<std::is_pointer<Iterator>>,
-            std::is_trivially_destructible<typename std::iterator_traits<Iterator>>
+            std::is_trivially_destructible<typename std::iterator_traits<Iterator>::value_type>
         >::value
     >::type* /* ptr */ = nullptr)
 {
