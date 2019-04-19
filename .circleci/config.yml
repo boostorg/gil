@@ -502,7 +502,6 @@ workflows:
       - gcc49_11_core:
           requires:
             - bootstrap_gcc
-          filters: { branches: { only: [ develop, master ] } }
       - gcc49_11_core_speed:
           requires:
             - gcc49_11_core
