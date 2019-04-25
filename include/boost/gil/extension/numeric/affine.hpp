@@ -10,6 +10,8 @@
 
 #include <boost/gil/point.hpp>
 
+#include <boost/config/workaround.hpp>
+
 namespace boost { namespace gil {
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -86,7 +88,14 @@ template <typename F, typename F2>
 BOOST_FORCEINLINE
 point<F> transform(matrix3x2<F> const& mat, point<F2> const& src)
 {
+#if BOOST_WORKAROUND(BOOST_MSVC, > 1900)
     return src * mat;
+#else
+    point<F> p;
+    p.x = mat.a*src.x + mat.c*src.y + mat.e;
+    p.y = mat.b*src.x + mat.d*src.y + mat.f;
+    return p;
+#endif
 }
 
 }} // namespace boost::gil
