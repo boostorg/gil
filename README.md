@@ -16,8 +16,8 @@
 **master** | [![AppVeyor](https://ci.appveyor.com/api/projects/status/w4k19d8io2af168h?svg=true)](https://ci.appveyor.com/project/stefanseefeld/gil/branch/master) | [![Azure](https://dev.azure.com/boostorg/gil/_apis/build/status/boostorg.gil?branchName=master)](https://dev.azure.com/boostorg/gil/_build/latest?definitionId=4?branchName=master) | [![Travis](https://travis-ci.org/boostorg/gil.svg?branch=master)](https://travis-ci.org/boostorg/gil) | [![CircleCI](https://circleci.com/gh/boostorg/gil/tree/master.svg?style=shield)](https://circleci.com/gh/boostorg/workflows/gil/tree/master) | [![gil](https://img.shields.io/badge/gil-master-blue.svg)](http://www.boost.org/development/tests/master/developer/gil.html)
  **C++/compilers:** | 11, 14, 17 | 11, 14, 17 | 11 | 11 |
  msvc++    | VS2015, VS2017 | VS2015, VS2017 |   |   |
- clang++   |   | Xcode 9.4.1 | 3.9, 5.0, Xcode 9.4.1 | 3.9, 4.0, 5.0 |
- g++       |   | 5.4, 8.1 | 5.5, 6.5, 7.4 | 4.9, 5.1-5, 6.1-4, 7.1-3, 8.2 |
+ clang++   |   | Xcode 9.4.1 | 3.9, 5.0, Xcode 9.4.1 | 3.9, 4.x - 9.x |
+ g++       |   | 5.4, 8.1 | 5.5, 6.5, 7.4 | 4.9, 5.x - 8.x |
  **tests coverage:** |
 core + concepts | Y | Y | Y | Y |
 headers    | core + ext | core + ext | core + ext | core + ext |

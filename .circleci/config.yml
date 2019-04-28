@@ -1,7 +1,7 @@
 ##############################################################################
 # CircleCI 2.0 for Boost.GIL
 #
-# Copyright (c) 2018 Mateusz Loskot <mateusz@loskot.net>
+# Copyright (c) 2018-2019 Mateusz Loskot <mateusz@loskot.net>
 #
 # Use, modification and distribution is subject to the Boost Software License,
 # Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -14,100 +14,76 @@ version: 2.0
 ##############################################################################
 docker_gcc48: &docker_gcc48
   docker:
-    - image: gcc:4.8
+    - image: teeks99/boost-cpp-docker:gcc-4.8
+
 docker_gcc49: &docker_gcc49
   docker:
-    - image: gcc:4.9
+    - image: teeks99/boost-cpp-docker:gcc-4.9
 
-docker_gcc51: &docker_gcc51
+docker_gcc5: &docker_gcc5
   docker:
-    - image: gcc:5.1
-docker_gcc52: &docker_gcc52
-  docker:
-    - image: gcc:5.2
-docker_gcc53: &docker_gcc53
-  docker:
-    - image: gcc:5.3
-docker_gcc54: &docker_gcc54
-  docker:
-    - image: gcc:5.4
-docker_gcc55: &docker_gcc55
-  docker:
-    - image: gcc:5.5
+    - image: teeks99/boost-cpp-docker:gcc-5
 
-docker_gcc61: &docker_gcc61
+docker_gcc6: &docker_gcc6
   docker:
-    - image: gcc:6.1
-docker_gcc62: &docker_gcc62
-  docker:
-    - image: gcc:6.2
-docker_gcc63: &docker_gcc63
-  docker:
-    - image: gcc:6.3
-docker_gcc64: &docker_gcc64
-  docker:
-    - image: gcc:6.4
+    - image: teeks99/boost-cpp-docker:gcc-6
 
-docker_gcc71: &docker_gcc71
+docker_gcc7: &docker_gcc7
   docker:
-    - image: gcc:7.3
-docker_gcc72: &docker_gcc72
-  docker:
-    - image: gcc:7.2
-docker_gcc73: &docker_gcc73
-  docker:
-    - image: gcc:7.3
+    - image: teeks99/boost-cpp-docker:gcc-7
 
-docker_gcc82: &docker_gcc82
+docker_gcc8: &docker_gcc8
   docker:
-    - image: gcc:8.2
+    - image: teeks99/boost-cpp-docker:gcc-8
 
 docker_clang39: &docker_clang39
   docker:
-    - image: rferraro/cxx-clang:3.9
+    - image: teeks99/boost-cpp-docker:clang-3.9
 
-docker_clang40: &docker_clang40
+docker_clang4: &docker_clang4
   docker:
-    - image: rferraro/cxx-clang:4.0
+    - image: teeks99/boost-cpp-docker:clang-4
 
-docker_clang50: &docker_clang50
+docker_clang5: &docker_clang5
   docker:
-    - image: rferraro/cxx-clang:5.0
+    - image: teeks99/boost-cpp-docker:clang-5
+
+docker_clang6: &docker_clang6
+  docker:
+    - image: teeks99/boost-cpp-docker:clang-6
+
+docker_clang7: &docker_clang7
+  docker:
+    - image: teeks99/boost-cpp-docker:clang-7
+
+docker_clang8: &docker_clang8
+  docker:
+    - image: teeks99/boost-cpp-docker:clang-8
+
+docker_clang9: &docker_clang9
+  docker:
+    - image: teeks99/boost-cpp-docker:clang-9
 
 ##############################################################################
 # Build variants
 ##############################################################################
-env_gcc_cpp11_dbg: &env_gcc_cpp11_dbg
-  environment:
-    - TOOLSET: gcc
-    - VARIANT: "variant=debug"
-    - OPTIMIZ: ""
-    - CXXSTD: "11"
-    - LNKFLAG: ""
+env_dbg: &env_dbg
+  VARIANT: "variant=debug"
+  OPTIMIZ: ""
 
-env_gcc_cpp11_opt_speed: &env_gcc_cpp11_opt_speed
-  environment:
-    - TOOLSET: gcc
-    - VARIANT: "variant=release"
-    - OPTIMIZ: "optimization=speed"
-    - CXXSTD: "11"
-    - LNKFLAG: ""
+env_opt: &env_opt
+  VARIANT: "variant=release"
+  OPTIMIZ: "optimization=speed"
 
-env_clang_cpp11_dbg: &env_clang_cpp11_dbg
-  environment:
-    - TOOLSET: clang
-    - VARIANT: "variant=debug"
-    - OPTIMIZ: ""
-    - CXXSTD: "11"
-    - LNKFLAG: ""
+env_gcc_cpp11: &env_gcc_cpp11
+  TOOLSET: gcc
+  CXXSTD: "11"
+  LNKFLAG: ""
 
-env_clang_cpp11_opt_speed: &env_clang_cpp11_opt_speed
-  environment:
-    - TOOLSET: clang
-    - VARIANT: "variant=release"
-    - OPTIMIZ: "optimization=speed"
-    - CXXSTD: "11"
-    - LNKFLAG: ""
+env_clang_cpp11: &env_clang_cpp11
+  TOOLSET: clang
+  CXXSTD: "11"
+  LNKFLAG: ""
 
 ##############################################################################
 # Build configurations
@@ -115,126 +91,141 @@ env_clang_cpp11_opt_speed: &env_clang_cpp11_opt_speed
 # GCC 4.8 is used to build `b2` driver
 config_gcc48_cpp11_opt_speed: &config_gcc48_cpp11_opt_speed
   <<: *docker_gcc48
-  <<: *env_gcc_cpp11_opt_speed
+  environment:
+    TOOLSET_VERSION: 4.8
+    <<: [*env_gcc_cpp11, *env_opt]
 
 config_gcc49_cpp11_dbg: &config_gcc49_cpp11_dbg
   <<: *docker_gcc49
-  <<: *env_gcc_cpp11_dbg
+  environment:
+    TOOLSET_VERSION: 4.9
+    <<: [*env_gcc_cpp11, *env_dbg]
 config_gcc49_cpp11_opt_speed: &config_gcc49_cpp11_opt_speed
   <<: *docker_gcc49
-  <<: *env_gcc_cpp11_opt_speed
+  environment:
+    TOOLSET_VERSION: 4.9
+    <<: [*env_gcc_cpp11, *env_opt]
 
-config_gcc51_cpp11_dbg: &config_gcc51_cpp11_dbg
-  <<: *docker_gcc51
-  <<: *env_gcc_cpp11_dbg
-config_gcc51_cpp11_opt_speed: &config_gcc51_cpp11_opt_speed
-  <<: *docker_gcc51
-  <<: *env_gcc_cpp11_opt_speed
+config_gcc5_cpp11_dbg: &config_gcc5_cpp11_dbg
+  <<: *docker_gcc5
+  environment:
+    TOOLSET_VERSION: 5
+    <<: [*env_gcc_cpp11, *env_dbg]
+config_gcc5_cpp11_opt_speed: &config_gcc5_cpp11_opt_speed
+  <<: *docker_gcc5
+  environment:
+    TOOLSET_VERSION: 5
+    <<: [*env_gcc_cpp11, *env_opt]
 
-config_gcc52_cpp11_dbg: &config_gcc52_cpp11_dbg
-  <<: *docker_gcc52
-  <<: *env_gcc_cpp11_dbg
-config_gcc52_cpp11_opt_speed: &config_gcc52_cpp11_opt_speed
-  <<: *docker_gcc52
-  <<: *env_gcc_cpp11_opt_speed
+config_gcc6_cpp11_dbg: &config_gcc6_cpp11_dbg
+  <<: *docker_gcc6
+  environment:
+    TOOLSET_VERSION: 6
+    <<: [*env_gcc_cpp11, *env_dbg]
+config_gcc6_cpp11_opt_speed: &config_gcc6_cpp11_opt_speed
+  <<: *docker_gcc6
+  environment:
+    TOOLSET_VERSION: 6
+    <<: [*env_gcc_cpp11, *env_opt]
 
-config_gcc53_cpp11_dbg: &config_gcc53_cpp11_dbg
-  <<: *docker_gcc53
-  <<: *env_gcc_cpp11_dbg
-config_gcc53_cpp11_opt_speed: &config_gcc53_cpp11_opt_speed
-  <<: *docker_gcc53
-  <<: *env_gcc_cpp11_opt_speed
+config_gcc7_cpp11_dbg: &config_gcc7_cpp11_dbg
+  <<: *docker_gcc7
+  environment:
+    TOOLSET_VERSION: 7
+    <<: [*env_gcc_cpp11, *env_dbg]
+config_gcc7_cpp11_opt_speed: &config_gcc7_cpp11_opt_speed
+  <<: *docker_gcc7
+  environment:
+    TOOLSET_VERSION: 7
+    <<: [*env_gcc_cpp11, *env_opt]
 
-config_gcc54_cpp11_dbg: &config_gcc54_cpp11_dbg
-  <<: *docker_gcc54
-  <<: *env_gcc_cpp11_dbg
-config_gcc54_cpp11_opt_speed: &config_gcc54_cpp11_opt_speed
-  <<: *docker_gcc54
-  <<: *env_gcc_cpp11_opt_speed
-
-config_gcc55_cpp11_dbg: &config_gcc55_cpp11_dbg
-  <<: *docker_gcc55
-  <<: *env_gcc_cpp11_dbg
-config_gcc55_cpp11_opt_speed: &config_gcc55_cpp11_opt_speed
-  <<: *docker_gcc55
-  <<: *env_gcc_cpp11_opt_speed
-
-config_gcc61_cpp11_dbg: &config_gcc61_cpp11_dbg
-  <<: *docker_gcc61
-  <<: *env_gcc_cpp11_dbg
-config_gcc61_cpp11_opt_speed: &config_gcc61_cpp11_opt_speed
-  <<: *docker_gcc61
-  <<: *env_gcc_cpp11_opt_speed
-
-config_gcc62_cpp11_dbg: &config_gcc62_cpp11_dbg
-  <<: *docker_gcc62
-  <<: *env_gcc_cpp11_dbg
-config_gcc62_cpp11_opt_speed: &config_gcc62_cpp11_opt_speed
-  <<: *docker_gcc62
-  <<: *env_gcc_cpp11_opt_speed
-
-config_gcc63_cpp11_dbg: &config_gcc63_cpp11_dbg
-  <<: *docker_gcc63
-  <<: *env_gcc_cpp11_dbg
-config_gcc63_cpp11_opt_speed: &config_gcc63_cpp11_opt_speed
-  <<: *docker_gcc63
-  <<: *env_gcc_cpp11_opt_speed
-
-config_gcc64_cpp11_dbg: &config_gcc64_cpp11_dbg
-  <<: *docker_gcc64
-  <<: *env_gcc_cpp11_dbg
-config_gcc64_cpp11_opt_speed: &config_gcc64_cpp11_opt_speed
-  <<: *docker_gcc64
-  <<: *env_gcc_cpp11_opt_speed
-
-config_gcc71_cpp11_dbg: &config_gcc71_cpp11_dbg
-  <<: *docker_gcc71
-  <<: *env_gcc_cpp11_dbg
-config_gcc71_cpp11_opt_speed: &config_gcc71_cpp11_opt_speed
-  <<: *docker_gcc71
-  <<: *env_gcc_cpp11_opt_speed
-
-config_gcc72_cpp11_dbg: &config_gcc72_cpp11_dbg
-  <<: *docker_gcc72
-  <<: *env_gcc_cpp11_dbg
-config_gcc72_cpp11_opt_speed: &config_gcc72_cpp11_opt_speed
-  <<: *docker_gcc72
-  <<: *env_gcc_cpp11_opt_speed
-
-config_gcc73_cpp11_dbg: &config_gcc73_cpp11_dbg
-  <<: *docker_gcc73
-  <<: *env_gcc_cpp11_dbg
-config_gcc73_cpp11_opt_speed: &config_gcc73_cpp11_opt_speed
-  <<: *docker_gcc73
-  <<: *env_gcc_cpp11_opt_speed
-
-config_gcc82_cpp11_dbg: &config_gcc82_cpp11_dbg
-  <<: *docker_gcc82
-  <<: *env_gcc_cpp11_dbg
-config_gcc82_cpp11_opt_speed: &config_gcc82_cpp11_opt_speed
-  <<: *docker_gcc82
-  <<: *env_gcc_cpp11_opt_speed
+config_gcc8_cpp11_dbg: &config_gcc8_cpp11_dbg
+  <<: *docker_gcc8
+  environment:
+    TOOLSET_VERSION: 8
+    <<: [*env_gcc_cpp11, *env_dbg]
+config_gcc8_cpp11_opt_speed: &config_gcc8_cpp11_opt_speed
+  <<: *docker_gcc8
+  environment:
+    TOOLSET_VERSION: 8
+    <<: [*env_gcc_cpp11, *env_opt]
 
 config_clang39_cpp11_dbg: &config_clang39_cpp11_dbg
   <<: *docker_clang39
-  <<: *env_clang_cpp11_dbg
+  environment:
+    TOOLSET_VERSION: 3.9
+    <<: [*env_clang_cpp11, *env_dbg]
 config_clang39_cpp11_opt_speed: &config_clang39_cpp11_opt_speed
   <<: *docker_clang39
-  <<: *env_clang_cpp11_opt_speed
+  environment:
+    TOOLSET_VERSION: 3.9
+    <<: [*env_clang_cpp11, *env_opt]
 
-config_clang40_cpp11_dbg: &config_clang40_cpp11_dbg
-  <<: *docker_clang40
-  <<: *env_clang_cpp11_dbg
-config_clang40_cpp11_opt_speed: &config_clang40_cpp11_opt_speed
-  <<: *docker_clang40
-  <<: *env_clang_cpp11_opt_speed
+config_clang4_cpp11_dbg: &config_clang4_cpp11_dbg
+  <<: *docker_clang4
+  environment:
+    TOOLSET_VERSION: 4.0
+    <<: [*env_clang_cpp11, *env_dbg]
+config_clang4_cpp11_opt_speed: &config_clang4_cpp11_opt_speed
+  <<: *docker_clang4
+  environment:
+    TOOLSET_VERSION: 4.0
+    <<: [*env_clang_cpp11, *env_opt]
 
-config_clang50_cpp11_dbg: &config_clang50_cpp11_dbg
-  <<: *docker_clang50
-  <<: *env_clang_cpp11_dbg
-config_clang50_cpp11_opt_speed: &config_clang50_cpp11_opt_speed
-  <<: *docker_clang50
-  <<: *env_clang_cpp11_opt_speed
+config_clang5_cpp11_dbg: &config_clang5_cpp11_dbg
+  <<: *docker_clang5
+  environment:
+    TOOLSET_VERSION: 5.0
+    <<: [*env_clang_cpp11, *env_dbg]
+config_clang5_cpp11_opt_speed: &config_clang5_cpp11_opt_speed
+  <<: *docker_clang5
+  environment:
+    TOOLSET_VERSION: 5.0
+    <<: [*env_clang_cpp11, *env_opt]
+
+config_clang6_cpp11_dbg: &config_clang6_cpp11_dbg
+  <<: *docker_clang6
+  environment:
+    TOOLSET_VERSION: 6.0
+    <<: [*env_clang_cpp11, *env_dbg]
+config_clang6_cpp11_opt_speed: &config_clang6_cpp11_opt_speed
+  <<: *docker_clang6
+  environment:
+    TOOLSET_VERSION: 6.0
+    <<: [*env_clang_cpp11, *env_opt]
+
+config_clang7_cpp11_dbg: &config_clang7_cpp11_dbg
+  <<: *docker_clang7
+  environment:
+    TOOLSET_VERSION: 7
+    <<: [*env_clang_cpp11, *env_dbg]
+config_clang7_cpp11_opt_speed: &config_clang7_cpp11_opt_speed
+  <<: *docker_clang7
+  environment:
+    TOOLSET_VERSION: 7
+    <<: [*env_clang_cpp11, *env_opt]
+
+config_clang8_cpp11_dbg: &config_clang8_cpp11_dbg
+  <<: *docker_clang8
+  environment:
+    TOOLSET_VERSION: 8
+    <<: [*env_clang_cpp11, *env_dbg]
+config_clang8_cpp11_opt_speed: &config_clang8_cpp11_opt_speed
+  <<: *docker_clang8
+  environment:
+    TOOLSET_VERSION: 8
+    <<: [*env_clang_cpp11, *env_opt]
+
+config_clang9_cpp11_dbg: &config_clang9_cpp11_dbg
+  <<: *docker_clang9
+  environment:
+    TOOLSET_VERSION: 9
+    <<: [*env_clang_cpp11, *env_dbg]
+config_clang9_cpp11_opt_speed: &config_clang9_cpp11_opt_speed
+  <<: *docker_clang9
+  environment:
+    TOOLSET_VERSION: 9
+    <<: [*env_clang_cpp11, *env_opt]
 
 ##############################################################################
 # Workspace persistance
@@ -251,16 +242,24 @@ run_compiler_version: &run_compiler_version
     name: Checking compiler version
     command: |
         echo TOOLSET=$TOOLSET
+        echo TOOLSET_VERSION=$TOOLSET_VERSION
         echo VARIANT=$VARIANT
         echo OPTIMIZ=$OPTIMIZ
         echo CXXSTD=$CXXSTD
         echo LNKFLAG=$LNKFLAG
-        $TOOLSET --version
+        "${TOOLSET}-${TOOLSET_VERSION}" --version
+
+run_project_config: &run_project_config
+  run:
+    name: Configure project-config.jam
+    command: |
+        echo "using $TOOLSET : : ${TOOLSET}-${TOOLSET_VERSION} ;" > boost-root/project-config.jam
 
 steps_bootstrap: &steps_bootstrap
   steps:
     - *attach_workspace
     - *run_compiler_version
+    - *run_project_config
     - run: cd boost-root && ./bootstrap.sh -with-toolset=$TOOLSET || cat ./bootstrap.log
     - run: cd boost-root && ./b2 headers > /dev/null
     - persist_to_workspace:
@@ -271,24 +270,28 @@ steps_test_core: &steps_test_core
   steps:
     - *attach_workspace
     - *run_compiler_version
+    - *run_project_config
     - run: cd boost-root && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/test
 
 steps_test_toolbox: &steps_test_toolbox
   steps:
     - *attach_workspace
     - *run_compiler_version
+    - *run_project_config
     - run: cd boost-root && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/toolbox/test
 
 steps_test_numeric: &steps_test_numeric
   steps:
     - *attach_workspace
     - *run_compiler_version
+    - *run_project_config
     - run: cd boost-root && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/numeric/test
 
 steps_test_io: &steps_test_io
   steps:
     - *attach_workspace
     - *run_compiler_version
+    - *run_project_config
     - run: cd boost-root && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/io/test//simple
 
 ##############################################################################
@@ -335,110 +338,39 @@ jobs:
     <<: *steps_test_core
 
   ### GCC 5.x ################################################################
-  gcc51_11_core:
-    <<: *config_gcc51_cpp11_dbg
+  gcc5_11_core:
+    <<: *config_gcc5_cpp11_dbg
     <<: *steps_test_core
 
-  gcc51_11_core_speed:
-    <<: *config_gcc51_cpp11_opt_speed
-    <<: *steps_test_core
-
-  gcc52_11_core:
-    <<: *config_gcc52_cpp11_dbg
-    <<: *steps_test_core
-
-  gcc52_11_core_speed:
-    <<: *config_gcc52_cpp11_opt_speed
-    <<: *steps_test_core
-
-  gcc53_11_core:
-    <<: *config_gcc53_cpp11_dbg
-    <<: *steps_test_core
-
-  gcc53_11_core_speed:
-    <<: *config_gcc53_cpp11_opt_speed
-    <<: *steps_test_core
-
-  gcc54_11_core:
-    <<: *config_gcc54_cpp11_dbg
-    <<: *steps_test_core
-
-  gcc54_11_core_speed:
-    <<: *config_gcc54_cpp11_opt_speed
-    <<: *steps_test_core
-
-  gcc55_11_core:
-    <<: *config_gcc55_cpp11_dbg
-    <<: *steps_test_core
-
-  gcc55_11_core_speed:
-    <<: *config_gcc55_cpp11_opt_speed
+  gcc5_11_core_speed:
+    <<: *config_gcc5_cpp11_opt_speed
     <<: *steps_test_core
 
   ### GCC 6.x ################################################################
-  gcc61_11_core:
-    <<: *config_gcc61_cpp11_dbg
+  gcc6_11_core:
+    <<: *config_gcc6_cpp11_dbg
     <<: *steps_test_core
 
-  gcc61_11_core_speed:
-    <<: *config_gcc61_cpp11_opt_speed
-    <<: *steps_test_core
-
-  gcc62_11_core:
-    <<: *config_gcc62_cpp11_dbg
-    <<: *steps_test_core
-
-  gcc62_11_core_speed:
-    <<: *config_gcc62_cpp11_opt_speed
-    <<: *steps_test_core
-
-  gcc63_11_core:
-    <<: *config_gcc63_cpp11_dbg
-    <<: *steps_test_core
-
-  gcc63_11_core_speed:
-    <<: *config_gcc63_cpp11_opt_speed
-    <<: *steps_test_core
-
-  gcc64_11_core:
-    <<: *config_gcc64_cpp11_dbg
-    <<: *steps_test_core
-
-  gcc64_11_core_speed:
-    <<: *config_gcc64_cpp11_opt_speed
+  gcc6_11_core_speed:
+    <<: *config_gcc6_cpp11_opt_speed
     <<: *steps_test_core
 
   ### GCC 7.x ################################################################
-  gcc71_11_core:
-    <<: *config_gcc71_cpp11_dbg
+  gcc7_11_core:
+    <<: *config_gcc7_cpp11_dbg
     <<: *steps_test_core
 
-  gcc71_11_core_speed:
-    <<: *config_gcc71_cpp11_opt_speed
+  gcc7_11_core_speed:
+    <<: *config_gcc7_cpp11_opt_speed
     <<: *steps_test_core
 
-  gcc72_11_core:
-    <<: *config_gcc72_cpp11_dbg
+  ### GCC 8.x ################################################################
+  gcc8_11_core:
+    <<: *config_gcc8_cpp11_dbg
     <<: *steps_test_core
 
-  gcc72_11_core_speed:
-    <<: *config_gcc72_cpp11_opt_speed
-    <<: *steps_test_core
-
-  gcc73_11_core:
-    <<: *config_gcc73_cpp11_dbg
-    <<: *steps_test_core
-
-  gcc73_11_core_speed:
-    <<: *config_gcc73_cpp11_opt_speed
-    <<: *steps_test_core
-
-  gcc82_11_core:
-    <<: *config_gcc82_cpp11_dbg
-    <<: *steps_test_core
-
-  gcc82_11_core_speed:
-    <<: *config_gcc82_cpp11_opt_speed
+  gcc8_11_core_speed:
+    <<: *config_gcc8_cpp11_opt_speed
     <<: *steps_test_core
 
   ### clang 3.9 ################################################################
@@ -450,22 +382,58 @@ jobs:
     <<: *config_clang39_cpp11_opt_speed
     <<: *steps_test_core
 
-  ### clang 4.0 ################################################################
-  clang40_11_core:
-    <<: *config_clang40_cpp11_dbg
+  ### clang 4.x ################################################################
+  clang4_11_core:
+    <<: *config_clang4_cpp11_dbg
     <<: *steps_test_core
 
-  clang40_11_core_speed:
-    <<: *config_clang40_cpp11_opt_speed
+  clang4_11_core_speed:
+    <<: *config_clang4_cpp11_opt_speed
     <<: *steps_test_core
 
-  ### clang 5.0 ################################################################
-  clang50_11_core:
-    <<: *config_clang50_cpp11_dbg
+  ### clang 5.x ################################################################
+  clang5_11_core:
+    <<: *config_clang5_cpp11_dbg
     <<: *steps_test_core
 
-  clang50_11_core_speed:
-    <<: *config_clang50_cpp11_opt_speed
+  clang5_11_core_speed:
+    <<: *config_clang5_cpp11_opt_speed
+    <<: *steps_test_core
+
+  ### clang 6.x ################################################################
+  clang6_11_core:
+    <<: *config_clang6_cpp11_dbg
+    <<: *steps_test_core
+
+  clang6_11_core_speed:
+    <<: *config_clang6_cpp11_opt_speed
+    <<: *steps_test_core
+
+  ### clang 7.x ################################################################
+  clang7_11_core:
+    <<: *config_clang7_cpp11_dbg
+    <<: *steps_test_core
+
+  clang7_11_core_speed:
+    <<: *config_clang7_cpp11_opt_speed
+    <<: *steps_test_core
+
+  ### clang 8.x ################################################################
+  clang8_11_core:
+    <<: *config_clang8_cpp11_dbg
+    <<: *steps_test_core
+
+  clang8_11_core_speed:
+    <<: *config_clang8_cpp11_opt_speed
+    <<: *steps_test_core
+
+  ### clang 9.x ################################################################
+  clang9_11_core:
+    <<: *config_clang9_cpp11_dbg
+    <<: *steps_test_core
+
+  clang9_11_core_speed:
+    <<: *config_clang9_cpp11_opt_speed
     <<: *steps_test_core
 
 ##############################################################################
@@ -492,99 +460,36 @@ workflows:
             - gcc49_11_core
 
       ### GCC 5.x ############################################################
-      - gcc51_11_core:
+      - gcc5_11_core:
           requires:
             - bootstrap_gcc
-      - gcc51_11_core_speed:
+      - gcc5_11_core_speed:
           requires:
-            - gcc51_11_core
-
-      - gcc52_11_core:
-          requires:
-            - bootstrap_gcc
-      - gcc52_11_core_speed:
-          requires:
-            - gcc52_11_core
-
-      - gcc53_11_core:
-          requires:
-            - bootstrap_gcc
-      - gcc53_11_core_speed:
-          requires:
-            - gcc53_11_core
-
-      - gcc54_11_core:
-          requires:
-            - bootstrap_gcc
-      - gcc54_11_core_speed:
-          requires:
-            - gcc54_11_core
-
-      - gcc55_11_core:
-          requires:
-            - bootstrap_gcc
-      - gcc55_11_core_speed:
-          requires:
-            - gcc55_11_core
+            - gcc5_11_core
 
       ### GCC 6.x ############################################################
-      - gcc61_11_core:
+      - gcc6_11_core:
           requires:
             - bootstrap_gcc
-      - gcc61_11_core_speed:
+      - gcc6_11_core_speed:
           requires:
-            - gcc61_11_core
-
-      - gcc62_11_core:
-          requires:
-            - bootstrap_gcc
-      - gcc62_11_core_speed:
-          requires:
-            - gcc62_11_core
-
-      - gcc63_11_core:
-          requires:
-            - bootstrap_gcc
-      - gcc63_11_core_speed:
-          requires:
-            - gcc63_11_core
-
-      - gcc64_11_core:
-          requires:
-            - bootstrap_gcc
-      - gcc64_11_core_speed:
-          requires:
-            - gcc64_11_core
+            - gcc6_11_core
 
       ### GCC 7.x ############################################################
-      - gcc71_11_core:
+      - gcc7_11_core:
           requires:
             - bootstrap_gcc
-      - gcc71_11_core_speed:
+      - gcc7_11_core_speed:
           requires:
-            - gcc71_11_core
-
-      - gcc72_11_core:
-          requires:
-            - bootstrap_gcc
-      - gcc72_11_core_speed:
-          requires:
-            - gcc72_11_core
-
-      - gcc73_11_core:
-          requires:
-            - bootstrap_gcc
-      - gcc73_11_core_speed:
-          requires:
-            - gcc73_11_core
+            - gcc7_11_core
 
       ### GCC 8.x ############################################################
-      - gcc82_11_core:
+      - gcc8_11_core:
           requires:
             - bootstrap_gcc
-      - gcc82_11_core_speed:
+      - gcc8_11_core_speed:
           requires:
-            - gcc82_11_core
+            - gcc8_11_core
 
       ### clang 3.9 ##########################################################
       - clang39_11_core:
@@ -594,21 +499,52 @@ workflows:
           requires:
             - clang39_11_core
 
-      ### clang 4.0 ##########################################################
-      - clang40_11_core:
+      ### clang 4.x ##########################################################
+      - clang4_11_core:
           requires:
             - bootstrap_clang
-      - clang40_11_core_speed:
+      - clang4_11_core_speed:
           requires:
-            - clang40_11_core
+            - clang4_11_core
 
-      ### clang 5.0 ##########################################################
-      - clang50_11_core:
+      ### clang 5.x ##########################################################
+      - clang5_11_core:
           requires:
             - bootstrap_clang
-      - clang50_11_core_speed:
+      - clang5_11_core_speed:
           requires:
-            - clang50_11_core
+            - clang5_11_core
+      ### clang 6.x ##########################################################
+      - clang6_11_core:
+          requires:
+            - bootstrap_clang
+      - clang6_11_core_speed:
+          requires:
+            - clang6_11_core
+
+      ### clang 7.x ##########################################################
+      - clang7_11_core:
+          requires:
+            - bootstrap_clang
+      - clang7_11_core_speed:
+          requires:
+            - clang7_11_core
+
+      ### clang 8.x ##########################################################
+      - clang8_11_core:
+          requires:
+            - bootstrap_clang
+      - clang8_11_core_speed:
+          requires:
+            - clang8_11_core
+
+      ### clang 9.x ##########################################################
+      - clang9_11_core:
+          requires:
+            - bootstrap_clang
+      - clang9_11_core_speed:
+          requires:
+            - clang9_11_core
 
 ##############################################################################
 # Notifications
