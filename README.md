@@ -17,7 +17,7 @@
  **C++/compilers:** | 11, 14, 17 | 11, 14, 17 | 11 | 11 |
  msvc++    | VS2015, VS2017 | VS2015, VS2017 |   |   |
  clang++   |   | Xcode 9.4.1 | 3.9, 5.0, Xcode 9.4.1 | 3.9, 4.0, 5.0 |
- g++       |   | 5.4, 8.1 | 5.5, 6.5, 7.4 | 4.8-9, 5.1-5, 6.1-4, 7.1-3, 8.2 |
+ g++       |   | 5.4, 8.1 | 5.5, 6.5, 7.4 | 4.9, 5.1-5, 6.1-4, 7.1-3, 8.2 |
  **tests coverage:** |
 core + concepts | Y | Y | Y | Y |
 headers    | core + ext | core + ext | core + ext | core + ext |
@@ -61,7 +61,7 @@ See [example/README.md](example/README.md) for available GIL examples.
 
 The Boost Generic Image Library (GIL) requires:
 
-- C++11 compiler
+- C++11 compiler (GCC 4.9, clang 3.3, MSVC++ 14.0 (1900) or any later version)
 - Boost header-only libraries
 
 Optionally, in order to build and run tests and examples:

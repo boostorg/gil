@@ -12,9 +12,6 @@ version: 2.0
 ##############################################################################
 # Docker images
 ##############################################################################
-docker_gcc48: &docker_gcc48
-  docker:
-    - image: gcc:4.8
 docker_gcc49: &docker_gcc49
   docker:
     - image: gcc:4.9
@@ -112,13 +109,6 @@ env_clang_cpp11_opt_speed: &env_clang_cpp11_opt_speed
 ##############################################################################
 # Build configurations
 ##############################################################################
-config_gcc48_cpp11_dbg: &config_gcc48_cpp11_dbg
-  <<: *docker_gcc48
-  <<: *env_gcc_cpp11_dbg
-config_gcc48_cpp11_opt_speed: &config_gcc48_cpp11_opt_speed
-  <<: *docker_gcc48
-  <<: *env_gcc_cpp11_opt_speed
-
 config_gcc49_cpp11_dbg: &config_gcc49_cpp11_dbg
   <<: *docker_gcc49
   <<: *env_gcc_cpp11_dbg
@@ -299,7 +289,7 @@ steps_test_io: &steps_test_io
 jobs:
   bootstrap_checkout:
     working_directory: ~/project/gil
-    <<: *config_gcc48_cpp11_opt_speed
+    <<: *config_gcc49_cpp11_opt_speed
     steps:
       - checkout
       - run:
@@ -318,7 +308,7 @@ jobs:
           paths: boost-root
 
   bootstrap_gcc:
-    <<: *config_gcc48_cpp11_opt_speed
+    <<: *config_gcc49_cpp11_opt_speed
     <<: *steps_bootstrap
 
   bootstrap_clang:
@@ -326,14 +316,6 @@ jobs:
     <<: *steps_bootstrap
 
   ### GCC 4.x ################################################################
-  gcc48_11_core:
-    <<: *config_gcc48_cpp11_dbg
-    <<: *steps_test_core
-
-  gcc48_11_core_speed:
-    <<: *config_gcc48_cpp11_opt_speed
-    <<: *steps_test_core
-
   gcc49_11_core:
     <<: *config_gcc49_cpp11_dbg
     <<: *steps_test_core
@@ -492,13 +474,6 @@ workflows:
             - bootstrap_checkout
 
       ### GCC 4.x ############################################################
-      - gcc48_11_core:
-          requires:
-            - bootstrap_gcc
-      - gcc48_11_core_speed:
-          requires:
-            - gcc48_11_core
-
       - gcc49_11_core:
           requires:
             - bootstrap_gcc

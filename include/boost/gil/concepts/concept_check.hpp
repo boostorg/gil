@@ -16,7 +16,7 @@
 #pragma clang diagnostic ignored "-Wuninitialized"
 #endif
 
-#if defined(BOOST_GCC) && (BOOST_GCC >= 40600)
+#if defined(BOOST_GCC) && (BOOST_GCC >= 40900)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wfloat-equal"
 #pragma GCC diagnostic ignored "-Wuninitialized"
@@ -28,7 +28,7 @@
 #pragma clang diagnostic pop
 #endif
 
-#if defined(BOOST_GCC) && (BOOST_GCC >= 40600)
+#if defined(BOOST_GCC) && (BOOST_GCC >= 40900)
 #pragma GCC diagnostic pop
 #endif
 
