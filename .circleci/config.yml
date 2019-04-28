@@ -112,9 +112,7 @@ env_clang_cpp11_opt_speed: &env_clang_cpp11_opt_speed
 ##############################################################################
 # Build configurations
 ##############################################################################
-config_gcc48_cpp11_dbg: &config_gcc48_cpp11_dbg
-  <<: *docker_gcc48
-  <<: *env_gcc_cpp11_dbg
+# GCC 4.8 is used to build `b2` driver
 config_gcc48_cpp11_opt_speed: &config_gcc48_cpp11_opt_speed
   <<: *docker_gcc48
   <<: *env_gcc_cpp11_opt_speed
@@ -299,6 +297,8 @@ steps_test_io: &steps_test_io
 jobs:
   bootstrap_checkout:
     working_directory: ~/project/gil
+    # Build `b2` using the ancient compiler to hopefully avoid run-time failures:
+    # ./b2: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.14' not found (required by ./b2)
     <<: *config_gcc48_cpp11_opt_speed
     steps:
       - checkout
@@ -326,14 +326,6 @@ jobs:
     <<: *steps_bootstrap
 
   ### GCC 4.x ################################################################
-  gcc48_11_core:
-    <<: *config_gcc48_cpp11_dbg
-    <<: *steps_test_core
-
-  gcc48_11_core_speed:
-    <<: *config_gcc48_cpp11_opt_speed
-    <<: *steps_test_core
-
   gcc49_11_core:
     <<: *config_gcc49_cpp11_dbg
     <<: *steps_test_core
@@ -492,13 +484,6 @@ workflows:
             - bootstrap_checkout
 
       ### GCC 4.x ############################################################
-      - gcc48_11_core:
-          requires:
-            - bootstrap_gcc
-      - gcc48_11_core_speed:
-          requires:
-            - gcc48_11_core
-
       - gcc49_11_core:
           requires:
             - bootstrap_gcc
