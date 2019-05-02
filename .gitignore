@@ -1,5 +1,6 @@
 *~
 *.swp
+*.log
 
 # Boost.Build
 stdcerr
