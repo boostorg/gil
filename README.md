@@ -17,7 +17,7 @@
  **C++/compilers:** | 11, 14, 17 | 11, 14, 17 | 11 | 11 |
  msvc++    | VS2015, VS2017 | VS2015, VS2017 |   |   |
  clang++   |   | Xcode 9.4.1 | 3.9, 5.0, Xcode 9.4.1 | 3.9, 4.0, 5.0 |
- g++       |   | 5.4, 8.1 | 5.5, 6.5, 7.4 | 4.9, 5.1-5, 6.1-4, 7.1-3, 8.2 |
+ g++       |   | 5.4, 8.1 | 5.5, 6.5, 7.4 | 4.9, 5.1-5, 6.1-4, 7.1-3, 8.2-3 |
  **tests coverage:** |
 core + concepts | Y | Y | Y | Y |
 headers    | core + ext | core + ext | core + ext | core + ext |
