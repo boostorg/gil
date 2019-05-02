@@ -221,7 +221,7 @@ config_gcc82_cpp11_opt_speed: &config_gcc82_cpp11_opt_speed
 config_gcc83_cpp11_dbg: &config_gcc83_cpp11_dbg
   <<: *docker_gcc83
   <<: *env_gcc_cpp11_dbg
-config_gcc83_cpp11_opt_speed: &config_gcc82_cpp11_opt_speed
+config_gcc83_cpp11_opt_speed: &config_gcc83_cpp11_opt_speed
   <<: *docker_gcc83
   <<: *env_gcc_cpp11_opt_speed
 
