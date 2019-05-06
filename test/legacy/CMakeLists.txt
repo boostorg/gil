@@ -20,7 +20,7 @@ foreach(_name
   image
   pixel
   pixel_iterator)
-  set(_target legacy_${_name})
+  set(_target test_legacy_${_name})
 
   add_executable(${_target} "")
   target_sources(${_target} PRIVATE ${_name}.cpp error_if.cpp)
@@ -39,7 +39,7 @@ endforeach()
 # Add extra source files accompanying image.cpp
 foreach(_name
   image)
-  set(_target legacy_${_name})
+  set(_target test_legacy_${_name})
   target_sources(${_target} PRIVATE
     error_if.cpp
     sample_image.cpp)
