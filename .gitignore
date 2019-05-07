@@ -23,3 +23,7 @@ stdcerr
 # Python
 /.venv
 /.env
+
+# Conan
+conaninfo.txt
+graph_info.json

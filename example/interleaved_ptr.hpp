@@ -42,7 +42,7 @@ struct interleaved_ptr : boost::iterator_facade
     >
 {
 private:
-    using parent_t boost::iterator_facade
+    using parent_t = boost::iterator_facade
         <
             interleaved_ptr<ChannelPtr, Layout>,
             pixel<typename std::iterator_traits<ChannelPtr>::value_type, Layout>,
