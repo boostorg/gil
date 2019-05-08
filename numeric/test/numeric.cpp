@@ -1,12 +1,10 @@
+//
 // Copyright 2013 Krzysztof Czainski
-// Distributed under the Boost Software License, Version 1.0. (See
-// accompanying file LICENSE_1_0.txt or copy at
-// http://www.boost.org/LICENSE_1_0.txt)
-
-/// \file numeric.cpp
-
-/// \brief Unit test for Numeric extension
-
+//
+// Distributed under the Boost Software License, Version 1.0
+// See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt
+//
 #include <boost/gil/image.hpp>
 #include <boost/gil/typedefs.hpp>
 
@@ -15,18 +13,8 @@
 
 #include <boost/assert.hpp>
 
-#if defined(BOOST_CLANG)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wfloat-equal"
-#endif
-
-#if defined(BOOST_GCC) && (BOOST_GCC >= 40900)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wfloat-equal"
-#endif
-
-#define BOOST_TEST_MAIN
-#include <boost/test/unit_test.hpp>
+#define BOOST_TEST_MODULE test_ext_numeric_numeric
+#include "unit_test.hpp"
 
 using namespace boost;
 using namespace gil;
