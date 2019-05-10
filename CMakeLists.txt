@@ -15,6 +15,7 @@ cmake_minimum_required(VERSION 3.10)
 #-----------------------------------------------------------------------------
 # Options
 #-----------------------------------------------------------------------------
+option(BOOST_GIL_BUILD_BENCHMARKS "Builds all available benchmarks in the benchmark directory" OFF)
 option(BOOST_GIL_BUILD_EXAMPLES "Build examples" ON)
 option(BOOST_GIL_BUILD_HEADER_TESTS "Enable self-contained header tests" ON)
 option(BOOST_GIL_ENABLE_EXT_DYNAMIC_IMAGE "Enable Dynamic Image extension, tests and examples" ON)
@@ -249,4 +250,8 @@ endif()
 #-----------------------------------------------------------------------------
 if(BOOST_GIL_BUILD_EXAMPLES AND BOOST_GIL_ENABLE_EXT_IO)
   add_subdirectory(example)
+endif()
+
+if(GIL_BUILD_BENCHMARKS)
+  add_subdirectory(benchmark)
 endif()
