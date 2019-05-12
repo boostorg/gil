@@ -159,27 +159,29 @@ target_compile_definitions(gil_dependencies
 #-----------------------------------------------------------------------------
 # Dependency: libpng, libjpeg, libtiff, libraw via Vcpkg or Conan
 #-----------------------------------------------------------------------------
+if(GIL_USE_CONAN)
+  # Download automatically, you can also just copy the conan.cmake file
+  if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
+    message(STATUS "Boost.GIL: Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
+    file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/v0.14/conan.cmake"
+      "${CMAKE_BINARY_DIR}/conan.cmake")
+  endif()
+
+  # NOTE: See RelWithDebInfo for Release builds, http://docs.conan.io/en/latest/howtos/vs2017_cmake.html
+  set(_build_type_saved ${CMAKE_BUILD_TYPE})
+  if(CMAKE_BUILD_TYPE STREQUAL "MinSizeRel" OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
+    set(CMAKE_BUILD_TYPE "Release")
+  endif()
+
+  include(${CMAKE_BINARY_DIR}/conan.cmake)
+  conan_cmake_run(CONANFILE conanfile.txt BASIC_SETUP CMAKE_TARGETS)
+
+  set(CMAKE_BUILD_TYPE ${_build_type_saved})
+  unset(_build_type_saved)
+endif()
+
 if(GIL_ENABLE_EXT_IO)
-  if(GIL_USE_CONAN)
-    # Download automatically, you can also just copy the conan.cmake file
-    if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
-      message(STATUS "Boost.GIL: Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
-      file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/v0.13/conan.cmake"
-        "${CMAKE_BINARY_DIR}/conan.cmake")
-    endif()
-
-    # NOTE: See RelWithDebInfo for Release builds, http://docs.conan.io/en/latest/howtos/vs2017_cmake.html
-    set(_build_type_saved ${CMAKE_BUILD_TYPE})
-    if(CMAKE_BUILD_TYPE STREQUAL "MinSizeRel" OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
-      set(CMAKE_BUILD_TYPE "Release")
-    endif()
-
-    include(${CMAKE_BINARY_DIR}/conan.cmake)
-    conan_cmake_run(CONANFILE conanfile.txt BASIC_SETUP CMAKE_TARGETS)
-
-    set(CMAKE_BUILD_TYPE ${_build_type_saved})
-    unset(_build_type_saved)
-
+  if (GIL_USE_CONAN)
     target_link_libraries(gil_dependencies
       INTERFACE
         CONAN_PKG::libjpeg
