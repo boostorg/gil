@@ -5,13 +5,14 @@
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 #
-[build_requires]
-google-benchmark/1.4.1@mpusz/stable
-
 [requires]
 libjpeg/9d
 libpng/1.6.37
 libtiff/4.1.0
+
+# Add required remote:
+# conan remote add conan-mpusz https://api.bintray.com/conan/mpusz/conan-mpusz
+google-benchmark/1.4.1@mpusz/stable
 
 [generators]
 CMakeDeps
