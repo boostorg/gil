@@ -283,14 +283,17 @@ if(BUILD_TESTING)
 endif()
 
 #-----------------------------------------------------------------------------
+# Benchmarks
+#-----------------------------------------------------------------------------
+if(GIL_BUILD_BENCHMARKS)
+  add_subdirectory(benchmark)
+endif()
+
+#-----------------------------------------------------------------------------
 # Examples
 #-----------------------------------------------------------------------------
 if(BOOST_GIL_BUILD_EXAMPLES AND BOOST_GIL_ENABLE_EXT_IO)
   add_subdirectory(example)
-endif()
-
-if(GIL_BUILD_BENCHMARKS)
-  add_subdirectory(benchmark)
 endif()
 
 endif()

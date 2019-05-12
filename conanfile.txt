@@ -5,6 +5,9 @@
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 #
+[build_requires]
+google-benchmark/1.4.1@mpusz/stable
+
 [requires]
 libjpeg/9d
 libpng/1.6.37
