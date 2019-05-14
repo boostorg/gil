@@ -14,6 +14,12 @@ libtiff/4.1.0
 # conan remote add conan-mpusz https://api.bintray.com/conan/mpusz/conan-mpusz
 google-benchmark/1.4.1@mpusz/stable
 
+# remote add ppodsiadly https://api.bintray.com/conan/ppodsiadly/conan
+celero/2.4.0@ppodsiadly/stable
+
+[options]
+celero:shared=False
+
 [generators]
 CMakeDeps
 CMakeToolchain
