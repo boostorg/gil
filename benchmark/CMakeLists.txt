@@ -10,10 +10,15 @@ endif()
 if (GIL_USE_CONAN)
     target_link_libraries(benchmark_dependencies
       INTERFACE
-        CONAN_PKG::google-benchmark)
+        CONAN_PKG::google-benchmark
+        CONAN_PKG::celero)
 else()
   find_package(benchmark REQUIRED)
-  target_link_libraries(gil_dependencies benchmark)
+  find_package(celero REQUIRED)
+  target_link_libraries(benchmark_dependencies
+    INTERFACE
+      benchmark
+      celero)
 endif()
 
 if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.12.0)
