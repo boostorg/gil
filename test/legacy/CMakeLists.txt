@@ -17,9 +17,9 @@ message(STATUS "Boost.GIL: Configuring core legacy tests")
 
 foreach(_name
   channel
-  image
   pixel
   pixel_iterator)
+  set(_test t_legacy_${_name})
   set(_target test_legacy_${_name})
 
   add_executable(${_target} "")
@@ -30,20 +30,35 @@ foreach(_name
       gil_include_directories
       gil_dependencies)
   target_compile_definitions(${_target} PRIVATE BOOST_GIL_USE_CONCEPT_CHECK)
-  add_test(test.legacy.${_name} ${_target})
+  add_test(NAME ${_test} COMMAND ${_target})
 
-  unset(_target)
   unset(_name)
+  unset(_target)
+  unset(_test)
 endforeach()
 
 # Add extra source files accompanying image.cpp
 foreach(_name
   image)
+  set(_test t_legacy_${_name})
   set(_target test_legacy_${_name})
+
+  add_executable(${_target} "")
   target_sources(${_target} PRIVATE
+    ${_name}.cpp
     error_if.cpp
     sample_image.cpp)
-  add_test(test.legacy.${_name}
-    ${_target}
+
+  target_link_libraries(${_target}
+    PRIVATE
+      gil_compile_options
+      gil_include_directories
+      gil_dependencies)
+  target_compile_definitions(${_target} PRIVATE BOOST_GIL_USE_CONCEPT_CHECK)
+  add_test(NAME ${_test} COMMAND ${_target}
     ${CMAKE_CURRENT_SOURCE_DIR}/gil_reference_checksums.txt)
+
+  unset(_name)
+  unset(_target)
+  unset(_test)
 endforeach()

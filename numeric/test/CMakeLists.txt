@@ -11,8 +11,9 @@ message(STATUS "Boost.GIL: Configuring Numeric extension tests")
 foreach(_name
   matrix3x2
   numeric)
-
+  set(_test t_ext_numeric_${_name})
   set(_target test_ext_numeric_${_name})
+
   add_executable(${_target} "")
   target_sources(${_target} PRIVATE ${_name}.cpp)
   target_link_libraries(${_target}
@@ -20,5 +21,9 @@ foreach(_name
       gil_compile_options
       gil_include_directories
       gil_dependencies)
-  add_test(test.ext.${_name} ${_target})
+  add_test(NAME ${_test} COMMAND ${_target})
+
+  unset(_name)
+  unset(_target)
+  unset(_test)
 endforeach()

@@ -7,6 +7,7 @@
 #
 foreach(_name
   concepts)
+  set(_test t_core_image_${_name})
   set(_target test_core_image_${_name})
 
   add_executable(${_target} "")
@@ -17,8 +18,9 @@ foreach(_name
       gil_include_directories
       gil_dependencies)
   target_compile_definitions(${_target} PRIVATE BOOST_GIL_USE_CONCEPT_CHECK)
-  add_test(test.core.image.${_name} ${_target})
+  add_test(NAME ${_test} COMMAND ${_target})
 
   unset(_name)
   unset(_target)
+  unset(_test)
 endforeach()

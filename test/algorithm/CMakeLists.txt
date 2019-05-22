@@ -8,6 +8,7 @@
 foreach(_name
   for_each_pixel
   std_fill)
+  set(_test t_core_algorithm_${_name})
   set(_target test_core_algorithm_${_name})
 
   add_executable(${_target} "")
@@ -17,8 +18,9 @@ foreach(_name
       gil_compile_options
       gil_include_directories
       gil_dependencies)
-  add_test(test.core.algorithm.${_name} ${_target})
+  add_test(NAME ${_test} COMMAND ${_target})
 
   unset(_name)
   unset(_target)
+  unset(_test)
 endforeach()

@@ -9,7 +9,8 @@ message(STATUS "Boost.GIL: Configuring core tests")
 
 foreach(_name
   promote_integral)
-  set(_target utility_${_name})
+  set(_test t_utility_${_name})
+  set(_target test_utility_${_name})
 
   add_executable(${_target} "")
   target_sources(${_target} PRIVATE ${_name}.cpp)
@@ -19,10 +20,11 @@ foreach(_name
       gil_include_directories
       gil_dependencies)
   target_compile_definitions(${_target} PRIVATE BOOST_GIL_USE_CONCEPT_CHECK)
-  add_test(test.utility.${_name} ${_target})
+  add_test(NAME ${_test} COMMAND ${_target})
 
-  unset(_target)
   unset(_name)
+  unset(_target)
+  unset(_test)
 endforeach()
 
 if(GIL_BUILD_HEADERS_TESTS)
