@@ -157,7 +157,6 @@ matrix:
             - libraw-dev
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-6.0
 
     - os: linux
       env: COMPILER=clang++-6.0 VARIANT=gil_ubsan_undefined TOOLSET=clang CXXSTD=11 B2_OPTIONS="visibility=global" UBSAN_OPTIONS='print_stacktrace=1'
@@ -172,7 +171,6 @@ matrix:
             - libraw-dev
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-6.0
 
     - os: osx
       env: COMPILER=clang++ VARIANT=debug TOOLSET=clang CXXSTD=11
