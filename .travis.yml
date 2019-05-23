@@ -130,11 +130,11 @@ matrix:
             - llvm-toolchain-precise-3.9
 
     - os: linux
-      env: COMPILER=clang++-5.0 VARIANT=gil_ubsan_integer TOOLSET=clang CXXSTD=11 B2_OPTIONS="visibility=global" UBSAN_OPTIONS='print_stacktrace=1'
+      env: COMPILER=clang++-6.0 VARIANT=gil_ubsan_integer TOOLSET=clang CXXSTD=11 B2_OPTIONS="visibility=global" UBSAN_OPTIONS='print_stacktrace=1'
       addons:
         apt:
           packages:
-            - clang-5.0
+            - clang-6.0
             - libstdc++-7-dev
             - libpng-dev
             - libjpeg-dev
@@ -142,14 +142,14 @@ matrix:
             - libraw-dev
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-5.0
+            - llvm-toolchain-trusty-6.0
 
     - os: linux
-      env: COMPILER=clang++-5.0 VARIANT=gil_ubsan_nullability TOOLSET=clang CXXSTD=11 B2_OPTIONS="visibility=global" UBSAN_OPTIONS='print_stacktrace=1'
+      env: COMPILER=clang++-6.0 VARIANT=gil_ubsan_nullability TOOLSET=clang CXXSTD=11 B2_OPTIONS="visibility=global" UBSAN_OPTIONS='print_stacktrace=1'
       addons:
         apt:
           packages:
-            - clang-5.0
+            - clang-6.0
             - libstdc++-7-dev
             - libpng-dev
             - libjpeg-dev
@@ -157,14 +157,14 @@ matrix:
             - libraw-dev
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-5.0
+            - llvm-toolchain-trusty-6.0
 
     - os: linux
-      env: COMPILER=clang++-5.0 VARIANT=gil_ubsan_undefined TOOLSET=clang CXXSTD=11 B2_OPTIONS="visibility=global" UBSAN_OPTIONS='print_stacktrace=1'
+      env: COMPILER=clang++-6.0 VARIANT=gil_ubsan_undefined TOOLSET=clang CXXSTD=11 B2_OPTIONS="visibility=global" UBSAN_OPTIONS='print_stacktrace=1'
       addons:
         apt:
           packages:
-            - clang-5.0
+            - clang-6.0
             - libstdc++-7-dev
             - libpng-dev
             - libjpeg-dev
@@ -172,7 +172,7 @@ matrix:
             - libraw-dev
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-5.0
+            - llvm-toolchain-trusty-6.0
 
     - os: osx
       env: COMPILER=clang++ VARIANT=debug TOOLSET=clang CXXSTD=11
@@ -187,7 +187,7 @@ matrix:
             - doxygen
 
   allow_failures:
-    - env: COMPILER=clang++-5.0 VARIANT=gil_ubsan_integer TOOLSET=clang CXXSTD=11 B2_OPTIONS="visibility=global" UBSAN_OPTIONS='print_stacktrace=1'
+    - env: COMPILER=clang++-6.0 VARIANT=gil_ubsan_integer TOOLSET=clang CXXSTD=11 B2_OPTIONS="visibility=global" UBSAN_OPTIONS='print_stacktrace=1'
 
 install:
   - |-
