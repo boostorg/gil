@@ -190,8 +190,10 @@ git remote add <username> https://github.com/<username>/gil.git
 or, if you cloned from your fork already, add the upstream as `origin` remote:
 
 ```shell
+git remote add upstream https://github.com/boostorg/gil.git
+# or
 git remote rename origin <username>
-git remote add origin https://github.com/<username>/gil.git
+git remote add origin https://github.com/boostorg/gil.git
 ```
 
 ### 4. Submit a pull request
