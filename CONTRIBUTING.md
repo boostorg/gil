@@ -234,7 +234,7 @@ strategy to update your pull request:
 
 - Use `git commit --amend`, `git rebase` and `git push --force` when your
    pull request is still *work-in-progress* and not ready for review yet.
-- `git commit`, `git merge` and `git push` to update your pull request
+- Use `git commit`, `git merge` and `git push` to update your pull request
    during review, in response to requests from reviewers.
 
 **NOTE:** Once review of your work has started, you should not rebase your work.
