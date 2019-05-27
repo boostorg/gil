@@ -187,6 +187,13 @@ cd libs/gil
 git remote add <username> https://github.com/<username>/gil.git
 ```
 
+or, if you cloned from your fork already, add the upstream as `origin` remote:
+
+```shell
+git remote rename origin <username>
+git remote add origin https://github.com/<username>/gil.git
+```
+
 ### 4. Submit a pull request
 
 All Boost.GIL contributions should be developed inside a topic branch created by
