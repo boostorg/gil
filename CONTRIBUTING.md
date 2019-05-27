@@ -184,7 +184,7 @@ Add your fork as git remote to the Boost.GIL submodule:
 
 ```shell
 cd libs/gil
-git remote add username https://github.com/username/gil.git
+git remote add <username> https://github.com/<username>/gil.git
 ```
 
 ### 4. Submit a pull request
@@ -192,7 +192,8 @@ git remote add username https://github.com/username/gil.git
 All Boost.GIL contributions should be developed inside a topic branch created by
 branching off the `develop` branch of [boostorg/gil](https://github.com/boostorg/gil).
 
-**IMPORTANT:** Pull Requests *must* come from a branch based on `develop`, and *never* on `master`.
+**IMPORTANT:** Pull Requests *must* come from a branch based on `develop`,
+and *never* on `master`.
 
 **NOTE:** The branching workflow model
 [Boost recommends](https://svn.boost.org/trac10/wiki/StartModWorkflow)
@@ -215,7 +216,7 @@ Once it's finished, you can submit it as pull request for review:
 ```shell
 cd libs/gil
 git checkout feature/foo
-git push username feature/foo
+git push <username> feature/foo
 ```
 
 Finally, sign in to your GitHub account and
@@ -228,43 +229,68 @@ by updating your pull request.
 
 ### 5. Update your pull request
 
-In simplest (and recommended) case , your the pull request you submitted earlier
-has *a single commit*, so you can simply update the existing commit with any
-modifications required to fix failing CI builds or requested by reviewers.
+Depending on actual purpose of the update, you can follow a different
+strategy to update your pull request:
 
-First, it is a good idea to synchronize your topic branch with the latest
-changes in the upstream `develop` branch:
+- Use `git commit --amend`, `git rebase` and `git push --force` when your
+   pull request is still *work-in-progress* and not ready for review yet.
+- `git commit`, `git merge` and `git push` to update your pull request
+   during review, in response to requests from reviewers.
+
+**NOTE:** Once review of your work has started, you should not rebase your work.
+You should create new commits and update your topic branch. This helps with
+traceability in the pull request and prevents the accidental history breakage.
+Those who review your work may be fetching it into their fork for local review.
+
+#### Synchronise pull request branch
+
+Keep your topic branch up to date and synchronized with the upstream `develop` branch:
 
 ```shell
 cd libs/gil
 git checkout develop
 git pull origin develop
 git checkout feature/foo
-git rebase develop
 ```
 
-Next, make your edits.
+If review of your work has not started, *prefer* to merge:
 
-Finally, `git commit --amend` the *single-commit* in your topic branch and
-update the pull request:
+```shell
+git merge develop
+git push <username> feature/foo
+```
+
+If your PR is still *work-in-progress*, you may rebase if you like:
+
+```shell
+git rebase develop
+git push --force <username> feature/foo
+```
+
+#### Amend last commit of pull request
+
+If your pull request is a *work-in-progress* and has not been reviewed yet,
+you may amend your commit or rebase onto the `develop` branch:
 
 ```shell
 cd libs/gil
 git checkout feature/foo
 git add -A
 git commit --amend
-git push --force username feature/foo
+git push --force <username> feature/foo
 ```
 
-**WARNING:** Ensure your pull request has a single commit, otherwise the
-force push can corrupt your pull request.
+#### Add new commits to pull request
 
-If you wish to update pull request adding a new commit, then create new
-commit and issue regular push:
+In order to update your pull request, for example in response to a change
+request from reviewer, just add new commits:
 
 ```shell
-git commit -m "Fix variable name"
-git push username feature/foo
+cd libs/gil
+git checkout feature/foo
+git add -A
+git commit -m "Fix build Travis CI failures"
+git push <username> feature/foo
 ```
 
 ## Development
