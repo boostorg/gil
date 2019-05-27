@@ -27,7 +27,7 @@
         { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
         { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
         { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
-        { "name": "GIL_BUILD_HEADERS_TESTS", "value": "OFF" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "OFF" },
         { "name": "GIL_DOWNLOAD_FINDBOOST", "value": "ON" },
         { "name": "GIL_USE_CONAN", "value": "ON" }
       ]
@@ -51,7 +51,7 @@
         { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
         { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
         { "name": "GIL_BUILD_EXAMPLES", "value": "OFF" },
-        { "name": "GIL_BUILD_HEADERS_TESTS", "value": "OFF" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "OFF" },
         { "name": "GIL_DOWNLOAD_FINDBOOST", "value": "ON" },
         { "name": "GIL_USE_CONAN", "value": "OFF" }
       ]
@@ -75,7 +75,7 @@
         { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
         { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
         { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
-        { "name": "GIL_BUILD_HEADERS_TESTS", "value": "ON" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
         { "name": "GIL_DOWNLOAD_FINDBOOST", "value": "ON" },
         { "name": "GIL_USE_CONAN", "value": "ON" }
       ]
@@ -99,7 +99,7 @@
         { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
         { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
         { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
-        { "name": "GIL_BUILD_HEADERS_TESTS", "value": "ON" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
         { "name": "GIL_DOWNLOAD_FINDBOOST", "value": "ON" },
         { "name": "GIL_USE_CONAN", "value": "ON" }
       ]

@@ -343,21 +343,21 @@ Run core tests only specifying location of directory with tests:
 
 ```shell
 cd libs/gil
-../../b2 -j8 test
+../../b2 -j8 test/core
 ```
 
 Run all tests for selected extension (from Boost root directory, as alternative):
 
 ```shell
-./b2 -j8 libs/gil/io/test
-./b2 -j8 libs/gil/numeric/test
-./b2 -j8 libs/gil/toolbox/test
+./b2 -j8 libs/gil/test/io
+./b2 -j8 libs/gil/test/numeric
+./b2 -j8 libs/gil/test/toolbox
 ```
 
 Run I/O extension tests bundled in target called `simple`:
 
 ```shell
-./b2 libs/gil/io/test//simple
+./b2 libs/gil/test/io//simple
 ```
 
 *TODO:* _Explain I/O dependencies (libjpeg, etc.)_

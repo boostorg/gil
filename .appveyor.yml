@@ -118,10 +118,10 @@ before_build:
 build: off
 
 build_script:
-  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% cxxstd=%CXXSTD% libs/gil/test
-  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% cxxstd=%CXXSTD% libs/gil/toolbox/test
-  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% cxxstd=%CXXSTD% libs/gil/numeric/test
-  - if NOT DEFINED GENERATOR b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% cxxstd=%CXXSTD% include=%VCPKG_I% library-path=%VCPKG_L% libs/gil/io/test//simple
+  - if NOT DEFINED GENERATOR b2 --abbreviate-paths address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% cxxstd=%CXXSTD% libs/gil/test/core
+  - if NOT DEFINED GENERATOR b2 --abbreviate-paths address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% cxxstd=%CXXSTD% libs/gil/test/extension/numeric
+  - if NOT DEFINED GENERATOR b2 --abbreviate-paths address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% cxxstd=%CXXSTD% libs/gil/test/extension/toolbox
+  - if NOT DEFINED GENERATOR b2 --abbreviate-paths address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% cxxstd=%CXXSTD% include=%VCPKG_I% library-path=%VCPKG_L% libs/gil/test/extension/io//simple
   - if DEFINED GENERATOR cd libs\gil && md build && cd build
   - if DEFINED GENERATOR cmake -G "%GENERATOR%" -DCMAKE_CXX_STANDARD=%CXXSTD% -DBoost_DETAILED_FAILURE_MSG=ON -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake ..
   - if DEFINED GENERATOR cmake --build . --config %CMAKE_CONFIG %

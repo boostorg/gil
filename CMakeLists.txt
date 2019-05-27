@@ -16,7 +16,7 @@ cmake_minimum_required(VERSION 3.10)
 # Options
 #-----------------------------------------------------------------------------
 option(GIL_BUILD_EXAMPLES "Build examples" ON)
-option(GIL_BUILD_HEADERS_TESTS "Enable self-contained header tests" ON)
+option(GIL_BUILD_HEADER_TESTS "Enable self-contained header tests" ON)
 option(GIL_ENABLE_EXT_IO "Enable IO extension, tests and examples (require libjpeg, libpng, libtiff)" ON)
 option(GIL_ENABLE_EXT_NUMERIC "Enable Numeric extension, tests and examples" ON)
 option(GIL_ENABLE_EXT_TOOLBOX "Enable Toolbox extension, tests and examples" ON)
@@ -266,21 +266,10 @@ enable_testing()
 # On Boost regression builds, CMake does not run, but Boost.Build,
 # so the header tests are not enabled there either.
 if(DEFINED ENV{CI})
-  set(GIL_BUILD_HEADERS_TESTS OFF)
+  set(GIL_BUILD_HEADER_TESTS OFF)
 endif()
+
 add_subdirectory(test)
-
-if(GIL_ENABLE_EXT_IO)
-  add_subdirectory(io/test)
-endif()
-
-if(GIL_ENABLE_EXT_NUMERIC)
-  add_subdirectory(numeric/test)
-endif()
-
-if(GIL_ENABLE_EXT_TOOLBOX)
-  add_subdirectory(toolbox/test)
-endif()
 
 #-----------------------------------------------------------------------------
 # Examples
