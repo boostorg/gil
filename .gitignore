@@ -7,6 +7,10 @@ stdcerr
 /doc/*build*
 /io/output
 
+# Documentation and Sphinx
+doc/html
+doc/warnings.txt
+
 # Visual Studio (Code)
 /.vs
 .vscode
@@ -21,8 +25,8 @@ stdcerr
 /.idea
 
 # Python
-/.venv
-/.env
+.venv*
+.env*
 
 # Conan
 conaninfo.txt
