@@ -5,14 +5,14 @@
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 #
-add_subdirectory(core)
+if(GIL_ENABLE_EXT_NUMERIC)
+  add_subdirectory(numeric)
+endif()
 
-add_subdirectory(legacy)
+if(GIL_ENABLE_EXT_TOOLBOX)
+  add_subdirectory(toolbox)
+endif()
 
-add_subdirectory(extension)
-
-# TODO: Split headers tests into core and extensions, see Jamfile-s
-# if(GIL_BUILD_HEADERS_TESTS)
-#   add_subdirectory(headers)
-# endif()
-
+if(GIL_ENABLE_EXT_IO)
+  add_subdirectory(io)
+endif()
