@@ -17,7 +17,7 @@ project
 
 compile concepts.cpp ;
 run test_fixture.cpp ;
-run is_integral.cpp ;
+run is_channel_integral.cpp ;
 run channel_traits.cpp ;
 run packed_channel_value.cpp ;
 run scoped_channel_value.cpp ;

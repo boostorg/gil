@@ -20,11 +20,12 @@
       "ctestCommandArgs": "",
       "variables": [
         { "name": "Boost_ARCHITECTURE", "value": "-x64" },
-        { "name": "GIL_ENABLE_EXT_IO", "value": "OFF" },
-        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "OFF" },
-        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "OFF" },
-        { "name": "GIL_BUILD_EXAMPLES", "value": "OFF" },
-        { "name": "GIL_BUILD_HEADERS_TESTS", "value": "OFF" },
+        { "name": "Boost_COMPILER", "value": "-vc142;-vc141" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "OFF" },
         { "name": "GIL_DOWNLOAD_FINDBOOST", "value": "ON" },
         { "name": "GIL_USE_CONAN", "value": "ON" }
       ]
@@ -45,7 +46,7 @@
         { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "OFF" },
         { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "OFF" },
         { "name": "GIL_BUILD_EXAMPLES", "value": "OFF" },
-        { "name": "GIL_BUILD_HEADERS_TESTS", "value": "OFF" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "OFF" },
         { "name": "GIL_DOWNLOAD_FINDBOOST", "value": "ON" },
         { "name": "GIL_USE_CONAN", "value": "ON" }
       ]
@@ -61,11 +62,15 @@
       "buildCommandArgs": "-v",
       "ctestCommandArgs": "",
       "variables": [
-        { "name": "GIL_ENABLE_EXT_IO", "value": "OFF" },
-        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "OFF" },
-        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "OFF" },
-        { "name": "GIL_BUILD_EXAMPLES", "value": "OFF" },
-        { "name": "GIL_BUILD_HEADERS_TESTS", "value": "OFF" },
+        { "name": "Boost_DEBUG", "value": "ON" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.71" },
+        { "name": "Boost_ARCHITECTURE", "value": "-x32" },
+        { "name": "Boost_COMPILER", "value": "-vc142;-vc141" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
         { "name": "GIL_DOWNLOAD_FINDBOOST", "value": "ON" },
         { "name": "GIL_USE_CONAN", "value": "ON" }
       ]
@@ -81,11 +86,15 @@
       "buildCommandArgs": "-v",
       "ctestCommandArgs": "",
       "variables": [
-        { "name": "GIL_ENABLE_EXT_IO", "value": "OFF" },
-        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "OFF" },
-        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "OFF" },
-        { "name": "GIL_BUILD_EXAMPLES", "value": "OFF" },
-        { "name": "GIL_BUILD_HEADERS_TESTS", "value": "OFF" },
+        { "name": "Boost_DEBUG", "value": "ON" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.71" },
+        { "name": "Boost_ARCHITECTURE", "value": "-x32" },
+        { "name": "Boost_COMPILER", "value": "-vc142;-vc141" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
         { "name": "GIL_DOWNLOAD_FINDBOOST", "value": "ON" },
         { "name": "GIL_USE_CONAN", "value": "ON" }
       ]

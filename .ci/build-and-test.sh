@@ -38,7 +38,7 @@ fi
 echo "Running ./b2 -j $JOBS $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT"
 
 set -euv
-./b2 -j $JOBS $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT cxxstd=$CXXSTD libs/gil/test
-./b2 -j $JOBS $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT cxxstd=$CXXSTD libs/gil/toolbox/test
-./b2 -j $JOBS $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT cxxstd=$CXXSTD libs/gil/numeric/test
-./b2 -j $JOBS $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT cxxstd=$CXXSTD libs/gil/io/test//simple
+./b2 -j $JOBS $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT cxxstd=$CXXSTD libs/gil/test/core
+./b2 -j $JOBS $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT cxxstd=$CXXSTD libs/gil/test/extension/numeric
+./b2 -j $JOBS $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT cxxstd=$CXXSTD libs/gil/test/extension/toolbox
+./b2 -j $JOBS $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT cxxstd=$CXXSTD libs/gil/test/extension/io//simple

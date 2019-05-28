@@ -1,21 +1,16 @@
-# Boost.GIL (Generic Image Library) - Toolbox tests
 #
-# Copyright (c) 2012 Christian Henning
-# Copyright (c) 2012 Mateusz Loskot <mateusz@loskot.net>
+# Copyright (c) 2017 Mateusz Loskot <mateusz at loskot dot net>
+# All rights reserved.
 #
 # Distributed under the Boost Software License, Version 1.0.
-# (See accompanying file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+# (See accompanying file LICENSE_1_0.txt or copy at
+# http://www.boost.org/LICENSE_1_0.txt)
+#
+message(STATUS "Boost.GIL: Configuring tests in test/extension/toolbox")
 
-import testing ;
-
-project
-    : requirements
-    <include>$(BOOST_ROOT)
-    <library>/boost/test//boost_unit_test_framework
-    <link>shared:<define>BOOST_TEST_DYN_LINK=1
-    ;
-
-run
+add_executable(test_ext_toolbox "")
+target_sources(test_ext_toolbox
+  PRIVATE
     test.cpp
     channel_type.cpp
     channel_view.cpp
@@ -35,5 +30,10 @@ run
     # TODO: Add subchroma_image.cpp after fixing run-time failure,
     #       for details see https://github.com/boostorg/gil/pull/164
     #subchroma_image.cpp
-    xyz_test.cpp
-    ;
+    xyz_test.cpp)
+target_link_libraries(test_ext_toolbox
+  PRIVATE
+    gil_compile_options
+    gil_include_directories
+    gil_dependencies)
+add_test(test.ext.toolbox test_ext_toolbox)
