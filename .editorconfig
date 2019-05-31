@@ -4,35 +4,41 @@
 root = true
 
 [*]
+guidelines = 100
 indent_size = 4
 indent_style = space
+max_line_length = 100
 trim_trailing_whitespace = true
 insert_final_newline = true
 
 [*.{cpp,hpp}]
-guidelines = 80, 90
+guidelines = 100
 indent_size = 4
 indent_style = space
+max_line_length = 100
 trim_trailing_whitespace = true
 insert_final_newline = true
 
 [*.rst]
-guidelines = 90
+guidelines = 100
 indent_size = 4
 indent_style = space
-max_line_length = 90
+max_line_length = 100
 trim_trailing_whitespace = true
 insert_final_newline = true
 
 [{Jamfile*,CMakeLists.txt,CMakeSettings.json,*.cmake}]
-guidelines = 90
+guidelines = 100
 indent_size = 2
 indent_style = space
+max_line_length = 100
 trim_trailing_whitespace = true
 insert_final_newline = true
 
 [*.yml]
+guidelines = 100
 indent_size = 2
 indent_style = space
-trim_trailing_whitespace = true
 insert_final_newline = true
+max_line_length = 100
+trim_trailing_whitespace = true

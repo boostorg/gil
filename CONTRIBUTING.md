@@ -586,7 +586,7 @@ Maintain structure your source code files according to the following guidelines:
 * All non-public headers should be placed `boost/gil/detail` or `boost/gil/<component>/detail`.
 * All public definitions should reside in scope of `namespace boost { namespace gil {...}}`.
 * All non-public definitions should reside in scope of `namespace boost { namespace gil { namespace detail {...}}}`.
-* Write your code to fit within **90** columns of text (see discussion on [preferred line length](https://lists.boost.org/boost-gil/2018/04/0028.php) in GIL).
+* Write your code to fit within **100** columns of text.
 * Use [EditorConfig](https://editorconfig.org) for your editor and enable [.editorconfig](https://github.com/boostorg/gil/blob/develop/.editorconfig) to:
     * Indent with **4 spaces** and no tabs.
     * Trim any trailing whitespaces.
