@@ -5,7 +5,11 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-#ifndef BOOST_GIL_USE_CONCEPT_CHECK
+// FIXME: Avoid Clang's flooding of non-disableable warnings like:
+// "T does not declare any constructor to initialize its non-modifiable members"
+// when compiling with concepts check enabled.
+// See https://bugs.llvm.org/show_bug.cgi?id=41759
+#if !defined(BOOST_GIL_USE_CONCEPT_CHECK) && !defined(__clang__)
 #error Compile with BOOST_GIL_USE_CONCEPT_CHECK defined
 #endif
 // FIXME: There are missing headers internally, leading to incomplete types
@@ -68,7 +72,7 @@ int main()
     test_view_planar<gil::rgb8_planar_step_view_t>();
     test_view_planar<gil::rgb8c_planar_view_t>();
     test_view_planar<gil::rgb8c_planar_step_view_t>();
-    
+
     test_view<gil::rgba8_view_t>();
     test_view<gil::rgba8_step_view_t>();
     test_view<gil::rgba8c_view_t>();
