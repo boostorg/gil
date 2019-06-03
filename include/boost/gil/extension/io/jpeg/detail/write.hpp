@@ -120,17 +120,10 @@ private:
 
         JSAMPLE* row_addr = reinterpret_cast< JSAMPLE* >( &row_buffer[0] );
 
-        for( int y =0; y != view.height(); ++ y )
+        for (typename View::y_coord_t y =0; y != view.height(); ++ y)
         {
-            std::copy( view.row_begin( y )
-                     , view.row_end  ( y )
-                     , row_buffer.begin()
-                     );
-
-            jpeg_write_scanlines( this->get()
-                                , &row_addr
-                                , 1
-                                );
+            std::copy(view.row_begin(y), view.row_end(y), row_buffer.begin());
+            jpeg_write_scanlines(this->get(), &row_addr, 1);
         }
     }
 };

@@ -102,16 +102,10 @@ private:
                           >
                    > row_buffer( view.width() );
 
-        for( int y = 0; y != view.height(); ++ y)
+        for (typename View::y_coord_t y = 0; y != view.height(); ++ y)
         {
-            std::copy( view.row_begin( y )
-                     , view.row_end  ( y )
-                     , row_buffer.begin()
-                     );
-
-            png_write_row( this->get_struct()
-                         , reinterpret_cast< png_bytep >( row_buffer.data() )
-                         );
+            std::copy(view.row_begin(y), view.row_end(y), row_buffer.begin());
+            png_write_row(this->get_struct(), reinterpret_cast<png_bytep>(row_buffer.data()));
         }
 
         png_write_end( this->get_struct()

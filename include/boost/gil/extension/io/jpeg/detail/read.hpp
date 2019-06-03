@@ -188,7 +188,7 @@ private:
         }
 
         // Read data.
-        for( int y = 0; y < view.height(); ++y )
+        for (typename View::y_coord_t y = 0; y < view.height(); ++y)
         {
             io_error_if( jpeg_read_scanlines( this->get()
                                             , &row_adr

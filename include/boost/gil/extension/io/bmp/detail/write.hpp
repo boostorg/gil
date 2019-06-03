@@ -154,20 +154,12 @@ private:
                                        , spn
                                        );
 
-        for( typename View::y_coord_t y = view.height() - 1; y > -1; --y  )
+        for (typename View::y_coord_t y = view.height() - 1; y > -1; --y)
         {
-            copy_pixels( subimage_view( view
-                                      , 0
-                                      , (int) y
-                                      , (int) view.width()
-                                      , 1
-                                      )
-                       , row
-                       );
+            copy_pixels(subimage_view(view, 0, y, view.width(), 1), row);
 
             this->_io_dev.write( &buffer.front(), spn );
         }
-
     }
 };
 

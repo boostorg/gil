@@ -19,6 +19,7 @@
 #include <boost/assert.hpp>
 
 #include <cstddef>
+#include <cstdint>
 #include <type_traits>
 
 /// Methods for creating shallow image views from raw pixel data or from other image views -
@@ -257,8 +258,12 @@ inline View subimage_view(const View& src, const typename View::point_t& topleft
 
 /// \ingroup ImageViewTransformationsSubimage
 template <typename View>
-inline View subimage_view(const View& src, int xMin, int yMin, int width, int height) {
-    return View(width,height,src.xy_at(xMin,yMin));
+inline
+View subimage_view(View const& src,
+    std::ptrdiff_t x, std::ptrdiff_t y,
+    std::ptrdiff_t width, std::ptrdiff_t height)
+{
+    return View(width, height, src.xy_at(x, y));
 }
 
 /// \defgroup ImageViewTransformationsSubsampled subsampled_view

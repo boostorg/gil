@@ -249,11 +249,11 @@ template <typename Views>
 inline
 auto subimage_view(
     any_image_view<Views> const& src,
-    int xMin, int yMin, int width, int height)
+    std::ptrdiff_t x, std::ptrdiff_t y, std::ptrdiff_t width, std::ptrdiff_t height)
     -> any_image_view<Views>
 {
     using subimage_view_fn = detail::subimage_view_fn<any_image_view<Views>>;
-    return apply_operation(src, subimage_view_fn(point_t(xMin, yMin),point_t(width, height)));
+    return apply_operation(src, subimage_view_fn(point_t{x, y}, point_t{width, height}));
 }
 
 /// \ingroup ImageViewTransformationsSubsampled
@@ -272,7 +272,7 @@ auto subsampled_view(any_image_view<Views> const& src, point_t const& step)
 /// \tparam Views Models Boost.MP11-compatible list of models of ImageViewConcept
 template <typename Views>
 inline
-auto subsampled_view(any_image_view<Views> const& src, int xStep, int yStep)
+auto subsampled_view(any_image_view<Views> const& src, std::ptrdiff_t xStep, std::ptrdiff_t yStep)
     -> typename dynamic_xy_step_type<any_image_view<Views>>::type
 {
     using step_type = typename dynamic_xy_step_type<any_image_view<Views>>::type;
