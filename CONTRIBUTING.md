@@ -443,9 +443,6 @@ Here is an example of such lightweight workflow in Linux environment (Debian-bas
     **TIP:** If CMake is failing to find Boost libraries, especially built with
         `--layout=versioned`, you can try a few hacks:
 
-     - `-DGIL_DOWNLOAD_FINDBOOST=ON` to use very latest version of
-       `FindBoost.cmake` without upgrading your CMake installation.
-
      - `-DBoost_ARCHITECTURE=-x64` to help CMake find Boost 1.66 and above
         add an architecture tag to the library file names in versioned build
         The option added in CMake 3.13.0.
