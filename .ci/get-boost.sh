@@ -93,9 +93,8 @@ fi
 echo "get-boost: Deleting $PWD/libs/gil cloned with Boost superproject"
 rm -rf libs/gil
 
-echo "get-boost: Copying $BUILD_DIR to $PWD/libs"
-mkdir libs/gil
-cp -r $BUILD_DIR libs/
+echo "get-boost: Copying $BUILD_DIR to $PWD/libs/gil"
+cp -r $BUILD_DIR libs/gil
 
 if [ -d libs/gil/.git ]; then
     current_pwd=`pwd`
