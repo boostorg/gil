@@ -205,10 +205,14 @@ script:
     if [ "$DOC" ]; then
       echo "using doxygen ;" > ~/user-config.jam
       ./b2 libs/gil/doc
+    else
+      echo "using $TOOLSET : : $COMPILER : ;" > ~/user-config.jam
+    ./b2 -j 2 $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT cxxstd=$CXXSTD libs/gil/test/core
+    ./b2 -j 2 $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT cxxstd=$CXXSTD libs/gil/test/legacy
+    ./b2 -j 2 $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT cxxstd=$CXXSTD libs/gil/test/extension/numeric
+    ./b2 -j 2 $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT cxxstd=$CXXSTD libs/gil/test/extension/toolbox
+    ./b2 -j 2 $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT cxxstd=$CXXSTD libs/gil/test/extension/io//simple
     fi
-  - |-
-    echo "using $TOOLSET : : $COMPILER : ;" > ~/user-config.jam
-  - travis_retry libs/gil/.ci/build-and-test.sh
 
 after_success:
 # Upload docs only when building upstream.

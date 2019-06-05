@@ -119,6 +119,7 @@ build: off
 
 build_script:
   - if NOT DEFINED GENERATOR b2 --abbreviate-paths address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% cxxstd=%CXXSTD% libs/gil/test/core
+  - if NOT DEFINED GENERATOR b2 --abbreviate-paths address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% cxxstd=%CXXSTD% libs/gil/test/legacy
   - if NOT DEFINED GENERATOR b2 --abbreviate-paths address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% cxxstd=%CXXSTD% libs/gil/test/extension/numeric
   - if NOT DEFINED GENERATOR b2 --abbreviate-paths address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% cxxstd=%CXXSTD% libs/gil/test/extension/toolbox
   - if NOT DEFINED GENERATOR b2 --abbreviate-paths address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% cxxstd=%CXXSTD% include=%VCPKG_I% library-path=%VCPKG_L% libs/gil/test/extension/io//simple
