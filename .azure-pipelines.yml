@@ -61,7 +61,6 @@ jobs:
       - template: .ci/azure-pipelines/steps-install-boost.yml
       - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
         parameters:
-          get_findboost: 'ON'
           use_conan: 'ON'
 
   - job: 'win2016_vs2017_cxx17_cmake'
@@ -80,7 +79,6 @@ jobs:
       - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
         parameters:
           cxxver: '17'
-          get_findboost: 'ON'
           use_conan: 'ON'
 
   - job: 'win2012_vs2015_cmake'
@@ -106,7 +104,6 @@ jobs:
       - template: .ci/azure-pipelines/steps-install-boost.yml
       - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
         parameters:
-          get_findboost: 'ON'
           use_conan: 'ON'
 
   - job: 'macos1013_xcode91_cmake'
