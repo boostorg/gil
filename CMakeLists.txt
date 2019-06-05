@@ -153,7 +153,7 @@ if(GIL_USE_CONAN)
   endif()
 
   include(${CMAKE_BINARY_DIR}/conan.cmake)
-  conan_cmake_run(CONANFILE conanfile.txt BASIC_SETUP CMAKE_TARGETS)
+  conan_cmake_run(CONANFILE conanfile.txt BASIC_SETUP CMAKE_TARGETS BUILD missing)
 
   set(CMAKE_BUILD_TYPE ${_build_type_saved})
   unset(_build_type_saved)
