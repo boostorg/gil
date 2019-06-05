@@ -15,3 +15,4 @@ project
 
 run binary.cpp ;
 run truncate.cpp ;
+run lanczos_scaling.cpp ;
