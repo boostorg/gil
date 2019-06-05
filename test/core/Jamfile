@@ -28,5 +28,6 @@ build-project locator ;
 build-project image ;
 build-project image_view ;
 build-project algorithm ;
+build-project image_processing ;
 
 run promote_integral.cpp /boost/test//boost_unit_test_framework : : : <link>shared:<define>BOOST_TEST_DYN_LINK=1 ;
