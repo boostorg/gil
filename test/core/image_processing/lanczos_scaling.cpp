@@ -1,9 +1,4 @@
 #include <boost/gil/image_processing/scaling.hpp>
-
-#include <boost/gil/extension/io/png.hpp>
-#include <boost/gil/extension/io/jpeg.hpp>
-#include <boost/gil/io/read_image.hpp>
-#include <boost/gil/io/write_view.hpp>
 #include <boost/gil/image.hpp>
 
 #include <boost/core/lightweight_test.hpp>
