@@ -16,8 +16,7 @@ namespace boost{ namespace gil{
 /// normalized_sinc(x) = sin(pi * x) / (pi * x)
 double normalized_sinc(double x) 
 {
-    constexpr double pi = boost::gil::pi;
-    return std::sin(x * pi) / (x * pi);
+    return std::sin(x * boost::gil::pi) / (x * boost::gil::pi);
 }
 
 /// \brief Lanczos response at point x
