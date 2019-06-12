@@ -26,7 +26,7 @@ double normalized_sinc(double x)
 /// x == 0: 1
 /// -a < x && x < a: 0
 /// otherwise: normalized_sinc(x) / normalized_sinc(x / a)
-double lanczos(double x, long int a)
+double lanczos(double x, std::ptrdiff_t a)
 {
     if (x == 0)
     {

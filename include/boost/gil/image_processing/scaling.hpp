@@ -29,12 +29,12 @@ namespace boost{ namespace gil{
 /// artifacts.
 template <typename ImageView>
 void lanczos_at(
-    std::ptrdiff_t source_x,
-    std::ptrdiff_t source_y,
-    std::ptrdiff_t target_x,
-    std::ptrdiff_t target_y,
     ImageView input_view,
     ImageView output_view,
+    typename ImageView::x_coord_t source_x,
+    typename ImageView::y_coord_t source_y,
+    typename ImageView::x_coord_t target_x,
+    typename ImageView::y_coord_t target_y,
     std::ptrdiff_t a)
 {
     using pixel_t = typename std::remove_reference<
@@ -100,12 +100,12 @@ void scale_lanczos(ImageView input_view, ImageView output_view, std::ptrdiff_t a
         for (std::ptrdiff_t x = 0; x < output_view.width(); ++x)
         {
             boost::gil::lanczos_at(
+                input_view,
+                output_view,
                 x / scale_x,
                 y / scale_y,
                 x,
                 y,
-                input_view,
-                output_view,
                 a);
         }
     }
