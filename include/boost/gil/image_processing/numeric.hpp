@@ -5,7 +5,7 @@ namespace boost{ namespace gil{
 
 /// \defgroup ImageProcessingMath
 /// \brief Math operations for IP algorithms
-/// 
+///
 /// This is mostly handful of mathemtical
 /// operations that are required by other
 /// image processing algorithms
@@ -14,7 +14,7 @@ namespace boost{ namespace gil{
 /// \ingroup ImageProcessingMath
 ///
 /// normalized_sinc(x) = sin(pi * x) / (pi * x)
-double normalized_sinc(double x) 
+double normalized_sinc(double x)
 {
     return std::sin(x * boost::gil::pi) / (x * boost::gil::pi);
 }
@@ -26,15 +26,15 @@ double normalized_sinc(double x)
 /// x == 0: 1
 /// -a < x && x < a: 0
 /// otherwise: normalized_sinc(x) / normalized_sinc(x / a)
-double lanczos(double x, long int a) 
+double lanczos(double x, long int a)
 {
-    if (x == 0) 
+    if (x == 0)
     {
         return 1;
     }
-    if (-a < x && x < a) 
+    if (-a < x && x < a)
     {
-        return normalized_sinc(x) 
+        return normalized_sinc(x)
                / normalized_sinc(x / static_cast<double>(a));
     }
 

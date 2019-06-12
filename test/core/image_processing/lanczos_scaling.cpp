@@ -12,11 +12,11 @@ bool are_equal(gil::rgb8_view_t expected, gil::rgb8_view_t actual) {
     if (expected.dimensions() != actual.dimensions())
         return false;
 
-    for (long int y = 0; y < expected.height(); ++y) 
+    for (long int y = 0; y < expected.height(); ++y)
     {
-        for (long int x = 0; x < expected.width(); ++x) 
+        for (long int x = 0; x < expected.width(); ++x)
         {
-            if (expected(x, y) != actual(x, y)) 
+            if (expected(x, y) != actual(x, y))
             {
                 return false;
             }
@@ -26,7 +26,7 @@ bool are_equal(gil::rgb8_view_t expected, gil::rgb8_view_t actual) {
     return true;
 }
 
-void test_lanczos_black_image() 
+void test_lanczos_black_image()
 {
 
     const gil::point_t input_dimensions(20, 20);
@@ -51,13 +51,13 @@ void test_lanczos_black_image()
     BOOST_TEST(are_equal(expected_view,output_view));
 }
 
-void test_lanczos_response_on_zero() 
+void test_lanczos_response_on_zero()
 {
     //random value for a
     BOOST_TEST(gil::lanczos(0, 2) == 1);
 }
 
-int main() 
+int main()
 {
     test_lanczos_black_image();
     test_lanczos_response_on_zero();
