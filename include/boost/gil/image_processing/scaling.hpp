@@ -29,13 +29,13 @@ namespace boost{ namespace gil{
 /// artifacts.
 template <typename ImageView>
 void lanczos_at(
-    long int source_x, 
-    long int source_y, 
-    long int target_x, 
-    long int target_y, 
+    std::ptrdiff_t source_x, 
+    std::ptrdiff_t source_y, 
+    std::ptrdiff_t target_x, 
+    std::ptrdiff_t target_y, 
     ImageView input_view, 
     ImageView output_view, 
-    long int a) 
+    std::ptrdiff_t a) 
 {
     using pixel_t = typename std::remove_reference<
                       decltype(std::declval<ImageView>()(0, 0))
@@ -52,12 +52,12 @@ void lanczos_at(
     boost::gil::static_transform(result_pixel, result_pixel, 
         [](channel_t) { return static_cast<channel_t>(0); });
     
-    for (long int y_i = std::max(source_y - a + 1l, 0l); 
-         y_i <= std::min(static_cast<std::ptrdiff_t>(source_y + a), input_view.height() - 1l);
+    for (std::ptrdiff_t y_i = std::max(source_y - a + 1l, 0l); 
+         y_i <= std::min(source_y + a, input_view.height() - 1l);
          ++y_i) 
         {
-        for (long int x_i = std::max(source_x - a + 1l, 0l); 
-             x_i <= std::min(static_cast<std::ptrdiff_t>(source_x + a), input_view.width() - 1l); 
+        for (std::ptrdiff_t x_i = std::max(source_x - a + 1l, 0l); 
+             x_i <= std::min(source_x + a, input_view.width() - 1l); 
              ++x_i) 
         {
             double lanczos_response = boost::gil::lanczos(source_x - x_i, a) 
@@ -88,16 +88,16 @@ void lanczos_at(
 /// https://en.wikipedia.org/wiki/Lanczos_resampling
 /// with standardinzed cardinal sin (sinc)
 template <typename ImageView>
-void scale_lanczos(ImageView input_view, ImageView output_view, long int a) 
+void scale_lanczos(ImageView input_view, ImageView output_view, std::ptrdiff_t a) 
 {
     double scale_x = (static_cast<double>(output_view.width())) 
                      / static_cast<double>(input_view.width());
     double scale_y = (static_cast<double>(output_view.height())) 
                      / static_cast<double>(input_view.height());
 
-    for (long int y = 0; y < output_view.height(); ++y) 
+    for (std::ptrdiff_t y = 0; y < output_view.height(); ++y) 
     {
-        for (long int x = 0; x < output_view.width(); ++x) 
+        for (std::ptrdiff_t x = 0; x < output_view.width(); ++x) 
         {
             boost::gil::lanczos_at(
                 x / scale_x, 
