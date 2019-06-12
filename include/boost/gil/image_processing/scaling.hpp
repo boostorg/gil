@@ -54,14 +54,16 @@ void lanczos_at(
     boost::gil::static_transform(result_pixel, result_pixel,
         [](channel_t) { return static_cast<channel_t>(0); });
     auto x_zero = static_cast<x_coord_t>(0);
+    auto x_one = static_cast<x_coord_t>(1);
     auto y_zero = static_cast<y_coord_t>(0);
+    auto y_one = static_cast<y_coord_t>(1);
 
-    for (y_coord_t y_i = std::max(source_y - a + 1l, y_zero);
-         y_i <= std::min(source_y + a, input_view.height() - 1l);
+    for (y_coord_t y_i = std::max(source_y - static_cast<y_coord_t>(a) + y_one, y_zero);
+         y_i <= std::min(source_y + static_cast<y_coord_t>(a), input_view.height() - y_one);
          ++y_i)
     {
-        for (x_coord_t x_i = std::max(source_x - a + 1l, x_zero);
-             x_i <= std::min(source_x + a, input_view.width() - 1l);
+        for (x_coord_t x_i = std::max(source_x - static_cast<x_coord_t>(a) + x_one, x_zero);
+             x_i <= std::min(source_x + static_cast<x_coord_t>(a), input_view.width() - x_one);
              ++x_i)
         {
             double lanczos_response = boost::gil::lanczos(source_x - x_i, a)
