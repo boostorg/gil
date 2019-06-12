@@ -37,6 +37,8 @@ void lanczos_at(
     typename ImageView::y_coord_t target_y,
     std::ptrdiff_t a)
 {
+    using x_coord_t = typename ImageView::x_coord_t;
+    using y_coord_t = typename ImageView::y_coord_t;
     using pixel_t = typename std::remove_reference<
                       decltype(std::declval<ImageView>()(0, 0))
                     >::type;
@@ -51,12 +53,14 @@ void lanczos_at(
     pixel_t result_pixel;
     boost::gil::static_transform(result_pixel, result_pixel,
         [](channel_t) { return static_cast<channel_t>(0); });
+    auto x_zero = static_cast<x_coord_t>(0);
+    auto y_zero = static_cast<y_coord_t>(0);
 
-    for (std::ptrdiff_t y_i = std::max(source_y - a + 1l, 0l);
+    for (y_coord_t y_i = std::max(source_y - a + 1l, y_zero);
          y_i <= std::min(source_y + a, input_view.height() - 1l);
          ++y_i)
-        {
-        for (std::ptrdiff_t x_i = std::max(source_x - a + 1l, 0l);
+    {
+        for (x_coord_t x_i = std::max(source_x - a + 1l, x_zero);
              x_i <= std::min(source_x + a, input_view.width() - 1l);
              ++x_i)
         {
@@ -95,9 +99,11 @@ void scale_lanczos(ImageView input_view, ImageView output_view, std::ptrdiff_t a
     double scale_y = (static_cast<double>(output_view.height()))
                      / static_cast<double>(input_view.height());
 
-    for (std::ptrdiff_t y = 0; y < output_view.height(); ++y)
+    using x_coord_t = typename ImageView::x_coord_t;
+    using y_coord_t = typename ImageView::y_coord_t;
+    for (y_coord_t y = 0; y < output_view.height(); ++y)
     {
-        for (std::ptrdiff_t x = 0; x < output_view.width(); ++x)
+        for (x_coord_t x = 0; x < output_view.width(); ++x)
         {
             boost::gil::lanczos_at(
                 input_view,
