@@ -14,7 +14,9 @@ ExternalProject_Add(project_celero
   GIT_SHALLOW 1
   PREFIX ${CMAKE_CURRENT_BINARY_DIR}/vendor/celero
   TIMEOUT 10
-  BUILD_BYPRODUCTS <INSTALL_DIR>/lib/static/${CMAKE_STATIC_LIBRARY_PREFIX}celerod${CMAKE_STATIC_LIBRARY_SUFFIX}
+  BUILD_BYPRODUCTS
+    <INSTALL_DIR>/lib/static/${CMAKE_STATIC_LIBRARY_PREFIX}celerod${CMAKE_STATIC_LIBRARY_SUFFIX}
+    <INSTALL_DIR>/lib/static/${CMAKE_STATIC_LIBRARY_PREFIX}celero${CMAKE_DEBUG_POSTFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}
   CMAKE_ARGS
     -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_BINARY_DIR}/vendor/celero
     -DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
@@ -29,10 +31,18 @@ file(MAKE_DIRECTORY ${INSTALL_DIR}/include)
 add_library(gil_celero STATIC IMPORTED)
 target_include_directories(gil_celero INTERFACE ${INSTALL_DIR}/include)
 target_compile_definitions(gil_celero INTERFACE CELERO_STATIC=1)
-set_property(TARGET gil_celero PROPERTY IMPORTED_LOCATION_DEBUG
+set_property(TARGET gil_celero PROPERTY
+  IMPORTED_LOCATION_DEBUG
   "${INSTALL_DIR}/lib/static/${CMAKE_STATIC_LIBRARY_PREFIX}celerod${CMAKE_STATIC_LIBRARY_SUFFIX}")
-set_property(TARGET gil_celero PROPERTY IMPORTED_LOCATION_RELEASE
+set_property(TARGET gil_celero PROPERTY
+  IMPORTED_LOCATION_RELEASE
   "${INSTALL_DIR}/lib/static/${CMAKE_STATIC_LIBRARY_PREFIX}celero${CMAKE_STATIC_LIBRARY_SUFFIX}")
+set_target_properties(gil_celero PROPERTIES
+  MAP_IMPORTED_CONFIG_MINSIZEREL Release
+  MAP_IMPORTED_CONFIG_RELWITHDEBINFO Release)
+
+# Hack to help IDEs (e.g. VS) find headers when using simple generators like Ninja
+include_directories(${INSTALL_DIR}/include)
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
   find_library(POWRPROF PowrProf.lib)
