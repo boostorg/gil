@@ -41,9 +41,6 @@ set_target_properties(gil_celero PROPERTIES
   MAP_IMPORTED_CONFIG_MINSIZEREL Release
   MAP_IMPORTED_CONFIG_RELWITHDEBINFO Release)
 
-# Hack to help IDEs (e.g. VS) find headers when using simple generators like Ninja
-include_directories(${INSTALL_DIR}/include)
-
 if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
   find_library(POWRPROF PowrProf.lib)
   target_link_libraries(gil_celero INTERFACE POWRPROF)
