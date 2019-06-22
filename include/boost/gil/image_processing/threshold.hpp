@@ -11,7 +11,15 @@
 #include <limits>
 #include <array>
 #include <type_traits>
+#include <cstddef>
+#include <algorithm>
+#include <vector>
+#include <cmath>
+
 #include <boost/gil/image.hpp>
+#include <boost/gil/extension/numeric/kernel.hpp>
+#include <boost/gil/extension/numeric/convolve.hpp>
+#include <boost/assert.hpp>
 
 namespace boost { namespace gil {
 
@@ -29,11 +37,6 @@ void threshold_impl(SrcView const& src_view, DstView const& dst_view, Operator c
 {
     gil_function_requires<ImageViewConcept<SrcView>>();
     gil_function_requires<MutableImageViewConcept<DstView>>();
-    gil_function_requires<ColorSpacesCompatibleConcept
-    <
-        typename color_space_type<SrcView>::type,
-        typename color_space_type<DstView>::type>
-    >();
     static_assert(color_spaces_are_compatible
     <
         typename color_space_type<SrcView>::type,
@@ -81,6 +84,12 @@ enum class threshold_truncate_mode
 {
     threshold,  ///< \todo TODO
     zero        ///< \todo TODO
+};
+
+enum class threshold_adaptive_method
+{
+    mean,
+    gaussian
 };
 
 /// \ingroup ImageProcessing
@@ -332,6 +341,115 @@ void threshold_optimal
                 (nth_channel_view(src_view, i), nth_channel_view(dst_view, i), direction);
         }
     }
+}
+
+namespace detail {
+
+template
+<
+    typename SourceChannelT,
+    typename ResultChannelT,
+    typename SrcView,
+    typename DstView,
+    typename Operator
+>
+void adaptive_impl
+(
+    SrcView const& src_view,
+    SrcView const& convolved_view,
+    DstView const& dst_view,
+    Operator const& threshold_op
+)
+{
+    //template argument validation
+    gil_function_requires<ImageViewConcept<SrcView>>();
+    gil_function_requires<MutableImageViewConcept<DstView>>();
+
+    static_assert(color_spaces_are_compatible
+    <
+        typename color_space_type<SrcView>::type,
+        typename color_space_type<DstView>::type
+    >::value, "Source and destination views must have pixels with the same color space");
+
+    //iterate over the image chaecking each pixel value for the threshold
+    for (std::ptrdiff_t y = 0; y < src_view.height(); y++)
+    {
+        typename SrcView::x_iterator src_it = src_view.row_begin(y);
+        typename SrcView::x_iterator convolved_it = convolved_view.row_begin(y);
+        typename DstView::x_iterator dst_it = dst_view.row_begin(y);
+
+        for (std::ptrdiff_t x = 0; x < src_view.width(); x++)
+        {
+            static_transform(src_it[x], convolved_it[x], dst_it[x], threshold_op);
+        }
+    }
+}
+} //namespace boost::gil::detail
+
+template <typename SrcView, typename DstView>
+void threshold_adaptive
+(
+    SrcView const& src_view,
+    DstView const& dst_view,
+    typename channel_type<DstView>::type max_value,
+    std::size_t kernel_size,
+    threshold_adaptive_method method = threshold_adaptive_method::mean,
+    threshold_direction direction = threshold_direction::regular
+)
+{
+    BOOST_ASSERT_MSG((kernel_size % 2 != 0), "Kernel size must be an odd number");
+
+    typedef typename channel_type<SrcView>::type source_channel_t;
+    typedef typename channel_type<DstView>::type result_channel_t;
+
+    if (method == threshold_adaptive_method::mean)
+    {
+        float *mean = new float[kernel_size];
+        std::fill_n(mean, kernel_size, 1.0f/kernel_size);
+
+        image<typename SrcView::value_type> temp_img(src_view.width(), src_view.height());
+        typename image<typename SrcView::value_type>::view_t temp_view = view(temp_img);
+        SrcView temp_conv(temp_view);
+        
+        kernel_1d<float> kernel(mean, kernel_size, kernel_size/2);
+        convolve_rows<pixel<float, typename SrcView::value_type::layout_t>>(
+            src_view, kernel, temp_view
+        );
+        convolve_cols<pixel<float, typename SrcView::value_type::layout_t>>(
+            temp_view, kernel, temp_view
+        );
+
+        if (direction == threshold_direction::regular)
+        {
+            detail::adaptive_impl<source_channel_t, result_channel_t>(src_view, temp_conv, dst_view,
+                [max_value](source_channel_t px1, source_channel_t px2) -> result_channel_t
+                    { return px1 >= px2 ? max_value : 0; });
+        }
+        else
+        {
+            detail::adaptive_impl<source_channel_t, result_channel_t>(src_view, temp_conv, dst_view,
+                [max_value](source_channel_t px1, source_channel_t px2) -> result_channel_t
+                    { return px1 >= px2 ? 0 : max_value; });
+        }
+    }
+}
+
+template <typename SrcView, typename DstView>
+void threshold_adaptive
+(
+    SrcView const& src_view,
+    DstView const& dst_view,
+    std::size_t kernel_size,
+    threshold_adaptive_method method = threshold_adaptive_method::mean,
+    threshold_direction direction = threshold_direction::regular
+)
+{
+    //deciding output channel type and creating functor
+    typedef typename channel_type<DstView>::type result_channel_t;
+
+    result_channel_t max_value = std::numeric_limits<result_channel_t>::max();
+
+    threshold_adaptive(src_view, dst_view, max_value, kernel_size, method, direction);
 }
 
 /// @}
