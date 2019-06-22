@@ -23,12 +23,13 @@ foreach(_name
 
     unset(_name)
     unset(_target)
+endforeach()
 
 foreach(_name
   lanczos_scaling
   )
-  set(_test t_image_processing_${_name})
-  set(_target test_image_processing_${_name})
+  set(_test t_${_name})
+  set(_target test_${_name})
 
   add_executable(${_target} "")
   target_sources(${_target} PRIVATE ${_name}.cpp)
