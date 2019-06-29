@@ -9,6 +9,7 @@
 message(STATUS "Boost.GIL: Configuring tests in test/extension/numeric")
 
 foreach(_name
+  kernel
   matrix3x2
   numeric)
   set(_test t_ext_numeric_${_name})
