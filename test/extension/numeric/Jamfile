@@ -1,6 +1,7 @@
 # Boost.GIL (Generic Image Library) - Numeric tests
 #
 # Copyright (c) 2013 Christian Henning
+# Copyright (c) 2019 Mateusz Loskot <mateusz at loskot dot net>
 #
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or
@@ -16,5 +17,6 @@ project
 
 alias headers : [ generate_self_contained_headers extension/numeric ] ;
 
+run kernel.cpp ;
 run matrix3x2.cpp ;
 run numeric.cpp ;
