@@ -7,7 +7,8 @@
 #
 foreach(_name
   concepts
-  homogeneous_color_base)
+  homogeneous_color_base
+  static_transform)
   set(_test t_core_color_base_${_name})
   set(_target test_core_color_base_${_name})
 
