@@ -272,7 +272,7 @@ steps_bootstrap: &steps_bootstrap
     - *attach_workspace
     - *run_compiler_version
     - run: cd boost-root && ./bootstrap.sh -with-toolset=$TOOLSET || cat ./bootstrap.log
-    - run: cd boost-root && ./b2 headers > /dev/null
+    - run: cd boost-root && ./b2 -j2 headers > /dev/null
     - persist_to_workspace:
         root: ~/project
         paths: boost-root
@@ -281,25 +281,25 @@ steps_test_core: &steps_test_core
   steps:
     - *attach_workspace
     - *run_compiler_version
-    - run: cd boost-root && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/test/core
+    - run: cd boost-root && ./b2 -j2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/test/core
 
 steps_test_numeric: &steps_test_numeric
   steps:
     - *attach_workspace
     - *run_compiler_version
-    - run: cd boost-root && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/test/extension/numeric
+    - run: cd boost-root && ./b2 -j2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/test/extension/numeric
 
 steps_test_toolbox: &steps_test_toolbox
   steps:
     - *attach_workspace
     - *run_compiler_version
-    - run: cd boost-root && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/test/extension/toolbox
+    - run: cd boost-root && ./b2 -j2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/test/extension/toolbox
 
 steps_test_io: &steps_test_io
   steps:
     - *attach_workspace
     - *run_compiler_version
-    - run: cd boost-root && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/test/extension/io//simple
+    - run: cd boost-root && ./b2 -j2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/test/extension/io//simple
 
 ##############################################################################
 # Build jobs
