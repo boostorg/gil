@@ -94,6 +94,10 @@ class kernel_1d_fixed : public detail::kernel_1d_adaptor<std::array<T,Size>>
 {
     using parent_t = detail::kernel_1d_adaptor<std::array<T,Size>>;
 public:
+    static constexpr std::size_t static_size = Size;
+    static_assert(static_size > 0, "kernel must have size greater than 0");
+    static_assert(static_size % 2 == 1, "kernel size must be odd to ensure validity at the center");
+
     kernel_1d_fixed() {}
     explicit kernel_1d_fixed(std::size_t center_in) : parent_t(center_in) {}
 
@@ -103,6 +107,11 @@ public:
     }
     kernel_1d_fixed(const kernel_1d_fixed& k_in)    : parent_t(k_in) {}
 };
+
+// TODO: This data member is odr-used and definition at namespace scope
+// is required by C++11. Redundant and deprecated in C++17.
+template <typename T,std::size_t Size>
+constexpr std::size_t kernel_1d_fixed<T, Size>::static_size;
 
 /// \brief reverse a kernel
 template <typename Kernel>
