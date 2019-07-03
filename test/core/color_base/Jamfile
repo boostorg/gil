@@ -15,3 +15,5 @@ project
 
 compile concepts.cpp ;
 compile homogeneous_color_base.cpp ;
+compile-fail static_transform_gray_to_rgb_fail.cpp ;
+compile-fail static_transform_rgb_to_cmyk_fail.cpp ;
