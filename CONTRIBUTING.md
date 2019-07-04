@@ -478,18 +478,17 @@ Here is an example of such lightweight workflow in Linux environment (Debian-bas
     ctest -R gil.tests.core.pixel
     ```
 
-#### CMake integration for Visual Studio
+#### CMake configuration for Visual Studio
 
-If you are going to use the CMake integration for Visual Studio 2017 or 2019, we provide
-[example/cmake/CMakeSettings.json](https://github.com/boostorg/gil/blob/develop/example/cmake/CMakeSettings.json)
-with reasonable default settings for the CMake integration for Visual Studio.
-Copy the file next to the top-level `CMakeLists.txt` of GIL and run CMake from within Visual Studio.
+We provide [example/cmake/CMakeSettings.json](https://github.com/boostorg/gil/blob/develop/example/cmake/CMakeSettings.json)
+with reasonable default settings for the [CMake support in Visual Studio](https://go.microsoft.com//fwlink//?linkid=834763).
+See [example/cmake/README.md](example/cmake/README.md) for more details.
 
-Go to [CMake support in Visual Studio](https://go.microsoft.com//fwlink//?linkid=834763)
-to learn more about the integration.
+#### CMake configuration for Visual Studio Code
 
-Go to [CMakeSettings.json schema reference](https://docs.microsoft.com/en-us/cpp/build/cmakesettings-reference?view=vs-2017)
-to learn about the configuration file itself.
+We provide [example/cmake/cmake-variants.yaml](https://github.com/boostorg/gil/blob/develop/example/cmake/cmake-variants.yaml)
+with reasonable default settings for the [CMake Tools](https://github.com/vector-of-bool/vscode-cmake-tools) extension.
+See [example/cmake/README.md](example/cmake/README.md) for more details.
 
 ### Using Faber
 

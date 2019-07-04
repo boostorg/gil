@@ -20,6 +20,7 @@ doc/warnings.txt
 /cmake-build-debug/
 /cmake-build-release/
 /CMakeSettings.json
+/cmake-variants.yaml
 
 # JetBrains
 /.idea
