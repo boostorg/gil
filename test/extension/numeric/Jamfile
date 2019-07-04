@@ -18,5 +18,6 @@ project
 alias headers : [ generate_self_contained_headers extension/numeric ] ;
 
 run kernel.cpp ;
+compile-fail kernel_1d_fixed_even_size_fail.cpp ;
 run matrix3x2.cpp ;
 run numeric.cpp ;
