@@ -7,9 +7,10 @@
 # http://www.boost.org/LICENSE_1_0.txt)
 #
 foreach(_name
-        binary
-        truncate)
-    set(_target test_threshold_${_name})
+    threshold_binary
+    threshold_truncate)
+    set(_test t_core_image_processing_${_name})
+    set(_target test_core_image_processing_${_name})
 
     add_executable(${_target} "")
     target_sources(${_target} PRIVATE ${_name}.cpp)
@@ -19,17 +20,16 @@ foreach(_name
             gil_include_directories
             gil_dependencies)
     target_compile_definitions(${_target} PRIVATE BOOST_GIL_USE_CONCEPT_CHECK)
-    add_test(NAME test.threshold.${_name} COMMAND ${_target})
+    add_test(NAME ${_test} COMMAND ${_target})
 
     unset(_name)
     unset(_target)
 endforeach()
 
 foreach(_name
-  lanczos_scaling
-  )
-  set(_test t_${_name})
-  set(_target test_${_name})
+  lanczos_scaling)
+  set(_test t_core_image_processing_${_name})
+  set(_target test_core_image_processing_${_name})
 
   add_executable(${_target} "")
   target_sources(${_target} PRIVATE ${_name}.cpp)

@@ -13,6 +13,6 @@ project
     <include>..
     ;
 
-run binary.cpp ;
-run truncate.cpp ;
+run threshold_binary.cpp ;
+run threshold_binary.cpp ;
 run lanczos_scaling.cpp ;
