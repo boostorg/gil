@@ -89,6 +89,7 @@ public:
     };
 
     image_view() : _dimensions(0,0) {}
+    image_view(image_view const& img_view) : _dimensions(img_view.dimensions()),  _pixels(img_view.pixels()) {}
     template <typename View> image_view(const View& iv)                                    : _dimensions(iv.dimensions()), _pixels(iv.pixels()) {}
 
     template <typename L2> image_view(const point_t& sz            , const L2& loc)        : _dimensions(sz),          _pixels(loc) {}
