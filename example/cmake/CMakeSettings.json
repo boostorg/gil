@@ -105,6 +105,98 @@
       ]
     },
     {
+      "name": "x64-Debug-VS2019",
+      "generator": "Visual Studio 16 2019 Win64",
+      "configurationType": "Debug",
+      "buildRoot": "${env.BuildDir}\\${name}",
+      "installRoot": "${env.InstallDir}\\${name}",
+      "buildCommandArgs": "-m",
+      "cmakeCommandArgs": "",
+      "ctestCommandArgs": "",
+      "variables": [
+        { "name": "Boost_DEBUG", "value": "ON" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.71" },
+        { "name": "Boost_ARCHITECTURE", "value": "-x64" },
+        { "name": "Boost_COMPILER", "value": "-vc142" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
+        { "name": "GIL_USE_CONAN", "value": "ON" },
+        { "name": "GIL_USE_CLANG_TIDY", "value": "OFF" }
+      ]
+    },
+    {
+      "name": "x64-Release-VS2019",
+      "generator": "Visual Studio 16 2019 Win64",
+      "configurationType": "Release",
+      "buildRoot": "${env.BuildDir}\\${name}",
+      "installRoot": "${env.InstallDir}\\${name}",
+      "buildCommandArgs": "-m",
+      "cmakeCommandArgs": "",
+      "ctestCommandArgs": "",
+      "variables": [
+        { "name": "Boost_DEBUG", "value": "ON" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.71" },
+        { "name": "Boost_ARCHITECTURE", "value": "-x64" },
+        { "name": "Boost_COMPILER", "value": "-vc142" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
+        { "name": "GIL_USE_CONAN", "value": "ON" },
+        { "name": "GIL_USE_CLANG_TIDY", "value": "OFF" }
+      ]
+    },
+    {
+      "name": "x86-Debug-VS2019",
+      "generator": "Visual Studio 16 2019",
+      "configurationType": "Debug",
+      "buildRoot": "${env.BuildDir}\\${name}",
+      "installRoot": "${env.InstallDir}\\${name}",
+      "buildCommandArgs": "-m",
+      "cmakeCommandArgs": "",
+      "ctestCommandArgs": "",
+      "variables": [
+        { "name": "Boost_DEBUG", "value": "ON" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.71" },
+        { "name": "Boost_ARCHITECTURE", "value": "-x32" },
+        { "name": "Boost_COMPILER", "value": "-vc142" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
+        { "name": "GIL_USE_CONAN", "value": "ON" },
+        { "name": "GIL_USE_CLANG_TIDY", "value": "OFF" }
+      ]
+    },
+    {
+      "name": "x86-Release-VS2019",
+      "generator": "Visual Studio 16 2019",
+      "configurationType": "Release",
+      "buildRoot": "${env.BuildDir}\\${name}",
+      "installRoot": "${env.InstallDir}\\${name}",
+      "buildCommandArgs": "-m",
+      "cmakeCommandArgs": "",
+      "ctestCommandArgs": "",
+      "variables": [
+        { "name": "Boost_DEBUG", "value": "ON" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.71" },
+        { "name": "Boost_ARCHITECTURE", "value": "-x32" },
+        { "name": "Boost_COMPILER", "value": "-vc142" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
+        { "name": "GIL_USE_CONAN", "value": "ON" },
+        { "name": "GIL_USE_CLANG_TIDY", "value": "OFF" }
+      ]
+    },
+    {
       "name": "x64-Debug-VS2017",
       "generator": "Visual Studio 15 2017 Win64",
       "configurationType": "Debug",
@@ -114,7 +206,17 @@
       "cmakeCommandArgs": "",
       "ctestCommandArgs": "",
       "variables": [
-        { "name": "CMAKE_TOOLCHAIN_FILE", "value": "C:\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake" }
+        { "name": "Boost_DEBUG", "value": "ON" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.71" },
+        { "name": "Boost_ARCHITECTURE", "value": "-x64" },
+        { "name": "Boost_COMPILER", "value": "-vc141" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
+        { "name": "GIL_USE_CONAN", "value": "ON" },
+        { "name": "GIL_USE_CLANG_TIDY", "value": "OFF" }
       ]
     },
     {
@@ -154,6 +256,112 @@
       "ctestCommandArgs": "",
       "variables": [
         { "name": "CMAKE_TOOLCHAIN_FILE", "value": "C:\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake" }
+      ]
+    },
+    {
+      "name": "WSL-Debug-GCC",
+      "generator": "Unix Makefiles",
+      "configurationType": "Debug",
+      "buildRoot": "${env.BuildDir}\\${name}",
+      "installRoot": "${env.InstallDir}\\${name}",
+      "cmakeExecutable": "/usr/bin/cmake",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "inheritEnvironments": [ "linux_x64" ],
+      "intelliSenseMode": "linux-gcc-x64",
+      "wslPath": "${defaultWSLPath}",
+      "addressSanitizerRuntimeFlags": "detect_leaks=0",
+      "variables": [
+        { "name": "Boost_DEBUG", "value": "ON" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.71" },
+        { "name": "Boost_ARCHITECTURE", "value": "-x64" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
+        { "name": "GIL_USE_CONAN", "value": "OFF" },
+        { "name": "GIL_USE_CLANG_TIDY", "value": "OFF" }
+      ]
+    },
+    {
+      "name": "WSL-Release-GCC",
+      "generator": "Unix Makefiles",
+      "configurationType": "RelWithDebInfo",
+      "buildRoot": "${env.BuildDir}\\${name}",
+      "installRoot": "${env.InstallDir}\\${name}",
+      "cmakeExecutable": "/usr/bin/cmake",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "inheritEnvironments": [ "linux_x64" ],
+      "intelliSenseMode": "linux-gcc-x64",
+      "wslPath": "${defaultWSLPath}",
+      "addressSanitizerRuntimeFlags": "detect_leaks=0",
+      "variables": [
+        { "name": "Boost_DEBUG", "value": "ON" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.71" },
+        { "name": "Boost_ARCHITECTURE", "value": "-x64" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
+        { "name": "GIL_USE_CONAN", "value": "OFF" },
+        { "name": "GIL_USE_CLANG_TIDY", "value": "OFF" }
+      ]
+    },
+    {
+      "name": "WSL-Debug-clang",
+      "generator": "Unix Makefiles",
+      "configurationType": "Debug",
+      "buildRoot": "${env.BuildDir}\\${name}",
+      "installRoot": "${env.InstallDir}\\${name}",
+      "cmakeExecutable": "/usr/bin/cmake",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "inheritEnvironments": [ "linux_clang_x64" ],
+      "wslPath": "${defaultWSLPath}",
+      "addressSanitizerRuntimeFlags": "detect_leaks=0",
+      "variables": [
+        { "name": "Boost_DEBUG", "value": "ON" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.71" },
+        { "name": "Boost_ARCHITECTURE", "value": "-x64" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
+        { "name": "GIL_USE_CONAN", "value": "OFF" },
+        { "name": "GIL_USE_CLANG_TIDY", "value": "OFF" }
+      ]
+    },
+    {
+      "name": "WSL-Release-clang",
+      "generator": "Unix Makefiles",
+      "configurationType": "RelWithDebInfo",
+      "buildRoot": "${env.BuildDir}\\${name}",
+      "installRoot": "${env.InstallDir}\\${name}",
+      "cmakeExecutable": "/usr/bin/cmake",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "inheritEnvironments": [ "linux_clang_x64" ],
+      "wslPath": "${defaultWSLPath}",
+      "addressSanitizerRuntimeFlags": "detect_leaks=0",
+      "variables": [
+        { "name": "Boost_DEBUG", "value": "ON" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.71" },
+        { "name": "Boost_ARCHITECTURE", "value": "-x64" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
+        { "name": "GIL_USE_CONAN", "value": "OFF" },
+        { "name": "GIL_USE_CLANG_TIDY", "value": "OFF" }
       ]
     }
   ]

@@ -9,6 +9,12 @@ Boost.GIL tests and examples in the IDEs of their choice.
 Example [CMakeSettings.json](CMakeSettings.json) file is provided for
 the [CMake support in Visual Studio](https://go.microsoft.com//fwlink//?linkid=834763).
 
+Currently, the `CMakeSettings.json` provides configurations for the following
+CMake generators:
+- Ninja (default)
+- Visual Studio 2017 and 2019
+- `Unix Makefiles` targeting Windows Subsystem for Linux (WSL) - requires Visual Studio 2019 IDE.
+
 Usage:
 
 1. Copy [CMakeSettings.json](CMakeSettings.json) to `${BOOST_ROOT}/libs/gil`.
