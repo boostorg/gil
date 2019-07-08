@@ -1,81 +1,67 @@
-Tutorial
-========
+Tutorial: Image Gradient
+========================
 
 .. contents::
    :local:
+   :depth: 1
 
-Installation
-------------
+This comprehensive (and long) tutorial will walk you through an example of
+using GIL to compute the image gradients.
 
-The latest version of GIL can be downloaded from http://boostorg.github.com/gil.
-GIL consists of header files only and does not require any libraries to
-link against. It does not require Boost to be built and including
-``boost/gil.hpp`` will be sufficient for most projects.
+We will start with some very simple and non-generic code and make it more
+generic as we go along.  Let us start with a horizontal gradient and use the
+simplest possible approximation to a gradient - central difference.
 
-Video Lecture by Lubomir Bourdev
---------------------------------
+The gradient at pixel x can be approximated with the half-difference of its
+two neighboring pixels::
 
-.. raw:: html
+  D[x] = (I[x-1] - I[x+1]) / 2
 
-    <div style="position: relative; overflow: hidden; max-width: 100%; height: auto;">
-        <iframe width="800" height="450" src="https://www.youtube.com/embed/sR8Wjg0pceE?rel=0" frameborder="0" allow="autoplay=false; encrypted-media" allowfullscreen></iframe>
-    </div>
-
-Source link: https://www.youtube.com/watch?v=sR8Wjg0pceE
-
-Example - Computing the Image Gradient
---------------------------------------
-
-This tutorial will walk through an example of using GIL to compute the
-image gradients. We will start with some very simple and non-generic
-code and make it more generic as we go along.  Let us start with a
-horizontal gradient and use the simplest possible approximation to a
-gradient - central difference.  The gradient at pixel x can be
-approximated with the half-difference of its two neighboring pixels:
-D[x] = (I[x-1] - I[x+1]) / 2
-
-For simplicity, we will also ignore the boundary cases - the pixels
-along the edges of the image for which one of the neighbors is not
-defined.  The focus of this document is how to use GIL, not how to
-create a good gradient generation algorithm.
+For simplicity, we will also ignore the boundary cases - the pixels along the
+edges of the image for which one of the neighbors is not defined. The focus of
+this document is how to use GIL, not how to create a good gradient generation
+algorithm.
 
 Interface and Glue Code
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
-Let us first start with 8-bit unsigned grayscale image as the input and
-8-bit signed grayscale image as the output.
-Here is how the interface to our algorithm looks like::
+Let us first start with 8-bit unsigned grayscale image as the input and 8-bit
+signed grayscale image as the output.
+
+Here is how the interface to our algorithm looks like:
+
+.. code-block:: cpp
 
   #include <boost/gil.hpp>
   using namespace boost::gil;
 
-  void x_gradient(const gray8c_view_t& src, const gray8s_view_t& dst)
+  void x_gradient(gray8c_view_t const& src, gray8s_view_t const& dst)
   {
     assert(src.dimensions() == dst.dimensions());
     ...    // compute the gradient
   }
 
-``gray8c_view_t`` is the type of the source image view - an 8-bit
-grayscale view, whose pixels are read-only (denoted by the "c"). The
-output is a grayscale view with a 8-bit signed (denoted by the "s")
-integer channel type. See Appendix 1 for the complete convention GIL
-uses to name concrete types.
+``gray8c_view_t`` is the type of the source image view - an 8-bit grayscale
+view, whose pixels are read-only (denoted by the "c").
 
-GIL makes a distinction between an image and an image view. A GIL
-**image view**, is a shallow, lightweight view of a rectangular grid
-of pixels. It provides access to the pixels but does not own the
-pixels. Copy-constructing a view does not deep-copy the pixels. Image
-views do not propagate their constness to the pixels and should always
-be taken by a const reference. Whether a view is mutable or read-only
-(immutable) is a property of the view type.
+The output is a grayscale view with a 8-bit signed (denoted by the "s")
+integer channel type. See Appendix 1 for the complete convention GIL uses to
+name concrete types.
 
-A GIL `image`, on the other hand, is a view with associated
-ownership. It is a container of pixels; its constructor/destructor
-allocates/deallocates the pixels, its copy-constructor performs
-deep-copy of the pixels and its operator== performs deep-compare of
-the pixels. Images also propagate their constness to their pixels - a
-constant reference to an image will not allow for modifying its
-pixels.
+GIL makes a distinction between an image and an image view.
+A GIL **image view**, is a shallow, lightweight view of a rectangular grid of
+pixels. It provides access to the pixels but does not own the pixels.
+Copy-constructing a view does not deep-copy the pixels. Image views do not
+propagate their constness to the pixels and should always be taken by a const
+reference. Whether a view is mutable or read-only (immutable) is a property of
+the view type.
+
+A GIL `image`, on the other hand, is a view with associated ownership.
+It is a container of pixels; its constructor/destructor allocates/deallocates
+the pixels, its copy-constructor performs deep-copy of the pixels and its
+``operator==`` performs deep-compare of the pixels. Images also propagate
+their constness to their pixels - a constant reference to an image will not
+allow for modifying its pixels.
 
 Most GIL algorithms operate on image views; images are rarely
 needed. GIL's design is very similar to that of the STL. The STL
@@ -87,53 +73,60 @@ ranges, just like GIL algorithms operate on image views.
 GIL's image views can be constructed from raw data - the dimensions,
 the number of bytes per row and the pixels, which for chunky views are
 represented with one pointer. Here is how to provide the glue between
-your code and GIL::
+your code and GIL:
 
-  void ComputeXGradientGray8(const unsigned char* src_pixels, ptrdiff_t src_row_bytes, int w, int h,
-                             signed char* dst_pixels, ptrdiff_t dst_row_bytes)
+.. code-block:: cpp
+
+  void ComputeXGradientGray8(
+      unsigned char const* src_pixels, ptrdiff_t src_row_bytes,
+      int w, int h,
+      signed char* dst_pixels, ptrdiff_t dst_row_bytes)
   {
-    gray8c_view_t src = interleaved_view(w, h, (const gray8_pixel_t*)src_pixels,src_row_bytes);
-    gray8s_view_t dst = interleaved_view(w, h, (     gray8s_pixel_t*)dst_pixels,dst_row_bytes);
-    x_gradient(src,dst);
+    gray8c_view_t src = interleaved_view(w, h, (gray8_pixel_t const*)src_pixels, src_row_bytes);
+    gray8s_view_t dst = interleaved_view(w, h, (gray8s_pixel_t*)dst_pixels, dst_row_bytes);
+    x_gradient(src, dst);
   }
 
-This glue code is very fast and views are lightweight - in the above
-example the views have a size of 16 bytes. They consist of a pointer
-to the top left pixel and three integers - the width, height, and
-number of bytes per row.
+This glue code is very fast and views are lightweight - in the above example
+the views have a size of 16 bytes. They consist of a pointer to the top left
+pixel and three integers - the width, height, and number of bytes per row.
 
 First Implementation
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 Focusing on simplicity at the expense of speed, we can compute the horizontal
-gradient like this::
+gradient like this:
 
-  void x_gradient(const gray8c_view_t& src, const gray8s_view_t& dst)
+.. code-block:: cpp
+
+  void x_gradient(gray8c_view_t const& src, gray8s_view_t const& dst)
   {
-    for (int y=0; y<src.height(); ++y)
-        for (int x=1; x<src.width()-1; ++x)
-            dst(x,y) = (src(x-1,y) - src(x+1,y)) / 2;
+    for (int y = 0; y < src.height(); ++y)
+        for (int x = 1; x < src.width() - 1; ++x)
+            dst(x, y) = (src(x-1, y) - src(x+1, y)) / 2;
   }
 
-We use image view's ``operator(x,y)`` to get a reference to the pixel
-at a given location and we set it to the half-difference of its left
-and right neighbors.  ``operator()`` returns a reference to a
-grayscale pixel. A grayscale pixel is convertible to its channel type
-(``unsigned char`` for ``src``) and it can be copy-constructed from a
-channel.  (This is only true for grayscale pixels).  While the above
-code is easy to read, it is not very fast, because the binary
-``operator()`` computes the location of the pixel in a 2D grid, which
-involves addition and multiplication. Here is a faster version of the
-above::
+We use image view's ``operator(x,y)`` to get a reference to the pixel at a
+given location and we set it to the half-difference of its left and right
+neighbors.  ``operator()`` returns a reference to a grayscale pixel.
+A grayscale pixel is convertible to its channel type (``unsigned char`` for
+``src``) and it can be copy-constructed from a channel.
+(This is only true for grayscale pixels).
 
-  void x_gradient(const gray8c_view_t& src, const gray8s_view_t& dst)
+While the above code is easy to read, it is not very fast, because the binary
+``operator()`` computes the location of the pixel in a 2D grid, which involves
+addition and multiplication. Here is a faster version of the above:
+
+.. code-block:: cpp
+
+  void x_gradient(gray8c_view_t const& src, gray8s_view_t const& dst)
   {
-    for (int y=0; y<src.height(); ++y)
+    for (int y = 0; y < src.height(); ++y)
     {
         gray8c_view_t::x_iterator src_it = src.row_begin(y);
         gray8s_view_t::x_iterator dst_it = dst.row_begin(y);
 
-        for (int x=1; x<src.width()-1; ++x)
+        for (int x=1; x < src.width() - 1; ++x)
             dst_it[x] = (src_it[x-1] - src_it[x+1]) / 2;
     }
   }
@@ -146,44 +139,48 @@ C pointers and their ``operator[]`` is a fast pointer indexing
 operator.
 
 The code to compute gradient in the vertical direction is very
-similar::
+similar:
 
-  void y_gradient(const gray8c_view_t& src, const gray8s_view_t& dst)
+.. code-block: cpp
+
+  void y_gradient(gray8c_view_t const& src, gray8s_view_t const& dst)
   {
-    for (int x=0; x<src.width(); ++x)
+    for (int x = 0; x < src.width(); ++x)
     {
         gray8c_view_t::y_iterator src_it = src.col_begin(x);
         gray8s_view_t::y_iterator dst_it = dst.col_begin(x);
 
-        for (int y=1; y<src.height()-1; ++y)
-            dst_it[y] = (src_it[y-1] - src_it[y+1])/2;
+        for (int y = 1; y < src.height() - 1; ++y)
+            dst_it[y] = (src_it[y-1] - src_it[y+1]) / 2;
     }
   }
 
-Instead of looping over the rows, we loop over each column and create
-a \p y_iterator, an iterator moving vertically. In this case a simple
-pointer cannot be used because the distance between two adjacent
-pixels equals the number of bytes in each row of the image. GIL uses
-here a special step iterator class whose size is 8 bytes - it contains
-a raw C pointer and a step.  Its ``operator[]`` multiplies the index
-by its step.
+Instead of looping over the rows, we loop over each column and create a
+``y_iterator``, an iterator moving vertically. In this case a simple pointer
+cannot be used because the distance between two adjacent pixels equals the
+number of bytes in each row of the image. GIL uses here a special step
+iterator class whose size is 8 bytes - it contains a raw C pointer and a step.
+Its ``operator[]`` multiplies the index by its step.
 
-The above version of ``y_gradient``, however, is much slower (easily
-an order of magnitude slower) than ``x_gradient`` because of the
-memory access pattern; traversing an image vertically results in lots
-of cache misses. A much more efficient and cache-friendly version will
-iterate over the columns in the inner loop::
+The above version of ``y_gradient``, however, is much slower (easily an order
+of magnitude slower) than ``x_gradient`` because of the memory access pattern;
+traversing an image vertically results in lots of cache misses. A much more
+efficient and cache-friendly version will iterate over the columns in the inner
+loop:
 
-  void y_gradient(const gray8c_view_t& src, const gray8s_view_t& dst)
+.. code-block:: cpp
+
+  void y_gradient(gray8c_view_t const& src, gray8s_view_t const& dst)
   {
-    for (int y=1; y<src.height()-1; ++y)
+    for (int y = 1; y < src.height() - 1; ++y)
     {
         gray8c_view_t::x_iterator src1_it = src.row_begin(y-1);
         gray8c_view_t::x_iterator src2_it = src.row_begin(y+1);
         gray8s_view_t::x_iterator dst_it = dst.row_begin(y);
 
-        for (int x=0; x<src.width(); ++x) {
-            *dst_it = ((*src1_it) - (*src2_it))/2;
+        for (int x = 0; x < src.width(); ++x)
+        {
+            *dst_it = ((*src1_it) - (*src2_it)) / 2;
             ++dst_it;
             ++src1_it;
             ++src2_it;
@@ -191,32 +188,33 @@ iterate over the columns in the inner loop::
     }
   }
 
-This sample code also shows an alternative way of using pixel
-iterators - instead of ``operator[]`` one could use increments and
-dereferences.
+This sample code also shows an alternative way of using pixel iterators -
+instead of ``operator[]`` one could use increments and dereferences.
 
 Using Locators
-~~~~~~~~~~~~~~
+--------------
 
 Unfortunately this cache-friendly version requires the extra hassle of
-maintaining two separate iterators in the source view. For every
-pixel, we want to access its neighbors above and below it. Such
-relative access can be done with GIL locators::
+maintaining two separate iterators in the source view. For every pixel, we
+want to access its neighbors above and below it. Such relative access can be
+done with GIL locators:
 
-  void y_gradient(const gray8c_view_t& src, const gray8s_view_t& dst)
+.. code-block:: cpp
+
+  void y_gradient(gray8c_view_t const& src, gray8s_view_t const& dst)
   {
     gray8c_view_t::xy_locator src_loc = src.xy_at(0,1);
-    for (int y=1; y<src.height()-1; ++y)
+    for (int y = 1; y < src.height() - 1; ++y)
     {
         gray8s_view_t::x_iterator dst_it  = dst.row_begin(y);
 
-        for (int x=0; x<src.width(); ++x)
+        for (int x = 0; x < src.width(); ++x)
     {
             (*dst_it) = (src_loc(0,-1) - src_loc(0,1)) / 2;
             ++dst_it;
             ++src_loc.x(); // each dimension can be advanced separately
         }
-        src_loc+=point<std::ptrdiff_t>(-src.width(),1); // carriage return
+        src_loc+=point<std::ptrdiff_t>(-src.width(), 1); // carriage return
     }
   }
 
@@ -243,45 +241,53 @@ though that the offset of the two neighbors is the same, regardless of
 the pixel location. To improve the performance, GIL can cache and
 reuse this offset::
 
-  void y_gradient(const gray8c_view_t& src, const gray8s_view_t& dst)
+  void y_gradient(gray8c_view_t const& src, gray8s_view_t const& dst)
   {
     gray8c_view_t::xy_locator src_loc = src.xy_at(0,1);
     gray8c_view_t::xy_locator::cached_location_t above = src_loc.cache_location(0,-1);
     gray8c_view_t::xy_locator::cached_location_t below = src_loc.cache_location(0, 1);
 
-    for (int y=1; y<src.height()-1; ++y)
+    for (int y = 1; y < src.height() - 1; ++y)
     {
         gray8s_view_t::x_iterator dst_it = dst.row_begin(y);
 
-        for (int x=0; x<src.width(); ++x)
+        for (int x = 0; x < src.width(); ++x)
     {
-            (*dst_it) = (src_loc[above] - src_loc[below])/2;
+            (*dst_it) = (src_loc[above] - src_loc[below]) / 2;
             ++dst_it;
             ++src_loc.x();
         }
-        src_loc+=point<std::ptrdiff_t>(-src.width(),1);
+        src_loc+=point<std::ptrdiff_t>(-src.width(), 1);
     }
   }
 
-In this example ``src_loc[above]`` corresponds to a fast pointer
-indexing operation and the code is efficient.
+In this example ``src_loc[above]`` corresponds to a fast pointer indexing
+operation and the code is efficient.
 
 Creating a Generic Version of GIL Algorithms
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------------
 
-Let us make our ``x_gradient`` more generic. It should work with any
-image views, as long as they have the same number of channels.  The
-gradient operation is to be computed for each channel
-independently. Here is how the new interface looks like::
+Let us make our ``x_gradient`` more generic. It should work with any image
+views, as long as they have the same number of channels. The gradient
+operation is to be computed for each channel independently.
+
+Here is how the new interface looks like:
+
+.. code-block:: cpp
 
   template <typename SrcView, typename DstView>
   void x_gradient(const SrcView& src, const DstView& dst)
   {
     gil_function_requires<ImageViewConcept<SrcView> >();
     gil_function_requires<MutableImageViewConcept<DstView> >();
-    gil_function_requires<ColorSpacesCompatibleConcept<
-                                typename color_space_type<SrcView>::type,
-                                typename color_space_type<DstView>::type> >();
+    gil_function_requires
+    <
+      ColorSpacesCompatibleConcept
+      <
+        typename color_space_type<SrcView>::type,
+        typename color_space_type<DstView>::type
+      >
+    >();
 
     ... // compute the gradient
   }
@@ -320,31 +326,35 @@ default).
 
 The body of the generic function is very similar to that of the
 concrete one. The biggest difference is that we need to loop over the
-channels of the pixel and compute the gradient for each channel::
+channels of the pixel and compute the gradient for each channel:
+
+.. code-block:: cpp
 
   template <typename SrcView, typename DstView>
   void x_gradient(const SrcView& src, const DstView& dst)
   {
-    for (int y=0; y<src.height(); ++y)
+    for (int y=0; y < src.height(); ++y)
     {
         typename SrcView::x_iterator src_it = src.row_begin(y);
         typename DstView::x_iterator dst_it = dst.row_begin(y);
 
-        for (int x=1; x<src.width()-1; ++x)
-            for (int c=0; c<num_channels<SrcView>::value; ++c)
-                dst_it[x][c] = (src_it[x-1][c]- src_it[x+1][c])/2;
+        for (int x = 1; x < src.width() - 1; ++x)
+            for (int c = 0; c < num_channels<SrcView>::value; ++c)
+                dst_it[x][c] = (src_it[x-1][c]- src_it[x+1][c]) / 2;
     }
   }
 
-Having an explicit loop for each channel could be a performance
-problem. GIL allows us to abstract out such per-channel operations::
+Having an explicit loop for each channel could be a performance problem.
+GIL allows us to abstract out such per-channel operations:
+
+.. code-block:: cpp
 
   template <typename Out>
   struct halfdiff_cast_channels
   {
-    template <typename T> Out operator()(const T& in1, const T& in2) const
+    template <typename T> Out operator()(T const& in1, T const& in2) const
     {
-        return Out((in1-in2)/2);
+        return Out((in1 - in2) / 2);
     }
   };
 
@@ -353,78 +363,86 @@ problem. GIL allows us to abstract out such per-channel operations::
   {
     typedef typename channel_type<DstView>::type dst_channel_t;
 
-    for (int y=0; y<src.height(); ++y)
+    for (int y=0; y < src.height(); ++y)
     {
         typename SrcView::x_iterator src_it = src.row_begin(y);
         typename DstView::x_iterator dst_it = dst.row_begin(y);
 
-        for (int x=1; x<src.width()-1; ++x)
+        for (int x=1; x < src.width() - 1; ++x)
+        {
             static_transform(src_it[x-1], src_it[x+1], dst_it[x],
-                               halfdiff_cast_channels<dst_channel_t>());
+                halfdiff_cast_channels<dst_channel_t>());
+        }
     }
   }
 
-``static_transform`` is an example of a channel-level GIL
-algorithm. Other such algorithms are ``static_generate``,
-``static_fill`` and ``static_for_each``. They are the channel-level
-equivalents of STL ``generate``, ``transform``, ``fill`` and
-``for_each`` respectively. GIL channel algorithms use static recursion
-to unroll the loops; they never loop over the channels explicitly.
-Note that sometimes modern compilers (at least Visual Studio 8)
-already unroll channel-level loops, such as the one above. However,
-another advantage of using GIL's channel-level algorithms is that they
-pair the channels semantically, not based on their order in
-memory. For example, the above example will properly match an RGB
-source with a BGR destination.
+The ``static_transform`` is an example of a channel-level GIL algorithm.
+Other such algorithms are ``static_generate``, ``static_fill`` and
+``static_for_each``. They are the channel-level equivalents of STL
+``generate``, ``transform``, ``fill`` and ``for_each`` respectively.
+GIL channel algorithms use static recursion to unroll the loops; they never
+loop over the channels explicitly.
 
-Here is how we can use our generic version with images of different
-types::
+Note that sometimes modern compilers (at least Visual Studio 8) already unroll
+channel-level loops, such as the one above. However, another advantage of
+using GIL's channel-level algorithms is that they pair the channels
+semantically, not based on their order in memory. For example, the above
+example will properly match an RGB source with a BGR destination.
+
+Here is how we can use our generic version with images of different types:
+
+.. code-block:: cpp
 
   // Calling with 16-bit grayscale data
-  void XGradientGray16_Gray32(const unsigned short* src_pixels, ptrdiff_t src_row_bytes, int w, int h,
-                              signed int* dst_pixels, ptrdiff_t dst_row_bytes)
+  void XGradientGray16_Gray32(
+      unsigned short const* src_pixels, ptrdiff_t src_row_bytes,
+      int w, int h,
+      signed int* dst_pixels, ptrdiff_t dst_row_bytes)
   {
-    gray16c_view_t src=interleaved_view(w,h,(const gray16_pixel_t*)src_pixels,src_row_bytes);
-    gray32s_view_t dst=interleaved_view(w,h,(     gray32s_pixel_t*)dst_pixels,dst_row_bytes);
+    gray16c_view_t src=interleaved_view(w, h, (gray16_pixel_t const*)src_pixels, src_row_bytes);
+    gray32s_view_t dst=interleaved_view(w, h, (gray32s_pixel_t*)dst_pixels, dst_row_bytes);
     x_gradient(src,dst);
   }
 
   // Calling with 8-bit RGB data into 16-bit BGR
-  void XGradientRGB8_BGR16(const unsigned char* src_pixels, ptrdiff_t src_row_bytes, int w, int h,
-                           signed short* dst_pixels, ptrdiff_t dst_row_bytes)
+  void XGradientRGB8_BGR16(
+      unsigned char const* src_pixels, ptrdiff_t src_row_bytes,
+      int w, int h,
+      signed short* dst_pixels, ptrdiff_t dst_row_bytes)
   {
-    rgb8c_view_t  src = interleaved_view(w,h,(const rgb8_pixel_t*)src_pixels,src_row_bytes);
-    rgb16s_view_t dst = interleaved_view(w,h,(    rgb16s_pixel_t*)dst_pixels,dst_row_bytes);
-    x_gradient(src,dst);
+    rgb8c_view_t  src = interleaved_view(w, h, (rgb8_pixel_t const*)src_pixels, src_row_bytes);
+    rgb16s_view_t dst = interleaved_view(w, h, (rgb16s_pixel_t*)dst_pixels, dst_row_bytes);
+    x_gradient(src, dst);
   }
 
   // Either or both the source and the destination could be planar - the gradient code does not change
   void XGradientPlanarRGB8_RGB32(
-           const unsigned short* src_r, const unsigned short* src_g, const unsigned short* src_b,
-           ptrdiff_t src_row_bytes, int w, int h,
-           signed int* dst_pixels, ptrdiff_t dst_row_bytes)
+      unsigned short const* src_r, unsigned short const* src_g, unsigned short const* src_b,
+      ptrdiff_t src_row_bytes, int w, int h,
+      signed int* dst_pixels, ptrdiff_t dst_row_bytes)
   {
-    rgb16c_planar_view_t src=planar_rgb_view (w,h, src_r,src_g,src_b,         src_row_bytes);
-    rgb32s_view_t        dst=interleaved_view(w,h,(rgb32s_pixel_t*)dst_pixels,dst_row_bytes);
+    rgb16c_planar_view_t src = planar_rgb_view (w, h, src_r, src_g, src_b,        src_row_bytes);
+    rgb32s_view_t        dst = interleaved_view(w, h,(rgb32s_pixel_t*)dst_pixels, dst_row_bytes);
     x_gradient(src,dst);
   }
 
-As these examples illustrate, both the source and the destination can
-be interleaved or planar, of any channel depth (assuming the
-destination channel is assignable to the source), and of any
-compatible color spaces.
+As these examples illustrate, both the source and the destination can be
+interleaved or planar, of any channel depth (assuming the destination channel
+is assignable to the source), and of any compatible color spaces.
 
 GIL 2.1 can also natively represent images whose channels are not
-byte-aligned, such as 6-bit RGB222 image or a 1-bit Gray1 image.  GIL
-algorithms apply to these images natively. See the design guide or
-sample files for more on using such images.
+byte-aligned, such as 6-bit RGB222 image or a 1-bit Gray1 image.
+GIL algorithms apply to these images natively. See the design guide or sample
+files for more on using such images.
 
 Image View Transformations
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
-One way to compute the y-gradient is to rotate the image by 90
-degrees, compute the x-gradient and rotate the result back. Here is
-how to do this in GIL::
+One way to compute the y-gradient is to rotate the image by 90 degrees,
+compute the x-gradient and rotate the result back.
+Here is how to do this in GIL:
+
+.. code-block:: cpp
 
   template <typename SrcView, typename DstView>
   void y_gradient(const SrcView& src, const DstView& dst)
@@ -447,7 +465,9 @@ because of the memory access pattern; using ``rotated90cw_view`` does
 not make it any slower.
 
 Another example: suppose we want to compute the gradient of the N-th
-channel of a color image. Here is how to do that::
+channel of a color image. Here is how to do that:
+
+.. code-block:: cpp
 
   template <typename SrcView, typename DstView>
   void nth_channel_x_gradient(const SrcView& src, int n, const DstView& dst)
@@ -463,7 +483,9 @@ when incremented.  If applied on a planar RGB view, the returned type
 is a simple grayscale view whose horizontal iterator is a C pointer.
 Image view transformation functions can be piped together. For
 example, to compute the y gradient of the second channel of the even
-pixels in the view, use::
+pixels in the view, use:
+
+.. code-block:: cpp
 
   y_gradient(subsampled_view(nth_channel_view(src, 1), 2,2), dst);
 
@@ -473,7 +495,7 @@ represented as a single subsampled view whose step is the product of
 the steps of the two views.
 
 1D pixel iterators
-~~~~~~~~~~~~~~~~~~
+------------------
 
 Let's go back to ``x_gradient`` one more time.  Many image view
 algorithms apply the same operation for each pixel and GIL provides an
@@ -482,21 +504,23 @@ access pattern, as it skips the first and the last column. It would be
 nice and instructional to see how we can rewrite it in canonical
 form. The way to do that in GIL is to write a version that works for
 every pixel, but apply it only on the subimage that excludes the first
-and last column::
+and last column:
 
-  void x_gradient_unguarded(const gray8c_view_t& src, const gray8s_view_t& dst)
+.. code-block:: cpp
+
+  void x_gradient_unguarded(gray8c_view_t const& src, gray8s_view_t const& dst)
   {
-    for (int y=0; y<src.height(); ++y)
+    for (int y=0; y < src.height(); ++y)
     {
         gray8c_view_t::x_iterator src_it = src.row_begin(y);
         gray8s_view_t::x_iterator dst_it = dst.row_begin(y);
 
-        for (int x=0; x<src.width(); ++x)
+        for (int x = 0; x < src.width(); ++x)
             dst_it[x] = (src_it[x-1] - src_it[x+1]) / 2;
     }
   }
 
-  void x_gradient(const gray8c_view_t& src, const gray8s_view_t& dst)
+  void x_gradient(gray8c_view_t const& src, gray8s_view_t const& dst)
   {
     assert(src.width()>=2);
     x_gradient_unguarded(subimage_view(src, 1, 0, src.width()-2, src.height()),
@@ -511,9 +535,11 @@ has no measurable performance degradation from the version that
 operates on the original views.
 
 Now that ``x_gradient_unguarded`` operates on every pixel, we can
-rewrite it more compactly::
+rewrite it more compactly:
 
-  void x_gradient_unguarded(const gray8c_view_t& src, const gray8s_view_t& dst)
+.. code-block:: cpp
+
+  void x_gradient_unguarded(gray8c_view_t const& src, gray8s_view_t const& dst)
   {
     gray8c_view_t::iterator src_it = src.begin();
     for (gray8s_view_t::iterator dst_it = dst.begin(); dst_it!=dst.end(); ++dst_it, ++src_it)
@@ -536,7 +562,7 @@ iterators to access the two neighbors properly, since they could
 reside outside the image view.
 
 STL Equivalent Algorithms
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 GIL provides STL equivalents of many algorithms. For example,
 ``std::transform`` is an STL algorithm that sets each element in a
@@ -545,7 +571,9 @@ corresponding element of the source range. In our example, we want to
 assign to each destination pixel the value of the half-difference of
 the horizontal neighbors of the corresponding source pixel.  If we
 abstract that operation in a function object, we can use GIL's
-``transform_pixel_positions`` to do that::
+``transform_pixel_positions`` to do that:
+
+.. code-block:: cpp
 
   struct half_x_difference
   {
@@ -555,7 +583,7 @@ abstract that operation in a function object, we can use GIL's
     }
   };
 
-  void x_gradient_unguarded(const gray8c_view_t& src, const gray8s_view_t& dst)
+  void x_gradient_unguarded(gray8c_view_t const& src, gray8s_view_t const& dst)
   {
     transform_pixel_positions(src, dst, half_x_difference());
   }
@@ -571,15 +599,17 @@ through the pixels using the more efficient two nested loops (as
 opposed to the single loop using 1-D iterators)
 
 Color Conversion
-~~~~~~~~~~~~~~~~
+----------------
 
 Instead of computing the gradient of each color plane of an image, we
 often want to compute the gradient of the luminosity. In other words,
 we want to convert the color image to grayscale and compute the
 gradient of the result. Here how to compute the luminosity gradient of
-a 32-bit float RGB image::
+a 32-bit float RGB image:
 
-  void x_gradient_rgb_luminosity(const rgb32fc_view_t& src, const gray8s_view_t& dst)
+.. code-block:: cpp
+
+  void x_gradient_rgb_luminosity(rgb32fc_view_t const& src, gray8s_view_t const& dst)
   {
     x_gradient(color_converted_view<gray8_pixel_t>(src), dst);
   }
@@ -596,12 +626,14 @@ performs color conversion every time its pixels are accessed.
 In the generic version of this algorithm we might like to convert the
 color space to grayscale, but keep the channel depth the same. We do
 that by constructing the type of a GIL grayscale pixel with the same
-channel as the source, and color convert to that pixel type::
+channel as the source, and color convert to that pixel type:
+
+.. code-block:: cpp
 
   template <typename SrcView, typename DstView>
-  void x_luminosity_gradient(const SrcView& src, const DstView& dst)
+  void x_luminosity_gradient(SrcView const& src, DstView const& dst)
   {
-    typedef pixel<typename channel_type<SrcView>::type, gray_layout_t> gray_pixel_t;
+    using gray_pixel_t = pixel<typename channel_type<SrcView>::type, gray_layout_t>;
     x_gradient(color_converted_view<gray_pixel_t>(src), dst);
   }
 
@@ -611,16 +643,18 @@ this case and avoids calling the color conversion code at all -
 i.e. ``color_converted_view`` returns back the source view unchanged.
 
 Image
-~~~~~
+-----
 
 The above example has a performance problem - ``x_gradient``
 dereferences most source pixels twice, which will cause the above code
 to perform color conversion twice.  Sometimes it may be more efficient
 to copy the color converted image into a temporary buffer and use it
 to compute the gradient - that way color conversion is invoked once
-per pixel.  Using our non-generic version we can do it like this::
+per pixel. Using our non-generic version we can do it like this:
 
-  void x_luminosity_gradient(const rgb32fc_view_t& src, const gray8s_view_t& dst)
+.. code-block:: cpp
+
+  void x_luminosity_gradient(rgb32fc_view_t const& src, gray8s_view_t const& dst)
   {
     gray8_image_t ccv_image(src.dimensions());
     copy_pixels(color_converted_view<gray8_pixel_t>(src), view(ccv_image));
@@ -635,15 +669,17 @@ image in our ``x_gradient algorithm``. As the example shows, GIL
 provides global functions ``view`` and ``const_view`` that take an
 image and return a mutable or an immutable view of its pixels.
 
-Creating a generic version of the above is a bit trickier::
+Creating a generic version of the above is a bit trickier:
+
+.. code-block:: cpp
 
   template <typename SrcView, typename DstView>
   void x_luminosity_gradient(const SrcView& src, const DstView& dst)
   {
-    typedef typename channel_type<DstView>::type d_channel_t;
-    typedef typename channel_convert_to_unsigned<d_channel_t>::type channel_t;
-    typedef pixel<channel_t, gray_layout_t>  gray_pixel_t;
-    typedef image<gray_pixel_t, false>       gray_image_t;
+    using d_channel_t = typename channel_type<DstView>::type;
+    using channel_t = typename channel_convert_to_unsigned<d_channel_t>::type;
+    using gray_pixel_t = pixel<channel_t, gray_layout_t>;
+    using gray_image_t = image<gray_pixel_t, false>;
 
     gray_image_t ccv_image(src.dimensions());
     copy_pixels(color_converted_view<gray_pixel_t>(src), view(ccv_image));
@@ -673,10 +709,12 @@ the pixel type and a boolean indicating whether the image should be
 planar or interleaved.  Single-channel (grayscale) images in GIL must
 always be interleaved. There are multiple ways of constructing types
 in GIL. Instead of instantiating the classes directly we could have
-used type factory metafunctions. The following code is equivalent::
+used type factory metafunctions. The following code is equivalent:
+
+.. code-block:: cpp
 
   template <typename SrcView, typename DstView>
-  void x_luminosity_gradient(const SrcView& src, const DstView& dst)
+  void x_luminosity_gradient(SrcView const& src, DstView const& dst)
   {
     typedef typename channel_type<DstView>::type d_channel_t;
     typedef typename channel_convert_to_unsigned<d_channel_t>::type channel_t;
@@ -708,14 +746,16 @@ algorithm ``copy_and_convert_pixels``, which is an abbreviated version
 of ``copy_pixels`` with a color converted source view.
 
 Virtual Image Views
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 So far we have been dealing with images that have pixels stored in
 memory. GIL allows you to create an image view of an arbitrary image,
 including a synthetic function. To demonstrate this, let us create a
 view of the Mandelbrot set.  First, we need to create a function
 object that computes the value of the Mandelbrot set at a given
-location (x,y) in the image::
+location (x,y) in the image:
+
+.. code-block:: cpp
 
   // models PixelDereferenceAdaptorConcept
   struct mandelbrot_fn
@@ -756,7 +796,9 @@ location (x,y) in the image::
   };
 
 We can now use GIL's ``virtual_2d_locator`` with this function object
-to construct a Mandelbrot view of size 200x200 pixels::
+to construct a Mandelbrot view of size 200x200 pixels:
+
+.. code-block:: cpp
 
   typedef mandelbrot_fn::point_t point_t;
   typedef virtual_2d_locator<mandelbrot_fn,false> locator_t;
@@ -770,7 +812,9 @@ to construct a Mandelbrot view of size 200x200 pixels::
 We can treat the synthetic view just like a real one. For example,
 let's invoke our ``x_gradient`` algorithm to compute the gradient of
 the 90-degree rotated view of the Mandelbrot set and save the original
-and the result::
+and the result:
+
+.. code-block:: cpp
 
   gray8s_image_t img(dims);
   x_gradient(rotated90cw_view(mandel), view(img));
@@ -781,10 +825,10 @@ and the result::
 
 Here is what the two files look like:
 
-.. image:: images/mandel.jpg
+.. image:: ../images/mandel.jpg
 
 Run-Time Specified Images and Image Views
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------------
 
 So far we have created a generic function that computes the image
 gradient of an image view template specialization.  Sometimes,
@@ -807,7 +851,9 @@ view algorithm overloads taking multiple variants.)
 
 First, we need to make a function object that contains the templated
 destination view and has an application operator taking a templated
-source view::
+source view:
+
+.. code-block:: cpp
 
   #include <boost/gil/extension/dynamic_image/dynamic_image_all.hpp>
 
@@ -823,9 +869,11 @@ source view::
     void operator()(const SrcView& src) const { x_luminosity_gradient(src, _dst); }
   };
 
-The second step is to provide an overload of ``x_luminosity_gradient``
-that takes image view variant and calls GIL's ``apply_operation``
-passing it the function object::
+The second step is to provide an overload of ``x_luminosity_gradient`` that
+takes image view variant and calls GIL's ``apply_operation`` passing it the
+function object:
+
+.. code-block:: cpp
 
   template <typename SrcViews, typename DstView>
   void x_luminosity_gradient(const any_image_view<SrcViews>& src, const DstView& dst)
@@ -845,7 +893,9 @@ statement. Algorithms that perform an operation for each pixel in an
 image view have practically no performance degradation when used with
 a variant.
 
-Here is how we can construct a variant and invoke the algorithm::
+Here is how we can construct a variant and invoke the algorithm:
+
+.. code-block:: cpp
 
   #include <boost/mpl/vector.hpp>
   #include <boost/gil/extension/io/jpeg_dynamic_io.hpp>
@@ -884,7 +934,7 @@ instantiated with every possible combination of the two input types!
 This can take a toll on both the compile time and the executable size.
 
 Conclusion
-~~~~~~~~~~
+----------
 
 This tutorial provides a glimpse at the challenges associated with
 writing generic and efficient image processing algorithms in GIL.  We
@@ -928,35 +978,3 @@ still failing to fully optimize generic code in some cases, such as
 failing to inline some functions or put some variables into
 registers. If performance is an issue, it might be worth trying your
 code with different compilers.
-
-Appendix
---------
-
-Naming convention for GIL concrete types
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Concrete (non-generic) GIL types follow this naming convention:
-
-_ColorSpace_ + _BitDepth_ + [``f`` | ``s``]+ [``c``] + [``_planar``] +
-[``_step``] + _ClassType_ + ``_t``
-
-Where _ColorSpace_ also indicates the ordering of components. Examples
-are ``rgb``, ``bgr``, ``cmyk``, ``rgba``.  _BitDepth_ indicates the
-bit depth of the color channel. Examples are ``8``,``16``,``32``. By
-default the type of channel is unsigned integral; using ``s``
-indicates signed integral and ``f`` - a floating point type, which is
-always signed. ``c`` indicates object operating over immutable
-pixels. ``_planar`` indicates planar organization (as opposed to
-interleaved). ``_step`` indicates special image views, locators and
-iterators which traverse the data in non-trivial way (for example,
-backwards or every other pixel).  _ClassType_ is ``_image`` (image),
-``_view`` (image view), ``_loc`` (pixel 2D locator) ``_ptr`` (pixel
-iterator), ``_ref`` (pixel reference), ``_pixel`` (pixel value).
-
-examples::
-
-   bgr8_image_t             a;    // 8-bit interleaved BGR image
-   cmyk16_pixel_t           b;    // 16-bit CMYK pixel value;
-   cmyk16c_planar_ref_t     c(b); // const reference to a 16-bit planar CMYK pixel.
-   rgb32f_planar_step_ptr_t d;    // step pointer to a 32-bit planar RGB pixel.
-
