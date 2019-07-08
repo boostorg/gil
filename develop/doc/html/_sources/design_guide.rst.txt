@@ -2352,26 +2352,25 @@ uniformly as a collection and store them in the same container.
 Useful Metafunctions and Typedefs
 ---------------------------------
 
-Flexibility comes at a price. GIL types can be very long and hard to
-read. To address this problem, GIL provides typedefs to refer to any
-standard image, pixel iterator, pixel locator, pixel reference or
-pixel value. They follow this pattern:
+Flexibility comes at a price. GIL types can be very long and hard to read.
+To address this problem, GIL provides typedefs to refer to any standard image,
+pixel iterator, pixel locator, pixel reference or pixel value.
 
-.. code-block::
+They follow this pattern::
 
   *ColorSpace* + *BitDepth* + ["s|f"] + ["c"] + ["_planar"] + ["_step"] + *ClassType* + "_t"
 
-where *ColorSpace* also indicates the ordering of components. Examples
-are ``rgb``, ``bgr``, ``cmyk``, ``rgba``. *BitDepth* can be, for
-example, ``8``,``16``,``32``. By default the bits are unsigned
-integral type. Append ``s`` to the bit depth to indicate signed
-integral, or ``f`` to indicate floating point. ``c`` indicates object
-whose associated pixel reference is immutable. ``_planar`` indicates
-planar organization (as opposed to interleaved). ``_step`` indicates
-the type has a dynamic step and *ClassType* is ``_image`` (image,
-using a standard allocator), ``_view`` (image view), ``_loc`` (pixel
-locator), ``_ptr`` (pixel iterator), ``_ref`` (pixel reference),
-``_pixel`` (pixel value).
+where *ColorSpace* also indicates the ordering of components.
+
+Examples are ``rgb``, ``bgr``, ``cmyk``, ``rgba``. *BitDepth* can be, for
+example, ``8``,``16``,``32``. By default the bits are unsigned integral type.
+Append ``s`` to the bit depth to indicate signed integral, or ``f`` to
+indicate floating point. ``c`` indicates object whose associated pixel
+reference is immutable. ``_planar`` indicates planar organization (as opposed
+to interleaved). ``_step`` indicates the type has a dynamic step and
+*ClassType* is ``_image`` (image, using a standard allocator), ``_view``
+(image view), ``_loc`` (pixel locator), ``_ptr`` (pixel iterator), ``_ref``
+(pixel reference), ``_pixel`` (pixel value).
 
 Here are examples:
 
@@ -2385,7 +2384,7 @@ Here are examples:
 GIL provides the metafunctions that return the types of standard
 homogeneous memory-based GIL constructs given a channel type, a
 layout, and whether the construct is planar, has a step along the X
-direction, and is mutable::
+direction, and is mutable:
 
 .. code-block:: cpp
 
