@@ -44,7 +44,7 @@ struct unsigned_integral_max_value
     : std::integral_constant
     <
         UnsignedIntegralChannel,
-        std::numeric_limits<UnsignedIntegralChannel>::max()
+        (std::numeric_limits<UnsignedIntegralChannel>::max)()
     >
 {};
 
