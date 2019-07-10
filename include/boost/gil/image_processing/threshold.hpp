@@ -82,14 +82,16 @@ void threshold_binary
     if (direction == threshold_direction::regular)
     {
         detail::threshold_impl<source_channel_t, result_channel_t>(src_view, dst_view,
-            [threshold_value, max_value](source_channel_t px) ->
-                result_channel_t { return px >= threshold_value ? max_value : 0; });
+            [threshold_value, max_value](source_channel_t px) -> result_channel_t {
+                return px > threshold_value ? max_value : 0;
+            });
     }
     else
     {
         detail::threshold_impl<source_channel_t, result_channel_t>(src_view, dst_view,
-            [threshold_value, max_value](source_channel_t px) ->
-                result_channel_t { return px >= threshold_value ? 0 : max_value; });
+            [threshold_value, max_value](source_channel_t px) -> result_channel_t {
+                return px > threshold_value ? 0 : max_value;
+            });
     }
 }
 
@@ -150,14 +152,16 @@ void threshold_truncate
         if (direction == threshold_direction::regular)
         {
             detail::threshold_impl<source_channel_t, result_channel_t>(src_view, dst_view,
-                [threshold_value](source_channel_t px) -> result_channel_t
-                    { return px >= threshold_value ? threshold_value : px; });
+                [threshold_value](source_channel_t px) -> result_channel_t {
+                    return px > threshold_value ? threshold_value : px;
+                });
         }
         else
         {
             detail::threshold_impl<source_channel_t, result_channel_t>(src_view, dst_view,
-                [threshold_value](source_channel_t px) -> result_channel_t
-                    { return px >= threshold_value ? px : threshold_value; });
+                [threshold_value](source_channel_t px) -> result_channel_t {
+                    return px > threshold_value ? px : threshold_value;
+                });
         }
     }
     else
@@ -165,14 +169,16 @@ void threshold_truncate
         if (direction == threshold_direction::regular)
         {
             detail::threshold_impl<source_channel_t, result_channel_t>(src_view, dst_view,
-                [threshold_value](source_channel_t px) -> result_channel_t
-                    { return px >= threshold_value ? px : 0; });
+                [threshold_value](source_channel_t px) -> result_channel_t {
+                    return px > threshold_value ? px : 0;
+                });
         }
         else
         {
             detail::threshold_impl<source_channel_t, result_channel_t>(src_view, dst_view,
-                [threshold_value](source_channel_t px) -> result_channel_t
-                    { return px >= threshold_value ? 0 : px; });
+                [threshold_value](source_channel_t px) -> result_channel_t {
+                    return px > threshold_value ? 0 : px;
+                });
         }
     }
 }
