@@ -24,14 +24,8 @@ template
     typename DstView,
     typename Operator
 >
-void threshold_impl
-(
-    SrcView const& src_view,
-    DstView const& dst_view,
-    Operator const& threshold_op
-)
+void threshold_impl(SrcView const& src_view, DstView const& dst_view, Operator const& threshold_op)
 {
-    //template argument validation
     gil_function_requires<ImageViewConcept<SrcView>>();
     gil_function_requires<MutableImageViewConcept<DstView>>();
     gil_function_requires<ColorSpacesCompatibleConcept
@@ -39,6 +33,11 @@ void threshold_impl
         typename color_space_type<SrcView>::type,
         typename color_space_type<DstView>::type>
     >();
+    static_assert(color_spaces_are_compatible
+    <
+        typename color_space_type<SrcView>::type,
+        typename color_space_type<DstView>::type
+    >::value, "Source and destination views must have pixels with the same color space");
 
     //iterate over the image chaecking each pixel value for the threshold
     for (std::ptrdiff_t y = 0; y < src_view.height(); y++)
@@ -79,7 +78,6 @@ void threshold_binary
     //deciding output channel type and creating functor
     typedef typename channel_type<SrcView>::type source_channel_t;
     typedef typename channel_type<DstView>::type result_channel_t;
-
 
     if (direction == threshold_direction::regular)
     {
