@@ -14,5 +14,5 @@ project
     ;
 
 run threshold_binary.cpp ;
-run threshold_binary.cpp ;
+run threshold_truncate.cpp ;
 run lanczos_scaling.cpp ;
