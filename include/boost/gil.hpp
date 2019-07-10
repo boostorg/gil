@@ -44,6 +44,7 @@
 #include <boost/gil/utilities.hpp>
 #include <boost/gil/version.hpp>
 #include <boost/gil/virtual_locator.hpp>
+#include <boost/gil/image_processing/scaling.hpp>
 #include <boost/gil/image_processing/threshold.hpp>
 
 #endif
