@@ -11,6 +11,7 @@ foreach(_name
   derived_view_type
   dynamic_step
   is_planar
+  planar_rgba_view
   view_is_basic
   view_is_mutable
   view_is_step
