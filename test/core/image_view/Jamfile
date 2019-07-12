@@ -24,3 +24,4 @@ compile view_type.cpp ;
 compile view_type_from_pixel.cpp ;
 
 run collection.cpp ;
+run planar_rgba_view.cpp ;
