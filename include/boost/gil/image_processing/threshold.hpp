@@ -15,7 +15,6 @@
 
 namespace boost { namespace gil {
 
-
 namespace detail {
 
 template
@@ -56,20 +55,47 @@ void threshold_impl(SrcView const& src_view, DstView const& dst_view, Operator c
 
 } //namespace boost::gil::detail
 
-enum class threshold_direction { regular, inverse };
-enum class threshold_optimal_value { otsu, triangle };
-enum class threshold_truncate_mode { threshold, zero };
+/// \addtogroup ImageProcessing
+/// @{
+///
+/// \brief Direction of image segmentation.
+/// The direction specifieds which pixels are considered as corresponding to object
+/// and which pixels correspond to background.
+enum class threshold_direction
+{
+    regular, ///< Consider values greater than threshold value
+    inverse  ///< Consider values less than or equal to threshold value
+};
 
-/*!
-Takes an image view and performes binary thresholding operation on each chennel.
-If direction is regular:
-values greater than or equal to threshold_value will be set to max_value else set to 0
-If direction is inverse:
-values greater than or equal to threshold_value will be set to 0 else set to max_value
-*/
+/// \ingroup ImageProcessing
+/// \brief Method of optimal threshold value calculation.
+enum class threshold_optimal_value
+{
+    otsu,       ///< \todo TODO
+    triangle    ///< \todo TODO
+};
+
+/// \ingroup ImageProcessing
+/// \brief TODO
+enum class threshold_truncate_mode
+{
+    threshold,  ///< \todo TODO
+    zero        ///< \todo TODO
+};
+
+/// \ingroup ImageProcessing
+/// \brief Applies fixed threshold to each pixel of image view.
+/// Performs image binarization by thresholding channel value of each
+/// pixel of given image view.
+/// \param src_view - TODO
+/// \param dst_view - TODO
+/// \param threshold_value - TODO
+/// \param max_value - TODO
+/// \param threshold_direction - if regular, values greater than threshold_value are
+/// set to max_value else set to 0; if inverse, values greater than threshold_value are
+/// set to 0 else set to max_value.
 template <typename SrcView, typename DstView>
-void threshold_binary
-(
+void threshold_binary(
     SrcView const& src_view,
     DstView const& dst_view,
     typename channel_type<DstView>::type threshold_value,
@@ -97,16 +123,18 @@ void threshold_binary
     }
 }
 
-/*!
-Takes an image view and performes binary thresholding operation on each chennel.
-If direction is regular:
-values more or equal to threshold_value will be set to maximum numeric limit of channel else 0
-If direction is inverse:
-values more than or equal to threshold_value will be set to 0 else maximum numeric limit of channel
-*/
+/// \ingroup ImageProcessing
+/// \brief Applies fixed threshold to each pixel of image view.
+/// Performs image binarization by thresholding channel value of each
+/// pixel of given image view.
+/// This variant of threshold_binary automatically deduces maximum value for each channel
+/// of pixel based on channel type.
+/// If direction is regular, values greater than threshold_value will be set to maximum
+/// numeric limit of channel else 0.
+/// If direction is inverse, values greater than threshold_value will be set to 0 else maximum
+/// numeric limit of channel.
 template <typename SrcView, typename DstView>
-void threshold_binary
-(
+void threshold_binary(
     SrcView const& src_view,
     DstView const& dst_view,
     typename channel_type<DstView>::type threshold_value,
@@ -120,20 +148,19 @@ void threshold_binary
     threshold_binary(src_view, dst_view, threshold_value, max_value, direction);
 }
 
-/*!
-Takes an image view and performes truncating threshold operation on each chennel.
-If mode is truncate and direction is regular:
-values greater than threshold_value will be set to threshold_value else no change
-If mode is truncate and direction is inverse:
-values less than threshold_value will be set to threshold_value else no change
-If mode is zeo and direction is regular:
-values less than threshold_value will be set to 0 else no change
-If mode is zero and direction is inverse:
-values more than threshold_value will be set to 0 else no change
-*/
+/// \ingroup ImageProcessing
+/// \brief Applies truncating threshold to each pixel of image view.
+/// Takes an image view and performes truncating threshold operation on each chennel.
+/// If mode is threshold and direction is regular:
+/// values greater than threshold_value will be set to threshold_value else no change
+/// If mode is threshold and direction is inverse:
+/// values less than threshold_value will be set to threshold_value else no change
+/// If mode is zero and direction is regular:
+/// values less than threshold_value will be set to 0 else no change
+/// If mode is zero and direction is inverse:
+/// values more than threshold_value will be set to 0 else no change
 template <typename SrcView, typename DstView>
-void threshold_truncate
-(
+void threshold_truncate(
     SrcView const& src_view,
     DstView const& dst_view,
     typename channel_type<DstView>::type threshold_value,
@@ -307,6 +334,8 @@ void threshold_optimal
         }
     }
 }
+
+/// @}
 
 }} //namespace boost::gil
 
