@@ -81,6 +81,7 @@ WARN_LOGFILE           = warnings.txt
 INPUT                  = . \
                          ../include/boost/gil \
                          ../include/boost/gil/concepts \
+                         ../include/boost/gil/image_processing \
                          ../include/boost/gil/io \
                          ../include/boost/gil/extension/io \
                          ../include/boost/gil/extension/dynamic_image
