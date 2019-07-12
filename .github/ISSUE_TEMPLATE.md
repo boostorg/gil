@@ -10,7 +10,7 @@
 
 ### Environment
 
-All relevant information like:
+<!-- Any details that may help GIL maintainers help you -->
 
 - Compiler version:
 - Build settings:

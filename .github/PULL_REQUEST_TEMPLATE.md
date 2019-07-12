@@ -1,24 +1,17 @@
-**(IMPORTANT: Pull Requests *must* come from topic branch based on `develop`, and *never* on `master`.)**
+<!-- Pull Requests MUST come from topic branch based on develop, and NEVER on `master) --->
 
 ### Description
 
-*Here, describe what does this pull request do?*
-
-### Environment
-
-All relevant information like:
-
-- Compiler version:
-- Build settings:
-- GIL Version (Git ref or `<boost/version.hpp>`):
+<!-- What does this pull request do? -->
 
 ### References
 
-*Link related issues, pull requests here, mailing list, stackoverflow, etc.*
+<!-- Any links related to this PR: issues, other PRs, mailing list threads, StackOverflow questions, etc. -->
 
 ### Tasklist
 
-- [ ] *YOUR TASK(S)*
+<!-- Add YOUR OWN TASK(s), especially if your PR is a work in progress -->
+
 - [ ] Add test case(s)
 - [ ] Ensure all CI builds pass
 - [ ] Review and approve
