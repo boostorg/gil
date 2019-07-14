@@ -11,7 +11,7 @@
 #include <tuple>
 #include <type_traits>
 
-#define BOOST_TEST_MODULE test_ext_numeric_colvolve_cols
+#define BOOST_TEST_MODULE test_ext_numeric_colvolve_2d
 #include "unit_test.hpp"
 #include "test_fixture.hpp"
 
