@@ -15,7 +15,6 @@
 #include <boost/gil/typedefs.hpp>
 
 #include <boost/core/ignore_unused.hpp>
-#include <boost/core/typeinfo.hpp>
 #include <boost/mp11.hpp>
 #include <boost/mp11/mpl.hpp> // for compatibility with Boost.Test
 
@@ -25,40 +24,6 @@
 #include <type_traits>
 
 namespace boost { namespace gil {
-
-namespace detail {
-
-struct print_color_base
-{
-    std::ostream& os_;
-    std::size_t element_index_{0};
-    print_color_base(std::ostream& os) : os_(os) {}
-
-    template <typename Element>
-    void operator()(Element& c)
-    {
-        typename gil::promote_integral<Element>::type const v(c);
-        if (element_index_ > 0) os_ << ", ";
-        os_ << "v" << element_index_ << "=" << v;
-        ++element_index_;
-    }
-};
-
-} // namespace detail
-
-// Pixel has to implement operator<< to be printable for BOOST_TEST()
-template <typename ChannelValue, typename Layout>
-std::ostream& operator<<(std::ostream& os, pixel<ChannelValue, Layout> const& p)
-{
-    os << "pixel<"
-       << "Channel=" << boost::core::demangled_name(typeid(ChannelValue))
-       << ", Layout=" << boost::core::demangled_name(typeid(Layout))
-       << ">(";
-
-    gil::static_for_each(p, detail::print_color_base{os});
-    os << ")" << std::endl;
-    return os;
-}
 
 namespace test { namespace fixture {
 

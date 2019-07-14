@@ -28,7 +28,12 @@
 #pragma GCC diagnostic ignored "-Wshadow"
 #endif
 
+#include <boost/core/typeinfo.hpp>
 #include <boost/test/unit_test.hpp>
+
+#include <boost/gil/color_base_algorithm.hpp> // static_for_each
+#include <boost/gil/pixel.hpp>
+#include <boost/gil/promote_integral.hpp>
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
@@ -45,4 +50,41 @@
 namespace btt = boost::test_tools;
 namespace but = boost::unit_test;
 
+namespace boost { namespace gil {
+
+namespace detail {
+
+struct print_color_base
+{
+    std::ostream& os_;
+    std::size_t element_index_{0};
+    print_color_base(std::ostream& os) : os_(os) {}
+
+    template <typename Element>
+    void operator()(Element& c)
+    {
+        typename ::boost::gil::promote_integral<Element>::type const v(c);
+        if (element_index_ > 0) os_ << ", ";
+        os_ << "v" << element_index_ << "=" << v;
+        ++element_index_;
+    }
+};
+
+} // namespace detail
+
+// Pixel has to implement operator<< to be printable for BOOST_TEST()
+template <typename ChannelValue, typename Layout>
+std::ostream& operator<<(std::ostream& os, pixel<ChannelValue, Layout> const& p)
+{
+    os << "pixel<"
+       << "Channel=" << boost::core::demangled_name(typeid(ChannelValue))
+       << ", Layout=" << boost::core::demangled_name(typeid(Layout))
+       << ">(";
+
+    static_for_each(p, detail::print_color_base{os});
+    os << ")" << std::endl;
+    return os;
+}
+
+}} // namespace boost::gil
 #endif

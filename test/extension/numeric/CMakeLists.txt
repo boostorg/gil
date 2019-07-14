@@ -9,9 +9,13 @@
 message(STATUS "Boost.GIL: Configuring tests in test/extension/numeric")
 
 foreach(_name
+  convolve_cols
+  convolve_rows
+  convolve_2d
   kernel
   matrix3x2
-  numeric)
+  numeric
+  test_fixture)
   set(_test t_ext_numeric_${_name})
   set(_target test_ext_numeric_${_name})
 
