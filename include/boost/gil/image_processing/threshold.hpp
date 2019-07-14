@@ -111,12 +111,8 @@ void threshold_binary
     threshold_direction direction = threshold_direction::regular
 )
 {
-    //deciding output channel type and creating functor
-    typedef typename channel_type<SrcView>::type source_channel_t;
     typedef typename channel_type<DstView>::type result_channel_t;
-
     result_channel_t max_value = std::numeric_limits<result_channel_t>::max();
-
     threshold_binary(src_view, dst_view, threshold_value, max_value, direction);
 }
 
