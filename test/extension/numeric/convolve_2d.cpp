@@ -14,6 +14,7 @@
 #define BOOST_TEST_MODULE test_ext_numeric_colvolve_2d
 #include "unit_test.hpp"
 #include "test_fixture.hpp"
+#include "core/image/test_fixture.hpp"
 
 namespace gil = boost::gil;
 namespace fixture = boost::gil::test::fixture;

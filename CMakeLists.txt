@@ -17,6 +17,7 @@ cmake_minimum_required(VERSION 3.10)
 #-----------------------------------------------------------------------------
 option(GIL_BUILD_EXAMPLES "Build examples" ON)
 option(GIL_BUILD_HEADER_TESTS "Enable self-contained header tests" ON)
+option(GIL_ENABLE_EXT_DYNAMIC_IMAGE "Enable Dynamic Image extension, tests and examples" ON)
 option(GIL_ENABLE_EXT_IO "Enable IO extension, tests and examples (require libjpeg, libpng, libtiff)" ON)
 option(GIL_ENABLE_EXT_NUMERIC "Enable Numeric extension, tests and examples" ON)
 option(GIL_ENABLE_EXT_TOOLBOX "Enable Toolbox extension, tests and examples" ON)

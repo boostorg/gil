@@ -15,6 +15,8 @@
 #include <boost/gil/point.hpp>
 #include <boost/gil/detail/mp11.hpp>
 
+#include <cstdint>
+
 namespace boost { namespace gil {
 
 // Methods for constructing any image views from other any image views
@@ -249,11 +251,11 @@ template <typename Views>
 inline
 auto subimage_view(
     any_image_view<Views> const& src,
-    int xMin, int yMin, int width, int height)
+    std::ptrdiff_t x_min, std::ptrdiff_t y_min, std::ptrdiff_t width, std::ptrdiff_t height)
     -> any_image_view<Views>
 {
     using subimage_view_fn = detail::subimage_view_fn<any_image_view<Views>>;
-    return apply_operation(src, subimage_view_fn(point_t(xMin, yMin),point_t(width, height)));
+    return apply_operation(src, subimage_view_fn(point_t(x_min, y_min),point_t(width, height)));
 }
 
 /// \ingroup ImageViewTransformationsSubsampled
@@ -272,12 +274,12 @@ auto subsampled_view(any_image_view<Views> const& src, point_t const& step)
 /// \tparam Views Models Boost.MP11-compatible list of models of ImageViewConcept
 template <typename Views>
 inline
-auto subsampled_view(any_image_view<Views> const& src, int xStep, int yStep)
+auto subsampled_view(any_image_view<Views> const& src, std::ptrdiff_t x_step, std::ptrdiff_t y_step)
     -> typename dynamic_xy_step_type<any_image_view<Views>>::type
 {
     using step_type = typename dynamic_xy_step_type<any_image_view<Views>>::type;
     using subsampled_view_fn = detail::subsampled_view_fn<step_type>;
-    return apply_operation(src, subsampled_view_fn(point_t(xStep, yStep)));
+    return apply_operation(src, subsampled_view_fn(point_t(x_step, y_step)));
 }
 
 namespace detail {

@@ -14,8 +14,7 @@ foreach(_name
   convolve_2d
   kernel
   matrix3x2
-  numeric
-  test_fixture)
+  numeric)
   set(_test t_ext_numeric_${_name})
   set(_target test_ext_numeric_${_name})
 

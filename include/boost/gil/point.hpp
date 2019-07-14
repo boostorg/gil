@@ -177,8 +177,8 @@ auto operator/(point<T> const& p, D d)
     using result_type = typename detail::std_common_type<T, D>::type;
     if (d < 0 || 0 < d)
     {
-        double const x = p.x / static_cast<double>(d);
-        double const y = p.y / static_cast<double>(d);
+        double const x = static_cast<double>(p.x) / static_cast<double>(d);
+        double const y = static_cast<double>(p.y) / static_cast<double>(d);
         return point<result_type>{
             static_cast<result_type>(iround(x)),
             static_cast<result_type>(iround(y))};
