@@ -25,3 +25,4 @@ compile view_type_from_pixel.cpp ;
 
 run collection.cpp ;
 run planar_rgba_view.cpp ;
+run subimage_view.cpp /boost/test//boost_unit_test_framework : : : <link>shared:<define>BOOST_TEST_DYN_LINK=1 ;
