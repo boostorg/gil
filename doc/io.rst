@@ -434,9 +434,8 @@ Currently the code is able to read and write the following image types:
 :Read: gray1, gray2, gray4, gray8, gray16, gray_alpha_8, gray_alpha_16, rgb8, rgb16, rgba8, rgba16
 :Write: gray1, gray2, gray4, gray8, gray16, gray_alpha_8, gray_alpha_16, rgb8, rgb16, rgba8, rgba16
 
-For reading gray_alpha images the user has to enable the ``ENABLE_GRAY_ALPHA``
-compiler switch. This color space is defined in the toolbox by
-using ``gray_alpha.hpp``.
+For reading gray_alpha images the user has to compile application with ``BOOST_GIL_IO_ENABLE_GRAY_ALPHA``
+macro  defined. This color space is defined in the toolbox by using ``gray_alpha.hpp``.
 
 PNM
 +++
