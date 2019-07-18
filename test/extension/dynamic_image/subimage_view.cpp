@@ -10,6 +10,7 @@
 
 #define BOOST_TEST_MODULE test_ext_dynamic_image_subimage_view
 #include "unit_test.hpp"
+#include "unit_test_utility.hpp"
 #include "test_fixture.hpp"
 #include "core/image/test_fixture.hpp"
 

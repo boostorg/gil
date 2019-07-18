@@ -27,6 +27,7 @@
 
 #define BOOST_TEST_MODULE test_pixel_test_fixture
 #include "unit_test.hpp"
+#include "unit_test_utility.hpp"
 #include "test_fixture.hpp"
 
 namespace gil = boost::gil;
