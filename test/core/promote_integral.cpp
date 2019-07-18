@@ -16,23 +16,24 @@
 //  - Update and sort includes
 //  - Add explicit conversions to avoid warnings due to implicit integral promotions
 //
+// Uncomment to enable debugging output
+//#define BOOST_GIL_TEST_DEBUG 1
+
 #include <boost/gil/promote_integral.hpp>
 
+#include <algorithm>
 #include <climits>
 #include <cstddef>
-#include <algorithm>
-#include <limits>
+#ifdef BOOST_GIL_TEST_DEBUG
 #include <iostream>
+#endif
+#include <limits>
 #include <string>
-#include <sstream>
 
 #ifndef BOOST_TEST_MODULE
 #define BOOST_TEST_MODULE test_promote_integral
 #endif
 #include "unit_test.hpp"
-
-// Uncomment to enable debugging output
-//#define BOOST_GIL_TEST_DEBUG 1
 
 namespace bg = boost::gil;
 
