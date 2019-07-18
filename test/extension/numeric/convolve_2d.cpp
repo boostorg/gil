@@ -13,6 +13,7 @@
 
 #define BOOST_TEST_MODULE test_ext_numeric_colvolve_2d
 #include "unit_test.hpp"
+#include "unit_test_utility.hpp"
 #include "test_fixture.hpp"
 #include "core/image/test_fixture.hpp"
 
