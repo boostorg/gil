@@ -12,6 +12,8 @@
 #include <boost/gil/pixel.hpp>
 #include <boost/gil/promote_integral.hpp>
 
+#include <boost/core/typeinfo.hpp>
+
 #include <cstdint>
 #include <ostream>
 
