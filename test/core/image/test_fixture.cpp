@@ -22,7 +22,9 @@
 
 #include <boost/gil.hpp>
 
+#include <algorithm>
 #include <cstdint>
+#include <vector>
 
 #define BOOST_TEST_MODULE test_ext_numeric_test_fixture
 #include "unit_test.hpp"
@@ -49,8 +51,15 @@ BOOST_AUTO_TEST_CASE(reverse_consecutive_value)
 
 BOOST_AUTO_TEST_CASE(random_value)
 {
-    fixture::random_value<std::uint8_t> v;
-    BOOST_TEST(v() != v());
-    BOOST_TEST(v() != v());
-    BOOST_TEST(v() != v());
+    // Generate N pseudo-random values
+    fixture::random_value<std::uint8_t> random;
+    std::vector<std::uint8_t> v(10, 0);
+    for (auto& i : v) i = random();
+
+    // Require not all of N values are equal (duplicates are possible!)
+    std::sort(v.begin(), v.end());
+    auto last = std::unique(v.begin(), v.end());
+    v.erase(last, v.end());
+    BOOST_TEST(v.size() > 0);
+    BOOST_TEST(v.size() <= 10);
 }
