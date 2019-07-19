@@ -9,6 +9,7 @@
 message(STATUS "Boost.GIL: Configuring tests in test/extension/numeric")
 
 foreach(_name
+  channel_numeric_operations
   convolve_cols
   convolve_rows
   convolve_2d
