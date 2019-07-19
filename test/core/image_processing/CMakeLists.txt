@@ -8,7 +8,8 @@
 #
 foreach(_name
     threshold_binary
-    threshold_truncate)
+    threshold_truncate
+    threshold_otsu)
     set(_test t_core_image_processing_${_name})
     set(_target test_core_image_processing_${_name})
 
