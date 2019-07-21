@@ -4,6 +4,10 @@
 #include <boost/gil/typedefs.hpp>
 #include <boost/core/lightweight_test.hpp>
 
+#include <string>
+#include <iomanip>
+#include <sstream>
+
 namespace gil = boost::gil;
 
 bool are_equal(gil::gray32f_view_t expected, gil::gray32f_view_t actual)
@@ -93,27 +97,31 @@ void test_gaussian_kernel_generation()
     auto view = gil::view(kernel_image);
     gil::generate_gaussian_kernel(view, 0.84089642);
     bool is_correct = true;
-    const float expected_values[][7] = {
-        0.00000067,	0.00002292,	0.00019117,	0.00038771,	0.00019117,	0.00002292,	0.00000067,
-        0.00002292,	0.00078633,	0.00655965,	0.01330373,	0.00655965,	0.00078633,	0.00002292,
-        0.00019117,	0.00655965,	0.05472157,	0.11098164,	0.05472157,	0.00655965,	0.00019117,
-        0.00038771,	0.01330373,	0.11098164,	0.22508352,	0.11098164,	0.01330373,	0.00038771,
-        0.00019117,	0.00655965,	0.05472157,	0.11098164,	0.05472157,	0.00655965,	0.00019117,
-        0.00002292,	0.00078633,	0.00655965,	0.01330373,	0.00655965,	0.00078633,	0.00002292,
-        0.00000067,	0.00002292,	0.00019117,	0.00038771,	0.00019117,	0.00002292,	0.00000067
+    const float expected_values[7][7] = {
+        {0.00000067f, 0.00002292f, 0.00019117f, 0.00038771f, 0.00019117f, 0.00002292f, 0.00000067f},
+        {0.00002292f, 0.00078633f, 0.00655965f, 0.01330373f, 0.00655965f, 0.00078633f, 0.00002292f},
+        {0.00019117f, 0.00655965f, 0.05472157f, 0.11098164f, 0.05472157f, 0.00655965f, 0.00019117f},
+        {0.00038771f, 0.01330373f, 0.11098164f, 0.25508352f, 0.11098164f, 0.01330373f, 0.00038711f},
+        {0.00019117f, 0.00655965f, 0.05472157f, 0.11098164f, 0.05472157f, 0.00655965f, 0.00019117f},
+        {0.00002292f, 0.00078633f, 0.00655965f, 0.01330373f, 0.00655965f, 0.00078633f, 0.00002292f},
+        {0.00000067f, 0.00002292f, 0.00019117f, 0.00038771f, 0.00019117f, 0.00002292f, 0.00000067f}
     };
 
+    std::cout << std::fixed << std::setprecision(8);
     const auto chosen_channel = std::integral_constant<int, 0>{};
     for (gil::gray32f_view_t::coord_t y = 0; y < view.height(); ++y)
-        for (gil::gray32f_view_t::coord_t x = 0; x < view.height(); ++x) {
-            std::cout << x << ' ' << y << ' ' << view(x, y).at(chosen_channel) << '\n';
-            if (view(x, y).at(chosen_channel) != expected_values[y][x])
-                is_correct = false;
+        for (gil::gray32f_view_t::coord_t x = 0; x < view.width(); ++x) {
+        //     std::ostringstream oss;
+        //     oss << std::fixed << std::setprecision(8) << view(x, y).at(chosen_channel);
+        //     BOOST_TEST(oss.str() == expected_values[y][x]);
+        //     std::cout << x << ' ' << y << " output: " << oss.str() << " expected: " << expected_values[y][x] << '\n';
+            auto output = view(x, y).at(chosen_channel);
+            auto expected = expected_values[y][x];
+            auto percent_difference = std::ceil(std::abs(expected - output) / expected);
+            BOOST_TEST(percent_difference < 5);
         }
 
 
-
-    BOOST_TEST(is_correct);
 }
 
 void test_gaussian_kernel_throw()

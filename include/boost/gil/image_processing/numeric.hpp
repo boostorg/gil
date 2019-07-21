@@ -92,7 +92,7 @@ void generate_gaussian_kernel(boost::gil::gray32f_view_t dst, double sigma) {
     const auto middle = boost::gil::point_t(dst.width() / 2, dst.height() / 2);
     for (boost::gil::gray32f_view_t::coord_t y = 0; y < dst.height(); ++y)
     {
-        for (boost::gil::gray32f_view_t::coord_t x = 0; x < dst.height(); ++x)
+        for (boost::gil::gray32f_view_t::coord_t x = 0; x < dst.width(); ++x)
         {
             const auto delta_x = std::abs(middle.x - x);
             const auto delta_y = std::abs(middle.y - y);
