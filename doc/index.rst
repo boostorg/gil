@@ -6,14 +6,28 @@ representations from algorithms and allows writing code that can work on
 a variety of images with performance similar to hand-writing for a specific
 image type.
 
+Quickstart
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   installation
+   tutorial/video
+   tutorial/histogram
+   tutorial/gradient
+   naming
+
+Documentation
+-------------
+
 .. toctree::
    :maxdepth: 2
 
-   tutorial
+   design_guide
    io
    toolbox
    numeric
-   design_guide
    API Reference <./reference/index.html#://>
 
 Sample files
