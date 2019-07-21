@@ -4,10 +4,6 @@
 #include <boost/gil/typedefs.hpp>
 #include <boost/core/lightweight_test.hpp>
 
-#include <string>
-#include <iomanip>
-#include <sstream>
-
 namespace gil = boost::gil;
 
 bool are_equal(gil::gray32f_view_t expected, gil::gray32f_view_t actual)
@@ -107,14 +103,9 @@ void test_gaussian_kernel_generation()
         {0.00000067f, 0.00002292f, 0.00019117f, 0.00038771f, 0.00019117f, 0.00002292f, 0.00000067f}
     };
 
-    std::cout << std::fixed << std::setprecision(8);
     const auto chosen_channel = std::integral_constant<int, 0>{};
     for (gil::gray32f_view_t::coord_t y = 0; y < view.height(); ++y)
         for (gil::gray32f_view_t::coord_t x = 0; x < view.width(); ++x) {
-        //     std::ostringstream oss;
-        //     oss << std::fixed << std::setprecision(8) << view(x, y).at(chosen_channel);
-        //     BOOST_TEST(oss.str() == expected_values[y][x]);
-        //     std::cout << x << ' ' << y << " output: " << oss.str() << " expected: " << expected_values[y][x] << '\n';
             auto output = view(x, y).at(chosen_channel);
             auto expected = expected_values[y][x];
             auto percent_difference = std::ceil(std::abs(expected - output) / expected);
