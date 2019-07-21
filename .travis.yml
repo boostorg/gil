@@ -192,7 +192,9 @@ matrix:
 install:
   - |-
     if [ "$DOC" ]; then
+      pip --version
       pip install --user sphinx==1.7.9
+      sphinx-build --version
     fi
   - cd ..
   - $TRAVIS_BUILD_DIR/.ci/get-boost.sh $TRAVIS_BRANCH $TRAVIS_BUILD_DIR
