@@ -79,19 +79,23 @@ void correlate_rows_impl(
         return;
     }
 
-    using SrcPixelRef = typename pixel_proxy<typename SrcView::value_type>::type;
-    using DstPixelRef = typename pixel_proxy<typename DstView::value_type>::type;
+    using src_pixel_ref_t = typename pixel_proxy<typename SrcView::value_type>::type;
+    using dst_pixel_ref_t = typename pixel_proxy<typename DstView::value_type>::type;
+    using x_coord_t = typename SrcView::x_coord_t;
+    using y_coord_t = typename SrcView::y_coord_t;
 
-    int width = src_view.width(), height = src_view.height();
-    PixelAccum acc_zero;
-    pixel_zeros_t<PixelAccum>()(acc_zero);
+    x_coord_t const width = src_view.width();
+    y_coord_t const height = src_view.height();
     if (width == 0)
         return;
+
+    PixelAccum acc_zero;
+    pixel_zeros_t<PixelAccum>()(acc_zero);
     if (option == convolve_option_output_ignore || option == convolve_option_output_zero)
     {
         typename DstView::value_type dst_zero;
-        pixel_assigns_t<PixelAccum, DstPixelRef>()(acc_zero, dst_zero);
-        if (width < static_cast<int>(kernel.size()))
+        pixel_assigns_t<PixelAccum, dst_pixel_ref_t>()(acc_zero, dst_zero);
+        if (width < static_cast<x_coord_t>(kernel.size()))
         {
             if (option == convolve_option_output_zero)
                 fill_pixels(dst_view, dst_zero);
@@ -99,10 +103,10 @@ void correlate_rows_impl(
         else
         {
             std::vector<PixelAccum> buffer(width);
-            for (int rr = 0; rr < height; ++rr)
+            for (y_coord_t y = 0; y < height; ++y)
             {
-                assign_pixels(src_view.row_begin(rr), src_view.row_end(rr), &buffer.front());
-                typename DstView::x_iterator it_dst = dst_view.row_begin(rr);
+                assign_pixels(src_view.row_begin(y), src_view.row_end(y), &buffer.front());
+                typename DstView::x_iterator it_dst = dst_view.row_begin(y);
                 if (option == convolve_option_output_zero)
                     std::fill_n(it_dst, kernel.left_size(), dst_zero);
                 it_dst += kernel.left_size();
@@ -117,40 +121,40 @@ void correlate_rows_impl(
     else
     {
         std::vector<PixelAccum> buffer(width + kernel.size() - 1);
-        for (int rr = 0; rr < height; ++rr)
+        for (y_coord_t y = 0; y < height; ++y)
         {
             PixelAccum *it_buffer = &buffer.front();
             if (option == convolve_option_extend_padded)
             {
                 assign_pixels(
-                    src_view.row_begin(rr) - kernel.left_size(),
-                    src_view.row_end(rr) + kernel.right_size(),
+                    src_view.row_begin(y) - kernel.left_size(),
+                    src_view.row_end(y) + kernel.right_size(),
                     it_buffer);
             }
             else if (option == convolve_option_extend_zero)
             {
                 std::fill_n(it_buffer, kernel.left_size(), acc_zero);
                 it_buffer += kernel.left_size();
-                assign_pixels(src_view.row_begin(rr), src_view.row_end(rr), it_buffer);
+                assign_pixels(src_view.row_begin(y), src_view.row_end(y), it_buffer);
                 it_buffer += width;
                 std::fill_n(it_buffer, kernel.right_size(), acc_zero);
             }
             else if (option == convolve_option_extend_constant)
             {
                 PixelAccum filler;
-                pixel_assigns_t<SrcPixelRef, PixelAccum>()(*src_view.row_begin(rr), filler);
+                pixel_assigns_t<src_pixel_ref_t, PixelAccum>()(*src_view.row_begin(y), filler);
                 std::fill_n(it_buffer, kernel.left_size(), filler);
                 it_buffer += kernel.left_size();
-                assign_pixels(src_view.row_begin(rr), src_view.row_end(rr), it_buffer);
+                assign_pixels(src_view.row_begin(y), src_view.row_end(y), it_buffer);
                 it_buffer += width;
-                pixel_assigns_t<SrcPixelRef, PixelAccum>()(src_view.row_end(rr)[-1], filler);
+                pixel_assigns_t<src_pixel_ref_t, PixelAccum>()(src_view.row_end(y)[-1], filler);
                 std::fill_n(it_buffer, kernel.right_size(), filler);
             }
 
             correlator(
                 &buffer.front(), &buffer.front() + width,
                 kernel.begin(),
-                dst_view.row_begin(rr));
+                dst_view.row_begin(y));
         }
     }
 }

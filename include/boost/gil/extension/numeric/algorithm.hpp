@@ -18,128 +18,232 @@
 #include <algorithm>
 #include <iterator>
 #include <numeric>
+#include <type_traits>
 
 namespace boost { namespace gil {
 
-/// \brief Returns the reference proxy associated with a type that has a \p "reference" member type alias.
+/// \brief Reference proxy associated with a type that has a \p "reference" member type alias.
 ///
-/// The reference proxy is the reference type, but with stripped-out C++ reference. It models PixelConcept
+/// The reference proxy is the reference type, but with stripped-out C++ reference.
+/// Models PixelConcept.
 template <typename T>
 struct pixel_proxy : std::remove_reference<typename T::reference> {};
 
 /// \brief std::for_each for a pair of iterators
-template <typename Iterator1,typename Iterator2,typename BinaryFunction>
-BinaryFunction for_each(Iterator1 first1,Iterator1 last1,Iterator2 first2,BinaryFunction f) {
-    while(first1!=last1)
-        f(*first1++,*first2++);
+template <typename Iterator1, typename Iterator2, typename BinaryFunction>
+BinaryFunction for_each(Iterator1 first1, Iterator1 last1, Iterator2 first2, BinaryFunction f)
+{
+    while (first1 != last1)
+        f(*first1++, *first2++);
     return f;
 }
 
-template <typename SrcIterator,typename DstIterator>
-inline DstIterator assign_pixels(SrcIterator src,SrcIterator src_end,DstIterator dst) {
-    for_each(src,src_end,dst,pixel_assigns_t<typename pixel_proxy<typename std::iterator_traits<SrcIterator>::value_type>::type,
-                                             typename pixel_proxy<typename std::iterator_traits<DstIterator>::value_type>::type>());
-    return dst+(src_end-src);
+template <typename SrcIterator, typename DstIterator>
+inline
+auto assign_pixels(SrcIterator src, SrcIterator src_end, DstIterator dst) -> DstIterator
+{
+    for_each(src, src_end, dst,
+        pixel_assigns_t
+        <
+            typename pixel_proxy<typename std::iterator_traits<SrcIterator>::value_type>::type,
+            typename pixel_proxy<typename std::iterator_traits<DstIterator>::value_type>::type
+        >());
+    return dst + (src_end - src);
 }
 
 namespace detail {
+
 template <std::size_t Size>
-struct inner_product_k_t {
-    template <class _InputIterator1, class _InputIterator2, class _Tp,
-              class _BinaryOperation1, class _BinaryOperation2>
-    static _Tp apply(_InputIterator1 __first1,
-                     _InputIterator2 __first2, _Tp __init,
-                     _BinaryOperation1 __binary_op1,
-                     _BinaryOperation2 __binary_op2) {
-        __init = __binary_op1(__init, __binary_op2(*__first1, *__first2));
-        return inner_product_k_t<Size-1>::template apply(__first1+1,__first2+1,__init,
-                                                         __binary_op1, __binary_op2);
+struct inner_product_k_t
+{
+    template
+    <
+        class InputIterator1,
+        class InputIterator2,
+        class T,
+        class BinaryOperation1,
+        class BinaryOperation2
+    >
+    static T apply(
+        InputIterator1 first1,
+        InputIterator2 first2, T init,
+        BinaryOperation1 binary_op1,
+        BinaryOperation2 binary_op2)
+    {
+        init = binary_op1(init, binary_op2(*first1, *first2));
+        return inner_product_k_t<Size - 1>::template apply(
+            first1 + 1, first2 + 1, init, binary_op1, binary_op2);
     }
 };
 
 template <>
-struct inner_product_k_t<0> {
-    template <class _InputIterator1, class _InputIterator2, class _Tp,
-              class _BinaryOperation1, class _BinaryOperation2>
-    static _Tp apply(_InputIterator1 __first1,
-                     _InputIterator2 __first2, _Tp __init,
-                     _BinaryOperation1 __binary_op1,
-                     _BinaryOperation2 __binary_op2) {
-        return __init;
+struct inner_product_k_t<0>
+{
+    template
+    <
+        class InputIterator1,
+        class InputIterator2,
+        class T,
+        class BinaryOperation1,
+        class BinaryOperation2
+    >
+    static T apply(
+        InputIterator1 first1,
+        InputIterator2 first2,
+        T init,
+        BinaryOperation1 binary_op1,
+        BinaryOperation2 binary_op2)
+    {
+        return init;
     }
 };
+
 } // namespace detail
 
 /// static version of std::inner_product
-template <std::size_t Size,
-          class _InputIterator1, class _InputIterator2, class _Tp,
-          class _BinaryOperation1, class _BinaryOperation2>
+template
+<
+    std::size_t Size,
+    class InputIterator1,
+    class InputIterator2,
+    class T,
+    class BinaryOperation1,
+    class BinaryOperation2
+>
 BOOST_FORCEINLINE
-_Tp inner_product_k(_InputIterator1 __first1,
-                    _InputIterator2 __first2,
-                    _Tp __init,
-                    _BinaryOperation1 __binary_op1,
-                    _BinaryOperation2 __binary_op2) {
-    return detail::inner_product_k_t<Size>::template apply(__first1,__first2,__init,
-                                                           __binary_op1, __binary_op2);
+T inner_product_k(
+    InputIterator1 first1,
+    InputIterator2 first2,
+    T init,
+    BinaryOperation1 binary_op1,
+    BinaryOperation2 binary_op2)
+{
+    return detail::inner_product_k_t<Size>::template apply(
+        first1, first2, init, binary_op1, binary_op2);
 }
 
 /// \brief 1D un-guarded correlation with a variable-size kernel
-template <typename PixelAccum,typename SrcIterator,typename KernelIterator,typename Integer,typename DstIterator>
-inline DstIterator correlate_pixels_n(SrcIterator src_begin,SrcIterator src_end,
-                                      KernelIterator ker_begin,Integer ker_size,
-                                      DstIterator dst_begin) {
-    using PIXEL_SRC_REF = typename pixel_proxy<typename std::iterator_traits<SrcIterator>::value_type>::type;
-    using PIXEL_DST_REF = typename pixel_proxy<typename std::iterator_traits<DstIterator>::value_type>::type;
-    using kernel_type = typename std::iterator_traits<KernelIterator>::value_type;
-    PixelAccum acc_zero; pixel_zeros_t<PixelAccum>()(acc_zero);
-    while(src_begin!=src_end) {
-        pixel_assigns_t<PixelAccum,PIXEL_DST_REF>()(
-            std::inner_product(src_begin,src_begin+ker_size,ker_begin,acc_zero,
-                               pixel_plus_t<PixelAccum,PixelAccum,PixelAccum>(),
-                               pixel_multiplies_scalar_t<PIXEL_SRC_REF,kernel_type,PixelAccum>()),
+template
+<
+    typename PixelAccum,
+    typename SrcIterator,
+    typename KernelIterator,
+    typename Size,
+    typename DstIterator
+>
+inline
+auto correlate_pixels_n(
+    SrcIterator src_begin,
+    SrcIterator src_end,
+    KernelIterator kernel_begin,
+    Size kernel_size,
+    DstIterator dst_begin)
+    -> DstIterator
+{
+    using src_pixel_ref_t = typename pixel_proxy
+        <
+            typename std::iterator_traits<SrcIterator>::value_type
+        >::type;
+    using dst_pixel_ref_t = typename pixel_proxy
+        <
+            typename std::iterator_traits<DstIterator>::value_type
+        >::type;
+    using kernel_value_t = typename std::iterator_traits<KernelIterator>::value_type;
+
+    PixelAccum accum_zero;
+    pixel_zeros_t<PixelAccum>()(accum_zero);
+    while (src_begin != src_end)
+    {
+        pixel_assigns_t<PixelAccum, dst_pixel_ref_t>()(
+            std::inner_product(
+                src_begin,
+                src_begin + kernel_size,
+                kernel_begin,
+                accum_zero,
+                pixel_plus_t<PixelAccum, PixelAccum, PixelAccum>(),
+                pixel_multiplies_scalar_t<src_pixel_ref_t, kernel_value_t, PixelAccum>()),
             *dst_begin);
-        ++src_begin; ++dst_begin;
+
+        ++src_begin;
+        ++dst_begin;
     }
     return dst_begin;
 }
 
 /// \brief 1D un-guarded correlation with a fixed-size kernel
-template <std::size_t Size,typename PixelAccum,typename SrcIterator,typename KernelIterator,typename DstIterator>
-inline DstIterator correlate_pixels_k(SrcIterator src_begin,SrcIterator src_end,
-                                      KernelIterator ker_begin,
-                                      DstIterator dst_begin) {
-    using PIXEL_SRC_REF = typename pixel_proxy<typename std::iterator_traits<SrcIterator>::value_type>::type;
-    using PIXEL_DST_REF = typename pixel_proxy<typename std::iterator_traits<DstIterator>::value_type>::type;
+template
+<
+    std::size_t Size,
+    typename PixelAccum,
+    typename SrcIterator,
+    typename KernelIterator,
+    typename DstIterator
+>
+inline
+auto correlate_pixels_k(
+    SrcIterator src_begin,
+    SrcIterator src_end,
+    KernelIterator kernel_begin,
+    DstIterator dst_begin)
+    -> DstIterator
+{
+    using src_pixel_ref_t = typename pixel_proxy
+        <
+            typename std::iterator_traits<SrcIterator>::value_type
+        >::type;
+    using dst_pixel_ref_t = typename pixel_proxy
+        <
+            typename std::iterator_traits<DstIterator>::value_type
+        >::type;
     using kernel_type = typename std::iterator_traits<KernelIterator>::value_type;
-    PixelAccum acc_zero; pixel_zeros_t<PixelAccum>()(acc_zero);
-    while(src_begin!=src_end) {
-        pixel_assigns_t<PixelAccum,PIXEL_DST_REF>()(
-            inner_product_k<Size>(src_begin,ker_begin,acc_zero,
-                                  pixel_plus_t<PixelAccum,PixelAccum,PixelAccum>(),
-                                  pixel_multiplies_scalar_t<PIXEL_SRC_REF,kernel_type,PixelAccum>()),
+
+    PixelAccum accum_zero;
+    pixel_zeros_t<PixelAccum>()(accum_zero);
+    while (src_begin != src_end)
+    {
+        pixel_assigns_t<PixelAccum, dst_pixel_ref_t>()(
+            inner_product_k<Size>(
+                src_begin,
+                kernel_begin,
+                accum_zero,
+                pixel_plus_t<PixelAccum, PixelAccum, PixelAccum>(),
+                pixel_multiplies_scalar_t<src_pixel_ref_t, kernel_type, PixelAccum>()),
             *dst_begin);
-        ++src_begin; ++dst_begin;
+
+        ++src_begin;
+        ++dst_begin;
     }
     return dst_begin;
 }
 
 /// \brief destination is set to be product of the source and a scalar
-template <typename PixelAccum,typename SrcView,typename Scalar,typename DstView>
-inline void view_multiplies_scalar(const SrcView& src,const Scalar& scalar,const DstView& dst) {
-    BOOST_ASSERT(src.dimensions() == dst.dimensions());
-    using PIXEL_SRC_REF = typename pixel_proxy<typename SrcView::value_type>::type;
-    using PIXEL_DST_REF = typename pixel_proxy<typename DstView::value_type>::type;
-    int height=src.height();
-    for(int rr=0;rr<height;++rr) {
-        typename SrcView::x_iterator it_src=src.row_begin(rr);
-        typename DstView::x_iterator it_dst=dst.row_begin(rr);
-        typename SrcView::x_iterator it_src_end=src.row_end(rr);
-        while(it_src!=it_src_end) {
-            pixel_assigns_t<PixelAccum,PIXEL_DST_REF>()(
-                pixel_multiplies_scalar_t<PIXEL_SRC_REF,Scalar,PixelAccum>()(*it_src,scalar),
+/// \tparam PixelAccum - TODO
+/// \tparam SrcView Models ImageViewConcept
+/// \tparam DstView Models MutableImageViewConcept
+template <typename PixelAccum, typename SrcView, typename Scalar, typename DstView>
+inline
+void view_multiplies_scalar(SrcView const& src_view, Scalar const& scalar, DstView const& dst_view)
+{
+    static_assert(std::is_scalar<Scalar>::value, "Scalar is not scalar");
+    BOOST_ASSERT(src_view.dimensions() == dst_view.dimensions());
+    using src_pixel_ref_t = typename pixel_proxy<typename SrcView::value_type>::type;
+    using dst_pixel_ref_t = typename pixel_proxy<typename DstView::value_type>::type;
+    using y_coord_t = typename SrcView::y_coord_t;
+
+    y_coord_t const height = src_view.height();
+    for (y_coord_t y = 0; y < height; ++y)
+    {
+        typename SrcView::x_iterator it_src = src_view.row_begin(y);
+        typename DstView::x_iterator it_dst = dst_view.row_begin(y);
+        typename SrcView::x_iterator it_src_end = src_view.row_end(y);
+        while (it_src != it_src_end)
+        {
+            pixel_assigns_t<PixelAccum, dst_pixel_ref_t>()(
+                pixel_multiplies_scalar_t<src_pixel_ref_t, Scalar, PixelAccum>()(*it_src, scalar),
                 *it_dst);
-            ++it_src; ++it_dst;
+
+            ++it_src;
+            ++it_dst;
         }
     }
 }
