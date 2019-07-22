@@ -12,7 +12,8 @@ void test_normalized_mean_generation()
     auto view = gil::view(kernel_image);
     gil::generate_normalized_mean(view);
     bool is_correct = true;
-    boost::gil::for_each_pixel(view, [&is_correct](gil::gray32f_pixel_t& pixel) {
+    boost::gil::for_each_pixel(view, [&is_correct](gil::gray32f_pixel_t& pixel)
+    {
         const auto chosen_channel = std::integral_constant<int, 0>{};
         const auto expected_value = static_cast<float>(1 / 25.f);
         if (pixel.at(chosen_channel) != expected_value)
@@ -72,7 +73,8 @@ void test_gaussian_kernel_generation()
     auto view = gil::view(kernel_image);
     gil::generate_gaussian_kernel(view, 0.84089642);
     bool is_correct = true;
-    const float expected_values[7][7] = {
+    const float expected_values[7][7] =
+    {
         {0.00000067f, 0.00002292f, 0.00019117f, 0.00038771f, 0.00019117f, 0.00002292f, 0.00000067f},
         {0.00002292f, 0.00078633f, 0.00655965f, 0.01330373f, 0.00655965f, 0.00078633f, 0.00002292f},
         {0.00019117f, 0.00655965f, 0.05472157f, 0.11098164f, 0.05472157f, 0.00655965f, 0.00019117f},
@@ -84,12 +86,15 @@ void test_gaussian_kernel_generation()
 
     const auto chosen_channel = std::integral_constant<int, 0>{};
     for (gil::gray32f_view_t::coord_t y = 0; y < view.height(); ++y)
-        for (gil::gray32f_view_t::coord_t x = 0; x < view.width(); ++x) {
+    {
+        for (gil::gray32f_view_t::coord_t x = 0; x < view.width(); ++x)
+        {
             auto output = view(x, y).at(chosen_channel);
             auto expected = expected_values[y][x];
             auto percent_difference = std::ceil(std::abs(expected - output) / expected);
             BOOST_TEST(percent_difference < 5);
         }
+    }
 }
 
 void test_gaussian_kernel_throw()

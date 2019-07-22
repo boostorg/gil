@@ -56,7 +56,8 @@ inline double lanczos(double x, std::ptrdiff_t a)
 /// Fills supplied view with normalized mean
 /// in which all entries will be equal to
 /// \code 1 / (dst.size()) \endcode
-inline void generate_normalized_mean(boost::gil::gray32f_view_t dst) {
+inline void generate_normalized_mean(boost::gil::gray32f_view_t dst)
+{
     if (dst.width() != dst.height() || dst.width() % 2 != 1)
         throw std::invalid_argument("kernel dimensions should be odd and equal");
     const float entry = 1.0f / static_cast<float>(dst.size());
@@ -70,7 +71,8 @@ inline void generate_normalized_mean(boost::gil::gray32f_view_t dst) {
 /// \ingroup ImageProcessingMath
 ///
 /// Fills supplied view with 1s (ones)
-inline void generate_unnormalized_mean(boost::gil::gray32f_view_t dst) {
+inline void generate_unnormalized_mean(boost::gil::gray32f_view_t dst)
+{
     if (dst.width() != dst.height() || dst.width() % 2 != 1)
         throw std::invalid_argument("kernel dimensions should be odd and equal");
 
@@ -84,7 +86,8 @@ inline void generate_unnormalized_mean(boost::gil::gray32f_view_t dst) {
 ///
 /// Fills supplied view with values taken from Gaussian distribution. See
 /// https://en.wikipedia.org/wiki/Gaussian_blur
-inline void generate_gaussian_kernel(boost::gil::gray32f_view_t dst, double sigma) {
+inline void generate_gaussian_kernel(boost::gil::gray32f_view_t dst, double sigma)
+{
     if (dst.width() != dst.height() || dst.width() % 2 != 1)
         throw std::invalid_argument("kernel dimensions should be odd and equal");
 
