@@ -189,8 +189,14 @@ struct scoped_channel_value
     static value_type max_value() { return MaxVal::apply(); }
 
     scoped_channel_value() = default;
-    scoped_channel_value(const scoped_channel_value& c) : value_(c.value_) {}
-    scoped_channel_value(BaseChannelValue val) : value_(val) {}
+    scoped_channel_value(scoped_channel_value const& other) : value_(other.value_) {}
+    scoped_channel_value& operator=(scoped_channel_value const& other) = default;
+    scoped_channel_value(BaseChannelValue value) : value_(value) {}
+    scoped_channel_value& operator=(BaseChannelValue value)
+    {
+        value_ = value;
+        return *this;
+    }
 
     scoped_channel_value& operator++() { ++value_; return *this; }
     scoped_channel_value& operator--() { --value_; return *this; }
@@ -203,7 +209,6 @@ struct scoped_channel_value
     template <typename Scalar2> scoped_channel_value& operator*=(Scalar2 v) { value_*=v; return *this; }
     template <typename Scalar2> scoped_channel_value& operator/=(Scalar2 v) { value_/=v; return *this; }
 
-    scoped_channel_value& operator=(BaseChannelValue v) { value_=v; return *this; }
     operator BaseChannelValue() const { return value_; }
 private:
     BaseChannelValue value_{};
