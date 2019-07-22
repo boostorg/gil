@@ -10,8 +10,28 @@
 
 #include <boost/gil/detail/mp11.hpp>
 
+#include <boost/config.hpp>
+
+#if defined(BOOST_CLANG)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wconversion"
+#endif
+
+#if defined(BOOST_GCC) && (BOOST_GCC >= 40900)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+#endif
+
 #include <boost/iterator/iterator_adaptor.hpp>
 #include <boost/iterator/iterator_facade.hpp>
+
+#if defined(BOOST_CLANG)
+#pragma clang diagnostic pop
+#endif
+
+#if defined(BOOST_GCC) && (BOOST_GCC >= 40900)
+#pragma GCC diagnostic pop
+#endif
 
 #include <algorithm>
 #include <cmath>
@@ -100,13 +120,13 @@ struct deref_base
 template <typename D1, typename D2>
 class deref_compose : public deref_base
 <
-      deref_compose<typename D1::const_t, typename D2::const_t>,
-      typename D1::value_type,
-      typename D1::reference,
-      typename D1::const_reference,
-      typename D2::argument_type,
-      typename D1::result_type,
-      D1::is_mutable && D2::is_mutable
+    deref_compose<typename D1::const_t, typename D2::const_t>,
+    typename D1::value_type,
+    typename D1::reference,
+    typename D1::const_reference,
+    typename D2::argument_type,
+    typename D1::result_type,
+    D1::is_mutable && D2::is_mutable
 >
 {
 public:
