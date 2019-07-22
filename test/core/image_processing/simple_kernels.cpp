@@ -6,7 +6,7 @@
 
 namespace gil = boost::gil;
 
-bool are_equal(gil::gray32f_view_t expected, gil::gray32f_view_t actual)
+bool is_equal(gil::gray32f_view_t expected, gil::gray32f_view_t actual)
 {
     if (expected.dimensions() != actual.dimensions())
         return false;
