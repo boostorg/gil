@@ -190,7 +190,6 @@ void otsu_impl(SrcView const& src_view, DstView const& dst_view, threshold_direc
 {
     //deciding output channel type and creating functor
     using source_channel_t = typename channel_type<SrcView>::type;
-    using result_channel_t = typename channel_type<DstView>::type;
 
     std::array<std::size_t, 256> histogram{};
     //initial value of min is set to maximum possible value to compare histogram data
