@@ -55,7 +55,7 @@ inline double lanczos(double x, std::ptrdiff_t a)
 ///
 /// Fills supplied view with normalized mean
 /// in which all entries will be equal to
-/// 1 / (dst.size())
+/// \code 1 / (dst.size()) \endcode
 inline void generate_normalized_mean(boost::gil::gray32f_view_t dst) {
     if (dst.width() != dst.height() || dst.width() % 2 != 1)
         throw std::invalid_argument("kernel dimensions should be odd and equal");
