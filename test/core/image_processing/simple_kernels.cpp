@@ -85,8 +85,6 @@ void test_unnormalized_mean_throw() {
     BOOST_TEST(have_thrown);
 }
 
-#include <iostream>
-
 void test_gaussian_kernel_generation()
 {
     gil::gray32f_image_t kernel_image(gil::point_t(7, 7));
