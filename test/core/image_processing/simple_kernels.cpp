@@ -11,9 +11,9 @@ bool are_equal(gil::gray32f_view_t expected, gil::gray32f_view_t actual)
     if (expected.dimensions() != actual.dimensions())
         return false;
 
-    for (long int y = 0; y < expected.height(); ++y)
+    for (std::ptrdiff_t y = 0; y < expected.height(); ++y)
     {
-        for (long int x = 0; x < expected.width(); ++x)
+        for (std::ptrdiff_t x = 0; x < expected.width(); ++x)
         {
             if (expected(x, y) != actual(x, y))
             {
@@ -111,8 +111,6 @@ void test_gaussian_kernel_generation()
             auto percent_difference = std::ceil(std::abs(expected - output) / expected);
             BOOST_TEST(percent_difference < 5);
         }
-
-
 }
 
 void test_gaussian_kernel_throw()
