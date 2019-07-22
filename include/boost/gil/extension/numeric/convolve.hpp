@@ -170,6 +170,16 @@ void convolve_cols(const SrcView& src, const Kernel& ker, const DstView& dst,
 }
 
 /// \ingroup ImageAlgorithms
+///convolve a 1D variable-size kernel along both rows and columns of an image
+template <typename PixelAccum,typename SrcView,typename Kernel,typename DstView>
+BOOST_FORCEINLINE
+void convolve(const SrcView& src, const Kernel& ker, const DstView& dst,
+                   convolve_boundary_option option=convolve_option_extend_zero) {
+    convolve_rows<PixelAccum>(src, ker, dst, option);
+    convolve_cols<PixelAccum>(dst, ker, dst, option);
+}
+
+/// \ingroup ImageAlgorithms
 ///correlate a 1D fixed-size kernel along the rows of an image
 template <typename PixelAccum, typename SrcView, typename Kernel, typename DstView>
 BOOST_FORCEINLINE
