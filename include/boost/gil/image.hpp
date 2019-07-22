@@ -13,8 +13,11 @@
 #include <boost/gil/metafunctions.hpp>
 #include <boost/gil/detail/mp11.hpp>
 
+#include <boost/assert.hpp>
+
 #include <cstddef>
 #include <memory>
+#include <utility>
 #include <type_traits>
 
 namespace boost { namespace gil {
@@ -145,7 +148,7 @@ public:
     {
         if (dims == _view.dimensions() && _align_in_bytes == alignment)
             return;
-        
+
         _align_in_bytes = alignment;
 
         if (_allocated_bytes >= total_allocated_size_in_bytes(dims))
@@ -196,7 +199,7 @@ public:
     {
         if (dims == _view.dimensions() && _align_in_bytes == alignment && alloc_in == _alloc)
             return;
-        
+
         _align_in_bytes = alignment;
 
         if (_allocated_bytes >= total_allocated_size_in_bytes(dims))
@@ -343,7 +346,10 @@ private:
         _memory=_alloc.allocate( _allocated_bytes );
 
         unsigned char* tmp=(_align_in_bytes>0) ? (unsigned char*)align((std::size_t)_memory,_align_in_bytes) : _memory;
-        _view=view_t(dimensions,typename view_t::locator(typename view_t::x_iterator(tmp),get_row_size_in_memunits(dimensions.x)));
+        _view=view_t(dimensions,typename view_t::locator(typename view_t::x_iterator(tmp), get_row_size_in_memunits(dimensions.x)));
+
+        BOOST_ASSERT(_view.width() == dimensions.x);
+        BOOST_ASSERT(_view.height() == dimensions.y);
     }
 
     void allocate_(point_t const& dimensions, std::true_type)
@@ -363,6 +369,9 @@ private:
             memunit_advance(dynamic_at_c(first,i), plane_size*i);
         }
         _view=view_t(dimensions, typename view_t::locator(first, row_size));
+
+        BOOST_ASSERT(_view.width() == dimensions.x);
+        BOOST_ASSERT(_view.height() == dimensions.y);
     }
 
     void create_view(point_t const& dims, std::true_type) // is planar
@@ -385,11 +394,10 @@ private:
                            );
         }
 
-        _view=view_t( dims
-                    , typename view_t::locator( first
-                                              , row_size
-                                              )
-                    );
+        _view = view_t(dims, typename view_t::locator(first, row_size));
+
+        BOOST_ASSERT(_view.width() == dims.x);
+        BOOST_ASSERT(_view.height() == dims.y);
     }
 
     void create_view(point_t const& dims, std::false_type) // is planar
@@ -404,6 +412,9 @@ private:
                                                 , get_row_size_in_memunits( dims.x )
                                                 )
                       );
+
+        BOOST_ASSERT(_view.width() == dims.x);
+        BOOST_ASSERT(_view.height() == dims.y);
     }
 };
 
