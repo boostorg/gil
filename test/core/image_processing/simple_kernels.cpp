@@ -6,25 +6,6 @@
 
 namespace gil = boost::gil;
 
-bool is_equal(gil::gray32f_view_t expected, gil::gray32f_view_t actual)
-{
-    if (expected.dimensions() != actual.dimensions())
-        return false;
-
-    for (std::ptrdiff_t y = 0; y < expected.height(); ++y)
-    {
-        for (std::ptrdiff_t x = 0; x < expected.width(); ++x)
-        {
-            if (expected(x, y) != actual(x, y))
-            {
-                return false;
-            }
-        }
-    }
-
-    return true;
-}
-
 void test_normalized_mean_generation()
 {
     gil::gray32f_image_t kernel_image(gil::point_t(5, 5));
