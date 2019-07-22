@@ -82,10 +82,28 @@ public:
         : parent_t(v0, v1, v2, v3, v4, v5)
     {}
 
+    planar_pixel_reference(planar_pixel_reference const& p) : parent_t(p) {}
+
+    // TODO: What is the purpose of returning via const reference?
+    auto operator=(planar_pixel_reference const& p) const -> planar_pixel_reference const&
+    {
+        static_copy(p, *this);
+        return *this;
+    }
+
     template <typename Pixel>
     planar_pixel_reference(Pixel const& p) : parent_t(p)
     {
          check_compatible<Pixel>();
+    }
+
+    // TODO: What is the purpose of returning via const reference?
+    template <typename Pixel>
+    auto operator=(Pixel const& p) const -> planar_pixel_reference const&
+    {
+        check_compatible<Pixel>();
+        static_copy(p, *this);
+        return *this;
     }
 
     // PERFORMANCE_CHECK: Is this constructor necessary?
@@ -101,20 +119,6 @@ public:
     planar_pixel_reference(planar_pixel_iterator<ChannelPtr, ColorSpace> const& p, std::ptrdiff_t diff)
         : parent_t(p, diff)
     {}
-
-    auto operator=(planar_pixel_reference const& p) const -> planar_pixel_reference const&
-    {
-        static_copy(p, *this);
-        return *this;
-    }
-
-    template <typename Pixel>
-    auto operator=(Pixel const& p) const -> planar_pixel_reference const&
-    {
-        check_compatible<Pixel>();
-        static_copy(p, *this);
-        return *this;
-    }
 
 // This overload is necessary for a compiler implementing Core Issue 574
 // to prevent generation of an implicit copy assignment operator (the reason
