@@ -20,17 +20,6 @@
 namespace gil = boost::gil;
 namespace fixture = boost::gil::test::fixture;
 
-namespace {
-
-template <typename Pixel, typename SrcView, typename Kernel, typename DstView>
-void convolve2d(SrcView const& src_view, Kernel const& kernel, DstView const& dst_view)
-{
-    gil::convolve_rows<Pixel>(src_view, kernel, dst_view);
-    gil::convolve_cols<Pixel>(src_view, kernel, dst_view);
-}
-
-} // unnamed namespace
-
 BOOST_AUTO_TEST_SUITE(convolve_2d)
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(image_1x1_kernel_1x1_identity, Image, fixture::image_types)
@@ -41,7 +30,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(image_1x1_kernel_1x1_identity, Image, fixture::ima
     using pixel_t = typename Image::value_type;
     using channel_t = typename gil::channel_type<pixel_t>::type;
     auto const kernel = fixture::create_kernel<channel_t>({1});
-    convolve2d<pixel_t>(const_view(img_out), kernel, view(img_out));
+    gil::convolve<pixel_t>(const_view(img_out), kernel, view(img_out));
 
     // 1x1 kernel reduces convolution to multiplication
     BOOST_TEST(gil::const_view(img).front() == gil::const_view(img_out).front());
@@ -55,7 +44,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(image_1x1_kernel_3x3_identity, Image, fixture::ima
     using pixel_t = typename Image::value_type;
     using channel_t = typename gil::channel_type<pixel_t>::type;
     auto const kernel = fixture::create_kernel<channel_t>({0, 0, 0, 0, 1, 0, 0, 0, 0});
-    convolve2d<pixel_t>(const_view(img_out), kernel, view(img_out));
+    gil::convolve<pixel_t>(const_view(img_out), kernel, view(img_out));
 
     BOOST_TEST(gil::const_view(img).front() == gil::const_view(img_out).front());
 }
@@ -68,7 +57,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(image_3x3_kernel_3x3_identity, Image, fixture::ima
     Image img_out(img);
 
     auto const kernel = fixture::create_kernel<channel_t>({0, 0, 0, 0, 1, 0, 0, 0, 0});
-    convolve2d<pixel_t>(const_view(img_out), kernel, view(img_out));
+    gil::convolve<pixel_t>(const_view(img_out), kernel, view(img_out));
 
     BOOST_TEST(gil::equal_pixels(gil::const_view(img), gil::const_view(img_out)));
 }
@@ -81,7 +70,7 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(image_5x5_kernel_3x3_identity, Image, fixture::ima
     Image img_out(img);
 
     auto const kernel = fixture::create_kernel<channel_t>({0, 0, 0, 0, 1, 0, 0, 0, 0});
-    convolve2d<pixel_t>(const_view(img_out), kernel, view(img_out));
+    gil::convolve<pixel_t>(const_view(img_out), kernel, view(img_out));
     // TODO: Test different boundary options
 
     BOOST_TEST(gil::equal_pixels(gil::const_view(img), gil::const_view(img_out)));
