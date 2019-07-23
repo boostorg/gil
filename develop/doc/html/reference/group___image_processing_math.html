@@ -55,12 +55,50 @@ Functions</h2></td></tr>
 double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___image_processing_math.html#gaaa4583e6d012a8b49ad1738cec762651">lanczos</a> (double x, std::ptrdiff_t a)</td></tr>
 <tr class="memdesc:gaaa4583e6d012a8b49ad1738cec762651"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lanczos response at point xLanczos response is defined as: x == 0: 1 -a &lt; x &amp;&amp; x &lt; a: 0 otherwise: normalized_sinc(x) / normalized_sinc(x / a) <br /></td></tr>
 <tr class="separator:gaaa4583e6d012a8b49ad1738cec762651"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga598481b60bf8ad39a0dce57d65d1820a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___image_processing_math.html#ga598481b60bf8ad39a0dce57d65d1820a">generate_normalized_mean</a> (boost::gil::gray32f_view_t dst)</td></tr>
+<tr class="memdesc:ga598481b60bf8ad39a0dce57d65d1820a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate mean kernelFills supplied view with normalized mean in which all entries will be equal to.  <a href="group___image_processing_math.html#ga598481b60bf8ad39a0dce57d65d1820a">More...</a><br /></td></tr>
+<tr class="separator:ga598481b60bf8ad39a0dce57d65d1820a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf09a84c1960713b6a8df3e1d78b1b733"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf09a84c1960713b6a8df3e1d78b1b733"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___image_processing_math.html#gaf09a84c1960713b6a8df3e1d78b1b733">generate_unnormalized_mean</a> (boost::gil::gray32f_view_t dst)</td></tr>
+<tr class="memdesc:gaf09a84c1960713b6a8df3e1d78b1b733"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate kernel with all 1sFills supplied view with 1s (ones) <br /></td></tr>
+<tr class="separator:gaf09a84c1960713b6a8df3e1d78b1b733"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae1bd55f00abfa4bad83560e35992f7f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae1bd55f00abfa4bad83560e35992f7f4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___image_processing_math.html#gae1bd55f00abfa4bad83560e35992f7f4">generate_gaussian_kernel</a> (boost::gil::gray32f_view_t dst, double sigma)</td></tr>
+<tr class="memdesc:gae1bd55f00abfa4bad83560e35992f7f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate Gaussian kernelFills supplied view with values taken from Gaussian distribution. See <a href="https://en.wikipedia.org/wiki/Gaussian_blur">https://en.wikipedia.org/wiki/Gaussian_blur</a>. <br /></td></tr>
+<tr class="separator:gae1bd55f00abfa4bad83560e35992f7f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Math operations for IP algorithms. </p>
 <p>This is mostly handful of mathemtical operations that are required by other image processing algorithms</p>
 <p>Normalized cardinal sine</p>
 <p>normalized_sinc(x) = sin(pi * x) / (pi * x) </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga598481b60bf8ad39a0dce57d65d1820a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void boost::gil::generate_normalized_mean </td>
+          <td>(</td>
+          <td class="paramtype">boost::gil::gray32f_view_t&#160;</td>
+          <td class="paramname"><em>dst</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Generate mean kernelFills supplied view with normalized mean in which all entries will be equal to. </p>
+<div class="fragment"><div class="line">1 / (dst.size()) </div></div><!-- fragment --> 
+</div>
+</div>
 </div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
      <!-- start footer part -->
