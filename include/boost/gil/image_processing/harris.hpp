@@ -52,11 +52,14 @@ void compute_harris_responses(
                     x_kernel < window_length;
                     ++x_kernel) {
                     ddxx += m11(x + x_kernel - half_length, y + y_kernel - half_length)
-                        .at(std::integral_constant<int, 0>{});
+                        .at(std::integral_constant<int, 0>{})
+                        * weights(x_kernel, y_kernel).at(std::integral_constant<int, 0>{});
                     dxdy += m12_21(x + x_kernel - half_length, y + y_kernel - half_length)
-                        .at(std::integral_constant<int, 0>{});;
+                        .at(std::integral_constant<int, 0>{})
+                        * weights(x_kernel, y_kernel).at(std::integral_constant<int, 0>{});
                     ddyy += m22(x + x_kernel - half_length, y + y_kernel - half_length)
-                        .at(std::integral_constant<int, 0>{});;
+                        .at(std::integral_constant<int, 0>{})
+                        * weights(x_kernel, y_kernel).at(std::integral_constant<int, 0>{});
                 }
             }
             auto det = (ddxx * ddyy) - dxdy * dxdy;
