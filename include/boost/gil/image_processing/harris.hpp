@@ -1,5 +1,5 @@
-#ifndef BOOST_GIL_HARRIS_HPP
-#define BOOST_GIL_HARRIS_HPP
+#ifndef BOOST_GIL_IMAGE_PROCESSING_HARRIS_HPP
+#define BOOST_GIL_IMAGE_PROCESSING_HARRIS_HPP
 
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/typedefs.hpp>
@@ -35,13 +35,15 @@ void compute_harris_responses(
             " tensor from the same image");
     }
 
-    auto window_length = weights.dimensions().x;
-    auto width = m11.width();
-    auto height = m11.height();
-    auto half_length = window_length / 2;
+    auto const window_length = weights.dimensions().x;
+    auto const width = m11.width();
+    auto const height = m11.height();
+    auto const half_length = window_length / 2;
 
-    for (auto y = half_length; y < height - half_length; ++y) {
-        for (auto x = half_length; x < width - half_length; ++x) {
+    for (auto y = half_length; y < height - half_length; ++y)
+    {
+        for (auto x = half_length; x < width - half_length; ++x)
+        {
             float ddxx = 0;
             float dxdy = 0;
             float ddyy = 0;
