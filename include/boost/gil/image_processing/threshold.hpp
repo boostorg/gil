@@ -394,7 +394,8 @@ void threshold_adaptive
     typename channel_type<DstView>::type max_value,
     std::size_t kernel_size,
     threshold_adaptive_method method = threshold_adaptive_method::mean,
-    threshold_direction direction = threshold_direction::regular
+    threshold_direction direction = threshold_direction::regular,
+    typename channel_type<DstView>::type constant = 0
 )
 {
     BOOST_ASSERT_MSG((kernel_size % 2 != 0), "Kernel size must be an odd number");
@@ -404,32 +405,28 @@ void threshold_adaptive
 
     if (method == threshold_adaptive_method::mean)
     {
-        float *mean = new float[kernel_size];
-        std::fill_n(mean, kernel_size, 1.0f/kernel_size);
+        std::vector<float> mean_kernel_values(kernel_size, 1.0f/kernel_size);
+        kernel_1d<float> kernel(mean_kernel_values.begin(), kernel_size, kernel_size/2);
 
         image<typename SrcView::value_type> temp_img(src_view.width(), src_view.height());
         typename image<typename SrcView::value_type>::view_t temp_view = view(temp_img);
         SrcView temp_conv(temp_view);
-        
-        kernel_1d<float> kernel(mean, kernel_size, kernel_size/2);
-        convolve_rows<pixel<float, typename SrcView::value_type::layout_t>>(
+
+        convolve<pixel<float, typename SrcView::value_type::layout_t>>(
             src_view, kernel, temp_view
-        );
-        convolve_cols<pixel<float, typename SrcView::value_type::layout_t>>(
-            temp_view, kernel, temp_view
         );
 
         if (direction == threshold_direction::regular)
         {
             detail::adaptive_impl<source_channel_t, result_channel_t>(src_view, temp_conv, dst_view,
-                [max_value](source_channel_t px1, source_channel_t px2) -> result_channel_t
-                    { return px1 >= px2 ? max_value : 0; });
+                [max_value, constant](source_channel_t px, source_channel_t threshold) -> result_channel_t
+                    { return px > (threshold - constant) ? max_value : 0; });
         }
         else
         {
             detail::adaptive_impl<source_channel_t, result_channel_t>(src_view, temp_conv, dst_view,
-                [max_value](source_channel_t px1, source_channel_t px2) -> result_channel_t
-                    { return px1 >= px2 ? 0 : max_value; });
+                [max_value, constant](source_channel_t px, source_channel_t threshold) -> result_channel_t
+                    { return px > (threshold - constant) ? 0 : max_value; });
         }
     }
 }
@@ -441,7 +438,8 @@ void threshold_adaptive
     DstView const& dst_view,
     std::size_t kernel_size,
     threshold_adaptive_method method = threshold_adaptive_method::mean,
-    threshold_direction direction = threshold_direction::regular
+    threshold_direction direction = threshold_direction::regular,
+    int constant = 0
 )
 {
     //deciding output channel type and creating functor
@@ -449,7 +447,7 @@ void threshold_adaptive
 
     result_channel_t max_value = std::numeric_limits<result_channel_t>::max();
 
-    threshold_adaptive(src_view, dst_view, max_value, kernel_size, method, direction);
+    threshold_adaptive(src_view, dst_view, max_value, kernel_size, method, direction, constant);
 }
 
 /// @}
