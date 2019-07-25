@@ -23,12 +23,12 @@ namespace boost { namespace gil {
 /// constant against edges (usually in range 0.04 to 0.06).
 /// harris_response is an out parameter that will contain the Harris responses.
 void compute_harris_responses(
-    gil::gray32f_view_t m11,
-    gil::gray32f_view_t m12_21,
-    gil::gray32f_view_t m22,
-    gil::gray32f_view_t weights,
+    boost::gil::gray32f_view_t m11,
+    boost::gil::gray32f_view_t m12_21,
+    boost::gil::gray32f_view_t m22,
+    boost::gil::gray32f_view_t weights,
     float k,
-    gil::gray32f_view_t harris_response)
+    boost::gil::gray32f_view_t harris_response)
 {
     if (m11.dimensions() != m12_21.dimensions() || m12_21.dimensions() != m22.dimensions()) {
         throw std::invalid_argument("m prefixed arguments must represent"
