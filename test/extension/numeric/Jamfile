@@ -17,6 +17,7 @@ project
 
 alias headers : [ generate_self_contained_headers extension/numeric ] ;
 
+run channel_numeric_operations.cpp ;
 run convolve_cols.cpp ;
 run convolve_rows.cpp ;
 run convolve_2d.cpp ;
