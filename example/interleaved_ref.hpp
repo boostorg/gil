@@ -8,6 +8,7 @@
 #ifndef BOOST_GIL_EXAMPLE_INTERLEAVED_REF_HPP
 #define BOOST_GIL_EXAMPLE_INTERLEAVED_REF_HPP
 
+#include <boost/gil.hpp>
 #include <boost/gil/extension/dynamic_image/dynamic_image_all.hpp>
 
 #include <type_traits>
