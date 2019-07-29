@@ -8,7 +8,7 @@
 #ifndef BOOST_GIL_EXAMPLE_INTERLEAVED_PTR_HPP
 #define BOOST_GIL_EXAMPLE_INTERLEAVED_PTR_HPP
 
-#include <boost/gil/pixel_iterator.hpp>
+#include <boost/gil.hpp>
 #include <boost/mp11.hpp>
 
 #include <type_traits>
