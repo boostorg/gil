@@ -20,7 +20,7 @@
 namespace gil = boost::gil;
 namespace fixture = boost::gil::test::fixture;
 
-BOOST_AUTO_TEST_SUITE(convolve_2d)
+BOOST_AUTO_TEST_SUITE(convolve)
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(image_1x1_kernel_1x1_identity, Image, fixture::image_types)
 {

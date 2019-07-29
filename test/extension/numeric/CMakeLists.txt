@@ -12,7 +12,7 @@ foreach(_name
   channel_numeric_operations
   convolve_cols
   convolve_rows
-  convolve_2d
+  convolve
   kernel
   matrix3x2
   numeric)
