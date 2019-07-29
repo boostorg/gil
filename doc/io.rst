@@ -441,10 +441,10 @@ PNM
 +++
 
 For a general overview of the PNM image file format go to the
-following PNM_Wiki_.
+following PNM_Wiki_. No external library is needed for the pnm format.
 
-No external library is needed for the pnm format.
-Both ascii and binary formats are supported.
+The extension can read images in both flavours of the formats, ASCII and binary,
+that is types from P1 through P6; can write only binary formats.
 
 Currently the code is able to read and write the following image types:
 
