@@ -122,7 +122,7 @@ T inner_product_k(
         first1, first2, init, binary_op1, binary_op2);
 }
 
-/// \brief 1D un-guarded correlation with a variable-size kernel
+/// \brief 1D un-guarded cross-correlation with a variable-size kernel
 template
 <
     typename PixelAccum,
@@ -170,7 +170,7 @@ auto correlate_pixels_n(
     return dst_begin;
 }
 
-/// \brief 1D un-guarded correlation with a fixed-size kernel
+/// \brief 1D un-guarded cross-correlation with a fixed-size kernel
 template
 <
     std::size_t Size,

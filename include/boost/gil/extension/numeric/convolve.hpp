@@ -26,10 +26,10 @@
 
 namespace boost { namespace gil {
 
-// 2D seperable convolutions and correlations
+// 2D spatial seperable convolutions and cross-correlations
 
 /// \ingroup ImageAlgorithms
-/// \brief Boundary options for 1D correlations and convolutions
+/// \brief Boundary options for 1D cross-correlation and convolution
 /// Use it as `enum class` with mutually exclusive constants, not as bitfields.
 /// \todo TODO: Change to enum class?
 enum /*class*/ convolve_boundary_option
@@ -43,7 +43,7 @@ enum /*class*/ convolve_boundary_option
 
 namespace detail {
 
-/// \brief Compute the correlation of 1D kernel with the rows of an image
+/// \brief Compute the cross-correlation of 1D kernel with the rows of an image
 /// \tparam PixelAccum - TODO
 /// \tparam SrcView Models ImageViewConcept
 /// \tparam Kernel - TODO
