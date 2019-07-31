@@ -9,6 +9,7 @@
 #define BOOST_GIL_EXTENSION_NUMERIC_KERNEL_HPP
 
 #include <boost/gil/utilities.hpp>
+#include <boost/gil/point.hpp>
 
 #include <boost/assert.hpp>
 
@@ -17,6 +18,7 @@
 #include <cstddef>
 #include <memory>
 #include <vector>
+#include <cmath>
 
 namespace boost { namespace gil {
 
@@ -150,6 +152,206 @@ inline Kernel reverse_kernel(Kernel const& kernel)
     std::reverse(result.begin(), result.end());
     return result;
 }
+
+
+namespace detail {
+
+template <typename Core>
+class kernel_2d_adaptor : public Core
+{
+public:
+    kernel_2d_adaptor() = default;
+
+    explicit kernel_2d_adaptor(std::size_t center_vertical, std::size_t center_horizontal)
+        : center_(center_horizontal, center_vertical)
+    {
+        BOOST_ASSERT(center_.y < this->size() && center_.x < this->size());
+    }
+
+    kernel_2d_adaptor(std::size_t size, std::size_t center_vertical, std::size_t center_horizontal)
+        : Core(size * size),
+        square_size(size),
+        center_(center_horizontal, center_vertical)
+    {
+        BOOST_ASSERT(this->size() > 0);
+        BOOST_ASSERT(center_.y < this->size() && center_.x < this->size()); // also implies `size() > 0`
+    }
+
+    kernel_2d_adaptor(kernel_2d_adaptor const& other)
+        : Core(other),
+        square_size(other.square_size),
+        center_(other.center_.x, other.center_.y)
+    {
+        BOOST_ASSERT(this->size() > 0);
+        BOOST_ASSERT(center_.y < this->size() && center_.x < this->size()); // also implies `size() > 0`
+    }
+
+    kernel_2d_adaptor& operator=(kernel_2d_adaptor const& other)
+    {
+        Core::operator=(other);
+        center_.y = other.center_.y;
+        center_.x = other.center_.x;
+        square_size = other.square_size;
+        return *this;
+    }
+
+    std::size_t upper_size() const
+    {
+        BOOST_ASSERT(center_.y < this->size());
+        return center_.y;
+    }
+
+    std::size_t lower_size() const
+    {
+        BOOST_ASSERT(center_.y < this->size());
+        return this->size() - center_.y - 1;
+    }
+
+    std::size_t left_size() const
+    {
+        BOOST_ASSERT(center_.x < this->size());
+        return center_.x;
+    }
+
+    std::size_t right_size() const
+    {
+        BOOST_ASSERT(center_.x < this->size());
+        return this->size() - center_.x - 1;
+    }
+
+    auto center_vertical() -> std::size_t&
+    {
+        BOOST_ASSERT(center_.y < this->size());
+        return center_.y;
+    }
+
+    auto center_vertical() const -> std::size_t const&
+    {
+        BOOST_ASSERT(center_.y < this->size());
+        return center_.y;
+    }
+
+    auto center_horizontal() -> std::size_t&
+    {
+        BOOST_ASSERT(center_.x < this->size());
+        return center_.x;
+    }
+
+    auto center_horizontal() const -> std::size_t const&
+    {
+        BOOST_ASSERT(center_.x < this->size());
+        return center_.x;
+    }
+
+    std::size_t size() const
+    {
+        return square_size;
+    }
+
+    typename Core::value_type at(std::size_t x, std::size_t y) const
+    {
+        if (x >= this->size() || y >= this->size())
+        {
+            throw std::out_of_range("Index out of range");
+        }
+        
+        return this->begin()[y * this->size() + x];
+    }
+
+private:
+    using center_t = point<std::size_t>;
+    center_t center_{ 0, 0 };
+
+protected:
+    std::size_t square_size{ 0 };
+};
+} //namespace detail
+
+/// \brief variable-size kernel
+template
+<
+    typename T,
+    typename Allocator = std::allocator<T>
+>
+class kernel_2d : public detail::kernel_2d_adaptor<std::vector<T, Allocator>>
+{
+    using parent_t = detail::kernel_2d_adaptor<std::vector<T, Allocator>>;
+
+public:
+
+    kernel_2d() = default;
+    kernel_2d(
+        std::size_t size,
+        std::size_t vertical_center,
+        std::size_t center_horizontal
+    ) : parent_t(size, vertical_center, center_horizontal){}
+
+    template <typename FwdIterator>
+    kernel_2d(
+        FwdIterator elements,
+        std::size_t size,
+        std::size_t vertical_center,
+        std::size_t center_horizontal
+    ) : parent_t(static_cast<int>(std::sqrt(size)), vertical_center, center_horizontal)
+    {
+        detail::copy_n(elements, size, this->begin());
+    }
+
+    kernel_2d(kernel_2d const& other) : parent_t(other) {}
+    kernel_2d& operator=(kernel_2d const& other) = default;
+};
+
+/// \brief static-size kernel
+template <typename T, std::size_t Size>
+class kernel_2d_fixed :
+    public detail::kernel_2d_adaptor<std::array<T, Size * Size>>
+{
+    using parent_t = detail::kernel_2d_adaptor<std::array<T, Size * Size>>;
+public:
+    static constexpr std::size_t static_size = Size;
+    static_assert(static_size > 0, "kernel must have size greater than 0");
+    static_assert(static_size % 2 == 1, "kernel size must be odd to ensure validity at the center");
+
+    kernel_2d_fixed()
+    {
+        this->square_size = Size;
+    }
+
+    explicit kernel_2d_fixed(std::size_t center_vertical, std::size_t center_horizontal) :
+        parent_t(center_vertical, center_horizontal)
+    {
+        this->square_size = Size;
+    }
+
+    template <typename FwdIterator>
+    explicit kernel_2d_fixed(
+        FwdIterator elements,
+        std::size_t center_vertical,
+        std::size_t center_horizontal
+    ) : parent_t(center_vertical, center_horizontal)
+    {
+        this->square_size = Size;
+        detail::copy_n(elements, Size * Size, this->begin());
+    }
+
+    kernel_2d_fixed(kernel_2d_fixed const& other) : parent_t(other) {}
+    kernel_2d_fixed& operator=(kernel_2d_fixed const& other) = default;
+};
+
+// TODO: This data member is odr-used and definition at namespace scope
+// is required by C++11. Redundant and deprecated in C++17.
+template <typename T, std::size_t Size>
+constexpr std::size_t kernel_2d_fixed<T, Size>::static_size;
+
+/// \brief reverse a kernel
+//template <typename Kernel>
+//inline Kernel reverse_kernel(Kernel const& kernel)
+//{
+//    Kernel result(kernel);
+//    result.center() = kernel.right_size();
+//    std::reverse(result.begin(), result.end());
+//    return result;
+//}
 
 }} // namespace boost::gil
 
