@@ -40,12 +40,12 @@ struct consecutive_value
 {
     consecutive_value(T start) : current_(start)
     {
-        BOOST_TEST(current_ >= 0);
+        BOOST_TEST(static_cast<int>(current_) >= 0);
     }
 
     T operator()()
     {
-        BOOST_ASSERT(current_ + 1 > 0);
+        BOOST_ASSERT(static_cast<int>(current_) + 1 > 0);
         return current_++;
     }
 
@@ -57,7 +57,7 @@ struct reverse_consecutive_value
 {
     reverse_consecutive_value(T start) : current_(start)
     {
-        BOOST_ASSERT(current_ > 0);
+        BOOST_ASSERT(static_cast<int>(current_) > 0);
     }
 
     T operator()()
