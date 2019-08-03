@@ -50,6 +50,7 @@ inline double lanczos(double x, std::ptrdiff_t a)
     return 0;
 }
 
+<<<<<<< HEAD
 inline void compute_tensor_entries(
     boost::gil::gray16_view_t dx,
     boost::gil::gray16_view_t dy,
@@ -64,6 +65,75 @@ inline void compute_tensor_entries(
             m11(x, y) = dx_value * dx_value;
             m12_21(x, y) = dx_value * dy_value;
             m22(x, y) = dy_value * dy_value;
+        }
+    }
+}
+
+template <typename GradientView, typename OutputView>
+inline void compute_hessian_entries(
+    GradientView dx,
+    GradientView dy,
+    OutputView ddxx,
+    OutputView dxdy,
+    OutputView ddyy)
+{
+    using x_coord_t = typename OutputView::x_coord_t;
+    using y_coord_t = typename OutputView::y_coord_t;
+    using pixel_t = typename std::remove_reference<decltype(ddxx(0, 0))>::type;
+    using channel_t = typename std::remove_reference<
+                        decltype(
+                            std::declval<pixel_t>().at(
+                                std::integral_constant<int, 0>{}
+                            )
+                        )
+                       >::type;
+
+    constexpr double x_kernel[3][3] =
+    {
+        {1, 0, -1},
+        {2, 0, -2},
+        {1, 0, -1}
+    };
+    constexpr double y_kernel[3][3] =
+    {
+        {1, 2, 1},
+        {0, 0, 0},
+        {-1, -2, -1}
+    };
+    constexpr auto chosen_channel = std::integral_constant<int, 0>{};
+    for (y_coord_t y = 1; y < ddxx.height() - 1; ++y)
+    {
+        for (x_coord_t x = 1; x < ddxx.width() - 1; ++x)
+        {
+            pixel_t ddxx_i;
+            boost::gil::static_transform(ddxx_i, ddxx_i,
+                [](channel_t) { return static_cast<channel_t>(0); });
+            pixel_t dxdy_i;
+            boost::gil::static_transform(dxdy_i, dxdy_i,
+                [](channel_t) { return static_cast<channel_t>(0); });
+            pixel_t ddyy_i;
+            boost::gil::static_transform(ddyy_i, ddyy_i,
+                [](channel_t) { return static_cast<channel_t>(0); });
+            for (y_coord_t y_filter = 0; y_filter < 2; ++y_filter)
+            {
+                for (x_coord_t x_filter = 0; x_filter < 2; ++x_filter)
+                {
+                    auto adjusted_y = y + y_filter - 1;
+                    auto adjusted_x = x + x_filter - 1;
+                    ddxx_i.at(std::integral_constant<int, 0>{}) +=
+                        dx(adjusted_x, adjusted_y).at(chosen_channel)
+                        * x_kernel[y_filter][x_filter];
+                    dxdy_i.at(std::integral_constant<int, 0>{}) +=
+                        dx(adjusted_x, adjusted_y).at(chosen_channel)
+                        * y_kernel[y_filter][x_filter];
+                    ddyy_i.at(std::integral_constant<int, 0>{}) +=
+                        dy(adjusted_x, adjusted_y).at(chosen_channel)
+                        * y_kernel[y_filter][x_filter];
+                }
+            }
+            ddxx(x, y) = ddxx_i;
+            dxdy(x, y) = dxdy_i;
+            ddyy(x, y) = ddyy_i;
         }
     }
 }
