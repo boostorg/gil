@@ -50,7 +50,6 @@ inline double lanczos(double x, std::ptrdiff_t a)
     return 0;
 }
 
-<<<<<<< HEAD
 inline void compute_tensor_entries(
     boost::gil::gray16_view_t dx,
     boost::gil::gray16_view_t dy,
@@ -69,6 +68,12 @@ inline void compute_tensor_entries(
     }
 }
 
+/// \brief Compute xy gradient, and second order x and y gradients
+/// \ingroup ImageProcessingMath
+///
+/// Hessian matrix is defined as a matrix of partial derivates
+/// for 2d case, it is [[ddxx, dxdy], [dxdy, ddyy].
+/// https://en.wikipedia.org/wiki/Hessian_matrix
 template <typename GradientView, typename OutputView>
 inline void compute_hessian_entries(
     GradientView dx,

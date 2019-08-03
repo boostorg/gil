@@ -231,19 +231,19 @@ int main(int argc, char* argv[]) {
         gil::view(m22)
     );
 
-    gil::gray32f_image_t hessian_determinant(x_gradient.dimensions());
+    gil::gray32f_image_t hessian_response(x_gradient.dimensions());
     gil::gray32f_image_t gaussian_kernel(gil::point_t(5, 5));
     gil::generate_gaussian_kernel(gil::view(gaussian_kernel), 0.84089642);
-    gil::compute_hessian_determinant(
+    gil::compute_hessian_response(
         gil::view(m11),
         gil::view(m12_21),
         gil::view(m22),
         gil::view(gaussian_kernel),
         discrimination_constant,
-        gil::view(hessian_determinant)
+        gil::view(hessian_response)
     );
 
-    auto corner_points = suppress(gil::view(hessian_determinant), hessian_determinant_threshold);
+    auto corner_points = suppress(gil::view(hessian_response), hessian_determinant_threshold);
     for (auto point: corner_points) {
         input_view(point) = gil::rgb8_pixel_t(0, 0, 0);
         input_view(point).at(std::integral_constant<int, 1>{}) = 255;

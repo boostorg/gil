@@ -7,8 +7,15 @@
 
 namespace boost { namespace gil {
 
+/// \brief Computes Hessian response
+///
+/// Computes Hessian response based on computed entries of Hessian matrix, e.g. second order
+/// derivates in x and y, and derivatives in both x, y.
+/// Weights change perception of surroinding pixels.
+/// Discrimination constant is used to differentiate between
+/// edges and corners, though additional filtering is strongly advised.
 template <typename GradientView, typename Weights, typename OutputView>
-inline void compute_hessian_determinant(
+inline void compute_hessian_response(
     GradientView ddxx,
     GradientView dxdy,
     GradientView ddyy,
@@ -61,10 +68,6 @@ inline void compute_hessian_determinant(
                         ;
                 }
             }
-
-            // ddxx_i = ddxx(x, y).at(chosen_channel);
-            // ddyy_i = ddyy(x, y).at(chosen_channel);
-            // dxdy_i = dxdy(x, y).at(chosen_channel);
 
             auto determinant = ddxx_i * ddyy_i - dxdy_i * dxdy_i;
             auto trace = ddyy_i + ddxx_i;
