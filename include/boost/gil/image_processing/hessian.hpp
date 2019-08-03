@@ -43,31 +43,32 @@ inline void compute_hessian_determinant(
             auto ddyy_i = channel_t();
             auto dxdy_i = channel_t();
             constexpr std::integral_constant<int, 0> chosen_channel{};
-            // for (typename OutputView::coord_t w_y = 0; w_y < weights.height(); ++w_y)
-            // {
-            //     for (typename OutputView::coord_t w_x = 0; w_x < weights.width(); ++w_x)
-            //     {
-            //         ddxx_i += ddxx(x + w_x - half_size, y + w_y - half_size)
-            //             .at(std::integral_constant<int, 0>{})
-            //             // * weights(w_x, w_y).at(std::integral_constant<int, 0>{})
-            //             ;
-            //         ddyy_i += ddyy(x + w_x - half_size, y + w_y - half_size)
-            //             .at(std::integral_constant<int, 0>{})
-            //             // * weights(w_x, w_y).at(std::integral_constant<int, 0>{})
-            //             ;
-            //         dxdy_i += dxdy(x + w_x - half_size, y + w_y - half_size)
-            //             .at(std::integral_constant<int, 0>{})
-            //             // * weights(w_x, w_y).at(std::integral_constant<int, 0>{})
-            //             ;
-            //     }
-            // }
+            for (typename OutputView::coord_t w_y = 0; w_y < weights.height(); ++w_y)
+            {
+                for (typename OutputView::coord_t w_x = 0; w_x < weights.width(); ++w_x)
+                {
+                    ddxx_i += ddxx(x + w_x - half_size, y + w_y - half_size)
+                        .at(std::integral_constant<int, 0>{})
+                         * weights(w_x, w_y).at(std::integral_constant<int, 0>{})
+                        ;
+                    ddyy_i += ddyy(x + w_x - half_size, y + w_y - half_size)
+                        .at(std::integral_constant<int, 0>{})
+                         * weights(w_x, w_y).at(std::integral_constant<int, 0>{})
+                        ;
+                    dxdy_i += dxdy(x + w_x - half_size, y + w_y - half_size)
+                        .at(std::integral_constant<int, 0>{})
+                         * weights(w_x, w_y).at(std::integral_constant<int, 0>{})
+                        ;
+                }
+            }
 
-            ddxx_i = ddxx(x, y).at(chosen_channel);
-            ddyy_i = ddyy(x, y).at(chosen_channel);
-            dxdy_i = dxdy(x, y).at(chosen_channel);
+            // ddxx_i = ddxx(x, y).at(chosen_channel);
+            // ddyy_i = ddyy(x, y).at(chosen_channel);
+            // dxdy_i = dxdy(x, y).at(chosen_channel);
 
             auto determinant = ddxx_i * ddyy_i - dxdy_i * dxdy_i;
-            dst(x, y).at(std::integral_constant<int, 0>{}) = determinant;
+            auto trace = ddyy_i + ddxx_i;
+            dst(x, y).at(std::integral_constant<int, 0>{}) = determinant - discrimination_constant * trace * trace;
         }
     }
 }
