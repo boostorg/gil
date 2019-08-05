@@ -412,7 +412,7 @@ void threshold_adaptive
         typename image<typename SrcView::value_type>::view_t temp_view = view(temp_img);
         SrcView temp_conv(temp_view);
 
-        convolve<pixel<float, typename SrcView::value_type::layout_t>>(
+        convolve_1d<pixel<float, typename SrcView::value_type::layout_t>>(
             src_view, kernel, temp_view
         );
 
