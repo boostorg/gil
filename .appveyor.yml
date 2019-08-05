@@ -22,13 +22,13 @@ environment:
       VARIANT: debug
       CXXSTD: 11
       TEST_HEADERS: 1
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     - TOOLSET: msvc-14.0
       ARCH: x86_64
       VARIANT: release
       CXXSTD: 11
       TEST_HEADERS: 1
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     - TOOLSET: msvc-14.1
       ARCH: x86_64
       VARIANT: debug
