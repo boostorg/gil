@@ -15,7 +15,7 @@ Original implementation
 Actual code from a commercial software product that computes the luminosity
 histogram (variable names have been changed and unrelated parts removed):
 
-.. code-block: cpp
+.. code-block:: cpp
 
   void luminosity_hist(
       std::uint8_t const* r, std::uint8_t const* g, std::uint8_t const* b,
@@ -43,7 +43,7 @@ Let's consider the following issues of the implementation above:
 GIL implementation
 ------------------
 
-.. code-block: cpp
+.. code-block:: cpp
 
   template <typename GrayView, typename R>
   void grayimage_histogram(GrayView& img, R& hist)
@@ -61,7 +61,7 @@ GIL implementation
 Using the Boost.Lambda library (or C++11 lambda) features it can written
 even simpler:
 
-.. code-block: cpp
+.. code-block:: cpp
 
   using boost::lambda;
 
@@ -85,7 +85,7 @@ Shortly, it is also very flexible.
 For example, to compute the histogram of the second channel of the top left
 quadrant of the image, taking every other row and column, call:
 
-.. code-block: cpp
+.. code-block:: cpp
 
   grayimage_histogram(
       nth_channel_view(
