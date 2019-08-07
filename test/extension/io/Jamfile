@@ -52,6 +52,7 @@ alias full :
       :
       :
       :
+        <define>BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES
           [ ac.check-library /zlib//zlib : <library>/zlib//zlib : <build>no ]
           [ ac.check-library /libpng//libpng : <library>/libpng//libpng : <build>no ]
     ]
