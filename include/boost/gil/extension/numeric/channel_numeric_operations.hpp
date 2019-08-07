@@ -30,7 +30,7 @@ namespace boost { namespace gil {
 /// \ingroup ChannelNumericOperations
 /// \brief Arithmetic operation of addition of two channel values.
 /// \note This is a generic implementation; user should specialize it for better performance.
-template <typename Channel1,typename Channel2,typename ChannelResult>
+template <typename Channel1, typename Channel2, typename ChannelResult>
 struct channel_plus_t
 {
     using ChannelRef1 = typename channel_traits<Channel1>::const_reference;
@@ -51,7 +51,7 @@ struct channel_plus_t
 /// \ingroup ChannelNumericOperations
 /// \brief Arithmetic operation of subtraction of two channel values.
 /// \note This is a generic implementation; user should specialize it for better performance.
-template <typename Channel1,typename Channel2,typename ChannelResult>
+template <typename Channel1, typename Channel2, typename ChannelResult>
 struct channel_minus_t
 {
     using ChannelRef1 = typename channel_traits<Channel1>::const_reference;
@@ -176,7 +176,7 @@ struct channel_multiplies_scalar_t
 /// \ingroup ChannelNumericOperations
 /// \brief Arithmetic operation of dividing channel value by scalar.
 /// \note This is a generic implementation; user should specialize it for better performance.
-template <typename Channel,typename Scalar,typename ChannelResult>
+template <typename Channel, typename Scalar, typename ChannelResult>
 struct channel_divides_scalar_t
 {
     using ChannelRef = typename channel_traits<Channel>::const_reference;
@@ -230,7 +230,7 @@ struct channel_zeros_t
 /// \ingroup ChannelNumericOperations
 /// structure for assigning one channel to another
 /// \note This is a generic implementation; user should specialize it for better performance.
-template <typename Channel1,typename Channel2>
+template <typename Channel1, typename Channel2>
 struct channel_assigns_t
 {
     using ChannelRef1 = typename channel_traits<Channel1>::const_reference;
