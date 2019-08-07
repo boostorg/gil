@@ -26,7 +26,11 @@ project
     ;
 
 alias headers : [ generate_self_contained_headers extension/io ] ;
+explicit headers ;
 
+# The `simple` in names of targets, somewhat misleading, means two things:
+# - minimal set of tests
+# - set of tests that require third-party libraries which are de-facto ubiquitous
 alias simple
   : [ run all_formats_test.cpp
       : # args
@@ -96,3 +100,5 @@ alias full :
           : [ ac.check-library /libtiff//libtiff : <library>/libtiff//libtiff : <build>no ]
     ]
     ;
+
+explicit full ;
