@@ -15,7 +15,8 @@ foreach(_name
   convolve
   kernel
   matrix3x2
-  numeric)
+  numeric
+  pixel_numeric_operations)
   set(_test t_ext_numeric_${_name})
   set(_target test_ext_numeric_${_name})
 
