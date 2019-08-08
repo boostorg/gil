@@ -16,7 +16,8 @@ foreach(_name
   kernel
   matrix3x2
   numeric
-  pixel_numeric_operations)
+  pixel_numeric_operations
+  convolve_2d)
   set(_test t_ext_numeric_${_name})
   set(_target test_ext_numeric_${_name})
 
