@@ -153,7 +153,7 @@ void threshold_binary(
     //deciding output channel type and creating functor
     using result_channel_t = typename channel_type<DstView>::type;
 
-    result_channel_t max_value = std::numeric_limits<result_channel_t>::max();
+    result_channel_t max_value = (std::numeric_limits<result_channel_t>::max)();
     threshold_binary(src_view, dst_view, threshold_value, max_value, direction);
 }
 
@@ -230,8 +230,8 @@ void otsu_impl(SrcView const& src_view, DstView const& dst_view, threshold_direc
     std::array<std::size_t, 256> histogram{};
     //initial value of min is set to maximum possible value to compare histogram data
     //initial value of max is set to minimum possible value to compare histogram data
-    auto min = std::numeric_limits<source_channel_t>::max(),
-        max = std::numeric_limits<source_channel_t>::min();
+    auto min = (std::numeric_limits<source_channel_t>::max)(),
+        max = (std::numeric_limits<source_channel_t>::min)();
 
     if (sizeof(source_channel_t) > 1 || std::is_signed<source_channel_t>::value)
     {
@@ -445,7 +445,7 @@ void threshold_adaptive
     //deciding output channel type and creating functor
     typedef typename channel_type<DstView>::type result_channel_t;
 
-    result_channel_t max_value = std::numeric_limits<result_channel_t>::max();
+    result_channel_t max_value = (std::numeric_limits<result_channel_t>::max)();
 
     threshold_adaptive(src_view, dst_view, max_value, kernel_size, method, direction, constant);
 }

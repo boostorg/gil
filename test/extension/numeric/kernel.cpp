@@ -1,5 +1,6 @@
 //
 // Copyright 2019 Mateusz Loskot <mateusz at loskot dot net>
+// Copyright 2019 Miral Shah <miralshah2211@gmail.com>
 //
 // Distributed under the Boost Software License, Version 1.0
 // See accompanying file LICENSE_1_0.txt or copy at
