@@ -62,12 +62,12 @@ void lanczos_at(
     auto y_zero = static_cast<y_coord_t>(0);
     auto y_one = static_cast<y_coord_t>(1);
 
-    for (y_coord_t y_i = std::max(source_y - static_cast<y_coord_t>(a) + y_one, y_zero);
-         y_i <= std::min(source_y + static_cast<y_coord_t>(a), input_view.height() - y_one);
+    for (y_coord_t y_i = (std::max)(source_y - static_cast<y_coord_t>(a) + y_one, y_zero);
+         y_i <= (std::min)(source_y + static_cast<y_coord_t>(a), input_view.height() - y_one);
          ++y_i)
     {
-        for (x_coord_t x_i = std::max(source_x - static_cast<x_coord_t>(a) + x_one, x_zero);
-             x_i <= std::min(source_x + static_cast<x_coord_t>(a), input_view.width() - x_one);
+        for (x_coord_t x_i = (std::max)(source_x - static_cast<x_coord_t>(a) + x_one, x_zero);
+             x_i <= (std::min)(source_x + static_cast<x_coord_t>(a), input_view.width() - x_one);
              ++x_i)
         {
             double lanczos_response = lanczos(source_x - x_i, a) * lanczos(source_y - y_i, a);
