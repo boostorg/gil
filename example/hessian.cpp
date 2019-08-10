@@ -194,15 +194,14 @@ std::vector<gil::point_t> suppress(
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 6) {
+    if (argc != 5) {
         std::cout << "usage: " << argv[0] << " <input.png> <odd-window-size>"
-            " <hessian-response-threshold> <discrimination-constant> <output.png>\n";
+            " <hessian-response-threshold> <output.png>\n";
         return -1;
     }
 
     long int window_size = std::stoi(argv[2]);
     long hessian_determinant_threshold = std::stol(argv[3]);
-    double discrimination_constant = std::stod(argv[4]);
 
     gil::rgb8_image_t input_image;
 
@@ -239,7 +238,6 @@ int main(int argc, char* argv[]) {
         gil::view(m12_21),
         gil::view(m22),
         gil::view(gaussian_kernel),
-        discrimination_constant,
         gil::view(hessian_response)
     );
 
@@ -248,5 +246,5 @@ int main(int argc, char* argv[]) {
         input_view(point) = gil::rgb8_pixel_t(0, 0, 0);
         input_view(point).at(std::integral_constant<int, 1>{}) = 255;
     }
-    gil::write_view(argv[5], input_view, gil::png_tag{});
+    gil::write_view(argv[4], input_view, gil::png_tag{});
 }

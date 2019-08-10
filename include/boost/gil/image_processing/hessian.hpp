@@ -12,15 +12,13 @@ namespace boost { namespace gil {
 /// Computes Hessian response based on computed entries of Hessian matrix, e.g. second order
 /// derivates in x and y, and derivatives in both x, y.
 /// Weights change perception of surroinding pixels.
-/// Discrimination constant is used to differentiate between
-/// edges and corners, though additional filtering is strongly advised.
+/// Additional filtering is strongly advised.
 template <typename GradientView, typename Weights, typename OutputView>
 inline void compute_hessian_response(
     GradientView ddxx,
     GradientView dxdy,
     GradientView ddyy,
     Weights weights,
-    double discrimination_constant,
     OutputView dst)
 {
     if (ddxx.dimensions() != ddyy.dimensions()
@@ -56,22 +54,17 @@ inline void compute_hessian_response(
                 {
                     ddxx_i += ddxx(x + w_x - half_size, y + w_y - half_size)
                         .at(std::integral_constant<int, 0>{})
-                         * weights(w_x, w_y).at(std::integral_constant<int, 0>{})
-                        ;
+                         * weights(w_x, w_y).at(std::integral_constant<int, 0>{});
                     ddyy_i += ddyy(x + w_x - half_size, y + w_y - half_size)
                         .at(std::integral_constant<int, 0>{})
-                         * weights(w_x, w_y).at(std::integral_constant<int, 0>{})
-                        ;
+                         * weights(w_x, w_y).at(std::integral_constant<int, 0>{});
                     dxdy_i += dxdy(x + w_x - half_size, y + w_y - half_size)
                         .at(std::integral_constant<int, 0>{})
-                         * weights(w_x, w_y).at(std::integral_constant<int, 0>{})
-                        ;
+                         * weights(w_x, w_y).at(std::integral_constant<int, 0>{});
                 }
             }
-
             auto determinant = ddxx_i * ddyy_i - dxdy_i * dxdy_i;
-            auto trace = ddyy_i + ddxx_i;
-            dst(x, y).at(std::integral_constant<int, 0>{}) = determinant - discrimination_constant * trace * trace;
+            dst(x, y).at(std::integral_constant<int, 0>{}) = determinant;
         }
     }
 }
