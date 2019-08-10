@@ -14,7 +14,7 @@ namespace boost { namespace gil {
 /// Weights change perception of surroinding pixels.
 /// Additional filtering is strongly advised.
 template <typename GradientView, typename Weights, typename OutputView>
-inline void compute_hessian_response(
+inline void compute_hessian_responses(
     GradientView ddxx,
     GradientView dxdy,
     GradientView ddyy,
