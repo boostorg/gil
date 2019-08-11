@@ -16,10 +16,12 @@
 #include <vector>
 #include <cmath>
 
+#include <boost/assert.hpp>
+
 #include <boost/gil/image.hpp>
 #include <boost/gil/extension/numeric/kernel.hpp>
 #include <boost/gil/extension/numeric/convolve.hpp>
-#include <boost/assert.hpp>
+#include <boost/gil/image_processing/numeric.hpp>
 
 namespace boost { namespace gil {
 
@@ -403,31 +405,49 @@ void threshold_adaptive
     typedef typename channel_type<SrcView>::type source_channel_t;
     typedef typename channel_type<DstView>::type result_channel_t;
 
+    image<typename SrcView::value_type> temp_img(src_view.width(), src_view.height());
+    typename image<typename SrcView::value_type>::view_t temp_view = view(temp_img);
+    SrcView temp_conv(temp_view);
+
     if (method == threshold_adaptive_method::mean)
     {
         std::vector<float> mean_kernel_values(kernel_size, 1.0f/kernel_size);
         kernel_1d<float> kernel(mean_kernel_values.begin(), kernel_size, kernel_size/2);
 
-        image<typename SrcView::value_type> temp_img(src_view.width(), src_view.height());
-        typename image<typename SrcView::value_type>::view_t temp_view = view(temp_img);
-        SrcView temp_conv(temp_view);
-
         convolve_1d<pixel<float, typename SrcView::value_type::layout_t>>(
             src_view, kernel, temp_view
         );
+    }
+    else if (method == threshold_adaptive_method::gaussian)
+    {
+        gray32f_image_t gaussian_kernel_values(kernel_size, kernel_size);
+        generate_gaussian_kernel(view(gaussian_kernel_values), 1.0);
 
-        if (direction == threshold_direction::regular)
-        {
-            detail::adaptive_impl<source_channel_t, result_channel_t>(src_view, temp_conv, dst_view,
-                [max_value, constant](source_channel_t px, source_channel_t threshold) -> result_channel_t
-                    { return px > (threshold - constant) ? max_value : 0; });
-        }
-        else
-        {
-            detail::adaptive_impl<source_channel_t, result_channel_t>(src_view, temp_conv, dst_view,
-                [max_value, constant](source_channel_t px, source_channel_t threshold) -> result_channel_t
-                    { return px > (threshold - constant) ? 0 : max_value; });
-        }
+        gray32f_view_t gaussian_kernel_view = view(gaussian_kernel_values);
+        kernel_2d<float> kernel(
+            kernel_size,
+            kernel_size / 2,
+            kernel_size / 2
+        );
+
+        std::transform(gaussian_kernel_view.begin(), gaussian_kernel_view.end(), kernel.begin(),
+            [](gray32f_pixel_t pixel) -> float {return pixel.at(std::integral_constant<int, 0>{}); }
+        );
+
+        convolve_2d(src_view, kernel, temp_view);
+    }
+
+    if (direction == threshold_direction::regular)
+    {
+        detail::adaptive_impl<source_channel_t, result_channel_t>(src_view, temp_conv, dst_view,
+            [max_value, constant](source_channel_t px, source_channel_t threshold) -> result_channel_t
+        { return px > (threshold - constant) ? max_value : 0; });
+    }
+    else
+    {
+        detail::adaptive_impl<source_channel_t, result_channel_t>(src_view, temp_conv, dst_view,
+            [max_value, constant](source_channel_t px, source_channel_t threshold) -> result_channel_t
+        { return px > (threshold - constant) ? 0 : max_value; });
     }
 }
 
