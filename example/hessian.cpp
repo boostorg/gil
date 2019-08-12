@@ -21,8 +21,10 @@ gil::gray8_image_t to_grayscale(gil::rgb8_view_t original)
     gil::gray8_image_t output_image(original.dimensions());
     auto output = gil::view(output_image);
     constexpr double max_channel_intensity = (std::numeric_limits<std::uint8_t>::max)();
-    for (long int y = 0; y < original.height(); ++y) {
-        for (long int x = 0; x < original.width(); ++x) {
+    for (long int y = 0; y < original.height(); ++y)
+    {
+        for (long int x = 0; x < original.width(); ++x)
+        {
             // scale the values into range [0, 1] and calculate linear intensity
             double red_intensity = original(x, y).at(std::integral_constant<int, 0>{})
                 / max_channel_intensity;
@@ -36,9 +38,11 @@ gil::gray8_image_t to_grayscale(gil::rgb8_view_t original)
 
             // perform gamma adjustment
             double gamma_compressed_luminosity = 0;
-            if (linear_luminosity < 0.0031308) {
+            if (linear_luminosity < 0.0031308)
+            {
                 gamma_compressed_luminosity = linear_luminosity * 12.92;
-            } else {
+            } else
+            {
                 gamma_compressed_luminosity = 1.055 * std::pow(linear_luminosity, 1 / 2.4) - 0.055;
             }
 
@@ -70,12 +74,15 @@ void apply_gaussian_blur(gil::gray8_view_t input_view, gil::gray8_view_t output_
     for (long x = 0; x < width; ++x) {
         for (long y = 0; y < height; ++y) {
             double intensity = 0.0;
-            for (size_t filter_y = 0; filter_y < filterHeight; ++filter_y) {
-                for (size_t filter_x = 0; filter_x < filterWidth; ++filter_x) {
+            for (size_t filter_y = 0; filter_y < filterHeight; ++filter_y)
+            {
+                for (size_t filter_x = 0; filter_x < filterWidth; ++filter_x)
+                {
                     int image_x = x - filterWidth / 2 + filter_x;
                     int image_y = y - filterHeight / 2 + filter_y;
                     if (image_x >= input_view.width() || image_x < 0
-                        || image_y >= input_view.height() || image_y < 0) {
+                        || image_y >= input_view.height() || image_y < 0)
+                    {
                         continue;
                     }
                     auto& pixel = input_view(image_x, image_y);
@@ -194,7 +201,8 @@ std::vector<gil::point_t> suppress(
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 5) {
+    if (argc != 5)
+    {
         std::cout << "usage: " << argv[0] << " <input.png> <odd-window-size>"
             " <hessian-response-threshold> <output.png>\n";
         return -1;

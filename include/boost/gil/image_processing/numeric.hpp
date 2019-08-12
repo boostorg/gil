@@ -114,13 +114,13 @@ inline void compute_hessian_entries(
         for (x_coord_t x = 1; x < ddxx.width() - 1; ++x)
         {
             pixel_t ddxx_i;
-            boost::gil::static_transform(ddxx_i, ddxx_i,
+            static_transform(ddxx_i, ddxx_i,
                 [](channel_t) { return static_cast<channel_t>(0); });
             pixel_t dxdy_i;
-            boost::gil::static_transform(dxdy_i, dxdy_i,
+            static_transform(dxdy_i, dxdy_i,
                 [](channel_t) { return static_cast<channel_t>(0); });
             pixel_t ddyy_i;
-            boost::gil::static_transform(ddyy_i, ddyy_i,
+            static_transform(ddyy_i, ddyy_i,
                 [](channel_t) { return static_cast<channel_t>(0); });
             for (y_coord_t y_filter = 0; y_filter < 2; ++y_filter)
             {
