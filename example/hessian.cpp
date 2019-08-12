@@ -26,11 +26,12 @@ gil::gray8_image_t to_grayscale(gil::rgb8_view_t original)
         for (long int x = 0; x < original.width(); ++x)
         {
             // scale the values into range [0, 1] and calculate linear intensity
-            double red_intensity = original(x, y).at(std::integral_constant<int, 0>{})
+            auto& p = original(x, y);
+            double red_intensity = p.at(std::integral_constant<int, 0>{})
                 / max_channel_intensity;
-            double green_intensity = original(x, y).at(std::integral_constant<int, 1>{})
+            double green_intensity = p.at(std::integral_constant<int, 1>{})
                 / max_channel_intensity;
-            double blue_intensity = original(x, y).at(std::integral_constant<int, 2>{})
+            double blue_intensity = p.at(std::integral_constant<int, 2>{})
                 / max_channel_intensity;
             auto linear_luminosity = 0.2126 * red_intensity
                                     + 0.7152 * green_intensity
@@ -241,7 +242,7 @@ int main(int argc, char* argv[]) {
     gil::gray32f_image_t hessian_response(x_gradient.dimensions());
     gil::gray32f_image_t gaussian_kernel(gil::point_t(5, 5));
     gil::generate_gaussian_kernel(gil::view(gaussian_kernel), 0.84089642);
-    gil::compute_hessian_response(
+    gil::compute_hessian_responses(
         gil::view(m11),
         gil::view(m12_21),
         gil::view(m22),
