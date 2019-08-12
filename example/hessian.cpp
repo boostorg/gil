@@ -56,9 +56,9 @@ gil::gray8_image_t to_grayscale(gil::rgb8_view_t original)
 
 void apply_gaussian_blur(gil::gray8_view_t input_view, gil::gray8_view_t output_view)
 {
-    constexpr static auto filterHeight = 5ull;
-    constexpr static auto filterWidth = 5ull;
-    constexpr static double filter[filterHeight][filterWidth] =
+    constexpr static auto filter_height = 5ull;
+    constexpr static auto filter_width = 5ull;
+    constexpr static double filter[filter_height][filter_width] =
     {
         2,  4,  6,  4,  2,
         4, 9, 12, 9,  4,
@@ -71,21 +71,21 @@ void apply_gaussian_blur(gil::gray8_view_t input_view, gil::gray8_view_t output_
 
     const auto height = input_view.height();
     const auto width = input_view.width();
-    for (long x = 0; x < width; ++x) {
-        for (long y = 0; y < height; ++y) {
+    for (std::ptrdiff_t x = 0; x < width; ++x) {
+        for (std::ptrdiff_t y = 0; y < height; ++y) {
             double intensity = 0.0;
-            for (size_t filter_y = 0; filter_y < filterHeight; ++filter_y)
+            for (std::ptrdiff_t filter_y = 0; filter_y < filter_height; ++filter_y)
             {
-                for (size_t filter_x = 0; filter_x < filterWidth; ++filter_x)
+                for (std::ptrdiff_t filter_x = 0; filter_x < filter_width; ++filter_x)
                 {
-                    int image_x = x - filterWidth / 2 + filter_x;
-                    int image_y = y - filterHeight / 2 + filter_y;
+                    int image_x = x - filter_width / 2 + filter_x;
+                    int image_y = y - filter_height / 2 + filter_y;
                     if (image_x >= input_view.width() || image_x < 0
                         || image_y >= input_view.height() || image_y < 0)
                     {
                         continue;
                     }
-                    auto& pixel = input_view(image_x, image_y);
+                    const auto& pixel = input_view(image_x, image_y);
                     intensity += pixel.at(std::integral_constant<int, 0>{})
                         * filter[filter_y][filter_x];
                 }
