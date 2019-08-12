@@ -73,6 +73,9 @@ inline void compute_tensor_entries(
 ///
 /// Hessian matrix is defined as a matrix of partial derivates
 /// for 2d case, it is [[ddxx, dxdy], [dxdy, ddyy].
+/// d stands for derivative, and x or y stand for direction.
+/// For example, dx stands for derivative (gradient) in horizontal
+/// direction, and ddxx means second order derivative in horizon direction
 /// https://en.wikipedia.org/wiki/Hessian_matrix
 template <typename GradientView, typename OutputView>
 inline void compute_hessian_entries(

@@ -11,6 +11,8 @@ namespace boost { namespace gil {
 ///
 /// Computes Hessian response based on computed entries of Hessian matrix, e.g. second order
 /// derivates in x and y, and derivatives in both x, y.
+/// d stands for derivative, and x or y stand for derivative direction. For example,
+/// ddxx means taking two derivatives (gradients) in horizontal direction.
 /// Weights change perception of surroinding pixels.
 /// Additional filtering is strongly advised.
 template <typename GradientView, typename Weights, typename OutputView>
