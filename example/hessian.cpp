@@ -1,8 +1,8 @@
 #include <boost/gil/image.hpp>
 #include <boost/gil/image_view.hpp>
-#include <boost/gil/extension/io/png.hpp>
 #include <boost/gil/image_processing/numeric.hpp>
 #include <boost/gil/image_processing/hessian.hpp>
+#include <boost/gil/extension/io/png.hpp>
 #include <vector>
 #include <functional>
 #include <set>
