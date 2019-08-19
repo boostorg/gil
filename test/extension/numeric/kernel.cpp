@@ -9,6 +9,8 @@
 #define BOOST_DISABLE_ASSERTS 1 // kernel_1d_adaptor assertions are too strict
 #include <boost/gil/extension/numeric/kernel.hpp>
 #include <vector>
+#include <array>
+#include <type_traits>
 
 #define BOOST_TEST_MODULE test_ext_numeric_kernel
 #include "unit_test.hpp"
@@ -32,7 +34,7 @@ BOOST_AUTO_TEST_CASE(kernel_2d_default_constructor)
     BOOST_TEST(k.center_horizontal() == 0);
 
     //BOOST_TEST(k.left_size() == 0);
-    //BOOST_TEST(k.right_size() == -1); 
+    //BOOST_TEST(k.right_size() == -1);
     BOOST_TEST(k.upper_size() == 0);
     BOOST_TEST(k.lower_size() == -1);
     // std::vector interface
@@ -304,4 +306,17 @@ BOOST_AUTO_TEST_CASE(kernel_1d_fixed_reverse_Kernel)
     BOOST_TEST(k == values_rev);
 }
 
+template <typename Kernel2d>
+struct is_detected_as_nested: std::false_type {};
 
+template <typename T>
+struct is_detected_as_nested<gil::detail::kernel_2d_adaptor<T, true>>: std::true_type {};
+
+static_assert(is_detected_as_nested<gil::detail::kernel_2d_adaptor<std::vector<std::vector<double>>>>::value,
+    "did not detect nested container properly for kernel_2d_adaptor");
+static_assert(is_detected_as_nested<gil::detail::kernel_2d_adaptor<std::array<std::array<double, 3>, 3>>>::value,
+    "did not detect nested container properly for kernel_2d_adaptor");
+static_assert(!is_detected_as_nested<gil::detail::kernel_2d_adaptor<std::vector<double>>>::value,
+    "false positive for nested container detection for kernel_2d_adaptor");
+static_assert(!is_detected_as_nested<gil::detail::kernel_2d_adaptor<std::array<double, 3>>>::value,
+    "false positive for nested container detection for kernel_2d_adaptor");

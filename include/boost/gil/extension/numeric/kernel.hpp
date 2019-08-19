@@ -158,7 +158,30 @@ inline Kernel reverse_kernel(Kernel const& kernel)
 
 namespace detail {
 
-template <typename Core>
+template <typename Container>
+struct is_nested_container {
+private:
+    // use decltype and skip expression with coma operator
+    // note that decltype argument must be an expression
+    template <typename Inner>
+    static constexpr decltype(std::declval<typename Inner::value_type>(), true) is_nested_impl(int)
+    {
+        return true;
+    }
+
+    // C style variable size arguments have least priority
+    // in overload resolution, thus previous definition
+    // will be selected if possible
+    template <typename U>
+    static constexpr bool is_nested_impl(...)
+    {
+        return false;
+    }
+public:
+    constexpr static bool value = is_nested_impl<typename Container::value_type>(0);
+};
+
+template <typename Core, bool is_nested = is_nested_container<Core>::value>
 class kernel_2d_adaptor : public Core
 {
 public:
@@ -256,7 +279,7 @@ public:
         {
             throw std::out_of_range("Index out of range");
         }
-        
+
         return this->begin()[y * this->size() + x];
     }
 
@@ -266,6 +289,11 @@ private:
 
 protected:
     std::size_t square_size{ 0 };
+};
+
+template <typename Core>
+class kernel_2d_adaptor<Core, true> {
+    // Miral, over here! :-)
 };
 } //namespace detail
 
