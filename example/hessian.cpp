@@ -15,7 +15,10 @@ namespace gil = boost::gil;
 // when converted to grayscale,
 // which was previously observed on
 // canny edge detector for test input
-// used for this example
+// used for this example.
+// the algorithm here follows sRGB gamma definition
+// taken from here (luminance calculation):
+// https://en.wikipedia.org/wiki/Grayscale
 gil::gray8_image_t to_grayscale(gil::rgb8_view_t original)
 {
     gil::gray8_image_t output_image(original.dimensions());
@@ -72,8 +75,10 @@ void apply_gaussian_blur(gil::gray8_view_t input_view, gil::gray8_view_t output_
 
     const auto height = input_view.height();
     const auto width = input_view.width();
-    for (std::ptrdiff_t x = 0; x < width; ++x) {
-        for (std::ptrdiff_t y = 0; y < height; ++y) {
+    for (std::ptrdiff_t x = 0; x < width; ++x)
+    {
+        for (std::ptrdiff_t y = 0; y < height; ++y)
+        {
             double intensity = 0.0;
             for (std::ptrdiff_t filter_y = 0; filter_y < filter_height; ++filter_y)
             {
@@ -81,8 +86,8 @@ void apply_gaussian_blur(gil::gray8_view_t input_view, gil::gray8_view_t output_
                 {
                     int image_x = x - filter_width / 2 + filter_x;
                     int image_y = y - filter_height / 2 + filter_y;
-                    if (image_x >= input_view.width() || image_x < 0
-                        || image_y >= input_view.height() || image_y < 0)
+                    if (image_x >= input_view.width() || image_x < 0 ||
+                        image_y >= input_view.height() || image_y < 0)
                     {
                         continue;
                     }
