@@ -50,6 +50,24 @@ inline double lanczos(double x, std::ptrdiff_t a)
     return 0;
 }
 
+inline void compute_tensor_entries(
+    boost::gil::gray16_view_t dx,
+    boost::gil::gray16_view_t dy,
+    boost::gil::gray32f_view_t m11,
+    boost::gil::gray32f_view_t m12_21,
+    boost::gil::gray32f_view_t m22)
+{
+    for (std::ptrdiff_t y = 0; y < dx.height(); ++y) {
+        for (std::ptrdiff_t x = 0; x < dx.width(); ++x) {
+            auto dx_value = dx(x, y);
+            auto dy_value = dy(x, y);
+            m11(x, y) = dx_value * dx_value;
+            m12_21(x, y) = dx_value * dy_value;
+            m22(x, y) = dy_value * dy_value;
+        }
+    }
+}
+
 /// \brief Generate mean kernel
 /// \ingroup ImageProcessingMath
 ///
