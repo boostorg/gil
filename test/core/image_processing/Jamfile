@@ -20,3 +20,4 @@ run threshold_otsu.cpp ;
 run lanczos_scaling.cpp ;
 run simple_kernels.cpp ;
 run harris.cpp ;
+run hessian.cpp ;

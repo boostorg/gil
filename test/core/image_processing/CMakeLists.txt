@@ -30,7 +30,8 @@ endforeach()
 foreach(_name
   lanczos_scaling
   simple_kernels
-  harris)
+  harris
+  hessian)
   set(_test t_core_image_processing_${_name})
   set(_target test_core_image_processing_${_name})
 
