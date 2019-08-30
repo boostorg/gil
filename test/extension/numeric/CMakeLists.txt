@@ -17,7 +17,8 @@ foreach(_name
   matrix3x2
   numeric
   pixel_numeric_operations
-  convolve_2d)
+  convolve_2d
+  extend_boundary)
   set(_test t_ext_numeric_${_name})
   set(_target test_ext_numeric_${_name})
 
