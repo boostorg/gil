@@ -44,29 +44,29 @@ The algorithms have the same structure:
 
 Harris and Hessian differ in what **derivatives they compute**. Harris computes the following derivatives:
 
-$HarrisMatrix = [(dx)^2, dxdy], [dxdy, (dy)^2]$
+`HarrisMatrix = [(dx)^2, dxdy], [dxdy, (dy)^2]`
 
-*(note that $d(x^2)$ and $(dy^2)$ are **numerical** powers, not gradient again).*
+*(note that `d(x^2)` and `(dy^2)` are **numerical** powers, not gradient again).*
 
 The three distinct terms of a matrix can be separated into three images, to simplify implementation. Hessian, on the other hand, computes second order derivatives:
 
-$HessianMatrix = [dxdx, dxdy][dxdy, dydy]$
+`HessianMatrix = [dxdx, dxdy][dxdy, dydy]`
 
 **Weighted convolution** is the same for both. Usually Gaussian blur matrix is used as weights, because corners should have hill like curvature in gradients, and other weights might be noisy.
 
 **Response computation** is a matter of choice. Given the general form of both matrices above
 
-$[a, b][c, d]$
+`[a, b][c, d]`
 
 One of the response functions is
 
-$response = det - k * trace^2 = a * c - b * d - k * (a + d)^2$
+`response = det - k * trace^2 = a * c - b * d - k * (a + d)^2`
 
-$k$ is called discrimination constant. Usual values are $0.04$ - $0.06$.
+`k` is called discrimination constant. Usual values are `0.04` - `0.06`.
 
 The other is simply determinant
 
-$response = det = a * c - b * d$
+`response = det = a * c - b * d`
 
 **Thresholding** is optional, but without it the result will be extremely noisy. For complex images, like the ones of outdoors, for Harris it will be in order of 100000000 and for Hessian will be in order of 10000. For simpler images values in order of 100s and 1000s should be enough. The numbers assume `uint8_t` gray image.
 

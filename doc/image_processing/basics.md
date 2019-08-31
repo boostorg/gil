@@ -10,7 +10,7 @@ Here are basic concepts that might help to understand documentation written in t
 
 Those three words usually mean the same thing, unless context is clear about a different usage. Simply put, they are matrices, that are used to achieve certain effects on the image. Lets consider a simple one, 3 by 3 Scharr filter
 
-$ScharrX = [1,0,-1][1,0,-1][1,0,-1]$
+`ScharrX = [1,0,-1][1,0,-1][1,0,-1]`
 
 The filter above, when convolved with a single channel image (intensity/luminance strength), will produce a gradient in X (horizontal) direction. There is filtering that cannot be done with a kernel though, and one good example is median filter (mean is the arithmetic mean, whereas median will be the center element of a sorted array).
 
@@ -24,7 +24,7 @@ The filter above, when convolved with a single channel image (intensity/luminanc
 
  ### Derivatives
 
-A derivative of an image is a gradient in one of two directions: x (horizontal) and y (vertical). To compute a derivative, one can use Scharr, \<other filter's name> and other gradient filters.
+A derivative of an image is a gradient in one of two directions: x (horizontal) and y (vertical). To compute a derivative, one can use Scharr, Sobel and other gradient filters.
 
 ---
 
