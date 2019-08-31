@@ -1,4 +1,4 @@
-## Space extrema detectors
+﻿## Space extrema detectors
 
 ### What is being detected?
 
@@ -10,7 +10,7 @@ A good feature is one that is repeatable, stable and can be recognized under aff
 
 At the moment, the following detectors are implemented
 
- - Harris corner detector
+ - Harris detector
 
  - Hessian detector
 
@@ -20,17 +20,23 @@ At the moment, the following detectors are implemented
 
 #### Harris and Hessian
 
-Both are derived from a concept called Moravec window. Lets have a look at the image below:
+Sometimes the kind of detectors is described as affine region detectors. Both are derived from a concept called Moravec window. Lets have a look at the image below:
 
-\<Moravec-window-image>
+![Moravec window corner case](./Moravec-window-corner.png)
 
-As can be noticed, moving the yellow window in any direction will cause very big change in intensity. This is the key concept in understanding how the two corner detectors work.
+As can be noticed, moving the yellow window in any direction will cause very big change in intensity.  Now, lets have a look at the edge case:
+
+![Moravec window edge case](./Moravec-window-edge.png)
+
+In this case, intensity change will happen only when moving in particular direction.
+
+This is the key concept in understanding how the two corner detectors work.
 
 The algorithms have the same structure:
 
  1. Compute image derivatives
 
- 2. Weighted convolution
+ 2. Compute Weighted convolution
 
  3. Compute response
 
@@ -62,10 +68,9 @@ The other is simply determinant
 
 $response = det = a * c - b * d$
 
-**Thresholding** is optional, but without it the result will be extremely noisy. For complex images, like the ones of outdoors, for Harris it will be in order of \<Harris-value> and for Hessian will be in order of \<Hessian value>. For simpler images values in order of 100s and 1000s should be enough.
+**Thresholding** is optional, but without it the result will be extremely noisy. For complex images, like the ones of outdoors, for Harris it will be in order of 100000000 and for Hessian will be in order of 10000. For simpler images values in order of 100s and 1000s should be enough. The numbers assume `uint8_t` gray image.
 
-To get deeper explanation please refer to following **papers**:
+To get deeper explanation please refer to following **paper**:
 
-\<Harris paper>
-
-\<Hessian matrix>
+[Harris, Christopher G., and Mike Stephens. "A combined corner and edge detector." In Alvey vision conference, vol. 15, no. 50, pp. 10-5244. 1988.
+](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.434.4816&rep=rep1&type=pdf)

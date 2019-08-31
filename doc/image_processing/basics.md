@@ -16,9 +16,15 @@ The filter above, when convolved with a single channel image (intensity/luminanc
 
 ---
 
+### Affine transformation
+
+
+
+---
+
  ### Derivatives
 
-A derivative of an image is a gradient in one of two directions, e.g. x (horizontal) and y (vertical). To compute a derivative, one can use Scharr, \<other filter's name> and other gradient filters.
+A derivative of an image is a gradient in one of two directions: x (horizontal) and y (vertical). To compute a derivative, one can use Scharr, \<other filter's name> and other gradient filters.
 
 ---
 
