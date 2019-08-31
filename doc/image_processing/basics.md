@@ -4,6 +4,8 @@ Here are basic concepts that might help to understand documentation written in t
 
 ### Convolution
 
+The simplest way to look at this is "tweaking the input so that it would look like the shape provided". What exact tweaking is applied depends on the kernel.
+
 ---
 
 ### Filters, kernels, weights
