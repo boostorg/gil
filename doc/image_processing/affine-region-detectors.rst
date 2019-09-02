@@ -65,8 +65,7 @@ computes the following derivatives:
 
 ``HarrisMatrix = [(dx)^2, dxdy], [dxdy, (dy)^2]``
 
-*(note that ``d(x^2)`` and ``(dy^2)`` are **numerical** powers, not
-gradient again).*
+(note that ``d(x^2)`` and ``(dy^2)`` are **numerical** powers, not gradient again).
 
 The three distinct terms of a matrix can be separated into three images,
 to simplify implementation. Hessian, on the other hand, computes second
