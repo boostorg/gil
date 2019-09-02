@@ -105,3 +105,8 @@ To get deeper explanation please refer to following **paper**:
 `Harris, Christopher G., and Mike Stephens. "A combined corner and edge
 detector." In Alvey vision conference, vol. 15, no. 50, pp. 10-5244.
 1988. <http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.434.4816&rep=rep1&type=pdf>`__
+
+`Mikolajczyk, Krystian, and Cordelia Schmid. "An affine invariant interest point detector." In European conference on computer vision, pp. 128-142. Springer, Berlin, Heidelberg, 2002. <https://hal.inria.fr/inria-00548252/document>`__
+
+`Mikolajczyk, Krystian, Tinne Tuytelaars, Cordelia Schmid, Andrew Zisserman, Jiri Matas, Frederik Schaffalitzky, Timor Kadir, and Luc Van Gool. "A comparison of affine region detectors." International journal of computer vision 65, no. 1-2 (2005): 43-72. <https://hal.inria.fr/inria-00548528/document>`__
+
