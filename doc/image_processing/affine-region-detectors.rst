@@ -4,10 +4,10 @@ Affine region detectors
 What is being detected?
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-A good feature is one that is repeatable, stable and can be recognized
-under affine transformations. Unfortunately, edges do not fit the
-description. They will get warped under affine transformations, 
-but corners, on the hand, fit well enough.
+Affine region is basically any region of the image
+that is stable under affine transformations. It can be
+edges under affinity conditions, corners (small patch of an image)
+or any other stable features.
 
 --------------
 
@@ -54,7 +54,7 @@ The algorithms have the same structure:
 
 1. Compute image derivatives
 
-2. Compute Weighted convolution
+2. Compute Weighted sum
 
 3. Compute response
 
@@ -74,9 +74,13 @@ order derivatives:
 
 ``HessianMatrix = [dxdx, dxdy][dxdy, dydy]``
 
-**Weighted convolution** is the same for both. Usually Gaussian blur
+**Weighted sum** is the same for both. Usually Gaussian blur
 matrix is used as weights, because corners should have hill like
 curvature in gradients, and other weights might be noisy.
+Basically overlay weights matrix over a corner, compute sum of
+``s[i,j]=image[x + i, y + j] * weights[i, j]`` for ``i, j``
+from zero to weight matrix dimensions, then move the window
+and compute again until all of the image is covered.
 
 **Response computation** is a matter of choice. Given the general form
 of both matrices above
