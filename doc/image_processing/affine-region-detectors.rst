@@ -1,4 +1,4 @@
-Space extrema detectors
+Affine region detectors
 -----------------------
 
 What is being detected?
@@ -6,7 +6,8 @@ What is being detected?
 
 A good feature is one that is repeatable, stable and can be recognized
 under affine transformations. Unfortunately, edges do not fit the
-description. Corners, on the hand, fit well enough.
+description. They will get warped under affine transformations, 
+but corners, on the hand, fit well enough.
 
 --------------
 
@@ -27,7 +28,6 @@ Algorithm steps
 Harris and Hessian
 ^^^^^^^^^^^^^^^^^^
 
-Sometimes the kind of detectors is described as affine region detectors.
 Both are derived from a concept called Moravec window. Lets have a look
 at the image below:
 
