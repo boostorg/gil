@@ -18,22 +18,28 @@ Quickstart
    tutorial/gradient
    naming
 
-Documentation
--------------
+Core Library Documentation
+--------------------------
 
 .. toctree::
    :maxdepth: 2
 
    design_guide
-   image_processing/basics
-   image_processing/affine-region-detectors
+   image_processing/index
+   API Reference <./reference/index.html#://>
+
+Extensions Documentation
+------------------------
+
+.. toctree::
+   :maxdepth: 2
+
    io
    toolbox
    numeric
-   API Reference <./reference/index.html#://>
 
-Sample files
-------------
+Examples
+--------
 
 * :download:`x_gradient.cpp <../example/x_gradient.cpp>`:
   Writing an algorithm that operates on generic images
