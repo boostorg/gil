@@ -26,6 +26,8 @@ Documentation
 
    design_guide
    io
+   image_processing/basics.rst
+   image_processing/affine-region-detectors.rst
    toolbox
    numeric
    API Reference <./reference/index.html#://>
