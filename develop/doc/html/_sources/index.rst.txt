@@ -25,9 +25,9 @@ Documentation
    :maxdepth: 2
 
    design_guide
+   image_processing/basics
+   image_processing/affine-region-detectors
    io
-   image_processing/basics.rst
-   image_processing/affine-region-detectors.rst
    toolbox
    numeric
    API Reference <./reference/index.html#://>
