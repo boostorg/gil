@@ -1,5 +1,6 @@
 //
 // Copyright 2005-2007 Adobe Systems Incorporated
+// Copyright 2019 Pranam Lashkari <plashkari628@gmail.com>
 //
 // Distributed under the Boost Software License, Version 1.0
 // See accompanying file LICENSE_1_0.txt or copy at
@@ -12,6 +13,7 @@
 
 #include <boost/gil/metafunctions.hpp>
 #include <boost/gil/pixel_iterator.hpp>
+#include <boost/gil/image.hpp>
 
 #include <boost/assert.hpp>
 
@@ -246,6 +248,141 @@ void view_multiplies_scalar(SrcView const& src_view, Scalar const& scalar, DstVi
             ++it_dst;
         }
     }
+}
+
+
+/// \ingroup ImageAlgorithms
+/// \brief Boundary options for image boundary extension
+enum class boundary_option
+{
+    extend_zero,    /// assume the source boundaries to be zero
+    extend_constant /// assume the source boundaries to be the boundary value
+};
+
+namespace detail
+{
+
+template <typename SrcView, typename RltView>
+void extend_row_impl(
+    SrcView src_view,
+    RltView result_view,
+    std::size_t extend_count,
+    boundary_option option)
+{
+    std::ptrdiff_t extend_count_ = static_cast<std::ptrdiff_t>(extend_count);
+
+    if (option == boundary_option::extend_constant)
+    {
+        for (std::ptrdiff_t i = 0; i < result_view.height(); i++)
+        {
+            if(i >= extend_count_ && i < extend_count_ + src_view.height())
+            {
+                assign_pixels(
+                    src_view.row_begin(i - extend_count_), 
+                    src_view.row_end(i - extend_count_), 
+                    result_view.row_begin(i)
+                );
+            }
+            else if(i < extend_count_)
+            {
+                assign_pixels(src_view.row_begin(0), src_view.row_end(0), result_view.row_begin(i));
+            }
+            else
+            {
+                assign_pixels(
+                    src_view.row_begin(src_view.height() - 1), 
+                    src_view.row_end(src_view.height() - 1), 
+                    result_view.row_begin(i)
+                );
+            }
+            
+        }
+    }
+    else if (option == boundary_option::extend_zero)
+    {
+        typename SrcView::value_type acc_zero;
+        pixel_zeros_t<typename SrcView::value_type>()(acc_zero);
+
+        for (std::ptrdiff_t i = 0; i < result_view.height(); i++)
+        {
+            if (i >= extend_count_ && i < extend_count_ + src_view.height())
+            {
+                assign_pixels(
+                    src_view.row_begin(i - extend_count_),
+                    src_view.row_end(i - extend_count_),
+                    result_view.row_begin(i));
+            }
+            else 
+            {
+                std::fill_n(result_view.row_begin(i), result_view.width(), acc_zero);
+            }
+        }
+    }
+}
+
+} //namespace detail
+
+
+/// \brief adds new row at top and bottom.
+/// Image padding introduces new pixels around the edges of an image.
+/// The border provides space for annotations or acts as a boundary when using advanced filtering techniques.
+/// \tparam SrcView Models ImageViewConcept
+/// \tparam extend_count number of rows to be added each side
+/// \tparam option - TODO
+template <typename SrcView>
+auto extend_row(
+    SrcView src_view,
+    std::size_t extend_count,
+    boundary_option option
+) -> typename gil::image<typename SrcView::value_type>
+{
+    typename gil::image<typename SrcView::value_type>
+        result_img(src_view.width(), src_view.height() + (2 * extend_count));
+
+    auto result_view = view(result_img);
+    detail::extend_row_impl(src_view, result_view, extend_count, option);
+    return result_img;
+}
+
+
+/// \brief adds new column at left and right.
+/// Image padding introduces new pixels around the edges of an image. 
+/// The border provides space for annotations or acts as a boundary when using advanced filtering techniques.
+/// \tparam SrcView Models ImageViewConcept
+/// \tparam extend_count number of columns to be added each side
+/// \tparam option - TODO
+template <typename SrcView>
+auto extend_col(
+    SrcView src_view,
+    std::size_t extend_count,
+    boundary_option option
+) -> typename gil::image<typename SrcView::value_type>
+{
+    auto src_view_rotate = rotated90cw_view(src_view);
+
+    typename gil::image<typename SrcView::value_type>
+        result_img(src_view.width() + (2 * extend_count), src_view.height());
+
+    auto result_view = rotated90cw_view(view(result_img));
+    detail::extend_row_impl(src_view_rotate, result_view, extend_count, option);
+    return result_img;
+}
+
+/// \brief adds new row and column at all sides.
+/// Image padding introduces new pixels around the edges of an image. 
+/// The border provides space for annotations or acts as a boundary when using advanced filtering techniques.
+/// \tparam SrcView Models ImageViewConcept
+/// \tparam extend_count number of rows/column to be added each side
+/// \tparam option - TODO
+template <typename SrcView>
+auto extend_boundary(
+    SrcView src_view,
+    std::size_t extend_count,
+    boundary_option option
+) -> typename gil::image<typename SrcView::value_type>
+{
+    auto auxilary_img = extend_col(src_view, extend_count, option);
+    return extend_row(view(auxilary_img), extend_count, option);
 }
 
 }} // namespace boost::gil
