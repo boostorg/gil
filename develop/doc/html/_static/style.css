@@ -27,19 +27,18 @@
 }
 
 .admonition-title { font-weight: bold;}
-.toctree-wrapper,
-.contents
+.toctree-wrapper
 {
   display: inline-block;
   border: 1px solid #dcdcdc;
   padding: 1em;
   margin: 0 2em;
 }
+.toctree-wrapper .caption,
+.toctree-wrapper .topic-title { font-weight: bold;}
+
 .footer
 {
     text-align: left;
     font-size: 80%;
 }
-.toctree-wrapper .caption,
-.toctree-wrapper .topic-title { font-weight: bold;}
-
