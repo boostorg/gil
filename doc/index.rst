@@ -24,7 +24,7 @@ Core Library Documentation
 .. toctree::
    :maxdepth: 2
 
-   design_guide
+   design/index
    image_processing/index
    API Reference <./reference/index.html#://>
 
