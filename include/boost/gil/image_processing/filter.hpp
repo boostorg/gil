@@ -14,6 +14,7 @@
 
 #include <boost/gil/image.hpp>
 #include <boost/gil/image_view.hpp>
+#include <boost/gil/extension/numeric/algorithm.hpp>
 #include <boost/gil/extension/numeric/kernel.hpp>
 #include <boost/gil/extension/numeric/convolve.hpp>
 
@@ -26,7 +27,7 @@ void box_filter(
     std::size_t kernel_size,
     long int anchor = -1,
     bool normalize=true,
-    convolve_boundary_option option = convolve_option_extend_zero
+    boundary_option option = boundary_option::extend_zero
 )
 {
     gil_function_requires<ImageViewConcept<SrcView>>();
@@ -53,7 +54,7 @@ void blur(
     DstView const& dst_view,
     std::size_t kernel_size,
     long int anchor = -1,
-    convolve_boundary_option option = convolve_option_extend_zero
+    boundary_option option = boundary_option::extend_zero
 )
 {
     box_filter(src_view, dst_view, kernel_size, anchor, true, option);
