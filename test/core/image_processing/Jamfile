@@ -21,5 +21,6 @@ run lanczos_scaling.cpp ;
 run simple_kernels.cpp ;
 run harris.cpp ;
 run hessian.cpp ;
+run sobel_scharr.cpp ;
 run box_filter.cpp /boost/test//boost_unit_test_framework : : : <link>shared:<define>BOOST_TEST_DYN_LINK=1 ;
 run median_filter.cpp /boost/test//boost_unit_test_framework : : : <link>shared:<define>BOOST_TEST_DYN_LINK=1 ;

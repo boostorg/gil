@@ -12,6 +12,7 @@
 #include <cmath>
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/typedefs.hpp>
+#include <boost/gil/extension/numeric/kernel.hpp>
 
 namespace boost { namespace gil {
 
@@ -201,6 +202,126 @@ inline void generate_gaussian_kernel(boost::gil::gray32f_view_t dst, double sigm
             dst(x, y).at(std::integral_constant<int, 0>{}) = value;
         }
     }
+}
+
+/// \brief Generates Sobel operator in horizontal direction
+/// \ingroup ImageProcessingMath
+///
+/// Generates a kernel which will represent Sobel operator in
+/// horizontal direction of specified degree (no need to convolve multiple times
+/// to obtain the desired degree).
+/// https://www.researchgate.net/publication/239398674_An_Isotropic_3_3_Image_Gradient_Operator
+template <typename T = float, typename Allocator = std::allocator<T>>
+inline kernel_2d<T, Allocator> generate_dx_sobel(unsigned int degree = 1)
+{
+    switch (degree)
+    {
+        case 0:
+        {
+            return get_identity_kernel<T, Allocator>();
+        }
+        case 1:
+        {
+            kernel_2d<T, Allocator> result(3, 1, 1);
+            std::copy(dx_sobel.begin(), dx_sobel.end(), result.begin());
+            return result;
+        }
+        default:
+            throw std::logic_error("not supported yet");
+    }
+
+    //to not upset compiler
+    throw std::runtime_error("unreachable statement");
+}
+
+/// \brief Generate Scharr operator in horizontal direction
+/// \ingroup ImageProcessingMath
+///
+/// Generates a kernel which will represent Scharr operator in
+/// horizontal direction of specified degree (no need to convolve multiple times
+/// to obtain the desired degree).
+/// https://www.researchgate.net/profile/Hanno_Scharr/publication/220955743_Optimal_Filters_for_Extended_Optical_Flow/links/004635151972eda98f000000/Optimal-Filters-for-Extended-Optical-Flow.pdf
+template <typename T = float, typename Allocator = std::allocator<T>>
+inline kernel_2d<T, Allocator> generate_dx_scharr(unsigned int degree = 1)
+{
+    switch (degree)
+    {
+        case 0:
+        {
+            return get_identity_kernel<T, Allocator>();
+        }
+        case 1:
+        {
+            kernel_2d<T, Allocator> result(3, 1, 1);
+            std::copy(dx_scharr.begin(), dx_scharr.end(), result.begin());
+            return result;
+        }
+        default:
+            throw std::logic_error("not supported yet");
+    }
+
+    //to not upset compiler
+    throw std::runtime_error("unreachable statement");
+}
+
+/// \brief Generates Sobel operator in vertical direction
+/// \ingroup ImageProcessingMath
+///
+/// Generates a kernel which will represent Sobel operator in
+/// vertical direction of specified degree (no need to convolve multiple times
+/// to obtain the desired degree).
+/// https://www.researchgate.net/publication/239398674_An_Isotropic_3_3_Image_Gradient_Operator
+template <typename T = float, typename Allocator = std::allocator<T>>
+inline kernel_2d<T, Allocator> generate_dy_sobel(unsigned int degree = 1)
+{
+    switch (degree)
+    {
+        case 0:
+        {
+            return get_identity_kernel<T, Allocator>();
+        }
+        case 1:
+        {
+            kernel_2d<T, Allocator> result(3, 1, 1);
+            std::copy(dy_sobel.begin(), dy_sobel.end(), result.begin());
+            return result;
+        }
+        default:
+            throw std::logic_error("not supported yet");
+    }
+
+    //to not upset compiler
+    throw std::runtime_error("unreachable statement");
+}
+
+/// \brief Generate Scharr operator in vertical direction
+/// \ingroup ImageProcessingMath
+///
+/// Generates a kernel which will represent Scharr operator in
+/// vertical direction of specified degree (no need to convolve multiple times
+/// to obtain the desired degree).
+/// https://www.researchgate.net/profile/Hanno_Scharr/publication/220955743_Optimal_Filters_for_Extended_Optical_Flow/links/004635151972eda98f000000/Optimal-Filters-for-Extended-Optical-Flow.pdf
+template <typename T = float, typename Allocator = std::allocator<T>>
+inline kernel_2d<T, Allocator> generate_dy_scharr(unsigned int degree = 1)
+{
+    switch (degree)
+    {
+        case 0:
+        {
+            return get_identity_kernel<T, Allocator>();
+        }
+        case 1:
+        {
+            kernel_2d<T, Allocator> result(3, 1, 1);
+            std::copy(dy_scharr.begin(), dy_scharr.end(), result.begin());
+            return result;
+        }
+        default:
+            throw std::logic_error("not supported yet");
+    }
+
+    //to not upset compiler
+    throw std::runtime_error("unreachable statement");
 }
 
 }} // namespace boost::gil

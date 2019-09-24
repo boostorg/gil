@@ -34,6 +34,7 @@ foreach(_name
   hessian
   box_filter
   median_filter)
+  sobel_scharr)
   set(_test t_core_image_processing_${_name})
   set(_target test_core_image_processing_${_name})
 
