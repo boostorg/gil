@@ -32,7 +32,8 @@ foreach(_name
   simple_kernels
   harris
   hessian
-  box_filter)
+  box_filter
+  median_filter)
   set(_test t_core_image_processing_${_name})
   set(_target test_core_image_processing_${_name})
 
