@@ -30,28 +30,28 @@
 #pragma GCC diagnostic pop
 #endif
 
-// `base` holds the path to ../.., i.e. the directory containing `test_images`
-static const std::string base = (boost::filesystem::absolute(boost::filesystem::path(__FILE__)).parent_path().parent_path().string()) + "/";
+// `base` holds the path to ../.., i.e. the directory containing `images`
+static const std::string base = (boost::filesystem::absolute(boost::filesystem::path(__FILE__)).parent_path().string()) + "/";
 
-static const std::string bmp_in  = base + "test_images/bmp/";
+static const std::string bmp_in  = base + "images/bmp/";
 static const std::string bmp_out = base + "output/bmp/";
 
-static const std::string jpeg_in  = base + "test_images/jpg/";
+static const std::string jpeg_in  = base + "images/jpg/";
 static const std::string jpeg_out = base + "output/jpeg/";
 
-static const std::string png_base_in = base + "test_images/png/";
+static const std::string png_base_in = base + "images/png/";
 static const std::string png_in      = png_base_in + "PngSuite/";
 static const std::string png_out     = base + "output/png/";
 
-static const std::string pnm_in  = base + "test_images/pnm/";
+static const std::string pnm_in  = base + "images/pnm/";
 static const std::string pnm_out = base + "output/pnm/";
 
-static const std::string raw_in  = base + "test_images/raw/";
+static const std::string raw_in  = base + "images/raw/";
 
-static const std::string targa_in  = base + "test_images/targa/";
+static const std::string targa_in  = base + "images/targa/";
 static const std::string targa_out = base + "output/targa/";
 
-static const std::string tiff_in    = base + "test_images/tiff/";
+static const std::string tiff_in    = base + "images/tiff/";
 static const std::string tiff_out   = base + "output/tiff/";
 static const std::string tiff_in_GM = tiff_in + "graphicmagick/";
 

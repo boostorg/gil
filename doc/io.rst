@@ -267,7 +267,7 @@ The following code sample shows the usage::
                             , tag_t
                             > reader_t;
 
-    reader_t reader = make_scanline_reader( "C:/boost/libs/gil/io/test_images/tiff/test.tif", tag_t() );
+    reader_t reader = make_scanline_reader( "C:/boost/libs/gil/test/extension/io/images/tiff/test.tif", tag_t() );
 
     typedef rgba8_image_t image_t;
 

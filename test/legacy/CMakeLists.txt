@@ -13,7 +13,7 @@
 #   * Modify only if absolutely necessary (a bug found in the tests).
 # See the accompanying README.md
 #
-message(STATUS "Boost.GIL: Configuring core tests")
+message(STATUS "Boost.GIL: Configuring tests in test/legacy")
 
 foreach(_name
   channel

@@ -8,7 +8,6 @@
 # (See accompanying file LICENSE_1_0.txt or
 # copy at http://www.boost.org/LICENSE_1_0.txt)
 
-import testing ;
 import ac ;
 
 using libjpeg : : : : true ; # work around bug on master
@@ -20,12 +19,13 @@ lib raw : : <name>raw ;
 
 project
     : requirements
-    <include>$(BOOST_ROOT)
     <library>/boost/test//boost_unit_test_framework
     <library>/boost/system//boost_system
     <library>/boost/filesystem//boost_filesystem
     <link>shared:<define>BOOST_TEST_DYN_LINK=1
     ;
+
+alias headers : [ generate_self_contained_headers extension/io ] ;
 
 alias simple
   : [ run all_formats_test.cpp
