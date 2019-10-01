@@ -52,8 +52,8 @@ inline double lanczos(double x, std::ptrdiff_t a)
 }
 
 inline void compute_tensor_entries(
-    boost::gil::gray16_view_t dx,
-    boost::gil::gray16_view_t dy,
+    boost::gil::gray16s_view_t dx,
+    boost::gil::gray16s_view_t dy,
     boost::gil::gray32f_view_t m11,
     boost::gil::gray32f_view_t m12_21,
     boost::gil::gray32f_view_t m22)
