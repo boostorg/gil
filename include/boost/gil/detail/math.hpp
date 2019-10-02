@@ -22,7 +22,8 @@ static constexpr std::array<float, 9> dy_sobel = {1, 2, 1, 0, 0, 0, -1, -2, -1};
 static constexpr std::array<float, 9> dy_scharr = {1, 1, 1, 0, 0, 0, -1, -1, -1};
 
 template <typename T, typename Allocator>
-inline kernel_2d<T, Allocator> get_identity_kernel() {
+inline kernel_2d<T, Allocator> get_identity_kernel()
+{
     kernel_2d<T, Allocator> kernel(1, 0, 0);
     kernel[0] = 1;
     return kernel;

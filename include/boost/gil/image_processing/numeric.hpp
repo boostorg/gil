@@ -8,12 +8,12 @@
 #ifndef BOOST_GIL_IMAGE_PROCESSING_NUMERIC_HPP
 #define BOOST_GIL_IMAGE_PROCESSING_NUMERIC_HPP
 
-#include <boost/gil/detail/math.hpp>
-#include <cmath>
-#include <boost/gil/image_view.hpp>
-#include <boost/gil/typedefs.hpp>
 #include <boost/gil/extension/numeric/kernel.hpp>
 #include <boost/gil/extension/numeric/convolve.hpp>
+#include <boost/gil/image_view.hpp>
+#include <boost/gil/typedefs.hpp>
+#include <boost/gil/detail/math.hpp>
+#include <cmath>
 
 namespace boost { namespace gil {
 
