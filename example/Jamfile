@@ -23,7 +23,7 @@ local sources =
     dynamic_image.cpp
     histogram.cpp
     harris.cpp
-    sobel_scharr
+    sobel_scharr.cpp
     ;
 
 local targets ;
