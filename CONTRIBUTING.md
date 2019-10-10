@@ -18,6 +18,7 @@ please follow the workflow explained in this document.
   * [4. Submit a pull request](#4-submit-a-pull-request)
   * [5. Update your pull request](#5-update-your-pull-request)
 * [Development](#development)
+  * [Install dependencies](#install-dependencies)
   * [Using Boost.Build](#using-boostbuild)
   * [Using CMake](#using-cmake)
   * [Using Faber](#using-faber)
@@ -27,6 +28,10 @@ please follow the workflow explained in this document.
 ## Prerequisites
 
 * C++11 compiler
+* Build and run-time dependencies for tests and examples:
+  - Boost.Filesystem
+  - Boost.Test
+  - Headers and libraries of libjpeg, libpng, libtiff, libraw for the I/O extension.
 * Experience with `git` command line basics.
 * Familiarity with build toolset and development environment of your choice.
 * Although this document tries to present all commands with necessary options,
@@ -319,6 +324,15 @@ We also provide configuration for two alternative build systems:
 configurations for Boost.GIL do not offer equivalents for all Boost.Build features. Most important difference to recognise is that Boost.Build will
 automatically build any other Boost libraries required by Boost.GIL as dependencies.
 
+### Install dependencies
+
+Boost.GIL tests and examples use the GIL I/O extension which depends on
+third-party libraries for read and write support of specific image formats:
+
+```shell
+sudo apt-get install libjpeg-dev libpng-dev libtiff5-dev libraw-dev
+```
+
 ### Using Boost.Build
 
 The [b2 invocation](https://boostorg.github.io/build/manual/develop/index.html#bbv2.overview.invocation)
@@ -359,8 +373,6 @@ Run I/O extension tests bundled in target called `simple`:
 ```shell
 ./b2 libs/gil/test/io//simple
 ```
-
-*TODO:* _Explain I/O dependencies (libjpeg, etc.)_
 
 ### Using CMake
 
@@ -410,13 +422,6 @@ Here is an example of such lightweight workflow in Linux environment (Debian-bas
     ```shell
     sudo apt-get update
     sudo apt-get install libboost-dev libboost-test-dev libboost-filesystem-dev
-    ```
-
-* Optionally, install libraries required by the I/O extension
-
-    ```shell
-    sudo apt-get update
-    sudo apt install libtiff-dev libpng-dev libjpeg-dev
     ```
 
 * Clone Boost.GIL repository

@@ -68,6 +68,7 @@ Optionally, in order to build and run tests and examples:
 
 - Boost.Filesystem
 - Boost.Test
+- Headers and libraries of libjpeg, libpng, libtiff, libraw for the I/O extension
 
 ## Branches
 
