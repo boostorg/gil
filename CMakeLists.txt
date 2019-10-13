@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2017-2018 Mateusz Loskot <mateusz at loskot dot net>
+# Copyright (c) 2017-2019 Mateusz Loskot <mateusz at loskot dot net>
 #
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
@@ -116,7 +116,7 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
   set(Boost_USE_STATIC_RUNTIME OFF)
 endif()
 
-find_package(Boost 1.65.0 REQUIRED
+find_package(Boost 1.68.0 REQUIRED
   COMPONENTS
     filesystem
     unit_test_framework)
