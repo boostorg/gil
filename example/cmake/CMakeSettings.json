@@ -20,7 +20,7 @@
       "ctestCommandArgs": "",
       "variables": [
         { "name": "Boost_DEBUG", "value": "ON" },
-        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.71" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.72;1.71" },
         { "name": "Boost_ARCHITECTURE", "value": "-x64" },
         { "name": "Boost_COMPILER", "value": "-vc142;-vc141" },
         { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
@@ -44,7 +44,7 @@
       "ctestCommandArgs": "",
       "variables": [
         { "name": "Boost_DEBUG", "value": "ON" },
-        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.71" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.72;1.71" },
         { "name": "Boost_ARCHITECTURE", "value": "-x64" },
         { "name": "Boost_COMPILER", "value": "-vc142;-vc141" },
         { "name": "GIL_BUILD_EXAMPLES", "value": "OFF" },
@@ -68,7 +68,7 @@
       "ctestCommandArgs": "",
       "variables": [
         { "name": "Boost_DEBUG", "value": "ON" },
-        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.71" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.72;1.71" },
         { "name": "Boost_ARCHITECTURE", "value": "-x32" },
         { "name": "Boost_COMPILER", "value": "-vc142;-vc141" },
         { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
@@ -92,7 +92,7 @@
       "ctestCommandArgs": "",
       "variables": [
         { "name": "Boost_DEBUG", "value": "ON" },
-        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.71" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.72;1.71" },
         { "name": "Boost_ARCHITECTURE", "value": "-x32" },
         { "name": "Boost_COMPILER", "value": "-vc142;-vc141" },
         { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
@@ -115,7 +115,7 @@
       "ctestCommandArgs": "",
       "variables": [
         { "name": "Boost_DEBUG", "value": "ON" },
-        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.71" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.72;1.71" },
         { "name": "Boost_ARCHITECTURE", "value": "-x64" },
         { "name": "Boost_COMPILER", "value": "-vc142" },
         { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
@@ -138,7 +138,7 @@
       "ctestCommandArgs": "",
       "variables": [
         { "name": "Boost_DEBUG", "value": "ON" },
-        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.71" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.72;1.71" },
         { "name": "Boost_ARCHITECTURE", "value": "-x64" },
         { "name": "Boost_COMPILER", "value": "-vc142" },
         { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
@@ -161,7 +161,7 @@
       "ctestCommandArgs": "",
       "variables": [
         { "name": "Boost_DEBUG", "value": "ON" },
-        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.71" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.72;1.71" },
         { "name": "Boost_ARCHITECTURE", "value": "-x32" },
         { "name": "Boost_COMPILER", "value": "-vc142" },
         { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
@@ -184,7 +184,7 @@
       "ctestCommandArgs": "",
       "variables": [
         { "name": "Boost_DEBUG", "value": "ON" },
-        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.71" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.72;1.71" },
         { "name": "Boost_ARCHITECTURE", "value": "-x32" },
         { "name": "Boost_COMPILER", "value": "-vc142" },
         { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
@@ -207,7 +207,7 @@
       "ctestCommandArgs": "",
       "variables": [
         { "name": "Boost_DEBUG", "value": "ON" },
-        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.71" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.72;1.71" },
         { "name": "Boost_ARCHITECTURE", "value": "-x64" },
         { "name": "Boost_COMPILER", "value": "-vc141" },
         { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
@@ -274,7 +274,7 @@
       "addressSanitizerRuntimeFlags": "detect_leaks=0",
       "variables": [
         { "name": "Boost_DEBUG", "value": "ON" },
-        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.71" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.72;1.71" },
         { "name": "Boost_ARCHITECTURE", "value": "-x64" },
         { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
         { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
@@ -301,7 +301,7 @@
       "addressSanitizerRuntimeFlags": "detect_leaks=0",
       "variables": [
         { "name": "Boost_DEBUG", "value": "ON" },
-        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.71" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.72;1.71" },
         { "name": "Boost_ARCHITECTURE", "value": "-x64" },
         { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
         { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
@@ -327,7 +327,7 @@
       "addressSanitizerRuntimeFlags": "detect_leaks=0",
       "variables": [
         { "name": "Boost_DEBUG", "value": "ON" },
-        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.71" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.72;1.71" },
         { "name": "Boost_ARCHITECTURE", "value": "-x64" },
         { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
         { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
@@ -353,7 +353,7 @@
       "addressSanitizerRuntimeFlags": "detect_leaks=0",
       "variables": [
         { "name": "Boost_DEBUG", "value": "ON" },
-        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.71" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.72;1.71" },
         { "name": "Boost_ARCHITECTURE", "value": "-x64" },
         { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
         { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
