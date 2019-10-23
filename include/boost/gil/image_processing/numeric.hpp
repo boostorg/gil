@@ -123,7 +123,7 @@ inline kernel_2d<T, Allocator> generate_gaussian_kernel(std::size_t side_length,
 
     const double denominator = 2 * boost::gil::pi * sigma * sigma;
     auto middle = side_length / 2;
-    kernel_2d<T, Allocator> result(side_length, middle, middle);
+    std::vector<T, Allocator> values(side_length * side_length);
     for (std::size_t y = 0; y < side_length; ++y)
     {
         for (std::size_t x = 0; x < side_length; ++x)
@@ -133,11 +133,11 @@ inline kernel_2d<T, Allocator> generate_gaussian_kernel(std::size_t side_length,
             const double power = (delta_x * delta_x +  delta_y * delta_y) / (2 * sigma * sigma);
             const double nominator = std::exp(-power);
             const float value = static_cast<float>(nominator / denominator);
-            result(x, y) = value;
+            values[y * side_length + x] = value;
         }
     }
 
-    return result;
+    return kernel_2d<T, Allocator>(values.begin(), values.size(), middle, middle);
 }
 
 /// \brief Generates Sobel operator in horizontal direction

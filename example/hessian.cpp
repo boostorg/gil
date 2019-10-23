@@ -156,7 +156,7 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    long int window_size = std::stoi(argv[2]);
+    std::size_t window_size = std::stoul(argv[2]);
     long hessian_determinant_threshold = std::stol(argv[3]);
 
     gil::rgb8_image_t input_image;
@@ -190,13 +190,12 @@ int main(int argc, char* argv[]) {
     );
 
     gil::gray32f_image_t hessian_response(x_gradient.dimensions());
-    gil::gray32f_image_t gaussian_kernel(gil::point_t(5, 5));
-    gil::generate_gaussian_kernel(gil::view(gaussian_kernel), 0.84089642);
+    auto gaussian_kernel = gil::generate_gaussian_kernel(window_size, 0.84089642);
     gil::compute_hessian_responses(
         gil::view(m11),
         gil::view(m12_21),
         gil::view(m22),
-        gil::view(gaussian_kernel),
+        gaussian_kernel,
         gil::view(hessian_response)
     );
 

@@ -152,8 +152,8 @@ int main(int argc, char* argv[])
         return -1;
     }
 
-    long int window_size = std::stoi(argv[2]);
-    double discrimnation_constant = std::stod(argv[3]);
+    std::size_t window_size = std::stoul(argv[2]);
+    double discrimnation_constant = std::stof(argv[3]);
     long harris_response_threshold = std::stol(argv[4]);
 
     gil::rgb8_image_t input_image;
@@ -187,13 +187,12 @@ int main(int argc, char* argv[])
     );
 
     gil::gray32f_image_t harris_response(x_gradient.dimensions());
-    gil::gray32f_image_t gaussian_kernel(gil::point_t(5, 5));
-    gil::generate_gaussian_kernel(gil::view(gaussian_kernel), 0.84089642);
+    auto gaussian_kernel = gil::generate_gaussian_kernel(window_size, 0.84089642);
     gil::compute_harris_responses(
         gil::view(m11),
         gil::view(m12_21),
         gil::view(m22),
-        gil::view(gaussian_kernel),
+        gaussian_kernel,
         discrimnation_constant,
         gil::view(harris_response)
     );
