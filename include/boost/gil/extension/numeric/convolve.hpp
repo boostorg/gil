@@ -255,24 +255,6 @@ void convolve_cols(
 }
 
 /// \ingroup ImageAlgorithms
-/// \brief Convolve 1D variable-size kernel along both rows and columns of image
-/// \tparam PixelAccum TODO
-/// \tparam SrcView Models ImageViewConcept
-/// \tparam Kernel TODO
-/// \tparam DstView Models MutableImageViewConcept
-template <typename PixelAccum, typename SrcView, typename Kernel, typename DstView>
-BOOST_FORCEINLINE
-void convolve_1d(
-    SrcView const& src_view,
-    Kernel const& kernel,
-    DstView const& dst_view,
-    boundary_option option = boundary_option::extend_zero)
-{
-    convolve_rows<PixelAccum>(src_view, kernel, dst_view, option);
-    convolve_cols<PixelAccum>(dst_view, kernel, dst_view, option);
-}
-
-/// \ingroup ImageAlgorithms
 /// \brief Correlate 1D fixed-size kernel along the rows of image
 /// \tparam PixelAccum TODO
 /// \tparam SrcView Models ImageViewConcept
@@ -346,6 +328,24 @@ void convolve_cols_fixed(
 namespace detail
 {
 
+/// \ingroup ImageAlgorithms
+/// \brief Convolve 1D variable-size kernel along both rows and columns of image
+/// \tparam PixelAccum TODO
+/// \tparam SrcView Models ImageViewConcept
+/// \tparam Kernel TODO
+/// \tparam DstView Models MutableImageViewConcept
+template <typename PixelAccum, typename SrcView, typename Kernel, typename DstView>
+BOOST_FORCEINLINE
+void convolve_1d(
+    SrcView const& src_view,
+    Kernel const& kernel,
+    DstView const& dst_view,
+    boundary_option option = boundary_option::extend_zero)
+{
+    convolve_rows<PixelAccum>(src_view, kernel, dst_view, option);
+    convolve_cols<PixelAccum>(dst_view, kernel, dst_view, option);
+}
+
 template <typename SrcView, typename DstView, typename Kernel>
 void convolve_2d_impl(SrcView const& src_view, DstView const& dst_view, Kernel const& kernel)
 {
@@ -383,9 +383,6 @@ void convolve_2d_impl(SrcView const& src_view, DstView const& dst_view, Kernel c
     }
 }
 
-} //namespace detail
-
-
 /// \ingroup ImageAlgorithms
 /// \brief convolve_2d can only use convolve_option_extend_zero as convolve_boundary_option
 ///  this is the default option and cannot be changed for now
@@ -417,6 +414,6 @@ void convolve_2d(SrcView const& src_view, Kernel const& kernel, DstView const& d
     }
 }
 
-}} // namespace boost::gil
+}}} // namespace boost::gil::detail
 
 #endif

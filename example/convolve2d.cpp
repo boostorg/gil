@@ -19,7 +19,7 @@ int main()
 
     std::vector<float> v(9, 1.0f / 9.0f);
     kernel_2d<float> kernel(v.begin(), v.size(), 1, 1);
-    convolve_2d(view(img), kernel, view(img_out1));
+    detail::convolve_2d(view(img), kernel, view(img_out1));
 
     //write_view("out-convolve2d.png", view(img_out), png_tag{});
     write_view("out-convolve2d.png", view(img_out1), jpeg_tag{});
@@ -29,7 +29,7 @@ int main()
     std::vector<float> v1(3, 1.0f / 3.0f);
     kernel_1d<float> kernel1(v1.begin(), v1.size(), 1);
 
-    convolve_1d<gray32f_pixel_t>(const_view(img), kernel1, view(img_out), boundary_option::extend_zero);
+    detail::convolve_1d<gray32f_pixel_t>(const_view(img), kernel1, view(img_out), boundary_option::extend_zero);
     write_view("out-convolve_option_extend_zero.png", view(img_out), png_tag{});
 
     if (equal_pixels(view(img_out1), view(img_out)))cout << "convolve_option_extend_zero" << endl;
