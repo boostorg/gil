@@ -53,13 +53,12 @@ void test_blank_image()
     BOOST_TEST(are_equal(gil::view(expected), gil::view(m22)));
 
     gil::gray32f_image_t hessian_response(dimensions, gil::gray32f_pixel_t(0), 0);
-    gil::gray32f_image_t unnormalized_mean(gil::point_t(5, 5));
-    gil::generate_unnormalized_mean(gil::view(unnormalized_mean));
+    auto unnormalized_mean = gil::generate_unnormalized_mean(5);
     gil::compute_hessian_responses(
         gil::view(m11),
         gil::view(m12_21),
         gil::view(m22),
-        gil::view(unnormalized_mean),
+        unnormalized_mean,
         gil::view(hessian_response)
     );
     BOOST_TEST(are_equal(gil::view(expected), gil::view(hessian_response)));

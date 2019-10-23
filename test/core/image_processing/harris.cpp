@@ -53,14 +53,13 @@ void test_blank_image()
     BOOST_TEST(are_equal(gil::view(expected), gil::view(m22)));
 
     gil::gray32f_image_t harris_response(dimensions, gil::gray32f_pixel_t(0), 0);
-    gil::gray32f_image_t unnormalized_mean(gil::point_t(5, 5));
-    gil::generate_unnormalized_mean(gil::view(unnormalized_mean));
+    auto unnormalized_mean = gil::generate_unnormalized_mean(5);
     gil::compute_harris_responses(
         gil::view(m11),
         gil::view(m12_21),
         gil::view(m22),
-        gil::view(unnormalized_mean),
-        0.04,
+        unnormalized_mean,
+        0.04f,
         gil::view(harris_response)
     );
     BOOST_TEST(are_equal(gil::view(expected), gil::view(harris_response)));

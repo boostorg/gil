@@ -96,7 +96,7 @@ inline kernel_2d<T, Allocator> generate_normalized_mean(std::size_t side_size)
 ///
 /// Fills supplied view with 1s (ones)
 template <typename T = float, typename Allocator = std::allocator<T>>
-inline void generate_unnormalized_mean(std::size_t side_size)
+inline kernel_2d<T, Allocator> generate_unnormalized_mean(std::size_t side_size)
 {
     if (side_size % 2 != 1)
         throw std::invalid_argument("kernel dimensions should be odd and equal");
@@ -105,6 +105,8 @@ inline void generate_unnormalized_mean(std::size_t side_size)
     for (auto& cell: result) {
         cell = 1.0f;
     }
+
+    return result;
 }
 
 /// \brief Generate Gaussian kernel
