@@ -79,16 +79,18 @@ inline void compute_tensor_entries(
 /// in which all entries will be equal to
 /// \code 1 / (dst.size()) \endcode
 template <typename T = float, typename Allocator = std::allocator<T>>
-inline kernel_2d<T, Allocator> generate_normalized_mean(std::size_t side_size)
+inline kernel_2d<T, Allocator> generate_normalized_mean(std::size_t side_length)
 {
-    if (side_size % 2 != 1)
+    if (side_length % 2 != 1)
         throw std::invalid_argument("kernel dimensions should be odd and equal");
-    const float entry = 1.0f / static_cast<float>(side_size * side_size);
+    const float entry = 1.0f / static_cast<float>(side_length * side_length);
 
-    kernel_2d<T, Allocator> result(side_size, side_size / 2, side_size / 2);
+    kernel_2d<T, Allocator> result(side_length, side_length / 2, side_length / 2);
     for (auto& cell: result) {
         cell = entry;
     }
+
+    return result;
 }
 
 /// \brief Generate kernel with all 1s
@@ -96,12 +98,12 @@ inline kernel_2d<T, Allocator> generate_normalized_mean(std::size_t side_size)
 ///
 /// Fills supplied view with 1s (ones)
 template <typename T = float, typename Allocator = std::allocator<T>>
-inline kernel_2d<T, Allocator> generate_unnormalized_mean(std::size_t side_size)
+inline kernel_2d<T, Allocator> generate_unnormalized_mean(std::size_t side_length)
 {
-    if (side_size % 2 != 1)
+    if (side_length % 2 != 1)
         throw std::invalid_argument("kernel dimensions should be odd and equal");
 
-    kernel_2d<T, Allocator> result(side_size, side_size / 2, side_size / 2);
+    kernel_2d<T, Allocator> result(side_length, side_length / 2, side_length / 2);
     for (auto& cell: result) {
         cell = 1.0f;
     }
