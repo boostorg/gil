@@ -420,19 +420,8 @@ void threshold_adaptive
     }
     else if (method == threshold_adaptive_method::gaussian)
     {
-        gray32f_image_t gaussian_kernel_values(kernel_size, kernel_size);
-        generate_gaussian_kernel(view(gaussian_kernel_values), 1.0);
-
-        gray32f_view_t gaussian_kernel_view = view(gaussian_kernel_values);
-        detail::kernel_2d<float> kernel(kernel_size, kernel_size / 2, kernel_size / 2);
-
-        std::transform(gaussian_kernel_view.begin(), gaussian_kernel_view.end(), kernel.begin(),
-            [](gray32f_pixel_t pixel) -> float {
-                return pixel.at(std::integral_constant<int, 0>{});
-            }
-        );
-
-        detail::convolve_2d(src_view, kernel, temp_view);
+        kernel_2d<float> kernel = generate_gaussian_kernel(kernel_size, 1.0);
+        convolve_2d(src_view, kernel, temp_view);
     }
 
     if (direction == threshold_direction::regular)

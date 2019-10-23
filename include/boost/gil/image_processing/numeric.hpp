@@ -13,6 +13,8 @@
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/typedefs.hpp>
 #include <boost/gil/detail/math.hpp>
+// fixes ambigious call to std::abs, https://stackoverflow.com/a/30084734/4593721
+#include <cstdlib>
 #include <cmath>
 
 namespace boost { namespace gil {
@@ -76,14 +78,16 @@ inline void compute_tensor_entries(
 /// Fills supplied view with normalized mean
 /// in which all entries will be equal to
 /// \code 1 / (dst.size()) \endcode
-inline void generate_normalized_mean(boost::gil::gray32f_view_t dst)
+template <typename T = float, typename Allocator = std::allocator<T>>
+inline kernel_2d<T, Allocator> generate_normalized_mean(std::size_t side_size)
 {
-    if (dst.width() != dst.height() || dst.width() % 2 != 1)
+    if (side_size % 2 != 1)
         throw std::invalid_argument("kernel dimensions should be odd and equal");
-    const float entry = 1.0f / static_cast<float>(dst.size());
+    const float entry = 1.0f / static_cast<float>(side_size * side_size);
 
-    for (auto& pixel: dst) {
-        pixel.at(std::integral_constant<int, 0>{}) = entry;
+    kernel_2d<T, Allocator> result(side_size, side_size / 2, side_size / 2);
+    for (auto& cell: result) {
+        cell = entry;
     }
 }
 
@@ -91,13 +95,15 @@ inline void generate_normalized_mean(boost::gil::gray32f_view_t dst)
 /// \ingroup ImageProcessingMath
 ///
 /// Fills supplied view with 1s (ones)
-inline void generate_unnormalized_mean(boost::gil::gray32f_view_t dst)
+template <typename T = float, typename Allocator = std::allocator<T>>
+inline void generate_unnormalized_mean(std::size_t side_size)
 {
-    if (dst.width() != dst.height() || dst.width() % 2 != 1)
+    if (side_size % 2 != 1)
         throw std::invalid_argument("kernel dimensions should be odd and equal");
 
-    for (auto& pixel: dst) {
-        pixel.at(std::integral_constant<int, 0>{}) = 1.0f;
+    kernel_2d<T, Allocator> result(side_size, side_size / 2, side_size / 2);
+    for (auto& cell: result) {
+        cell = 1.0f;
     }
 }
 
@@ -106,25 +112,30 @@ inline void generate_unnormalized_mean(boost::gil::gray32f_view_t dst)
 ///
 /// Fills supplied view with values taken from Gaussian distribution. See
 /// https://en.wikipedia.org/wiki/Gaussian_blur
-inline void generate_gaussian_kernel(boost::gil::gray32f_view_t dst, double sigma)
+template <typename T = float, typename Allocator = std::allocator<T>>
+inline kernel_2d<T, Allocator> generate_gaussian_kernel(std::size_t side_length, double sigma)
 {
-    if (dst.width() != dst.height() || dst.width() % 2 != 1)
+    if (side_length % 2 != 1)
         throw std::invalid_argument("kernel dimensions should be odd and equal");
 
+
     const double denominator = 2 * boost::gil::pi * sigma * sigma;
-    const auto middle = boost::gil::point_t(dst.width() / 2, dst.height() / 2);
-    for (boost::gil::gray32f_view_t::coord_t y = 0; y < dst.height(); ++y)
+    auto middle = side_length / 2;
+    kernel_2d<T, Allocator> result(side_length, middle, middle);
+    for (std::size_t y = 0; y < side_length; ++y)
     {
-        for (boost::gil::gray32f_view_t::coord_t x = 0; x < dst.width(); ++x)
+        for (std::size_t x = 0; x < side_length; ++x)
         {
-            const auto delta_x = std::abs(middle.x - x);
-            const auto delta_y = std::abs(middle.y - y);
+            const auto delta_x = middle > x ? middle - x : x - middle;
+            const auto delta_y = middle > y ? middle - y : y - middle;
             const double power = (delta_x * delta_x +  delta_y * delta_y) / (2 * sigma * sigma);
             const double nominator = std::exp(-power);
-            const float value = nominator / denominator;
-            dst(x, y).at(std::integral_constant<int, 0>{}) = value;
+            const float value = static_cast<float>(nominator / denominator);
+            result(x, y) = value;
         }
     }
+
+    return result;
 }
 
 /// \brief Generates Sobel operator in horizontal direction
