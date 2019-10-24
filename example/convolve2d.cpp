@@ -18,7 +18,7 @@ int main()
     gray8_image_t img_out(img.dimensions()), img_out1(img.dimensions());
 
     std::vector<float> v(9, 1.0f / 9.0f);
-    kernel_2d<float> kernel(v.begin(), v.size(), 1, 1);
+    detail::kernel_2d<float> kernel(v.begin(), v.size(), 1, 1);
     detail::convolve_2d(view(img), kernel, view(img_out1));
 
     //write_view("out-convolve2d.png", view(img_out), png_tag{});

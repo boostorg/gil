@@ -424,14 +424,12 @@ void threshold_adaptive
         generate_gaussian_kernel(view(gaussian_kernel_values), 1.0);
 
         gray32f_view_t gaussian_kernel_view = view(gaussian_kernel_values);
-        kernel_2d<float> kernel(
-            kernel_size,
-            kernel_size / 2,
-            kernel_size / 2
-        );
+        detail::kernel_2d<float> kernel(kernel_size, kernel_size / 2, kernel_size / 2);
 
         std::transform(gaussian_kernel_view.begin(), gaussian_kernel_view.end(), kernel.begin(),
-            [](gray32f_pixel_t pixel) -> float {return pixel.at(std::integral_constant<int, 0>{}); }
+            [](gray32f_pixel_t pixel) -> float {
+                return pixel.at(std::integral_constant<int, 0>{});
+            }
         );
 
         detail::convolve_2d(src_view, kernel, temp_view);

@@ -365,8 +365,8 @@ void convolve_2d_impl(SrcView const& src_view, DstView const& dst_view, Kernel c
                     flip_ker_col = kernel.size() - 1 - kernel_col; // column index of flipped kernel
 
                     // index of input signal, used for checking boundary
-                    row_boundary = view_row + (kernel.center_vertical() - flip_ker_row);
-                    col_boundary = view_col + (kernel.center_horizontal() - flip_ker_col);
+                    row_boundary = view_row + (kernel.center_y() - flip_ker_row);
+                    col_boundary = view_col + (kernel.center_x() - flip_ker_col);
 
                     // ignore input samples which are out of bound
                     if (row_boundary >= 0 && row_boundary < src_view.height() &&

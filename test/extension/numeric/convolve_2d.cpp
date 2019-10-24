@@ -54,7 +54,7 @@ BOOST_AUTO_TEST_CASE(convolve_2d_with_normalized_mean_filter)
     gil::gray8_view_t dst_view(temp_view);
 
     std::vector<float> v(9, 1.0f / 9.0f);
-    gil::kernel_2d<float> kernel(v.begin(), v.size(), 1, 1);
+    gil::detail::kernel_2d<float> kernel(v.begin(), v.size(), 1, 1);
 
     gil::detail::convolve_2d(src_view, kernel, dst_view);
 
