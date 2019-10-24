@@ -44,8 +44,7 @@ public:
     }
 
     kernel_1d_adaptor(std::size_t size, std::size_t center)
-        : Core(size)
-        , center_(center)
+        : Core(size) , center_(center)
     {
         BOOST_ASSERT(this->size() > 0);
         BOOST_ASSERT(center_ < this->size()); // also implies `size() > 0`
@@ -164,28 +163,24 @@ class kernel_2d_adaptor : public Core
 public:
     kernel_2d_adaptor() = default;
 
-    explicit kernel_2d_adaptor(std::size_t center_vertical, std::size_t center_horizontal)
-        : center_(center_horizontal, center_vertical)
+    explicit kernel_2d_adaptor(std::size_t center_y, std::size_t center_x)
+        : center_(center_x, center_y)
     {
         BOOST_ASSERT(center_.y < this->size() && center_.x < this->size());
     }
 
-    kernel_2d_adaptor(std::size_t size, std::size_t center_vertical, std::size_t center_horizontal)
-        : Core(size * size),
-        square_size(size),
-        center_(center_horizontal, center_vertical)
+    kernel_2d_adaptor(std::size_t size, std::size_t center_y, std::size_t center_x)
+        : Core(size * size), square_size(size), center_(center_x, center_y)
     {
         BOOST_ASSERT(this->size() > 0);
-        BOOST_ASSERT(center_.y < this->size() && center_.x < this->size()); // also implies `size() > 0`
+        BOOST_ASSERT(center_.y < this->size() && center_.x < this->size()); // implies `size() > 0`
     }
 
     kernel_2d_adaptor(kernel_2d_adaptor const& other)
-        : Core(other),
-        square_size(other.square_size),
-        center_(other.center_.x, other.center_.y)
+        : Core(other), square_size(other.square_size), center_(other.center_.x, other.center_.y)
     {
         BOOST_ASSERT(this->size() > 0);
-        BOOST_ASSERT(center_.y < this->size() && center_.x < this->size()); // also implies `size() > 0`
+        BOOST_ASSERT(center_.y < this->size() && center_.x < this->size()); // implies `size() > 0`
     }
 
     kernel_2d_adaptor& operator=(kernel_2d_adaptor const& other)
@@ -221,25 +216,25 @@ public:
         return this->size() - center_.x - 1;
     }
 
-    auto center_vertical() -> std::size_t&
+    auto center_y() -> std::size_t&
     {
         BOOST_ASSERT(center_.y < this->size());
         return center_.y;
     }
 
-    auto center_vertical() const -> std::size_t const&
+    auto center_y() const -> std::size_t const&
     {
         BOOST_ASSERT(center_.y < this->size());
         return center_.y;
     }
 
-    auto center_horizontal() -> std::size_t&
+    auto center_x() -> std::size_t&
     {
         BOOST_ASSERT(center_.x < this->size());
         return center_.x;
     }
 
-    auto center_horizontal() const -> std::size_t const&
+    auto center_x() const -> std::size_t const&
     {
         BOOST_ASSERT(center_.x < this->size());
         return center_.x;
@@ -256,18 +251,15 @@ public:
         {
             throw std::out_of_range("Index out of range");
         }
-        
         return this->begin()[y * this->size() + x];
     }
 
-private:
-    using center_t = point<std::size_t>;
-    center_t center_{ 0, 0 };
-
 protected:
-    std::size_t square_size{ 0 };
+    std::size_t square_size{0};
+
+private:
+    point<std::size_t> center_{0, 0};
 };
-} //namespace detail
 
 /// \brief variable-size kernel
 template
@@ -282,19 +274,13 @@ class kernel_2d : public detail::kernel_2d_adaptor<std::vector<T, Allocator>>
 public:
 
     kernel_2d() = default;
-    kernel_2d(
-        std::size_t size,
-        std::size_t vertical_center,
-        std::size_t center_horizontal
-    ) : parent_t(size, vertical_center, center_horizontal){}
+    kernel_2d(std::size_t size,std::size_t center_y, std::size_t center_x)
+        : parent_t(size, center_y, center_x)
+    {}
 
     template <typename FwdIterator>
-    kernel_2d(
-        FwdIterator elements,
-        std::size_t size,
-        std::size_t vertical_center,
-        std::size_t center_horizontal
-    ) : parent_t(static_cast<int>(std::sqrt(size)), vertical_center, center_horizontal)
+    kernel_2d(FwdIterator elements, std::size_t size, std::size_t center_y, std::size_t center_x)
+        : parent_t(static_cast<int>(std::sqrt(size)), center_y, center_x)
     {
         detail::copy_n(elements, size, this->begin());
     }
@@ -319,18 +305,15 @@ public:
         this->square_size = Size;
     }
 
-    explicit kernel_2d_fixed(std::size_t center_vertical, std::size_t center_horizontal) :
-        parent_t(center_vertical, center_horizontal)
+    explicit kernel_2d_fixed(std::size_t center_y, std::size_t center_x) :
+        parent_t(center_y, center_x)
     {
         this->square_size = Size;
     }
 
     template <typename FwdIterator>
-    explicit kernel_2d_fixed(
-        FwdIterator elements,
-        std::size_t center_vertical,
-        std::size_t center_horizontal
-    ) : parent_t(center_vertical, center_horizontal)
+    explicit kernel_2d_fixed(FwdIterator elements, std::size_t center_y, std::size_t center_x)
+        : parent_t(center_y, center_x)
     {
         this->square_size = Size;
         detail::copy_n(elements, Size * Size, this->begin());
@@ -344,6 +327,8 @@ public:
 // is required by C++11. Redundant and deprecated in C++17.
 template <typename T, std::size_t Size>
 constexpr std::size_t kernel_2d_fixed<T, Size>::static_size;
+
+} //namespace detail
 
 /// \brief reverse a kernel
 //template <typename Kernel>

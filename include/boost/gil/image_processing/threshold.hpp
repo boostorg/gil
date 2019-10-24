@@ -413,9 +413,10 @@ void threshold_adaptive
         std::vector<float> mean_kernel_values(kernel_size, 1.0f/kernel_size);
         kernel_1d<float> kernel(mean_kernel_values.begin(), kernel_size, kernel_size/2);
 
-        convolve_1d<pixel<float, typename SrcView::value_type::layout_t>>(
-            src_view, kernel, temp_view
-        );
+        detail::convolve_1d
+        <
+            pixel<float, typename SrcView::value_type::layout_t>
+        >(src_view, kernel, temp_view);
     }
     else if (method == threshold_adaptive_method::gaussian)
     {
@@ -423,17 +424,15 @@ void threshold_adaptive
         generate_gaussian_kernel(view(gaussian_kernel_values), 1.0);
 
         gray32f_view_t gaussian_kernel_view = view(gaussian_kernel_values);
-        kernel_2d<float> kernel(
-            kernel_size,
-            kernel_size / 2,
-            kernel_size / 2
-        );
+        detail::kernel_2d<float> kernel(kernel_size, kernel_size / 2, kernel_size / 2);
 
         std::transform(gaussian_kernel_view.begin(), gaussian_kernel_view.end(), kernel.begin(),
-            [](gray32f_pixel_t pixel) -> float {return pixel.at(std::integral_constant<int, 0>{}); }
+            [](gray32f_pixel_t pixel) -> float {
+                return pixel.at(std::integral_constant<int, 0>{});
+            }
         );
 
-        convolve_2d(src_view, kernel, temp_view);
+        detail::convolve_2d(src_view, kernel, temp_view);
     }
 
     if (direction == threshold_direction::regular)
