@@ -153,6 +153,18 @@ BOOST_AUTO_TEST_CASE(extend_row_with_zero)
     BOOST_TEST(gil::equal_pixels(out_view, gil::view(output)));
 }
 
+BOOST_AUTO_TEST_CASE(extend_row_with_padded)
+{
+    gil::gray8c_view_t src_view =
+        gil::interleaved_view(9, 9, reinterpret_cast<const gil::gray8_pixel_t *>(img), 9);
+
+    auto src_sub_view = gil::subimage_view(src_view, 0, 1, 9, 7);
+
+    auto output = gil::extend_row(src_sub_view, 1, gil::boundary_option::extend_padded);
+
+    BOOST_TEST(gil::equal_pixels(src_view, gil::view(output)));
+}
+
 BOOST_AUTO_TEST_CASE(extend_col_with_constant)
 {
     gil::gray8c_view_t src_view =
@@ -179,6 +191,18 @@ BOOST_AUTO_TEST_CASE(extend_col_with_zero)
     BOOST_TEST(gil::equal_pixels(out_view, gil::view(output)));
 }
 
+BOOST_AUTO_TEST_CASE(extend_col_with_padded)
+{
+    gil::gray8c_view_t src_view =
+        gil::interleaved_view(9, 9, reinterpret_cast<const gil::gray8_pixel_t *>(img), 9);
+
+    auto src_sub_view = gil::subimage_view(src_view, 1, 0, 7, 9);
+
+    auto output = gil::extend_col(src_sub_view, 1, gil::boundary_option::extend_padded);
+
+    BOOST_TEST(gil::equal_pixels(src_view, gil::view(output)));
+}
+
 BOOST_AUTO_TEST_CASE(extend_img_with_constant)
 {
     gil::gray8c_view_t src_view =
@@ -203,6 +227,18 @@ BOOST_AUTO_TEST_CASE(extend_img_with_zero)
     auto output = gil::extend_boundary(src_view, 2, gil::boundary_option::extend_zero);
 
     BOOST_TEST(gil::equal_pixels(out_view, gil::view(output)));
+}
+
+BOOST_AUTO_TEST_CASE(extend_img_with_padded)
+{
+    gil::gray8c_view_t src_view =
+        gil::interleaved_view(9, 9, reinterpret_cast<const gil::gray8_pixel_t *>(img), 9);
+
+    auto src_sub_view = gil::subimage_view(src_view, 1, 1, 7, 7);
+
+    auto output = gil::extend_boundary(src_sub_view, 1, gil::boundary_option::extend_padded);
+
+    BOOST_TEST(gil::equal_pixels(src_view, gil::view(output)));
 }
 
 BOOST_AUTO_TEST_SUITE_END()
