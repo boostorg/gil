@@ -378,7 +378,7 @@ public:
             >
     void read( T (&buf)[N] )
     {
-        return read( buf, N );
+        read( buf, N );
     }
 
     /// Reads byte
