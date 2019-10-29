@@ -373,12 +373,10 @@ public:
     }
 
     /// Reads array
-    template< typename T
-            , int      N
-            >
-    void read( T (&buf)[N] )
+    template<typename T, int N>
+    void read(T (&buf)[N])
     {
-        return read( buf, N );
+        read(buf, N);
     }
 
     /// Reads byte
