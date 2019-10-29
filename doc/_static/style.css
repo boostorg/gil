@@ -4,11 +4,11 @@
 {
   color: #00507f;
   font-size: 200%;
-  font-style: italic; 
+  font-style: italic;
 }
 .header h3 { margin: 1px;}
-#contents 
-{ 
+#contents
+{
 /*    border-bottom: solid thin black;*/
 }
 
@@ -27,8 +27,7 @@
 }
 
 .admonition-title { font-weight: bold;}
-.toctree-wrapper,
-.contents
+.toctree-wrapper
 {
   display: inline-block;
   border: 1px solid #dcdcdc;
@@ -38,3 +37,8 @@
 .toctree-wrapper .caption,
 .toctree-wrapper .topic-title { font-weight: bold;}
 
+.footer
+{
+    text-align: left;
+    font-size: 80%;
+}

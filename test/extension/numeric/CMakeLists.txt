@@ -9,9 +9,19 @@
 message(STATUS "Boost.GIL: Configuring tests in test/extension/numeric")
 
 foreach(_name
-  numeric)
+  channel_numeric_operations
+  convolve_cols
+  convolve_rows
+  convolve
+  kernel
+  matrix3x2
+  numeric
+  pixel_numeric_operations
+  convolve_2d
+  extend_boundary)
+  set(_test t_ext_numeric_${_name})
+  set(_target test_ext_numeric_${_name})
 
-  set(_target test_ext_${_name})
   add_executable(${_target} "")
   target_sources(${_target} PRIVATE ${_name}.cpp)
   target_link_libraries(${_target}
@@ -19,5 +29,9 @@ foreach(_name
       gil_compile_options
       gil_include_directories
       gil_dependencies)
-  add_test(test.ext.${_name} ${_target})
+  add_test(NAME ${_test} COMMAND ${_target})
+
+  unset(_name)
+  unset(_target)
+  unset(_test)
 endforeach()

@@ -41,6 +41,20 @@ using channel_integer_types = std::tuple
         std::int32_t
     >;
 
+using channel_integer_signed_types = std::tuple
+    <
+        std::int8_t,
+        std::int16_t,
+        std::int32_t
+    >;
+
+using channel_integer_unsigned_types = std::tuple
+    <
+        std::uint8_t,
+        std::uint16_t,
+        std::uint32_t
+    >;
+
 // FIXME: If float types are convertible between each other,
 // currently they are not, then move to channel_byte_types and
 // remove channel_integer_types as redundant.

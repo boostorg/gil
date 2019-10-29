@@ -22,6 +22,8 @@ local sources =
     affine.cpp
     dynamic_image.cpp
     histogram.cpp
+    harris.cpp
+    sobel_scharr.cpp
     ;
 
 local targets ;

@@ -22,6 +22,7 @@ if(GIL_ENABLE_EXT_IO_RAW)
 endif()
 
 foreach(_name ${_formats})
+  set(_test t_ext_io_${_name})
   set(_target test_ext_io_${_name})
 
   add_executable(${_target} "")
@@ -34,10 +35,11 @@ foreach(_name ${_formats})
     PRIVATE
       BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES
       BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES)
-  add_test(test.ext.io.${_name} ${_target})
+  add_test(NAME ${_test} COMMAND ${_target})
 
   unset(_name)
   unset(_target)
+  unset(_test)
 endforeach()
 
 unset(_formats)

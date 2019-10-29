@@ -18,6 +18,7 @@ please follow the workflow explained in this document.
   * [4. Submit a pull request](#4-submit-a-pull-request)
   * [5. Update your pull request](#5-update-your-pull-request)
 * [Development](#development)
+  * [Install dependencies](#install-dependencies)
   * [Using Boost.Build](#using-boostbuild)
   * [Using CMake](#using-cmake)
   * [Using Faber](#using-faber)
@@ -27,6 +28,10 @@ please follow the workflow explained in this document.
 ## Prerequisites
 
 * C++11 compiler
+* Build and run-time dependencies for tests and examples:
+  - Boost.Filesystem
+  - Boost.Test
+  - Headers and libraries of libjpeg, libpng, libtiff, libraw for the I/O extension.
 * Experience with `git` command line basics.
 * Familiarity with build toolset and development environment of your choice.
 * Although this document tries to present all commands with necessary options,
@@ -184,7 +189,16 @@ Add your fork as git remote to the Boost.GIL submodule:
 
 ```shell
 cd libs/gil
-git remote add username https://github.com/username/gil.git
+git remote add <username> https://github.com/<username>/gil.git
+```
+
+or, if you cloned from your fork already, add the upstream as `origin` remote:
+
+```shell
+git remote add upstream https://github.com/boostorg/gil.git
+# or
+git remote rename origin <username>
+git remote add origin https://github.com/boostorg/gil.git
 ```
 
 ### 4. Submit a pull request
@@ -192,7 +206,8 @@ git remote add username https://github.com/username/gil.git
 All Boost.GIL contributions should be developed inside a topic branch created by
 branching off the `develop` branch of [boostorg/gil](https://github.com/boostorg/gil).
 
-**IMPORTANT:** Pull Requests *must* come from a branch based on `develop`, and *never* on `master`.
+**IMPORTANT:** Pull Requests *must* come from a branch based on `develop`,
+and *never* on `master`.
 
 **NOTE:** The branching workflow model
 [Boost recommends](https://svn.boost.org/trac10/wiki/StartModWorkflow)
@@ -215,7 +230,7 @@ Once it's finished, you can submit it as pull request for review:
 ```shell
 cd libs/gil
 git checkout feature/foo
-git push username feature/foo
+git push <username> feature/foo
 ```
 
 Finally, sign in to your GitHub account and
@@ -228,43 +243,68 @@ by updating your pull request.
 
 ### 5. Update your pull request
 
-In simplest (and recommended) case , your the pull request you submitted earlier
-has *a single commit*, so you can simply update the existing commit with any
-modifications required to fix failing CI builds or requested by reviewers.
+Depending on actual purpose of the update, you can follow a different
+strategy to update your pull request:
 
-First, it is a good idea to synchronize your topic branch with the latest
-changes in the upstream `develop` branch:
+- Use `git commit --amend`, `git rebase` and `git push --force` when your
+   pull request is still *work-in-progress* and not ready for review yet.
+- Use `git commit`, `git merge` and `git push` to update your pull request
+   during review, in response to requests from reviewers.
+
+**NOTE:** Once review of your work has started, you should not rebase your work.
+You should create new commits and update your topic branch. This helps with
+traceability in the pull request and prevents the accidental history breakage.
+Those who review your work may be fetching it into their fork for local review.
+
+#### Synchronise pull request branch
+
+Keep your topic branch up to date and synchronized with the upstream `develop` branch:
 
 ```shell
 cd libs/gil
 git checkout develop
 git pull origin develop
 git checkout feature/foo
-git rebase develop
 ```
 
-Next, make your edits.
+If review of your work has not started, *prefer* to merge:
 
-Finally, `git commit --amend` the *single-commit* in your topic branch and
-update the pull request:
+```shell
+git merge develop
+git push <username> feature/foo
+```
+
+If your PR is still *work-in-progress*, you may rebase if you like:
+
+```shell
+git rebase develop
+git push --force <username> feature/foo
+```
+
+#### Amend last commit of pull request
+
+If your pull request is a *work-in-progress* and has not been reviewed yet,
+you may amend your commit or rebase onto the `develop` branch:
 
 ```shell
 cd libs/gil
 git checkout feature/foo
 git add -A
 git commit --amend
-git push --force username feature/foo
+git push --force <username> feature/foo
 ```
 
-**WARNING:** Ensure your pull request has a single commit, otherwise the
-force push can corrupt your pull request.
+#### Add new commits to pull request
 
-If you wish to update pull request adding a new commit, then create new
-commit and issue regular push:
+In order to update your pull request, for example in response to a change
+request from reviewer, just add new commits:
 
 ```shell
-git commit -m "Fix variable name"
-git push username feature/foo
+cd libs/gil
+git checkout feature/foo
+git add -A
+git commit -m "Fix build Travis CI failures"
+git push <username> feature/foo
 ```
 
 ## Development
@@ -283,6 +323,15 @@ We also provide configuration for two alternative build systems:
 **NOTE:** The CMake and Faber are optional and the corresponding build
 configurations for Boost.GIL do not offer equivalents for all Boost.Build features. Most important difference to recognise is that Boost.Build will
 automatically build any other Boost libraries required by Boost.GIL as dependencies.
+
+### Install dependencies
+
+Boost.GIL tests and examples use the GIL I/O extension which depends on
+third-party libraries for read and write support of specific image formats:
+
+```shell
+sudo apt-get install libjpeg-dev libpng-dev libtiff5-dev libraw-dev
+```
 
 ### Using Boost.Build
 
@@ -325,8 +374,6 @@ Run I/O extension tests bundled in target called `simple`:
 ./b2 libs/gil/test/io//simple
 ```
 
-*TODO:* _Explain I/O dependencies (libjpeg, etc.)_
-
 ### Using CMake
 
 Maintainer: [@mloskot](https://github.com/mloskot)
@@ -363,6 +410,8 @@ Using the installed Boost enables a lightweight mode for the library development
 inside a stand-alone clone Boost.GIL repository and without any need to clone the
 whole Boost super-project.
 
+**TIP:** For the lightweight setup, prefer latest release of Boost.
+
 For available custom CMake options, open the top-level `CMakeLists.txt`
 and search for `option`.
 
@@ -373,13 +422,6 @@ Here is an example of such lightweight workflow in Linux environment (Debian-bas
     ```shell
     sudo apt-get update
     sudo apt-get install libboost-dev libboost-test-dev libboost-filesystem-dev
-    ```
-
-* Optionally, install libraries required by the I/O extension
-
-    ```shell
-    sudo apt-get update
-    sudo apt install libtiff-dev libpng-dev libjpeg-dev
     ```
 
 * Clone Boost.GIL repository
@@ -405,9 +447,6 @@ Here is an example of such lightweight workflow in Linux environment (Debian-bas
 
     **TIP:** If CMake is failing to find Boost libraries, especially built with
         `--layout=versioned`, you can try a few hacks:
-
-     - `-DGIL_DOWNLOAD_FINDBOOST=ON` to use very latest version of
-       `FindBoost.cmake` without upgrading your CMake installation.
 
      - `-DBoost_ARCHITECTURE=-x64` to help CMake find Boost 1.66 and above
         add an architecture tag to the library file names in versioned build
@@ -443,6 +482,18 @@ Here is an example of such lightweight workflow in Linux environment (Debian-bas
     ```shell
     ctest -R gil.tests.core.pixel
     ```
+
+#### CMake configuration for Visual Studio
+
+We provide [example/cmake/CMakeSettings.json](https://github.com/boostorg/gil/blob/develop/example/cmake/CMakeSettings.json)
+with reasonable default settings for the [CMake support in Visual Studio](https://go.microsoft.com//fwlink//?linkid=834763).
+See [example/cmake/README.md](example/cmake/README.md) for more details.
+
+#### CMake configuration for Visual Studio Code
+
+We provide [example/cmake/cmake-variants.yaml](https://github.com/boostorg/gil/blob/develop/example/cmake/cmake-variants.yaml)
+with reasonable default settings for the [CMake Tools](https://github.com/vector-of-bool/vscode-cmake-tools) extension.
+See [example/cmake/README.md](example/cmake/README.md) for more details.
 
 ### Using Faber
 
@@ -536,7 +587,7 @@ Maintain structure your source code files according to the following guidelines:
 * All non-public headers should be placed `boost/gil/detail` or `boost/gil/<component>/detail`.
 * All public definitions should reside in scope of `namespace boost { namespace gil {...}}`.
 * All non-public definitions should reside in scope of `namespace boost { namespace gil { namespace detail {...}}}`.
-* Write your code to fit within **90** columns of text (see discussion on [preferred line length](https://lists.boost.org/boost-gil/2018/04/0028.php) in GIL).
+* Write your code to fit within **100** columns of text.
 * Use [EditorConfig](https://editorconfig.org) for your editor and enable [.editorconfig](https://github.com/boostorg/gil/blob/develop/.editorconfig) to:
     * Indent with **4 spaces** and no tabs.
     * Trim any trailing whitespaces.

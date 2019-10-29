@@ -19,6 +19,7 @@
 
 #include "paths.hpp"
 #include "scanline_read_test.hpp"
+#include "unit_test_utility.hpp"
 
 using namespace std;
 using namespace boost;
@@ -123,6 +124,231 @@ BOOST_AUTO_TEST_CASE( read_pixel_per_meter )
                                       );
 
     BOOST_CHECK_EQUAL( backend._info._pixels_per_meter, png_uint_32( 1417 ));
+}
+
+BOOST_AUTO_TEST_CASE(read_with_trns_chunk_color_type_0)
+{
+    // PNG 1.2: For color type 0 (grayscale), the tRNS chunk contains a single gray level value,
+    // stored in the format:
+    //
+    // Gray:  2 bytes, range 0 .. (2^bitdepth)-1
+    {
+        auto const png_path = png_in + "tbbn0g04.png";
+        image_read_settings<png_tag> settings;
+        settings.set_read_members_true();
+        auto backend = read_image_info(png_path, settings);
+        BOOST_CHECK_EQUAL(backend._info._width, 32u);
+        BOOST_CHECK_EQUAL(backend._info._height, 32u);
+        BOOST_CHECK_EQUAL(backend._info._bit_depth, 4);
+        BOOST_CHECK_EQUAL(backend._info._num_channels, 1u);
+        BOOST_CHECK_EQUAL(backend._info._color_type, PNG_COLOR_TYPE_GRAY);
+
+        gray_alpha8_image_t img;
+        read_image(png_path, img, settings);
+        BOOST_CHECK_EQUAL(backend._info._width, 32u);
+        BOOST_CHECK_EQUAL(backend._info._height, 32u);
+        BOOST_TEST(const_view(img).front() == gray_alpha8c_pixel_t(255, 0));
+        BOOST_TEST(const_view(img)[78] == gray_alpha8c_pixel_t(221, 255));
+        BOOST_TEST(const_view(img)[79] == gray_alpha8c_pixel_t(204, 255));
+        BOOST_TEST(const_view(img)[975] == gray_alpha8c_pixel_t(238, 255));
+        BOOST_TEST(const_view(img)[976] == gray_alpha8c_pixel_t(221, 255));
+        BOOST_TEST(const_view(img).back() == gray_alpha8c_pixel_t(255, 0));
+    }
+    {
+        auto const png_path = png_in + "tbwn0g16.png";
+        image_read_settings<png_tag> settings;
+        settings.set_read_members_true();
+        auto backend = read_image_info(png_path, settings);
+        BOOST_CHECK_EQUAL(backend._info._width, 32u);
+        BOOST_CHECK_EQUAL(backend._info._height, 32u);
+        BOOST_CHECK_EQUAL(backend._info._bit_depth, 16);
+        BOOST_CHECK_EQUAL(backend._info._num_channels, 1u);
+        BOOST_CHECK_EQUAL(backend._info._color_type, PNG_COLOR_TYPE_GRAY);
+
+        gray_alpha16_image_t img;
+        read_image(png_path, img, settings);
+        BOOST_CHECK_EQUAL(backend._info._width, 32u);
+        BOOST_CHECK_EQUAL(backend._info._height, 32u);
+        BOOST_TEST(const_view(img).front() == gray_alpha16c_pixel_t(65535, 0));
+        BOOST_TEST(const_view(img)[78] == gray_alpha16c_pixel_t(58339, 65535));
+        BOOST_TEST(const_view(img)[79] == gray_alpha16c_pixel_t(51657, 65535));
+        BOOST_TEST(const_view(img)[975] == gray_alpha16c_pixel_t(62965, 65535));
+        BOOST_TEST(const_view(img)[976] == gray_alpha16c_pixel_t(58339, 65535));
+        BOOST_TEST(const_view(img).back() == gray_alpha16c_pixel_t(65535, 0));
+    }
+}
+
+BOOST_AUTO_TEST_CASE(read_with_trns_chunk_color_type_2)
+{
+    // PNG 1.2: For color type 2 (truecolor), the tRNS chunk contains a single RGB color value,
+    // stored in the format:
+    // 
+    // Red:   2 bytes, range 0 .. (2^bitdepth)-1
+    // Green: 2 bytes, range 0 .. (2^bitdepth)-1
+    // Blue:  2 bytes, range 0 .. (2^bitdepth)-1
+    {
+        auto const png_path = png_in + "tbbn2c16.png";
+        image_read_settings<png_tag> settings;
+        settings.set_read_members_true();
+        auto backend = read_image_info(png_path, settings);
+        BOOST_CHECK_EQUAL(backend._info._width, 32u);
+        BOOST_CHECK_EQUAL(backend._info._height, 32u);
+        BOOST_CHECK_EQUAL(backend._info._bit_depth, 16);
+        BOOST_CHECK_EQUAL(backend._info._num_channels, 3u);
+        BOOST_CHECK_EQUAL(backend._info._color_type, PNG_COLOR_TYPE_RGB);
+
+        rgba16_image_t img;
+        read_image(png_path, img, settings);
+        BOOST_CHECK_EQUAL(backend._info._width, 32u);
+        BOOST_CHECK_EQUAL(backend._info._height, 32u);
+        BOOST_TEST(const_view(img).front() == rgba16c_pixel_t(65535, 65535, 65535, 0));
+        BOOST_TEST(const_view(img)[78] == rgba16c_pixel_t(58339, 58339, 58339, 65535));
+        BOOST_TEST(const_view(img)[79] == rgba16c_pixel_t(51657, 51657, 51657, 65535));
+        BOOST_TEST(const_view(img)[975] == rgba16c_pixel_t(62965, 62965, 62965, 65535));
+        BOOST_TEST(const_view(img)[976] == rgba16c_pixel_t(58339, 58339, 58339, 65535));
+        BOOST_TEST(const_view(img).back() == rgba16c_pixel_t(65535, 65535, 65535, 0));
+    }
+    {
+        auto const png_path = png_in + "tbgn2c16.png";
+        image_read_settings<png_tag> settings;
+        settings.set_read_members_true();
+        auto backend = read_image_info(png_path, settings);
+        BOOST_CHECK_EQUAL(backend._info._width, 32u);
+        BOOST_CHECK_EQUAL(backend._info._height, 32u);
+        BOOST_CHECK_EQUAL(backend._info._bit_depth, 16);
+        BOOST_CHECK_EQUAL(backend._info._num_channels, 3u);
+        BOOST_CHECK_EQUAL(backend._info._color_type, PNG_COLOR_TYPE_RGB);
+
+        rgba16_image_t img;
+        read_image(png_path, img, settings);
+        BOOST_CHECK_EQUAL(backend._info._width, 32u);
+        BOOST_CHECK_EQUAL(backend._info._height, 32u);
+        BOOST_TEST(const_view(img).front() == rgba16c_pixel_t(65535, 65535, 65535, 0));
+        BOOST_TEST(const_view(img)[78] == rgba16c_pixel_t(58339, 58339, 58339, 65535));
+        BOOST_TEST(const_view(img)[79] == rgba16c_pixel_t(51657, 51657, 51657, 65535));
+        BOOST_TEST(const_view(img)[975] == rgba16c_pixel_t(62965, 62965, 62965, 65535));
+        BOOST_TEST(const_view(img)[976] == rgba16c_pixel_t(58339, 58339, 58339, 65535));
+        BOOST_TEST(const_view(img).back() == rgba16c_pixel_t(65535, 65535, 65535, 0));
+    }
+    {
+        auto const png_path = png_in + "tbrn2c08.png";
+        image_read_settings<png_tag> settings;
+        settings.set_read_members_true();
+        auto backend = read_image_info(png_path, settings);
+        BOOST_CHECK_EQUAL(backend._info._width, 32u);
+        BOOST_CHECK_EQUAL(backend._info._height, 32u);
+        BOOST_CHECK_EQUAL(backend._info._bit_depth, 8);
+        BOOST_CHECK_EQUAL(backend._info._num_channels, 3u);
+        BOOST_CHECK_EQUAL(backend._info._color_type, PNG_COLOR_TYPE_RGB);
+
+        rgba8_image_t img;
+        read_image(png_path, img, settings);
+        BOOST_CHECK_EQUAL(backend._info._width, 32u);
+        BOOST_CHECK_EQUAL(backend._info._height, 32u);
+        BOOST_TEST(const_view(img).front() == rgba8c_pixel_t(255, 255, 255, 0));
+        BOOST_TEST(const_view(img)[78] == rgba8c_pixel_t(227, 227, 227, 255));
+        BOOST_TEST(const_view(img)[79] == rgba8c_pixel_t(201, 201, 201, 255));
+        BOOST_TEST(const_view(img)[975] == rgba8c_pixel_t(245, 245, 245, 255));
+        BOOST_TEST(const_view(img)[976] == rgba8c_pixel_t(227, 227, 227, 255));
+        BOOST_TEST(const_view(img).back() == rgba8c_pixel_t(255, 255, 255, 0));
+    }
+}
+
+BOOST_AUTO_TEST_CASE(read_with_trns_chunk_color_type_3)
+{
+    // PNG 1.2: For color type 3 (indexed color), the tRNS chunk contains a series of one-byte
+    // alpha values, corresponding to entries in the PLTE chunk:
+    // 
+    // Alpha for palette index 0:  1 byte
+    // Alpha for palette index 1:  1 byte
+    // ...etc...
+    {
+        auto const png_path = png_in + "tbbn3p08.png";
+        image_read_settings<png_tag> settings;
+        settings.set_read_members_true();
+        auto backend = read_image_info(png_path, settings);
+        BOOST_CHECK_EQUAL(backend._info._width, 32u);
+        BOOST_CHECK_EQUAL(backend._info._height, 32u);
+        BOOST_CHECK_EQUAL(backend._info._bit_depth, 8);
+        BOOST_CHECK_EQUAL(backend._info._num_channels, 1u);
+        BOOST_CHECK_EQUAL(backend._info._color_type, PNG_COLOR_TYPE_PALETTE);
+
+        rgba8_image_t img;
+        read_image(png_path, img, settings);
+        BOOST_CHECK_EQUAL(backend._info._width, 32u);
+        BOOST_CHECK_EQUAL(backend._info._height, 32u);
+        BOOST_TEST(const_view(img).front() == rgba8c_pixel_t(255, 255, 255, 0));
+        BOOST_TEST(const_view(img)[78] == rgba8c_pixel_t(227, 227, 227, 255));
+        BOOST_TEST(const_view(img)[79] == rgba8c_pixel_t(201, 201, 201, 255));
+        BOOST_TEST(const_view(img)[975] == rgba8c_pixel_t(246, 246, 246, 255));
+        BOOST_TEST(const_view(img)[976] == rgba8c_pixel_t(227, 227, 227, 255));
+        BOOST_TEST(const_view(img).back() == rgba8c_pixel_t(255, 255, 255, 0));
+    }
+    {
+        auto const png_path = png_in + "tbgn3p08.png";
+        image_read_settings<png_tag> settings;
+        settings.set_read_members_true();
+        auto backend = read_image_info(png_path, settings);
+        BOOST_CHECK_EQUAL(backend._info._width, 32u);
+        BOOST_CHECK_EQUAL(backend._info._height, 32u);
+        BOOST_CHECK_EQUAL(backend._info._bit_depth, 8);
+        BOOST_CHECK_EQUAL(backend._info._num_channels, 1u);
+        BOOST_CHECK_EQUAL(backend._info._color_type, PNG_COLOR_TYPE_PALETTE);
+
+        rgba8_image_t img;
+        read_image(png_path, img, settings);
+        BOOST_CHECK_EQUAL(backend._info._width, 32u);
+        BOOST_CHECK_EQUAL(backend._info._height, 32u);
+        BOOST_TEST(const_view(img).front() == rgba8c_pixel_t(255, 255, 255, 0));
+        BOOST_TEST(const_view(img)[78] == rgba8c_pixel_t(227, 227, 227, 255));
+        BOOST_TEST(const_view(img)[79] == rgba8c_pixel_t(201, 201, 201, 255));
+        BOOST_TEST(const_view(img)[975] == rgba8c_pixel_t(246, 246, 246, 255));
+        BOOST_TEST(const_view(img)[976] == rgba8c_pixel_t(227, 227, 227, 255));
+        BOOST_TEST(const_view(img).back() == rgba8c_pixel_t(255, 255, 255, 0));
+    }
+    {
+        auto const png_path = png_in + "tp1n3p08.png";
+        image_read_settings<png_tag> settings;
+        settings.set_read_members_true();
+        auto backend = read_image_info(png_path, settings);
+        BOOST_CHECK_EQUAL(backend._info._width, 32u);
+        BOOST_CHECK_EQUAL(backend._info._height, 32u);
+        BOOST_CHECK_EQUAL(backend._info._bit_depth, 8);
+        BOOST_CHECK_EQUAL(backend._info._num_channels, 1u);
+        BOOST_CHECK_EQUAL(backend._info._color_type, PNG_COLOR_TYPE_PALETTE);
+
+        rgba8_image_t img;
+        read_image(png_path, img, settings);
+        BOOST_CHECK_EQUAL(backend._info._width, 32u);
+        BOOST_CHECK_EQUAL(backend._info._height, 32u);
+        BOOST_TEST(const_view(img).front() == rgba8c_pixel_t(255, 255, 255, 0));
+        BOOST_TEST(const_view(img)[78] == rgba8c_pixel_t(227, 227, 227, 255));
+        BOOST_TEST(const_view(img)[79] == rgba8c_pixel_t(201, 201, 201, 255));
+        BOOST_TEST(const_view(img)[975] == rgba8c_pixel_t(246, 246, 246, 255));
+        BOOST_TEST(const_view(img)[976] == rgba8c_pixel_t(227, 227, 227, 255));
+        BOOST_TEST(const_view(img).back() == rgba8c_pixel_t(255, 255, 255, 0));
+    }
+    {
+        auto const png_path = png_in + "tm3n3p02.png";
+        image_read_settings<png_tag> settings;
+        settings.set_read_members_true();
+        auto backend = read_image_info(png_path, settings);
+        BOOST_CHECK_EQUAL(backend._info._width, 32u);
+        BOOST_CHECK_EQUAL(backend._info._height, 32u);
+        BOOST_CHECK_EQUAL(backend._info._bit_depth, 2);
+        BOOST_CHECK_EQUAL(backend._info._num_channels, 1u);
+        BOOST_CHECK_EQUAL(backend._info._color_type, PNG_COLOR_TYPE_PALETTE);
+
+        rgba8_image_t img;
+        read_image(png_path, img, settings);
+        BOOST_CHECK_EQUAL(backend._info._width, 32u);
+        BOOST_CHECK_EQUAL(backend._info._height, 32u);
+        BOOST_TEST(const_view(img).front() == rgba8c_pixel_t(0, 0, 255, 0));
+        BOOST_TEST(const_view(img)[16] == rgba8c_pixel_t(0, 0, 255, 85));
+        BOOST_TEST(const_view(img)[511] == rgba8c_pixel_t(0, 0, 255, 85));
+        BOOST_TEST(const_view(img)[1007] == rgba8c_pixel_t(0, 0, 255, 170));
+        BOOST_TEST(const_view(img).back() == rgba8c_pixel_t(0, 0, 255, 255));
+    }
 }
 
 #endif // BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES

@@ -11,7 +11,6 @@
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/tiff/read.hpp>
 
-#include <boost/mpl/vector.hpp>
 #include <boost/preprocessor/cat.hpp>
 #include <boost/preprocessor/stringize.hpp>
 #include <boost/preprocessor/tuple/elem.hpp>
@@ -21,6 +20,8 @@
 #include "paths.hpp"
 
 using tag_t = boost::gil::tiff_tag;
+
+// TODO: Rename the macros to BOOST_GIL_*
 
 #define GENERATE_TILE_STRIP_COMPARISON_BIT_ALIGNED_RGB(z, n, data)\
     BOOST_AUTO_TEST_CASE( BOOST_PP_CAT( \

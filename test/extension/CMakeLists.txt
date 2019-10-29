@@ -5,6 +5,10 @@
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 #
+if(GIL_ENABLE_EXT_DYNAMIC_IMAGE)
+  add_subdirectory(dynamic_image)
+endif()
+
 if(GIL_ENABLE_EXT_NUMERIC)
   add_subdirectory(numeric)
 endif()

@@ -434,18 +434,17 @@ Currently the code is able to read and write the following image types:
 :Read: gray1, gray2, gray4, gray8, gray16, gray_alpha_8, gray_alpha_16, rgb8, rgb16, rgba8, rgba16
 :Write: gray1, gray2, gray4, gray8, gray16, gray_alpha_8, gray_alpha_16, rgb8, rgb16, rgba8, rgba16
 
-For reading gray_alpha images the user has to enable the ``ENABLE_GRAY_ALPHA``
-compiler switch. This color space is defined in the toolbox by
-using ``gray_alpha.hpp``.
+For reading gray_alpha images the user has to compile application with ``BOOST_GIL_IO_ENABLE_GRAY_ALPHA``
+macro  defined. This color space is defined in the toolbox by using ``gray_alpha.hpp``.
 
 PNM
 +++
 
 For a general overview of the PNM image file format go to the
-following PNM_Wiki_.
+following PNM_Wiki_. No external library is needed for the pnm format.
 
-No external library is needed for the pnm format.
-Both ascii and binary formats are supported.
+The extension can read images in both flavours of the formats, ASCII and binary,
+that is types from P1 through P6; can write only binary formats.
 
 Currently the code is able to read and write the following image types:
 

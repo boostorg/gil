@@ -5,13 +5,14 @@
 # (See accompanying file LICENSE_1_0.txt or copy at http://boost.org/LICENSE_1_0.txt)
 #
 variables:
-  #system.debug: true
+  system.debug: true
   configuration: release
 
 trigger:
   - master
   - develop
   - azure-pipelines
+  - ml/*
 
 jobs:
   - job: 'ubuntu1604_gcc5_cxx11_cmake'
@@ -22,7 +23,8 @@ jobs:
         displayName: 'Check GCC'
       - template: .ci/azure-pipelines/steps-check-cmake.yml
       - script: |
-          sudo apt-get install libjpeg-dev libpng16-dev libtiff5-dev libraw-dev
+          sudo -E apt-get update
+          sudo -E apt-get -yq --no-install-suggests --no-install-recommends install libpng-dev libjpeg-dev libtiff5-dev libraw-dev
         displayName: 'Install dependencies'
       - template: .ci/azure-pipelines/steps-install-boost.yml
       - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
@@ -36,7 +38,8 @@ jobs:
         displayName: 'Check GCC'
       - template: .ci/azure-pipelines/steps-check-cmake.yml
       - script: |
-          sudo apt-get install libjpeg-dev libpng16-dev libtiff5-dev libraw-dev
+          sudo -E apt-get update
+          sudo -E apt-get -yq --no-install-suggests --no-install-recommends install libpng-dev libjpeg-dev libtiff5-dev libraw-dev
         displayName: 'Install dependencies'
       - template: .ci/azure-pipelines/steps-install-boost.yml
       - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
@@ -58,7 +61,7 @@ jobs:
       - template: .ci/azure-pipelines/steps-install-boost.yml
       - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
         parameters:
-          use_conan: 'yes'
+          use_conan: 'ON'
 
   - job: 'win2016_vs2017_cxx17_cmake'
     pool:
@@ -75,17 +78,17 @@ jobs:
       - template: .ci/azure-pipelines/steps-install-boost.yml
       - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
         parameters:
-          use_conan: 'yes'
           cxxver: '17'
+          use_conan: 'ON'
 
   - job: 'win2012_vs2015_cmake'
     pool:
       vmImage: 'vs2015-win2012r2'
     steps:
       - powershell: |
-          Invoke-WebRequest https://cmake.org/files/v3.14/cmake-3.14.0-win64-x64.zip -OutFile C:\cmake-3.14.0-win64-x64.zip
-          Expand-Archive C:\cmake-3.14.0-win64-x64.zip -DestinationPath C:\
-          Rename-Item -Path C:\cmake-3.14.0-win64-x64 -NewName C:\cmake
+          Invoke-WebRequest https://cmake.org/files/v3.14/cmake-3.14.4-win64-x64.zip -OutFile C:\cmake-3.14.4-win64-x64.zip
+          Expand-Archive C:\cmake-3.14.4-win64-x64.zip -DestinationPath C:\
+          Rename-Item -Path C:\cmake-3.14.4-win64-x64 -NewName C:\cmake
           Write-Host "##vso[task.prependpath]C:\cmake\bin"
         displayName: 'Install CMake 3.14'
       - template: .ci/azure-pipelines/steps-check-cmake.yml
@@ -101,7 +104,7 @@ jobs:
       - template: .ci/azure-pipelines/steps-install-boost.yml
       - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
         parameters:
-          use_conan: 'yes'
+          use_conan: 'ON'
 
   - job: 'macos1013_xcode91_cmake'
     pool:
@@ -118,4 +121,4 @@ jobs:
           toolset: darwin
       - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
         parameters:
-          use_conan: 'yes'
+          use_conan: 'ON'

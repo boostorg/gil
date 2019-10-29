@@ -1,23 +1,45 @@
 Boost Generic Image Library
 ===========================
 
-The Generic Image Library (GIL) is a C++ library that abstracts image
+The Generic Image Library (GIL) is a C++11 library that abstracts image
 representations from algorithms and allows writing code that can work on
 a variety of images with performance similar to hand-writing for a specific
 image type.
 
+Quickstart
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   installation
+   tutorial/video
+   tutorial/histogram
+   tutorial/gradient
+   naming
+
+Core Library Documentation
+--------------------------
+
 .. toctree::
    :maxdepth: 2
 
-   tutorial
+   design/index
+   image_processing/index
+   API Reference <./reference/index.html#://>
+
+Extensions Documentation
+------------------------
+
+.. toctree::
+   :maxdepth: 2
+
    io
    toolbox
    numeric
-   design_guide
-   API Reference <./reference/index.html#://>
 
-Sample files
-------------
+Examples
+--------
 
 * :download:`x_gradient.cpp <../example/x_gradient.cpp>`:
   Writing an algorithm that operates on generic images

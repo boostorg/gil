@@ -10,15 +10,22 @@
 [![Conan](https://img.shields.io/badge/on-conan-blue.svg)](https://bintray.com/bincrafters/public-conan/boost_gil%3Abincrafters)
 [![Vcpkg](https://img.shields.io/badge/on-vcpkg-blue.svg)](https://github.com/Microsoft/vcpkg/tree/master/ports/boost-gil)
 
-   <br />  | AppVeyor        | Azure Pipelines | Travis CI       | CircleCI        | Regression
------------|-----------------|-----------------|-----------------|-----------------|------------
-**develop**| [![AppVeyor](https://ci.appveyor.com/api/projects/status/w4k19d8io2af168h/branch/develop?svg=true)](https://ci.appveyor.com/project/stefanseefeld/gil/branch/develop) | [![Azure](https://dev.azure.com/boostorg/gil/_apis/build/status/boostorg.gil?branchName=develop)](https://dev.azure.com/boostorg/gil/_build/latest?definitionId=4?branchName=develop) | [![Travis](https://travis-ci.org/boostorg/gil.svg?branch=develop)](https://travis-ci.org/boostorg/gil) | [![CircleCI](https://circleci.com/gh/boostorg/gil/tree/develop.svg?style=shield)](https://circleci.com/gh/boostorg/workflows/gil/tree/develop) | [![gil](https://img.shields.io/badge/gil-develop-blue.svg)](http://www.boost.org/development/tests/develop/developer/gil.html)
-**master** | [![AppVeyor](https://ci.appveyor.com/api/projects/status/w4k19d8io2af168h?svg=true)](https://ci.appveyor.com/project/stefanseefeld/gil/branch/master) | [![Azure](https://dev.azure.com/boostorg/gil/_apis/build/status/boostorg.gil?branchName=master)](https://dev.azure.com/boostorg/gil/_build/latest?definitionId=4?branchName=master) | [![Travis](https://travis-ci.org/boostorg/gil.svg?branch=master)](https://travis-ci.org/boostorg/gil) | [![CircleCI](https://circleci.com/gh/boostorg/gil/tree/master.svg?style=shield)](https://circleci.com/gh/boostorg/workflows/gil/tree/master) | [![gil](https://img.shields.io/badge/gil-master-blue.svg)](http://www.boost.org/development/tests/master/developer/gil.html)
- msvc++    | VS2017 | VS2017, VS2015 |   |   |
- clang     |   | Xcode 9.4.1 | 3.9, 5.0, Xcode 9.4.1 | 3.9, 4.0, 5.0 |
- gcc       |   | 5.4, 8.1 | 5.5, 6.5, 7.4 | 4.8-9, 5.1-5, 6.1-4, 7.1-3, 8.2 |
- C++       | 14 | 11, 14, 17 | 11 | 11 |
- <br />    | Boost.Build, CMake | CMake, Boost 1.68 | Boost.Build, UBSan | Boost.Build |
+Documentation | AppVeyor        | Azure Pipelines | Travis CI       | CircleCI        | Regression
+--------------|-----------------|-----------------|-----------------|-----------------|------------
+[![develop](https://img.shields.io/badge/doc-develop-blue.svg)](https://boostorg.github.io/gil/develop/) | [![AppVeyor](https://ci.appveyor.com/api/projects/status/w4k19d8io2af168h/branch/develop?svg=true)](https://ci.appveyor.com/project/stefanseefeld/gil/branch/develop) | [![Azure](https://dev.azure.com/boostorg/gil/_apis/build/status/boostorg.gil?branchName=develop)](https://dev.azure.com/boostorg/gil/_build/latest?definitionId=4?branchName=develop) | [![Travis](https://travis-ci.org/boostorg/gil.svg?branch=develop)](https://travis-ci.org/boostorg/gil) | [![CircleCI](https://circleci.com/gh/boostorg/gil/tree/develop.svg?style=shield)](https://circleci.com/gh/boostorg/workflows/gil/tree/develop) | [![gil](https://img.shields.io/badge/gil-develop-blue.svg)](http://www.boost.org/development/tests/develop/developer/gil.html)
+[![master](https://img.shields.io/badge/doc-master-blue.svg)](https://boostorg.github.io/gil/) | [![AppVeyor](https://ci.appveyor.com/api/projects/status/w4k19d8io2af168h?svg=true)](https://ci.appveyor.com/project/stefanseefeld/gil/branch/master) | [![Azure](https://dev.azure.com/boostorg/gil/_apis/build/status/boostorg.gil?branchName=master)](https://dev.azure.com/boostorg/gil/_build/latest?definitionId=4?branchName=master) | [![Travis](https://travis-ci.org/boostorg/gil.svg?branch=master)](https://travis-ci.org/boostorg/gil) | [![CircleCI](https://circleci.com/gh/boostorg/gil/tree/master.svg?style=shield)](https://circleci.com/gh/boostorg/workflows/gil/tree/master) | [![gil](https://img.shields.io/badge/gil-master-blue.svg)](http://www.boost.org/development/tests/master/developer/gil.html)
+ **C++/compilers:** | 11, 14, 17 | 11, 14, 17 | 11 | 11 |
+ msvc++    | VS2015, VS2017 | VS2015, VS2017 |   |   |
+ clang++   |   | Xcode 9.4.1 | 3.9, 5.0, Xcode 9.4.1 | 3.9, 4.0, 5.0 |
+ g++       |   | 5.4, 8.1 | 5.5, 6.5, 7.4 | 4.9, 5.1-5, 6.1-4, 7.1-3, 8.2-3 |
+ **tests coverage:** |
+core + concepts | Y | Y | Y | Y |
+headers    | core + ext | core + ext | core + ext | core + ext |
+ext/dynamic_image |   |   |   |   |
+ext/io     | simple |  | simple | simple |
+ext/numeric| Y | Y | Y | Y |
+ext/toolbox| Y | Y | Y | Y |
+ **build config:** | Boost.Build, CMake | CMake | Boost.Build, UBSan | Boost.Build |
 
 # Boost.GIL
 
@@ -54,13 +61,14 @@ See [example/README.md](example/README.md) for available GIL examples.
 
 The Boost Generic Image Library (GIL) requires:
 
-- C++11 compiler
+- C++11 compiler (GCC 4.9, clang 3.3, MSVC++ 14.0 (1900) or any later version)
 - Boost header-only libraries
 
 Optionally, in order to build and run tests and examples:
 
 - Boost.Filesystem
 - Boost.Test
+- Headers and libraries of libjpeg, libpng, libtiff, libraw for the I/O extension
 
 ## Branches
 
@@ -79,7 +87,7 @@ There is number of communication channels to ask questions and discuss Boost.GIL
 - Mailing list [boost-gil](https://lists.boost.org/mailman/listinfo.cgi/boost-gil) ([archive](https://lists.boost.org/boost-gil/)) as well as official Boost lists, [boost-users](https://lists.boost.org/mailman/listinfo.cgi/boost-users) and
 [boost](https://lists.boost.org/mailman/listinfo.cgi/boost).
 - Gitter chat room [boostorg//gil](https://gitter.im/boostorg/gil).
-- [cpplang.slack.com](https://cpplang.slack.com) chat rooms [#boost_user](https://cpplang.slack.com/messages/CEWTCFDN0/) and [#boost](https://cpplang.slack.com/messages/C27KZLB0X/).
+- [cpplang.slack.com](https://cpplang.slack.com) chat rooms [#boost-user](https://cpplang.slack.com/messages/CEWTCFDN0/) and [#boost](https://cpplang.slack.com/messages/C27KZLB0X/).
 - IRC channel [#boost](irc://chat.freenode.net/#osgeo-geos) on FreeNode.
 - You can also ask questions via GitHub issue.
 

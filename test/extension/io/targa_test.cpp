@@ -11,6 +11,7 @@
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/targa.hpp>
 
+#include <boost/mp11.hpp>
 #include <boost/test/unit_test.hpp>
 
 #include <fstream>
@@ -303,7 +304,7 @@ BOOST_AUTO_TEST_CASE( subimage_test )
 
 BOOST_AUTO_TEST_CASE( dynamic_image_test )
 {
-    using my_img_types = mpl::vector
+    using my_img_types = mp11::mp_list
         <
             gray8_image_t,
             gray16_image_t,

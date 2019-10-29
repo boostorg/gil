@@ -18,10 +18,10 @@ namespace gil = boost::gil;
 namespace fixture = boost::gil::test::fixture;
 
 template <typename ChannelFixtureBase>
-void test_channel_arithmetic_mutable(boost::mpl::false_)  {}
+void test_channel_arithmetic_mutable(std::false_type)  {}
 
 template <typename ChannelFixtureBase>
-void test_channel_arithmetic_mutable(boost::mpl::true_)
+void test_channel_arithmetic_mutable(std::true_type)
 {
     using fixture_t = fixture::channel<ChannelFixtureBase>;
     using channel_value_t = typename fixture_t::channel_value_t;
@@ -69,11 +69,12 @@ void test_channel_arithmetic()
     BOOST_TEST((f.min_v_ + 1) + 1 == f.min_v_ + 2);
     BOOST_TEST((f.max_v_ - 1) - 1 == f.max_v_ - 2);
 
-    using is_mutable_t = boost::mpl::bool_
+    using is_mutable_t = std::integral_constant
         <
-        gil::channel_traits<typename fixture_t::channel_t>::is_mutable
+            bool,
+            gil::channel_traits<typename fixture_t::channel_t>::is_mutable
         >;
-    test_channel_arithmetic_mutable<ChannelFixtureBase>(is_mutable_t());
+    test_channel_arithmetic_mutable<ChannelFixtureBase>(is_mutable_t{});
 }
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(channel_value, Channel, fixture::channel_byte_types)

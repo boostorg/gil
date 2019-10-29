@@ -6,7 +6,7 @@
         /// \defgroup PointConcept Concepts
         /// \ingroup Point
         /// \brief Concepts for points
-        
+
         /// \defgroup PointModel Models
         /// \ingroup Point
         /// \brief Models for points
@@ -19,7 +19,7 @@
     /// \brief The color space and the layout define the set, ordering and interpretation of channels in a pixel
         /// \defgroup ColorSpaceAndLayoutConcept Concepts
         /// \ingroup ColorSpaceAndLayout
-        
+
         /// \defgroup ColorSpaceAndLayoutModel Models
         /// \ingroup ColorSpaceAndLayout
 
@@ -28,7 +28,7 @@
 
             /// \defgroup ColorSpaceModel Color Spaces
             /// \ingroup ColorSpaceAndLayoutModel
-            
+
             /// \defgroup LayoutModel Layouts
             /// \ingroup ColorSpaceAndLayoutModel
 
@@ -37,7 +37,7 @@
         /// \defgroup ChannelConcept Concepts
         /// \ingroup Channel
         /// \brief Concepts for channels
-        
+
         /// \defgroup ChannelModel Models
         /// \ingroup Channel
         /// \brief Channel models. Although not required by the ChannelConcept, all GIL-provided channels support arithmetic operations
@@ -45,10 +45,10 @@
         /// \defgroup ChannelAlgorithm Algorithms and Utility Functions
         /// \ingroup Channel
         /// \brief Channel algorithms, metafunctions and utility functions
-        
+
 /**
         \defgroup ColorBase ColorBase
-        \brief A color base is a container of color elements. 
+        \brief A color base is a container of color elements.
 
 The most common use of color base is in the implementation of a pixel, in which case the color
 elements are channel values. The color base concept, however, can be used in other scenarios. For example, a planar pixel has channels that are not
@@ -58,7 +58,7 @@ whose elements are channel iterators.
         /// \defgroup ColorBaseConcept Concepts
         /// \ingroup ColorBase
         /// \brief ColorBase concepts
-        
+
         /// \defgroup ColorBaseModel Models
         /// \ingroup ColorBase
         /// \brief ColorBase models
@@ -66,8 +66,8 @@ whose elements are channel iterators.
         /// \defgroup ColorBaseAlgorithm Algorithms and Utility Functions
         /// \ingroup ColorBase
         /// \brief ColorBase algorithms, metafunctions and utility functions
-    
-/** 
+
+/**
     \defgroup PixelBased PixelBased
     \brief Concepts for all GIL constructs that are pixel-based (pixels, pixel iterators, locators, views, images).
 
@@ -77,7 +77,7 @@ whose elements are channel iterators.
         /// \defgroup PixelBasedConcept Concepts
         /// \ingroup PixelBased
         /// \brief PixelBased concepts
-        
+
         /// \defgroup PixelBasedModel Models
         /// \ingroup PixelBased
         /// \brief PixelBased models
@@ -88,20 +88,20 @@ whose elements are channel iterators.
 
 /**
             \defgroup Pixel Pixel
-            \brief A pixel is a set of channels defining the color at a given point in an image. 
+            \brief A pixel is a set of channels defining the color at a given point in an image.
 
 Conceptually, a pixel is little more than a color base whose elements model \p ChannelConcept.
-Many properties of pixels inherit from color bases: pixels may be <i>homogeneous</i> if all of their channels have the same type; otherwise they are 
-called <i>heterogeneous</i>. The channels of a pixel may be addressed using semantic or physical indexing, or by color; all color base algorithms 
-work on pixels as well. Two pixels are <i>compatible</i> if their color spaces are the same and their channels, paired semantically, are compatible. 
-Note that constness, memory organization and reference/value are ignored. For example, an 8-bit RGB planar reference is compatible to a constant 8-bit 
+Many properties of pixels inherit from color bases: pixels may be <i>homogeneous</i> if all of their channels have the same type; otherwise they are
+called <i>heterogeneous</i>. The channels of a pixel may be addressed using semantic or physical indexing, or by color; all color base algorithms
+work on pixels as well. Two pixels are <i>compatible</i> if their color spaces are the same and their channels, paired semantically, are compatible.
+Note that constness, memory organization and reference/value are ignored. For example, an 8-bit RGB planar reference is compatible to a constant 8-bit
 BGR interleaved pixel value. Most pairwise pixel operations (copy construction, assignment, equality, etc.) are only defined for compatible pixels.
 
 */
         /// \defgroup PixelConcept Concepts
         /// \ingroup Pixel
         /// \brief Pixel concepts
-        
+
         /// \defgroup PixelModel Models
         /// \ingroup Pixel
         /// \brief Pixel models
@@ -120,7 +120,7 @@ Since pixels model the ColorBaseConcept, all color-base related algorithms also 
 
         /// \defgroup PixelDereferenceAdaptorConcept Concepts
         /// \ingroup PixelDereferenceAdaptor
-        
+
         /// \defgroup PixelDereferenceAdaptorModel Models
         /// \ingroup PixelDereferenceAdaptor
 
@@ -131,7 +131,7 @@ Since pixels model the ColorBaseConcept, all color-base related algorithms also 
         /// \defgroup PixelIteratorConcept Concepts
         /// \ingroup PixelIterator
         /// \brief Pixel iterator concepts
-        
+
         /// \defgroup PixelIteratorModel Models
         /// \ingroup PixelIterator
         /// \brief Pixel iterator models
@@ -143,7 +143,7 @@ Since pixels model the ColorBaseConcept, all color-base related algorithms also 
         /// \defgroup PixelLocatorConcept Concepts
         /// \ingroup PixelLocator
         /// \brief Pixel locator concepts
-        
+
         /// \defgroup PixelLocatorModel Models
         /// \ingroup PixelLocator
         /// \brief Pixel locator models
@@ -154,7 +154,7 @@ Since pixels model the ColorBaseConcept, all color-base related algorithms also 
         /// \defgroup ImageViewConcept Concepts
         /// \ingroup ImageView
         /// \brief Image view concepts
-        
+
         /// \defgroup ImageViewModel Models
         /// \ingroup ImageView
         /// \brief Image view models
@@ -163,31 +163,38 @@ Since pixels model the ColorBaseConcept, all color-base related algorithms also 
         /// \ingroup ImageView
         /// \brief Image view algorithms, metafunctions and utility functions
 
-/**    
+/**
     \defgroup Image Image
     \brief N-dimensional container
 
   An image is a container of N-dimensional data. GIL provides only one model, a two dimensional image whose \p value_type is a pixel.
-  
+
   Images are regular types (which means they have a default constructor, a copy constructor, \p operator=, \p operator==, \p operator!=, and \p swap)
   As containers, images own the data, which means they allocate the data in their constructors and deallocate in the destructors. Their copy construction,
   assignment and equality comparison is deep (i.e. propagates the operation to the values). That makes images expensive to pass by value, unlike views.
-  
-  Also, unlike views, images propagate their constness to the data. An const-qualified image does not allow for modifying its pixels and does not provide 
+
+  Also, unlike views, images propagate their constness to the data. An const-qualified image does not allow for modifying its pixels and does not provide
   a mutable view over its pixels.
-  
+
   Images provide two services: they manage ownership of their data (the pixels) and they can return a view over their pixels.
-  Algorithms predominantly operate on views. This is analogous to the STL: In the STL containers (like \p std::vector) provide ranges (\p vec.begin() 
+  Algorithms predominantly operate on views. This is analogous to the STL: In the STL containers (like \p std::vector) provide ranges (\p vec.begin()
   and \p vec.end() ) and algorithms typically operate on ranges. The GIL equivalent of a range is an image view.
-  
+
 */
         /// \defgroup ImageConcept Concepts
         /// \ingroup Image
         /// \brief Image concepts
-        
+
         /// \defgroup ImageModel Models
         /// \ingroup Image
         /// \brief Image models
+
+/**
+    \defgroup ImageProcessing Image Processing
+    \brief Image Processing algorithms
+
+  Collection of image processing algorithms currently implemented by GIL.
+*/
 
     /// \defgroup Variant Variant
     /// \brief A holder of a runtime instantiated type. Used to provide runtime-specified images and views
@@ -201,7 +208,7 @@ Since pixels model the ColorBaseConcept, all color-base related algorithms also 
         /// \defgroup TypeAnalysis Type Analysis Metafunctions
         /// \ingroup Metafunctions
         /// \brief Metafunctions that determine properties of GIL types
-        
+
     /// \defgroup IO I/O
     /// \brief Support for reading and writing images to file
         /// \defgroup JPEG_IO JPEG I/O
@@ -216,7 +223,7 @@ Since pixels model the ColorBaseConcept, all color-base related algorithms also 
         /// \ingroup IO
         /// \brief Support for reading and writing PNG image files
 
-/*! 
+/*!
 \mainpage API Reference
 
 \section Modules
@@ -261,6 +268,7 @@ Since pixels model the ColorBaseConcept, all color-base related algorithms also 
     - \ref Image
         - \ref ImageConcept
         - \ref ImageModel
+    - \ref ImageProcessing
     - \ref Metafunctions
         - \ref TypeFactory
         - \ref TypeAnalysis
@@ -268,6 +276,6 @@ Since pixels model the ColorBaseConcept, all color-base related algorithms also 
     - \ref IO
         - \ref JPEG_IO
         - \ref TIFF_IO
-        - \ref PNG_IO    
+        - \ref PNG_IO
 */
 

@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2017-2018 Mateusz Loskot <mateusz at loskot dot net>
+# Copyright (c) 2017-2019 Mateusz Loskot <mateusz at loskot dot net>
 #
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
@@ -17,12 +17,12 @@ cmake_minimum_required(VERSION 3.10)
 #-----------------------------------------------------------------------------
 option(GIL_BUILD_EXAMPLES "Build examples" ON)
 option(GIL_BUILD_HEADER_TESTS "Enable self-contained header tests" ON)
+option(GIL_ENABLE_EXT_DYNAMIC_IMAGE "Enable Dynamic Image extension, tests and examples" ON)
 option(GIL_ENABLE_EXT_IO "Enable IO extension, tests and examples (require libjpeg, libpng, libtiff)" ON)
 option(GIL_ENABLE_EXT_NUMERIC "Enable Numeric extension, tests and examples" ON)
 option(GIL_ENABLE_EXT_TOOLBOX "Enable Toolbox extension, tests and examples" ON)
 option(GIL_USE_CONAN "Use Conan to install dependencies" OFF)
 option(GIL_USE_CLANG_TIDY "Set CMAKE_CXX_CLANG_TIDY property on targets to enable clang-tidy linting" OFF)
-option(GIL_DOWNLOAD_FINDBOOST "Download FindBoost.cmake from latest CMake release" OFF)
 set(CMAKE_CXX_STANDARD 11 CACHE STRING "C++ standard version to use (default is 11)")
 
 #-----------------------------------------------------------------------------
@@ -100,25 +100,6 @@ add_library(gil_dependencies INTERFACE)
 # - look for default installation location
 # - look for location specified with BOOST_ROOT
 #-----------------------------------------------------------------------------
-if(CMAKE_VERSION VERSION_LESS 3.13 AND NOT GIL_DOWNLOAD_FINDBOOST)
-  message(STATUS "Boost.GIL: You are using CMake older than 3.13")
-  message(STATUS "Boost.GIL: FindBoost.cmake has likely been updated to detect newer or even not yet released Boost")
-  message(STATUS "Boost.GIL: Run CMake with -DGIL_DOWNLOAD_FINDBOOST=ON to get latest version of FindBoost.cmake")
-  message(STATUS "Boost.GIL: WARNING:")
-  message(STATUS "Boost.GIL:    Newer FindBoost.cmake may fail to find your Boost for many reasons.")
-  message(STATUS "Boost.GIL:    For example, this may be due to unrecognised toolset eg. latest Visual Studio 2017.")
-  message(STATUS "Boost.GIL:    Try run CMake with -DBoost_COMPILER=\"-vc141\" or value for your toolset.")
-endif()
-
-if(GIL_DOWNLOAD_FINDBOOST)
-  if(NOT EXISTS "${CMAKE_BINARY_DIR}/cmake/FindBoost.cmake")
-    message(STATUS "Boost.GIL: Downloading FindBoost.cmake from https://gitlab.kitware.com/cmake/ release branch")
-    file(DOWNLOAD
-      "https://gitlab.kitware.com/cmake/cmake/raw/release/Modules/FindBoost.cmake"
-      "${CMAKE_BINARY_DIR}/cmake/FindBoost.cmake")
-  endif()
-endif()
-
 if(NOT DEFINED BOOST_ROOT AND NOT DEFINED ENV{BOOST_ROOT})
   message(STATUS "Boost.GIL: Looking for Boost from current source tree and libraries from stage.")
   message(STATUS "Boost.GIL: Disable stage look-up with passing -DBOOST_ROOT=/path/to/your/boost.")
@@ -135,7 +116,7 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
   set(Boost_USE_STATIC_RUNTIME OFF)
 endif()
 
-find_package(Boost 1.65.0 REQUIRED
+find_package(Boost 1.68.0 REQUIRED
   COMPONENTS
     filesystem
     unit_test_framework)
@@ -158,27 +139,29 @@ target_compile_definitions(gil_dependencies
 #-----------------------------------------------------------------------------
 # Dependency: libpng, libjpeg, libtiff, libraw via Vcpkg or Conan
 #-----------------------------------------------------------------------------
+if(GIL_USE_CONAN)
+  # Download automatically, you can also just copy the conan.cmake file
+  if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
+    message(STATUS "Boost.GIL: Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
+    file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/v0.14/conan.cmake"
+      "${CMAKE_BINARY_DIR}/conan.cmake")
+  endif()
+
+  # NOTE: See RelWithDebInfo for Release builds, http://docs.conan.io/en/latest/howtos/vs2017_cmake.html
+  set(_build_type_saved ${CMAKE_BUILD_TYPE})
+  if(CMAKE_BUILD_TYPE STREQUAL "MinSizeRel" OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
+    set(CMAKE_BUILD_TYPE "Release")
+  endif()
+
+  include(${CMAKE_BINARY_DIR}/conan.cmake)
+  conan_cmake_run(CONANFILE conanfile.txt BASIC_SETUP CMAKE_TARGETS BUILD missing)
+
+  set(CMAKE_BUILD_TYPE ${_build_type_saved})
+  unset(_build_type_saved)
+endif()
+
 if(GIL_ENABLE_EXT_IO)
-  if(GIL_USE_CONAN)
-    # Download automatically, you can also just copy the conan.cmake file
-    if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
-      message(STATUS "Boost.GIL: Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
-      file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/v0.13/conan.cmake"
-        "${CMAKE_BINARY_DIR}/conan.cmake")
-    endif()
-
-    # NOTE: See RelWithDebInfo for Release builds, http://docs.conan.io/en/latest/howtos/vs2017_cmake.html
-    set(_build_type_saved ${CMAKE_BUILD_TYPE})
-    if(CMAKE_BUILD_TYPE STREQUAL "MinSizeRel" OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
-      set(CMAKE_BUILD_TYPE "Release")
-    endif()
-
-    include(${CMAKE_BINARY_DIR}/conan.cmake)
-    conan_cmake_run(CONANFILE conanfile.txt BASIC_SETUP CMAKE_TARGETS)
-
-    set(CMAKE_BUILD_TYPE ${_build_type_saved})
-    unset(_build_type_saved)
-
+  if (GIL_USE_CONAN)
     target_link_libraries(gil_dependencies
       INTERFACE
         CONAN_PKG::libjpeg

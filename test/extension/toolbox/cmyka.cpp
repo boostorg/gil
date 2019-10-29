@@ -8,7 +8,6 @@
 #include <boost/gil/extension/toolbox/color_spaces/cmyka.hpp>
 
 #include <boost/test/unit_test.hpp>
-#include <boost/type_traits/is_same.hpp>
 
 using namespace boost;
 using namespace gil;

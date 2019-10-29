@@ -8,15 +8,15 @@
 #include <boost/gil/bit_aligned_pixel_reference.hpp>
 #include <boost/gil/packed_pixel.hpp>
 #include <boost/gil/rgb.hpp>
-#include <boost/mpl/vector_c.hpp>
+#include <boost/mp11.hpp>
 namespace gil = boost::gil;
-namespace mpl = boost::mpl;
+namespace mp11 = boost::mp11;
 
 int main()
 {
     using bgr121_ref_t = gil::bit_aligned_pixel_reference
         <
-            std::uint8_t, mpl::vector3_c<int, 1, 2, 1>, gil::bgr_layout_t, true
+            std::uint8_t, mp11::mp_list_c<int, 1, 2, 1>, gil::bgr_layout_t, true
         >;
 
     static_assert(bgr121_ref_t::bit_size == 4,
@@ -37,10 +37,10 @@ int main()
             std::uint8_t,
             typename gil::detail::packed_channel_references_vector_type
             <
-                std::uint8_t, mpl::vector3_c<int, 1, 2, 1>
+                std::uint8_t, mp11::mp_list_c<int, 1, 2, 1>
             >::type,
             gil::bgr_layout_t
         >;
-    static_assert(std::is_same<bgr121_ref_t::value_type, packed_pixel_t >::value,
+    static_assert(std::is_same<bgr121_ref_t::value_type, packed_pixel_t>::value,
         "value_type should be specialization of packed_pixel");
 }

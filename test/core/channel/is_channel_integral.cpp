@@ -7,18 +7,27 @@
 //
 #include <boost/gil/channel.hpp>
 #include <boost/gil/typedefs.hpp>
+#include <boost/gil/detail/is_channel_integral.hpp>
+
+#include <type_traits>
 
 namespace gil = boost::gil;
 
 int main()
 {
-    static_assert(boost::is_integral<gil::packed_channel_value<1>>::value,
+    static_assert(gil::detail::is_channel_integral
+        <
+            gil::packed_channel_value<1>
+        >::value,
         "1-bit packed_channel_value should be recognized as integral");
 
-    static_assert(boost::is_integral<gil::packed_channel_value<8>>::value,
+    static_assert(gil::detail::is_channel_integral
+        <
+            gil::packed_channel_value<8>
+        >::value,
         "8-bit packed_channel_value should be recognized as integral");
 
-    static_assert(boost::is_integral
+    static_assert(gil::detail::is_channel_integral
         <
             gil::packed_channel_reference
             <
@@ -27,7 +36,7 @@ int main()
         >::value,
         "3-bit packed_channel_reference should be recognized as integral");
 
-    static_assert(boost::is_integral
+    static_assert(gil::detail::is_channel_integral
         <
             gil::packed_dynamic_channel_reference
             <
@@ -36,7 +45,7 @@ int main()
         >::value,
         "2-bit packed_dynamic_channel_reference should be recognized as integral");
 
-    static_assert(boost::is_integral
+    static_assert(gil::detail::is_channel_integral
         <
             gil::packed_dynamic_channel_reference
             <
@@ -48,7 +57,7 @@ int main()
 
     struct int_minus_value  { static std::int8_t apply() { return -64; } };
     struct int_plus_value   { static std::int8_t apply() { return  64; } };
-    static_assert(boost::is_integral
+    static_assert(gil::detail::is_channel_integral
         <
             gil::scoped_channel_value
             <
@@ -57,9 +66,9 @@ int main()
         >::value,
         "integer-based scoped_channel_value should be recognized as integral");
 
-    static_assert(!boost::is_integral<gil::float32_t>::value,
+    static_assert(!gil::detail::is_channel_integral<gil::float32_t>::value,
         "float-based packed_channel_value should not be recognized as integral");
 
-    static_assert(!boost::is_integral<gil::float64_t>::value,
+    static_assert(!gil::detail::is_channel_integral<gil::float64_t>::value,
         "float-based packed_channel_value should not be recognized as integral");
 }

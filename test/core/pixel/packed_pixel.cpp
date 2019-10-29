@@ -11,16 +11,13 @@
 #include <boost/gil/rgb.hpp>
 
 #include <boost/core/typeinfo.hpp>
-#include <boost/mpl/at.hpp>
-#include <boost/mpl/int.hpp>
-#include <boost/mpl/size.hpp>
-#include <boost/mpl/vector_c.hpp>
+#include <boost/mp11.hpp>
 
 #define BOOST_TEST_MODULE test_channel_traits
 #include "unit_test.hpp"
 
 namespace gil = boost::gil;
-namespace mpl = boost::mpl;
+namespace mp11 = boost::mp11;
 
 namespace boost { namespace gil {
 
@@ -40,7 +37,7 @@ std::ostream& operator<<(std::ostream& os, gil::packed_pixel<BitField, ChannelRe
 using packed_channel_references_3 = typename gil::detail::packed_channel_references_vector_type
 <
     std::uint8_t,
-    mpl::vector1_c<int, 3>
+    mp11::mp_list_c<int, 3>
 >::type;
 
 using packed_pixel_gray3 = gil::packed_pixel
@@ -72,12 +69,10 @@ BOOST_AUTO_TEST_CASE(packed_pixel_gray3_definition)
 
     // Verify metafunctions
 
-    using channel_references_t = packed_channel_references_3::type;
-
-    static_assert(mpl::size<channel_references_t>::value == 1,
+    static_assert(mp11::mp_size<packed_channel_references_3>::value == 1,
         "packed_channel_references_vector_type should define one reference to channel start bits");
 
-    using channel1_ref_t = mpl::at_c<channel_references_t, 0>::type;
+    using channel1_ref_t = mp11::mp_at_c<packed_channel_references_3, 0>;
     static_assert(channel1_ref_t::num_bits == 3,
         "1st channel of gray3 pixel should be of 3-bit size");
 
@@ -91,13 +86,23 @@ BOOST_AUTO_TEST_CASE(packed_pixel_gray3_definition)
     // double check intermediate metafunction packed_channel_reference_type
     static_assert(std::is_same
         <
-            gil::detail::packed_channel_reference_type<std::uint8_t, mpl::int_<0>, mpl::int_<3>>::type,
+            gil::detail::packed_channel_reference_type
+            <
+                std::uint8_t,
+                std::integral_constant<int, 0>,
+                std::integral_constant<int, 3>
+            >::type,
             channel1_ref_t
         >::value,
         "packed_channel_reference_type should return packed_channel_reference");
     static_assert(std::is_same
         <
-            gil::detail::packed_channel_reference_type<std::uint8_t, mpl::int_<0>, mpl::int_<3>>::type,
+            gil::detail::packed_channel_reference_type
+            <
+                std::uint8_t,
+                std::integral_constant<int, 0>,
+                std::integral_constant<int, 3>
+            >::type,
             gil::packed_channel_reference<std::uint8_t, 0, 3, true> const
         >::value,
         "packed_channel_reference_type should return packed_channel_reference");
@@ -123,9 +128,17 @@ BOOST_AUTO_TEST_CASE(packed_pixel_gray_equality)
 
 BOOST_AUTO_TEST_CASE(packed_pixel_gray3_assignment_gray_channel)
 {
-    packed_pixel_gray3 p1{0};
-    p1 = int{5};
-    BOOST_TEST(p1._bitfield == int{5});
+    {
+        packed_pixel_gray3 p1; // default-initialized
+        p1 = int{5};
+        BOOST_TEST(p1._bitfield == int{5});
+    }
+
+    {
+        packed_pixel_gray3 p1{0}; // value-initialized
+        p1 = int{5};
+        BOOST_TEST(p1._bitfield == int{5});
+    }
 }
 
 BOOST_AUTO_TEST_CASE(packed_pixel_gray_equality_gray_channel)
@@ -137,7 +150,7 @@ BOOST_AUTO_TEST_CASE(packed_pixel_gray_equality_gray_channel)
 using packed_channel_references_121 = typename gil::detail::packed_channel_references_vector_type
 <
     std::uint8_t,
-    mpl::vector3_c<int, 1, 2, 1>
+    mp11::mp_list_c<int, 1, 2, 1>
 >::type;
 
 using packed_pixel_bgr121 = gil::packed_pixel
@@ -169,20 +182,18 @@ BOOST_AUTO_TEST_CASE(packed_pixel_bgr121_definition)
 
     // Verify metafunctions
 
-    using channel_references_t = packed_channel_references_121::type;
-
-    static_assert(mpl::size<channel_references_t>::value == 3,
+    static_assert(mp11::mp_size<packed_channel_references_121>::value == 3,
         "packed_channel_references_vector_type should define three references to channel start bits");
 
-    using channel1_ref_t = mpl::at_c<channel_references_t, 0>::type;
+    using channel1_ref_t = mp11::mp_at_c<packed_channel_references_121, 0>;
     static_assert(channel1_ref_t::num_bits == 1,
         "1st channel of bgr121 pixel should be of 1-bit size");
 
-    using channel2_ref_t = mpl::at_c<channel_references_t, 1>::type;
+    using channel2_ref_t = mp11::mp_at_c<packed_channel_references_121, 1>;
     static_assert(channel2_ref_t::num_bits == 2,
         "2nd channel of bgr121 pixel should be of 2-bit size");
 
-    using channel3_ref_t = mpl::at_c<channel_references_t, 2>::type;
+    using channel3_ref_t = mp11::mp_at_c<packed_channel_references_121, 2>;
     static_assert(channel3_ref_t::num_bits == 1,
         "3rd channel of bgr121 pixel should be of 1-bit size");
 
@@ -210,13 +221,19 @@ BOOST_AUTO_TEST_CASE(packed_pixel_bgr121_definition)
     // double check intermediate metafunction packed_channel_reference_type
     static_assert(std::is_same
         <
-            gil::detail::packed_channel_reference_type<std::uint8_t, mpl::int_<0>, mpl::int_<1>>::type,
+            gil::detail::packed_channel_reference_type
+            <
+                std::uint8_t, mp11::mp_int<0>, mp11::mp_int<1>
+            >::type,
             channel1_ref_t
         >::value,
         "packed_channel_reference_type should return packed_channel_reference");
     static_assert(std::is_same
         <
-            gil::detail::packed_channel_reference_type<std::uint8_t, mpl::int_<0>, mpl::int_<1>>::type,
+            gil::detail::packed_channel_reference_type
+            <
+                std::uint8_t, mp11::mp_int<0>, mp11::mp_int<1>
+            >::type,
             gil::packed_channel_reference<std::uint8_t, 0, 1, true> const
         >::value,
         "packed_channel_reference_type should return packed_channel_reference");
@@ -243,7 +260,7 @@ BOOST_AUTO_TEST_CASE(packed_pixel_bgr121_equality)
 using packed_channel_references_535 = typename gil::detail::packed_channel_references_vector_type
 <
     std::uint16_t,
-    mpl::vector3_c<int, 5, 3, 5>
+    mp11::mp_list_c<int, 5, 3, 5>
 >::type;
 
 using packed_pixel_rgb535 = gil::packed_pixel
@@ -275,20 +292,18 @@ BOOST_AUTO_TEST_CASE(packed_pixel_rgb535_definition)
 
     // Verify metafunctions
 
-    using channel_references_t = packed_channel_references_535::type;
-
-    static_assert(mpl::size<channel_references_t>::value == 3,
+    static_assert(mp11::mp_size<packed_channel_references_535>::value == 3,
         "packed_channel_references_vector_type should define three references to channel start bits");
 
-    using channel1_ref_t = mpl::at_c<channel_references_t, 0>::type;
+    using channel1_ref_t = mp11::mp_at_c<packed_channel_references_535, 0>;
     static_assert(channel1_ref_t::num_bits == 5,
         "1st channel of rgb535 pixel should be of 5-bit size");
 
-    using channel2_ref_t = mpl::at_c<channel_references_t, 1>::type;
+    using channel2_ref_t = mp11::mp_at_c<packed_channel_references_535, 1>;
     static_assert(channel2_ref_t::num_bits == 3,
         "2nd channel of rgb535 pixel should be of 3-bit size");
 
-    using channel3_ref_t = mpl::at_c<channel_references_t, 2>::type;
+    using channel3_ref_t = mp11::mp_at_c<packed_channel_references_535, 2>;
     static_assert(channel3_ref_t::num_bits == 5,
         "3rd channel of rgb535 pixel should be of 5-bit size");
 
@@ -316,13 +331,23 @@ BOOST_AUTO_TEST_CASE(packed_pixel_rgb535_definition)
     // double check intermediate metafunction packed_channel_reference_type
     static_assert(std::is_same
         <
-            gil::detail::packed_channel_reference_type<std::uint16_t, mpl::int_<0>, mpl::int_<5>>::type,
+            gil::detail::packed_channel_reference_type
+            <
+                std::uint16_t,
+                std::integral_constant<int, 0>,
+                std::integral_constant<int, 5>
+            >::type,
             channel1_ref_t
         >::value,
         "packed_channel_reference_type should return packed_channel_reference");
     static_assert(std::is_same
         <
-            gil::detail::packed_channel_reference_type<std::uint16_t, mpl::int_<0>, mpl::int_<5>>::type,
+            gil::detail::packed_channel_reference_type
+            <
+                std::uint16_t,
+                std::integral_constant<int, 0>,
+                std::integral_constant<int, 5>
+            >::type,
             gil::packed_channel_reference<std::uint16_t, 0, 5, true> const
         >::value,
         "packed_channel_reference_type should return packed_channel_reference");

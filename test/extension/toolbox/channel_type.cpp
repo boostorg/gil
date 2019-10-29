@@ -8,7 +8,8 @@
 #include <boost/gil/extension/toolbox/metafunctions/channel_type.hpp>
 #include <boost/gil/extension/toolbox/metafunctions/is_bit_aligned.hpp>
 
-#include <boost/gil/channel.hpp> // boost::is_integral<packed_dynamic_channel_reference<...>>
+#include <boost/gil/channel.hpp>
+#include <boost/gil/detail/is_channel_integral.hpp>
 
 #include <boost/test/unit_test.hpp>
 
@@ -36,7 +37,7 @@ BOOST_AUTO_TEST_CASE(channel_type_test)
     // channel_type for bit_aligned images doesn't work with standard gil.
     using image_t = bg::bit_aligned_image4_type<4, 4, 4, 4, bg::rgb_layout_t>::type;
     using channel_t = bg::channel_type<image_t::view_t::reference>::type;
-    static_assert(boost::is_integral<channel_t>::value, "");
+    static_assert(bg::detail::is_channel_integral<channel_t>::value, "");
 }
 
 BOOST_AUTO_TEST_SUITE_END()

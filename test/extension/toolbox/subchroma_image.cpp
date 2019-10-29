@@ -11,6 +11,8 @@
 #include <boost/gil/extension/toolbox/color_spaces/ycbcr.hpp>
 #include <boost/gil/extension/toolbox/image_types/subchroma_image.hpp>
 
+#include <boost/mp11.hpp>
+
 using namespace std;
 using namespace boost;
 using namespace gil;
@@ -57,17 +59,17 @@ BOOST_AUTO_TEST_CASE( subchroma_image_test )
     {
         using pixel_t = rgb8_pixel_t;
 
-        subchroma_image<pixel_t, mpl::vector_c<int, 4, 4, 4>> a(640, 480);
+        subchroma_image<pixel_t, mp11::mp_list_c<int, 4, 4, 4>> a(640, 480);
         static_assert(a.ss_X == 1 && a.ss_Y == 1, "");
-        subchroma_image<pixel_t, mpl::vector_c<int, 4, 4, 0>> b(640, 480);
+        subchroma_image<pixel_t, mp11::mp_list_c<int, 4, 4, 0>> b(640, 480);
         static_assert(b.ss_X == 1 && b.ss_Y == 2, "");
-        subchroma_image<pixel_t, mpl::vector_c<int, 4, 2, 2>> c(640, 480);
+        subchroma_image<pixel_t, mp11::mp_list_c<int, 4, 2, 2>> c(640, 480);
         static_assert(c.ss_X == 2 && c.ss_Y == 1, "");
-        subchroma_image<pixel_t, mpl::vector_c<int, 4, 2, 0>> d(640, 480);
+        subchroma_image<pixel_t, mp11::mp_list_c<int, 4, 2, 0>> d(640, 480);
         static_assert(d.ss_X == 2 && d.ss_Y == 2, "");
-        subchroma_image<pixel_t, mpl::vector_c<int, 4, 1, 1>> e(640, 480);
+        subchroma_image<pixel_t, mp11::mp_list_c<int, 4, 1, 1>> e(640, 480);
         static_assert(e.ss_X == 4 && e.ss_Y == 1, "");
-        subchroma_image<pixel_t, mpl::vector_c<int, 4, 1, 0>> f(640, 480);
+        subchroma_image<pixel_t, mp11::mp_list_c<int, 4, 1, 0>> f(640, 480);
         static_assert(f.ss_X == 4 && f.ss_Y == 2, "");
 
         fill_pixels( view( a ), pixel_t( 10, 20, 30 ) );
@@ -81,7 +83,7 @@ BOOST_AUTO_TEST_CASE( subchroma_image_test )
 
     {
         using pixel_t = ycbcr_601_8_pixel_t;
-        using factors_t = mpl::vector_c<int, 4, 2, 2>;
+        using factors_t = mp11::mp_list_c<int, 4, 2, 2>;
         using image_t = subchroma_image<pixel_t, factors_t>;
 
         std::size_t y_width     = 640;

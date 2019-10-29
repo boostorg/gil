@@ -10,27 +10,32 @@ parameters:
   toolset: 'gcc'
 
 steps:
+  # The $BSD_DIR is the same path as $(Build.SourcesDirectory)
+  # but guaranteed in Unix format /a/b/c on every OS.
   - bash: |
-      curl -L https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.gz -o boost.tar.gz
-      tar -xf boost.tar.gz
+      export BSD_DIR=$PWD
+      cd ..
+      export GIL_DIR=$PWD/gil
+      echo "Copying $BSD_DIR to $GIL_DIR"
+      cp -a $BSD_DIR $GIL_DIR
+      cd $BSD_DIR
+      $GIL_DIR/.ci/get-boost.sh $(Build.SourceBranchName) $GIL_DIR
     displayName: 'Download Boost'
 
-  - bash: |
-      cd boost_*
-      rm -r libs/gil
-      ls libs
-    displayName: 'Remove libs/gil from Boost 1.68'
-
   - script: |
-      cd boost_*
+      cd boost-root
       ./bootstrap.sh
-      sudo ./b2 -j4 variant=${{ parameters.variant }} toolset=${{ parameters.toolset }} --with-filesystem --with-test install
+      sudo ./b2 headers
+      sudo ./b2 -j4 toolset=${{ parameters.toolset }} variant=${{ parameters.variant }} --with-filesystem --with-system --with-test stage
+      ls stage/lib
     displayName: 'Install Boost on Unix'
     condition: ne(variables['Agent.OS'], 'Windows_NT')
 
   - script: |
-      cd boost_*
+      cd boost-root
       call .\bootstrap.bat
-      .\b2 -j4 variant=${{ parameters.variant }} --with-filesystem --with-test install
+      .\b2 headers
+      .\b2 -j4 address-model=32 variant=${{ parameters.variant }} --layout=system --with-filesystem --with-system --with-test stage
+      dir stage\lib
     displayName: 'Install Boost on Windows'
     condition: eq(variables['Agent.OS'], 'Windows_NT')

@@ -1,23 +1,39 @@
 *~
 *.swp
+*.log
 
 # Boost.Build
 stdcerr
 /doc/*build*
 /io/output
 
+# Documentation and Sphinx
+doc/html
+doc/warnings.txt
+
 # Visual Studio (Code)
 /.vs
 .vscode
+*.code-workspace
 
 # CMake
 /*build*
 /cmake-build-debug/
 /cmake-build-release/
 /CMakeSettings.json
+/cmake-variants.yaml
 
 # JetBrains
 /.idea
 
 # Python
-.venv
+.venv*
+.env*
+
+# Conan
+conaninfo.txt
+graph_info.json
+
+# clangd
+compile_commands.json
+.clangd/

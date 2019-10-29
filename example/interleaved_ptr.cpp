@@ -23,6 +23,7 @@ namespace boost { namespace gil {
     at_c(const interleaved_ref<ChannelReference,Layout>& p);
 } }
 
+#include <boost/gil.hpp>
 #include <boost/gil/extension/io/jpeg.hpp>
 
 #include <iostream>

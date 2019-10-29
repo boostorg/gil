@@ -61,6 +61,9 @@ docker_gcc73: &docker_gcc73
 docker_gcc82: &docker_gcc82
   docker:
     - image: gcc:8.2
+docker_gcc83: &docker_gcc83
+  docker:
+    - image: gcc:8.3
 
 docker_clang39: &docker_clang39
   docker:
@@ -112,9 +115,7 @@ env_clang_cpp11_opt_speed: &env_clang_cpp11_opt_speed
 ##############################################################################
 # Build configurations
 ##############################################################################
-config_gcc48_cpp11_dbg: &config_gcc48_cpp11_dbg
-  <<: *docker_gcc48
-  <<: *env_gcc_cpp11_dbg
+# GCC 4.8 is used to build `b2` driver
 config_gcc48_cpp11_opt_speed: &config_gcc48_cpp11_opt_speed
   <<: *docker_gcc48
   <<: *env_gcc_cpp11_opt_speed
@@ -217,6 +218,13 @@ config_gcc82_cpp11_opt_speed: &config_gcc82_cpp11_opt_speed
   <<: *docker_gcc82
   <<: *env_gcc_cpp11_opt_speed
 
+config_gcc83_cpp11_dbg: &config_gcc83_cpp11_dbg
+  <<: *docker_gcc83
+  <<: *env_gcc_cpp11_dbg
+config_gcc83_cpp11_opt_speed: &config_gcc83_cpp11_opt_speed
+  <<: *docker_gcc83
+  <<: *env_gcc_cpp11_opt_speed
+
 config_clang39_cpp11_dbg: &config_clang39_cpp11_dbg
   <<: *docker_clang39
   <<: *env_clang_cpp11_dbg
@@ -263,41 +271,44 @@ steps_bootstrap: &steps_bootstrap
   steps:
     - *attach_workspace
     - *run_compiler_version
-    - run: cd boost && ./bootstrap.sh -with-toolset=$TOOLSET || cat ./bootstrap.log
-    - run: cd boost && ./b2 headers
+    - run: cd boost-root && ./bootstrap.sh -with-toolset=$TOOLSET || cat ./bootstrap.log
+    - run: cd boost-root && ./b2 -j2 headers > /dev/null
     - persist_to_workspace:
         root: ~/project
-        paths: boost
+        paths: boost-root
 
 steps_test_core: &steps_test_core
   steps:
     - *attach_workspace
     - *run_compiler_version
-    - run: cd boost-root && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/test/core
+    - run: cd boost-root && ./b2 -j2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/test/core
 
 steps_test_numeric: &steps_test_numeric
   steps:
     - *attach_workspace
     - *run_compiler_version
-    - run: cd boost-root && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/test/extension/numeric
+    - run: cd boost-root && ./b2 -j2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/test/extension/numeric
 
 steps_test_toolbox: &steps_test_toolbox
   steps:
     - *attach_workspace
     - *run_compiler_version
-    - run: cd boost-root && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/test/extension/toolbox
+    - run: cd boost-root && ./b2 -j2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/test/extension/toolbox
 
 steps_test_io: &steps_test_io
   steps:
     - *attach_workspace
     - *run_compiler_version
-    - run: cd boost-root && ./b2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/test/extension/io//simple
+    - run: cd boost-root && ./b2 -j2 toolset=$TOOLSET $VARIANT $OPTIMIZ cxxstd="$CXXSTD" libs/gil/test/extension/io//simple
 
 ##############################################################################
 # Build jobs
 ##############################################################################
 jobs:
   bootstrap_checkout:
+    working_directory: ~/project/gil
+    # Build `b2` using the ancient compiler to hopefully avoid run-time failures:
+    # ./b2: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.14' not found (required by ./b2)
     <<: *config_gcc48_cpp11_opt_speed
     steps:
       - checkout
@@ -307,20 +318,14 @@ jobs:
           # against other Boost libraries as defined by the Boost super-project master branch
           name: Checkout Boost superproject
           command: |
-            git clone -b master --depth 1 https://github.com/boostorg/boost.git
-            cd boost
-            git branch
-            git submodule --quiet update --init tools/build
-            git submodule --quiet update --init tools/boost_install
-            git submodule --quiet update --init tools/boostdep
-            git submodule --quiet update --init libs/headers
-            git submodule --quiet update --init libs/config
-            rm -rf libs/gil && mkdir -p libs/gil
-            mv -t libs/gil/ ../Jamfile ../example ../include ../io ../numeric ../test ../toolbox
-            python tools/boostdep/depinst/depinst.py gil
+            echo $PWD && ls -a $PWD
+            cd ..
+            echo $PWD && ls -a $PWD
+            ~/project/gil/.ci/get-boost.sh $CIRCLE_BRANCH ~/project/gil
+            cd boost-root
       - persist_to_workspace:
           root: ~/project
-          paths: boost
+          paths: boost-root
 
   bootstrap_gcc:
     <<: *config_gcc48_cpp11_opt_speed
@@ -331,14 +336,6 @@ jobs:
     <<: *steps_bootstrap
 
   ### GCC 4.x ################################################################
-  gcc48_11_core:
-    <<: *config_gcc48_cpp11_dbg
-    <<: *steps_test_core
-
-  gcc48_11_core_speed:
-    <<: *config_gcc48_cpp11_opt_speed
-    <<: *steps_test_core
-
   gcc49_11_core:
     <<: *config_gcc49_cpp11_dbg
     <<: *steps_test_core
@@ -454,6 +451,14 @@ jobs:
     <<: *config_gcc82_cpp11_opt_speed
     <<: *steps_test_core
 
+  gcc83_11_core:
+    <<: *config_gcc83_cpp11_dbg
+    <<: *steps_test_core
+
+  gcc83_11_core_speed:
+    <<: *config_gcc83_cpp11_opt_speed
+    <<: *steps_test_core
+
   ### clang 3.9 ################################################################
   clang39_11_core:
     <<: *config_clang39_cpp11_dbg
@@ -491,182 +496,144 @@ workflows:
       - bootstrap_checkout:
           filters: { branches: { only: [ develop, master ] } }
       - bootstrap_gcc:
-          requires:
-            - bootstrap_checkout
+          requires: [ bootstrap_checkout ]
           filters: { branches: { only: [ develop, master ] } }
       - bootstrap_clang:
-          requires:
-            - bootstrap_checkout
+          requires: [ bootstrap_checkout ]
           filters: { branches: { only: [ develop, master ] } }
 
       ### GCC 4.x ############################################################
-      - gcc48_11_core:
-          requires:
-            - bootstrap_gcc
-          filters: { branches: { only: [ develop, master ] } }
-      - gcc48_11_core_speed:
-          requires:
-            - gcc48_11_core
-          filters: { branches: { only: [ develop, master ] } }
-
       - gcc49_11_core:
-          requires:
-            - bootstrap_gcc
+          requires: [ bootstrap_gcc ]
           filters: { branches: { only: [ develop, master ] } }
       - gcc49_11_core_speed:
-          requires:
-            - gcc49_11_core
+          requires: [ gcc49_11_core ]
           filters: { branches: { only: [ develop, master ] } }
 
       ### GCC 5.x ############################################################
       - gcc51_11_core:
-          requires:
-            - bootstrap_gcc
+          requires: [ bootstrap_gcc ]
           filters: { branches: { only: [ develop, master ] } }
       - gcc51_11_core_speed:
-          requires:
-            - gcc51_11_core
+          requires: [ gcc51_11_core ]
           filters: { branches: { only: [ develop, master ] } }
 
       - gcc52_11_core:
-          requires:
-            - bootstrap_gcc
+          requires: [ bootstrap_gcc ]
           filters: { branches: { only: [ develop, master ] } }
       - gcc52_11_core_speed:
-          requires:
-            - gcc52_11_core
+          requires: [ gcc52_11_core ]
           filters: { branches: { only: [ develop, master ] } }
 
       - gcc53_11_core:
-          requires:
-            - bootstrap_gcc
+          requires: [ bootstrap_gcc ]
           filters: { branches: { only: [ develop, master ] } }
       - gcc53_11_core_speed:
-          requires:
-            - gcc53_11_core
+          requires: [ gcc53_11_core ]
           filters: { branches: { only: [ develop, master ] } }
 
       - gcc54_11_core:
-          requires:
-            - bootstrap_gcc
+          requires: [ bootstrap_gcc ]
           filters: { branches: { only: [ develop, master ] } }
       - gcc54_11_core_speed:
-          requires:
-            - gcc54_11_core
+          requires: [ gcc54_11_core ]
           filters: { branches: { only: [ develop, master ] } }
 
       - gcc55_11_core:
-          requires:
-            - bootstrap_gcc
+          requires: [ bootstrap_gcc ]
           filters: { branches: { only: [ develop, master ] } }
       - gcc55_11_core_speed:
-          requires:
-            - gcc55_11_core
+          requires: [ gcc55_11_core ]
           filters: { branches: { only: [ develop, master ] } }
 
       ### GCC 6.x ############################################################
       - gcc61_11_core:
-          requires:
-            - bootstrap_gcc
+          requires: [ bootstrap_gcc ]
           filters: { branches: { only: [ develop, master ] } }
       - gcc61_11_core_speed:
-          requires:
-            - gcc61_11_core
+          requires: [ gcc61_11_core ]
           filters: { branches: { only: [ develop, master ] } }
 
       - gcc62_11_core:
-          requires:
-            - bootstrap_gcc
+          requires: [ bootstrap_gcc ]
           filters: { branches: { only: [ develop, master ] } }
       - gcc62_11_core_speed:
-          requires:
-            - gcc62_11_core
+          requires: [ gcc62_11_core ]
           filters: { branches: { only: [ develop, master ] } }
 
       - gcc63_11_core:
-          requires:
-            - bootstrap_gcc
+          requires: [ bootstrap_gcc ]
           filters: { branches: { only: [ develop, master ] } }
       - gcc63_11_core_speed:
-          requires:
-            - gcc63_11_core
+          requires: [ gcc63_11_core ]
           filters: { branches: { only: [ develop, master ] } }
 
       - gcc64_11_core:
-          requires:
-            - bootstrap_gcc
+          requires: [ bootstrap_gcc ]
           filters: { branches: { only: [ develop, master ] } }
       - gcc64_11_core_speed:
-          requires:
-            - gcc64_11_core
+          requires: [ gcc64_11_core ]
           filters: { branches: { only: [ develop, master ] } }
 
       ### GCC 7.x ############################################################
       - gcc71_11_core:
-          requires:
-            - bootstrap_gcc
+          requires: [ bootstrap_gcc ]
           filters: { branches: { only: [ develop, master ] } }
       - gcc71_11_core_speed:
-          requires:
-            - gcc71_11_core
+          requires: [ gcc71_11_core ]
           filters: { branches: { only: [ develop, master ] } }
 
       - gcc72_11_core:
-          requires:
-            - bootstrap_gcc
+          requires: [ bootstrap_gcc ]
           filters: { branches: { only: [ develop, master ] } }
       - gcc72_11_core_speed:
-          requires:
-            - gcc72_11_core
+          requires: [ gcc72_11_core ]
           filters: { branches: { only: [ develop, master ] } }
 
       - gcc73_11_core:
-          requires:
-            - bootstrap_gcc
+          requires: [ bootstrap_gcc ]
           filters: { branches: { only: [ develop, master ] } }
       - gcc73_11_core_speed:
-          requires:
-            - gcc73_11_core
+          requires: [ gcc73_11_core ]
           filters: { branches: { only: [ develop, master ] } }
 
       ### GCC 8.x ############################################################
       - gcc82_11_core:
-          requires:
-            - bootstrap_gcc
+          requires: [ bootstrap_gcc ]
           filters: { branches: { only: [ develop, master ] } }
       - gcc82_11_core_speed:
-          requires:
-            - gcc82_11_core
+          requires: [ gcc82_11_core ]
+          filters: { branches: { only: [ develop, master ] } }
+
+      - gcc83_11_core:
+          requires: [ bootstrap_gcc ]
+          filters: { branches: { only: [ develop, master ] } }
+      - gcc83_11_core_speed:
+          requires: [ gcc83_11_core ]
           filters: { branches: { only: [ develop, master ] } }
 
       ### clang 3.9 ##########################################################
       - clang39_11_core:
-          requires:
-            - bootstrap_clang
+          requires: [ bootstrap_clang ]
           filters: { branches: { only: [ develop, master ] } }
       - clang39_11_core_speed:
-          requires:
-            - clang39_11_core
+          requires: [ clang39_11_core ]
           filters: { branches: { only: [ develop, master ] } }
 
       ### clang 4.0 ##########################################################
       - clang40_11_core:
-          requires:
-            - bootstrap_clang
+          requires: [ bootstrap_clang ]
           filters: { branches: { only: [ develop, master ] } }
       - clang40_11_core_speed:
-          requires:
-            - clang40_11_core
+          requires: [ clang40_11_core ]
           filters: { branches: { only: [ develop, master ] } }
 
       ### clang 5.0 ##########################################################
       - clang50_11_core:
-          requires:
-            - bootstrap_clang
+          requires: [ bootstrap_clang ]
           filters: { branches: { only: [ develop, master ] } }
       - clang50_11_core_speed:
-          requires:
-            - clang50_11_core
+          requires: [ clang50_11_core ]
           filters: { branches: { only: [ develop, master ] } }
 
 ##############################################################################
@@ -675,6 +642,9 @@ workflows:
 # Circle CI 1.0 notifications seem to work for Circle CI 2.0 (not 2.1!)
 # https://github.com/circleci/circleci-docs/issues/2411
 # https://discuss.circleci.com/t/circleci-2-0-notifications-webhooks/19075/9
-notify:
-  webhooks:
-    - url: https://webhooks.gitter.im/e/9538066016dc0f9b6511
+#
+# TODO: Disabled until CircleCI supports single notification per whole workflow.
+#       Currently, it floods the webhook with a notification per job.
+#notify:
+#  webhooks:
+#    - url: https://webhooks.gitter.im/e/9538066016dc0f9b6511
