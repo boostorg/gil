@@ -10,6 +10,7 @@
 
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/typedefs.hpp>
+#include <boost/gil/extension/numeric/kernel.hpp>
 
 namespace boost { namespace gil {
 /// \defgroup CornerDetectionAlgorithms
@@ -29,11 +30,12 @@ namespace boost { namespace gil {
 /// to compute sum of corresponding entries. k is a discrimination
 /// constant against edges (usually in range 0.04 to 0.06).
 /// harris_response is an out parameter that will contain the Harris responses.
+template <typename T, typename Allocator>
 void compute_harris_responses(
     boost::gil::gray32f_view_t m11,
     boost::gil::gray32f_view_t m12_21,
     boost::gil::gray32f_view_t m22,
-    boost::gil::gray32f_view_t weights,
+    boost::gil::detail::kernel_2d<T, Allocator> weights,
     float k,
     boost::gil::gray32f_view_t harris_response)
 {
@@ -42,7 +44,7 @@ void compute_harris_responses(
             " tensor from the same image");
     }
 
-    auto const window_length = weights.dimensions().x;
+    auto const window_length = weights.size();
     auto const width = m11.width();
     auto const height = m11.height();
     auto const half_length = window_length / 2;
@@ -61,14 +63,11 @@ void compute_harris_responses(
                     x_kernel < window_length;
                     ++x_kernel) {
                     ddxx += m11(x + x_kernel - half_length, y + y_kernel - half_length)
-                        .at(std::integral_constant<int, 0>{})
-                        * weights(x_kernel, y_kernel).at(std::integral_constant<int, 0>{});
+                        .at(std::integral_constant<int, 0>{}) * weights.at(x_kernel, y_kernel);
                     dxdy += m12_21(x + x_kernel - half_length, y + y_kernel - half_length)
-                        .at(std::integral_constant<int, 0>{})
-                        * weights(x_kernel, y_kernel).at(std::integral_constant<int, 0>{});
+                        .at(std::integral_constant<int, 0>{}) * weights.at(x_kernel, y_kernel);
                     ddyy += m22(x + x_kernel - half_length, y + y_kernel - half_length)
-                        .at(std::integral_constant<int, 0>{})
-                        * weights(x_kernel, y_kernel).at(std::integral_constant<int, 0>{});
+                        .at(std::integral_constant<int, 0>{}) * weights.at(x_kernel, y_kernel);
                 }
             }
             auto det = (ddxx * ddyy) - dxdy * dxdy;

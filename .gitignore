@@ -33,3 +33,7 @@ doc/warnings.txt
 # Conan
 conaninfo.txt
 graph_info.json
+
+# clangd
+compile_commands.json
+.clangd/

@@ -10,6 +10,7 @@
 #include <boost/gil/extension/io/png.hpp>
 #include <boost/gil/image_processing/numeric.hpp>
 #include <boost/gil/image_processing/harris.hpp>
+#include <boost/gil/extension/numeric/convolve.hpp>
 #include <vector>
 #include <functional>
 #include <set>
@@ -97,64 +98,6 @@ void apply_gaussian_blur(gil::gray8_view_t input_view, gil::gray8_view_t output_
     }
 }
 
-void calculate_gradients(gil::gray8_view_t input,
-    gil::gray16_view_t x_gradient,
-    gil::gray16_view_t y_gradient)
-{
-    using x_coord_t = gil::gray16_view_t::x_coord_t;
-    using y_coord_t = gil::gray16_view_t::y_coord_t;
-    using pixel_t = std::remove_reference<decltype(x_gradient(0, 0))>::type;
-    using channel_t = typename std::remove_reference<
-                        decltype(
-                            std::declval<gil::gray16_pixel_t>().at(
-                                std::integral_constant<int, 0>{}
-                            )
-                        )
-                       >::type;
-
-    constexpr double x_kernel[3][3] =
-    {
-        {1, 0, -1},
-        {2, 0, -2},
-        {1, 0, -1}
-    };
-    constexpr double y_kernel[3][3] =
-    {
-        {1, 2, 1},
-        {0, 0, 0},
-        {-1, -2, -1}
-    };
-    constexpr auto chosen_channel = std::integral_constant<int, 0>{};
-    for (y_coord_t y = 1; y < input.height() - 1; ++y)
-    {
-        for (x_coord_t x = 1; x < input.width() - 1; ++x)
-        {
-            gil::gray16_pixel_t x_result;
-            boost::gil::static_transform(x_result, x_result,
-                [](channel_t) { return static_cast<channel_t>(0); });
-            gil::gray16_pixel_t y_result;
-            boost::gil::static_transform(y_result, y_result,
-                [](channel_t) { return static_cast<channel_t>(0); });
-            for (y_coord_t y_filter = 0; y_filter < 2; ++y_filter)
-            {
-                for (x_coord_t x_filter = 0; x_filter < 2; ++x_filter)
-                {
-                    auto adjusted_y = y + y_filter - 1;
-                    auto adjusted_x = x + x_filter - 1;
-                    x_result.at(std::integral_constant<int, 0>{}) +=
-                        input(adjusted_x, adjusted_y).at(chosen_channel)
-                        * x_kernel[y_filter][x_filter];
-                    y_result.at(std::integral_constant<int, 0>{}) +=
-                        input(adjusted_x, adjusted_y).at(chosen_channel)
-                        * y_kernel[y_filter][x_filter];
-                }
-            }
-            x_gradient(x, y) = static_cast<std::uint8_t>(x_result.at(chosen_channel));
-            y_gradient(x, y) = static_cast<std::uint8_t>(y_result.at(chosen_channel));
-        }
-    }
-}
-
 std::vector<gil::point_t> suppress(
     gil::gray32f_view_t harris_response,
     double harris_response_threshold)
@@ -209,8 +152,8 @@ int main(int argc, char* argv[])
         return -1;
     }
 
-    long int window_size = std::stoi(argv[2]);
-    double discrimnation_constant = std::stod(argv[3]);
+    std::size_t window_size = std::stoul(argv[2]);
+    double discrimnation_constant = std::stof(argv[3]);
     long harris_response_threshold = std::stol(argv[4]);
 
     gil::rgb8_image_t input_image;
@@ -222,12 +165,15 @@ int main(int argc, char* argv[])
     gil::gray8_image_t smoothed_image(grayscaled.dimensions());
     auto smoothed = gil::view(smoothed_image);
     apply_gaussian_blur(gil::view(grayscaled), smoothed);
-    gil::gray16_image_t x_gradient_image(grayscaled.dimensions());
-    gil::gray16_image_t y_gradient_image(grayscaled.dimensions());
+    gil::gray16s_image_t x_gradient_image(grayscaled.dimensions());
+    gil::gray16s_image_t y_gradient_image(grayscaled.dimensions());
 
     auto x_gradient = gil::view(x_gradient_image);
     auto y_gradient = gil::view(y_gradient_image);
-    calculate_gradients(smoothed, x_gradient, y_gradient);
+    auto scharr_x = gil::generate_dx_scharr();
+    gil::detail::convolve_2d(smoothed, scharr_x, x_gradient);
+    auto scharr_y = gil::generate_dy_scharr();
+    gil::detail::convolve_2d(smoothed, scharr_y, y_gradient);
 
     gil::gray32f_image_t m11(x_gradient.dimensions());
     gil::gray32f_image_t m12_21(x_gradient.dimensions());
@@ -241,13 +187,12 @@ int main(int argc, char* argv[])
     );
 
     gil::gray32f_image_t harris_response(x_gradient.dimensions());
-    gil::gray32f_image_t gaussian_kernel(gil::point_t(5, 5));
-    gil::generate_gaussian_kernel(gil::view(gaussian_kernel), 0.84089642);
+    auto gaussian_kernel = gil::generate_gaussian_kernel(window_size, 0.84089642);
     gil::compute_harris_responses(
         gil::view(m11),
         gil::view(m12_21),
         gil::view(m22),
-        gil::view(gaussian_kernel),
+        gaussian_kernel,
         discrimnation_constant,
         gil::view(harris_response)
     );

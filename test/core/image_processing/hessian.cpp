@@ -34,8 +34,8 @@ bool are_equal(gil::gray32f_view_t expected, gil::gray32f_view_t actual) {
 void test_blank_image()
 {
     const gil::point_t dimensions(20, 20);
-    gil::gray16_image_t dx(dimensions, gil::gray16_pixel_t(0), 0);
-    gil::gray16_image_t dy(dimensions, gil::gray16_pixel_t(0), 0);
+    gil::gray16s_image_t dx(dimensions, gil::gray16s_pixel_t(0), 0);
+    gil::gray16s_image_t dy(dimensions, gil::gray16s_pixel_t(0), 0);
 
     gil::gray32f_image_t m11(dimensions);
     gil::gray32f_image_t m12_21(dimensions);
@@ -53,13 +53,12 @@ void test_blank_image()
     BOOST_TEST(are_equal(gil::view(expected), gil::view(m22)));
 
     gil::gray32f_image_t hessian_response(dimensions, gil::gray32f_pixel_t(0), 0);
-    gil::gray32f_image_t unnormalized_mean(gil::point_t(5, 5));
-    gil::generate_unnormalized_mean(gil::view(unnormalized_mean));
+    auto unnormalized_mean = gil::generate_unnormalized_mean(5);
     gil::compute_hessian_responses(
         gil::view(m11),
         gil::view(m12_21),
         gil::view(m22),
-        gil::view(unnormalized_mean),
+        unnormalized_mean,
         gil::view(hessian_response)
     );
     BOOST_TEST(are_equal(gil::view(expected), gil::view(hessian_response)));

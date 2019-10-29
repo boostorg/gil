@@ -8,10 +8,14 @@
 #ifndef BOOST_GIL_IMAGE_PROCESSING_NUMERIC_HPP
 #define BOOST_GIL_IMAGE_PROCESSING_NUMERIC_HPP
 
-#include <boost/gil/detail/math.hpp>
-#include <cmath>
+#include <boost/gil/extension/numeric/kernel.hpp>
+#include <boost/gil/extension/numeric/convolve.hpp>
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/typedefs.hpp>
+#include <boost/gil/detail/math.hpp>
+// fixes ambigious call to std::abs, https://stackoverflow.com/a/30084734/4593721
+#include <cstdlib>
+#include <cmath>
 
 namespace boost { namespace gil {
 
@@ -51,8 +55,8 @@ inline double lanczos(double x, std::ptrdiff_t a)
 }
 
 inline void compute_tensor_entries(
-    boost::gil::gray16_view_t dx,
-    boost::gil::gray16_view_t dy,
+    boost::gil::gray16s_view_t dx,
+    boost::gil::gray16s_view_t dy,
     boost::gil::gray32f_view_t m11,
     boost::gil::gray32f_view_t m12_21,
     boost::gil::gray32f_view_t m22)
@@ -66,6 +70,196 @@ inline void compute_tensor_entries(
             m22(x, y) = dy_value * dy_value;
         }
     }
+}
+
+/// \brief Generate mean kernel
+/// \ingroup ImageProcessingMath
+///
+/// Fills supplied view with normalized mean
+/// in which all entries will be equal to
+/// \code 1 / (dst.size()) \endcode
+template <typename T = float, typename Allocator = std::allocator<T>>
+inline detail::kernel_2d<T, Allocator> generate_normalized_mean(std::size_t side_length)
+{
+    if (side_length % 2 != 1)
+        throw std::invalid_argument("kernel dimensions should be odd and equal");
+    const float entry = 1.0f / static_cast<float>(side_length * side_length);
+
+    detail::kernel_2d<T, Allocator> result(side_length, side_length / 2, side_length / 2);
+    for (auto& cell: result) {
+        cell = entry;
+    }
+
+    return result;
+}
+
+/// \brief Generate kernel with all 1s
+/// \ingroup ImageProcessingMath
+///
+/// Fills supplied view with 1s (ones)
+template <typename T = float, typename Allocator = std::allocator<T>>
+inline detail::kernel_2d<T, Allocator> generate_unnormalized_mean(std::size_t side_length)
+{
+    if (side_length % 2 != 1)
+        throw std::invalid_argument("kernel dimensions should be odd and equal");
+
+    detail::kernel_2d<T, Allocator> result(side_length, side_length / 2, side_length / 2);
+    for (auto& cell: result) {
+        cell = 1.0f;
+    }
+
+    return result;
+}
+
+/// \brief Generate Gaussian kernel
+/// \ingroup ImageProcessingMath
+///
+/// Fills supplied view with values taken from Gaussian distribution. See
+/// https://en.wikipedia.org/wiki/Gaussian_blur
+template <typename T = float, typename Allocator = std::allocator<T>>
+inline detail::kernel_2d<T, Allocator> generate_gaussian_kernel(std::size_t side_length, double sigma)
+{
+    if (side_length % 2 != 1)
+        throw std::invalid_argument("kernel dimensions should be odd and equal");
+
+
+    const double denominator = 2 * boost::gil::pi * sigma * sigma;
+    auto middle = side_length / 2;
+    std::vector<T, Allocator> values(side_length * side_length);
+    for (std::size_t y = 0; y < side_length; ++y)
+    {
+        for (std::size_t x = 0; x < side_length; ++x)
+        {
+            const auto delta_x = middle > x ? middle - x : x - middle;
+            const auto delta_y = middle > y ? middle - y : y - middle;
+            const double power = (delta_x * delta_x +  delta_y * delta_y) / (2 * sigma * sigma);
+            const double nominator = std::exp(-power);
+            const float value = static_cast<float>(nominator / denominator);
+            values[y * side_length + x] = value;
+        }
+    }
+
+    return detail::kernel_2d<T, Allocator>(values.begin(), values.size(), middle, middle);
+}
+
+/// \brief Generates Sobel operator in horizontal direction
+/// \ingroup ImageProcessingMath
+///
+/// Generates a kernel which will represent Sobel operator in
+/// horizontal direction of specified degree (no need to convolve multiple times
+/// to obtain the desired degree).
+/// https://www.researchgate.net/publication/239398674_An_Isotropic_3_3_Image_Gradient_Operator
+template <typename T = float, typename Allocator = std::allocator<T>>
+inline detail::kernel_2d<T, Allocator> generate_dx_sobel(unsigned int degree = 1)
+{
+    switch (degree)
+    {
+        case 0:
+        {
+            return get_identity_kernel<T, Allocator>();
+        }
+        case 1:
+        {
+            detail::kernel_2d<T, Allocator> result(3, 1, 1);
+            std::copy(dx_sobel.begin(), dx_sobel.end(), result.begin());
+            return result;
+        }
+        default:
+            throw std::logic_error("not supported yet");
+    }
+
+    //to not upset compiler
+    throw std::runtime_error("unreachable statement");
+}
+
+/// \brief Generate Scharr operator in horizontal direction
+/// \ingroup ImageProcessingMath
+///
+/// Generates a kernel which will represent Scharr operator in
+/// horizontal direction of specified degree (no need to convolve multiple times
+/// to obtain the desired degree).
+/// https://www.researchgate.net/profile/Hanno_Scharr/publication/220955743_Optimal_Filters_for_Extended_Optical_Flow/links/004635151972eda98f000000/Optimal-Filters-for-Extended-Optical-Flow.pdf
+template <typename T = float, typename Allocator = std::allocator<T>>
+inline detail::kernel_2d<T, Allocator> generate_dx_scharr(unsigned int degree = 1)
+{
+    switch (degree)
+    {
+        case 0:
+        {
+            return get_identity_kernel<T, Allocator>();
+        }
+        case 1:
+        {
+            detail::kernel_2d<T, Allocator> result(3, 1, 1);
+            std::copy(dx_scharr.begin(), dx_scharr.end(), result.begin());
+            return result;
+        }
+        default:
+            throw std::logic_error("not supported yet");
+    }
+
+    //to not upset compiler
+    throw std::runtime_error("unreachable statement");
+}
+
+/// \brief Generates Sobel operator in vertical direction
+/// \ingroup ImageProcessingMath
+///
+/// Generates a kernel which will represent Sobel operator in
+/// vertical direction of specified degree (no need to convolve multiple times
+/// to obtain the desired degree).
+/// https://www.researchgate.net/publication/239398674_An_Isotropic_3_3_Image_Gradient_Operator
+template <typename T = float, typename Allocator = std::allocator<T>>
+inline detail::kernel_2d<T, Allocator> generate_dy_sobel(unsigned int degree = 1)
+{
+    switch (degree)
+    {
+        case 0:
+        {
+            return get_identity_kernel<T, Allocator>();
+        }
+        case 1:
+        {
+            detail::kernel_2d<T, Allocator> result(3, 1, 1);
+            std::copy(dy_sobel.begin(), dy_sobel.end(), result.begin());
+            return result;
+        }
+        default:
+            throw std::logic_error("not supported yet");
+    }
+
+    //to not upset compiler
+    throw std::runtime_error("unreachable statement");
+}
+
+/// \brief Generate Scharr operator in vertical direction
+/// \ingroup ImageProcessingMath
+///
+/// Generates a kernel which will represent Scharr operator in
+/// vertical direction of specified degree (no need to convolve multiple times
+/// to obtain the desired degree).
+/// https://www.researchgate.net/profile/Hanno_Scharr/publication/220955743_Optimal_Filters_for_Extended_Optical_Flow/links/004635151972eda98f000000/Optimal-Filters-for-Extended-Optical-Flow.pdf
+template <typename T = float, typename Allocator = std::allocator<T>>
+inline detail::kernel_2d<T, Allocator> generate_dy_scharr(unsigned int degree = 1)
+{
+    switch (degree)
+    {
+        case 0:
+        {
+            return get_identity_kernel<T, Allocator>();
+        }
+        case 1:
+        {
+            detail::kernel_2d<T, Allocator> result(3, 1, 1);
+            std::copy(dy_scharr.begin(), dy_scharr.end(), result.begin());
+            return result;
+        }
+        default:
+            throw std::logic_error("not supported yet");
+    }
+
+    //to not upset compiler
+    throw std::runtime_error("unreachable statement");
 }
 
 /// \brief Compute xy gradient, and second order x and y gradients
@@ -85,122 +279,11 @@ inline void compute_hessian_entries(
     OutputView dxdy,
     OutputView ddyy)
 {
-    using x_coord_t = typename OutputView::x_coord_t;
-    using y_coord_t = typename OutputView::y_coord_t;
-    using pixel_t = typename std::remove_reference<decltype(ddxx(0, 0))>::type;
-    using channel_t = typename std::remove_reference<
-                        decltype(
-                            std::declval<pixel_t>().at(
-                                std::integral_constant<int, 0>{}
-                            )
-                        )
-                       >::type;
-
-    constexpr double x_kernel[3][3] =
-    {
-        {1, 0, -1},
-        {2, 0, -2},
-        {1, 0, -1}
-    };
-    constexpr double y_kernel[3][3] =
-    {
-        {1, 2, 1},
-        {0, 0, 0},
-        {-1, -2, -1}
-    };
-    constexpr auto chosen_channel = std::integral_constant<int, 0>{};
-    for (y_coord_t y = 1; y < ddxx.height() - 1; ++y)
-    {
-        for (x_coord_t x = 1; x < ddxx.width() - 1; ++x)
-        {
-            pixel_t ddxx_i;
-            static_transform(ddxx_i, ddxx_i,
-                [](channel_t) { return static_cast<channel_t>(0); });
-            pixel_t dxdy_i;
-            static_transform(dxdy_i, dxdy_i,
-                [](channel_t) { return static_cast<channel_t>(0); });
-            pixel_t ddyy_i;
-            static_transform(ddyy_i, ddyy_i,
-                [](channel_t) { return static_cast<channel_t>(0); });
-            for (y_coord_t y_filter = 0; y_filter < 2; ++y_filter)
-            {
-                for (x_coord_t x_filter = 0; x_filter < 2; ++x_filter)
-                {
-                    auto adjusted_y = y + y_filter - 1;
-                    auto adjusted_x = x + x_filter - 1;
-                    ddxx_i.at(std::integral_constant<int, 0>{}) +=
-                        dx(adjusted_x, adjusted_y).at(chosen_channel)
-                        * x_kernel[y_filter][x_filter];
-                    dxdy_i.at(std::integral_constant<int, 0>{}) +=
-                        dx(adjusted_x, adjusted_y).at(chosen_channel)
-                        * y_kernel[y_filter][x_filter];
-                    ddyy_i.at(std::integral_constant<int, 0>{}) +=
-                        dy(adjusted_x, adjusted_y).at(chosen_channel)
-                        * y_kernel[y_filter][x_filter];
-                }
-            }
-            ddxx(x, y) = ddxx_i;
-            dxdy(x, y) = dxdy_i;
-            ddyy(x, y) = ddyy_i;
-        }
-    }
-}
-
-/// \brief Generate mean kernel
-/// \ingroup ImageProcessingMath
-///
-/// Fills supplied view with normalized mean
-/// in which all entries will be equal to
-/// \code 1 / (dst.size()) \endcode
-inline void generate_normalized_mean(boost::gil::gray32f_view_t dst)
-{
-    if (dst.width() != dst.height() || dst.width() % 2 != 1)
-        throw std::invalid_argument("kernel dimensions should be odd and equal");
-    const float entry = 1.0f / static_cast<float>(dst.size());
-
-    for (auto& pixel: dst) {
-        pixel.at(std::integral_constant<int, 0>{}) = entry;
-    }
-}
-
-/// \brief Generate kernel with all 1s
-/// \ingroup ImageProcessingMath
-///
-/// Fills supplied view with 1s (ones)
-inline void generate_unnormalized_mean(boost::gil::gray32f_view_t dst)
-{
-    if (dst.width() != dst.height() || dst.width() % 2 != 1)
-        throw std::invalid_argument("kernel dimensions should be odd and equal");
-
-    for (auto& pixel: dst) {
-        pixel.at(std::integral_constant<int, 0>{}) = 1.0f;
-    }
-}
-
-/// \brief Generate Gaussian kernel
-/// \ingroup ImageProcessingMath
-///
-/// Fills supplied view with values taken from Gaussian distribution. See
-/// https://en.wikipedia.org/wiki/Gaussian_blur
-inline void generate_gaussian_kernel(boost::gil::gray32f_view_t dst, double sigma)
-{
-    if (dst.width() != dst.height() || dst.width() % 2 != 1)
-        throw std::invalid_argument("kernel dimensions should be odd and equal");
-
-    const double denominator = 2 * boost::gil::pi * sigma * sigma;
-    const auto middle = boost::gil::point_t(dst.width() / 2, dst.height() / 2);
-    for (boost::gil::gray32f_view_t::coord_t y = 0; y < dst.height(); ++y)
-    {
-        for (boost::gil::gray32f_view_t::coord_t x = 0; x < dst.width(); ++x)
-        {
-            const auto delta_x = std::abs(middle.x - x);
-            const auto delta_y = std::abs(middle.y - y);
-            const double power = (delta_x * delta_x +  delta_y * delta_y) / (2 * sigma * sigma);
-            const double nominator = std::exp(-power);
-            const float value = nominator / denominator;
-            dst(x, y).at(std::integral_constant<int, 0>{}) = value;
-        }
-    }
+    auto sobel_x = generate_dx_sobel();
+    auto sobel_y = generate_dy_sobel();
+    detail::convolve_2d(dx, sobel_x, ddxx);
+    detail::convolve_2d(dx, sobel_y, dxdy);
+    detail::convolve_2d(dy, sobel_y, ddyy);
 }
 
 }} // namespace boost::gil
