@@ -21,13 +21,13 @@ inline void compute_hessian_responses(
     GradientView ddxx,
     GradientView dxdy,
     GradientView ddyy,
-    const kernel_2d<T, Allocator>& weights,
+    const detail::kernel_2d<T, Allocator>& weights,
     OutputView dst)
 {
     if (ddxx.dimensions() != ddyy.dimensions()
         || ddyy.dimensions() != dxdy.dimensions()
         || dxdy.dimensions() != dst.dimensions()
-        || weights.center_horizontal() != weights.center_vertical())
+        || weights.center_x() != weights.center_y())
     {
         throw std::invalid_argument("dimensions of views are not the same"
             " or weights don't have equal width and height"
@@ -42,7 +42,7 @@ inline void compute_hessian_responses(
         >::type;
 
 
-    auto center = weights.center_vertical();
+    auto center = weights.center_y();
     for (auto y = center; y < dst.height() - center; ++y)
     {
         for (auto x = center; x < dst.width() - center; ++x)

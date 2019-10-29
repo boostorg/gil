@@ -174,9 +174,9 @@ int main(int argc, char* argv[]) {
     auto x_gradient = gil::view(x_gradient_image);
     auto y_gradient = gil::view(y_gradient_image);
     auto scharr_x = gil::generate_dx_scharr();
-    gil::convolve_2d(smoothed, scharr_x, x_gradient);
+    gil::detail::convolve_2d(smoothed, scharr_x, x_gradient);
     auto scharr_y = gil::generate_dy_scharr();
-    gil::convolve_2d(smoothed, scharr_y, y_gradient);
+    gil::detail::convolve_2d(smoothed, scharr_y, y_gradient);
 
     gil::gray32f_image_t m11(x_gradient.dimensions());
     gil::gray32f_image_t m12_21(x_gradient.dimensions());

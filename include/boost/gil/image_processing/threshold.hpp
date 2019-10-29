@@ -420,7 +420,7 @@ void threshold_adaptive
     }
     else if (method == threshold_adaptive_method::gaussian)
     {
-        kernel_2d<float> kernel = generate_gaussian_kernel(kernel_size, 1.0);
+        detail::kernel_2d<float> kernel = generate_gaussian_kernel(kernel_size, 1.0);
         convolve_2d(src_view, kernel, temp_view);
     }
 

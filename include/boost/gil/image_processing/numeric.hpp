@@ -79,13 +79,13 @@ inline void compute_tensor_entries(
 /// in which all entries will be equal to
 /// \code 1 / (dst.size()) \endcode
 template <typename T = float, typename Allocator = std::allocator<T>>
-inline kernel_2d<T, Allocator> generate_normalized_mean(std::size_t side_length)
+inline detail::kernel_2d<T, Allocator> generate_normalized_mean(std::size_t side_length)
 {
     if (side_length % 2 != 1)
         throw std::invalid_argument("kernel dimensions should be odd and equal");
     const float entry = 1.0f / static_cast<float>(side_length * side_length);
 
-    kernel_2d<T, Allocator> result(side_length, side_length / 2, side_length / 2);
+    detail::kernel_2d<T, Allocator> result(side_length, side_length / 2, side_length / 2);
     for (auto& cell: result) {
         cell = entry;
     }
@@ -98,12 +98,12 @@ inline kernel_2d<T, Allocator> generate_normalized_mean(std::size_t side_length)
 ///
 /// Fills supplied view with 1s (ones)
 template <typename T = float, typename Allocator = std::allocator<T>>
-inline kernel_2d<T, Allocator> generate_unnormalized_mean(std::size_t side_length)
+inline detail::kernel_2d<T, Allocator> generate_unnormalized_mean(std::size_t side_length)
 {
     if (side_length % 2 != 1)
         throw std::invalid_argument("kernel dimensions should be odd and equal");
 
-    kernel_2d<T, Allocator> result(side_length, side_length / 2, side_length / 2);
+    detail::kernel_2d<T, Allocator> result(side_length, side_length / 2, side_length / 2);
     for (auto& cell: result) {
         cell = 1.0f;
     }
@@ -117,7 +117,7 @@ inline kernel_2d<T, Allocator> generate_unnormalized_mean(std::size_t side_lengt
 /// Fills supplied view with values taken from Gaussian distribution. See
 /// https://en.wikipedia.org/wiki/Gaussian_blur
 template <typename T = float, typename Allocator = std::allocator<T>>
-inline kernel_2d<T, Allocator> generate_gaussian_kernel(std::size_t side_length, double sigma)
+inline detail::kernel_2d<T, Allocator> generate_gaussian_kernel(std::size_t side_length, double sigma)
 {
     if (side_length % 2 != 1)
         throw std::invalid_argument("kernel dimensions should be odd and equal");
@@ -139,7 +139,7 @@ inline kernel_2d<T, Allocator> generate_gaussian_kernel(std::size_t side_length,
         }
     }
 
-    return kernel_2d<T, Allocator>(values.begin(), values.size(), middle, middle);
+    return detail::kernel_2d<T, Allocator>(values.begin(), values.size(), middle, middle);
 }
 
 /// \brief Generates Sobel operator in horizontal direction
@@ -150,7 +150,7 @@ inline kernel_2d<T, Allocator> generate_gaussian_kernel(std::size_t side_length,
 /// to obtain the desired degree).
 /// https://www.researchgate.net/publication/239398674_An_Isotropic_3_3_Image_Gradient_Operator
 template <typename T = float, typename Allocator = std::allocator<T>>
-inline kernel_2d<T, Allocator> generate_dx_sobel(unsigned int degree = 1)
+inline detail::kernel_2d<T, Allocator> generate_dx_sobel(unsigned int degree = 1)
 {
     switch (degree)
     {
@@ -160,7 +160,7 @@ inline kernel_2d<T, Allocator> generate_dx_sobel(unsigned int degree = 1)
         }
         case 1:
         {
-            kernel_2d<T, Allocator> result(3, 1, 1);
+            detail::kernel_2d<T, Allocator> result(3, 1, 1);
             std::copy(dx_sobel.begin(), dx_sobel.end(), result.begin());
             return result;
         }
@@ -180,7 +180,7 @@ inline kernel_2d<T, Allocator> generate_dx_sobel(unsigned int degree = 1)
 /// to obtain the desired degree).
 /// https://www.researchgate.net/profile/Hanno_Scharr/publication/220955743_Optimal_Filters_for_Extended_Optical_Flow/links/004635151972eda98f000000/Optimal-Filters-for-Extended-Optical-Flow.pdf
 template <typename T = float, typename Allocator = std::allocator<T>>
-inline kernel_2d<T, Allocator> generate_dx_scharr(unsigned int degree = 1)
+inline detail::kernel_2d<T, Allocator> generate_dx_scharr(unsigned int degree = 1)
 {
     switch (degree)
     {
@@ -190,7 +190,7 @@ inline kernel_2d<T, Allocator> generate_dx_scharr(unsigned int degree = 1)
         }
         case 1:
         {
-            kernel_2d<T, Allocator> result(3, 1, 1);
+            detail::kernel_2d<T, Allocator> result(3, 1, 1);
             std::copy(dx_scharr.begin(), dx_scharr.end(), result.begin());
             return result;
         }
@@ -210,7 +210,7 @@ inline kernel_2d<T, Allocator> generate_dx_scharr(unsigned int degree = 1)
 /// to obtain the desired degree).
 /// https://www.researchgate.net/publication/239398674_An_Isotropic_3_3_Image_Gradient_Operator
 template <typename T = float, typename Allocator = std::allocator<T>>
-inline kernel_2d<T, Allocator> generate_dy_sobel(unsigned int degree = 1)
+inline detail::kernel_2d<T, Allocator> generate_dy_sobel(unsigned int degree = 1)
 {
     switch (degree)
     {
@@ -220,7 +220,7 @@ inline kernel_2d<T, Allocator> generate_dy_sobel(unsigned int degree = 1)
         }
         case 1:
         {
-            kernel_2d<T, Allocator> result(3, 1, 1);
+            detail::kernel_2d<T, Allocator> result(3, 1, 1);
             std::copy(dy_sobel.begin(), dy_sobel.end(), result.begin());
             return result;
         }
@@ -240,7 +240,7 @@ inline kernel_2d<T, Allocator> generate_dy_sobel(unsigned int degree = 1)
 /// to obtain the desired degree).
 /// https://www.researchgate.net/profile/Hanno_Scharr/publication/220955743_Optimal_Filters_for_Extended_Optical_Flow/links/004635151972eda98f000000/Optimal-Filters-for-Extended-Optical-Flow.pdf
 template <typename T = float, typename Allocator = std::allocator<T>>
-inline kernel_2d<T, Allocator> generate_dy_scharr(unsigned int degree = 1)
+inline detail::kernel_2d<T, Allocator> generate_dy_scharr(unsigned int degree = 1)
 {
     switch (degree)
     {
@@ -250,7 +250,7 @@ inline kernel_2d<T, Allocator> generate_dy_scharr(unsigned int degree = 1)
         }
         case 1:
         {
-            kernel_2d<T, Allocator> result(3, 1, 1);
+            detail::kernel_2d<T, Allocator> result(3, 1, 1);
             std::copy(dy_scharr.begin(), dy_scharr.end(), result.begin());
             return result;
         }
@@ -281,9 +281,9 @@ inline void compute_hessian_entries(
 {
     auto sobel_x = generate_dx_sobel();
     auto sobel_y = generate_dy_sobel();
-    convolve_2d(dx, sobel_x, ddxx);
-    convolve_2d(dx, sobel_y, dxdy);
-    convolve_2d(dy, sobel_y, ddyy);
+    detail::convolve_2d(dx, sobel_x, ddxx);
+    detail::convolve_2d(dx, sobel_y, dxdy);
+    detail::convolve_2d(dy, sobel_y, ddyy);
 }
 
 }} // namespace boost::gil

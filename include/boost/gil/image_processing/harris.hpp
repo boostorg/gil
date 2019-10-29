@@ -35,7 +35,7 @@ void compute_harris_responses(
     boost::gil::gray32f_view_t m11,
     boost::gil::gray32f_view_t m12_21,
     boost::gil::gray32f_view_t m22,
-    boost::gil::kernel_2d<T, Allocator> weights,
+    boost::gil::detail::kernel_2d<T, Allocator> weights,
     float k,
     boost::gil::gray32f_view_t harris_response)
 {
