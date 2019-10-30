@@ -61,7 +61,7 @@
 </div><!--header-->
 <div class="contents">
 
-<p>A reference proxy to a planar pixel. Models: <a class="el" href="structboost_1_1gil_1_1_homogeneous_color_base_concept.html" title="Color base whose elements all have the same type. ">HomogeneousColorBaseConcept</a>, <a class="el" href="structboost_1_1gil_1_1_homogeneous_pixel_concept.html" title="Homogeneous pixel concept. ">HomogeneousPixelConcept</a>.  
+<p>A reference proxy to a planar pixel.  
  <a href="structboost_1_1gil_1_1planar__pixel__reference.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="planar__pixel__reference_8hpp_source.html">planar_pixel_reference.hpp</a>&gt;</code></p>
@@ -70,9 +70,9 @@
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a18332c293875dbd82fd0c69b044261be"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a18332c293875dbd82fd0c69b044261be"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>parent_t</b> = detail::homogeneous_color_base&lt; ChannelReference, <a class="el" href="structboost_1_1gil_1_1layout.html">layout</a>&lt; ColorSpace &gt;, mpl::size&lt; ColorSpace &gt;::value &gt;</td></tr>
-<tr class="separator:a18332c293875dbd82fd0c69b044261be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa58b25ebd200242c9ac69d6277535a0f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa58b25ebd200242c9ac69d6277535a0f"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>parent_t</b> = detail::homogeneous_color_base&lt; ChannelReference, <a class="el" href="structboost_1_1gil_1_1layout.html">layout</a>&lt; ColorSpace &gt;, mp11::mp_size&lt; ColorSpace &gt;::value &gt;</td></tr>
+<tr class="separator:aa58b25ebd200242c9ac69d6277535a0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d44eadf3d6303b5621a0f99a4e45c22"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5d44eadf3d6303b5621a0f99a4e45c22"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b> = <a class="el" href="structboost_1_1gil_1_1pixel.html">pixel</a>&lt; channel_t, <a class="el" href="structboost_1_1gil_1_1layout.html">layout</a>&lt; ColorSpace &gt;&gt;</td></tr>
 <tr class="separator:a5d44eadf3d6303b5621a0f99a4e45c22"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -100,39 +100,42 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a326177c672b834ebae1f606d092db69d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a326177c672b834ebae1f606d092db69d"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>planar_pixel_reference</b> (ChannelReference v0, ChannelReference v1, ChannelReference v2, ChannelReference v3, ChannelReference v4, ChannelReference v5)</td></tr>
 <tr class="separator:a326177c672b834ebae1f606d092db69d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ceaedb632ab5d8e09ddba2ff09e7523"><td class="memTemplParams" colspan="2"><a class="anchor" id="a1ceaedb632ab5d8e09ddba2ff09e7523"></a>
-template&lt;typename P &gt; </td></tr>
-<tr class="memitem:a1ceaedb632ab5d8e09ddba2ff09e7523"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>planar_pixel_reference</b> (const P &amp;p)</td></tr>
-<tr class="separator:a1ceaedb632ab5d8e09ddba2ff09e7523"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4931a0a2190c4300ad6ade5164dc2bba"><td class="memTemplParams" colspan="2"><a class="anchor" id="a4931a0a2190c4300ad6ade5164dc2bba"></a>
+<tr class="memitem:ac7ac169b22308d88e887c184884b7503"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac7ac169b22308d88e887c184884b7503"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>planar_pixel_reference</b> (<a class="el" href="structboost_1_1gil_1_1planar__pixel__reference.html">planar_pixel_reference</a> const &amp;p)</td></tr>
+<tr class="separator:ac7ac169b22308d88e887c184884b7503"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba8c88de90b8e2dc7756789f39803eba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba8c88de90b8e2dc7756789f39803eba"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="structboost_1_1gil_1_1planar__pixel__reference.html">planar_pixel_reference</a> const &amp;p) const -&gt; <a class="el" href="structboost_1_1gil_1_1planar__pixel__reference.html">planar_pixel_reference</a> const &amp;</td></tr>
+<tr class="separator:aba8c88de90b8e2dc7756789f39803eba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3f63ccd3ad9904cc7df630d342f17c5"><td class="memTemplParams" colspan="2"><a class="anchor" id="af3f63ccd3ad9904cc7df630d342f17c5"></a>
+template&lt;typename Pixel &gt; </td></tr>
+<tr class="memitem:af3f63ccd3ad9904cc7df630d342f17c5"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>planar_pixel_reference</b> (Pixel const &amp;p)</td></tr>
+<tr class="separator:af3f63ccd3ad9904cc7df630d342f17c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6683e7afb9f3d8e1e44a9e95d76fe2fa"><td class="memTemplParams" colspan="2"><a class="anchor" id="a6683e7afb9f3d8e1e44a9e95d76fe2fa"></a>
+template&lt;typename Pixel &gt; </td></tr>
+<tr class="memitem:a6683e7afb9f3d8e1e44a9e95d76fe2fa"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator=</b> (Pixel const &amp;p) const -&gt; <a class="el" href="structboost_1_1gil_1_1planar__pixel__reference.html">planar_pixel_reference</a> const &amp;</td></tr>
+<tr class="separator:a6683e7afb9f3d8e1e44a9e95d76fe2fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9236ce4ebec269c382f8d9d7681fa0d8"><td class="memTemplParams" colspan="2"><a class="anchor" id="a9236ce4ebec269c382f8d9d7681fa0d8"></a>
 template&lt;typename ChannelV , typename Mapping &gt; </td></tr>
-<tr class="memitem:a4931a0a2190c4300ad6ade5164dc2bba"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>planar_pixel_reference</b> (<a class="el" href="structboost_1_1gil_1_1pixel.html">pixel</a>&lt; ChannelV, <a class="el" href="structboost_1_1gil_1_1layout.html">layout</a>&lt; ColorSpace, Mapping &gt; &gt; &amp;p)</td></tr>
-<tr class="separator:a4931a0a2190c4300ad6ade5164dc2bba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af886c65eb9f2aaf1a1edf3b41287a4e2"><td class="memTemplParams" colspan="2"><a class="anchor" id="af886c65eb9f2aaf1a1edf3b41287a4e2"></a>
+<tr class="memitem:a9236ce4ebec269c382f8d9d7681fa0d8"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>planar_pixel_reference</b> (<a class="el" href="structboost_1_1gil_1_1pixel.html">pixel</a>&lt; ChannelV, <a class="el" href="structboost_1_1gil_1_1layout.html">layout</a>&lt; ColorSpace, Mapping &gt;&gt; &amp;p)</td></tr>
+<tr class="separator:a9236ce4ebec269c382f8d9d7681fa0d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72ac5f7f127cd6d6bd0c5d38e8647bcd"><td class="memTemplParams" colspan="2"><a class="anchor" id="a72ac5f7f127cd6d6bd0c5d38e8647bcd"></a>
 template&lt;typename ChannelPtr &gt; </td></tr>
-<tr class="memitem:af886c65eb9f2aaf1a1edf3b41287a4e2"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>planar_pixel_reference</b> (const <a class="el" href="structboost_1_1gil_1_1planar__pixel__iterator.html">planar_pixel_iterator</a>&lt; ChannelPtr, ColorSpace &gt; &amp;p, std::ptrdiff_t diff)</td></tr>
-<tr class="separator:af886c65eb9f2aaf1a1edf3b41287a4e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a11856373a2fdf2992d6ec9c574fdaa3a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a11856373a2fdf2992d6ec9c574fdaa3a"></a>
-const <a class="el" href="structboost_1_1gil_1_1planar__pixel__reference.html">planar_pixel_reference</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="structboost_1_1gil_1_1planar__pixel__reference.html">planar_pixel_reference</a> &amp;p) const </td></tr>
-<tr class="separator:a11856373a2fdf2992d6ec9c574fdaa3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab300ef3eb9c410d48c45fb2ddcf35a64"><td class="memTemplParams" colspan="2"><a class="anchor" id="ab300ef3eb9c410d48c45fb2ddcf35a64"></a>
-template&lt;typename P &gt; </td></tr>
-<tr class="memitem:ab300ef3eb9c410d48c45fb2ddcf35a64"><td class="memTemplItemLeft" align="right" valign="top">const <a class="el" href="structboost_1_1gil_1_1planar__pixel__reference.html">planar_pixel_reference</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator=</b> (const P &amp;p) const </td></tr>
-<tr class="separator:ab300ef3eb9c410d48c45fb2ddcf35a64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89f0e5ef1df3ba11cd5f604d84afba65"><td class="memTemplParams" colspan="2"><a class="anchor" id="a89f0e5ef1df3ba11cd5f604d84afba65"></a>
-template&lt;typename P &gt; </td></tr>
-<tr class="memitem:a89f0e5ef1df3ba11cd5f604d84afba65"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator==</b> (const P &amp;p) const </td></tr>
-<tr class="separator:a89f0e5ef1df3ba11cd5f604d84afba65"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac7c2c671794283aa75d3062646cdb6d"><td class="memTemplParams" colspan="2"><a class="anchor" id="aac7c2c671794283aa75d3062646cdb6d"></a>
-template&lt;typename P &gt; </td></tr>
-<tr class="memitem:aac7c2c671794283aa75d3062646cdb6d"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator!=</b> (const P &amp;p) const </td></tr>
-<tr class="separator:aac7c2c671794283aa75d3062646cdb6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae62e6d0e154050d639c4d779ad1df2e2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae62e6d0e154050d639c4d779ad1df2e2"></a>
-ChannelReference&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (std::size_t i) const </td></tr>
-<tr class="separator:ae62e6d0e154050d639c4d779ad1df2e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac04d1e9caff628c590f156d59f400e23"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac04d1e9caff628c590f156d59f400e23"></a>
-const <a class="el" href="structboost_1_1gil_1_1planar__pixel__reference.html">planar_pixel_reference</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>operator-&gt;</b> () const </td></tr>
-<tr class="separator:ac04d1e9caff628c590f156d59f400e23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72ac5f7f127cd6d6bd0c5d38e8647bcd"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>planar_pixel_reference</b> (<a class="el" href="structboost_1_1gil_1_1planar__pixel__iterator.html">planar_pixel_iterator</a>&lt; ChannelPtr, ColorSpace &gt; const &amp;p, std::ptrdiff_t diff)</td></tr>
+<tr class="separator:a72ac5f7f127cd6d6bd0c5d38e8647bcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac44d316c5e40b0d516503ffaefe93331"><td class="memTemplParams" colspan="2"><a class="anchor" id="ac44d316c5e40b0d516503ffaefe93331"></a>
+template&lt;typename Pixel &gt; </td></tr>
+<tr class="memitem:ac44d316c5e40b0d516503ffaefe93331"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator==</b> (Pixel const &amp;p) const </td></tr>
+<tr class="separator:ac44d316c5e40b0d516503ffaefe93331"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad94e54e3800607176a92a1aea87ebb2f"><td class="memTemplParams" colspan="2"><a class="anchor" id="ad94e54e3800607176a92a1aea87ebb2f"></a>
+template&lt;typename Pixel &gt; </td></tr>
+<tr class="memitem:ad94e54e3800607176a92a1aea87ebb2f"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator!=</b> (Pixel const &amp;p) const </td></tr>
+<tr class="separator:ad94e54e3800607176a92a1aea87ebb2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43fcae62467ed761b142a423a3c8fbf6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a43fcae62467ed761b142a423a3c8fbf6"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (std::size_t i) const -&gt; ChannelReference</td></tr>
+<tr class="separator:a43fcae62467ed761b142a423a3c8fbf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3717bd7d088f0e11bb897704be7ee4e4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3717bd7d088f0e11bb897704be7ee4e4"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator-&gt;</b> () const -&gt; <a class="el" href="structboost_1_1gil_1_1planar__pixel__reference.html">planar_pixel_reference</a> const *</td></tr>
+<tr class="separator:a3717bd7d088f0e11bb897704be7ee4e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
@@ -144,8 +147,15 @@ static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_m
 <div class="textblock"><h3>template&lt;typename ChannelReference, typename ColorSpace&gt;<br />
 struct boost::gil::planar_pixel_reference&lt; ChannelReference, ColorSpace &gt;</h3>
 
-<p>A reference proxy to a planar pixel. Models: <a class="el" href="structboost_1_1gil_1_1_homogeneous_color_base_concept.html" title="Color base whose elements all have the same type. ">HomogeneousColorBaseConcept</a>, <a class="el" href="structboost_1_1gil_1_1_homogeneous_pixel_concept.html" title="Homogeneous pixel concept. ">HomogeneousPixelConcept</a>. </p>
-<p>A reference to a planar pixel is a proxy class containing references to each of the corresponding channels. </p>
+<p>A reference proxy to a planar pixel. </p>
+<p>A reference to a planar pixel is a proxy class containing references to each of the corresponding channels. Models: <a class="el" href="structboost_1_1gil_1_1_homogeneous_color_base_concept.html" title="Color base whose elements all have the same type. ">HomogeneousColorBaseConcept</a>, <a class="el" href="structboost_1_1gil_1_1_homogeneous_pixel_concept.html" title="Homogeneous pixel concept. ">HomogeneousPixelConcept</a></p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">ChannelReference</td><td>A channel reference, either const or mutable </td></tr>
+    <tr><td class="paramname">ColorSpace</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 </div><hr/>The documentation for this struct was generated from the following files:<ul>
 <li><a class="el" href="metafunctions_8hpp_source.html">metafunctions.hpp</a></li>
 <li><a class="el" href="planar__pixel__reference_8hpp_source.html">planar_pixel_reference.hpp</a></li>

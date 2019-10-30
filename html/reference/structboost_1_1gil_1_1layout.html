@@ -74,7 +74,7 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>channel_mapping_t</b
 <tr class="separator:aec327051f4b968f2356b5e9c448b000e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename ColorSpace, typename ChannelMapping = mpl::range_c&lt;int,0,mpl::size&lt;ColorSpace&gt;::value&gt;&gt;<br />
+<div class="textblock"><h3>template&lt;typename ColorSpace, typename ChannelMapping = mp11::mp_iota &lt;        std::integral_constant&lt;int, mp11::mp_size&lt;ColorSpace&gt;::value&gt;    &gt;&gt;<br />
 struct boost::gil::layout&lt; ColorSpace, ChannelMapping &gt;</h3>
 
 <p>Represents a color space and ordering of channels in memory. </p>

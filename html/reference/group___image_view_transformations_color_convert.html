@@ -58,11 +58,11 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1color__converted__view__type.html">color_converted_view_type&lt; SrcView, DstP, CC &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the type of a view that does color conversion upon dereferencing its pixels.  <a href="structboost_1_1gil_1_1color__converted__view__type.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1color__converted__view__type_3_01any__image__view_3_01_view_types_01_4_00_01_dst_p_00_01_c_c_01_4.html">color_converted_view_type&lt; any_image_view&lt; ViewTypes &gt;, DstP, CC &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the type of a runtime-specified view, color-converted to a given pixel type with user specified color converter.  <a href="structboost_1_1gil_1_1color__converted__view__type_3_01any__image__view_3_01_view_types_01_4_00_01_dst_p_00_01_c_c_01_4.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1color__converted__view__type_3_01any__image__view_3_01_views_01_4_00_01_dst_p_00_01_c_c_01_4.html">color_converted_view_type&lt; any_image_view&lt; Views &gt;, DstP, CC &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the type of a runtime-specified view, color-converted to a given pixel type with user specified color converter.  <a href="structboost_1_1gil_1_1color__converted__view__type_3_01any__image__view_3_01_views_01_4_00_01_dst_p_00_01_c_c_01_4.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1color__converted__view__type_3_01any__image__view_3_01_view_types_01_4_00_01_dst_p_01_4.html">color_converted_view_type&lt; any_image_view&lt; ViewTypes &gt;, DstP &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the type of a runtime-specified view, color-converted to a given pixel type with the default coor converter.  <a href="structboost_1_1gil_1_1color__converted__view__type_3_01any__image__view_3_01_view_types_01_4_00_01_dst_p_01_4.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1color__converted__view__type_3_01any__image__view_3_01_views_01_4_00_01_dst_p_01_4.html">color_converted_view_type&lt; any_image_view&lt; Views &gt;, DstP &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the type of a runtime-specified view, color-converted to a given pixel type with the default coor converter.  <a href="structboost_1_1gil_1_1color__converted__view__type_3_01any__image__view_3_01_views_01_4_00_01_dst_p_01_4.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
@@ -77,29 +77,178 @@ template&lt;typename DstP , typename View &gt; </td></tr>
 <tr class="memitem:ga6c421b40d2e890444c8687123e286e41"><td class="memTemplItemLeft" align="right" valign="top">color_converted_view_type&lt; View, DstP &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_transformations_color_convert.html#ga6c421b40d2e890444c8687123e286e41">color_converted_view</a> (const View &amp;src)</td></tr>
 <tr class="memdesc:ga6c421b40d2e890444c8687123e286e41"><td class="mdescLeft">&#160;</td><td class="mdescRight">overload of generic color_converted_view with the default color-converter <br /></td></tr>
 <tr class="separator:ga6c421b40d2e890444c8687123e286e41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadce3ab33f9c63e53575ce97450854194"><td class="memTemplParams" colspan="2"><a class="anchor" id="gadce3ab33f9c63e53575ce97450854194"></a>
-template&lt;typename DstP , typename ViewTypes , typename CC &gt; </td></tr>
-<tr class="memitem:gadce3ab33f9c63e53575ce97450854194"><td class="memTemplItemLeft" align="right" valign="top">color_converted_view_type&lt; any_image_view&lt; ViewTypes &gt;, DstP, CC &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_transformations_color_convert.html#gadce3ab33f9c63e53575ce97450854194">color_converted_view</a> (const any_image_view&lt; ViewTypes &gt; &amp;src, CC)</td></tr>
-<tr class="memdesc:gadce3ab33f9c63e53575ce97450854194"><td class="mdescLeft">&#160;</td><td class="mdescRight">overload of generic color_converted_view with user defined color-converter <br /></td></tr>
-<tr class="separator:gadce3ab33f9c63e53575ce97450854194"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaed4a407d4d60b1a4b403e0c5a8c98202"><td class="memTemplParams" colspan="2"><a class="anchor" id="gaed4a407d4d60b1a4b403e0c5a8c98202"></a>
-template&lt;typename DstP , typename ViewTypes &gt; </td></tr>
-<tr class="memitem:gaed4a407d4d60b1a4b403e0c5a8c98202"><td class="memTemplItemLeft" align="right" valign="top">color_converted_view_type&lt; any_image_view&lt; ViewTypes &gt;, DstP &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_transformations_color_convert.html#gaed4a407d4d60b1a4b403e0c5a8c98202">color_converted_view</a> (const any_image_view&lt; ViewTypes &gt; &amp;src)</td></tr>
-<tr class="memdesc:gaed4a407d4d60b1a4b403e0c5a8c98202"><td class="mdescLeft">&#160;</td><td class="mdescRight">overload of generic color_converted_view with the default color-converter <br /></td></tr>
-<tr class="separator:gaed4a407d4d60b1a4b403e0c5a8c98202"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga832d8bc9519db2c3bc08da881bd28237"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga832d8bc9519db2c3bc08da881bd28237"></a>
-template&lt;typename DstP , typename ViewTypes , typename CC &gt; </td></tr>
-<tr class="memitem:ga832d8bc9519db2c3bc08da881bd28237"><td class="memTemplItemLeft" align="right" valign="top">color_converted_view_type&lt; any_image_view&lt; ViewTypes &gt;, DstP, CC &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_transformations_color_convert.html#ga832d8bc9519db2c3bc08da881bd28237">any_color_converted_view</a> (const any_image_view&lt; ViewTypes &gt; &amp;src, CC)</td></tr>
-<tr class="memdesc:ga832d8bc9519db2c3bc08da881bd28237"><td class="mdescLeft">&#160;</td><td class="mdescRight">overload of generic color_converted_view with user defined color-converter These are workarounds for GCC 3.4, which thinks color_converted_view is ambiguous with the same method for templated views (in <a class="el" href="image__view__factory_8hpp_source.html">gil/image_view_factory.hpp</a>) <br /></td></tr>
-<tr class="separator:ga832d8bc9519db2c3bc08da881bd28237"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab26337a646b4f58448c663b44ad2538f"><td class="memTemplParams" colspan="2"><a class="anchor" id="gab26337a646b4f58448c663b44ad2538f"></a>
-template&lt;typename DstP , typename ViewTypes &gt; </td></tr>
-<tr class="memitem:gab26337a646b4f58448c663b44ad2538f"><td class="memTemplItemLeft" align="right" valign="top">color_converted_view_type&lt; any_image_view&lt; ViewTypes &gt;, DstP &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_transformations_color_convert.html#gab26337a646b4f58448c663b44ad2538f">any_color_converted_view</a> (const any_image_view&lt; ViewTypes &gt; &amp;src)</td></tr>
-<tr class="memdesc:gab26337a646b4f58448c663b44ad2538f"><td class="mdescLeft">&#160;</td><td class="mdescRight">overload of generic color_converted_view with the default color-converter These are workarounds for GCC 3.4, which thinks color_converted_view is ambiguous with the same method for templated views (in <a class="el" href="image__view__factory_8hpp_source.html">gil/image_view_factory.hpp</a>) <br /></td></tr>
-<tr class="separator:gab26337a646b4f58448c663b44ad2538f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gace6799466699dd0788ca7fd854227724"><td class="memTemplParams" colspan="2">template&lt;typename DstP , typename Views , typename CC &gt; </td></tr>
+<tr class="memitem:gace6799466699dd0788ca7fd854227724"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_transformations_color_convert.html#gace6799466699dd0788ca7fd854227724">color_converted_view</a> (const any_image_view&lt; Views &gt; &amp;src, CC) -&gt; typename color_converted_view_type&lt; any_image_view&lt; Views &gt;, DstP, CC &gt;::type</td></tr>
+<tr class="memdesc:gace6799466699dd0788ca7fd854227724"><td class="mdescLeft">&#160;</td><td class="mdescRight">overload of generic color_converted_view with user defined color-converter  <a href="group___image_view_transformations_color_convert.html#gace6799466699dd0788ca7fd854227724">More...</a><br /></td></tr>
+<tr class="separator:gace6799466699dd0788ca7fd854227724"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga717a73bbd9c89d2bfafb13e62a7a18e8"><td class="memTemplParams" colspan="2">template&lt;typename DstP , typename Views &gt; </td></tr>
+<tr class="memitem:ga717a73bbd9c89d2bfafb13e62a7a18e8"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_transformations_color_convert.html#ga717a73bbd9c89d2bfafb13e62a7a18e8">color_converted_view</a> (any_image_view&lt; Views &gt; const &amp;src) -&gt; typename color_converted_view_type&lt; any_image_view&lt; Views &gt;, DstP &gt;::type</td></tr>
+<tr class="memdesc:ga717a73bbd9c89d2bfafb13e62a7a18e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">overload of generic color_converted_view with the default color-converter  <a href="group___image_view_transformations_color_convert.html#ga717a73bbd9c89d2bfafb13e62a7a18e8">More...</a><br /></td></tr>
+<tr class="separator:ga717a73bbd9c89d2bfafb13e62a7a18e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaabd1fbebc8b910f65e454a8e66626e19"><td class="memTemplParams" colspan="2">template&lt;typename DstP , typename Views , typename CC &gt; </td></tr>
+<tr class="memitem:gaabd1fbebc8b910f65e454a8e66626e19"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_transformations_color_convert.html#gaabd1fbebc8b910f65e454a8e66626e19">any_color_converted_view</a> (const any_image_view&lt; Views &gt; &amp;src, CC) -&gt; typename color_converted_view_type&lt; any_image_view&lt; Views &gt;, DstP, CC &gt;::type</td></tr>
+<tr class="memdesc:gaabd1fbebc8b910f65e454a8e66626e19"><td class="mdescLeft">&#160;</td><td class="mdescRight">overload of generic color_converted_view with user defined color-converter These are workarounds for GCC 3.4, which thinks color_converted_view is ambiguous with the same method for templated views (in <a class="el" href="image__view__factory_8hpp_source.html">gil/image_view_factory.hpp</a>)  <a href="group___image_view_transformations_color_convert.html#gaabd1fbebc8b910f65e454a8e66626e19">More...</a><br /></td></tr>
+<tr class="separator:gaabd1fbebc8b910f65e454a8e66626e19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c765ab04bc2af579ab5f0329a9e4147"><td class="memTemplParams" colspan="2">template&lt;typename DstP , typename Views &gt; </td></tr>
+<tr class="memitem:ga8c765ab04bc2af579ab5f0329a9e4147"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_transformations_color_convert.html#ga8c765ab04bc2af579ab5f0329a9e4147">any_color_converted_view</a> (const any_image_view&lt; Views &gt; &amp;src) -&gt; typename color_converted_view_type&lt; any_image_view&lt; Views &gt;, DstP &gt;::type</td></tr>
+<tr class="memdesc:ga8c765ab04bc2af579ab5f0329a9e4147"><td class="mdescLeft">&#160;</td><td class="mdescRight">overload of generic color_converted_view with the default color-converter These are workarounds for GCC 3.4, which thinks color_converted_view is ambiguous with the same method for templated views (in <a class="el" href="image__view__factory_8hpp_source.html">gil/image_view_factory.hpp</a>)  <a href="group___image_view_transformations_color_convert.html#ga8c765ab04bc2af579ab5f0329a9e4147">More...</a><br /></td></tr>
+<tr class="separator:ga8c765ab04bc2af579ab5f0329a9e4147"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Color converted view of another view. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="gaabd1fbebc8b910f65e454a8e66626e19"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto boost::gil::any_color_converted_view </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; Views &gt; &amp;&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">CC&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt; typename <a class="el" href="structboost_1_1gil_1_1color__converted__view__type.html">color_converted_view_type</a>&lt;<a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt;Views&gt;, DstP, CC&gt;::type
+</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>overload of generic color_converted_view with user defined color-converter These are workarounds for GCC 3.4, which thinks color_converted_view is ambiguous with the same method for templated views (in <a class="el" href="image__view__factory_8hpp_source.html">gil/image_view_factory.hpp</a>) </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Views</td><td>Models Boost.MP11-compatible list of models of <a class="el" href="structboost_1_1gil_1_1_image_view_concept.html" title="GIL&#39;s 2-dimensional view over immutable GIL pixels. ">ImageViewConcept</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga8c765ab04bc2af579ab5f0329a9e4147"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto boost::gil::any_color_converted_view </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; Views &gt; &amp;&#160;</td>
+          <td class="paramname"><em>src</em></td><td>)</td>
+          <td> -&gt; typename <a class="el" href="structboost_1_1gil_1_1color__converted__view__type.html">color_converted_view_type</a>&lt;<a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt;Views&gt;, DstP&gt;::type
+</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>overload of generic color_converted_view with the default color-converter These are workarounds for GCC 3.4, which thinks color_converted_view is ambiguous with the same method for templated views (in <a class="el" href="image__view__factory_8hpp_source.html">gil/image_view_factory.hpp</a>) </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Views</td><td>Models Boost.MP11-compatible list of models of <a class="el" href="structboost_1_1gil_1_1_image_view_concept.html" title="GIL&#39;s 2-dimensional view over immutable GIL pixels. ">ImageViewConcept</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gace6799466699dd0788ca7fd854227724"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto boost::gil::color_converted_view </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; Views &gt; &amp;&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">CC&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt; typename <a class="el" href="structboost_1_1gil_1_1color__converted__view__type.html">color_converted_view_type</a>&lt;<a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt;Views&gt;, DstP, CC&gt;::type
+</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>overload of generic color_converted_view with user defined color-converter </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Views</td><td>Models Boost.MP11-compatible list of models of <a class="el" href="structboost_1_1gil_1_1_image_view_concept.html" title="GIL&#39;s 2-dimensional view over immutable GIL pixels. ">ImageViewConcept</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga717a73bbd9c89d2bfafb13e62a7a18e8"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto boost::gil::color_converted_view </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; Views &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>src</em></td><td>)</td>
+          <td> -&gt; typename <a class="el" href="structboost_1_1gil_1_1color__converted__view__type.html">color_converted_view_type</a>&lt;<a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt;Views&gt;, DstP&gt;::type
+</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>overload of generic color_converted_view with the default color-converter </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Views</td><td>Models Boost.MP11-compatible list of models of <a class="el" href="structboost_1_1gil_1_1_image_view_concept.html" title="GIL&#39;s 2-dimensional view over immutable GIL pixels. ">ImageViewConcept</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
      <!-- start footer part -->

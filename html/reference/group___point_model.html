@@ -78,18 +78,18 @@ template&lt;typename T &gt; </td></tr>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ga0aad48387ed0659fdbb93f2080938398"><td class="memTemplItemLeft" align="right" valign="top">BOOST_FORCEINLINE point&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator-</b> (const point&lt; T &gt; &amp;p1, const point&lt; T &gt; &amp;p2)</td></tr>
 <tr class="separator:ga0aad48387ed0659fdbb93f2080938398"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab68d58a26e1bd81f131dfb526702525b"><td class="memTemplParams" colspan="2"><a class="anchor" id="gab68d58a26e1bd81f131dfb526702525b"></a>
+<tr class="memitem:gaab61e70922559b3c48820e5762cbd0ba"><td class="memTemplParams" colspan="2"><a class="anchor" id="gaab61e70922559b3c48820e5762cbd0ba"></a>
 template&lt;typename T , typename D &gt; </td></tr>
-<tr class="memitem:gab68d58a26e1bd81f131dfb526702525b"><td class="memTemplItemLeft" align="right" valign="top">BOOST_FORCEINLINE auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator/</b> (point&lt; T &gt; const &amp;p, D d) -&gt; point&lt; typename std::common_type&lt; T, D &gt;::type &gt;</td></tr>
-<tr class="separator:gab68d58a26e1bd81f131dfb526702525b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadcccc9254bf82ea302288f3b2354e0b3"><td class="memTemplParams" colspan="2"><a class="anchor" id="gadcccc9254bf82ea302288f3b2354e0b3"></a>
+<tr class="memitem:gaab61e70922559b3c48820e5762cbd0ba"><td class="memTemplItemLeft" align="right" valign="top">BOOST_FORCEINLINE auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator/</b> (point&lt; T &gt; const &amp;p, D d) -&gt; typename std::enable_if&lt; std::is_arithmetic&lt; D &gt;::value, point&lt; typename detail::std_common_type&lt; T, D &gt;::type &gt; &gt;::type</td></tr>
+<tr class="separator:gaab61e70922559b3c48820e5762cbd0ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaed8ce79d6a2a963ab0467f3ea60d1ab"><td class="memTemplParams" colspan="2"><a class="anchor" id="gaaed8ce79d6a2a963ab0467f3ea60d1ab"></a>
 template&lt;typename T , typename M &gt; </td></tr>
-<tr class="memitem:gadcccc9254bf82ea302288f3b2354e0b3"><td class="memTemplItemLeft" align="right" valign="top">BOOST_FORCEINLINE auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator*</b> (point&lt; T &gt; const &amp;p, M m) -&gt; point&lt; typename std::common_type&lt; T, M &gt;::type &gt;</td></tr>
-<tr class="separator:gadcccc9254bf82ea302288f3b2354e0b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac9adeb2acdd00c5becf7235fa0ee778b"><td class="memTemplParams" colspan="2"><a class="anchor" id="gac9adeb2acdd00c5becf7235fa0ee778b"></a>
+<tr class="memitem:gaaed8ce79d6a2a963ab0467f3ea60d1ab"><td class="memTemplItemLeft" align="right" valign="top">BOOST_FORCEINLINE auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator*</b> (point&lt; T &gt; const &amp;p, M m) -&gt; typename std::enable_if&lt; std::is_arithmetic&lt; M &gt;::value, point&lt; typename detail::std_common_type&lt; T, M &gt;::type &gt; &gt;::type</td></tr>
+<tr class="separator:gaaed8ce79d6a2a963ab0467f3ea60d1ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga04609bec4449d9ac905c2a83f8839169"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga04609bec4449d9ac905c2a83f8839169"></a>
 template&lt;typename T , typename M &gt; </td></tr>
-<tr class="memitem:gac9adeb2acdd00c5becf7235fa0ee778b"><td class="memTemplItemLeft" align="right" valign="top">BOOST_FORCEINLINE auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator*</b> (M m, point&lt; T &gt; const &amp;p) -&gt; point&lt; typename std::common_type&lt; T, M &gt;::type &gt;</td></tr>
-<tr class="separator:gac9adeb2acdd00c5becf7235fa0ee778b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga04609bec4449d9ac905c2a83f8839169"><td class="memTemplItemLeft" align="right" valign="top">BOOST_FORCEINLINE auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator*</b> (M m, point&lt; T &gt; const &amp;p) -&gt; typename std::enable_if&lt; std::is_arithmetic&lt; M &gt;::value, point&lt; typename detail::std_common_type&lt; T, M &gt;::type &gt; &gt;::type</td></tr>
+<tr class="separator:ga04609bec4449d9ac905c2a83f8839169"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4fa5ac5751e7092a699b60759f16b3a4"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga4fa5ac5751e7092a699b60759f16b3a4"></a>
 template&lt;std::size_t K, typename T &gt; </td></tr>
 <tr class="memitem:ga4fa5ac5751e7092a699b60759f16b3a4"><td class="memTemplItemLeft" align="right" valign="top">BOOST_FORCEINLINE T const &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>axis_value</b> (point&lt; T &gt; const &amp;p)</td></tr>

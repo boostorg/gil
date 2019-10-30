@@ -55,13 +55,44 @@ Functions</h2></td></tr>
 template&lt;typename View &gt; </td></tr>
 <tr class="memitem:ga2f1be3ce4ada5e0aa916105ddfc5bfdc"><td class="memTemplItemLeft" align="right" valign="top">dynamic_xy_step_transposed_type&lt; View &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><b>rotated90ccw_view</b> (const View &amp;src)</td></tr>
 <tr class="separator:ga2f1be3ce4ada5e0aa916105ddfc5bfdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8caee21531dbd8e156f41178078ad9d9"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga8caee21531dbd8e156f41178078ad9d9"></a>
-template&lt;typename ViewTypes &gt; </td></tr>
-<tr class="memitem:ga8caee21531dbd8e156f41178078ad9d9"><td class="memTemplItemLeft" align="right" valign="top">dynamic_xy_step_transposed_type&lt; any_image_view&lt; ViewTypes &gt; &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><b>rotated90ccw_view</b> (const any_image_view&lt; ViewTypes &gt; &amp;src)</td></tr>
-<tr class="separator:ga8caee21531dbd8e156f41178078ad9d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga50becbabe862a395e588393d8ab49e7f"><td class="memTemplParams" colspan="2">template&lt;typename Views &gt; </td></tr>
+<tr class="memitem:ga50becbabe862a395e588393d8ab49e7f"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_transformations90_c_c_w.html#ga50becbabe862a395e588393d8ab49e7f">rotated90ccw_view</a> (const any_image_view&lt; Views &gt; &amp;src) -&gt; typename dynamic_xy_step_transposed_type&lt; any_image_view&lt; Views &gt;&gt;::type</td></tr>
+<tr class="separator:ga50becbabe862a395e588393d8ab49e7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>view of a view rotated 90 degrees counter-clockwise </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga50becbabe862a395e588393d8ab49e7f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto boost::gil::rotated90ccw_view </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; Views &gt; &amp;&#160;</td>
+          <td class="paramname"><em>src</em></td><td>)</td>
+          <td> -&gt; typename <a class="el" href="structboost_1_1gil_1_1dynamic__xy__step__transposed__type.html">dynamic_xy_step_transposed_type</a>&lt;<a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt;Views&gt;&gt;::type
+</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Views</td><td>Models Boost.MP11-compatible list of models of <a class="el" href="structboost_1_1gil_1_1_image_view_concept.html" title="GIL&#39;s 2-dimensional view over immutable GIL pixels. ">ImageViewConcept</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
      <!-- start footer part -->

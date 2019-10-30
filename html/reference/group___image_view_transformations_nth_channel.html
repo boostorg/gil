@@ -55,8 +55,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1nth__channel__view__type.html">nth_channel_view_type&lt; View &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given a source image view type View, returns the type of an image view over a single channel of ViewIf the channels in the source view are adjacent in memory (such as planar non-step view or single-channel view) then the return view is a single-channel non-step view. If the channels are non-adjacent (interleaved and/or step view) then the return view is a single-channel step view.  <a href="structboost_1_1gil_1_1nth__channel__view__type.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1nth__channel__view__type_3_01any__image__view_3_01_view_types_01_4_01_4.html">nth_channel_view_type&lt; any_image_view&lt; ViewTypes &gt; &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given a runtime source image view, returns the type of a runtime image view over a single channel of the source view.  <a href="structboost_1_1gil_1_1nth__channel__view__type_3_01any__image__view_3_01_view_types_01_4_01_4.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1nth__channel__view__type_3_01any__image__view_3_01_views_01_4_01_4.html">nth_channel_view_type&lt; any_image_view&lt; Views &gt; &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given a runtime source image view, returns the type of a runtime image view over a single channel of the source view.  <a href="structboost_1_1gil_1_1nth__channel__view__type_3_01any__image__view_3_01_views_01_4_01_4.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
@@ -65,13 +65,54 @@ Functions</h2></td></tr>
 template&lt;typename View &gt; </td></tr>
 <tr class="memitem:gad976e8c51016d9cdbb47d57ab2ce8717"><td class="memTemplItemLeft" align="right" valign="top">nth_channel_view_type&lt; View &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><b>nth_channel_view</b> (const View &amp;src, int n)</td></tr>
 <tr class="separator:gad976e8c51016d9cdbb47d57ab2ce8717"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga18e951d5686b03b8a000fb42776aad11"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga18e951d5686b03b8a000fb42776aad11"></a>
-template&lt;typename ViewTypes &gt; </td></tr>
-<tr class="memitem:ga18e951d5686b03b8a000fb42776aad11"><td class="memTemplItemLeft" align="right" valign="top">nth_channel_view_type&lt; any_image_view&lt; ViewTypes &gt; &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><b>nth_channel_view</b> (const any_image_view&lt; ViewTypes &gt; &amp;src, int n)</td></tr>
-<tr class="separator:ga18e951d5686b03b8a000fb42776aad11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga459665184d07a1121424e99478aea947"><td class="memTemplParams" colspan="2">template&lt;typename Views &gt; </td></tr>
+<tr class="memitem:ga459665184d07a1121424e99478aea947"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_transformations_nth_channel.html#ga459665184d07a1121424e99478aea947">nth_channel_view</a> (const any_image_view&lt; Views &gt; &amp;src, int n) -&gt; typename nth_channel_view_type&lt; any_image_view&lt; Views &gt;&gt;::type</td></tr>
+<tr class="separator:ga459665184d07a1121424e99478aea947"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>single-channel (grayscale) view of the N-th channel of a given <a class="el" href="classboost_1_1gil_1_1image__view.html" title="A lightweight object that interprets memory as a 2D array of pixels. Models ImageViewConcept,PixelBasedConcept,HasDynamicXStepTypeConcept,HasDynamicYStepTypeConcept,HasTransposedTypeConcept. ">image_view</a> </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga459665184d07a1121424e99478aea947"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto boost::gil::nth_channel_view </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; Views &gt; &amp;&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>n</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt; typename <a class="el" href="structboost_1_1gil_1_1nth__channel__view__type.html">nth_channel_view_type</a>&lt;<a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt;Views&gt;&gt;::type
+</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Views</td><td>Models Boost.MP11-compatible list of models of <a class="el" href="structboost_1_1gil_1_1_image_view_concept.html" title="GIL&#39;s 2-dimensional view over immutable GIL pixels. ">ImageViewConcept</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
      <!-- HTML footer for doxygen 1.8.13-->
      <!-- start footer part -->
