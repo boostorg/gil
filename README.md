@@ -87,8 +87,8 @@ There is number of communication channels to ask questions and discuss Boost.GIL
 - Mailing list [boost-gil](https://lists.boost.org/mailman/listinfo.cgi/boost-gil) ([archive](https://lists.boost.org/boost-gil/)) as well as official Boost lists, [boost-users](https://lists.boost.org/mailman/listinfo.cgi/boost-users) and
 [boost](https://lists.boost.org/mailman/listinfo.cgi/boost).
 - Gitter chat room [boostorg//gil](https://gitter.im/boostorg/gil).
-- [cpplang.slack.com](https://cpplang.slack.com) chat rooms [#boost-user](https://cpplang.slack.com/messages/CEWTCFDN0/) and [#boost](https://cpplang.slack.com/messages/C27KZLB0X/).
-- IRC channel [#boost](irc://chat.freenode.net/#osgeo-geos) on FreeNode.
+- [cpplang.slack.com](https://cpplang.slack.com) chat rooms [\#boost-user](https://cpplang.slack.com/messages/CEWTCFDN0/) and [\#boost](https://cpplang.slack.com/messages/C27KZLB0X/).
+- IRC channel [\#boost](irc://chat.freenode.net/#boost) on FreeNode.
 - You can also ask questions via GitHub issue.
 
 ## Contributing (We Need Your Help!)
