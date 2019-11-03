@@ -1,5 +1,3 @@
-![logo](https://raw.githubusercontent.com/boostorg/gil/develop/doc/_static/gil.png)
-
 # Contributing to Boost.GIL
 
 Boost.GIL is a member of [Boost](https://www.boost.org) libraries.
