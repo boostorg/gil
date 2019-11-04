@@ -47,8 +47,9 @@ variety of images with performance similar to hand-writing for a specific image 
 
 ## Documentation
 
-- Latest release: https://boost.org/libs/gil
-- Development: http://boostorg.github.io/gil/
+- [Latest release](https://boost.org/libs/gil)
+- [Branch master](http://boostorg.github.io/gil/) (latest release with minor changes)
+- [Branch develop](http://boostorg.github.io/gil/develop/)
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for instructions about how to build and
 run tests, examples.
@@ -74,10 +75,10 @@ Optionally, in order to build and run tests and examples:
 
 The official repository contains the following branches:
 
-* [**master**](https://github.com/boostorg/gil/tree/master) This
+- [**master**](https://github.com/boostorg/gil/tree/master) This
   holds the most recent snapshot with code that is known to be stable.
 
-* [**develop**](https://github.com/boostorg/gil/tree/develop) This
+- [**develop**](https://github.com/boostorg/gil/tree/develop) This
   holds the most recent snapshot. It may contain unstable code.
 
 ## Community
@@ -106,7 +107,7 @@ with solving reported issues, especially those labelled with:
 
 - [status/need-help](https://github.com/boostorg/gil/labels/status%2Fneed-help)
 - [status/need-feedback](https://github.com/boostorg/gil/labels/status%2Fneed-feedback)
-- [need-minimal-example ](https://github.com/boostorg/gil/labels/status%2Fneed-minimal-example)
+- [need-minimal-example](https://github.com/boostorg/gil/labels/status%2Fneed-minimal-example)
 
 Any feedback from users and developers, even simple questions about how things work
 or why they were done a certain way, carries value and can be used to improve the library.
