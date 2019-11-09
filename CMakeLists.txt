@@ -26,28 +26,12 @@ option(GIL_USE_CLANG_TIDY "Set CMAKE_CXX_CLANG_TIDY property on targets to enabl
 set(CMAKE_CXX_STANDARD 11 CACHE STRING "C++ standard version to use (default is 11)")
 
 #-----------------------------------------------------------------------------
-# Version
-#-----------------------------------------------------------------------------
-file(STRINGS include/boost/gil/version.hpp
-  BOOST_GIL_LIB_VERSION
-  REGEX "#define BOOST_GIL_LIB_VERSION ")
-
-if(BOOST_GIL_LIB_VERSION)
-  string(REGEX REPLACE ".*\"(.*)\".*" "\\1" BOOST_GIL_LIB_VERSION "${BOOST_GIL_LIB_VERSION}")
-  string(REPLACE "_" "." BOOST_GIL_LIB_VERSION "${BOOST_GIL_LIB_VERSION}")
-else()
-  message(SEND_ERROR "Cannot find version in '${CMAKE_CURRENT_SOURCE_DIR}/include/boost/gil/version.hpp'")
-endif()
-
-#-----------------------------------------------------------------------------
 # Project
 #-----------------------------------------------------------------------------
 project(Boost.GIL
   LANGUAGES CXX
-  VERSION ${BOOST_GIL_LIB_VERSION}
   DESCRIPTION "Boost.GIL - Generic Image Library | Requires C++11 since Boost 1.68")
 
-message(STATUS "Boost.GIL: Version ${PROJECT_VERSION}")
 list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_BINARY_DIR}/cmake)
 
 #-----------------------------------------------------------------------------
