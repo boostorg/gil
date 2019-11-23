@@ -30,9 +30,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Move all tests, core features and extensions, inside `test/` directory ([PR #302](https://github.com/boostorg/gil/pull/302)).
 
 ### Removed
-- Dropped support for GCC <= 4.8 ([PR #296](https://github.com/boostorg/gil/pull/296)).
 - Replace Boost.MPL with Boost.MP11 ([PR #274](https://github.com/boostorg/gil/pull/274)).
 - Removed use of Boost.TypeTraits ([PR #274](https://github.com/boostorg/gil/pull/274)).
+- Dropped support for GCC <= 4.8 ([PR #296](https://github.com/boostorg/gil/pull/296)).
+- Remove `include/boost/gil/version.hpp` file as unused ([PR #403](https://github.com/boostorg/gil/pull/403)).
 
 ### Fixed
 - Undetermined value of default-initialized channel and pixel objects ([PR #273](https://github.com/boostorg/gil/pull/273)).
