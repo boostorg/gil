@@ -6,7 +6,7 @@
         "Hailin Jin",
         "Christian Henning"
     ],
-    "description": "Generic Image Library",
+    "description": "(C++11) Generic Image Library",
     "category": [
         "Algorithms",
         "Containers",

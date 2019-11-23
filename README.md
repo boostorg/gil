@@ -47,8 +47,9 @@ variety of images with performance similar to hand-writing for a specific image 
 
 ## Documentation
 
-- Latest release: https://boost.org/libs/gil
-- Development: http://boostorg.github.io/gil/
+- [Latest release](https://boost.org/libs/gil)
+- [Branch master](http://boostorg.github.io/gil/) (latest release with minor changes)
+- [Branch develop](http://boostorg.github.io/gil/develop/)
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for instructions about how to build and
 run tests, examples.
@@ -74,10 +75,10 @@ Optionally, in order to build and run tests and examples:
 
 The official repository contains the following branches:
 
-* [**master**](https://github.com/boostorg/gil/tree/master) This
+- [**master**](https://github.com/boostorg/gil/tree/master) This
   holds the most recent snapshot with code that is known to be stable.
 
-* [**develop**](https://github.com/boostorg/gil/tree/develop) This
+- [**develop**](https://github.com/boostorg/gil/tree/develop) This
   holds the most recent snapshot. It may contain unstable code.
 
 ## Community
@@ -87,8 +88,8 @@ There is number of communication channels to ask questions and discuss Boost.GIL
 - Mailing list [boost-gil](https://lists.boost.org/mailman/listinfo.cgi/boost-gil) ([archive](https://lists.boost.org/boost-gil/)) as well as official Boost lists, [boost-users](https://lists.boost.org/mailman/listinfo.cgi/boost-users) and
 [boost](https://lists.boost.org/mailman/listinfo.cgi/boost).
 - Gitter chat room [boostorg//gil](https://gitter.im/boostorg/gil).
-- [cpplang.slack.com](https://cpplang.slack.com) chat rooms [#boost-user](https://cpplang.slack.com/messages/CEWTCFDN0/) and [#boost](https://cpplang.slack.com/messages/C27KZLB0X/).
-- IRC channel [#boost](irc://chat.freenode.net/#osgeo-geos) on FreeNode.
+- [cpplang.slack.com](https://cpplang.slack.com) chat rooms [\#boost-user](https://cpplang.slack.com/messages/CEWTCFDN0/) and [\#boost](https://cpplang.slack.com/messages/C27KZLB0X/).
+- IRC channel [\#boost](irc://chat.freenode.net/#boost) on FreeNode.
 - You can also ask questions via GitHub issue.
 
 ## Contributing (We Need Your Help!)
@@ -106,7 +107,7 @@ with solving reported issues, especially those labelled with:
 
 - [status/need-help](https://github.com/boostorg/gil/labels/status%2Fneed-help)
 - [status/need-feedback](https://github.com/boostorg/gil/labels/status%2Fneed-feedback)
-- [need-minimal-example ](https://github.com/boostorg/gil/labels/status%2Fneed-minimal-example)
+- [need-minimal-example](https://github.com/boostorg/gil/labels/status%2Fneed-minimal-example)
 
 Any feedback from users and developers, even simple questions about how things work
 or why they were done a certain way, carries value and can be used to improve the library.
