@@ -51,6 +51,8 @@ variety of images with performance similar to hand-writing for a specific image 
 - [Branch master](http://boostorg.github.io/gil/) (latest release with minor changes)
 - [Branch develop](http://boostorg.github.io/gil/develop/)
 
+See [RELEASES.md](RELEASES.md) for release notes.
+
 See [CONTRIBUTING.md](CONTRIBUTING.md) for instructions about how to build and
 run tests, examples.
 
