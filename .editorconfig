@@ -24,7 +24,7 @@ guidelines = 78
 indent_size = 2
 indent_style = space
 max_line_length = 79
-trim_trailing_whitespace = true
+trim_trailing_whitespace = false
 insert_final_newline = true
 
 [{Jamfile*,CMakeLists.txt,CMakeSettings.json,*.cmake}]
