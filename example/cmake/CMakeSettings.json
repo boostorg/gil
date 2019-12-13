@@ -5,7 +5,18 @@
   },
   "environments": [
     { "BuildDir": "${workspaceRoot}\\_build" },
-    { "InstallDir": "${workspaceRoot}\\_install" }
+    { "InstallDir": "${workspaceRoot}\\_install" },
+    { "name": "DEFAULT_Boost_ADDITIONAL_VERSIONS", "value": "1.73;1.72;1.71" },
+    { "name": "DEFAULT_Boost_COMPILER", "value": "-vc142;-vc141" },
+    { "name": "DEFAULT_Boost_DEBUG", "value": "ON" },
+    { "name": "DEFAULT_GIL_BUILD_EXAMPLES", "value": "ON" },
+    { "name": "DEFAULT_GIL_BUILD_HEADER_TESTS", "value": "OFF" },
+    { "name": "DEFAULT_GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "ON" },
+    { "name": "DEFAULT_GIL_ENABLE_EXT_IO", "value": "ON" },
+    { "name": "DEFAULT_GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
+    { "name": "DEFAULT_GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
+    { "name": "DEFAULT_GIL_USE_CONAN", "value": "ON" },
+    { "name": "DEFAULT_GIL_USE_CLANG_TIDY", "value": "OFF" }
   ],
   "configurations": [
     {
@@ -19,18 +30,18 @@
       "buildCommandArgs": "-v",
       "ctestCommandArgs": "",
       "variables": [
-        { "name": "Boost_DEBUG", "value": "ON" },
-        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.73;1.72;1.71" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "${env.DEFAULT_Boost_ADDITIONAL_VERSIONS}" },
         { "name": "Boost_ARCHITECTURE", "value": "-x64" },
-        { "name": "Boost_COMPILER", "value": "-vc142;-vc141" },
-        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
-        { "name": "GIL_BUILD_HEADER_TESTS", "value": "OFF" },
-        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_IO", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
-        { "name": "GIL_USE_CONAN", "value": "ON" },
-        { "name": "GIL_USE_CLANG_TIDY", "value": "OFF" }
+        { "name": "Boost_COMPILER", "value": "${env.DEFAULT_Boost_COMPILER}" },
+        { "name": "Boost_DEBUG", "value": "${env.DEFAULT_Boost_DEBUG}" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "${env.DEFAULT_GIL_BUILD_EXAMPLES}" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "${env.DEFAULT_GIL_BUILD_HEADER_TESTS}" },
+        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "${env.DEFAULT_GIL_ENABLE_EXT_DYNAMIC_IMAGE}" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "${env.DEFAULT_GIL_ENABLE_EXT_IO}" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "${env.DEFAULT_GIL_ENABLE_EXT_NUMERIC}" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "${env.DEFAULT_GIL_ENABLE_EXT_TOOLBOX}" },
+        { "name": "GIL_USE_CONAN", "value": "${env.DEFAULT_GIL_USE_CONAN}" },
+        { "name": "GIL_USE_CLANG_TIDY", "value": "${env.DEFAULT_GIL_USE_CLANG_TIDY}" }
       ]
     },
     {
@@ -44,18 +55,18 @@
       "buildCommandArgs": "-v",
       "ctestCommandArgs": "",
       "variables": [
-        { "name": "Boost_DEBUG", "value": "ON" },
-        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.73;1.72;1.71" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "${env.DEFAULT_Boost_ADDITIONAL_VERSIONS}" },
         { "name": "Boost_ARCHITECTURE", "value": "-x64" },
-        { "name": "Boost_COMPILER", "value": "-vc142;-vc141" },
-        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
-        { "name": "GIL_BUILD_HEADER_TESTS", "value": "OFF" },
-        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_IO", "value": "OFF" },
-        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
-        { "name": "GIL_USE_CONAN", "value": "OFF" },
-        { "name": "GIL_USE_CLANG_TIDY", "value": "OFF" }
+        { "name": "Boost_COMPILER", "value": "${env.DEFAULT_Boost_COMPILER}" },
+        { "name": "Boost_DEBUG", "value": "${env.DEFAULT_Boost_DEBUG}" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "${env.DEFAULT_GIL_BUILD_EXAMPLES}" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "${env.DEFAULT_GIL_BUILD_HEADER_TESTS}" },
+        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "${env.DEFAULT_GIL_ENABLE_EXT_DYNAMIC_IMAGE}" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "${env.DEFAULT_GIL_ENABLE_EXT_IO}" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "${env.DEFAULT_GIL_ENABLE_EXT_NUMERIC}" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "${env.DEFAULT_GIL_ENABLE_EXT_TOOLBOX}" },
+        { "name": "GIL_USE_CONAN", "value": "${env.DEFAULT_GIL_USE_CONAN}" },
+        { "name": "GIL_USE_CLANG_TIDY", "value": "${env.DEFAULT_GIL_USE_CLANG_TIDY}" }
       ]
     },
     {
@@ -69,8 +80,8 @@
       "buildCommandArgs": "-v",
       "ctestCommandArgs": "",
       "variables": [
-        { "name": "Boost_DEBUG", "value": "ON" },
-        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.73;1.72;1.71" },
+        { "name": "Boost_DEBUG", "value": "${env.DEFAULT_Boost_DEBUG}" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "${env.DEFAULT_Boost_ADDITIONAL_VERSIONS}" },
         { "name": "Boost_ARCHITECTURE", "value": "-x32" },
         { "name": "Boost_COMPILER", "value": "-vc142;-vc141" },
         { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
@@ -94,18 +105,18 @@
       "buildCommandArgs": "-v",
       "ctestCommandArgs": "",
       "variables": [
-        { "name": "Boost_DEBUG", "value": "ON" },
-        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.73;1.72;1.71" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "${env.DEFAULT_Boost_ADDITIONAL_VERSIONS}" },
         { "name": "Boost_ARCHITECTURE", "value": "-x32" },
-        { "name": "Boost_COMPILER", "value": "-vc142;-vc141" },
-        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
-        { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_IO", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
-        { "name": "GIL_USE_CONAN", "value": "ON" },
-        { "name": "GIL_USE_CLANG_TIDY", "value": "OFF" }
+        { "name": "Boost_COMPILER", "value": "${env.DEFAULT_Boost_COMPILER}" },
+        { "name": "Boost_DEBUG", "value": "${env.DEFAULT_Boost_DEBUG}" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "${env.DEFAULT_GIL_BUILD_EXAMPLES}" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "${env.DEFAULT_GIL_BUILD_HEADER_TESTS}" },
+        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "${env.DEFAULT_GIL_ENABLE_EXT_DYNAMIC_IMAGE}" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "${env.DEFAULT_GIL_ENABLE_EXT_IO}" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "${env.DEFAULT_GIL_ENABLE_EXT_NUMERIC}" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "${env.DEFAULT_GIL_ENABLE_EXT_TOOLBOX}" },
+        { "name": "GIL_USE_CONAN", "value": "${env.DEFAULT_GIL_USE_CONAN}" },
+        { "name": "GIL_USE_CLANG_TIDY", "value": "${env.DEFAULT_GIL_USE_CLANG_TIDY}" }
       ]
     },
     {
@@ -118,18 +129,18 @@
       "cmakeCommandArgs": "",
       "ctestCommandArgs": "",
       "variables": [
-        { "name": "Boost_DEBUG", "value": "ON" },
-        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.73;1.72;1.71" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "${env.DEFAULT_Boost_ADDITIONAL_VERSIONS}" },
         { "name": "Boost_ARCHITECTURE", "value": "-x64" },
-        { "name": "Boost_COMPILER", "value": "-vc142" },
-        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
-        { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_IO", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
-        { "name": "GIL_USE_CONAN", "value": "ON" },
-        { "name": "GIL_USE_CLANG_TIDY", "value": "OFF" }
+        { "name": "Boost_COMPILER", "value": "${env.DEFAULT_Boost_COMPILER}" },
+        { "name": "Boost_DEBUG", "value": "${env.DEFAULT_Boost_DEBUG}" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "${env.DEFAULT_GIL_BUILD_EXAMPLES}" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "${env.DEFAULT_GIL_BUILD_HEADER_TESTS}" },
+        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "${env.DEFAULT_GIL_ENABLE_EXT_DYNAMIC_IMAGE}" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "${env.DEFAULT_GIL_ENABLE_EXT_IO}" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "${env.DEFAULT_GIL_ENABLE_EXT_NUMERIC}" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "${env.DEFAULT_GIL_ENABLE_EXT_TOOLBOX}" },
+        { "name": "GIL_USE_CONAN", "value": "${env.DEFAULT_GIL_USE_CONAN}" },
+        { "name": "GIL_USE_CLANG_TIDY", "value": "${env.DEFAULT_GIL_USE_CLANG_TIDY}" }
       ]
     },
     {
@@ -142,18 +153,18 @@
       "cmakeCommandArgs": "",
       "ctestCommandArgs": "",
       "variables": [
-        { "name": "Boost_DEBUG", "value": "ON" },
-        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.73;1.72;1.71" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "${env.DEFAULT_Boost_ADDITIONAL_VERSIONS}" },
         { "name": "Boost_ARCHITECTURE", "value": "-x64" },
         { "name": "Boost_COMPILER", "value": "-vc142" },
-        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
-        { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_IO", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
-        { "name": "GIL_USE_CONAN", "value": "ON" },
-        { "name": "GIL_USE_CLANG_TIDY", "value": "OFF" }
+        { "name": "Boost_DEBUG", "value": "${env.DEFAULT_Boost_DEBUG}" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "${env.DEFAULT_GIL_BUILD_EXAMPLES}" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "${env.DEFAULT_GIL_BUILD_HEADER_TESTS}" },
+        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "${env.DEFAULT_GIL_ENABLE_EXT_DYNAMIC_IMAGE}" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "${env.DEFAULT_GIL_ENABLE_EXT_IO}" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "${env.DEFAULT_GIL_ENABLE_EXT_NUMERIC}" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "${env.DEFAULT_GIL_ENABLE_EXT_TOOLBOX}" },
+        { "name": "GIL_USE_CONAN", "value": "${env.DEFAULT_GIL_USE_CONAN}" },
+        { "name": "GIL_USE_CLANG_TIDY", "value": "${env.DEFAULT_GIL_USE_CLANG_TIDY}" }
       ]
     },
     {
@@ -166,18 +177,18 @@
       "cmakeCommandArgs": "",
       "ctestCommandArgs": "",
       "variables": [
-        { "name": "Boost_DEBUG", "value": "ON" },
-        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.73;1.72;1.71" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "${env.DEFAULT_Boost_ADDITIONAL_VERSIONS}" },
         { "name": "Boost_ARCHITECTURE", "value": "-x32" },
         { "name": "Boost_COMPILER", "value": "-vc142" },
-        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
-        { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_IO", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
-        { "name": "GIL_USE_CONAN", "value": "ON" },
-        { "name": "GIL_USE_CLANG_TIDY", "value": "OFF" }
+        { "name": "Boost_DEBUG", "value": "${env.DEFAULT_Boost_DEBUG}" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "${env.DEFAULT_GIL_BUILD_EXAMPLES}" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "${env.DEFAULT_GIL_BUILD_HEADER_TESTS}" },
+        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "${env.DEFAULT_GIL_ENABLE_EXT_DYNAMIC_IMAGE}" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "${env.DEFAULT_GIL_ENABLE_EXT_IO}" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "${env.DEFAULT_GIL_ENABLE_EXT_NUMERIC}" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "${env.DEFAULT_GIL_ENABLE_EXT_TOOLBOX}" },
+        { "name": "GIL_USE_CONAN", "value": "${env.DEFAULT_GIL_USE_CONAN}" },
+        { "name": "GIL_USE_CLANG_TIDY", "value": "${env.DEFAULT_GIL_USE_CLANG_TIDY}" }
       ]
     },
     {
@@ -190,18 +201,18 @@
       "cmakeCommandArgs": "",
       "ctestCommandArgs": "",
       "variables": [
-        { "name": "Boost_DEBUG", "value": "ON" },
-        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.73;1.72;1.71" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "${env.DEFAULT_Boost_ADDITIONAL_VERSIONS}" },
         { "name": "Boost_ARCHITECTURE", "value": "-x32" },
         { "name": "Boost_COMPILER", "value": "-vc142" },
-        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
-        { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_IO", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
-        { "name": "GIL_USE_CONAN", "value": "ON" },
-        { "name": "GIL_USE_CLANG_TIDY", "value": "OFF" }
+        { "name": "Boost_DEBUG", "value": "${env.DEFAULT_Boost_DEBUG}" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "${env.DEFAULT_GIL_BUILD_EXAMPLES}" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "${env.DEFAULT_GIL_BUILD_HEADER_TESTS}" },
+        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "${env.DEFAULT_GIL_ENABLE_EXT_DYNAMIC_IMAGE}" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "${env.DEFAULT_GIL_ENABLE_EXT_IO}" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "${env.DEFAULT_GIL_ENABLE_EXT_NUMERIC}" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "${env.DEFAULT_GIL_ENABLE_EXT_TOOLBOX}" },
+        { "name": "GIL_USE_CONAN", "value": "${env.DEFAULT_GIL_USE_CONAN}" },
+        { "name": "GIL_USE_CLANG_TIDY", "value": "${env.DEFAULT_GIL_USE_CLANG_TIDY}" }
       ]
     },
     {
@@ -214,18 +225,18 @@
       "cmakeCommandArgs": "",
       "ctestCommandArgs": "",
       "variables": [
-        { "name": "Boost_DEBUG", "value": "ON" },
-        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.73;1.72;1.71" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "${env.DEFAULT_Boost_ADDITIONAL_VERSIONS}" },
         { "name": "Boost_ARCHITECTURE", "value": "-x64" },
         { "name": "Boost_COMPILER", "value": "-vc141" },
-        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
-        { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_IO", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
-        { "name": "GIL_USE_CONAN", "value": "ON" },
-        { "name": "GIL_USE_CLANG_TIDY", "value": "OFF" }
+        { "name": "Boost_DEBUG", "value": "${env.DEFAULT_Boost_DEBUG}" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "${env.DEFAULT_GIL_BUILD_EXAMPLES}" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "${env.DEFAULT_GIL_BUILD_HEADER_TESTS}" },
+        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "${env.DEFAULT_GIL_ENABLE_EXT_DYNAMIC_IMAGE}" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "${env.DEFAULT_GIL_ENABLE_EXT_IO}" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "${env.DEFAULT_GIL_ENABLE_EXT_NUMERIC}" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "${env.DEFAULT_GIL_ENABLE_EXT_TOOLBOX}" },
+        { "name": "GIL_USE_CONAN", "value": "${env.DEFAULT_GIL_USE_CONAN}" },
+        { "name": "GIL_USE_CLANG_TIDY", "value": "${env.DEFAULT_GIL_USE_CLANG_TIDY}" }
       ]
     },
     {
@@ -238,7 +249,15 @@
       "cmakeCommandArgs": "",
       "ctestCommandArgs": "",
       "variables": [
-        { "name": "CMAKE_TOOLCHAIN_FILE", "value": "C:\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake" }
+        { "name": "CMAKE_TOOLCHAIN_FILE", "value": "C:\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "${env.DEFAULT_GIL_BUILD_EXAMPLES}" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "${env.DEFAULT_GIL_BUILD_HEADER_TESTS}" },
+        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "${env.DEFAULT_GIL_ENABLE_EXT_DYNAMIC_IMAGE}" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "${env.DEFAULT_GIL_ENABLE_EXT_IO}" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "${env.DEFAULT_GIL_ENABLE_EXT_NUMERIC}" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "${env.DEFAULT_GIL_ENABLE_EXT_TOOLBOX}" },
+        { "name": "GIL_USE_CONAN", "value": "OFF" },
+        { "name": "GIL_USE_CLANG_TIDY", "value": "${env.DEFAULT_GIL_USE_CLANG_TIDY}" }
       ]
     },
     {
@@ -251,7 +270,15 @@
       "cmakeCommandArgs": "",
       "ctestCommandArgs": "",
       "variables": [
-        { "name": "CMAKE_TOOLCHAIN_FILE", "value": "C:\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake" }
+        { "name": "CMAKE_TOOLCHAIN_FILE", "value": "C:\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "${env.DEFAULT_GIL_BUILD_EXAMPLES}" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "${env.DEFAULT_GIL_BUILD_HEADER_TESTS}" },
+        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "${env.DEFAULT_GIL_ENABLE_EXT_DYNAMIC_IMAGE}" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "${env.DEFAULT_GIL_ENABLE_EXT_IO}" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "${env.DEFAULT_GIL_ENABLE_EXT_NUMERIC}" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "${env.DEFAULT_GIL_ENABLE_EXT_TOOLBOX}" },
+        { "name": "GIL_USE_CONAN", "value": "OFF" },
+        { "name": "GIL_USE_CLANG_TIDY", "value": "${env.DEFAULT_GIL_USE_CLANG_TIDY}" }
       ]
     },
     {
@@ -264,7 +291,15 @@
       "cmakeCommandArgs": "",
       "ctestCommandArgs": "",
       "variables": [
-        { "name": "CMAKE_TOOLCHAIN_FILE", "value": "C:\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake" }
+        { "name": "CMAKE_TOOLCHAIN_FILE", "value": "C:\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "${env.DEFAULT_GIL_BUILD_EXAMPLES}" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "${env.DEFAULT_GIL_BUILD_HEADER_TESTS}" },
+        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "${env.DEFAULT_GIL_ENABLE_EXT_DYNAMIC_IMAGE}" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "${env.DEFAULT_GIL_ENABLE_EXT_IO}" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "${env.DEFAULT_GIL_ENABLE_EXT_NUMERIC}" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "${env.DEFAULT_GIL_ENABLE_EXT_TOOLBOX}" },
+        { "name": "GIL_USE_CONAN", "value": "OFF" },
+        { "name": "GIL_USE_CLANG_TIDY", "value": "${env.DEFAULT_GIL_USE_CLANG_TIDY}" }
       ]
     },
     {
@@ -282,17 +317,17 @@
       "wslPath": "${defaultWSLPath}",
       "addressSanitizerRuntimeFlags": "detect_leaks=0",
       "variables": [
-        { "name": "Boost_DEBUG", "value": "ON" },
-        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.73;1.72;1.71" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "${env.DEFAULT_Boost_ADDITIONAL_VERSIONS}" },
         { "name": "Boost_ARCHITECTURE", "value": "-x64" },
-        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
-        { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_IO", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
+        { "name": "Boost_DEBUG", "value": "${env.DEFAULT_Boost_DEBUG}" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "${env.DEFAULT_GIL_BUILD_EXAMPLES}" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "${env.DEFAULT_GIL_BUILD_HEADER_TESTS}" },
+        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "${env.DEFAULT_GIL_ENABLE_EXT_DYNAMIC_IMAGE}" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "${env.DEFAULT_GIL_ENABLE_EXT_IO}" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "${env.DEFAULT_GIL_ENABLE_EXT_NUMERIC}" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "${env.DEFAULT_GIL_ENABLE_EXT_TOOLBOX}" },
         { "name": "GIL_USE_CONAN", "value": "OFF" },
-        { "name": "GIL_USE_CLANG_TIDY", "value": "OFF" }
+        { "name": "GIL_USE_CLANG_TIDY", "value": "${env.DEFAULT_GIL_USE_CLANG_TIDY}" }
       ]
     },
     {
@@ -310,17 +345,17 @@
       "wslPath": "${defaultWSLPath}",
       "addressSanitizerRuntimeFlags": "detect_leaks=0",
       "variables": [
-        { "name": "Boost_DEBUG", "value": "ON" },
-        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.73;1.72;1.71" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "${env.DEFAULT_Boost_ADDITIONAL_VERSIONS}" },
         { "name": "Boost_ARCHITECTURE", "value": "-x64" },
-        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
-        { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_IO", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
+        { "name": "Boost_DEBUG", "value": "${env.DEFAULT_Boost_DEBUG}" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "${env.DEFAULT_GIL_BUILD_EXAMPLES}" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "${env.DEFAULT_GIL_BUILD_HEADER_TESTS}" },
+        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "${env.DEFAULT_GIL_ENABLE_EXT_DYNAMIC_IMAGE}" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "${env.DEFAULT_GIL_ENABLE_EXT_IO}" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "${env.DEFAULT_GIL_ENABLE_EXT_NUMERIC}" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "${env.DEFAULT_GIL_ENABLE_EXT_TOOLBOX}" },
         { "name": "GIL_USE_CONAN", "value": "OFF" },
-        { "name": "GIL_USE_CLANG_TIDY", "value": "OFF" }
+        { "name": "GIL_USE_CLANG_TIDY", "value": "${env.DEFAULT_GIL_USE_CLANG_TIDY}" }
       ]
     },
     {
@@ -337,17 +372,17 @@
       "wslPath": "${defaultWSLPath}",
       "addressSanitizerRuntimeFlags": "detect_leaks=0",
       "variables": [
-        { "name": "Boost_DEBUG", "value": "ON" },
-        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.73;1.72;1.71" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "${env.DEFAULT_Boost_ADDITIONAL_VERSIONS}" },
         { "name": "Boost_ARCHITECTURE", "value": "-x64" },
-        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
-        { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_IO", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
+        { "name": "Boost_DEBUG", "value": "${env.DEFAULT_Boost_DEBUG}" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "${env.DEFAULT_GIL_BUILD_EXAMPLES}" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "${env.DEFAULT_GIL_BUILD_HEADER_TESTS}" },
+        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "${env.DEFAULT_GIL_ENABLE_EXT_DYNAMIC_IMAGE}" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "${env.DEFAULT_GIL_ENABLE_EXT_IO}" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "${env.DEFAULT_GIL_ENABLE_EXT_NUMERIC}" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "${env.DEFAULT_GIL_ENABLE_EXT_TOOLBOX}" },
         { "name": "GIL_USE_CONAN", "value": "OFF" },
-        { "name": "GIL_USE_CLANG_TIDY", "value": "OFF" }
+        { "name": "GIL_USE_CLANG_TIDY", "value": "${env.DEFAULT_GIL_USE_CLANG_TIDY}" }
       ]
     },
     {
@@ -364,17 +399,17 @@
       "wslPath": "${defaultWSLPath}",
       "addressSanitizerRuntimeFlags": "detect_leaks=0",
       "variables": [
-        { "name": "Boost_DEBUG", "value": "ON" },
-        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "1.73;1.72;1.71" },
+        { "name": "Boost_ADDITIONAL_VERSIONS", "value": "${env.DEFAULT_Boost_ADDITIONAL_VERSIONS}" },
         { "name": "Boost_ARCHITECTURE", "value": "-x64" },
-        { "name": "GIL_BUILD_EXAMPLES", "value": "ON" },
-        { "name": "GIL_BUILD_HEADER_TESTS", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_IO", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "ON" },
-        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "ON" },
+        { "name": "Boost_DEBUG", "value": "${env.DEFAULT_Boost_DEBUG}" },
+        { "name": "GIL_BUILD_EXAMPLES", "value": "${env.DEFAULT_GIL_BUILD_EXAMPLES}" },
+        { "name": "GIL_BUILD_HEADER_TESTS", "value": "${env.DEFAULT_GIL_BUILD_HEADER_TESTS}" },
+        { "name": "GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "${env.DEFAULT_GIL_ENABLE_EXT_DYNAMIC_IMAGE}" },
+        { "name": "GIL_ENABLE_EXT_IO", "value": "${env.DEFAULT_GIL_ENABLE_EXT_IO}" },
+        { "name": "GIL_ENABLE_EXT_NUMERIC", "value": "${env.DEFAULT_GIL_ENABLE_EXT_NUMERIC}" },
+        { "name": "GIL_ENABLE_EXT_TOOLBOX", "value": "${env.DEFAULT_GIL_ENABLE_EXT_TOOLBOX}" },
         { "name": "GIL_USE_CONAN", "value": "OFF" },
-        { "name": "GIL_USE_CLANG_TIDY", "value": "OFF" }
+        { "name": "GIL_USE_CLANG_TIDY", "value": "${env.DEFAULT_GIL_USE_CLANG_TIDY}" }
       ]
     }
   ]
