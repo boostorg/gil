@@ -34,7 +34,7 @@ struct test_convert_to
 };
 
 //--- Test gil::channel_convert from integral channels to all byte channels -------------
-#define GIL_TEST_CHANNEL_CONVERT_FROM(source_channel_type) \
+#define BOOST_GIL_TEST_CHANNEL_CONVERT_FROM(source_channel_type) \
     BOOST_FIXTURE_TEST_SUITE( \
         channel_convert_from_##source_channel_type, \
         fixture::channel_minmax_value<std::source_channel_type>) \
@@ -59,14 +59,14 @@ struct test_convert_to
     } \
     BOOST_AUTO_TEST_SUITE_END()
 
-GIL_TEST_CHANNEL_CONVERT_FROM(uint8_t)
-GIL_TEST_CHANNEL_CONVERT_FROM(int8_t)
-GIL_TEST_CHANNEL_CONVERT_FROM(uint16_t)
-GIL_TEST_CHANNEL_CONVERT_FROM(int16_t)
-GIL_TEST_CHANNEL_CONVERT_FROM(uint32_t)
-GIL_TEST_CHANNEL_CONVERT_FROM(int32_t)
+BOOST_GIL_TEST_CHANNEL_CONVERT_FROM(uint8_t)
+BOOST_GIL_TEST_CHANNEL_CONVERT_FROM(int8_t)
+BOOST_GIL_TEST_CHANNEL_CONVERT_FROM(uint16_t)
+BOOST_GIL_TEST_CHANNEL_CONVERT_FROM(int16_t)
+BOOST_GIL_TEST_CHANNEL_CONVERT_FROM(uint32_t)
+BOOST_GIL_TEST_CHANNEL_CONVERT_FROM(int32_t)
 
-#undef GIL_TEST_CHANNEL_CONVERT_FROM
+#undef BOOST_GIL_TEST_CHANNEL_CONVERT_FROM
 
 // FIXME: gil::float32_t <-> gil::float64_t seems not supported
 
