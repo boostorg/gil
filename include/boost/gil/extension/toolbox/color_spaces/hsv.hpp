@@ -43,7 +43,7 @@ using hsv_t = mp11::mp_list
 /// \ingroup LayoutModel
 using hsv_layout_t = layout<hsv_t>;
 
-GIL_DEFINE_ALL_TYPEDEFS(32f, float32_t, hsv)
+BOOST_GIL_DEFINE_ALL_TYPEDEFS(32f, float32_t, hsv)
 
 /// \ingroup ColorConvert
 /// \brief RGB to HSV
