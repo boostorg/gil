@@ -3,7 +3,7 @@
 This directory contains
 
 - examples of C++ programs using GIL
-- configuration files for CMake integrations in popular IDEs
+- configuration files for Boost.Build command line and CMake integration for popular IDEs.
 
 We provide Boost.Build (`Jamfile`) and CMake (`CMakeLists.txt`)
 configurations to build the examples.
@@ -14,7 +14,7 @@ Each example is build as a separate executable.
 Each executable generates its output as `out-<example_name>.jpg`.
 For example, the `resize.cpp` example generates the image `out-resize.jpg`.
 
-The following examples are included:
+The following C++ examples are included:
 
 1. `resize.cpp`
    Scales an image using bilinear or nearest-neighbour resampling.

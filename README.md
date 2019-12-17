@@ -54,9 +54,13 @@ variety of images with performance similar to hand-writing for a specific image 
 See [RELEASES.md](RELEASES.md) for release notes.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for instructions about how to build and
-run tests, examples.
+run tests and examples using Boost.Build or CMake.
 
-See [example/README.md](example/README.md) for available GIL examples.
+See [example/README.md](example/README.md) for GIL usage examples.
+
+See [example/b2/README.md](example/b2/README.md) for Boost.Build configuration examples.
+
+See [example/cmake/README.md](example/cmake/README.md) for CMake configuration examples.
 
 ## Requirements
 

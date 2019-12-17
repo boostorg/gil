@@ -329,6 +329,8 @@ third-party libraries for read and write support of specific image formats:
 sudo apt-get install libjpeg-dev libpng-dev libtiff5-dev libraw-dev
 ```
 
+**TIP:** On Windows, use vcpkg with `user-config.jam` configuration provided in [example/b2/user-config-windows-vcpkg.jam](example/b2/).
+
 ### Using Boost.Build
 
 The [b2 invocation](https://boostorg.github.io/build/manual/develop/index.html#bbv2.overview.invocation)
