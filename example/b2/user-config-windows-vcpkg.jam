@@ -24,8 +24,7 @@ using libpng
 
 using libpng
   :
-  :
-    <include>C:/vcpkg/installed/x64-windows/include <search>C:/vcpkg/installed/x64-windows/lib
+  : <include>C:/vcpkg/installed/x64-windows/include <search>C:/vcpkg/installed/x64-windows/lib
   : <address-model>64
   ;
 
@@ -37,8 +36,7 @@ using libtiff
 
 using libtiff
   :
-  :
-    <include>C:/vcpkg/installed/x64-windows/include <search>C:/vcpkg/installed/x64-windows/lib
+  : <include>C:/vcpkg/installed/x64-windows/include <search>C:/vcpkg/installed/x64-windows/lib
   : <address-model>64
   ;
 
@@ -50,7 +48,6 @@ using zlib
 
 using zlib
   :
-  :
-    <include>C:/vcpkg/installed/x64-windows/include <search>C:/vcpkg/installed/x64-windows/lib
+  : <include>C:/vcpkg/installed/x64-windows/include <search>C:/vcpkg/installed/x64-windows/lib
   : <address-model>64
   ;
