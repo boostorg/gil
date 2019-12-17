@@ -81,7 +81,7 @@ std::size_t total_allocated_size_in_bytes( const typename View::point_t& dimensi
 }
 
 
-BOOST_AUTO_TEST_SUITE(GIL_Tests)
+BOOST_AUTO_TEST_SUITE(gil_legacy_tests)
 
 BOOST_AUTO_TEST_CASE(recreate_image_test)
 {

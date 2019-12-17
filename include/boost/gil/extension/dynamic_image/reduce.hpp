@@ -32,7 +32,7 @@
 #include <type_traits>
 
 // Max number of cases in the cross-expension of binary operation for it to be reduced as unary
-#define GIL_BINARY_REDUCE_LIMIT 226
+#define BOOST_GIL_BINARY_REDUCE_LIMIT 226
 
 namespace boost { namespace mpl {
 
@@ -176,7 +176,7 @@ struct unary_reduce<Types,Op,true> : public unary_reduce_impl<Types,Op> {
 /// \brief Binary reduce.
 ///
 /// Given two sets of types, Types1 and Types2, first performs unary reduction on each. Then checks if the product of their sizes is above
-/// the GIL_BINARY_REDUCE_LIMIT limit. If so, the operation is too complex to be binary-reduced and uses a specialization of binary_reduce_impl
+/// the BOOST_GIL_BINARY_REDUCE_LIMIT limit. If so, the operation is too complex to be binary-reduced and uses a specialization of binary_reduce_impl
 /// to simply call the binary apply_operation_base (which performs two nested 1D apply operations)
 /// If the operation is not too complex, uses the other specialization of binary_reduce_impl to create a cross-product of the input types
 /// and performs unary reduction on the result (bin_reduced_t). To apply the binary operation, it simply invokes a unary apply_operation_base
@@ -239,7 +239,7 @@ struct binary_reduce
     static const std::size_t CROSS_SIZE = mpl::size<typename unary1_t::unique_t>::value *
                                           mpl::size<typename unary2_t::unique_t>::value;
 
-    using impl = detail::binary_reduce_impl<unary1_t,unary2_t,Op, (CROSS_SIZE>GIL_BINARY_REDUCE_LIMIT)>;
+    using impl = detail::binary_reduce_impl<unary1_t,unary2_t,Op, (CROSS_SIZE>BOOST_GIL_BINARY_REDUCE_LIMIT)>;
 public:
     template <typename Bits1, typename Bits2>
     static typename Op::result_type inline apply(const Bits1& bits1, std::size_t index1, const Bits2& bits2, std::size_t index2, Op op) {
@@ -262,7 +262,7 @@ BOOST_FORCEINLINE typename BinaryOp::result_type apply_operation(const variant<T
     return binary_reduce<Types1,Types2,BinaryOp>::template apply(arg1._bits, arg1._index, arg2._bits, arg2._index, op);
 }
 
-#undef GIL_BINARY_REDUCE_LIMIT
+#undef BOOST_GIL_BINARY_REDUCE_LIMIT
 
 } }  // namespace gil
 
