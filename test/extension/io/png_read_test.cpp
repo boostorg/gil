@@ -749,7 +749,20 @@ BOOST_AUTO_TEST_CASE( corrupted_png_read_test ) {
 	};
 	std::stringstream ss(std::string(corrupt_png.begin(), corrupt_png.end()), std::ios_base::in | std::ios_base::binary);
 	boost::gil::rgb8_image_t img;
-	boost::gil::read_image(ss, img, boost::gil::png_tag{});
+    try
+    {
+	    boost::gil::read_image(ss, img, boost::gil::png_tag{});
+    } catch (std::ios_base::failure& exception)
+    {
+        // the exception message is "png is invalid: iostream error"
+        // is the error portable throughout stdlib implementations,
+        // or is it native to this one?
+        // the description passd is "png_is_invalid"
+        // the exact error message is thus not checked
+        return;
+    }
+
+    BOOST_FAIL("no exception was thrown, which is an error");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
