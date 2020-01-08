@@ -5,6 +5,9 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
+#define BOOST_TEST_MODULE gil/test/core/color_base/homogeneous_color_base
+#include "unit_test.hpp"
+
 #include <boost/gil/color_base.hpp>
 #include <boost/gil/gray.hpp>
 #include <boost/gil/rgb.hpp>
@@ -13,9 +16,6 @@
 #include <boost/core/typeinfo.hpp>
 
 #include <type_traits>
-
-#define BOOST_TEST_MODULE test_channel_traits
-#include "unit_test.hpp"
 
 namespace gil = boost::gil;
 

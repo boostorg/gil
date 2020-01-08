@@ -5,6 +5,9 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
+#define BOOST_TEST_MODULE gil/test/extension/numeric/numeric
+#include "unit_test.hpp"
+
 #include <boost/gil/image.hpp>
 #include <boost/gil/typedefs.hpp>
 
@@ -12,9 +15,6 @@
 #include <boost/gil/extension/numeric/sampler.hpp>
 
 #include <boost/assert.hpp>
-
-#define BOOST_TEST_MODULE test_ext_numeric_numeric
-#include "unit_test.hpp"
 
 using namespace boost;
 using namespace gil;

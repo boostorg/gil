@@ -5,16 +5,16 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
+#define BOOST_TEST_MODULE gil/test/core/pixel/packed_pixel
+#include "unit_test.hpp"
+
 #include <boost/gil/channel.hpp>
-#include <boost/gil/packed_pixel.hpp>
 #include <boost/gil/gray.hpp>
+#include <boost/gil/packed_pixel.hpp>
 #include <boost/gil/rgb.hpp>
 
 #include <boost/core/typeinfo.hpp>
 #include <boost/mp11.hpp>
-
-#define BOOST_TEST_MODULE test_channel_traits
-#include "unit_test.hpp"
 
 namespace gil = boost::gil;
 namespace mp11 = boost::mp11;

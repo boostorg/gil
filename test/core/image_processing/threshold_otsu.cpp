@@ -5,12 +5,12 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#include <boost/gil/image_processing/threshold.hpp>
-#include <boost/gil/image_view.hpp>
 #include <boost/gil/algorithm.hpp>
 #include <boost/gil/gray.hpp>
-#include <boost/core/lightweight_test.hpp>
+#include <boost/gil/image_view.hpp>
+#include <boost/gil/image_processing/threshold.hpp>
 
+#include <boost/core/lightweight_test.hpp>
 
 namespace gil = boost::gil;
 

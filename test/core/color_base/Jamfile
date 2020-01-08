@@ -8,12 +8,9 @@
 
 import testing ;
 
-project
-    : requirements
-    <include>..
-    ;
-
 compile concepts.cpp ;
-compile homogeneous_color_base.cpp ;
 compile-fail static_transform_gray_to_rgb_fail.cpp ;
 compile-fail static_transform_rgb_to_cmyk_fail.cpp ;
+
+run homogeneous_color_base.cpp /boost/test//boost_unit_test_framework : : : <link>shared:<define>BOOST_TEST_DYN_LINK=1 ;
+run static_transform.cpp /boost/test//boost_unit_test_framework : : : <link>shared:<define>BOOST_TEST_DYN_LINK=1 ;

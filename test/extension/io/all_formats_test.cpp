@@ -5,15 +5,15 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-#define BOOST_TEST_MODULE all_formats_test
+#define BOOST_TEST_MODULE gil/test/extension/io/all_formats_test
+#include "unit_test.hpp"
+
 #include <boost/gil/extension/io/png.hpp>
 #include <boost/gil/extension/io/bmp.hpp>
 #include <boost/gil/extension/io/jpeg.hpp>
 #include <boost/gil/extension/io/pnm.hpp>
 #include <boost/gil/extension/io/targa.hpp>
 #include <boost/gil/extension/io/tiff.hpp>
-
-#include <boost/test/unit_test.hpp>
 
 #include "paths.hpp"
 

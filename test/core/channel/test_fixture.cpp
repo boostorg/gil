@@ -5,11 +5,11 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-#include <limits>
-
-#define BOOST_TEST_MODULE test_channel_test_fixture
+#define BOOST_TEST_MODULE gil/test/core/channel/test_fixture
 #include "unit_test.hpp"
 #include "test_fixture.hpp"
+
+#include <limits>
 
 namespace fixture = boost::gil::test::fixture;
 

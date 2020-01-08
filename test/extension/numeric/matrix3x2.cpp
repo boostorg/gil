@@ -5,13 +5,13 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
+#define BOOST_TEST_MODULE gil/test/extension/numeric/matrix3x2
+#include "unit_test.hpp"
+
 #include <boost/gil/extension/numeric/affine.hpp>
 #include <boost/gil/extension/numeric/resample.hpp>
 #include <boost/gil/extension/numeric/sampler.hpp>
 #include <boost/gil.hpp>
-
-#define BOOST_TEST_MODULE test_ext_numeric_matrix3x2
-#include "unit_test.hpp"
 
 namespace gil = boost::gil;
 

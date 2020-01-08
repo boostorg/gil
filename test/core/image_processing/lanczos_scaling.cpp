@@ -10,7 +10,6 @@
 
 #include <boost/core/lightweight_test.hpp>
 
-
 #include <iostream>
 
 namespace gil = boost::gil;

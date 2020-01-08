@@ -5,14 +5,15 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
+#define BOOST_TEST_MODULE gil/test/extension/numeric/pixel_numeric_operations
+#include "unit_test.hpp"
+
 #include <boost/gil.hpp>
 #include <boost/gil/extension/numeric/pixel_numeric_operations.hpp>
 
 #include <tuple>
 #include <type_traits>
 
-#define BOOST_TEST_MODULE test_ext_numeric_pixel_numeric_operations
-#include "unit_test.hpp"
 #include "unit_test_utility.hpp"
 #include "core/image/test_fixture.hpp" // random_value
 #include "core/pixel/test_fixture.hpp"

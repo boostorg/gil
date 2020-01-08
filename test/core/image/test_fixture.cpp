@@ -5,8 +5,8 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-#include <boost/config.hpp>
-#include <boost/core/ignore_unused.hpp>
+#define BOOST_TEST_MODULE gil/test/core/image/test_fixture
+#include "unit_test.hpp"
 
 #if defined(BOOST_CLANG)
 #pragma clang diagnostic push
@@ -26,8 +26,6 @@
 #include <cstdint>
 #include <vector>
 
-#define BOOST_TEST_MODULE test_ext_numeric_test_fixture
-#include "unit_test.hpp"
 #include "test_fixture.hpp"
 
 namespace gil = boost::gil;

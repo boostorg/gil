@@ -8,10 +8,5 @@
 
 import testing ;
 
-project
-    : requirements
-    <include>..
-    ;
-
 compile concepts.cpp ;
 compile dynamic_step.cpp ;

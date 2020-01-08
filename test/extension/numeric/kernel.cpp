@@ -6,12 +6,12 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
+#define BOOST_TEST_MODULE gil/test/extension/numeric/kernel
+#include "unit_test.hpp"
+
 #define BOOST_DISABLE_ASSERTS 1 // kernel_1d_adaptor assertions are too strict
 #include <boost/gil/extension/numeric/kernel.hpp>
 #include <vector>
-
-#define BOOST_TEST_MODULE test_ext_numeric_kernel
-#include "unit_test.hpp"
 
 namespace gil = boost::gil;
 

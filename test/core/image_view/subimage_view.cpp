@@ -5,12 +5,13 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
+#define BOOST_TEST_MODULE gil/test/core/image_view/subimage_view
+#include "unit_test.hpp"
+
 #include <boost/gil.hpp>
 
-#define BOOST_TEST_MODULE test_image_view_subimage_view
-#include "unit_test.hpp"
-#include "unit_test_utility.hpp"
 #include "core/image/test_fixture.hpp"
+#include "unit_test_utility.hpp"
 
 namespace gil = boost::gil;
 namespace fixture = boost::gil::test::fixture;

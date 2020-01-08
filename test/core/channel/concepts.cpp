@@ -6,7 +6,8 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-#include <boost/config.hpp>
+#define BOOST_TEST_MODULE gil/test/core/channel/concepts
+#include "unit_test.hpp"
 
 #if defined(BOOST_CLANG)
 #pragma clang diagnostic push
@@ -19,10 +20,9 @@
 #endif
 
 #include <boost/gil/concepts.hpp>
+
 #include <cstdint>
 
-#define BOOST_TEST_MODULE test_channel_concepts
-#include "unit_test.hpp"
 #include "test_fixture.hpp"
 
 namespace gil = boost::gil;
