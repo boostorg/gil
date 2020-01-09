@@ -8,11 +8,6 @@
 
 import testing ;
 
-project
-    : requirements
-    <include>..
-    ;
-
 compile concepts.cpp ;
 compile dynamic_step.cpp ;
 compile is_planar.cpp ;

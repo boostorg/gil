@@ -18,6 +18,8 @@
 //
 // Uncomment to enable debugging output
 //#define BOOST_GIL_TEST_DEBUG 1
+#define BOOST_TEST_MODULE gil/test/promote_integral
+#include "unit_test.hpp"
 
 #include <boost/gil/promote_integral.hpp>
 
@@ -29,11 +31,6 @@
 #endif
 #include <limits>
 #include <string>
-
-#ifndef BOOST_TEST_MODULE
-#define BOOST_TEST_MODULE test_promote_integral
-#endif
-#include "unit_test.hpp"
 
 namespace bg = boost::gil;
 

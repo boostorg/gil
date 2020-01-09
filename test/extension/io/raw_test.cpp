@@ -5,15 +5,15 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-#define BOOST_TEST_MODULE raw_test
+#define BOOST_TEST_MODULE gil/test/extension/io/raw_test
+#include "unit_test.hpp"
+
 #define BOOST_FILESYSTEM_VERSION 3
 #define BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
-
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/raw.hpp>
 
 #include <boost/mp11.hpp>
-#include <boost/test/unit_test.hpp>
 
 #include <fstream>
 

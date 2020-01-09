@@ -8,11 +8,6 @@
 #
 import testing ;
 
-project
-    : requirements
-    <include>..
-    ;
-
 compile-fail threshold_color_spaces_not_compatible_fail.cpp ;
 run threshold_binary.cpp ;
 run threshold_truncate.cpp ;

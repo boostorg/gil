@@ -5,11 +5,12 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
+#define BOOST_TEST_MODULE gil/test/extension/dynamic_image/subimage_view
+#include "unit_test.hpp"
+
 #include <boost/gil.hpp>
 #include <boost/gil/extension/dynamic_image/dynamic_image_all.hpp>
 
-#define BOOST_TEST_MODULE test_ext_dynamic_image_subimage_view
-#include "unit_test.hpp"
 #include "unit_test_utility.hpp"
 #include "test_fixture.hpp"
 #include "core/image/test_fixture.hpp"

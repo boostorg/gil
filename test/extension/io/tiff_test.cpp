@@ -5,14 +5,15 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-#define BOOST_TEST_MODULE tiff_test
+#define BOOST_TEST_MODULE gil/test/extension/io/tiff_test
+#include "unit_test.hpp"
+
 #define BOOST_FILESYSTEM_VERSION 3
 #define BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
 
 #include <boost/gil/extension/io/tiff.hpp>
 
 #include <boost/mp11.hpp>
-#include <boost/test/unit_test.hpp>
 
 #include <fstream>
 #include <sstream>

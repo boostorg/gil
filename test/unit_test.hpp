@@ -42,6 +42,8 @@
 #pragma GCC diagnostic pop
 #endif
 
+#include <boost/core/ignore_unused.hpp>
+
 namespace btt = boost::test_tools;
 namespace but = boost::unit_test;
 

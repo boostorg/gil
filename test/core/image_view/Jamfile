@@ -8,11 +8,6 @@
 
 import testing ;
 
-project
-    : requirements
-    <include>..
-    ;
-
 compile concepts.cpp ;
 compile derived_view_type.cpp ;
 compile dynamic_step.cpp ;

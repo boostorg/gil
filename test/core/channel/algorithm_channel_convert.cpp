@@ -6,11 +6,13 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
+#define BOOST_TEST_MODULE gil/test/core/channel/algorithm_channel_convert
+#include "unit_test.hpp"
+
 #include <boost/gil/channel_algorithm.hpp>
+
 #include <cstdint>
 
-#define BOOST_TEST_MODULE test_algorithm_channel_convert
-#include "unit_test.hpp"
 #include "test_fixture.hpp"
 
 namespace gil = boost::gil;

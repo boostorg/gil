@@ -5,15 +5,13 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-
-#define BOOST_TEST_MODULE test_image_processing_median_filter
+#define BOOST_TEST_MODULE gil/test/core/image_processing/median_filter
 #include "unit_test.hpp"
 
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/algorithm.hpp>
 #include <boost/gil/gray.hpp>
 #include <boost/gil/image_processing/filter.hpp>
-
 
 namespace gil = boost::gil;
 
