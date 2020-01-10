@@ -54,6 +54,11 @@ inline double lanczos(double x, std::ptrdiff_t a)
     return 0;
 }
 
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(push)
+#pragma warning(disable:4244) // 'argument': conversion from 'const Channel' to 'BaseChannelValue', possible loss of data
+#endif
+
 inline void compute_tensor_entries(
     boost::gil::gray16s_view_t dx,
     boost::gil::gray16s_view_t dy,
@@ -71,6 +76,10 @@ inline void compute_tensor_entries(
         }
     }
 }
+
+#if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
+#pragma warning(pop)
+#endif
 
 /// \brief Generate mean kernel
 /// \ingroup ImageProcessingMath
