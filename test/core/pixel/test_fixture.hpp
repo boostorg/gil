@@ -6,13 +6,18 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
+#ifndef BOOST_GIL_TEST_CORE_PIXEL_TEST_FIXTURE_HPP
+#define BOOST_GIL_TEST_CORE_PIXEL_TEST_FIXTURE_HPP
+
 #include <boost/gil/channel.hpp>
 #include <boost/gil/color_base_algorithm.hpp>
 #include <boost/gil/concepts/pixel.hpp>
+#include <boost/gil/packed_pixel.hpp>
 #include <boost/gil/pixel.hpp>
 #include <boost/gil/planar_pixel_reference.hpp>
 #include <boost/gil/promote_integral.hpp>
 #include <boost/gil/typedefs.hpp>
+#include <boost/gil/extension/toolbox/metafunctions/channel_type.hpp> // channel_type for packed and bit-aligned pixels
 
 #include <boost/core/ignore_unused.hpp>
 #include <boost/mp11.hpp>
@@ -20,12 +25,44 @@
 
 #include <cstdint>
 #include <iostream>
+#include <iterator>
 #include <tuple>
 #include <type_traits>
 
-namespace boost { namespace gil {
+#include "core/test_fixture.hpp" // random_value
+#include "core/channel/test_fixture.hpp" // channel_minmax_value
 
-namespace test { namespace fixture {
+namespace boost { namespace gil { namespace test { namespace fixture {
+
+template <typename Pixel>
+struct pixel_generator
+{
+    using channel_t = typename gil::channel_type<Pixel>::type;
+
+    static auto max() -> Pixel
+    {
+        channel_minmax_value<channel_t> channel;
+        Pixel pixel;
+        gil::static_fill(pixel, channel.max_v_);
+        return pixel;
+    }
+
+    static auto min()-> Pixel
+    {
+        channel_minmax_value<channel_t> channel;
+        Pixel pixel;
+        gil::static_fill(pixel, channel.min_v_);
+        return pixel;
+    }
+
+    static auto random() -> Pixel
+    {
+        random_value<channel_t> generate;
+        Pixel pixel;
+        gil::static_generate(pixel, [&generate]() { return generate(); });
+        return pixel;
+    }
+};
 
 template <typename Pixel, int Tag = 0>
 class pixel_value
@@ -104,7 +141,6 @@ using representative_pixel_types= ::boost::mp11::mp_list
     reference_core<gil::rgb32fc_planar_ref_t>
 >;
 
-
 // List of all integer-based core pixel typedefs (i.e. with cv-qualifiers)
 using pixel_integer_types = ::boost::mp11::mp_list
 <
@@ -163,7 +199,6 @@ using pixel_float_types = ::boost::mp11::mp_list
     gil::cmyk32f_pixel_t,
     gil::rgba32f_pixel_t
 >;
-
 
 // List of all core pixel types (i.e. without cv-qualifiers)
 using pixel_types = ::boost::mp11::mp_append
@@ -244,5 +279,69 @@ using non_pixels = ::boost::mp11::mp_list
     std::false_type
 >;
 
+using packed_channel_references_3 = typename gil::detail::packed_channel_references_vector_type
+<
+    std::uint8_t,
+    mp11::mp_list_c<int, 3>
+>::type;
+
+using packed_pixel_gray3 = gil::packed_pixel
+<
+    std::uint8_t,
+    packed_channel_references_3,
+    gil::gray_layout_t
+>;
+
+using packed_channel_references_121 = typename gil::detail::packed_channel_references_vector_type
+<
+    std::uint8_t,
+    mp11::mp_list_c<int, 1, 2, 1>
+>::type;
+
+using packed_pixel_bgr121 = gil::packed_pixel
+<
+    std::uint8_t,
+    packed_channel_references_121,
+    gil::bgr_layout_t
+>;
+
+using packed_channel_references_535 = typename gil::detail::packed_channel_references_vector_type
+<
+    std::uint16_t,
+    mp11::mp_list_c<int, 5, 3, 5>
+>::type;
+
+using packed_pixel_rgb535 = gil::packed_pixel
+<
+    std::uint16_t,
+    packed_channel_references_535,
+    gil::rgb_layout_t
+>;
+
+using bit_aligned_pixel_bgr232_refefence = gil::bit_aligned_pixel_reference
+    <
+        std::uint8_t,
+        mp11::mp_list_c<int, 2, 3, 2>,
+        gil::bgr_layout_t,
+        true
+    > const;
+
+using bit_aligned_pixel_bgr232_iterator = bit_aligned_pixel_iterator<bit_aligned_pixel_bgr232_refefence>;
+
+using bit_aligned_pixel_bgr232 = std::iterator_traits<bit_aligned_pixel_bgr232_iterator>::value_type;
+
+using bit_aligned_pixel_rgb567_refefence = gil::bit_aligned_pixel_reference
+    <
+        std::uint32_t,
+        mp11::mp_list_c<int, 5, 6, 7>,
+        gil::rgb_layout_t,
+        true
+    > const;
+
+using bit_aligned_pixel_rgb567_iterator = bit_aligned_pixel_iterator<bit_aligned_pixel_rgb567_refefence>;
+
+using bit_aligned_pixel_rgb567 = std::iterator_traits<bit_aligned_pixel_rgb567_iterator>::value_type;
 
 }}}} // namespace boost::gil::test::fixture
+
+#endif

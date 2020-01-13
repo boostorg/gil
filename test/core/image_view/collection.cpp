@@ -12,6 +12,8 @@
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/typedefs.hpp>
 
+#include <iterator>
+
 namespace gil = boost::gil;
 
 namespace

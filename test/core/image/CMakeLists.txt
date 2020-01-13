@@ -6,8 +6,7 @@
 # http://www.boost.org/LICENSE_1_0.txt)
 #
 foreach(_name
-  concepts
-  test_fixture)
+  concepts)
   set(_test t_core_image_${_name})
   set(_target test_core_image_${_name})
 
