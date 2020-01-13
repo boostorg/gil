@@ -19,21 +19,6 @@
 namespace gil = boost::gil;
 namespace mp11 = boost::mp11;
 
-namespace boost { namespace gil {
-
-template <typename BitField, typename ChannelRefs, typename Layout>
-std::ostream& operator<<(std::ostream& os, gil::packed_pixel<BitField, ChannelRefs, Layout> const& p)
-{
-    os << "packed_pixel<"
-       << "BitField=" << boost::core::demangled_name(typeid(BitField))
-       << ", ChannelRefs="  << boost::core::demangled_name(typeid(ChannelRefs))
-       << ", Layout=" << boost::core::demangled_name(typeid(Layout))
-        << ">(" << (std::uint64_t)p._bitfield << ")";
-    return os;
-}
-
-}} // namespace boost::gil
-
 using packed_channel_references_3 = typename gil::detail::packed_channel_references_vector_type
 <
     std::uint8_t,

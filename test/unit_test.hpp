@@ -47,6 +47,7 @@
 
 #include <boost/gil/color_base_algorithm.hpp> // static_for_each
 #include <boost/gil/iterator_from_2d.hpp>
+#include <boost/gil/packed_pixel.hpp>
 #include <boost/gil/pixel.hpp>
 #include <boost/gil/planar_pixel_reference.hpp>
 #include <boost/gil/promote_integral.hpp>
@@ -99,6 +100,17 @@ std::ostream& operator<<(std::ostream& os, pixel<ChannelValue, Layout> const& p)
 
     static_for_each(p, detail::print_color_base{os});
     os << ")" << std::endl;
+    return os;
+}
+
+template <typename BitField, typename ChannelRefs, typename Layout>
+std::ostream& operator<<(std::ostream& os, gil::packed_pixel<BitField, ChannelRefs, Layout> const& p)
+{
+    os << "packed_pixel<"
+       << "BitField=" << boost::core::demangled_name(typeid(BitField))
+       << ", ChannelRefs="  << boost::core::demangled_name(typeid(ChannelRefs))
+       << ", Layout=" << boost::core::demangled_name(typeid(Layout))
+        << ">(" << (std::uint64_t)p._bitfield << ")";
     return os;
 }
 
