@@ -10,12 +10,15 @@
 //        pixel.hpp(50) : error C2039 : 'type' : is not a member of 'boost::gil::color_space_type<P>
 #undef BOOST_GIL_USE_CONCEPT_CHECK
 #endif
+#define BOOST_TEST_MODULE gil/test/core/algorithm/std_fill
+#include "unit_test.hpp"
+
 #include <boost/gil/algorithm.hpp>
 #include <boost/gil/image.hpp>
 #include <boost/gil/image_view.hpp>
 
 #include <boost/array.hpp>
-#include <boost/core/lightweight_test.hpp>
+#include <boost/mp11.hpp>
 #include <boost/range/algorithm/fill_n.hpp>
 
 #include <array>
@@ -23,20 +26,17 @@
 
 namespace gil = boost::gil;
 
-template <typename ArrayPixel>
-void test_array_as_range()
+using array_pixel_types = ::boost::mp11::mp_list
+<
+    boost::array<int, 2>,
+    std::array<int, 2>
+>;
+
+BOOST_AUTO_TEST_CASE_TEMPLATE(array_as_range, ArrayPixel, array_pixel_types)
 {
     static_assert(ArrayPixel().size() == 2, "two-element array expected");
 
     gil::image<ArrayPixel> img(1, 1);
     std::fill(gil::view(img).begin(), gil::view(img).end(), ArrayPixel{0, 1});
     BOOST_TEST(*gil::view(img).at(0,0) == (ArrayPixel{0, 1}));
-}
-
-int main()
-{
-    test_array_as_range<boost::array<int, 2>>();
-    test_array_as_range<std::array<int, 2>>();
-
-    return boost::report_errors();
 }

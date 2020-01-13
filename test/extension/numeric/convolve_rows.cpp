@@ -14,7 +14,6 @@
 #include <tuple>
 #include <type_traits>
 
-#include "unit_test_utility.hpp"
 #include "test_fixture.hpp"
 #include "core/image/test_fixture.hpp"
 
