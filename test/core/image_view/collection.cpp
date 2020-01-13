@@ -5,59 +5,40 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
+#define BOOST_TEST_MODULE gil/test/core/image_view/planar_rgba_view
+#include "unit_test.hpp"
+
 #include <boost/gil/image.hpp>
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/typedefs.hpp>
 
-#include <boost/core/lightweight_test.hpp>
-
 namespace gil = boost::gil;
 
+namespace
+{
 gil::gray8_pixel_t const gray128(128);
 gil::gray8_pixel_t const gray255(255);
+} // unnamed namespace
 
-void test_begin()
+BOOST_TEST_DONT_PRINT_LOG_VALUE(std::reverse_iterator<boost::gil::iterator_from_2d<boost::gil::gray8_loc_t>>)
+BOOST_TEST_DONT_PRINT_LOG_VALUE(boost::gil::iterator_from_2d<boost::gil::gray8_loc_t>)
+
+// Collection
+
+BOOST_AUTO_TEST_CASE(begin)
 {
     gil::gray8_image_t image(2, 2, gray255);
     auto view = gil::view(image);
     BOOST_TEST(*view.begin() == gray255);
 }
 
-void test_end()
+BOOST_AUTO_TEST_CASE(end)
 {
     gil::gray8_image_t::view_t view;
     BOOST_TEST(view.begin() == view.end());
 }
 
-void test_rbegin()
-{
-    gil::gray8_image_t image(2, 2, gray255);
-    auto view = gil::view(image);
-    view(1,1) = gray128;
-    BOOST_TEST(*view.rbegin() == gray128);
-}
-
-void test_rend()
-{
-    gil::gray8_image_t::view_t view;
-    BOOST_TEST(view.rbegin() == view.rend());
-}
-
-void test_front()
-{
-    gil::gray8_image_t image(2, 2, gray255);
-    auto view = gil::view(image);
-    BOOST_TEST(view.front() == gray255);
-}
-
-void test_back()
-{
-    gil::gray8_image_t image(2, 2, gray255);
-    auto view = gil::view(image);
-    BOOST_TEST(view.back() == gray255);
-}
-
-void test_empty()
+BOOST_AUTO_TEST_CASE(empty)
 {
     gil::gray8_image_t::view_t view;
     BOOST_TEST(view.empty());
@@ -67,17 +48,17 @@ void test_empty()
     BOOST_TEST(!view.empty());
 }
 
-void test_size()
+BOOST_AUTO_TEST_CASE(size)
 {
     gil::gray8_image_t::view_t view;
-    BOOST_TEST_EQ(view.size(), 0);
+    BOOST_TEST(view.size() == 0);
 
     gil::gray8_image_t image(2, 2);
     view = gil::view(image);
-    BOOST_TEST_EQ(view.size(), 4);
+    BOOST_TEST(view.size() == 4);
 }
 
-void test_swap()
+BOOST_AUTO_TEST_CASE(swap)
 {
     gil::gray8_image_t::view_t view1;
     gil::gray8_image_t::view_t view2;
@@ -90,22 +71,34 @@ void test_swap()
     BOOST_TEST(!view2.empty());
 }
 
-int main()
+// ForwardCollection
+
+BOOST_AUTO_TEST_CASE(back)
 {
-    // Collection
-    test_begin();
-    test_end();
-    test_size();
-    test_empty();
-    test_swap();
+    gil::gray8_image_t image(2, 2, gray255);
+    auto view = gil::view(image);
+    BOOST_TEST(view.back() == gray255);
+}
 
-    // ForwardCollection
-    test_front();
+BOOST_AUTO_TEST_CASE(front)
+{
+    gil::gray8_image_t image(2, 2, gray255);
+    auto view = gil::view(image);
+    BOOST_TEST(view.front() == gray255);
+}
 
-    // ReversibleCollection
-    test_rbegin();
-    test_rend();
-    test_back();
+// ReversibleCollection
 
-    return boost::report_errors();
+BOOST_AUTO_TEST_CASE(rbegin)
+{
+    gil::gray8_image_t image(2, 2, gray255);
+    auto view = gil::view(image);
+    view(1,1) = gray128;
+    BOOST_TEST(*view.rbegin() == gray128);
+}
+
+BOOST_AUTO_TEST_CASE(rend)
+{
+    gil::gray8_image_t::view_t view;
+    BOOST_TEST(view.rbegin() == view.rend());
 }

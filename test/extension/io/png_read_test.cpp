@@ -19,7 +19,6 @@
 
 #include "paths.hpp"
 #include "scanline_read_test.hpp"
-#include "unit_test_utility.hpp"
 
 using namespace std;
 using namespace boost;

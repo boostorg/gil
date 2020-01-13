@@ -14,7 +14,6 @@
 #include <tuple>
 #include <type_traits>
 
-#include "unit_test_utility.hpp"
 #include "core/channel/test_fixture.hpp"
 
 namespace gil = boost::gil;

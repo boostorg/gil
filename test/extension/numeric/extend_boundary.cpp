@@ -12,8 +12,6 @@
 #include <boost/gil/extension/numeric/algorithm.hpp>
 #include <boost/gil/extension/numeric/convolve.hpp>
 
-#include "unit_test_utility.hpp"
-
 namespace gil = boost::gil;
 
 std::uint8_t img[] =

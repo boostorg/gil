@@ -18,6 +18,6 @@ compile view_is_step.cpp ;
 compile view_type.cpp ;
 compile view_type_from_pixel.cpp ;
 
-run collection.cpp ;
-run planar_rgba_view.cpp ;
+run collection.cpp /boost/test//boost_unit_test_framework : : : <link>shared:<define>BOOST_TEST_DYN_LINK=1 ;
+run planar_rgba_view.cpp /boost/test//boost_unit_test_framework : : : <link>shared:<define>BOOST_TEST_DYN_LINK=1 ;
 run subimage_view.cpp /boost/test//boost_unit_test_framework : : : <link>shared:<define>BOOST_TEST_DYN_LINK=1 ;
