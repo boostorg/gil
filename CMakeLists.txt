@@ -15,14 +15,14 @@ cmake_minimum_required(VERSION 3.10)
 #-----------------------------------------------------------------------------
 # Options
 #-----------------------------------------------------------------------------
-option(GIL_BUILD_EXAMPLES "Build examples" ON)
-option(GIL_BUILD_HEADER_TESTS "Enable self-contained header tests" ON)
-option(GIL_ENABLE_EXT_DYNAMIC_IMAGE "Enable Dynamic Image extension, tests and examples" ON)
-option(GIL_ENABLE_EXT_IO "Enable IO extension, tests and examples (require libjpeg, libpng, libtiff)" ON)
-option(GIL_ENABLE_EXT_NUMERIC "Enable Numeric extension, tests and examples" ON)
-option(GIL_ENABLE_EXT_TOOLBOX "Enable Toolbox extension, tests and examples" ON)
-option(GIL_USE_CONAN "Use Conan to install dependencies" OFF)
-option(GIL_USE_CLANG_TIDY "Set CMAKE_CXX_CLANG_TIDY property on targets to enable clang-tidy linting" OFF)
+option(BOOST_GIL_BUILD_EXAMPLES "Build examples" ON)
+option(BOOST_GIL_BUILD_HEADER_TESTS "Enable self-contained header tests" ON)
+option(BOOST_GIL_ENABLE_EXT_DYNAMIC_IMAGE "Enable Dynamic Image extension, tests and examples" ON)
+option(BOOST_GIL_ENABLE_EXT_IO "Enable IO extension, tests and examples (require libjpeg, libpng, libtiff)" ON)
+option(BOOST_GIL_ENABLE_EXT_NUMERIC "Enable Numeric extension, tests and examples" ON)
+option(BOOST_GIL_ENABLE_EXT_TOOLBOX "Enable Toolbox extension, tests and examples" ON)
+option(BOOST_GIL_USE_CONAN "Use Conan to install dependencies" OFF)
+option(BOOST_GIL_USE_CLANG_TIDY "Set CMAKE_CXX_CLANG_TIDY property on targets to enable clang-tidy linting" OFF)
 set(CMAKE_CXX_STANDARD 11 CACHE STRING "C++ standard version to use (default is 11)")
 
 #-----------------------------------------------------------------------------
@@ -144,8 +144,8 @@ if(GIL_USE_CONAN)
   unset(_build_type_saved)
 endif()
 
-if(GIL_ENABLE_EXT_IO)
-  if (GIL_USE_CONAN)
+if(BOOST_GIL_ENABLE_EXT_IO)
+  if (BOOST_GIL_USE_CONAN)
     target_link_libraries(gil_dependencies
       INTERFACE
         CONAN_PKG::libjpeg
@@ -181,8 +181,8 @@ if(GIL_ENABLE_EXT_IO)
         "${CMAKE_BINARY_DIR}/cmake/FindLibRaw.cmake")
     endif()
     find_package(LibRaw)
-    set(GIL_ENABLE_EXT_IO_RAW ${LibRaw_FOUND} CACHE BOOL "Enable IO RAW extension (requires libraw)" FORCE)
-    if(GIL_ENABLE_EXT_IO_RAW)
+    set(BOOST_GIL_ENABLE_EXT_IO_RAW ${LibRaw_FOUND} CACHE BOOL "Enable IO RAW extension (requires libraw)" FORCE)
+    if(BOOST_GIL_ENABLE_EXT_IO_RAW)
       target_include_directories(gil_dependencies INTERFACE ${LibRaw_INCLUDE_DIR})
       target_link_libraries(gil_dependencies INTERFACE ${LibRaw_LIBRARIES})
       target_compile_definitions(gil_dependencies INTERFACE ${LibRaw_DEFINITIONS})
@@ -194,7 +194,7 @@ endif()
 # clang-tidy
 # - default checks specified in .clang-tidy configuration file
 #-----------------------------------------------------------------------------
-if(GIL_USE_CLANG_TIDY AND CMAKE_VERSION VERSION_GREATER_EQUAL 3.6)
+if(BOOST_GIL_USE_CLANG_TIDY AND CMAKE_VERSION VERSION_GREATER_EQUAL 3.6)
   find_program(_clang_tidy
     NAMES clang-tidy-7 clang-tidy-6.0 clang-tidy-5.0 clang-tidy-4.0 clang-tidy
     DOC "Path to clang-tidy executable")
@@ -231,7 +231,7 @@ enable_testing()
 # On Boost regression builds, CMake does not run, but Boost.Build,
 # so the header tests are not enabled there either.
 if(DEFINED ENV{CI})
-  set(GIL_BUILD_HEADER_TESTS OFF)
+  set(BOOST_GIL_BUILD_HEADER_TESTS OFF)
 endif()
 
 add_subdirectory(test)
@@ -239,6 +239,6 @@ add_subdirectory(test)
 #-----------------------------------------------------------------------------
 # Examples
 #-----------------------------------------------------------------------------
-if(GIL_BUILD_EXAMPLES AND GIL_ENABLE_EXT_IO)
+if(BOOST_GIL_BUILD_EXAMPLES AND BOOST_GIL_ENABLE_EXT_IO)
   add_subdirectory(example)
 endif()
