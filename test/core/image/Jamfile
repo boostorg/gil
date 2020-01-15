@@ -11,3 +11,4 @@ import testing ;
 compile concepts.cpp ;
 
 run image.cpp ;
+run alignment.cpp ;

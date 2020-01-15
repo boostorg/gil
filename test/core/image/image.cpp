@@ -142,6 +142,7 @@ struct test_move_assignement
             BOOST_TEST_EQ(image.dimensions(), gil::point_t{});
         }
     }
+
     static void run()
     {
         boost::mp11::mp_for_each<fixture::image_types>(test_move_assignement{});

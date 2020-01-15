@@ -7,6 +7,7 @@
 #
 foreach(_name
   concepts
+  alignment
   image)
   set(_test t_core_image_${_name})
   set(_target test_core_image_${_name})
