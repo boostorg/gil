@@ -17,7 +17,7 @@ set(_formats
   targa
   tiff)
 
-if(GIL_ENABLE_EXT_IO_RAW)
+if(BOOST_GIL_ENABLE_EXT_IO_RAW)
   list(APPEND _formats raw)
 endif()
 
@@ -64,7 +64,7 @@ target_sources(test_ext_io_pnm
   PRIVATE
     pnm_test.cpp pnm_old_test.cpp pnm_read_test.cpp pnm_write_test.cpp)
 
-if(GIL_ENABLE_EXT_IO_RAW)
+if(BOOST_GIL_ENABLE_EXT_IO_RAW)
   target_sources(test_ext_io_raw
     PRIVATE
       raw_test.cpp)

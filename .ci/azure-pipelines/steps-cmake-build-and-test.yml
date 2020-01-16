@@ -18,7 +18,7 @@ steps:
       export BOOST_ROOT=$(Build.SourcesDirectory)/boost-root
       export BOOST_INCLUDEDIR=$BOOST_ROOT
       export BOOST_LIBRARYDIR=$BOOST_ROOT/lib
-      cmake -H. -B_build -DCMAKE_BUILD_TYPE=${{ parameters.configuration }} -DCMAKE_CXX_STANDARD=${{ parameters.cxxver }} -DCMAKE_VERBOSE_MAKEFILE=ON -DBoost_DEBUG=ON -DBoost_NO_SYSTEM_PATHS=ON -DGIL_USE_CONAN=${{ parameters.use_conan }} -DGIL_ENABLE_EXT_IO=${{ parameters.enable_ext_io }} -DGIL_ENABLE_EXT_NUMERIC=${{ parameters.enable_ext_numeric }} -DGIL_ENABLE_EXT_TOOLBOX=${{ parameters.enable_ext_toolbox }}
+      cmake -H. -B_build -DCMAKE_BUILD_TYPE=${{ parameters.configuration }} -DCMAKE_CXX_STANDARD=${{ parameters.cxxver }} -DCMAKE_VERBOSE_MAKEFILE=ON -DBoost_DEBUG=ON -DBoost_NO_SYSTEM_PATHS=ON -DBOOST_GIL_USE_CONAN=${{ parameters.use_conan }} -DBOOST_GIL_ENABLE_EXT_IO=${{ parameters.enable_ext_io }} -DBOOST_GIL_ENABLE_EXT_NUMERIC=${{ parameters.enable_ext_numeric }} -DBOOST_GIL_ENABLE_EXT_TOOLBOX=${{ parameters.enable_ext_toolbox }}
     workingDirectory: $(Build.SourcesDirectory)/boost-root/libs/gil
     displayName: 'Run CMake to configure build on Unix'
     condition: ne(variables['Agent.OS'], 'Windows_NT')
@@ -27,7 +27,7 @@ steps:
       set BOOST_ROOT=$(Build.SourcesDirectory)\boost-root
       set BOOST_INCLUDEDIR=%BOOST_ROOT%
       set BOOST_LIBRARYDIR=%BOOST_ROOT%\lib
-      cmake -H. -B_build -DCMAKE_BUILD_TYPE=${{ parameters.configuration }} -DCMAKE_CXX_STANDARD=${{ parameters.cxxver }} -DCMAKE_VERBOSE_MAKEFILE=ON -DBoost_DEBUG=ON -DBoost_ADDITIONAL_VERSIONS="1.70;1.71" -DBoost_ARCHITECTURE=-x32 -DBoost_NO_SYSTEM_PATHS=ON -DGIL_USE_CONAN=${{ parameters.use_conan }} -DGIL_ENABLE_EXT_IO=${{ parameters.enable_ext_io }} -DGIL_ENABLE_EXT_NUMERIC=${{ parameters.enable_ext_numeric }} -DGIL_ENABLE_EXT_TOOLBOX=${{ parameters.enable_ext_toolbox }}
+      cmake -H. -B_build -DCMAKE_BUILD_TYPE=${{ parameters.configuration }} -DCMAKE_CXX_STANDARD=${{ parameters.cxxver }} -DCMAKE_VERBOSE_MAKEFILE=ON -DBoost_DEBUG=ON -DBoost_ADDITIONAL_VERSIONS="1.70;1.71" -DBoost_ARCHITECTURE=-x32 -DBoost_NO_SYSTEM_PATHS=ON -DBOOST_GIL_USE_CONAN=${{ parameters.use_conan }} -DBOOST_GIL_ENABLE_EXT_IO=${{ parameters.enable_ext_io }} -DBOOST_GIL_ENABLE_EXT_NUMERIC=${{ parameters.enable_ext_numeric }} -DBOOST_GIL_ENABLE_EXT_TOOLBOX=${{ parameters.enable_ext_toolbox }}
     workingDirectory: $(Build.SourcesDirectory)/boost-root/libs/gil
     displayName: 'Run CMake to configure build on Windows'
     condition: eq(variables['Agent.OS'], 'Windows_NT')
