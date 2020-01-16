@@ -23,8 +23,8 @@ foreach(_example ${_examples})
   if(BOOST_GIL_USE_CONAN)
     target_link_libraries(example_${_name}
       PRIVATE
-        gil_compile_options
-        gil_include_directories
+        boost_gil_compile_options
+        boost_gil_include_directories
         Boost::disable_autolinking
         Boost::filesystem
         CONAN_PKG::libjpeg
@@ -33,9 +33,9 @@ foreach(_example ${_examples})
   else()
     target_link_libraries(example_${_name}
       PRIVATE
-        gil_compile_options
-        gil_include_directories
-        gil_dependencies)
+        boost_gil_compile_options
+        boost_gil_include_directories
+        boost_gil_dependencies)
   endif()
 
   unset(_name)

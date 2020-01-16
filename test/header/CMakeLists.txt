@@ -70,9 +70,9 @@ foreach(_header ${_headers})
 
   target_link_libraries(${_target}
     PRIVATE
-      gil_compile_options
-      gil_include_directories
-      gil_dependencies)
+      boost_gil_compile_options
+      boost_gil_include_directories
+      boost_gil_dependencies)
 
   add_dependencies(test_headers_self_contained ${_target})
 
@@ -101,6 +101,6 @@ unset(_cpp)
 
 target_link_libraries(test_headers_all_in_one
   PRIVATE
-    gil_compile_options
-    gil_include_directories
-    gil_dependencies)
+    boost_gil_compile_options
+    boost_gil_include_directories
+    boost_gil_dependencies)
