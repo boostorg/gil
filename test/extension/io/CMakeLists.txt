@@ -28,9 +28,9 @@ foreach(_name ${_formats})
   add_executable(${_target} "")
   target_link_libraries(${_target}
     PRIVATE
-      boost_gil_compile_options
-      boost_gil_include_directories
-      boost_gil_dependencies)
+      gil_compile_options
+      gil_include_directories
+      gil_dependencies)
   target_compile_definitions(${_target}
     PRIVATE
       BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES

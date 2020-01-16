@@ -41,7 +41,7 @@ message(STATUS "Boost.GIL: Require C++${CMAKE_CXX_STANDARD}")
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-add_library(boost_gil_compile_options INTERFACE)
+add_library(gil_compile_options INTERFACE)
 
 # See https://cmake.org/pipermail/cmake/2018-December/068716.html
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
@@ -51,7 +51,7 @@ endif()
 
 # See https://svn.boost.org/trac10/wiki/Guidelines/WarningsGuidelines
 
-target_compile_options(boost_gil_compile_options
+target_compile_options(gil_compile_options
   INTERFACE
     $<$<CXX_COMPILER_ID:MSVC>:-W4>
     $<$<CXX_COMPILER_ID:MSVC>:-bigobj>
@@ -60,12 +60,12 @@ target_compile_options(boost_gil_compile_options
 
 # Do not mix warnings due to strict compilation level with linter warnings
 if(NOT CMAKE_CXX_CLANG_TIDY)
-  target_compile_options(boost_gil_compile_options
+  target_compile_options(gil_compile_options
     INTERFACE
       $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-Wall -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter>)
 endif()
 
-target_compile_definitions(boost_gil_compile_options
+target_compile_definitions(gil_compile_options
   INTERFACE
     $<$<CXX_COMPILER_ID:MSVC>:_CRT_NONSTDC_NO_DEPRECATE>
     $<$<CXX_COMPILER_ID:MSVC>:_SCL_SECURE_NO_DEPRECATE>
@@ -76,7 +76,7 @@ target_compile_definitions(boost_gil_compile_options
 #-----------------------------------------------------------------------------
 # Dependency target
 #-----------------------------------------------------------------------------
-add_library(boost_gil_dependencies INTERFACE)
+add_library(gil_dependencies INTERFACE)
 
 #-----------------------------------------------------------------------------
 # Dependency: Boost
@@ -107,16 +107,16 @@ find_package(Boost 1.68.0 REQUIRED
 message(STATUS "Boost.GIL: Using Boost_INCLUDE_DIRS=${Boost_INCLUDE_DIRS}")
 message(STATUS "Boost.GIL: Using Boost_LIBRARY_DIRS=${Boost_LIBRARY_DIRS}")
 
-target_link_libraries(boost_gil_dependencies
+target_link_libraries(gil_dependencies
   INTERFACE
     Boost::filesystem
     Boost::unit_test_framework)
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-  target_link_libraries(boost_gil_dependencies INTERFACE Boost::disable_autolinking)
+  target_link_libraries(gil_dependencies INTERFACE Boost::disable_autolinking)
 endif()
 
-target_compile_definitions(boost_gil_dependencies
+target_compile_definitions(gil_dependencies
   INTERFACE
     $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:BOOST_TEST_DYN_LINK>)
 
@@ -146,7 +146,7 @@ endif()
 
 if(BOOST_GIL_ENABLE_EXT_IO)
   if (BOOST_GIL_USE_CONAN)
-    target_link_libraries(boost_gil_dependencies
+    target_link_libraries(gil_dependencies
       INTERFACE
         CONAN_PKG::libjpeg
         CONAN_PKG::libpng
@@ -155,11 +155,11 @@ if(BOOST_GIL_ENABLE_EXT_IO)
     find_package(JPEG REQUIRED)
     find_package(PNG REQUIRED)
     find_package(TIFF REQUIRED)
-    target_include_directories(boost_gil_dependencies
+    target_include_directories(gil_dependencies
       INTERFACE
         ${JPEG_INCLUDE_DIR})
 
-    target_link_libraries(boost_gil_dependencies
+    target_link_libraries(gil_dependencies
       INTERFACE
         ${JPEG_LIBRARIES}
         PNG::PNG
@@ -169,8 +169,8 @@ if(BOOST_GIL_ENABLE_EXT_IO)
       # Typically, Linux packages provide C++ stream interface for TIFF
       find_path(TIFFXX_INCLUDE_DIR NAMES tiffio.hxx)
       find_library(TIFFXX_LIBRARY NAMES tiffxx)
-      target_include_directories(boost_gil_dependencies INTERFACE ${TIFFXX_INCLUDE_DIR})
-      target_link_libraries(boost_gil_dependencies INTERFACE ${TIFFXX_LIBRARY})
+      target_include_directories(gil_dependencies INTERFACE ${TIFFXX_INCLUDE_DIR})
+      target_link_libraries(gil_dependencies INTERFACE ${TIFFXX_LIBRARY})
     endif()
 
     # LibRaw is optional, because it is not easy to install pre-built libraw on Windows and Mac OSX
@@ -183,9 +183,9 @@ if(BOOST_GIL_ENABLE_EXT_IO)
     find_package(LibRaw)
     set(BOOST_GIL_ENABLE_EXT_IO_RAW ${LibRaw_FOUND} CACHE BOOL "Enable IO RAW extension (requires libraw)" FORCE)
     if(BOOST_GIL_ENABLE_EXT_IO_RAW)
-      target_include_directories(boost_gil_dependencies INTERFACE ${LibRaw_INCLUDE_DIR})
-      target_link_libraries(boost_gil_dependencies INTERFACE ${LibRaw_LIBRARIES})
-      target_compile_definitions(boost_gil_dependencies INTERFACE ${LibRaw_DEFINITIONS})
+      target_include_directories(gil_dependencies INTERFACE ${LibRaw_INCLUDE_DIR})
+      target_link_libraries(gil_dependencies INTERFACE ${LibRaw_LIBRARIES})
+      target_compile_definitions(gil_dependencies INTERFACE ${LibRaw_DEFINITIONS})
     endif()
   endif()
 endif()
@@ -214,8 +214,8 @@ endif()
 # Otherwise IDEs may see the wrong file (ie. due to boost/ symlinks or
 # GIL headers from installed Boost instead of this clone of boostog/gil).
 #-----------------------------------------------------------------------------
-add_library(boost_gil_include_directories INTERFACE)
-target_include_directories(boost_gil_include_directories
+add_library(gil_include_directories INTERFACE)
+target_include_directories(gil_include_directories
   BEFORE
   INTERFACE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
