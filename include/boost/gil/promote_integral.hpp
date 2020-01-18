@@ -16,16 +16,14 @@
 #ifndef BOOST_GIL_PROMOTE_INTEGRAL_HPP
 #define BOOST_GIL_PROMOTE_INTEGRAL_HPP
 
-#include <boost/mpl/begin.hpp>
-#include <boost/mpl/deref.hpp>
-#include <boost/mpl/end.hpp>
-#include <boost/mpl/list.hpp>
-#include <boost/mpl/next.hpp>
-
+#include <boost/mp11/list.hpp>
+#include <boost/mp11/algorithm.hpp>
+#include <boost/mp11/utility.hpp>
+#include <iterator>
 #include <climits>
 #include <cstddef>
 #include <type_traits>
-
+namespace mp11 = boost::mp11;
 namespace boost { namespace gil
 {
 
@@ -44,41 +42,76 @@ struct bit_size {};
 template <typename T>
 struct bit_size<T, true> : std::integral_constant<std::size_t, (CHAR_BIT * sizeof(T))> {};
 
-template
-<
-    typename T,
-    typename Iterator,
-    typename EndIterator,
-    std::size_t MinSize
+/*promote to larger function uses mp_cond , it checks if bit_size 
+  of type is greater than MinSize , if true then type is selected
+  else it checks for next type for promotion , until condition becomes true .
+  in a small list of 4-5 type comparision , a simple mp_cond can work fine
+  else constexpr can be used to iterate over a large list for promote_to_larger 
+  function .
+
+ */
+ template
+ <  
+    class T,
+    std::size_t MinSize, 
+    bool is_unsigned
 >
-struct promote_to_larger
-{
-    using current_type = typename boost::mpl::deref<Iterator>::type;
+struct promote_to_larger{};
 
-    using type = typename std::conditional
-        <
-            (bit_size<current_type>::value >= MinSize),
-            current_type,
-            typename promote_to_larger
-                <
-                    T,
-                    typename boost::mpl::next<Iterator>::type,
-                    EndIterator,
-                    MinSize
-                >::type
-        >::type;
-};
-
-// The following specialization is required to finish the loop over
-// all list elements
-template <typename T, typename EndIterator, std::size_t MinSize>
-struct promote_to_larger<T, EndIterator, EndIterator, MinSize>
-{
+//specialization for unsinged type promotion
+template< class T,std::size_t MinSize>
+struct promote_to_larger<T,MinSize, true >
+{    
+    /*
+     unsigned short, unsigned int, unsigned long, std::size_t, boost::ulong_long_type
+    */
+     using type = typename mp11::mp_cond
+    < 
+        mp11::mp_bool<sizeof(unsigned short)>= MinSize>,
+        unsigned short,
+        mp11::mp_bool<sizeof(unsigned int)>= MinSize>,
+        unsigned int,
+        mp11::mp_bool<sizeof(unsigned long)>=MinSize>,
+        unsigned long,
+        mp11::mp_bool<sizeof(std::size_t)>=MinSize>,
+        std::size_t,
+#if defined(BOOST_HAS_LONG_LONG)
+        mp11::mp_bool<sizeof(boost::ulong_long_type)>=MinSize>,
+        boost::ulong_long_type,
+#endif
+        mp11::mp_true,
+        T
+     
     // if promotion fails, keep the number T
     // (and cross fingers that overflow will not occur)
-    using type = T;
+     >; 
 };
 
+template< class T,std::size_t MinSize>
+struct promote_to_larger<T,MinSize,false >
+{    
+    /*
+      short, int, long, boost::long_long_type
+    */
+     using type = typename mp11::mp_cond
+    < 
+        mp11::mp_bool<sizeof(short)>= MinSize>,
+        short,
+        mp11::mp_bool<sizeof(int)>= MinSize>,
+        int,
+        mp11::mp_bool<sizeof(long)>=MinSize>,
+        long,
+#if defined(BOOST_HAS_LONG_LONG)
+        mp11::mp_bool<sizeof(boost::long_long_type)>=MinSize>,
+        boost::long_long_type,
+#endif
+        mp11::mp_true,
+        T
+     
+    // if promotion fails, keep the number T
+    // (and cross fingers that overflow will not occur)
+     >; 
+};
 }} // namespace detail::promote_integral
 
 /*!
@@ -90,14 +123,14 @@ struct promote_to_larger<T, EndIterator, EndIterator, MinSize>
     to a another integral type with size (roughly) twice the bit size of T.
 
     To do this, two times the bit size of T is tested against the bit sizes of:
-         short, int, long, boost::long_long_type, boost::int128_t
+         short, int, long, boost::long_long_type
     and the one that first matches is chosen.
 
     For unsigned types the bit size of T is tested against the bit
     sizes of the types above, if T is promoted to a signed type, or
     the bit sizes of
          unsigned short, unsigned int, unsigned long, std::size_t,
-         boost::ulong_long_type, boost::uint128_t
+         boost::ulong_long_type
     if T is promoted to an unsigned type.
 
     By default an unsigned type is promoted to a signed type.
@@ -148,7 +181,7 @@ private:
 
     // Define the list of signed integral types we are going to use
     // for promotion
-    using signed_integral_types = boost::mpl::list
+    using signed_integral_types = mp11::mp_list
         <
             short, int, long
 #if defined(BOOST_HAS_LONG_LONG)
@@ -158,7 +191,7 @@ private:
 
     // Define the list of unsigned integral types we are going to use
     // for promotion
-    using unsigned_integral_types = boost::mpl::list
+    using unsigned_integral_types = mp11::mp_list
         <
             unsigned short, unsigned int, unsigned long, std::size_t
 #if defined(BOOST_HAS_LONG_LONG)
@@ -176,13 +209,12 @@ private:
             signed_integral_types
         >::type;
 
-public:
+public:  
     using type = typename detail::promote_integral::promote_to_larger
         <
             T,
-            typename boost::mpl::begin<integral_types>::type,
-            typename boost::mpl::end<integral_types>::type,
-            min_bit_size_type::value
+            min_bit_size_type::value, 
+            (is_unsigned&&PromoteUnsignedToUnsigned)
         >::type;
 };
 
