@@ -26,13 +26,13 @@ int main(int argc, char* argv[])
     auto dy = gil::view(dy_image);
     if (filter_type == "sobel")
     {
-        gil::convolve_2d(input, gil::generate_dx_sobel(1), dx);
-        gil::convolve_2d(input, gil::generate_dy_sobel(1), dy);
+        gil::detail::convolve_2d(input, gil::generate_dx_sobel(1), dx);
+        gil::detail::convolve_2d(input, gil::generate_dy_sobel(1), dy);
     }
     else if (filter_type == "scharr")
     {
-        gil::convolve_2d(input, gil::generate_dx_scharr(1), dx);
-        gil::convolve_2d(input, gil::generate_dy_scharr(1), dy);
+        gil::detail::convolve_2d(input, gil::generate_dx_scharr(1), dx);
+        gil::detail::convolve_2d(input, gil::generate_dy_scharr(1), dy);
     }
     else
     {
