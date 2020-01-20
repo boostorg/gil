@@ -132,7 +132,7 @@ The preparation involves the following steps:
     **TIP:** For more convenient path-less invocation, you can copy the `b2`
     program to a location in your `PATH`.
 
-4. Optionally, create full content of `/boost` virtual directory with
+4. Create full content of `/boost` virtual directory with
 all Boost headers linked from the individual modular Boost libraries.
 If you skip this step, executing `b2` to run tests will automatically
 create the directory with all headers required by Boost.GIL and tests.
