@@ -91,11 +91,15 @@ The official repository contains the following branches:
 
 There is number of communication channels to ask questions and discuss Boost.GIL issues:
 
-- Mailing list [boost-gil](https://lists.boost.org/mailman/listinfo.cgi/boost-gil) ([archive](https://lists.boost.org/boost-gil/)) as well as official Boost lists, [boost-users](https://lists.boost.org/mailman/listinfo.cgi/boost-users) and
-[boost](https://lists.boost.org/mailman/listinfo.cgi/boost).
-- Gitter chat room [boostorg//gil](https://gitter.im/boostorg/gil).
-- [cpplang.slack.com](https://cpplang.slack.com) chat rooms [\#boost-user](https://cpplang.slack.com/messages/CEWTCFDN0/) and [\#boost](https://cpplang.slack.com/messages/C27KZLB0X/).
-- IRC channel [\#boost](irc://chat.freenode.net/#boost) on FreeNode.
+- Mailing lists ([Boost discussion policy](https://www.boost.org/more/discussion_policy.html))
+    - [boost-gil](https://lists.boost.org/mailman/listinfo.cgi/boost-gil) (*recommended*) - official Boost.GIL mailing lsit ([archive](https://lists.boost.org/boost-gil/))
+    - [boost-users](https://lists.boost.org/mailman/listinfo.cgi/boost-users) for all Boost users
+    - [boost](https://lists.boost.org/mailman/listinfo.cgi/boost) for all Boost developers
+- Slack at [cpplang.slack.com](https://cpplang.slack.com) with Boost channels:
+    - [\#boost-gil](https://cpplang.slack.com/messages/C27KZLB0X/) (*recommended*) - official Boost.GIL channel
+    - [\#boost-user](https://cpplang.slack.com/messages/CEWTCFDN0/) for all Boost users
+    - [\#boost](https://cpplang.slack.com/messages/C27KZLB0X/) for all Boost users
+- Gitter room [boostorg/gil](https://gitter.im/boostorg/gil)
 - You can also ask questions via GitHub issue.
 
 ## Contributing (We Need Your Help!)
