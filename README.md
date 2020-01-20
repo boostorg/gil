@@ -96,7 +96,7 @@ There is number of communication channels to ask questions and discuss Boost.GIL
     - [boost-users](https://lists.boost.org/mailman/listinfo.cgi/boost-users) for all Boost users
     - [boost](https://lists.boost.org/mailman/listinfo.cgi/boost) for all Boost developers
 - Slack at [cpplang.slack.com](https://cpplang.slack.com) with Boost channels:
-    - [\#boost-gil](https://cpplang.slack.com/messages/C27KZLB0X/) (*recommended*) official Boost.GIL channel
+    - [\#boost-gil](https://cpplang.slack.com/archives/CSVT0STV2) (*recommended*) official Boost.GIL channel
     - [\#boost-user](https://cpplang.slack.com/messages/CEWTCFDN0/) for all Boost users
     - [\#boost](https://cpplang.slack.com/messages/C27KZLB0X/) for all Boost users
 - Gitter room [boostorg/gil](https://gitter.im/boostorg/gil) (old real-time chat space)
