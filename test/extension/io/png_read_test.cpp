@@ -12,7 +12,7 @@
 
 #include <boost/gil/extension/io/png.hpp>
 
-#include <boost/test/unit_test.hpp>
+#include "unit_test.hpp"
 
 #include <cstdint>
 #include <iostream>
