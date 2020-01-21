@@ -138,7 +138,7 @@ If you skip this step, executing `b2` to run tests will automatically
 create the directory with all headers required by Boost.GIL and tests.
 
     ```shell
-    ./b2 -j8 headers
+    ./b2 headers
     ```
 
 **TIP:** If something goes wrong, you end up with incomplete or accidentally
@@ -355,22 +355,25 @@ Run core tests only specifying location of directory with tests:
 
 ```shell
 cd libs/gil
-../../b2 -j8 test/core
+../../b2 cxxstd=11 test/core
 ```
 
 Run all tests for selected extension (from Boost root directory, as alternative):
 
 ```shell
-./b2 -j8 libs/gil/test/io
-./b2 -j8 libs/gil/test/numeric
-./b2 -j8 libs/gil/test/toolbox
+./b2 cxxstd=11 libs/gil/test/io
+./b2 cxxstd=11 libs/gil/test/numeric
+./b2 cxxstd=11 libs/gil/test/toolbox
 ```
 
 Run I/O extension tests bundled in target called `simple`:
 
 ```shell
-./b2 libs/gil/test/io//simple
+./b2 cxxstd=11 libs/gil/test/io//simple
 ```
+
+**TIP:** Pass `b2` feature `cxxstd=11,14,17,2a` to request compilation for
+multiple C++ standard versions in single build run.
 
 ### Using CMake
 
@@ -395,17 +398,22 @@ The provided CMake configuration allows a couple of ways to develop Boost.GIL:
    `libs/gil`. This mode requires prior deployment of `boost` virtual directory
    with headers and stage build of required libraries, for example:
 
+For CMake, you only need to build Boost libraries required by Boost.Test library
+which is used to run GIL tests. Since the `CMAKE_CXX_STANDARD` option in the current
+[CMakeLists.txt](CMakeLists.txt) defaults to C++11, pass the default `cxxstd=11` to `b2`:
+
   ```shell
-  ./b2 -j8 headers
-  ./b2 -j8 variant=debug --with-test --with-filesystem stage
-  ./b2 -j8 variant=release --with-test --with-filesystem stage
+  ./b2 headers
+  ./b2 variant=debug,release cxxstd=11 --with-test --with-filesystem stage
   ```
 
   or, depending on specific requirements, more complete build:
 
   ```shell
-  ./b2 -j8 variant=debug,release address-model=32,64 --layout=versioned --with-test --with-filesystem stage
+  ./b2 variant=debug,release address-model=32,64 cxxstd=11 --layout=versioned --with-test --with-filesystem stage
   ```
+
+If you wish to build tests using different C++ standard version, then adjust the `cxxstd` accordingly.
 
 Using the installed Boost enables a lightweight mode for the library development,
 inside a stand-alone clone Boost.GIL repository and without any need to clone the
@@ -413,8 +421,7 @@ whole Boost super-project.
 
 **TIP:** For the lightweight setup, prefer latest release of Boost.
 
-For available custom CMake options, open the top-level `CMakeLists.txt`
-and search for `option`.
+For available custom CMake options, open the top-level `CMakeLists.txt` and search for `option`.
 
 Here is an example of such lightweight workflow in Linux environment (Debian-based):
 
