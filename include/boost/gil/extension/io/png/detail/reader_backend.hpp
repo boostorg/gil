@@ -91,6 +91,9 @@ public:
         // you can supply NULL for the last three parameters.  We also supply the
         // the compiler header file version, so that we know if the application
         // was compiled with a compatible version of the library.  REQUIRED
+        // Please read http://www.libpng.org/pub/png/book/chapter13.html
+        // and http://www.libpng.org/pub/png/book/chapter14.html
+        // on why using default handler is dangerous
         get()->_struct = png_create_read_struct( PNG_LIBPNG_VER_STRING
                                              , nullptr  // user_error_ptr
                                              , &error_handler  // user_error_fn
@@ -127,7 +130,6 @@ public:
         // Set error handling if you are using the setjmp/longjmp method (this is
         // the normal method of doing things with libpng).  REQUIRED unless you
         // set up your own error handlers in the png_create_read_struct() earlier.
-
         png_set_read_fn( get_struct()
                        , static_cast< png_voidp >( &this->_io_dev )
                        , this_t::read_data
