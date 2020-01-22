@@ -11,6 +11,7 @@
 #include <boost/gil/extension/io/png/tags.hpp>
 #include <boost/gil/extension/io/png/detail/base.hpp>
 #include <boost/gil/extension/io/png/detail/supported_types.hpp>
+#include <boost/gil/io/error.hpp>
 
 namespace boost { namespace gil {
 
@@ -60,6 +61,11 @@ public:
         }
     }
 
+    static void error_handler(png_structp png_ptr, png_const_charp msg)
+    {
+        io_error(msg);
+    }
+
     void read_header()
     {
         using boost::gil::detail::PNG_BYTES_TO_CHECK;
@@ -87,7 +93,7 @@ public:
         // was compiled with a compatible version of the library.  REQUIRED
         get()->_struct = png_create_read_struct( PNG_LIBPNG_VER_STRING
                                              , nullptr  // user_error_ptr
-                                             , nullptr  // user_error_fn
+                                             , &error_handler  // user_error_fn
                                              , nullptr  // user_warning_fn
                                              );
 
@@ -121,16 +127,6 @@ public:
         // Set error handling if you are using the setjmp/longjmp method (this is
         // the normal method of doing things with libpng).  REQUIRED unless you
         // set up your own error handlers in the png_create_read_struct() earlier.
-        if( setjmp( png_jmpbuf( get_struct() )))
-        {
-            //free all of the memory associated with the png_ptr and info_ptr
-            png_destroy_read_struct( &get()->_struct
-                                   , &get()->_info
-                                   , nullptr
-                                   );
-
-            io_error( "png is invalid" );
-        }
 
         png_set_read_fn( get_struct()
                        , static_cast< png_voidp >( &this->_io_dev )
