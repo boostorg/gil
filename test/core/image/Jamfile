@@ -9,3 +9,5 @@
 import testing ;
 
 compile concepts.cpp ;
+
+run image.cpp /boost/test//boost_unit_test_framework : : : <link>shared:<define>BOOST_TEST_DYN_LINK=1 ;
