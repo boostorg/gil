@@ -1,9 +1,7 @@
-#include <iostream>
-
 #include <boost/gil/extension/io/png.hpp>
+#include <boost/gil/image_processing/morphology.hpp>
 #include <boost/gil/image_view_factory.hpp>
 #include <boost/gil.hpp>
-#include <boost/gil/image_processing/morph.hpp>
 #include <boost/multi_array.hpp>
 
 #define SE_SIZE 3
@@ -29,8 +27,6 @@ int main()
             se[i][j] = se_arr[i][j];
         }
     }
-
-    // gray8c_view_t se_g = interleaved_view(3, 3, (const gray8_pixel_t*)se,sizeof(se[0]));
 
     dilate(view(img), view(img_dilate), se);
     erode(view(img), view(img_erode), se);
