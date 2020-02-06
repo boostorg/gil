@@ -4,7 +4,7 @@
 #include <boost/gil.hpp>
 #include <boost/multi_array.hpp>
 
-#define SE_SIZE 3
+const int struct_elem_size = 3;
 
 using namespace boost::gil;
 using namespace std;
@@ -16,13 +16,14 @@ int main()
     gray8_image_t img_dilate(img.dimensions());
     gray8_image_t img_erode(img.dimensions());
 
-    int se_arr[SE_SIZE][SE_SIZE] = {{0,1,0},{1,1,1},{0,1,0}};
+    int se_arr[struct_elem_size][struct_elem_size] = {{0,1,0},{1,1,1},{0,1,0}};
 
-    typedef boost::multi_array<int, 2> se_type;
-    se_type se{boost::extents[SE_SIZE][SE_SIZE]};
-    for(int i=0; i < SE_SIZE; ++i)
+    using se_type = boost::multi_array<int, 2>;
+    
+    se_type se{boost::extents[struct_elem_size][struct_elem_size]};
+    for(int i=0; i < struct_elem_size; ++i)
     {
-        for(int j=0; j < SE_SIZE; ++j)
+        for(int j=0; j < struct_elem_size; ++j)
         {
             se[i][j] = se_arr[i][j];
         }
