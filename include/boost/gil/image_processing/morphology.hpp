@@ -58,7 +58,7 @@ void convolve_with_struct_element(SrcView const &src_view, DstView &dst_view,
                 auto x_to_read = src_x + struct_elem_x - struct_elem_width/2;
                 if(x_to_read < 0 || x_to_read >= src_view.width())
                     continue;
-                  auto src_point_val = src_it[x_to_read];
+                auto src_point_val = src_it[x_to_read];
                 if (src_point_val < min)
                     min = src_point_val;
                 if (src_point_val > max)
