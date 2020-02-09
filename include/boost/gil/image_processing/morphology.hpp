@@ -102,7 +102,9 @@ void morph_impl(SrcView const &src_view, DstView &dst_view, StructElement const 
 /// \param src_view - The source image view.
 /// \param dst_view - The destination image view (after performing dilation).
 /// \param struct_elem - The Structuing Element. Should be a 2D-array type consiting of binary int values (0 and 1).
-/// Should provide size() and operator[]
+/// \tparam SrcView type of source image. Should confirm to gil::ImgaeViewConcept.
+/// \tparam DstView type of destination image. Should confirm to gil::MutableImageViewConcept.
+/// \tparam StructElement type of structuring element. Should provide size() and operator[].
 template <typename SrcView, typename DstView, typename StructElement>
 void dilate(SrcView const &src_view, DstView &dst_view, StructElement const &struct_elem)
 {
@@ -113,7 +115,9 @@ void dilate(SrcView const &src_view, DstView &dst_view, StructElement const &str
 /// \param src_view - The source image view.
 /// \param dst_view - The destination image view (after performing dilation).
 /// \param struct_elem - The Structuing Element. Should be a 2D-array type consiting of binary int values (0 and 1).
-/// Should provide size() and operator[]
+/// \tparam SrcView type of source image. Should confirm to gil::ImgaeViewConcept.
+/// \tparam DstView type of destination image. Should confirm to gil::MutableImageViewConcept.
+/// \tparam StructElement type of structuring element. Should provide size() and operator[].
 template <typename SrcView, typename DstView, typename StructElement>
 void erode(SrcView const &src_view, DstView &dst_view, StructElement const &struct_elem)
 {
