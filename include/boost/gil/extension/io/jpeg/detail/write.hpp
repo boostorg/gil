@@ -132,6 +132,9 @@ private:
                                 , 1
                                 );
         }
+
+        jpeg_finish_compress ( this->get() );
+
     }
 };
 

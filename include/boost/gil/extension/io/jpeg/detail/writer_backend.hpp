@@ -113,7 +113,6 @@ public:
 
     ~writer_backend()
     {
-        jpeg_finish_compress ( get() );
         jpeg_destroy_compress( get() );
     }
 
