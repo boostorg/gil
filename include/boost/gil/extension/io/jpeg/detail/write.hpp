@@ -134,7 +134,6 @@ private:
         }
 
         jpeg_finish_compress ( this->get() );
-
     }
 };
 
