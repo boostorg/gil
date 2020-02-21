@@ -123,7 +123,7 @@ target_compile_definitions(gil_dependencies
 #-----------------------------------------------------------------------------
 # Dependency: libpng, libjpeg, libtiff, libraw via Vcpkg or Conan
 #-----------------------------------------------------------------------------
-if(GIL_USE_CONAN)
+if(BOOST_GIL_USE_CONAN)
   # Download automatically, you can also just copy the conan.cmake file
   if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
     message(STATUS "Boost.GIL: Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
