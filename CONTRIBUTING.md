@@ -60,6 +60,7 @@ please follow the workflow explained in this document.
 - **DO** [mention] any users that should know about and/or review the change.
 - **DO** ensure each commit successfully builds. The entire PR must pass all tests in
   the Continuous Integration (CI) system before it'll be merged.
+- **DO** ensure any new features or changes to existing behaviours are covered with test cases.
 - **DO** address PR feedback in an additional commit(s) rather than amending the existing
   commits, and only rebase/squash them when necessary. This makes it easier for reviewers
   to track changes.
