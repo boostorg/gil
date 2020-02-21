@@ -224,17 +224,19 @@ target_include_directories(gil_include_directories
 #-----------------------------------------------------------------------------
 # Tests
 #-----------------------------------------------------------------------------
-enable_testing()
+include(CTest)
 
-# On CI services, test the self-contained headers on-demand only to avoid build timeouts.
-# CI environment is common for Travis CI, AppVeyor, CircleCI, etc.
-# On Boost regression builds, CMake does not run, but Boost.Build,
-# so the header tests are not enabled there either.
-if(DEFINED ENV{CI})
-  set(BOOST_GIL_BUILD_HEADER_TESTS OFF)
+if(BUILD_TESTING)
+  # On CI services, test the self-contained headers on-demand only to avoid build timeouts.
+  # CI environment is common for Travis CI, AppVeyor, CircleCI, etc.
+  # On Boost regression builds, CMake does not run, but Boost.Build,
+  # so the header tests are not enabled there either.
+  if(DEFINED ENV{CI})
+    set(BOOST_GIL_BUILD_HEADER_TESTS OFF)
+  endif()
+
+  add_subdirectory(test)
 endif()
-
-add_subdirectory(test)
 
 #-----------------------------------------------------------------------------
 # Examples
