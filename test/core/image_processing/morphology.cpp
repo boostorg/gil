@@ -1,3 +1,10 @@
+//
+// Copyright 2019 Ayush Bansal <abansal1008@gmail.com>
+//
+// Use, modification and distribution are subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+//
 #include <boost/gil/image_processing/morphology.hpp>
 #include <boost/core/lightweight_test.hpp>
 
@@ -95,9 +102,9 @@ std::vector<std::vector<int> > struct_element_big{
 // Utility function to fill values from a vector into an image view.
 void fill_values(std::vector<std::vector<int> > &values, gil::gray8_image_t &img)
 {
-    for(std::ptrdiff_t y=0; y<values.size(); ++y)
+    for (std::ptrdiff_t y=0; y < values.size(); ++y)
     {
-        for(std::ptrdiff_t x=0; x<values[0].size(); ++x)
+        for (std::ptrdiff_t x=0; x < values[0].size(); ++x)
         {
             gil::view(img)(x,y) = gil::gray8_pixel_t(values[y][x]);
         }

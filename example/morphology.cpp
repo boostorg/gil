@@ -1,3 +1,10 @@
+//
+// Copyright 2019 Ayush Bansal <abansal1008@gmail.com>
+//
+// Use, modification and distribution are subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+//
 #include <boost/gil/extension/io/png.hpp>
 #include <boost/gil/image_processing/morphology.hpp>
 #include <boost/gil/image_view_factory.hpp>
@@ -19,11 +26,11 @@ int main()
     int se_arr[struct_elem_size][struct_elem_size] = {{0,1,0},{1,1,1},{0,1,0}};
 
     using se_type = boost::multi_array<int, 2>;
-    
+
     se_type se{boost::extents[struct_elem_size][struct_elem_size]};
-    for(int i=0; i < struct_elem_size; ++i)
+    for (int i=0; i < struct_elem_size; ++i)
     {
-        for(int j=0; j < struct_elem_size; ++j)
+        for (int j=0; j < struct_elem_size; ++j)
         {
             se[i][j] = se_arr[i][j];
         }
