@@ -13,6 +13,7 @@ import ../../config/checks/config : requires ;
 import os ;
 import path ;
 import regex ;
+import sequence ;
 import testing ;
 
 # Avoid warnings flood on Travis CI, AppVeyor, CircleCI, Azure Pipelines
@@ -97,12 +98,17 @@ rule generate_self_contained_headers ( headers_subpath * : exclude_subpaths * )
     # NOTE: All '/' in test names are replaced with '-' because apparently
     #       test scripts have a problem with test names containing slashes.
 
-    local top_headers_path = [ path.make $(BOOST_ROOT)/libs/gil/include/boost/gil ] ;
-
-    for local file in [ path.glob-tree $(top_headers_path)/$(headers_subpath) : *.hpp : $(exclude_subpaths) ]
+    local headers_path = [ path.make $(BOOST_ROOT)/libs/gil/include/boost/gil ] ;
+    if $(headers_subpath)
     {
-        local rel_file = [ path.relative-to $(top_headers_path) $(file) ] ;
-        local target_name = [ regex.replace h/$(rel_file) "/" "-" ] ;
+        headers_path = $(headers_path)/$(headers_subpath) ;
+    }
+
+    for local file in [ path.glob-tree $(headers_path) : *.hpp : $(exclude_subpaths) ]
+    {
+        local target_no = [ sequence.length $(targets) ] ;
+        local rel_file = [ path.relative-to $(headers_path) $(file) ] ;
+        local target_name = [ regex.replace h/$(target_no)/$(rel_file) "/" "-" ] ;
         local target_name = [ regex.replace $(target_name) "\.hpp" "" ] ;
         targets += [
             compile $(BOOST_ROOT)/libs/gil/test/header/main.cpp
