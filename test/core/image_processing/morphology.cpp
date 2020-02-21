@@ -18,6 +18,9 @@ const int big_width = 50, big_height = 50;
 gil::gray8_image_t original_gray(width, height), processed_gray(width, height), expected_gray(width, height);
 gil::gray8_image_t original_gray_big(big_width, big_height), processed_gray_big(big_width, big_height), expected_gray_big(big_width, big_height);
 
+auto original_gray_view = gil::const_view(original_gray);
+auto processed_gray_view = gil::view(processed_gray);
+
 std::vector<std::vector<int> > original_gray_dilation_values {
         {  0,   0,   0,   0,   0},
         {  0, 255, 255,   0,   0},
@@ -102,9 +105,9 @@ std::vector<std::vector<int> > struct_element_big{
 // Utility function to fill values from a vector into an image view.
 void fill_values(std::vector<std::vector<int> > &values, gil::gray8_image_t &img)
 {
-    for (std::ptrdiff_t y=0; y < values.size(); ++y)
+    for (std::ptrdiff_t y=0; y < (std::ptrdiff_t) values.size(); ++y)
     {
-        for (std::ptrdiff_t x=0; x < values[0].size(); ++x)
+        for (std::ptrdiff_t x=0; x < (std::ptrdiff_t) values[0].size(); ++x)
         {
             gil::view(img)(x,y) = gil::gray8_pixel_t(values[y][x]);
         }
@@ -122,14 +125,14 @@ void test_dilation_3x3()
             { 0,   255,   0,   0,   0}};
     fill_values(expected_values, expected_gray);
 
-    gil::dilate(gil::view(original_gray),gil::view(processed_gray),struct_element_3x3);
+    gil::dilate(original_gray_view,processed_gray_view,struct_element_3x3);
     BOOST_TEST(gil::equal_pixels(gil::view(processed_gray), gil::view(expected_gray)));
 }
 
 // Test Dilation using 3x3 Structuring Element. Checks boundary cases for image.
 void test_dilation_3x3_boundary_case()
 {
-    gil::view(original_gray)(0,0) = 255, gil::view(original_gray)(1,0) = 255; // Make the boundary values as 255
+    gil::view(original_gray)(0,0) = (unsigned char) 255, gil::view(original_gray)(1,0) = (unsigned char) 255; // Make the boundary values as 255
     std::vector<std::vector<int> > expected_values{
             {255,	255,	255,	0,	0},
             {255,	255,	255,	255,	0},
@@ -138,7 +141,7 @@ void test_dilation_3x3_boundary_case()
             {0,	255,	0,	0,	0}};
     fill_values(expected_values, expected_gray);
 
-    gil::dilate(gil::view(original_gray),gil::view(processed_gray),struct_element_3x3);
+    gil::dilate(original_gray_view,processed_gray_view,struct_element_3x3);
     BOOST_TEST(gil::equal_pixels(gil::view(processed_gray), gil::view(expected_gray)));
 
     // RESET Image to original values
@@ -156,7 +159,7 @@ void test_dilation_2x2()
             {0,	255,	0,	0,	0}};
     fill_values(expected_values, expected_gray);
 
-    gil::dilate(gil::view(original_gray),gil::view(processed_gray),struct_element_2x2);
+    gil::dilate(original_gray_view,processed_gray_view,struct_element_2x2);
     BOOST_TEST(gil::equal_pixels(gil::view(processed_gray), gil::view(expected_gray)));
 }
 
@@ -167,14 +170,16 @@ void test_erosion_3x3()
     expected_values[width/2][height/2] = 255;
     fill_values(expected_values, expected_gray);
 
-    gil::erode(gil::view(original_gray),gil::view(processed_gray),struct_element_3x3);
+    gil::erode(original_gray_view,processed_gray_view,struct_element_3x3);
     BOOST_TEST(gil::equal_pixels(gil::view(processed_gray), gil::view(expected_gray)));
 }
 
 // Test Erosion using 3x3 Structuring Element. Checks boundary cases for image.
 void test_erosion_3x3_boundary_case()
 {
-    gil::view(original_gray)(0,0) = 255, gil::view(original_gray)(1,0) = 255, gil::view(original_gray)(0,1) = 255; // Make the boundary values as 255
+    gil::view(original_gray)(0,0) = (unsigned char) 255,
+    gil::view(original_gray)(1,0) = (unsigned char) 255,
+    gil::view(original_gray)(0,1) = (unsigned char) 255; // Make the boundary values as 255
     std::vector<std::vector<int> > expected_values{
             {255,	0,	0,	0,	0},
             {0,	255,	0,	0,	0},
@@ -183,7 +188,7 @@ void test_erosion_3x3_boundary_case()
             {0,	0,	0,	0,	0}};
     fill_values(expected_values, expected_gray);
 
-    gil::erode(gil::view(original_gray),gil::view(processed_gray),struct_element_3x3);
+    gil::erode(original_gray_view,processed_gray_view,struct_element_3x3);
     BOOST_TEST(gil::equal_pixels(gil::view(processed_gray), gil::view(expected_gray)));
 
     // RESET Image to original values
@@ -201,7 +206,7 @@ void test_erosion_2x2()
             {0,	0,	0,	0,	0}};
     fill_values(expected_values, expected_gray);
 
-    gil::erode(gil::view(original_gray),gil::view(processed_gray),struct_element_2x2);
+    gil::erode(original_gray_view,processed_gray_view,struct_element_2x2);
     BOOST_TEST(gil::equal_pixels(gil::view(processed_gray), gil::view(expected_gray)));
 }
 
@@ -263,7 +268,9 @@ void test_dilation_big()
 
     fill_values(expected_values, expected_gray_big);
 
-    gil::dilate(gil::view(original_gray_big),gil::view(processed_gray_big),struct_element_big);
+    auto original_gray_big_view = gil::const_view(original_gray_big);
+    auto processed_gray_big_view = gil::view(processed_gray_big);
+    gil::dilate(original_gray_big_view,processed_gray_big_view,struct_element_big);
     BOOST_TEST(gil::equal_pixels(gil::view(processed_gray_big), gil::view(expected_gray_big)));
 }
 
@@ -323,7 +330,9 @@ void test_erosion_big()
 
     fill_values(expected_values, expected_gray_big);
 
-    gil::erode(gil::view(original_gray_big),gil::view(processed_gray_big),struct_element_big);
+    auto original_gray_big_view = gil::const_view(original_gray_big);
+    auto processed_gray_big_view = gil::view(processed_gray_big);
+    gil::erode(original_gray_big_view,processed_gray_big_view,struct_element_big);
     BOOST_TEST(gil::equal_pixels(gil::view(processed_gray_big), gil::view(expected_gray_big)));
 }
 

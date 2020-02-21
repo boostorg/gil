@@ -8,7 +8,11 @@
 #ifndef BOOST_GIL_IMAGE_PROCESSING_MORPHOLOGY_HPP
 #define BOOST_GIL_IMAGE_PROCESSING_MORPHOLOGY_HPP
 
+#include <boost/gil/concepts.hpp>
+#include <boost/gil/image.hpp>
 #include <boost/assert.hpp>
+
+#include <cstddef>
 
 namespace boost { namespace gil {
 
@@ -37,8 +41,8 @@ void convolve_with_struct_element(SrcView const &src_view, DstView &dst_view,
     auto min = (std::numeric_limits<source_channel_t>::max());
     auto max = (std::numeric_limits<source_channel_t>::min());
 
-    std::size_t struct_elem_height = struct_elem.size();
-    std::size_t struct_elem_width = struct_elem[0].size();
+    std::ptrdiff_t struct_elem_height = struct_elem.size();
+    std::ptrdiff_t struct_elem_width = struct_elem[0].size();
 
     for (std::ptrdiff_t struct_elem_y = 0; struct_elem_y < struct_elem_height; ++struct_elem_y)
     {
@@ -81,8 +85,8 @@ void morph_impl(SrcView const &src_view, DstView &dst_view, StructElement const 
     BOOST_ASSERT(src_view.dimensions() == dst_view.dimensions());
     BOOST_ASSERT(struct_elem.size() != 0 && struct_elem[0].size() != 0);
 
-    std::size_t height = src_view.height();
-    std::size_t width = dst_view.width();
+    std::ptrdiff_t height = src_view.height();
+    std::ptrdiff_t width = dst_view.width();
 
     for (std::ptrdiff_t src_y = 0; src_y < height; ++src_y)
     {

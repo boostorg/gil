@@ -35,9 +35,12 @@ int main()
             se[i][j] = se_arr[i][j];
         }
     }
+    auto img_view = const_view(img);
+    auto img_erode_view = view(img_erode);
+    auto img_dilate_view = view(img_dilate);
 
-    dilate(view(img), view(img_dilate), se);
-    erode(view(img), view(img_erode), se);
+    dilate(img_view, img_dilate_view, se);
+    erode(img_view, img_erode_view, se);
 
     write_view("dilated_image.png", view(img_dilate), png_tag{});
     write_view("eroded_image.png", view(img_erode), png_tag{});
