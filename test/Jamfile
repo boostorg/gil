@@ -98,16 +98,17 @@ rule generate_self_contained_headers ( headers_subpath * : exclude_subpaths * )
     # NOTE: All '/' in test names are replaced with '-' because apparently
     #       test scripts have a problem with test names containing slashes.
 
-    local headers_path = [ path.make $(BOOST_ROOT)/libs/gil/include/boost/gil ] ;
+    local top_headers_path = [ path.make $(BOOST_ROOT)/libs/gil/include/boost/gil ] ;
+    local headers_path = $(top_headers_path) ;
     if $(headers_subpath)
     {
-        headers_path = $(headers_path)/$(headers_subpath) ;
+        headers_path = $(top_headers_path)/$(headers_subpath) ;
     }
 
     for local file in [ path.glob-tree $(headers_path) : *.hpp : $(exclude_subpaths) ]
     {
         local target_no = [ sequence.length $(targets) ] ;
-        local rel_file = [ path.relative-to $(headers_path) $(file) ] ;
+        local rel_file = [ path.relative-to $(top_headers_path) $(file) ] ;
         local target_name = [ regex.replace h/$(target_no)/$(rel_file) "/" "-" ] ;
         local target_name = [ regex.replace $(target_name) "\.hpp" "" ] ;
         targets += [
