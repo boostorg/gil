@@ -98,7 +98,7 @@ There is number of communication channels to ask questions and discuss Boost.GIL
 - Slack at [cpplang.slack.com](https://cppalliance.org/slack/) with Boost channels:
     - [\#boost-gil](https://cpplang.slack.com/archives/CSVT0STV2) (*recommended*) official Boost.GIL channel
     - [\#boost-user](https://cpplang.slack.com/messages/CEWTCFDN0/) for all Boost users
-    - [\#boost](https://cpplang.slack.com/messages/C27KZLB0X/) for all Boost users
+    - [\#boost](https://cpplang.slack.com/messages/C27KZLB0X/) for all Boost developers
 - Gitter room [boostorg/gil](https://gitter.im/boostorg/gil) (old real-time chat space)
 - You can also ask questions via GitHub issue.
 
