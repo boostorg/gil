@@ -40,8 +40,8 @@ Most of them are defined at the
 
   auto concept EqualityComparable<typename T, typename U = T>
   {
-      bool operator==(T x, T y);
-      bool operator!=(T x, T y) { return !(x==y); }
+      bool operator==(T x, U y);
+      bool operator!=(T x, U y) { return !(x==y); }
   };
 
   concept SameType<typename T, typename U> { /* unspecified */ };
