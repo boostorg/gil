@@ -45,7 +45,7 @@ void threshold_impl(SrcView const& src_view, DstView const& dst_view, Operator c
         typename color_space_type<DstView>::type
     >::value, "Source and destination views must have pixels with the same color space");
 
-    //iterate over the image chaecking each pixel value for the threshold
+    //iterate over the image checking each pixel value for the threshold
     for (std::ptrdiff_t y = 0; y < src_view.height(); y++)
     {
         typename SrcView::x_iterator src_it = src_view.row_begin(y);
@@ -64,7 +64,7 @@ void threshold_impl(SrcView const& src_view, DstView const& dst_view, Operator c
 /// @{
 ///
 /// \brief Direction of image segmentation.
-/// The direction specifieds which pixels are considered as corresponding to object
+/// The direction specifies which pixels are considered as corresponding to object
 /// and which pixels correspond to background.
 enum class threshold_direction
 {
