@@ -159,11 +159,6 @@ void getGaussianKernel(KernelT& kernel,
         kernel[x] = value;
         kernel[kernel_size-1-x] = value;
     }
-    if (normalize)
-    {
-        auto sum = std::accumulate(kernel.begin(), kernel.end(), 0.0f);
-        std::for_each(kernel.begin(), kernel.end(), [&sum](float x) { return x/sum; });
-    }
 }
 
 } // namespace detail
