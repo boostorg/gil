@@ -155,7 +155,7 @@ void getGaussianKernel(KernelT& kernel,
         const auto delta_x = center - x;
         const double power = (delta_x * delta_x) / exp_denom;
         const double numerator = std::exp(-power);
-        const float value = static_cast<float>(numerator/std::sqrt(boost::gil::pi * exp_denom));
+        const float value = static_cast<float>(numerator/std::sqrt(M_PI * exp_denom));
         kernel[x] = value;
         kernel[kernel_size-1-x] = value;
     }
