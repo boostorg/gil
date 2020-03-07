@@ -16,11 +16,11 @@
 #include <boost/gil/image.hpp>
 #include <boost/gil/image_view.hpp>
 
-#include <cstddef>
-#include <vector>
-#include <utility>
 #include <algorithm>
 #include <cmath>
+#include <cstddef>
+#include <utility>
+#include <vector>
 
 
 
@@ -140,12 +140,12 @@ void median_filter(SrcView const& src_view, DstView const& dst_view, std::size_t
 namespace detail {
 
 template<typename KernelT>
-void getGaussianKernel(KernelT& kernel,
-                       long int kernel_size,
-                       double sigma,
-                       bool normalize = true)
+void get_gaussian_kernel(
+    KernelT& kernel,
+    long int kernel_size,
+    double sigma)
 {
-    if (!(kernel_size & 0x1))
+    if (!(kernel_size%2))
         throw std::invalid_argument("kernel dimensions should be odd");
 
     const double exp_denom = 2 * sigma * sigma;
@@ -164,12 +164,12 @@ void getGaussianKernel(KernelT& kernel,
 } // namespace detail
 
 template <typename SrcView, typename DstView>
-void gaussian_filter(SrcView src_view,
-                     DstView dst_view,
-                     long int kernel_size,
-                     double sigma,
-                     bool normalize = true,
-                     boundary_option option = boundary_option::extend_zero)
+void gaussian_filter(
+    SrcView src_view,
+    DstView dst_view,
+    long int kernel_size,
+    double sigma,
+    boundary_option option = boundary_option::extend_zero)
 {
     gil_function_requires<ImageViewConcept<SrcView>>();
     gil_function_requires<MutableImageViewConcept<DstView>>();
