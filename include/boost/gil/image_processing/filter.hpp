@@ -145,7 +145,7 @@ void getGaussianKernel(KernelT& kernel,
 {
     if (kernel_size & 0x1)
         throw std::invalid_argument("kernel dimensions should be odd");
-    
+
     const double exp_denom = 2 * sigma * sigma;
     auto center = kernel_size / 2;
     for (long int x = 0; x <= center; x++)
@@ -153,7 +153,7 @@ void getGaussianKernel(KernelT& kernel,
         const auto delta_x = center - x;
         const double power = (delta_x * delta_x) / exp_denom;
         const double numerator = std::exp(-power);
-        const float value = static_cast<float>(numerator/(boost::gil::pi * exp_denom));
+        const float value = static_cast<float>(numerator/std::sqrt(boost::gil::pi * exp_denom));
         kernel[x] = value;
         kernel[kernel_size-1-x] = value;
     }
