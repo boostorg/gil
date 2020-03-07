@@ -143,7 +143,7 @@ void getGaussianKernel(KernelT& kernel,
                        double sigma,
                        bool normalize = true)
 {
-    if (kernel_size & 0x1)
+    if (!(kernel_size & 0x1))
         throw std::invalid_argument("kernel dimensions should be odd");
 
     const double exp_denom = 2 * sigma * sigma;
