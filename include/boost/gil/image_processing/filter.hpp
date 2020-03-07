@@ -135,6 +135,64 @@ void median_filter(SrcView const& src_view, DstView const& dst_view, std::size_t
     }
 }
 
+namespace detail {
+
+template<typename KernelT>
+void getGaussianKernel(KernelT& kernel,
+                       long int kernel_size,
+                       double sigma,
+                       bool normalize = true)
+{
+    if (kernel_size & 0x1)
+        throw std::invalid_argument("kernel dimensions should be odd");
+    
+    const double exp_denom = 2 * sigma * sigma;
+    auto center = kernel_size / 2;
+    for (long int x = 0; x <= center; x++)
+    {
+        const auto delta_x = center - x;
+        const double power = (delta_x * delta_x) / exp_denom;
+        const double numerator = std::exp(-power);
+        const float value = static_cast<float>(numerator/(boost::gil::pi * exp_denom));
+        kernel[x] = value;
+        kernel[kernel_size-1-x] = value;
+    }
+    if (normalize)
+    {
+        auto sum = std::accumulate(kernel.begin(), kernel.end(), 0.0f);
+        std::for_each(kernel.begin(), kernel.end(), [&sum](float x) { return x/sum; });
+    }
+}
+
+} // namespace detail
+
+template <typename SrcView, typename DstView>
+void gaussian_filter(SrcView src_view,
+                     DstView dst_view,
+                     long int kernel_size,
+                     double sigma,
+                     bool normalize = true,
+                     boundary_option option = boundary_option::extend_zero)
+{
+    gil_function_requires<ImageViewConcept<SrcView>>();
+    gil_function_requires<MutableImageViewConcept<DstView>>();
+    static_assert(color_spaces_are_compatible
+    <
+        typename color_space_type<SrcView>::type,
+        typename color_space_type<DstView>::type
+    >::value, "Source and destination views must have pixels with the same color space");
+
+    std::vector<float> kernel_values(kernel_size);
+    detail::getGaussianKernel(kernel_values, kernel_size, sigma, normalize);
+    auto center = static_cast<int>(kernel_size/2);
+    kernel_1d<float> kernel(kernel_values.begin(), kernel_size, center);
+
+    detail::convolve_1d
+    <
+        pixel<float, typename SrcView::value_type::layout_t>
+    >(src_view, kernel, dst_view, option);
+}
+
 }} //namespace boost::gil
 
 #endif // !BOOST_GIL_IMAGE_PROCESSING_FILTER_HPP
