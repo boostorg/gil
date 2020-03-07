@@ -9,8 +9,8 @@ int main()
     read_image("test.jpg",img, jpeg_tag{});
     rgb8_image_t img_out(img.dimensions());
 
-//    performing binary threshold on each channel of the image
-//    if the pixel value is more than 150 than it will be set to 255 else to 0
+//    performing Gaussian Blur on image
+//    here kernel size is 5 and sigma is taken as 1
     boost::gil::gaussian_filter(const_view(img), view(img_out), 5, 1.0f);
     write_view("gaussian_blur.jpg", view(img_out), jpeg_tag{});
 
