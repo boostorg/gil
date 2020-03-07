@@ -33,7 +33,7 @@ std::uint8 output[] =
 
 BOOST_AUTO_TEST_SUITE(filter)
 
-BOOST_AUTO_TEST_CASE(box_filter_with_default_parameters)
+BOOST_AUTO_TEST_CASE(gaussian_filter_with_default_parameters)
 {
     gil::gray8c_view_t src_view =
         gil::interleaved_view(5, 5, reinterpret_cast<const gil::gray8_pixel_t*>(img), 5);
