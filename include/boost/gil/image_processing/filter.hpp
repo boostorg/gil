@@ -140,7 +140,7 @@ void median_filter(SrcView const& src_view, DstView const& dst_view, std::size_t
 namespace detail {
 
 template<typename KernelT>
-void get_gaussian_kernel(
+void get_1d_gaussian_kernel(
     KernelT& kernel,
     long int kernel_size,
     double sigma)
