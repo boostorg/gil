@@ -12,6 +12,7 @@
 #include <boost/gil/extension/numeric/algorithm.hpp>
 #include <boost/gil/extension/numeric/kernel.hpp>
 #include <boost/gil/extension/numeric/convolve.hpp>
+#include <boost/gil/extension/image_processing/numeric.hpp>
 
 #include <boost/gil/image.hpp>
 #include <boost/gil/image_view.hpp>
@@ -153,7 +154,6 @@ void gaussian_filter(
     auto gaussian_kernel = generate_gaussian_kernel(kernel_size, sigma);
     detail::convolve_2d(src_view, gaussian_kernel, dst_view);
 }
-
 
 }} //namespace boost::gil
 
