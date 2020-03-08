@@ -39,7 +39,7 @@ namespace boost { namespace gil {
 /// \ingroup ImageViewConcept
 /// \brief N-dimensional range
 
-/// \defgroup ImageView2DConcept ImageView2DConcept
+/// \defgroup ImageView2DConcept ImageView2DLocatorConcept
 /// \ingroup ImageViewConcept
 /// \brief 2-dimensional range
 
