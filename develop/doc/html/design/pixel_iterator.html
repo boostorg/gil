@@ -104,7 +104,7 @@
 (i.e. whether they allow for modifying the pixel they refer to), to get the
 immutable (read-only) type of the iterator, and to determine whether they are
 plain iterators or adaptors over another pixel iterator:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">PixelIteratorConcept</span><span class="o">&lt;</span><span class="n">RandomAccessTraversalIteratorConcept</span> <span class="n">Iterator</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">PixelIteratorConcept</span><span class="o">&lt;</span><span class="n">RandomAccessTraversalIteratorConcept</span> <span class="n">Iterator</span><span class="o">&gt;</span>
     <span class="o">:</span> <span class="n">PixelBasedConcept</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="n">where</span> <span class="n">PixelValueConcept</span><span class="o">&lt;</span><span class="n">value_type</span><span class="o">&gt;</span><span class="p">;</span>
@@ -115,7 +115,7 @@ plain iterators or adaptors over another pixel iterator:</p>
 <span class="p">};</span>
 
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">Iterator</span><span class="o">&gt;</span>
-<span class="n">concept</span> <span class="nl">MutablePixelIteratorConcept</span> <span class="p">:</span> <span class="n">PixelIteratorConcept</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">MutableRandomAccessIteratorConcept</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;</span> <span class="p">{};</span>
+<span class="k">concept</span> <span class="nl">MutablePixelIteratorConcept</span> <span class="p">:</span> <span class="n">PixelIteratorConcept</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">MutableRandomAccessIteratorConcept</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;</span> <span class="p">{};</span>
 </pre></div>
 </div>
 <div class="admonition seealso">
@@ -176,7 +176,7 @@ byte and the bit offset.</p>
 <code class="docutils literal notranslate"><span class="pre">is_iterator_adaptor</span></code> metafunction must evaluate to true, and it needs to
 provide a member method to return the base iterator, a metafunction to get its
 type, and a metafunction to rebind to another base iterator:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">IteratorAdaptorConcept</span><span class="o">&lt;</span><span class="n">RandomAccessTraversalIteratorConcept</span> <span class="n">Iterator</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">IteratorAdaptorConcept</span><span class="o">&lt;</span><span class="n">RandomAccessTraversalIteratorConcept</span> <span class="n">Iterator</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="n">where</span> <span class="n">SameType</span><span class="o">&lt;</span><span class="n">is_iterator_adaptor</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;::</span><span class="n">type</span><span class="p">,</span> <span class="n">mpl</span><span class="o">::</span><span class="n">true_</span><span class="o">&gt;</span><span class="p">;</span>
 
@@ -193,7 +193,7 @@ type, and a metafunction to rebind to another base iterator:</p>
 <span class="p">};</span>
 
 <span class="k">template</span> <span class="o">&lt;</span><span class="n">boost_concepts</span><span class="o">::</span><span class="n">Mutable_ForwardIteratorConcept</span> <span class="n">Iterator</span><span class="o">&gt;</span>
-<span class="n">concept</span> <span class="nl">MutableIteratorAdaptorConcept</span> <span class="p">:</span> <span class="n">IteratorAdaptorConcept</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;</span> <span class="p">{};</span>
+<span class="k">concept</span> <span class="nl">MutableIteratorAdaptorConcept</span> <span class="p">:</span> <span class="n">IteratorAdaptorConcept</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;</span> <span class="p">{};</span>
 </pre></div>
 </div>
 <div class="admonition seealso">
@@ -225,7 +225,7 @@ model <code class="docutils literal notranslate"><span class="pre">PixelDerefere
 dereferencing a pixel iterator. Its argument type could be anything (usually a
 <code class="docutils literal notranslate"><span class="pre">PixelConcept</span></code>) and the result type must be convertible to <code class="docutils literal notranslate"><span class="pre">PixelConcept</span></code>:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="n">boost</span><span class="o">::</span><span class="n">UnaryFunctionConcept</span> <span class="n">D</span><span class="o">&gt;</span>
-<span class="n">concept</span> <span class="nl">PixelDereferenceAdaptorConcept</span><span class="p">:</span>
+<span class="k">concept</span> <span class="nl">PixelDereferenceAdaptorConcept</span><span class="p">:</span>
     <span class="n">DefaultConstructibleConcept</span><span class="o">&lt;</span><span class="n">D</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">CopyConstructibleConcept</span><span class="o">&lt;</span><span class="n">D</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">AssignableConcept</span><span class="o">&lt;</span><span class="n">D</span><span class="o">&gt;</span>
@@ -275,12 +275,12 @@ useful:</p>
 </ul>
 <p>Step iterators are forward traversal iterators that allow changing the step
 between adjacent values:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">StepIteratorConcept</span><span class="o">&lt;</span><span class="n">boost_concepts</span><span class="o">::</span><span class="n">ForwardTraversalConcept</span> <span class="n">Iterator</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">StepIteratorConcept</span><span class="o">&lt;</span><span class="n">boost_concepts</span><span class="o">::</span><span class="n">ForwardTraversalConcept</span> <span class="n">Iterator</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="k">template</span> <span class="o">&lt;</span><span class="n">Integral</span> <span class="n">D</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="n">Iterator</span><span class="o">::</span><span class="n">set_step</span><span class="p">(</span><span class="n">D</span> <span class="n">step</span><span class="p">);</span>
 <span class="p">};</span>
 
-<span class="n">concept</span> <span class="n">MutableStepIteratorConcept</span><span class="o">&lt;</span><span class="n">boost_concepts</span><span class="o">::</span><span class="n">Mutable_ForwardIteratorConcept</span> <span class="n">Iterator</span><span class="o">&gt;</span>
+<span class="k">concept</span> <span class="n">MutableStepIteratorConcept</span><span class="o">&lt;</span><span class="n">boost_concepts</span><span class="o">::</span><span class="n">Mutable_ForwardIteratorConcept</span> <span class="n">Iterator</span><span class="o">&gt;</span>
     <span class="o">:</span> <span class="n">StepIteratorConcept</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;</span>
 <span class="p">{};</span>
 </pre></div>
@@ -300,7 +300,7 @@ in memunits away. It must also supply a function that advances an iterator a
 given distance in memory units. <code class="docutils literal notranslate"><span class="pre">memunit_advanced</span></code> and
 <code class="docutils literal notranslate"><span class="pre">memunit_advanced_ref</span></code> have a default implementation but some iterators may
 supply a more efficient version:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">MemoryBasedIteratorConcept</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">MemoryBasedIteratorConcept</span>
 <span class="o">&lt;</span>
     <span class="n">boost_concepts</span><span class="o">::</span><span class="n">RandomAccessTraversalConcept</span> <span class="n">Iterator</span>
 <span class="o">&gt;</span>
@@ -317,7 +317,7 @@ supply a more efficient version:</p>
 <p>It is useful to be able to construct a step iterator over another iterator.
 More generally, given a type, we want to be able to construct an equivalent
 type that allows for dynamically specified horizontal step:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">HasDynamicXStepTypeConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">HasDynamicXStepTypeConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="k">typename</span> <span class="n">dynamic_x_step_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">;</span>
       <span class="n">where</span> <span class="n">Metafunction</span><span class="o">&lt;</span><span class="n">dynamic_x_step_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">;</span>
@@ -372,8 +372,8 @@ but not <code class="docutils literal notranslate"><span class="pre">MemoryBased
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2020-03-05 11:03:48.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.
+      Last updated on 2020-03-08 22:03:51.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.
     </div>
   </body>
 </html>

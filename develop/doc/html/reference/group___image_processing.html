@@ -84,7 +84,7 @@ template&lt;typename SrcView , typename DstView &gt; </td></tr>
 <tr class="memitem:gacbd19f2c4dc367e744d2aac412f98055"><td class="memTemplParams" colspan="2"><a class="anchor" id="gacbd19f2c4dc367e744d2aac412f98055"></a>
 template&lt;typename SrcView , typename DstView &gt; </td></tr>
 <tr class="memitem:gacbd19f2c4dc367e744d2aac412f98055"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_processing.html#gacbd19f2c4dc367e744d2aac412f98055">threshold_truncate</a> (SrcView const &amp;src_view, DstView const &amp;dst_view, typename channel_type&lt; DstView &gt;::type threshold_value, threshold_truncate_mode mode=threshold_truncate_mode::threshold, threshold_direction direction=threshold_direction::regular)</td></tr>
-<tr class="memdesc:gacbd19f2c4dc367e744d2aac412f98055"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies truncating threshold to each pixel of image view. Takes an image view and performes truncating threshold operation on each chennel. If mode is threshold and direction is regular: values greater than threshold_value will be set to threshold_value else no change If mode is threshold and direction is inverse: values less than threshold_value will be set to threshold_value else no change If mode is zero and direction is regular: values less than threshold_value will be set to 0 else no change If mode is zero and direction is inverse: values more than threshold_value will be set to 0 else no change. <br /></td></tr>
+<tr class="memdesc:gacbd19f2c4dc367e744d2aac412f98055"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies truncating threshold to each pixel of image view. Takes an image view and performs truncating threshold operation on each chennel. If mode is threshold and direction is regular: values greater than threshold_value will be set to threshold_value else no change If mode is threshold and direction is inverse: values less than or equal to threshold_value will be set to threshold_value else no change If mode is zero and direction is regular: values less than or equal to threshold_value will be set to 0 else no change If mode is zero and direction is inverse: values more than threshold_value will be set to 0 else no change. <br /></td></tr>
 <tr class="separator:gacbd19f2c4dc367e744d2aac412f98055"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gada979902dabfdd42295b4cb6252e2184"><td class="memTemplParams" colspan="2"><a class="anchor" id="gada979902dabfdd42295b4cb6252e2184"></a>
 template&lt;typename SrcView , typename DstView &gt; </td></tr>
@@ -101,7 +101,7 @@ template&lt;typename SrcView , typename DstView &gt; </td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Image Processing algorithms. </p>
-<p>Direction of image segmentation. The direction specifieds which pixels are considered as corresponding to object and which pixels correspond to background.</p>
+<p>Direction of image segmentation. The direction specifies which pixels are considered as corresponding to object and which pixels correspond to background.</p>
 <p>Collection of image processing algorithms currently implemented by GIL. </p>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a class="anchor" id="gae73d8b37c737a81ffa26b0c5c62d8f0e"></a>

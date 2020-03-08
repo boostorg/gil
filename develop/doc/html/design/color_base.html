@@ -85,7 +85,7 @@ memory. Its reference is a proxy class that uses a color base whose elements
 are channel references. Its iterator uses a color base whose elements are
 channel iterators.</p>
 <p>Color base models must satisfy the following concepts:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">ColorBaseConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">ColorBaseConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
     <span class="o">:</span> <span class="n">CopyConstructible</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">EqualityComparable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="c1">// a GIL layout (the color space and element permutation)</span>
@@ -110,7 +110,7 @@ channel iterators.</p>
 
 <span class="p">};</span>
 
-<span class="n">concept</span> <span class="n">MutableColorBaseConcept</span><span class="o">&lt;</span><span class="n">ColorBaseConcept</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">concept</span> <span class="n">MutableColorBaseConcept</span><span class="o">&lt;</span><span class="n">ColorBaseConcept</span> <span class="n">T</span><span class="o">&gt;</span>
     <span class="o">:</span> <span class="n">Assignable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">Swappable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="k">template</span> <span class="o">&lt;</span><span class="kt">int</span> <span class="n">K</span><span class="o">&gt;</span> <span class="k">struct</span> <span class="n">kth_element_reference_type</span><span class="p">;</span>
@@ -122,29 +122,29 @@ channel iterators.</p>
       <span class="n">T</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="n">T</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">T2</span><span class="o">&amp;</span><span class="p">);</span>
 <span class="p">};</span>
 
-<span class="n">concept</span> <span class="n">ColorBaseValueConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">MutableColorBaseConcept</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">Regular</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+<span class="k">concept</span> <span class="n">ColorBaseValueConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">MutableColorBaseConcept</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">Regular</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
 <span class="p">{</span>
 <span class="p">};</span>
 
-<span class="n">concept</span> <span class="n">HomogeneousColorBaseConcept</span><span class="o">&lt;</span><span class="n">ColorBaseConcept</span> <span class="n">CB</span><span class="o">&gt;</span>
+<span class="k">concept</span> <span class="n">HomogeneousColorBaseConcept</span><span class="o">&lt;</span><span class="n">ColorBaseConcept</span> <span class="n">CB</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="c1">// For all K in [0 ... size&lt;C1&gt;::value-1):</span>
   <span class="c1">//     where SameType&lt;kth_element_type&lt;K&gt;::type, kth_element_type&lt;K+1&gt;::type&gt;;</span>
   <span class="n">kth_element_const_reference_type</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">dynamic_at_c</span><span class="p">(</span><span class="k">const</span> <span class="n">CB</span><span class="o">&amp;</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">n</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="n">concept</span> <span class="n">MutableHomogeneousColorBaseConcept</span><span class="o">&lt;</span><span class="n">MutableColorBaseConcept</span> <span class="n">CB</span><span class="o">&gt;</span>
+<span class="k">concept</span> <span class="n">MutableHomogeneousColorBaseConcept</span><span class="o">&lt;</span><span class="n">MutableColorBaseConcept</span> <span class="n">CB</span><span class="o">&gt;</span>
     <span class="o">:</span> <span class="n">HomogeneousColorBaseConcept</span><span class="o">&lt;</span><span class="n">CB</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="n">kth_element_reference_type</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">dynamic_at_c</span><span class="p">(</span><span class="k">const</span> <span class="n">CB</span><span class="o">&amp;</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">n</span><span class="p">);</span>
 <span class="p">};</span>
 
-<span class="n">concept</span> <span class="n">HomogeneousColorBaseValueConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">concept</span> <span class="n">HomogeneousColorBaseValueConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
     <span class="o">:</span> <span class="n">MutableHomogeneousColorBaseConcept</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">Regular</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
 <span class="p">{</span>
 <span class="p">};</span>
 
-<span class="n">concept</span> <span class="n">ColorBasesCompatibleConcept</span><span class="o">&lt;</span><span class="n">ColorBaseConcept</span> <span class="n">C1</span><span class="p">,</span> <span class="n">ColorBaseConcept</span> <span class="n">C2</span><span class="o">&gt;</span>
+<span class="k">concept</span> <span class="n">ColorBasesCompatibleConcept</span><span class="o">&lt;</span><span class="n">ColorBaseConcept</span> <span class="n">C1</span><span class="p">,</span> <span class="n">ColorBaseConcept</span> <span class="n">C2</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="n">where</span> <span class="n">SameType</span><span class="o">&lt;</span><span class="n">C1</span><span class="o">::</span><span class="n">layout_t</span><span class="o">::</span><span class="n">color_space_t</span><span class="p">,</span> <span class="n">C2</span><span class="o">::</span><span class="n">layout_t</span><span class="o">::</span><span class="n">color_space_t</span><span class="o">&gt;</span><span class="p">;</span>
   <span class="c1">// also, for all K in [0 ... size&lt;C1&gt;::value):</span>
@@ -310,8 +310,8 @@ color base require that they all have the same color space.</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2020-03-05 11:03:48.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.
+      Last updated on 2020-03-08 22:03:51.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.
     </div>
   </body>
 </html>
