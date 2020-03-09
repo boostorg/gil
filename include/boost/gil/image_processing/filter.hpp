@@ -12,6 +12,7 @@
 #include <boost/gil/extension/numeric/algorithm.hpp>
 #include <boost/gil/extension/numeric/kernel.hpp>
 #include <boost/gil/extension/numeric/convolve.hpp>
+#include <boost/gil/image_processing/numeric.hpp>
 
 #include <boost/gil/image.hpp>
 #include <boost/gil/image_view.hpp>
@@ -133,6 +134,31 @@ void median_filter(SrcView const& src_view, DstView const& dst_view, std::size_t
             kernel_size
         );
     }
+}
+
+template <typename SrcView, typename DstView>
+void gaussian_filter(
+    SrcView const& src_view,
+    DstView const& dst_view,
+    std::size_t kernel_size,
+    double sigma,
+    boundary_option option = boundary_option::extend_zero
+)
+{
+    gil_function_requires<ImageViewConcept<SrcView>>();
+    gil_function_requires<MutableImageViewConcept<DstView>>();
+    static_assert(color_spaces_are_compatible
+    <
+        typename color_space_type<SrcView>::type,
+        typename color_space_type<DstView>::type
+    >::value, "Source and destination views must have pixels with the same color space");
+
+    auto gaussian_kernel_1d = generate_1d_gaussian_kernel(kernel_size, sigma);
+
+    detail::convolve_1d
+    <
+        pixel<float, typename SrcView::value_type::layout_t>
+    >(src_view, gaussian_kernel_1d, dst_view, option);
 }
 
 }} //namespace boost::gil

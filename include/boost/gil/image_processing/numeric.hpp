@@ -151,6 +151,27 @@ inline detail::kernel_2d<T, Allocator> generate_gaussian_kernel(std::size_t side
     return detail::kernel_2d<T, Allocator>(values.begin(), values.size(), middle, middle);
 }
 
+template <typename T = float, typename Allocator = std::allocator<T>>
+inline kernel_1d<T, Allocator> generate_1d_gaussian_kernel(std::size_t side_length, double sigma)
+{
+    if (side_length % 2 != 1)
+        throw std::invalid_argument("kernel dimensions should be odd");
+
+    const double denominator = 2 * sigma * sigma;
+    auto middle = side_length / 2;
+    std::vector<T, Allocator> values(side_length);
+    for (std::size_t x = 0; x <= middle; x++)
+    {
+        const auto delta_x = middle - x;
+        const double power = (delta_x * delta_x) / denominator;
+        const double numerator = std::exp(-power);
+        const float value = static_cast<float>(numerator / std::sqrt(denominator * M_PI));
+        values[x] = value;
+        values[side_length - 1 - x] = value;
+    }
+    return kernel_1d<T, Allocator>(values.begin(), values.size(), middle, middle);
+}
+
 /// \brief Generates Sobel operator in horizontal direction
 /// \ingroup ImageProcessingMath
 ///
