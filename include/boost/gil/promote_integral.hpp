@@ -46,13 +46,13 @@ struct bit_size<T, true> : std::integral_constant<std::size_t, (CHAR_BIT * sizeo
 template
 <
     typename T,
-    typename type_list,
+    typename IntegralTypes,
     std::size_t MinSize
 >
 struct promote_to_larger
 {
-    using current_type = boost::mp11::mp_first<type_list>;
-    using list_after_front = boost::mp11::mp_rest<type_list>;
+    using current_type = boost::mp11::mp_first<IntegralTypes>;
+    using list_after_front = boost::mp11::mp_rest<IntegralTypes>;
 
     using type = typename std::conditional
         <
