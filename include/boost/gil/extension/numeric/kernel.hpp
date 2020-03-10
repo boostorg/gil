@@ -330,6 +330,33 @@ constexpr std::size_t kernel_2d_fixed<T, Size>::static_size;
 
 } //namespace detail
 
+template <typename T = float, typename Allocator = std::allocator<T>>
+kernel_1d<T, Allocator> get_1d_kernel_from(
+    detail::kernel_2d<T, Allocator> const& kernel)
+{
+    std::vector<T, Allocator> values(kernel.size());
+    for (std::size_t x = 0; x < kernel.size(); x++)
+        values[x] = std::sqrt(kernel.at(x, x));
+    return kernel_1d<T, Allocator>(values.begin(), values.size(), (kernel.size() / 2));
+}
+
+template <typename T = float, typename Allocator = std::allocator<T>>
+kernel_2d<T, Allocator> get_2d_kernel_from(
+    kernel_1d<T, Allocator> const& kernel)
+{
+    auto side_length = kernel.size();
+    std::vector<T, Allocator> values(side_length * side_length);
+    for (std::size_t y = 0; y < side_length; y++)
+    {
+        for (std::size_t x = 0; x < side_length; x++)
+        {
+            values[y * side_length + x] = kernel[y] * kernel[x];
+        }
+    }
+    return detail::kernel_2d<T, Allocator>(values.begin(), side_length * side_length,
+                                           side_length / 2, side_length / 2);
+}
+
 /// \brief reverse a kernel
 //template <typename Kernel>
 //inline Kernel reverse_kernel(Kernel const& kernel)
