@@ -341,7 +341,7 @@ kernel_1d<T, Allocator> get_1d_kernel_from(
 }
 
 template <typename T = float, typename Allocator = std::allocator<T>>
-kernel_2d<T, Allocator> get_2d_kernel_from(
+detail::kernel_2d<T, Allocator> get_2d_kernel_from(
     kernel_1d<T, Allocator> const& kernel)
 {
     auto side_length = kernel.size();
