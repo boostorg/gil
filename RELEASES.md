@@ -42,10 +42,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Applied the [Rule of Three](https://en.wikipedia.org/wiki/Rule_of_three_(C%2B%2B_programming)) for numerous types.
 - Removed uses of deprecated implicit definition of defaulted copy assignment operator or copy constructor.
 
+## [1.69.0] - 2018-12-12
+
+### Changed
+- Refactored library includes to `#include <boost/gil/...>` structure ([PR #145](https://github.com/boostorg/gil/pull/145)).
+
+### Removed
+- Header `include/boost/gil_all.hpp` file as deprecated ([PR #145](https://github.com/boostorg/gil/pull/145)).
+- Header `include/boost/gil_concepts.hpp` file as deprecated ([PR #145](https://github.com/boostorg/gil/pull/145)).
+- Header `include/boost/gil_config.hpp` file as unnecessary ([PR #144](https://github.com/boostorg/gil/pull/144)).
+
+### Fixed
+- Fixed `point<T>` divide and multiply to not to hardcode result as `point<double>` ([PR #157](https://github.com/boostorg/gil/pull/157)).
+- Fixed conflict between `std::fill_n` and `boost::range::fill_n` ([PR #152](https://github.com/boostorg/gil/pull/152)).
+- Fixed issue with re-assignment of functor from `for_each_pixel` ([PR #139](https://github.com/boostorg/gil/pull/139)).
+- Fixed missing template keyword prior to dependent name `axis_iterator` ([PR #129](https://github.com/boostorg/gil/pull/129)).
+
 ## [1.68.0] - 2018-08-09
 
 ### Added
 - The library now requires a C++11-compliant compiler.
+- New top-level all-in-one `include/boost/gil.hpp` header.
 - Added Toolbox extension following the [review and acceptance into Boost](https://lists.boost.org/boost-announce/2011/01/0281.php).
 
 ### Changed
