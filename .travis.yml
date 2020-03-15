@@ -12,9 +12,6 @@ os:
   - osx
 
 env:
-  global:
-    - secure: "UHit2f6Hq2pkHvx8rfrQvFacYiQKVO3vrCbNuDi/VSAIzQjRnqCqE06y4vpXLMsXf62TvBeCBStIuI8g+HP8B+f39oGb/9Om+yIgN/yes47R4sLFKFbRiOS6sfCIefJp7Kx7GSFf81xWxStpIU4QaSsk8Dlt5xyurTWXFSde+lQ="
-
   matrix:
     - BOGUS_JOB=true
 
@@ -180,7 +177,9 @@ matrix:
     - os: osx
       env: COMPILER=clang++ VARIANT=release TOOLSET=clang CXXSTD=11
 
-    - env: DOC=1
+    - env:
+        - DOC=1
+        - secure: "UHit2f6Hq2pkHvx8rfrQvFacYiQKVO3vrCbNuDi/VSAIzQjRnqCqE06y4vpXLMsXf62TvBeCBStIuI8g+HP8B+f39oGb/9Om+yIgN/yes47R4sLFKFbRiOS6sfCIefJp7Kx7GSFf81xWxStpIU4QaSsk8Dlt5xyurTWXFSde+lQ="
       addons:
         apt:
           packages:
