@@ -11,6 +11,7 @@ foreach(_name
   derived_view_type
   dynamic_step
   is_planar
+  iteration
   planar_rgba_view
   subimage_view
   view_is_basic
