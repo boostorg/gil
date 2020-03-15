@@ -144,7 +144,6 @@ matrix:
             - libraw-dev
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-6.0
 
     - os: linux
       env: COMPILER=clang++-6.0 VARIANT=gil_ubsan_nullability TOOLSET=clang CXXSTD=11 B2_OPTIONS="visibility=global" UBSAN_OPTIONS='print_stacktrace=1'
@@ -188,9 +187,6 @@ matrix:
             - python3
             - python3-pip
             - python3-setuptools
-
-  allow_failures:
-    - env: COMPILER=clang++-6.0 VARIANT=gil_ubsan_integer TOOLSET=clang CXXSTD=11 B2_OPTIONS="visibility=global" UBSAN_OPTIONS='print_stacktrace=1'
 
 install:
   - |-
