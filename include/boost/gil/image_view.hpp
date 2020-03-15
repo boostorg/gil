@@ -292,7 +292,7 @@ public:
     {
         // TODO: Are relative locations of neighbors with negative offsets valid? Sampling?
         BOOST_ASSERT(x < width());
-        BOOST_ASSERT(y < height());
+        BOOST_ASSERT(y <= height());
         return _pixels + point_t(x, y);
     }
 
