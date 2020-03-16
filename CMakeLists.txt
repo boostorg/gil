@@ -41,6 +41,15 @@ message(STATUS "Boost.GIL: Require C++${CMAKE_CXX_STANDARD}")
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# Avoid warnings flood on Travis CI, AppVeyor, CircleCI, Azure Pipelines
+if(DEFINED ENV{CI} OR DEFINED ENV{AGENT_JOBSTATUS} OR DEFINED ENV{GITHUB_ACTIONS})
+  set(BOOST_GIL_BUILD_CI ON)
+  message(STATUS "Boost.GIL: Turning off detailed compiler warnings for CI build short log")
+else()
+  set(BOOST_GIL_BUILD_CI OFF)
+  message(STATUS "Boost.GIL: Turning on detailed compiler warnings")
+endif()
+
 add_library(gil_compile_options INTERFACE)
 
 # See https://cmake.org/pipermail/cmake/2018-December/068716.html
@@ -50,20 +59,14 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 endif()
 
 # See https://svn.boost.org/trac10/wiki/Guidelines/WarningsGuidelines
-
 target_compile_options(gil_compile_options
   INTERFACE
-    $<$<CXX_COMPILER_ID:MSVC>:-W4>
+    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<BOOL:${BOOST_GIL_BUILD_CI}>>:-W1>
+    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<NOT:$<BOOL:${BOOST_GIL_BUILD_CI}>>>:-W4>
     $<$<CXX_COMPILER_ID:MSVC>:-bigobj>
     $<$<CXX_COMPILER_ID:MSVC>:-FC> # Need absolute path for __FILE__ used in tests
-    $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-fstrict-aliasing -pedantic>)
-
-# Do not mix warnings due to strict compilation level with linter warnings
-if(NOT CMAKE_CXX_CLANG_TIDY)
-  target_compile_options(gil_compile_options
-    INTERFACE
-      $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-Wall -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter>)
-endif()
+    $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-fstrict-aliasing>
+    $<$<AND:$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>,$<NOT:$<BOOL:${BOOST_GIL_BUILD_CI}>>>:-Wall -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter -pedantic>)
 
 target_compile_definitions(gil_compile_options
   INTERFACE
