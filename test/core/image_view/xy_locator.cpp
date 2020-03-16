@@ -54,14 +54,18 @@ void test_xy_x_end()
     {
         gil::gray8_image_t image = fixture::make_image_gray8();
         auto view = gil::view(image);
+#ifdef NDEBUG // skip assertion on x < width(), see TODO comment in image_view.hpp
         BOOST_TEST(view.xy_at(2, 0).x() == view.row_end(0));
         BOOST_TEST(view.xy_at(2, 1).x() == view.row_end(1));
+#endif
     }
     {
         gil::rgb8_image_t image = fixture::make_image_rgb8();
         auto view = gil::view(image);
+#ifdef NDEBUG // skip assertion on x < width(), see TODO comment in image_view.hpp
         BOOST_TEST(view.xy_at(2, 0).x() == view.row_end(0));
         BOOST_TEST(view.xy_at(2, 1).x() == view.row_end(1));
+#endif
     }
 }
 
