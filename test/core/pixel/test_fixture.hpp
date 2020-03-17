@@ -24,7 +24,6 @@
 #include <boost/mp11/mpl.hpp> // for compatibility with Boost.Test
 
 #include <cstdint>
-#include <iostream>
 #include <iterator>
 #include <tuple>
 #include <type_traits>

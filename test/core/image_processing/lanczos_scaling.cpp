@@ -5,16 +5,15 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#include <boost/gil/image_processing/scaling.hpp>
 #include <boost/gil/image.hpp>
+#include <boost/gil/image_processing/scaling.hpp>
 
 #include <boost/core/lightweight_test.hpp>
 
-#include <iostream>
-
 namespace gil = boost::gil;
 
-bool are_equal(gil::rgb8_view_t expected, gil::rgb8_view_t actual) {
+bool are_equal(gil::rgb8_view_t expected, gil::rgb8_view_t actual)
+{
     if (expected.dimensions() != actual.dimensions())
         return false;
 
@@ -23,9 +22,7 @@ bool are_equal(gil::rgb8_view_t expected, gil::rgb8_view_t actual) {
         for (long int x = 0; x < expected.width(); ++x)
         {
             if (expected(x, y) != actual(x, y))
-            {
                 return false;
-            }
         }
     }
 
@@ -34,7 +31,6 @@ bool are_equal(gil::rgb8_view_t expected, gil::rgb8_view_t actual) {
 
 void test_lanczos_black_image()
 {
-
     const gil::point_t input_dimensions(20, 20);
     const gil::point_t output_dimensions(input_dimensions.x / 2, input_dimensions.y / 2);
     gil::rgb8_image_t image(input_dimensions, gil::rgb8_pixel_t(0, 0, 0), 0);

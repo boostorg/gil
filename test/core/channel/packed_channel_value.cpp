@@ -1,15 +1,14 @@
 //
-// Copyright 2019 Mateusz Loskot <mateusz at loskot dot net>
+// Copyright 2019-2020 Mateusz Loskot <mateusz at loskot dot net>
 //
 // Distributed under the Boost Software License, Version 1.0
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-#define BOOST_TEST_MODULE gil/test/core/channel/packed_channel_value
-#include "unit_test.hpp"
-
 #include <boost/gil/channel.hpp>
 #include <boost/gil/typedefs.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 
 #include <cstdint>
 #include <limits>
@@ -44,7 +43,7 @@ void test_packed_channel_value_members()
         "packed_channel_value should be convertible to underlying integer_t");
 }
 
-BOOST_AUTO_TEST_CASE(packed_channel_value_with_num_bits_1)
+void test_packed_channel_value_with_num_bits_1()
 {
     using bits1 = gil::packed_channel_value<1>;
 
@@ -60,7 +59,7 @@ BOOST_AUTO_TEST_CASE(packed_channel_value_with_num_bits_1)
     BOOST_TEST(gil::channel_traits<bits1>::max_value() == 1u);
 }
 
-BOOST_AUTO_TEST_CASE(packed_channel_value_with_num_bits_8)
+void test_packed_channel_value_with_num_bits_8()
 {
     using bits8 = gil::packed_channel_value<8>;
 
@@ -76,7 +75,7 @@ BOOST_AUTO_TEST_CASE(packed_channel_value_with_num_bits_8)
     BOOST_TEST(gil::channel_traits<bits8>::max_value() == 255u);
 }
 
-BOOST_AUTO_TEST_CASE(packed_channel_value_with_num_bits15)
+void test_packed_channel_value_with_num_bits15()
 {
     using bits15 = gil::packed_channel_value<15>;
 
@@ -94,21 +93,21 @@ BOOST_AUTO_TEST_CASE(packed_channel_value_with_num_bits15)
 
 using fixture = gil::packed_channel_value<8>;
 
-BOOST_AUTO_TEST_CASE(packed_channel_value_default_constructor)
+void test_packed_channel_value_default_constructor()
 {
     fixture f;
     std::uint8_t v = f;
     BOOST_TEST(v == std::uint8_t{0});
 }
 
-BOOST_AUTO_TEST_CASE(packed_channel_value_user_defined_constructors)
+void test_packed_channel_value_user_defined_constructors()
 {
     fixture f{1};
     std::uint8_t v = f;
     BOOST_TEST(v == std::uint8_t{1});
 }
 
-BOOST_AUTO_TEST_CASE(packed_channel_value_copy_constructors)
+void test_packed_channel_value_copy_constructors()
 {
     fixture f1{128};
     fixture f2{f1};
@@ -117,9 +116,22 @@ BOOST_AUTO_TEST_CASE(packed_channel_value_copy_constructors)
     BOOST_TEST(std::uint8_t{f1} == std::uint8_t{f2});
 }
 
-BOOST_AUTO_TEST_CASE(packed_channel_value_assignment)
+void test_packed_channel_value_assignment()
 {
     fixture f;
     f = 64;
     BOOST_TEST(f == std::uint8_t{64});
+}
+
+int main()
+{
+    test_packed_channel_value_with_num_bits_1();
+    test_packed_channel_value_with_num_bits_8();
+    test_packed_channel_value_with_num_bits15();
+    test_packed_channel_value_default_constructor();
+    test_packed_channel_value_user_defined_constructors();
+    test_packed_channel_value_copy_constructors();
+    test_packed_channel_value_assignment();
+
+    return ::boost::report_errors();
 }

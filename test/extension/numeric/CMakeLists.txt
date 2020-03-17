@@ -10,15 +10,17 @@ message(STATUS "Boost.GIL: Configuring tests in test/extension/numeric")
 
 foreach(_name
   channel_numeric_operations
+  convolve
+  convolve_2d
   convolve_cols
   convolve_rows
-  convolve
+  extend_boundary
   kernel
+  kernel_fixed
   matrix3x2
-  numeric
   pixel_numeric_operations
-  convolve_2d
-  extend_boundary)
+  pixel_numeric_operations_float
+  resample)
   set(_test t_ext_numeric_${_name})
   set(_target test_ext_numeric_${_name})
 

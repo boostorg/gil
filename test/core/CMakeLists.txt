@@ -8,7 +8,8 @@
 message(STATUS "Boost.GIL: Configuring tests in test/core")
 
 foreach(_name
-  promote_integral)
+  promote_integral
+  test_fixture)
   set(_test t_utility_${_name})
   set(_target test_utility_${_name})
 

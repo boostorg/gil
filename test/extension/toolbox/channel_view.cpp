@@ -8,23 +8,18 @@
 #include <boost/gil.hpp>
 #include <boost/gil/extension/toolbox/metafunctions/channel_view.hpp>
 
-#include <boost/test/unit_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 #include <type_traits>
 
-namespace bg = boost::gil;
+namespace gil = boost::gil;
 
-BOOST_AUTO_TEST_SUITE(toolbox_tests)
-
-BOOST_AUTO_TEST_CASE(channel_view_test)
+void test_channel_view()
 {
-    using image_t = bg::rgb8_image_t;
-    image_t img(100, 100);
-
     using kth_channel_view_t
-        = bg::kth_channel_view_type<0, bg::rgb8_view_t::const_t>::type;
+        = gil::kth_channel_view_type<0, gil::rgb8_view_t::const_t>::type;
     using channel_view_t
-        = bg::channel_view_type<bg::red_t, bg::rgb8_view_t::const_t>::type;
+        = gil::channel_view_type<gil::red_t, gil::rgb8_view_t::const_t>::type;
 
     static_assert(std::is_same
         <
@@ -33,11 +28,17 @@ BOOST_AUTO_TEST_CASE(channel_view_test)
         >::value,
         "");
 
-    kth_channel_view_t const kth0 = bg::kth_channel_view<0>(bg::const_view(img));
+    gil::rgb8_image_t img(100, 100);
+    kth_channel_view_t const kth0 = gil::kth_channel_view<0>(gil::const_view(img));
     BOOST_TEST(kth0.num_channels() == 1u);
 
-    channel_view_t const red = bg::channel_view<bg::red_t>(bg::const_view(img));
+    channel_view_t const red = gil::channel_view<gil::red_t>(gil::const_view(img));
     BOOST_TEST(red.num_channels() == 1u);
 }
 
-BOOST_AUTO_TEST_SUITE_END()
+int main()
+{
+    test_channel_view();
+
+    return boost::report_errors();
+}

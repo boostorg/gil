@@ -11,4 +11,4 @@ import testing ;
 compile concepts.cpp ;
 compile-fail multiply_by_non_arithmetic_fail.cpp ;
 
-run point.cpp /boost/test//boost_unit_test_framework : : : <link>shared:<define>BOOST_TEST_DYN_LINK=1 ;
+run point.cpp ;

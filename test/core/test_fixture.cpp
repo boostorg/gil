@@ -5,9 +5,6 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-#define BOOST_TEST_MODULE gil/test/core/image/test_fixture
-#include "unit_test.hpp"
-
 #if defined(BOOST_CLANG)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wconversion"
@@ -22,6 +19,8 @@
 
 #include <boost/gil.hpp>
 
+#include <boost/core/lightweight_test.hpp>
+
 #include <algorithm>
 #include <cstdint>
 #include <vector>
@@ -31,23 +30,23 @@
 namespace gil = boost::gil;
 namespace fixture = boost::gil::test::fixture;
 
-BOOST_AUTO_TEST_CASE(consecutive_value)
+void test_consecutive_value()
 {
     fixture::consecutive_value<std::uint8_t> v(10);
-    BOOST_TEST(v() = std::uint8_t{11});
-    BOOST_TEST(v() = std::uint8_t{12});
-    BOOST_TEST(v() = std::uint8_t{13});
+    BOOST_TEST(v() == std::uint8_t{11});
+    BOOST_TEST(v() == std::uint8_t{12});
+    BOOST_TEST(v() == std::uint8_t{13});
 }
 
-BOOST_AUTO_TEST_CASE(reverse_consecutive_value)
+void test_reverse_consecutive_value()
 {
     fixture::reverse_consecutive_value<std::uint8_t> v(10);
-    BOOST_TEST(v() = std::uint8_t{9});
-    BOOST_TEST(v() = std::uint8_t{8});
-    BOOST_TEST(v() = std::uint8_t{7});
+    BOOST_TEST(v() == std::uint8_t{9});
+    BOOST_TEST(v() == std::uint8_t{8});
+    BOOST_TEST(v() == std::uint8_t{7});
 }
 
-BOOST_AUTO_TEST_CASE(random_value)
+void test_random_value()
 {
     // Generate N pseudo-random values
     fixture::random_value<std::uint8_t> random;
@@ -60,4 +59,13 @@ BOOST_AUTO_TEST_CASE(random_value)
     v.erase(last, v.end());
     BOOST_TEST(v.size() > 0);
     BOOST_TEST(v.size() <= 10);
+}
+
+int main()
+{
+    test_consecutive_value();
+    test_reverse_consecutive_value();
+    test_random_value();
+
+    return boost::report_errors();
 }

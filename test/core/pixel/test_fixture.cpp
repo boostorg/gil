@@ -1,13 +1,10 @@
 //
-// Copyright 2019 Mateusz Loskot <mateusz at loskot dot net>
+// Copyright 2019-2020 Mateusz Loskot <mateusz at loskot dot net>
 //
 // Distributed under the Boost Software License, Version 1.0
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-#define BOOST_TEST_MODULE gil/test/core/pixel/test_fixture
-#include "unit_test.hpp"
-
 #if defined(BOOST_CLANG)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wconversion"
@@ -22,6 +19,8 @@
 
 #include <boost/gil/channel.hpp>
 
+#include <boost/core/lightweight_test.hpp>
+
 #include <limits>
 #include <ostream>
 
@@ -30,44 +29,84 @@
 namespace gil = boost::gil;
 namespace fixture = boost::gil::test::fixture;
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(pixel_value_default_constructor, Pixel, fixture::pixel_types)
+struct test_pixel_value_default_constructor
 {
-    fixture::pixel_value<Pixel> fix;
-    Pixel const default_value{};
-    // FIXME: Default value of pixel/homogeneous_color_base is undermined
-    boost::ignore_unused(fix);
-    boost::ignore_unused(default_value);
-    //BOOST_TEST(fix.pixel_ == default_value);
-}
+    template <typename Pixel>
+    void operator()(Pixel const &)
+    {
+        using pixel_t = Pixel;
+        fixture::pixel_value<pixel_t> fix;
+        pixel_t const default_value{};
+        BOOST_TEST(fix.pixel_ == default_value);
+    }
+    static void run()
+    {
+        boost::mp11::mp_for_each<fixture::pixel_types>(test_pixel_value_default_constructor{});
+    }
+};
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(pixel_value_parameterized_constructor, Pixel, fixture::pixel_types)
+struct test_pixel_value_parameterized_constructor
 {
-    using channel_t = typename gil::channel_type<Pixel>::type;
-    // Sample channel value, simplified, could be min, max, random
-    channel_t const sample_channel = 2;
-    Pixel sample_pixel;
-    gil::static_fill(sample_pixel, sample_channel);
-    fixture::pixel_value<Pixel> fix{sample_pixel};
-    BOOST_TEST(fix.pixel_ == sample_pixel);
-}
+    template <typename Pixel>
+    void operator()(Pixel const &)
+    {
+        using pixel_t = Pixel;
+        using channel_t = typename gil::channel_type<pixel_t>::type;
+        // Sample channel value, simplified, could be min, max, random
+        channel_t const sample_channel = 2;
+        pixel_t sample_pixel;
+        gil::static_fill(sample_pixel, sample_channel);
+        fixture::pixel_value<pixel_t> fix{sample_pixel};
+        BOOST_TEST(fix.pixel_ == sample_pixel);
+    }
+    static void run()
+    {
+        boost::mp11::mp_for_each<fixture::pixel_types>(test_pixel_value_parameterized_constructor{});
+    }
+};
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(pixel_reference_default_constructor, Pixel, fixture::pixel_types)
+struct test_pixel_reference_default_constructor
 {
-    fixture::pixel_reference<Pixel&> fix;
-    Pixel const default_value{};
-    // FIXME: Default value of pixel/homogeneous_color_base is undermined
-    boost::ignore_unused(fix);
-    boost::ignore_unused(default_value);
-    //BOOST_TEST(fix.pixel_ == Pixel{});
-}
+        template <typename Pixel>
+    void operator()(Pixel const &)
+    {
+        using pixel_t = Pixel;
+        fixture::pixel_reference<pixel_t&> fix;
+        pixel_t const default_value{};
+        BOOST_TEST(fix.pixel_ == pixel_t{});
+    }
+    static void run()
+    {
+        boost::mp11::mp_for_each<fixture::pixel_types>(test_pixel_reference_default_constructor{});
+    }
+};
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(pixel_reference_parameterized_constructor, Pixel, fixture::pixel_types)
+struct test_pixel_reference_parameterized_constructor
 {
-    using channel_t = typename gil::channel_type<Pixel>::type;
-    // Sample channel value, simplified, could be min, max, random
-    channel_t const sample_channel = 3;
-    Pixel sample_pixel;
-    gil::static_fill(sample_pixel, sample_channel);
-    fixture::pixel_reference<Pixel&> fix{sample_pixel};
-    BOOST_TEST(fix.pixel_ == sample_pixel);
+    template <typename Pixel>
+    void operator()(Pixel const &)
+    {
+        using pixel_t = Pixel;
+        using channel_t = typename gil::channel_type<pixel_t>::type;
+        // Sample channel value, simplified, could be min, max, random
+        channel_t const sample_channel = 3;
+        pixel_t sample_pixel;
+        gil::static_fill(sample_pixel, sample_channel);
+        fixture::pixel_reference<pixel_t&> fix{sample_pixel};
+        BOOST_TEST(fix.pixel_ == sample_pixel);
+    }
+    static void run()
+    {
+        boost::mp11::mp_for_each<fixture::pixel_types>(test_pixel_reference_parameterized_constructor{});
+    }
+};
+
+int main()
+{
+    test_pixel_value_default_constructor::run();
+    test_pixel_value_parameterized_constructor::run();
+    test_pixel_reference_default_constructor::run();
+    test_pixel_reference_parameterized_constructor::run();
+
+    return boost::report_errors();
 }
