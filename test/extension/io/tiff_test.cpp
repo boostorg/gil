@@ -342,6 +342,7 @@ BOOST_AUTO_TEST_CASE( dynamic_image_test )
             gray8_image_t,
             gray16_image_t,
             rgb8_image_t,
+            rgba8_image_t,
             gray1_image_t
         >;
 
