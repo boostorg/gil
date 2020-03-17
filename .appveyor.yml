@@ -71,14 +71,6 @@ environment:
 
 matrix:
   fast_finish: true
-  allow_failures:
-    - TOOLSET: msvc-14.1
-      ARCH: x86_64
-      VARIANT: debug
-      CXXSTD: 14
-      GENERATOR: "Visual Studio 15 2017 Win64"
-      CMAKE_CONFIG: Debug
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
 
 cache:
   - c:\tools\vcpkg\installed\
