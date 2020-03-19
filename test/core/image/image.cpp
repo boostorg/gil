@@ -44,3 +44,26 @@ int main()
 
     return ::boost::report_errors();
 }
+
+BOOST_AUTO_TEST_CASE_TEMPLATE(move_constructor, Image, fixture::image_types)
+{
+    gil::point_t const dimensions{256, 128};
+    {
+        Image image(fixture::create_image<Image>(dimensions.x, dimensions.y, 0));
+
+        Image image2(std::move(image));
+        BOOST_CHECK_EQUAL(image2.dimensions(), dimensions);
+        BOOST_CHECK_EQUAL(image.dimensions(), gil::point_t{});
+    }
+}
+
+BOOST_AUTO_TEST_CASE_TEMPLATE(move_assignement, Image, fixture::image_types)
+{
+    gil::point_t const dimensions{256, 128};
+    {
+        Image image = fixture::create_image<Image>(dimensions.x, dimensions.y, 0);
+        Image image2 = std::move(image);
+        BOOST_CHECK_EQUAL(image2.dimensions(), dimensions);
+        BOOST_CHECK_EQUAL(image.dimensions(), gil::point_t{});
+    }
+}

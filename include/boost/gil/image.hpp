@@ -101,6 +101,19 @@ public:
        allocate_and_copy(img.dimensions(),img._view);
     }
 
+    // TODO Optimization: use noexcept (requires _view to be nothrow copy constructible)
+    image(image&& img) :
+      _view(img._view),
+      _memory(img._memory),
+      _align_in_bytes(img._align_in_bytes),
+      _alloc(std::move(img._alloc)),
+      _allocated_bytes(img._allocated_bytes)  {
+        img._view = view_t();
+        img._memory = nullptr;
+        img._align_in_bytes = 0;
+        img._allocated_bytes = 0;
+    }
+
     image& operator=(const image& img) {
         if (dimensions() == img.dimensions())
             copy_pixels(img._view,_view);
@@ -119,6 +132,48 @@ public:
             image tmp(img);
             swap(tmp);
         }
+        return *this;
+    }
+
+private:
+    using equal_allocators = std::true_type;
+    using no_propagate_allocators = std::false_type;
+
+    template <class Allocator>
+    // TODO: Use std::allocator_traits<Allocator>::is_always_equal if available
+    using move_policy = typename std::is_empty<Allocator>::type;
+
+    void move_assign(image& img, equal_allocators) {
+        destruct_pixels(_view);
+        deallocate();
+
+        // TODO Use std::exchange
+        _view = img._view;
+        _memory = img._memory;
+        _align_in_bytes = img._align_in_bytes;
+        _allocated_bytes = img._allocated_bytes;
+        
+        img._view = view_t();
+        img._memory = nullptr;
+        img._align_in_bytes = 0;
+        img._allocated_bytes = 0;
+    }
+
+    void move_assign(image& img, no_propagate_allocators) {
+        if (_alloc == img._alloc) {
+            move_assign(img, equal_allocators{});
+        } else {
+            // Fallback to copy
+            image tmp(img);
+            swap(tmp);
+        }
+    }
+  
+public:
+    image& operator=(image&& img) {
+        if (this != std::addressof(img))
+            move_assign(img, move_policy<Alloc>{});
+
         return *this;
     }
 
