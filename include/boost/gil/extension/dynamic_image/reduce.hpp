@@ -12,6 +12,10 @@
 #undef BOOST_GIL_REDUCE_CODE_BLOAT
 #endif
 
+// The techniques implemented here are discussed in the paper
+// "Efficient Run-Time Dispatching in Generic Programming with Minimal Code Bloat"
+// by Lubomir Bourdev, Jaakko Jarvi
+// http://lubomir.org/academic/MinimizingCodeBloat.pdf
 #ifdef BOOST_GIL_REDUCE_CODE_BLOAT
 
 #include <boost/gil/extension/dynamic_image/dynamic_at_c.hpp>
