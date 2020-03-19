@@ -74,16 +74,6 @@ matrix:
   allow_failures:
     - TOOLSET: msvc-14.1
       ARCH: x86_64
-      VARIANT: release
-      CXXSTD: 17
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    - TOOLSET: msvc-14.1
-      ARCH: x86_64
-      VARIANT: release
-      CXXSTD: 14
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    - TOOLSET: msvc-14.1
-      ARCH: x86_64
       VARIANT: debug
       CXXSTD: 14
       GENERATOR: "Visual Studio 15 2017 Win64"
