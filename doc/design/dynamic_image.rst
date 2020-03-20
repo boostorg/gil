@@ -120,6 +120,7 @@ GIL ``any_image_view`` and ``any_image`` are subclasses of ``variant``:
     typedef std::ptrdiff_t x_coord_t;
     typedef std::ptrdiff_t y_coord_t;
     typedef point<std::ptrdiff_t> point_t;
+    using size_type = std::size_t;
 
     any_image_view();
     template <typename T> explicit any_image_view(const T& obj);
@@ -131,6 +132,7 @@ GIL ``any_image_view`` and ``any_image`` are subclasses of ``variant``:
     // parameters of the currently instantiated view
     std::size_t num_channels()  const;
     point_t     dimensions()    const;
+    size_type   size()          const;
     x_coord_t   width()         const;
     y_coord_t   height()        const;
   };
