@@ -19,7 +19,6 @@ please follow the workflow explained in this document.
   - [Install dependencies](#install-dependencies)
   - [Using Boost.Build](#using-boostbuild)
   - [Using CMake](#using-cmake)
-  - [Using Faber](#using-faber)
   - [Running clang-tidy](#running-clang-tidy)
 - [Guidelines](#guidelines)
 
@@ -316,11 +315,11 @@ By default, Boost.GIL uses Boost.Build to build all the executables.
 We also provide configuration for two alternative build systems:
 
 - [CMake](https://cmake.org)
-- [Faber](http://stefan.seefeld.name/faber/)
 
-**NOTE:** The CMake and Faber are optional and the corresponding build
-configurations for Boost.GIL do not offer equivalents for all Boost.Build features. Most important difference to recognise is that Boost.Build will
-automatically build any other Boost libraries required by Boost.GIL as dependencies.
+**NOTE:** The CMake is optional and the corresponding build configurations
+for Boost.GIL do not offer equivalents for all Boost.Build features.
+Most important difference to recognise is that Boost.Build will automatically
+build any other Boost libraries required by Boost.GIL as dependencies.
 
 ### Install dependencies
 
@@ -502,12 +501,6 @@ See [example/cmake/README.md](example/cmake/README.md) for more details.
 We provide [example/cmake/cmake-variants.yaml](https://github.com/boostorg/gil/blob/develop/example/cmake/cmake-variants.yaml)
 with reasonable default settings for the [CMake Tools](https://github.com/vector-of-bool/vscode-cmake-tools) extension.
 See [example/cmake/README.md](example/cmake/README.md) for more details.
-
-### Using Faber
-
-Maintainer: [@stefanseefeld](https://github.com/stefanseefeld)
-
-*TODO:* _Describe_
 
 ### Running clang-tidy
 
