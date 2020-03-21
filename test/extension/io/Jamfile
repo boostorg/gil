@@ -9,6 +9,7 @@
 # copy at http://www.boost.org/LICENSE_1_0.txt)
 
 import ac ;
+import testing ;
 
 using libjpeg : : : : true ; # work around bug on master
 using zlib ;
@@ -16,6 +17,12 @@ using libpng : : : : true ;
 using libtiff : : : : true ;
 
 lib libraw : : <name>raw ;
+
+project
+  :
+    requirements
+      <include>.
+  ;
 
 alias headers : [ generate_self_contained_headers extension/io ] ;
 explicit headers ;
@@ -26,114 +33,19 @@ explicit headers ;
 alias simple
   :
     [
-      run all_formats_test.cpp /boost/filesystem//boost_filesystem
+      run simple_all_formats.cpp
       : # args
       : # input files
       : # requirements
-      <define>BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES
-      <define>BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
-      [ ac.check-library /libjpeg//libjpeg : <library>/libjpeg//libjpeg : <build>no ]
-      [ ac.check-library /zlib//zlib : <library>/zlib//zlib : <build>no ]
-      [ ac.check-library /libpng//libpng : <library>/libpng//libpng : <build>no ]
-      [ ac.check-library /libtiff//libtiff : <library>/libtiff//libtiff : <build>no ]
+        <library>/boost/filesystem//boost_filesystem
+        <define>BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES
+        <define>BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
+        [ ac.check-library /libjpeg//libjpeg : <library>/libjpeg//libjpeg : <build>no ]
+        [ ac.check-library /zlib//zlib : <library>/zlib//zlib : <build>no ]
+        [ ac.check-library /libpng//libpng : <library>/libpng//libpng : <build>no ]
+        [ ac.check-library /libtiff//libtiff : <library>/libtiff//libtiff : <build>no ]
     ]
   ;
 
 alias full : bmp jpeg png pnm raw targa tiff ;
 explicit full ;
-
-alias boost_utf_dep
-  : /boost/filesystem//boost_filesystem
-    /boost/system//boost_system
-    /boost/test//boost_unit_test_framework
-  : <link>shared:<define>BOOST_TEST_DYN_LINK=1
-  ;
-
-alias bmp
-  : [ run bmp_test.cpp bmp_old_test.cpp bmp_read_test.cpp bmp_write_test.cpp
-        boost_utf_dep ]
-  ;
-explicit bmp ;
-
-alias jpeg
-  : [
-      run jpeg_test.cpp jpeg_old_test.cpp jpeg_read_test.cpp jpeg_write_test.cpp
-        boost_utf_dep
-      :
-      :
-      : [ ac.check-library /libjpeg//libjpeg : <library>/libjpeg//libjpeg : <build>no ]
-    ]
-  ;
-explicit jpeg ;
-
-alias png
-  : [ run png_test.cpp png_old_test.cpp png_file_format_test.cpp png_read_test.cpp
-        boost_utf_dep
-      :
-      :
-      : <define>BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES
-        [ ac.check-library /zlib//zlib : <library>/zlib//zlib : <build>no ]
-        [ ac.check-library /libpng//libpng : <library>/libpng//libpng : <build>no ]
-    ]
-  ;
-explicit png ;
-
-alias pnm
-  : [ run pnm_test.cpp pnm_old_test.cpp pnm_read_test.cpp pnm_write_test.cpp
-        boost_utf_dep ]
-  ;
-explicit pnm ;
-
-alias raw
-  : [ run raw_test.cpp
-        boost_utf_dep
-      : # args
-      : # input files
-      : # requirements
-        <define>BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES
-	      <library>libraw
-    ]
-  ;
-explicit raw ;
-
-alias targa
-  : [ run targa_test.cpp targa_old_test.cpp targa_read_test.cpp targa_write_test.cpp
-        boost_utf_dep ]
-  ;
-explicit targa ;
-
-alias tiff
-  : [ run
-        tiff_test.cpp
-        tiff_old_test.cpp
-        tiff_file_format_test.cpp
-        tiff_subimage_test.cpp
-        tiff_tiled_float_test.cpp
-        tiff_tiled_minisblack_test_1-10.cpp
-        tiff_tiled_minisblack_test_11-20.cpp
-        tiff_tiled_minisblack_test_21-31_32-64.cpp
-        tiff_tiled_minisblack_write_test_1-10.cpp
-        tiff_tiled_minisblack_write_test_11-20.cpp
-        tiff_tiled_minisblack_write_test_21-31_32-64.cpp
-        tiff_tiled_palette_test_1-8.cpp
-        tiff_tiled_palette_test_8-16.cpp
-        tiff_tiled_palette_write_test_1-8.cpp
-        tiff_tiled_palette_write_test_8-16.cpp
-        tiff_tiled_rgb_contig_test_1-10.cpp
-        tiff_tiled_rgb_contig_test_11-20.cpp
-        tiff_tiled_rgb_contig_test_21-31_32_64.cpp
-        tiff_tiled_rgb_contig_write_test_1-10.cpp
-        tiff_tiled_rgb_contig_write_test_11-20.cpp
-        tiff_tiled_rgb_contig_write_test_21-31_32_64.cpp
-        tiff_tiled_rgb_planar_test_1-10.cpp
-        tiff_tiled_rgb_planar_test_11-20.cpp
-        tiff_tiled_rgb_planar_test_21-31_32_64.cpp
-        tiff_tiled_test.cpp
-        tiff_write_test.cpp
-        boost_utf_dep
-      :
-      :
-      : [ ac.check-library /libtiff//libtiff : <library>/libtiff//libtiff : <build>no ]
-    ]
-  ;
-explicit tiff ;
