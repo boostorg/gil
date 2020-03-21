@@ -34,7 +34,7 @@ matrix:
             - ubuntu-toolchain-r-test
 
     - os: linux
-      env: COMPILER=g++-5 VARIANT=release TOOLSET=gcc CXXSTD=11
+      env: COMPILER=g++-5 VARIANT=release TOOLSET=gcc CXXSTD=14
       addons:
         apt:
           packages:
@@ -47,7 +47,7 @@ matrix:
             - ubuntu-toolchain-r-test
 
     - os: linux
-      env: COMPILER=g++-6 VARIANT=debug TOOLSET=gcc CXXSTD=11
+      env: COMPILER=g++-6 VARIANT=debug TOOLSET=gcc CXXSTD=14
       addons:
         apt:
           packages:
@@ -73,7 +73,7 @@ matrix:
             - ubuntu-toolchain-r-test
 
     - os: linux
-      env: COMPILER=g++-7 VARIANT=debug TOOLSET=gcc CXXSTD=11
+      env: COMPILER=g++-7 VARIANT=debug TOOLSET=gcc CXXSTD=17
       addons:
         apt:
           packages:
@@ -86,11 +86,37 @@ matrix:
             - ubuntu-toolchain-r-test
 
     - os: linux
-      env: COMPILER=g++-7 VARIANT=release TOOLSET=gcc CXXSTD=11
+      env: COMPILER=g++-7 VARIANT=release TOOLSET=gcc CXXSTD=17
       addons:
         apt:
           packages:
             - g++-7
+            - libpng-dev
+            - libjpeg-dev
+            - libtiff5-dev
+            - libraw-dev
+          sources:
+            - ubuntu-toolchain-r-test
+
+    - os: linux
+      env: COMPILER=g++-9 VARIANT=debug TOOLSET=gcc CXXSTD=2a
+      addons:
+        apt:
+          packages:
+            - g++-9
+            - libpng-dev
+            - libjpeg-dev
+            - libtiff5-dev
+            - libraw-dev
+          sources:
+            - ubuntu-toolchain-r-test
+
+    - os: linux
+      env: COMPILER=g++-9 VARIANT=release TOOLSET=gcc CXXSTD=2a
+      addons:
+        apt:
+          packages:
+            - g++-9
             - libpng-dev
             - libjpeg-dev
             - libtiff5-dev
