@@ -5,11 +5,10 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-#define BOOST_TEST_MODULE gil/test/core/algorithm/std_uninitialized_fill
-#include "unit_test.hpp"
-
 #include <boost/gil.hpp>
+
 #include <boost/mp11.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 #include <memory>
 #include <random>
@@ -54,40 +53,57 @@ private:
 namespace gil = boost::gil;
 namespace fixture = boost::gil::test::fixture;
 
-BOOST_TEST_DONT_PRINT_LOG_VALUE(fixture::bit_aligned_pixel_bgr232)
-
-BOOST_AUTO_TEST_CASE_TEMPLATE(fill_with_pixel_integer_types, Pixel, fixture::pixel_integer_types)
+struct fill_with_pixel_integer_types
 {
-    auto min_pixel = fixture::pixel_generator<Pixel>::min();
-    auto max_pixel = fixture::pixel_generator<Pixel>::max();
-    auto rnd_pixel = fixture::pixel_generator<Pixel>::random();
-
-    for (auto const& fill_pixel : {min_pixel, max_pixel, rnd_pixel} )
+    template <typename Pixel>
+    void operator()(Pixel const &)
     {
-        fixture::pixel_array<Pixel> pixels;
-        std::uninitialized_fill(pixels.begin(), pixels.end(), fill_pixel);
+        using pixel_t = Pixel;
+        auto min_pixel = fixture::pixel_generator<pixel_t>::min();
+        auto max_pixel = fixture::pixel_generator<pixel_t>::max();
+        auto rnd_pixel = fixture::pixel_generator<pixel_t>::random();
 
-        for (Pixel const& p : pixels)
-            BOOST_TEST(p == fill_pixel);
+        for (auto const &fill_pixel : {min_pixel, max_pixel, rnd_pixel})
+        {
+            fixture::pixel_array<pixel_t> pixels;
+            std::uninitialized_fill(pixels.begin(), pixels.end(), fill_pixel);
+
+            for (pixel_t const &p : pixels)
+                BOOST_TEST(p == fill_pixel);
+        }
     }
-}
+    static void run()
+    {
+        boost::mp11::mp_for_each<fixture::pixel_integer_types>(fill_with_pixel_integer_types{});
+    }
+};
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(fill_with_pixel_float_types, Pixel, fixture::pixel_float_types)
+struct fill_with_pixel_float_types
 {
-    auto min_pixel = fixture::pixel_generator<Pixel>::min();
-    auto max_pixel = fixture::pixel_generator<Pixel>::max();
-
-    for (auto const& fill_pixel : {min_pixel, max_pixel} )
+    template <typename Pixel>
+    void operator()(Pixel const &)
     {
-        fixture::pixel_array<Pixel> pixels;
-        std::uninitialized_fill(pixels.begin(), pixels.end(), fill_pixel);
+        using pixel_t = Pixel;
+        auto min_pixel = fixture::pixel_generator<pixel_t>::min();
+        auto max_pixel = fixture::pixel_generator<pixel_t>::max();
 
-        for (Pixel const& p : pixels)
-            BOOST_TEST(p == fill_pixel);
+        for (auto const &fill_pixel : {min_pixel, max_pixel})
+        {
+            fixture::pixel_array<Pixel> pixels;
+            std::uninitialized_fill(pixels.begin(), pixels.end(), fill_pixel);
+
+            for (Pixel const &p : pixels)
+                BOOST_TEST(p == fill_pixel);
+        }
     }
-}
+    static void run()
+    {
+        boost::mp11::mp_for_each<fixture::pixel_float_types>(fill_with_pixel_float_types{});
+    }
+};
 
-BOOST_AUTO_TEST_CASE(fill_with_packed_pixel_gray3)
+void
+test_fill_with_packed_pixel_gray3()
 {
     auto min_pixel = fixture::packed_pixel_gray3{0};
     auto mid_pixel = fixture::packed_pixel_gray3{3};
@@ -106,7 +122,7 @@ BOOST_AUTO_TEST_CASE(fill_with_packed_pixel_gray3)
     }
 }
 
-BOOST_AUTO_TEST_CASE(fill_with_packed_pixel_bgr121)
+void test_fill_with_packed_pixel_bgr121()
 {
     auto min_pixel = fixture::packed_pixel_bgr121{0};
     auto mid_pixel = fixture::packed_pixel_bgr121{8};
@@ -127,7 +143,7 @@ BOOST_AUTO_TEST_CASE(fill_with_packed_pixel_bgr121)
     }
 }
 
-BOOST_AUTO_TEST_CASE(fill_with_packed_pixel_rgb535)
+void test_fill_with_packed_pixel_rgb535()
 {
     fixture::packed_pixel_rgb535 min_pixel(0, 0, 0);
     fixture::packed_pixel_rgb535 mid_pixel(15, 3, 15);
@@ -148,7 +164,7 @@ BOOST_AUTO_TEST_CASE(fill_with_packed_pixel_rgb535)
     }
 }
 
-BOOST_AUTO_TEST_CASE(bit_aligned_pixel_bgr232)
+void test_bit_aligned_pixel_bgr232()
 {
     fixture::bit_aligned_pixel_bgr232 min_pixel(0, 0, 0);
     fixture::bit_aligned_pixel_bgr232 mid_pixel(1, 4, 2);
@@ -169,7 +185,7 @@ BOOST_AUTO_TEST_CASE(bit_aligned_pixel_bgr232)
     }
 }
 
-BOOST_AUTO_TEST_CASE(bit_aligned_pixel_rgb567)
+void test_bit_aligned_pixel_rgb567()
 {
     fixture::bit_aligned_pixel_rgb567 min_pixel(0, 0, 0);
     fixture::bit_aligned_pixel_rgb567 mid_pixel(15, 31, 63);
@@ -188,4 +204,19 @@ BOOST_AUTO_TEST_CASE(bit_aligned_pixel_rgb567)
             BOOST_TEST((int)get_color(p, gil::blue_t()) == (int)get_color(fill_pixel, gil::blue_t()));
         }
     }
+}
+
+int main()
+{
+    fill_with_pixel_integer_types::run();
+    fill_with_pixel_float_types::run();
+
+    test_fill_with_packed_pixel_gray3();
+    test_fill_with_packed_pixel_bgr121();
+    test_fill_with_packed_pixel_rgb535();
+
+    test_bit_aligned_pixel_bgr232();
+    test_bit_aligned_pixel_rgb567();
+
+    return ::boost::report_errors();
 }

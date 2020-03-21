@@ -8,8 +8,12 @@
 #include <boost/gil/image.hpp>
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/typedefs.hpp>
+
+#include <boost/core/ignore_unused.hpp>
 #include <boost/core/lightweight_test.hpp>
+
 #include "test_fixture.hpp"
+
 namespace gil = boost::gil;
 namespace fixture = boost::gil::test::fixture;
 
@@ -57,6 +61,8 @@ void test_xy_x_end()
 #ifdef NDEBUG // skip assertion on x < width(), see TODO comment in image_view.hpp
         BOOST_TEST(view.xy_at(2, 0).x() == view.row_end(0));
         BOOST_TEST(view.xy_at(2, 1).x() == view.row_end(1));
+#else
+        boost::ignore_unused(view);
 #endif
     }
     {
@@ -65,6 +71,8 @@ void test_xy_x_end()
 #ifdef NDEBUG // skip assertion on x < width(), see TODO comment in image_view.hpp
         BOOST_TEST(view.xy_at(2, 0).x() == view.row_end(0));
         BOOST_TEST(view.xy_at(2, 1).x() == view.row_end(1));
+#else
+        boost::ignore_unused(view);
 #endif
     }
 }

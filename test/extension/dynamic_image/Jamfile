@@ -10,4 +10,4 @@ import testing ;
 
 alias headers : [ generate_self_contained_headers extension/dynamic_image ] ;
 
-run subimage_view.cpp /boost/test//boost_unit_test_framework : : : <link>shared:<define>BOOST_TEST_DYN_LINK=1 ;
+run subimage_view.cpp ;

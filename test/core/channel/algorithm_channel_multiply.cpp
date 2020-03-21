@@ -1,15 +1,16 @@
 //
 // Copyright 2005-2007 Adobe Systems Incorporated
-// Copyright 2018 Mateusz Loskot <mateusz at loskot dot net>
+// Copyright 2018-2020 Mateusz Loskot <mateusz at loskot dot net>
 //
 // Distributed under the Boost Software License, Version 1.0
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-#define BOOST_TEST_MODULE gil/test/core/channel/algorithm_channel_multiply
-#include "unit_test.hpp"
-
 #include <boost/gil/channel_algorithm.hpp>
+
+#include <boost/core/lightweight_test.hpp>
+
+#include <cstdint>
 
 #include "test_fixture.hpp"
 
@@ -25,38 +26,94 @@ void test_channel_multiply()
     BOOST_TEST(gil::channel_multiply(f.max_v_, f.min_v_) == f.min_v_);
 }
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(channel_value, Channel, fixture::channel_byte_types)
+struct test_channel_value
 {
-    using fixture_t = fixture::channel_value<Channel>;
-    test_channel_multiply<fixture_t>();
-}
+    template <typename Channel>
+    void operator()(Channel const &)
+    {
+        using channel_t = Channel;
+        using fixture_t = fixture::channel_value<channel_t>;
+        test_channel_multiply<fixture_t>();
+    }
+    static void run()
+    {
+        boost::mp11::mp_for_each<fixture::channel_byte_types>(test_channel_value{});
+    }
+};
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(channel_reference, Channel, fixture::channel_byte_types)
+struct test_channel_reference
 {
-    using fixture_t = fixture::channel_reference<Channel&>;
-    test_channel_multiply<fixture_t>();
-}
+    template <typename Channel>
+    void operator()(Channel const &)
+    {
+        using channel_t = Channel;
+        using fixture_t = fixture::channel_reference<channel_t&>;
+        test_channel_multiply<fixture_t>();
+    }
+    static void run()
+    {
+        boost::mp11::mp_for_each<fixture::channel_byte_types>(test_channel_reference{});
+    }
+};
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(
-    channel_reference_const, Channel, fixture::channel_byte_types)
+struct test_channel_reference_const
 {
-    using fixture_t = fixture::channel_reference<Channel const&>;
-    test_channel_multiply<fixture_t>();
-}
+    template <typename Channel>
+    void operator()(Channel const &)
+    {
+        using channel_t = Channel;
+        using fixture_t = fixture::channel_reference<channel_t const&>;
+        test_channel_multiply<fixture_t>();
+    }
+    static void run()
+    {
+        boost::mp11::mp_for_each<fixture::channel_byte_types>(test_channel_reference_const{});
+    }
+};
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(
-    packed_channel_reference, BitField, fixture::channel_bitfield_types)
+struct test_packed_channel_reference
 {
-    using channels565_t = fixture::packed_channels565<BitField>;
-    test_channel_multiply<typename channels565_t::fixture_0_5_t>();
-    test_channel_multiply<typename channels565_t::fixture_5_6_t >();
-    test_channel_multiply<typename channels565_t::fixture_11_5_t>();
-}
+    template <typename BitField>
+    void operator()(BitField const &)
+    {
+        using bitfield_t = BitField;
+        using channels565_t = fixture::packed_channels565<bitfield_t>;
+        test_channel_multiply<typename channels565_t::fixture_0_5_t>();
+        test_channel_multiply<typename channels565_t::fixture_5_6_t>();
+        test_channel_multiply<typename channels565_t::fixture_11_5_t>();
+    }
+    static void run()
+    {
+        boost::mp11::mp_for_each<fixture::channel_bitfield_types>(test_packed_channel_reference{});
+    }
+};
 
-BOOST_AUTO_TEST_CASE_TEMPLATE(
-    packed_dynamic_channel_reference, BitField, fixture::channel_bitfield_types)
+struct test_packed_dynamic_channel_reference
 {
-    using channels565_t = fixture::packed_dynamic_channels565<BitField>;
-    test_channel_multiply<typename channels565_t::fixture_5_t>();
-    test_channel_multiply<typename channels565_t::fixture_6_t>();
+    template <typename BitField>
+    void operator()(BitField const &)
+    {
+        using bitfield_t = BitField;
+        using channels565_t = fixture::packed_dynamic_channels565<bitfield_t>;
+        test_channel_multiply<typename channels565_t::fixture_5_t>();
+        test_channel_multiply<typename channels565_t::fixture_6_t>();
+    }
+    static void run()
+    {
+        boost::mp11::mp_for_each<fixture::channel_bitfield_types>(test_packed_dynamic_channel_reference{});
+    }
+};
+
+int main()
+{
+    test_channel_value::run();
+    test_channel_reference::run();
+    test_channel_reference_const::run();
+    test_packed_channel_reference::run();
+    test_packed_dynamic_channel_reference::run();
+
+    // TODO: packed_channel_reference_const ?
+    // TODO: packed_dynamic_channel_reference_const ?
+
+    return ::boost::report_errors();
 }

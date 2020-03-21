@@ -11,33 +11,32 @@
 #include <boost/gil/channel.hpp>
 #include <boost/gil/detail/is_channel_integral.hpp>
 
-#include <boost/test/unit_test.hpp>
-
 #include <type_traits>
 
-namespace bg = boost::gil;
+namespace gil = boost::gil;
 
-BOOST_AUTO_TEST_SUITE(toolbox_tests)
-
-BOOST_AUTO_TEST_CASE(channel_type_test)
+void test_channel_type()
 {
     static_assert(std::is_same
         <
             unsigned char,
-            bg::channel_type<bg::rgb8_pixel_t>::type
+            gil::channel_type<gil::rgb8_pixel_t>::type
         >::value, "");
 
     // float32_t is a scoped_channel_value object
     static_assert(std::is_same
         <
-            bg::float32_t,
-            bg::channel_type<bg::rgba32f_pixel_t>::type
+            gil::float32_t,
+            gil::channel_type<gil::rgba32f_pixel_t>::type
         >::value, "");
 
     // channel_type for bit_aligned images doesn't work with standard gil.
-    using image_t = bg::bit_aligned_image4_type<4, 4, 4, 4, bg::rgb_layout_t>::type;
-    using channel_t = bg::channel_type<image_t::view_t::reference>::type;
-    static_assert(bg::detail::is_channel_integral<channel_t>::value, "");
+    using image_t = gil::bit_aligned_image4_type<4, 4, 4, 4, gil::rgb_layout_t>::type;
+    using channel_t = gil::channel_type<image_t::view_t::reference>::type;
+    static_assert(gil::detail::is_channel_integral<channel_t>::value, "");
 }
 
-BOOST_AUTO_TEST_SUITE_END()
+int main()
+{
+    test_channel_type();
+}

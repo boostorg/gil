@@ -103,7 +103,7 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
   set(Boost_USE_STATIC_RUNTIME OFF)
 endif()
 
-find_package(Boost 1.68.0 REQUIRED
+find_package(Boost 1.72.0 REQUIRED
   COMPONENTS
     filesystem
     unit_test_framework)

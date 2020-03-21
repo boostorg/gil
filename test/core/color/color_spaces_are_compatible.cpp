@@ -15,7 +15,6 @@
 #include <boost/gil/typedefs.hpp>
 
 #include <boost/mp11.hpp>
-
 #include <type_traits>
 
 namespace gil = boost::gil;

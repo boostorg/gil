@@ -1,15 +1,14 @@
 //
-// Copyright 2018 Mateusz Loskot <mateusz at loskot dot net>
+// Copyright 2018-2020 Mateusz Loskot <mateusz at loskot dot net>
 //
 // Distributed under the Boost Software License, Version 1.0
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-#define BOOST_TEST_MODULE gil/test/core/channel/channel_traits
-#include "unit_test.hpp"
-
 #include <boost/gil/channel.hpp>
 #include <boost/gil/typedefs.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 
 #include <cstdint>
 #include <limits>
@@ -26,32 +25,44 @@ void test_channel_minmax()
                std::numeric_limits<T>::max());
 }
 
-BOOST_AUTO_TEST_CASE(channel_minmax_uint8_t)
+void test_channel_minmax_uint8_t()
 {
     test_channel_minmax<std::uint8_t>();
 }
 
-BOOST_AUTO_TEST_CASE(channel_minmax_int8_t)
+void test_channel_minmax_int8_t()
 {
     test_channel_minmax<std::int8_t>();
 }
 
-BOOST_AUTO_TEST_CASE(channel_minmax_uint16_t)
+void test_channel_minmax_uint16_t()
 {
     test_channel_minmax<std::uint16_t>();
 }
 
-BOOST_AUTO_TEST_CASE(channel_minmax_int16_t)
+void test_channel_minmax_int16_t()
 {
     test_channel_minmax<std::int16_t>();
 }
 
-BOOST_AUTO_TEST_CASE(channel_minmax_uint32_t)
+void test_channel_minmax_uint32_t()
 {
     test_channel_minmax<std::uint32_t>();
 }
 
-BOOST_AUTO_TEST_CASE(channel_minmax_int32_t)
+void test_channel_minmax_int32_t()
 {
     test_channel_minmax<std::int32_t>();
+}
+
+int main()
+{
+    test_channel_minmax_uint8_t();
+    test_channel_minmax_int8_t();
+    test_channel_minmax_uint16_t();
+    test_channel_minmax_int16_t();
+    test_channel_minmax_uint32_t();
+    test_channel_minmax_int32_t();
+
+    return ::boost::report_errors();
 }
