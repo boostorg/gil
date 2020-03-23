@@ -106,9 +106,9 @@ jobs:
         parameters:
           use_conan: 'ON'
 
-  - job: 'macos1013_xcode91_cmake'
+  - job: 'macos1014_xcode11_cmake'
     pool:
-      vmImage: 'macOS-10.13'
+      vmImage: 'macOS-10.14'
     steps:
       - script: which clang++ && clang++ --version
         displayName: 'Check clang'
