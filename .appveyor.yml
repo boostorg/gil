@@ -95,7 +95,7 @@ before_build:
   - cd boost-root
   - cmd /c bootstrap
   - .\b2 headers > NUL
-  - if DEFINED GENERATOR .\b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% cxxstd=%CXXSTD% --with-filesystem --with-test stage
+  - if DEFINED GENERATOR .\b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% cxxstd=%CXXSTD% --with-filesystem stage
 
 build: off
 

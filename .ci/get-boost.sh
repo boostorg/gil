@@ -46,7 +46,6 @@ git submodule --quiet update --init $GIT_SUBMODULE_OPTS \
     libs/mpl \
     libs/numeric/conversion \
     libs/preprocessor \
-    libs/test \
     libs/type_traits \
     libs/variant
 # Transitive (of GIL tests too)
