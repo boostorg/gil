@@ -5,8 +5,8 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-#ifndef BOOST_GIL_IO_TEST_PATHS_HPP
-#define BOOST_GIL_IO_TEST_PATHS_HPP
+#ifndef BOOST_GIL_TEST_EXTENSION_IO_PATHS_HPP
+#define BOOST_GIL_TEST_EXTENSION_IO_PATHS_HPP
 
 // Disable warning: conversion to 'std::atomic<int>::__integral_type {aka int}' from 'long int' may alter its value
 #if defined(BOOST_CLANG)
@@ -66,4 +66,4 @@ static const std::string raw_filename(raw_in + "RAW_CANON_D30_SRGB.CRW");
 static const std::string targa_filename(targa_in + "24BPP_compressed.tga");
 static const std::string tiff_filename(tiff_in + "test.tif");
 
-#endif // BOOST_GIL_IO_TEST_PATHS_HPP
+#endif // BOOST_GIL_TEST_EXTENSION_IO_PATHS_HPP
