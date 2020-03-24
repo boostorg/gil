@@ -103,17 +103,11 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
   set(Boost_USE_STATIC_RUNTIME OFF)
 endif()
 
-find_package(Boost 1.72.0 REQUIRED
-  COMPONENTS
-    filesystem
-    unit_test_framework)
+find_package(Boost 1.72.0 REQUIRED COMPONENTS filesystem)
 message(STATUS "Boost.GIL: Using Boost_INCLUDE_DIRS=${Boost_INCLUDE_DIRS}")
 message(STATUS "Boost.GIL: Using Boost_LIBRARY_DIRS=${Boost_LIBRARY_DIRS}")
 
-target_link_libraries(gil_dependencies
-  INTERFACE
-    Boost::filesystem
-    Boost::unit_test_framework)
+target_link_libraries(gil_dependencies INTERFACE Boost::filesystem)
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
   target_link_libraries(gil_dependencies INTERFACE Boost::disable_autolinking)

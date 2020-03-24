@@ -405,13 +405,13 @@ which is used to run GIL tests. Since the `CMAKE_CXX_STANDARD` option in the cur
 
   ```shell
   ./b2 headers
-  ./b2 variant=debug,release cxxstd=11 --with-test --with-filesystem stage
+  ./b2 variant=debug,release cxxstd=11 --with-filesystem stage
   ```
 
   or, depending on specific requirements, more complete build:
 
   ```shell
-  ./b2 variant=debug,release address-model=32,64 cxxstd=11 --layout=versioned --with-test --with-filesystem stage
+  ./b2 variant=debug,release address-model=32,64 cxxstd=11 --layout=versioned --with-filesystem stage
   ```
 
 If you wish to build tests using different C++ standard version, then adjust the `cxxstd` accordingly.
@@ -461,7 +461,7 @@ Here is an example of such lightweight workflow in Linux environment (Debian-bas
         The option added in CMake 3.13.0.
       - option `-DBoost_COMPILER=-gcc5` or `-DBoost_COMPILER=-vc141` to help CMake earlier
         than 3.13 match your compiler with toolset used in the Boost library file names
-        (i.e. `libboost_unit_test_framework-gcc5-mt-x64-1_69` and not `-gcc55-`).
+        (i.e. `libboost_filesystem-gcc5-mt-x64-1_69` and not `-gcc55-`).
         Fixed in CMake 3.13.0.
       - if CMake is still failing to find Boost, you may try `-DBoost_DEBUG=ON` to
         get detailed diagnostics output from `FindBoost.cmake` module.
