@@ -6,11 +6,12 @@
 #include <boost/gil/io/write_view.hpp>
 #include <boost/gil/extension/io/png/tags.hpp>
 #include <boost/gil/extension/io/png.hpp>
-#include <boost/gil/extension/numeric/kernel.hpp>
-#include <boost/gil/extension/numeric/convolve.hpp>
+#include <boost/gil/io/typedefs.hpp>
 
 #include <cmath>
 #include <type_traits>
+#include <iostream>
+#include <cstdio>
 
 namespace gil = boost::gil;
 
@@ -20,6 +21,10 @@ enum class diffusion_option {
 };
 
 using gray_channel = std::integral_constant<int, 0>;
+
+namespace boost{namespace gil{
+using gray64f_view_t = gil::image_view<gil::memory_based_2d_locator<gil::memory_based_step_iterator<gil::gray64f_pixel_t*>>>;
+}}
 
 enum direction {
     north = 0,
@@ -32,8 +37,7 @@ enum direction {
     north_west = 7
 };
 
-template <typename ImageView>
-void compute_nabla(ImageView view, std::vector<ImageView> nabla) {
+void compute_nabla(gil::gray8_view_t view, std::vector<gil::gray32f_view_t> nabla) {
     for (std::ptrdiff_t y = 1; y < view.height() - 1; ++y)
     {
         for (std::ptrdiff_t x = 1; x < view.width() - 1; ++x)
@@ -60,20 +64,24 @@ auto convolve(const Image& input, gil::detail::kernel_2d<T> kernel) -> Image {
     return result;
 }
 
-void diffuse(gil::gray32f_view_t input, double kappa, gil::gray32f_view_t output)
+void calculate_c(gil::gray32f_view_t input, double kappa, gil::gray32f_view_t output)
 {
     // gil::for_each_pixel(input, [](gil::gray32f_pixel_t p))
     gil::transform_pixels(input, output, [kappa](gil::gray32f_pixel_t p)
     {
-        auto value = p.at(gray_channel{}) / kappa;
-        return std::exp(-value * value);
+        float value = p.at(gray_channel{}) / kappa;
+        float result = std::exp(-value * value);
+        // float result = 1.0 / (1.0 + value * value);
+        // if (result < 0.5) {
+        //     printf("%f\n", value);
+        // }
+        return result;
     });
 }
 
 template <typename ImageView>
-void print_images(std::initializer_list<ImageView> views)
+void print_images(std::initializer_list<ImageView> views, const std::string& prefix = "./nabla")
 {
-    const std::string prefix = "./nabla";
     unsigned int counter = 0;
     for (const auto& view: views)
     {
@@ -82,46 +90,97 @@ void print_images(std::initializer_list<ImageView> views)
     }
 }
 
-void anisotropic_diffusion(gil::gray32fc_view_t input, unsigned int num_iter, double delta_t, double kappa, gil::gray32f_view_t output)
+void anisotropic_diffusion(gil::gray8c_view_t input, unsigned int num_iter, double delta_t, double kappa, gil::gray8_view_t output)
 {
-    gil::copy_pixels(input, output);
+    gil::copy_and_convert_pixels(input, output);
     double dx = 1.0;
     double dy = 1.0;
     double dd = std::sqrt(2);
 
-    gil::gray32f_image_t nabla_north(input.dimensions());
-    gil::gray32f_image_t nabla_south(input.dimensions());
-    gil::gray32f_image_t nabla_west(input.dimensions());
-    gil::gray32f_image_t nabla_east(input.dimensions());
+    for (unsigned int i = 0; i < num_iter; ++i) {
 
-    gil::gray32f_image_t nabla_north_east(input.dimensions());
-    gil::gray32f_image_t nabla_south_east(input.dimensions());
-    gil::gray32f_image_t nabla_south_west(input.dimensions());
-    gil::gray32f_image_t nabla_north_west(input.dimensions());
+        gil::gray32f_image_t nabla_north(input.dimensions());
+        gil::gray32f_image_t nabla_south(input.dimensions());
+        gil::gray32f_image_t nabla_west(input.dimensions());
+        gil::gray32f_image_t nabla_east(input.dimensions());
 
-    compute_nabla(output, {
-        gil::view(nabla_north),
-        gil::view(nabla_south),
-        gil::view(nabla_west),
-        gil::view(nabla_east),
+        gil::gray32f_image_t nabla_north_east(input.dimensions());
+        gil::gray32f_image_t nabla_south_east(input.dimensions());
+        gil::gray32f_image_t nabla_south_west(input.dimensions());
+        gil::gray32f_image_t nabla_north_west(input.dimensions());
 
-        gil::view(nabla_north_east),
-        gil::view(nabla_south_east),
-        gil::view(nabla_south_west),
-        gil::view(nabla_north_west),
-        });
+        gil::gray32f_image_t c_north(input.dimensions());
+        gil::gray32f_image_t c_south(input.dimensions());
+        gil::gray32f_image_t c_west(input.dimensions());
+        gil::gray32f_image_t c_east(input.dimensions());
 
-    print_images({
-        gil::view(nabla_north),
-        gil::view(nabla_south),
-        gil::view(nabla_west),
-        gil::view(nabla_east),
+        gil::gray32f_image_t c_north_east(input.dimensions());
+        gil::gray32f_image_t c_south_east(input.dimensions());
+        gil::gray32f_image_t c_south_west(input.dimensions());
+        gil::gray32f_image_t c_north_west(input.dimensions());
 
-        gil::view(nabla_north_east),
-        gil::view(nabla_south_east),
-        gil::view(nabla_south_west),
-        gil::view(nabla_north_west),
-        });
+        compute_nabla(output, {
+            gil::view(nabla_north),
+            gil::view(nabla_south),
+            gil::view(nabla_west),
+            gil::view(nabla_east),
+
+            gil::view(nabla_north_east),
+            gil::view(nabla_south_east),
+            gil::view(nabla_south_west),
+            gil::view(nabla_north_west),
+            });
+
+        calculate_c(gil::view(nabla_north), kappa, gil::view(c_north));
+        calculate_c(gil::view(nabla_south), kappa, gil::view(c_south));
+        calculate_c(gil::view(nabla_west), kappa, gil::view(c_west));
+        calculate_c(gil::view(nabla_east), kappa, gil::view(c_east));
+
+        calculate_c(gil::view(nabla_north_east), kappa, gil::view(c_north_east));
+        calculate_c(gil::view(nabla_south_east), kappa, gil::view(c_south_east));
+        calculate_c(gil::view(nabla_south_west), kappa, gil::view(c_south_west));
+        calculate_c(gil::view(nabla_north_west), kappa, gil::view(c_north_west));
+
+        print_images({
+            gil::view(nabla_north),
+            gil::view(nabla_south),
+            gil::view(nabla_west),
+            gil::view(nabla_east),
+
+            gil::view(nabla_north_east),
+            gil::view(nabla_south_east),
+            gil::view(nabla_south_west),
+            gil::view(nabla_north_west),
+            });
+
+        print_images({
+            gil::view(c_north),
+            gil::view(c_south),
+            gil::view(c_west),
+            gil::view(c_east),
+
+            gil::view(c_north_east),
+            gil::view(c_south_east),
+            gil::view(c_south_west),
+            gil::view(c_north_west),
+            }, "diffusivity");
+
+        float half = float(1.0f / 2);
+        for (std::ptrdiff_t y = 0; y < output.height(); ++y)
+        {
+            for (std::ptrdiff_t x = 0; x < output.width(); ++ x)
+            {
+                float delta = delta_t * (
+                    gil::view(c_north)(x, y).at(gray_channel{}) * gil::view(nabla_north)(x, y).at(gray_channel{}) + gil::view(c_south)(x, y).at(gray_channel{}) * gil::view(nabla_south)(x, y).at(gray_channel{})
+                    + gil::view(c_west)(x, y).at(gray_channel{}) * gil::view(nabla_west)(x, y).at(gray_channel{}) + gil::view(c_east)(x, y).at(gray_channel{}) * gil::view(nabla_east)(x, y).at(gray_channel{})
+                    + half * gil::view(c_north_east)(x, y).at(gray_channel{}) * gil::view(nabla_north_east)(x, y).at(gray_channel{}) + half * gil::view(c_south_east)(x, y).at(gray_channel{}) * gil::view(nabla_south_east)(x, y).at(gray_channel{})
+                    + half * gil::view(c_south_west)(x, y).at(gray_channel{}) * gil::view(nabla_south_west)(x, y).at(gray_channel{}) + half * gil::view(c_north_west)(x, y).at(gray_channel{}) * gil::view(nabla_north_west)(x, y).at(gray_channel{})
+                );
+                // std::cout << delta << '\n';
+                output(x, y) = output(x, y).at(gray_channel{}) + delta;
+            }
+        }
+    }
 }
 
 // void anisotropic_diffusion(gil::gray8_view_t input, unsigned int num_iter, double delta_t, double kappa, diffusion_option option, gil::gray8_view_t output)
@@ -232,16 +291,22 @@ int main()
     gil::read_image("./input.png", input, gil::png_tag{});
     auto input_view = gil::view(input);
 
-    gil::gray32f_image_t gray(input.dimensions());
+    gil::gray8_image_t gray(input.dimensions());
     auto gray_view = gil::view(gray);
 
     gil::copy_and_convert_pixels(input_view, gray_view);
 
-    gil::gray32f_image_t output(gray.dimensions());
+    gil::gray8_image_t output(gray.dimensions());
     auto output_view = gil::view(output);
 
-    anisotropic_diffusion(gray_view, 10, 1 / 7, 30, output_view);
-    gil::copy_pixels(gray_view, output_view);
+    anisotropic_diffusion(gray_view, 10, 1 / 7., 30, output_view);
+    // anisotropic_diffusion(output_view, 10, 1 / 7, 30, output_view);
+    // anisotropic_diffusion(output_view, 10, 1 / 7, 30, output_view);
+    // anisotropic_diffusion(output_view, 10, 1 / 7, 30, output_view);
+    // anisotropic_diffusion(output_view, 10, 1 / 7, 30, output_view);
+    // gil::copy_pixels(gray_view, output_view);
 
     gil::write_view("./output.png", gil::color_converted_view<gil::gray8_pixel_t>(output_view), gil::png_tag{});
+    gil::write_view("./gray.png", gil::color_converted_view<gil::gray8_pixel_t>(gray_view), gil::png_tag{});
+
 }
