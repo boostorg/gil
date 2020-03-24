@@ -5,37 +5,33 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-#ifndef BOOST_GIL_IO_TEST_CMP_VIEW_HPP
-#define BOOST_GIL_IO_TEST_CMP_VIEW_HPP
+#ifndef BOOST_GIL_IO_TEST_EXTENSION_IO_CMP_VIEW_HPP
+#define BOOST_GIL_IO_TEST_EXTENSION_IO_CMP_VIEW_HPP
 
 #include <boost/gil.hpp>
 
-template< typename View_1, typename View_2 >
-void cmp_view( const View_1& v1
-             , const View_2& v2
-             )
+#include <stdexcept>
+
+template <typename View1, typename View2>
+void cmp_view(View1 const& v1, View2 const& v2)
 {
-    if( v1.dimensions() != v2.dimensions() )
+    if (v1.dimensions() != v2.dimensions())
+        throw std::runtime_error("Images are not equal.");
+
+    typename View1::x_coord_t width  = v1.width();
+    typename View1::y_coord_t height = v1.height();
+
+    for (typename View1::y_coord_t y = 0; y < height; ++y)
     {
-        throw std::runtime_error( "Images are not equal." );
-    }
+        typename View1::x_iterator const src_it = v1.row_begin(y);
+        typename View2::x_iterator const dst_it = v2.row_begin(y);
 
-    typename View_1::x_coord_t width  = v1.width();
-    typename View_1::y_coord_t height = v1.height();
-
-    for( typename View_1::y_coord_t y = 0; y < height; ++y )
-    {
-        const typename View_1::x_iterator src_it = v1.row_begin( y );
-        const typename View_2::x_iterator dst_it = v2.row_begin( y );
-
-        for( typename View_1::x_coord_t x = 0; x < width; ++x )
+        for (typename View1::x_coord_t x = 0; x < width; ++x)
         {
-            if( *src_it != *dst_it )
-            {
-                throw std::runtime_error( "Images are not equal." );
-            }
+            if (*src_it != *dst_it)
+                throw std::runtime_error("Images are not equal.");
         }
     }
 }
 
-#endif
+#endif // BOOST_GIL_IO_TEST_EXTENSION_IO_CMP_VIEW_HPP
