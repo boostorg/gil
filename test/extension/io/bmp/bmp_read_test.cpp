@@ -354,7 +354,7 @@ void test_read_reference_images_image_iterator()
 
     // not supported
     // g04rle.bmp - RLE compressed.
-    //test_scanline_reader<bgra8_image_t, gil::bmp_tag>(std::string(bmp_in + "g01bg.bmp").c_str());
+    //test_scanline_reader<gil::bgra8_image_t, gil::bmp_tag>(std::string(bmp_in + "g01bg.bmp").c_str());
 
     // g04p4.bmp - 4-color grayscale palette
     test_scanline_reader<gil::rgba8_image_t, gil::bmp_tag>(std::string(bmp_in + "g04p4.bmp").c_str());
@@ -422,18 +422,18 @@ void test_read_reference_images_image_iterator()
     test_scanline_reader<gil::rgb8_image_t, gil::bmp_tag>(std::string(bmp_in + "g16bf565.bmp").c_str());
 
     // g24.bmp - 24-bit color (BGR)
-    test_scanline_reader<bgr8_image_t, gil::bmp_tag>(std::string(bmp_in + "g24.bmp").c_str());
+    test_scanline_reader<gil::bgr8_image_t, gil::bmp_tag>(std::string(bmp_in + "g24.bmp").c_str());
 
     // g32def.bmp - 24-bit color (8 bits wasted), biCompression=BI_RGB (no bitfields, defaults to BGRx)
-    test_scanline_reader<bgra8_image_t, gil::bmp_tag>(std::string(bmp_in + "g32def.bmp").c_str());
+    test_scanline_reader<gil::bgra8_image_t, gil::bmp_tag>(std::string(bmp_in + "g32def.bmp").c_str());
 
     // g32bf.bmp - 24-bit color (8 bits wasted), biCompression=BI_BITFIELDS (bitfields indicate BGRx)
-    test_scanline_reader<bgra8_image_t, gil::bmp_tag>(std::string(bmp_in + "g32bf.bmp").c_str());
+    test_scanline_reader<gil::bgra8_image_t, gil::bmp_tag>(std::string(bmp_in + "g32bf.bmp").c_str());
 }
 
 void test_partial_image()
 {
-    std::string const filename(bmp_in + "rgb.bmp");
+    std::string const filename(bmp_in + "g24.bmp");
 
     gil::rgb8_image_t img;
     gil::read_image(filename, img, gil::image_read_settings<gil::bmp_tag>(
@@ -443,16 +443,21 @@ void test_partial_image()
 }
 #endif // BOOST_GIL_IO_USE_BMP_TEST_SUITE_IMAGES
 
-int main()
+int main(int argc, char *argv[])
 {
-    test_read_header();
+    try
+    {
+        test_read_header();
 
 #ifdef BOOST_GIL_IO_USE_BMP_TEST_SUITE_IMAGES
-    test_read_reference_images_test();
-    test_read_reference_images_image_iterator();
-    test_partial_image();
+        test_read_reference_images_test();
+        test_read_reference_images_image_iterator();
+        test_partial_image();
 #endif
-
+    }
+     catch (std::exception const& e)
+    {
+        BOOST_ERROR(e.what());
+    }
     return boost::report_errors();
 }
-

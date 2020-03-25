@@ -77,15 +77,21 @@ void test_old_dynamic_image()
     gil::bmp_write_view(bmp_out + "old_dynamic_image_test.bmp", gil::view(image));
 }
 
-int main()
+int main(int argc, char *argv[])
 {
-    test_old_read_dimensions();
-    test_old_read_image();
-    test_old_read_and_convert_image();
-    test_old_read_view();
-    test_old_read_and_convert_view();
-    test_old_write_view();
-    test_old_dynamic_image();
-
+    try
+    {
+        test_old_read_dimensions();
+        test_old_read_image();
+        test_old_read_and_convert_image();
+        test_old_read_view();
+        test_old_read_and_convert_view();
+        test_old_write_view();
+        test_old_dynamic_image();
+    }
+    catch (std::exception const& e)
+    {
+        BOOST_ERROR(e.what());
+    }
     return boost::report_errors();
 }
