@@ -74,15 +74,21 @@ void test_tiff()
     gil::write_view(tiff_out + "simple_all_format.tif", gil::view(img), gil::tiff_tag());
 }
 
-int main()
+int main(int argc, char* argv[])
 {
-    test_bmp();
-    test_jpeg();
-    test_png();
-    test_pnm();
-    // TODO: test_raw()
-    test_targa();
-    test_tiff();
-
+    try
+    {
+        test_bmp();
+        test_jpeg();
+        test_png();
+        test_pnm();
+        // TODO: test_raw()
+        test_targa();
+        test_tiff();
+    }
+    catch (std::exception const& e)
+    {
+        BOOST_ERROR(e.what());
+    }
     return boost::report_errors();
 }
