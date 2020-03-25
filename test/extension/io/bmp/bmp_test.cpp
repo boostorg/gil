@@ -25,8 +25,6 @@ namespace fs = boost::filesystem;
 namespace gil = boost::gil;
 namespace mp11 = boost::mp11;
 
-#ifdef BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES
-
 void test_read_image_info_using_string()
 {
     {
@@ -173,7 +171,6 @@ void test_write_view()
 {
     auto const b = gil::rgb8_pixel_t(0, 0, 255);
     auto const g = gil::rgb8_pixel_t(0, 255, 0);
-#ifdef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
     {
         std::string filename(bmp_out + "write_test_string.bmp");
         gil::write_view(filename, create_mandel_view(1000, 600, b, g), gil::bmp_tag());
@@ -197,8 +194,6 @@ void test_write_view()
         FILE *file = fopen(filename.c_str(), "wb");
         gil::write_view(file, create_mandel_view(1000, 600, b, g), info);
     }
-
-#endif // BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
 }
 
 void test_stream()
@@ -225,9 +220,7 @@ void test_stream()
     std::string filename(bmp_out + "stream_test.bmp");
     std::ofstream out(filename.c_str(), std::ios_base::binary);
 
-#ifdef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
     gil::write_view( out, gil::view( dst ), gil::bmp_tag() );
-#endif // BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
 }
 
 void test_stream_2()
@@ -237,7 +230,6 @@ void test_stream_2()
     {
         BOOST_TEST(false);
     }
-
     std::istream in(&in_buf);
 
     gil::rgb8_image_t img;
@@ -266,9 +258,7 @@ void test_dynamic_image()
     gil::any_image<my_img_types> image;
     gil::read_image(bmp_filename.c_str(), image, gil::bmp_tag());
 
-#ifdef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
     gil::write_view(bmp_out + "dynamic_image_test.bmp", gil::view(image), gil::bmp_tag());
-#endif // BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
 }
 
 int main()
@@ -286,7 +276,3 @@ int main()
 
     return boost::report_errors();
 }
-
-#else
-int main() {}
-#endif // BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES

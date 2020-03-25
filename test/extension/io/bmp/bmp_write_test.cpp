@@ -18,7 +18,6 @@
 
 namespace gil = boost::gil;
 
-#ifdef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
 void test_write_rgb8()
 {
     gil::write_view(bmp_out + "rgb8_test.bmp", create_mandel_view(200, 200,
@@ -30,7 +29,6 @@ void test_write_rgba8()
     gil::write_view(bmp_out + "rgba8_test.bmp", create_mandel_view(200, 200,
         gil::rgba8_pixel_t(0, 0, 255, 0), gil::rgba8_pixel_t(0, 255, 0, 0)), gil::bmp_tag());
 }
-#endif // BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
 
 void test_rgb_color_space_write()
 {
@@ -41,14 +39,9 @@ void test_rgb_color_space_write()
 
 int main()
 {
-#ifdef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
     test_write_rgb8();
     test_write_rgba8();
-#endif // BOOST_GIL_IO_USE_BMP_TEST_SUITE_IMAGES
-
     test_rgb_color_space_write();
 
     return boost::report_errors();
 }
-
-

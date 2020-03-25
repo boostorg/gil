@@ -17,8 +17,6 @@
 namespace gil = boost::gil;
 namespace mp11 = boost::mp11;
 
-#ifdef BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES
-
 void test_old_read_dimensions()
 {
     boost::gil::point_t dim = gil::bmp_read_dimensions(bmp_filename);
@@ -58,29 +56,25 @@ void test_old_read_and_convert_view()
 
 void test_old_write_view()
 {
-#ifdef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
     auto b = gil::rgb8_pixel_t(0, 0, 255);
     auto g = gil::rgb8_pixel_t(0, 255, 0);
     gil::bmp_write_view(bmp_out + "old_write_view_test.bmp", create_mandel_view(1000, 600, b, g));
-#endif // BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
 }
 
 void test_old_dynamic_image()
 {
     using my_img_types = mp11::mp_list
-        <
-            gil::gray8_image_t,
-            gil::gray16_image_t,
-            gil::rgb8_image_t,
-            gil::rgba8_image_t
-        >;
+    <
+        gil::gray8_image_t,
+        gil::gray16_image_t,
+        gil::rgb8_image_t,
+        gil::rgba8_image_t
+    >;
 
     gil::any_image<my_img_types> image;
     gil::bmp_read_image(bmp_filename.c_str(), image);
 
-#ifdef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
     gil::bmp_write_view(bmp_out + "old_dynamic_image_test.bmp", gil::view(image));
-#endif // BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
 }
 
 int main()
@@ -95,7 +89,3 @@ int main()
 
     return boost::report_errors();
 }
-
-#else
-int main() {}
-#endif // BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES
