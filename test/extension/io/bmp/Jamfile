@@ -10,16 +10,14 @@
 
 import testing ;
 
-# TODO: Download BMP test suite images and build with BOOST_GIL_IO_USE_BMP_TEST_SUITE_IMAGES
+# TODO: Download BMP test suite images and build with <define>BOOST_GIL_IO_USE_BMP_TEST_SUITE_IMAGES
 
 project
    : requirements
-      <define>BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES
-      <define>BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
       <library>/boost/filesystem//boost_filesystem
    ;
 
-run make.cpp ;
+run bmp_make.cpp ;
 
 run bmp_test.cpp ;
 run bmp_read_test.cpp ;
