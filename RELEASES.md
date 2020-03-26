@@ -5,6 +5,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+- New member function `size()` in `any_image_view` class ([PR #456](https://github.com/boostorg/gil/pull/456)).
+- Numerous new test cases for existing features.
+
+### Changed
+- Replace Boost.Test with Boost.LightweightTest as the only test framework used in GIL ([PR #459](https://github.com/boostorg/gil/pull/459) and [PR #464](https://github.com/boostorg/gil/pull/464)).
+- Removed remaining uses of Boost.MPL ([PR #441](https://github.com/boostorg/gil/pull/441) and ).
+- Renamed all macros using `BOOST_GIL_` prefix ([PR #411](https://github.com/boostorg/gil/pull/411)).
+- Renamed all CMake configuration options using `BOOST_GIL_` prefix ([PR #419](https://github.com/boostorg/gil/pull/419)).
+
+### Removed
+- Removed `extension/dynamic_image/reduce.hpp` as unused and possibly unfinished ([PR #466](https://github.com/boostorg/gil/pull/466)). An implementation attempt of techniques described in the paper [Efficient Run-Time Dispatching in Generic Programming with Minimal Code Bloat](http://lubomir.org/academic/MinimizingCodeBloat.pdf) by Lubomir Bourdev, Jaakko Jarvi.
+- Removed dependency on Boost.MPL, Boost.System and Boost.Test.
+
+### Fixed
+- Avoid `longjmp` interaction during destruction of I/O extension objects ([PR #433](https://github.com/boostorg/gil/pull/433)).
+- Fixed missing alignment default value in constructor of `image` class ([PR #429](https://github.com/boostorg/gil/pull/429)).
+- Fixed segmentation fault when reading corrupted PNG file ([PR #414](https://github.com/boostorg/gil/pull/414)).
+- Fixed illegal initialization of return values in the old IOv1 interface of I/O extension ([PR #409](https://github.com/boostorg/gil/pull/409)).
+
 ## [1.72.0] - 2019-12-11
 
 ### Added
