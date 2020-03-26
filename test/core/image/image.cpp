@@ -38,32 +38,53 @@ struct test_constructor_with_dimensions_pixel
     }
 };
 
+struct test_move_constructor
+{
+    template <typename Image>
+    void operator()(Image const&)
+    {
+        using image_t = Image;
+        gil::point_t const dimensions{256, 128};
+        {
+            image_t image(fixture::create_image<image_t>(dimensions.x, dimensions.y, 0));
+
+            image_t image2(std::move(image));
+            BOOST_TEST_EQ(image2.dimensions(), dimensions);
+            BOOST_TEST_EQ(image.dimensions(), gil::point_t{});
+        }
+    }
+    static void run()
+    {
+        boost::mp11::mp_for_each<fixture::image_types>(test_move_constructor{});
+    }
+};
+
+struct test_move_assignement
+{
+    template <typename Image>
+    void operator()(Image const&)
+    {
+        using image_t = Image;
+        gil::point_t const dimensions{256, 128};
+        {
+            image_t image = fixture::create_image<image_t>(dimensions.x, dimensions.y, 0);
+            image_t image2 = std::move(image);
+            BOOST_TEST_EQ(image2.dimensions(), dimensions);
+            BOOST_TEST_EQ(image.dimensions(), gil::point_t{});
+        }
+    }
+    static void run()
+    {
+        boost::mp11::mp_for_each<fixture::image_types>(test_move_assignement{});
+    }
+};
+
 int main()
 {
     test_constructor_with_dimensions_pixel::run();
 
+    test_move_constructor::run();
+    test_move_assignement::run();
+
     return ::boost::report_errors();
-}
-
-BOOST_AUTO_TEST_CASE_TEMPLATE(move_constructor, Image, fixture::image_types)
-{
-    gil::point_t const dimensions{256, 128};
-    {
-        Image image(fixture::create_image<Image>(dimensions.x, dimensions.y, 0));
-
-        Image image2(std::move(image));
-        BOOST_CHECK_EQUAL(image2.dimensions(), dimensions);
-        BOOST_CHECK_EQUAL(image.dimensions(), gil::point_t{});
-    }
-}
-
-BOOST_AUTO_TEST_CASE_TEMPLATE(move_assignement, Image, fixture::image_types)
-{
-    gil::point_t const dimensions{256, 128};
-    {
-        Image image = fixture::create_image<Image>(dimensions.x, dimensions.y, 0);
-        Image image2 = std::move(image);
-        BOOST_CHECK_EQUAL(image2.dimensions(), dimensions);
-        BOOST_CHECK_EQUAL(image.dimensions(), gil::point_t{});
-    }
 }
