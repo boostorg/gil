@@ -37,7 +37,7 @@ enum direction {
     north_west = 7
 };
 
-void compute_nabla(gil::gray8_view_t view, std::vector<gil::gray32f_view_t> nabla) {
+void compute_nabla(gil::gray64f_view_t view, std::vector<gil::gray32f_view_t> nabla) {
     for (std::ptrdiff_t y = 1; y < view.height() - 1; ++y)
     {
         for (std::ptrdiff_t x = 1; x < view.width() - 1; ++x)
@@ -90,12 +90,9 @@ void print_images(std::initializer_list<ImageView> views, const std::string& pre
     }
 }
 
-void anisotropic_diffusion(gil::gray8c_view_t input, unsigned int num_iter, double delta_t, double kappa, gil::gray8_view_t output)
+void anisotropic_diffusion(gil::gray64f_view_t input, unsigned int num_iter, double delta_t, double kappa, gil::gray64f_view_t output)
 {
-    gil::copy_and_convert_pixels(input, output);
-    double dx = 1.0;
-    double dy = 1.0;
-    double dd = std::sqrt(2);
+    gil::copy_pixels(input, output);
 
     for (unsigned int i = 0; i < num_iter; ++i) {
 
@@ -291,22 +288,29 @@ int main()
     gil::read_image("./input.png", input, gil::png_tag{});
     auto input_view = gil::view(input);
 
-    gil::gray8_image_t gray(input.dimensions());
+    gil::gray64f_image_t gray(input.dimensions());
     auto gray_view = gil::view(gray);
 
-    gil::copy_and_convert_pixels(input_view, gray_view);
-
-    gil::gray8_image_t output(gray.dimensions());
+    // gil::copy_and_convert_pixels(input_view, gray_view);
+    gil::transform_pixels(input_view, gray_view,
+    [](const gil::rgb8_pixel_t& p)
+    {
+        return 0.3 * p.at(std::integral_constant<int, 0>{})
+               + 0.59 * p.at(std::integral_constant<int, 1>{})
+               + 0.11 * p.at(std::integral_constant<int, 2>{});
+    });
+    gil::gray64f_image_t output(gray.dimensions());
     auto output_view = gil::view(output);
 
     anisotropic_diffusion(gray_view, 10, 1 / 7., 30, output_view);
-    // anisotropic_diffusion(output_view, 10, 1 / 7, 30, output_view);
-    // anisotropic_diffusion(output_view, 10, 1 / 7, 30, output_view);
-    // anisotropic_diffusion(output_view, 10, 1 / 7, 30, output_view);
-    // anisotropic_diffusion(output_view, 10, 1 / 7, 30, output_view);
-    // gil::copy_pixels(gray_view, output_view);
 
-    gil::write_view("./output.png", gil::color_converted_view<gil::gray8_pixel_t>(output_view), gil::png_tag{});
+    gil::gray8_image_t true_output(output.dimensions());
+    gil::transform_pixels(output_view, gil::view(true_output), [](gil::gray64f_pixel_t p)
+    {
+        return p.at(gray_channel{});
+    });
+
+    gil::write_view("./output.png", gil::view(true_output), gil::png_tag{});
     gil::write_view("./gray.png", gil::color_converted_view<gil::gray8_pixel_t>(gray_view), gil::png_tag{});
 
 }
