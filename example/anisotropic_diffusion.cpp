@@ -15,11 +15,6 @@
 
 namespace gil = boost::gil;
 
-enum class diffusion_option {
-    privelege_high_contrast,
-    privelege_wider_area
-};
-
 using gray_channel = std::integral_constant<int, 0>;
 
 namespace boost{namespace gil{
