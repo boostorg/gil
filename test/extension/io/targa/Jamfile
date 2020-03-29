@@ -10,12 +10,8 @@
 
 import testing ;
 
-# TODO: Download Targa test suite images and build with BOOST_GIL_IO_USE_TARGA_FILEFORMAT_TEST_SUITE_IMAGES
-
 project
    : requirements
-      <define>BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES
-      <define>BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
       <library>/boost/filesystem//boost_filesystem
    ;
 

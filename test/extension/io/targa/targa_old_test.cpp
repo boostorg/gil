@@ -17,10 +17,10 @@
 namespace gil  = boost::gil;
 namespace mp11 = boost::mp11;
 
-#ifdef BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES
 void test_old_read_dimensions()
 {
     boost::gil::point_t dim = gil::targa_read_dimensions(targa_filename);
+
     BOOST_TEST_EQ(dim.x, 124);
     BOOST_TEST_EQ(dim.y, 124);
 }
@@ -57,11 +57,9 @@ void test_old_read_and_convert_view()
 
 void test_old_write_view()
 {
-#ifdef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
     targa_write_view(
         targa_out + "old_write_view_test.tga",
         create_mandel_view(124, 124, gil::rgb8_pixel_t(0, 0, 255), gil::rgb8_pixel_t(0, 255, 0)));
-#endif  // BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
 }
 
 void test_old_dynamic_image()
@@ -77,9 +75,7 @@ void test_old_dynamic_image()
     gil::any_image<my_img_types> image;
     gil::targa_read_image(targa_filename.c_str(), image);
 
-#ifdef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
     targa_write_view(targa_out + "old_dynamic_image_test.tga", gil::view(image));
-#endif  // BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
 }
 
 int main()
@@ -94,7 +90,3 @@ int main()
 
     return boost::report_errors();
 }
-
-#else
-int main() {}
-#endif  // BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES

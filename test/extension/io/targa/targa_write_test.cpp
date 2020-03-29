@@ -17,7 +17,6 @@
 
 namespace gil = boost::gil;
 
-#ifdef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
 void test_write()
 {
     // test writing all supported image types
@@ -35,7 +34,6 @@ void test_write()
             gil::targa_tag());
     }
 }
-#endif // BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
 
 void test_rgb_color_space_write()
 {
@@ -46,10 +44,7 @@ void test_rgb_color_space_write()
 int main()
 {
     test_rgb_color_space_write();
-
-#ifdef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
     test_write();
-#endif
 
     return boost::report_errors();
 }

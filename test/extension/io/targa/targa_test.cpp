@@ -24,7 +24,6 @@ namespace fs = boost::filesystem;
 namespace gil = boost::gil;
 namespace mp11 = boost::mp11;
 
-#ifdef BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES
 void test_read_image_info_using_string()
 {
     {
@@ -161,7 +160,6 @@ void test_read_and_convert_view()
     }
 }
 
-#ifdef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
 void test_write_view()
 {
     {
@@ -202,7 +200,6 @@ void test_write_view()
             info);
     }
 }
-#endif //BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
 
 void test_stream()
 {
@@ -227,9 +224,7 @@ void test_stream()
     // 5. Write out image.
     std::string filename(targa_out + "stream_test.tga");
     std::ofstream out(filename.c_str(), std::ios_base::binary);
-#ifdef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
     gil::write_view(out, gil::view(dst), gil::targa_tag());
-#endif  // BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
 }
 
 void test_stream_2()
@@ -252,8 +247,8 @@ void test_subimage()
         targa_filename, gil::point_t(0, 0), gil::point_t(50, 50));
 
     // FIXME: not working
-    // run_subimage_test<gil::gray8_image_t, gil::targa_tag>(
-    //     targa_filename, gil::point_t(39, 7), gil::point_t(50, 50));
+    run_subimage_test<gil::gray8_image_t, gil::targa_tag>(
+        targa_filename, gil::point_t(39, 7), gil::point_t(50, 50));
 }
 
 void test_dynamic_image()
@@ -267,12 +262,8 @@ void test_dynamic_image()
     >;
 
     gil::any_image<my_img_types> image;
-
     gil::read_image(targa_filename.c_str(), image, gil::targa_tag());
-
-#ifdef BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
     gil::write_view(targa_out + "dynamic_image_test.tga", gil::view(image), gil::targa_tag());
-#endif  // BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES
 }
 
 int main()
@@ -289,6 +280,3 @@ int main()
 
     return boost::report_errors();
 }
-#else
-int main() {}
-#endif // BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES
