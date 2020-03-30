@@ -14,6 +14,7 @@
 #include <boost/gil/detail/mp11.hpp>
 
 #include <boost/assert.hpp>
+#include <boost/core/exchange.hpp>
 
 #include <cstddef>
 #include <memory>
@@ -148,48 +149,52 @@ public:
         return *this;
     }
 
-private:
-    using equal_allocators = std::true_type;
-    using no_propagate_allocators = std::false_type;
-
-    template <class Allocator>
-    // TODO: Use std::allocator_traits<Allocator>::is_always_equal if available
-    using move_policy = typename std::is_empty<Allocator>::type;
-
-    void move_assign(image& img, equal_allocators)
-    {
-        destruct_pixels(_view);
-        deallocate();
-
-        // TODO Use std::exchange
-        _view = img._view;
-        _memory = img._memory;
-        _align_in_bytes = img._align_in_bytes;
-        _allocated_bytes = img._allocated_bytes;
-        
-        img._view = view_t();
-        img._memory = nullptr;
-        img._align_in_bytes = 0;
-        img._allocated_bytes = 0;
-    }
-
-    void move_assign(image& img, no_propagate_allocators)
-    {
-        if (_alloc == img._alloc)
-            move_assign(img, equal_allocators{});
-        else
-        {
-            // Fallback to copy
-            image tmp(img);
-            swap(tmp);
-        }
-    }
-  
-public:
     image& operator=(image&& img)
     {
         if (this != std::addressof(img))
-            move_assign(img, move_policy<Alloc>{});
+        {
+            auto const exchange_memory = [](image& lhs, image& rhs)
+            {
+                lhs._memory = boost::exchange(rhs._memory, nullptr);
+                lhs._align_in_bytes = boost::exchange(rhs._align_in_bytes, 0);
+                lhs._allocated_bytes = boost::exchange(rhs._allocated_bytes, 0);
+                lhs._view = boost::exchange(rhs._view, image::view_t{});
+            };
+
+            constexpr bool pocma = std::allocator_traits<Alloc>::propagate_on_container_move_assignment::value;
+            if (pocma)
+            {
+                // non-sticky allocator, can adopt the memory, fast
+                destruct_pixels(this->_view);
+                this->deallocate();
+                this->_alloc = img._alloc;
+                exchange_memory(*this, img);
+            }
+            else if (_alloc == img._alloc)
+            {
+                // allocator stuck to the rhs, but it's equivalent of ours, we can still adopt the memory
+                destruct_pixels(_view);
+                this->deallocate();
+                exchange_memory(*this, img);
+            }
+            else
+            {
+                // cannot propagate the allocator and cannot adopt the memory
+                if (img._memory)
+                {
+                    allocate_and_copy(img.dimensions(), img._view);
+                    destruct_pixels(img._view);
+                    img.deallocate();
+                    img._view = image::view_t{};
+                }
+                else
+                {
+                    destruct_pixels(this->_view);
+                    this->deallocate();
+                    this->_view = view_t{};
+                }
+            }
+        }
 
         return *this;
     }
