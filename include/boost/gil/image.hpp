@@ -37,7 +37,8 @@ namespace boost { namespace gil {
 ////////////////////////////////////////////////////////////////////////////////////////
 
 template< typename Pixel, bool IsPlanar = false, typename Alloc=std::allocator<unsigned char> >
-class image {
+class image
+{
 public:
 #if defined(BOOST_NO_CXX11_ALLOCATOR)
     using allocator_type = typename Alloc::template rebind<unsigned char>::other;
@@ -64,14 +65,16 @@ public:
     image(const point_t& dimensions,
           std::size_t alignment=0,
           const Alloc alloc_in = Alloc()) : _memory(nullptr), _align_in_bytes(alignment), _alloc(alloc_in)
-                                          , _allocated_bytes( 0 ) {
+                                          , _allocated_bytes( 0 )
+    {
         allocate_and_default_construct(dimensions);
     }
 
     image(x_coord_t width, y_coord_t height,
           std::size_t alignment=0,
           const Alloc alloc_in = Alloc()) : _memory(nullptr), _align_in_bytes(alignment), _alloc(alloc_in)
-                                          , _allocated_bytes( 0 ) {
+                                          , _allocated_bytes( 0 )
+    {
         allocate_and_default_construct(point_t(width,height));
     }
 
@@ -79,25 +82,30 @@ public:
           const Pixel& p_in,
           std::size_t alignment = 0,
           const Alloc alloc_in = Alloc())  : _memory(nullptr), _align_in_bytes(alignment), _alloc(alloc_in)
-                                           , _allocated_bytes( 0 ) {
+                                           , _allocated_bytes( 0 )
+    {
         allocate_and_fill(dimensions, p_in);
     }
+    
     image(x_coord_t width, y_coord_t height,
           const Pixel& p_in,
           std::size_t alignment = 0,
           const Alloc alloc_in = Alloc())  : _memory(nullptr), _align_in_bytes(alignment), _alloc(alloc_in)
-                                           , _allocated_bytes ( 0 ) {
+                                           , _allocated_bytes ( 0 )
+    {
         allocate_and_fill(point_t(width,height),p_in);
     }
 
     image(const image& img) : _memory(nullptr), _align_in_bytes(img._align_in_bytes), _alloc(img._alloc)
-                            , _allocated_bytes( img._allocated_bytes ) {
+                            , _allocated_bytes( img._allocated_bytes )
+    {
         allocate_and_copy(img.dimensions(),img._view);
     }
 
     template <typename P2, bool IP2, typename Alloc2>
     image(const image<P2,IP2,Alloc2>& img) : _memory(nullptr), _align_in_bytes(img._align_in_bytes), _alloc(img._alloc)
-                                           , _allocated_bytes( img._allocated_bytes ) {
+                                           , _allocated_bytes( img._allocated_bytes )
+    {
        allocate_and_copy(img.dimensions(),img._view);
     }
 
@@ -107,17 +115,20 @@ public:
       _memory(img._memory),
       _align_in_bytes(img._align_in_bytes),
       _alloc(std::move(img._alloc)),
-      _allocated_bytes(img._allocated_bytes)  {
+      _allocated_bytes(img._allocated_bytes)
+    {
         img._view = view_t();
         img._memory = nullptr;
         img._align_in_bytes = 0;
         img._allocated_bytes = 0;
     }
 
-    image& operator=(const image& img) {
+    image& operator=(const image& img)
+    {
         if (dimensions() == img.dimensions())
             copy_pixels(img._view,_view);
-        else {
+        else
+        {
             image tmp(img);
             swap(tmp);
         }
@@ -125,10 +136,12 @@ public:
     }
 
     template <typename Img>
-    image& operator=(const Img& img) {
+    image& operator=(const Img& img)
+    {
         if (dimensions() == img.dimensions())
             copy_pixels(img._view,_view);
-        else {
+        else
+        {
             image tmp(img);
             swap(tmp);
         }
@@ -143,7 +156,8 @@ private:
     // TODO: Use std::allocator_traits<Allocator>::is_always_equal if available
     using move_policy = typename std::is_empty<Allocator>::type;
 
-    void move_assign(image& img, equal_allocators) {
+    void move_assign(image& img, equal_allocators)
+    {
         destruct_pixels(_view);
         deallocate();
 
@@ -159,10 +173,12 @@ private:
         img._allocated_bytes = 0;
     }
 
-    void move_assign(image& img, no_propagate_allocators) {
-        if (_alloc == img._alloc) {
+    void move_assign(image& img, no_propagate_allocators)
+    {
+        if (_alloc == img._alloc)
             move_assign(img, equal_allocators{});
-        } else {
+        else
+        {
             // Fallback to copy
             image tmp(img);
             swap(tmp);
@@ -170,14 +186,16 @@ private:
     }
   
 public:
-    image& operator=(image&& img) {
+    image& operator=(image&& img)
+    {
         if (this != std::addressof(img))
             move_assign(img, move_policy<Alloc>{});
 
         return *this;
     }
 
-    ~image() {
+    ~image()
+    {
         destruct_pixels(_view);
         deallocate();
     }
@@ -185,7 +203,8 @@ public:
     Alloc&       allocator() { return _alloc; }
     Alloc const& allocator() const { return _alloc; }
 
-    void swap(image& img) { // required by MutableContainerConcept
+    void swap(image& img) // required by MutableContainerConcept
+    {
         using std::swap;
         swap(_align_in_bytes,  img._align_in_bytes);
         swap(_memory,          img._memory);
@@ -474,12 +493,14 @@ private:
 };
 
 template <typename Pixel, bool IsPlanar, typename Alloc>
-void swap(image<Pixel, IsPlanar, Alloc>& im1,image<Pixel, IsPlanar, Alloc>& im2) {
+void swap(image<Pixel, IsPlanar, Alloc>& im1,image<Pixel, IsPlanar, Alloc>& im2)
+{
     im1.swap(im2);
 }
 
 template <typename Pixel1, bool IsPlanar1, typename Alloc1, typename Pixel2, bool IsPlanar2, typename Alloc2>
-bool operator==(const image<Pixel1,IsPlanar1,Alloc1>& im1,const image<Pixel2,IsPlanar2,Alloc2>& im2) {
+bool operator==(const image<Pixel1,IsPlanar1,Alloc1>& im1,const image<Pixel2,IsPlanar2,Alloc2>& im2)
+{
     if ((void*)(&im1)==(void*)(&im2)) return true;
     if (const_view(im1).dimensions()!=const_view(im2).dimensions()) return false;
     return equal_pixels(const_view(im1),const_view(im2));
@@ -499,7 +520,8 @@ const typename image<Pixel,IsPlanar,Alloc>::view_t& view(image<Pixel,IsPlanar,Al
 
 /// \brief Returns the constant-pixel view of an image
 template <typename Pixel, bool IsPlanar, typename Alloc> inline
-const typename image<Pixel,IsPlanar,Alloc>::const_view_t const_view(const image<Pixel,IsPlanar,Alloc>& img) {
+const typename image<Pixel,IsPlanar,Alloc>::const_view_t const_view(const image<Pixel,IsPlanar,Alloc>& img)
+{
     return static_cast<const typename image<Pixel,IsPlanar,Alloc>::const_view_t>(img._view);
 }
 ///@}
