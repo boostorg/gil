@@ -3,7 +3,7 @@
 All notable changes to [Boost.GIL](https://github.com/boostorg/gil/) project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## ## [1.73.0] - [Unreleased]
 
 ### Added
 - New member function `size()` in `any_image_view` class ([PR #456](https://github.com/boostorg/gil/pull/456)).
@@ -11,13 +11,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 - Replace Boost.Test with Boost.LightweightTest as the only test framework used in GIL ([PR #459](https://github.com/boostorg/gil/pull/459) and [PR #464](https://github.com/boostorg/gil/pull/464)). This also restructured the `test/extension/io/` sub-tree and targets in related `Jamfile`-s.
-- Removed remaining uses of Boost.MPL ([PR #441](https://github.com/boostorg/gil/pull/441) and ).
+- Removed remaining uses of Boost.MPL ([PR #441](https://github.com/boostorg/gil/pull/441).
 - Renamed all macros using `BOOST_GIL_` prefix ([PR #411](https://github.com/boostorg/gil/pull/411)).
 - Renamed all CMake configuration options using `BOOST_GIL_` prefix ([PR #419](https://github.com/boostorg/gil/pull/419)).
 
 ### Removed
 - Removed `extension/dynamic_image/reduce.hpp` as unused and possibly unfinished ([PR #466](https://github.com/boostorg/gil/pull/466)). An implementation attempt of techniques described in the paper [Efficient Run-Time Dispatching in Generic Programming with Minimal Code Bloat](http://lubomir.org/academic/MinimizingCodeBloat.pdf) by Lubomir Bourdev, Jaakko Jarvi.
-- Removed dependency on Boost.MPL, Boost.System and Boost.Test.
+- Removed direct dependency on Boost.MPL, Boost.System and Boost.Test.
 - Started removing public macros for compile-time configuration of I/O extension tests, i.e. `BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES` and `BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES`. Instead, if a test target is built, it builds all its test cases unconditionally.
 
 ### Fixed
