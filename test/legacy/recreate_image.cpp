@@ -12,7 +12,7 @@
 
 #include <boost/gil/extension/dynamic_image/dynamic_image_all.hpp>
 
-#include <boost/test/unit_test.hpp>
+#include <boost/core/lightweight_test.hpp>
 
 #include <ios>
 #include <iostream>
@@ -81,19 +81,22 @@ std::size_t total_allocated_size_in_bytes( const typename View::point_t& dimensi
 }
 
 
-BOOST_AUTO_TEST_SUITE(GIL_Tests)
-
-BOOST_AUTO_TEST_CASE(recreate_image_test)
+void test_recreate_image()
 {
     auto tasib_1 = total_allocated_size_in_bytes<rgb8_view_t, false>({640, 480});
     auto tasib_2 = total_allocated_size_in_bytes<rgb8_view_t, false>({320, 200});
 
     rgb8_image_t img( 640, 480 );
     img.recreate( 320, 200 );
-
 }
 
-BOOST_AUTO_TEST_SUITE_END()
+int main()
+{
+    test_recreate_image();
+
+    return ::boost::report_errors();
+}
+
 
 #if BOOST_WORKAROUND(BOOST_MSVC, >= 1400)
 #pragma warning(push)

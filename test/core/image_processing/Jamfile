@@ -8,11 +8,6 @@
 #
 import testing ;
 
-project
-    : requirements
-    <include>..
-    ;
-
 compile-fail threshold_color_spaces_not_compatible_fail.cpp ;
 run threshold_binary.cpp ;
 run threshold_truncate.cpp ;
@@ -22,5 +17,5 @@ run simple_kernels.cpp ;
 run harris.cpp ;
 run hessian.cpp ;
 run sobel_scharr.cpp ;
-run box_filter.cpp /boost/test//boost_unit_test_framework : : : <link>shared:<define>BOOST_TEST_DYN_LINK=1 ;
-run median_filter.cpp /boost/test//boost_unit_test_framework : : : <link>shared:<define>BOOST_TEST_DYN_LINK=1 ;
+run box_filter.cpp ;
+run median_filter.cpp ;

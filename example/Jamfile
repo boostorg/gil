@@ -19,11 +19,21 @@ project
 # TODO: Add missing examples
 
 local sources =
+    adaptive_threshold.cpp
     affine.cpp
+    convolution.cpp
+    convolve2d.cpp
     dynamic_image.cpp
-    histogram.cpp
     harris.cpp
+    hessian.cpp
+    histogram.cpp
+    interleaved_ptr.cpp
+    mandelbrot.cpp
+    packed_pixel.cpp
+    resize.cpp
     sobel_scharr.cpp
+    threshold.cpp
+    x_gradient.cpp
     ;
 
 local targets ;

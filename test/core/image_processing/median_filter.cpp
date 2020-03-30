@@ -5,15 +5,12 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-
-#define BOOST_TEST_MODULE test_image_processing_median_filter
-#include "unit_test.hpp"
-
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/algorithm.hpp>
 #include <boost/gil/gray.hpp>
 #include <boost/gil/image_processing/filter.hpp>
 
+#include <boost/core/lightweight_test.hpp>
 
 namespace gil = boost::gil;
 
@@ -43,9 +40,7 @@ std::uint8_t output[] =
     171, 171,  65,  67, 133, 133, 157, 157, 105
 };
 
-BOOST_AUTO_TEST_SUITE(filter)
-
-BOOST_AUTO_TEST_CASE(median_filter_with_kernel_size_3)
+void test_median_filter_with_kernel_size_3()
 {
     gil::gray8c_view_t src_view =
         gil::interleaved_view(9, 9, reinterpret_cast<const gil::gray8_pixel_t*>(img), 9);
@@ -62,4 +57,9 @@ BOOST_AUTO_TEST_CASE(median_filter_with_kernel_size_3)
     BOOST_TEST(gil::equal_pixels(out_view, dst_view));
 }
 
-BOOST_AUTO_TEST_SUITE_END()
+int main()
+{
+    test_median_filter_with_kernel_size_3();
+
+    return ::boost::report_errors();
+}

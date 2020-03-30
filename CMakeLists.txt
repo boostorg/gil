@@ -15,14 +15,14 @@ cmake_minimum_required(VERSION 3.10)
 #-----------------------------------------------------------------------------
 # Options
 #-----------------------------------------------------------------------------
-option(GIL_BUILD_EXAMPLES "Build examples" ON)
-option(GIL_BUILD_HEADER_TESTS "Enable self-contained header tests" ON)
-option(GIL_ENABLE_EXT_DYNAMIC_IMAGE "Enable Dynamic Image extension, tests and examples" ON)
-option(GIL_ENABLE_EXT_IO "Enable IO extension, tests and examples (require libjpeg, libpng, libtiff)" ON)
-option(GIL_ENABLE_EXT_NUMERIC "Enable Numeric extension, tests and examples" ON)
-option(GIL_ENABLE_EXT_TOOLBOX "Enable Toolbox extension, tests and examples" ON)
-option(GIL_USE_CONAN "Use Conan to install dependencies" OFF)
-option(GIL_USE_CLANG_TIDY "Set CMAKE_CXX_CLANG_TIDY property on targets to enable clang-tidy linting" OFF)
+option(BOOST_GIL_BUILD_EXAMPLES "Build examples" ON)
+option(BOOST_GIL_BUILD_HEADER_TESTS "Enable self-contained header tests" ON)
+option(BOOST_GIL_ENABLE_EXT_DYNAMIC_IMAGE "Enable Dynamic Image extension, tests and examples" ON)
+option(BOOST_GIL_ENABLE_EXT_IO "Enable IO extension, tests and examples (require libjpeg, libpng, libtiff)" ON)
+option(BOOST_GIL_ENABLE_EXT_NUMERIC "Enable Numeric extension, tests and examples" ON)
+option(BOOST_GIL_ENABLE_EXT_TOOLBOX "Enable Toolbox extension, tests and examples" ON)
+option(BOOST_GIL_USE_CONAN "Use Conan to install dependencies" OFF)
+option(BOOST_GIL_USE_CLANG_TIDY "Set CMAKE_CXX_CLANG_TIDY property on targets to enable clang-tidy linting" OFF)
 set(CMAKE_CXX_STANDARD 11 CACHE STRING "C++ standard version to use (default is 11)")
 
 #-----------------------------------------------------------------------------
@@ -41,6 +41,15 @@ message(STATUS "Boost.GIL: Require C++${CMAKE_CXX_STANDARD}")
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# Avoid warnings flood on Travis CI, AppVeyor, CircleCI, Azure Pipelines
+if(DEFINED ENV{CI} OR DEFINED ENV{AGENT_JOBSTATUS} OR DEFINED ENV{GITHUB_ACTIONS})
+  set(BOOST_GIL_BUILD_CI ON)
+  message(STATUS "Boost.GIL: Turning off detailed compiler warnings for CI build short log")
+else()
+  set(BOOST_GIL_BUILD_CI OFF)
+  message(STATUS "Boost.GIL: Turning on detailed compiler warnings")
+endif()
+
 add_library(gil_compile_options INTERFACE)
 
 # See https://cmake.org/pipermail/cmake/2018-December/068716.html
@@ -50,20 +59,14 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 endif()
 
 # See https://svn.boost.org/trac10/wiki/Guidelines/WarningsGuidelines
-
 target_compile_options(gil_compile_options
   INTERFACE
-    $<$<CXX_COMPILER_ID:MSVC>:-W4>
+    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<BOOL:${BOOST_GIL_BUILD_CI}>>:-W1>
+    $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<NOT:$<BOOL:${BOOST_GIL_BUILD_CI}>>>:-W4>
     $<$<CXX_COMPILER_ID:MSVC>:-bigobj>
     $<$<CXX_COMPILER_ID:MSVC>:-FC> # Need absolute path for __FILE__ used in tests
-    $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-fstrict-aliasing -pedantic>)
-
-# Do not mix warnings due to strict compilation level with linter warnings
-if(NOT CMAKE_CXX_CLANG_TIDY)
-  target_compile_options(gil_compile_options
-    INTERFACE
-      $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-Wall -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter>)
-endif()
+    $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-fstrict-aliasing>
+    $<$<AND:$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>,$<NOT:$<BOOL:${BOOST_GIL_BUILD_CI}>>>:-Wall -Wconversion -Wextra -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter -pedantic>)
 
 target_compile_definitions(gil_compile_options
   INTERFACE
@@ -100,17 +103,11 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
   set(Boost_USE_STATIC_RUNTIME OFF)
 endif()
 
-find_package(Boost 1.68.0 REQUIRED
-  COMPONENTS
-    filesystem
-    unit_test_framework)
+find_package(Boost 1.72.0 REQUIRED COMPONENTS filesystem)
 message(STATUS "Boost.GIL: Using Boost_INCLUDE_DIRS=${Boost_INCLUDE_DIRS}")
 message(STATUS "Boost.GIL: Using Boost_LIBRARY_DIRS=${Boost_LIBRARY_DIRS}")
 
-target_link_libraries(gil_dependencies
-  INTERFACE
-    Boost::filesystem
-    Boost::unit_test_framework)
+target_link_libraries(gil_dependencies INTERFACE Boost::filesystem)
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
   target_link_libraries(gil_dependencies INTERFACE Boost::disable_autolinking)
@@ -123,11 +120,11 @@ target_compile_definitions(gil_dependencies
 #-----------------------------------------------------------------------------
 # Dependency: libpng, libjpeg, libtiff, libraw via Vcpkg or Conan
 #-----------------------------------------------------------------------------
-if(GIL_USE_CONAN)
+if(BOOST_GIL_USE_CONAN)
   # Download automatically, you can also just copy the conan.cmake file
   if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
     message(STATUS "Boost.GIL: Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
-    file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/v0.14/conan.cmake"
+    file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/v0.15/conan.cmake"
       "${CMAKE_BINARY_DIR}/conan.cmake")
   endif()
 
@@ -144,8 +141,8 @@ if(GIL_USE_CONAN)
   unset(_build_type_saved)
 endif()
 
-if(GIL_ENABLE_EXT_IO)
-  if (GIL_USE_CONAN)
+if(BOOST_GIL_ENABLE_EXT_IO)
+  if (BOOST_GIL_USE_CONAN)
     target_link_libraries(gil_dependencies
       INTERFACE
         CONAN_PKG::libjpeg
@@ -165,10 +162,19 @@ if(GIL_ENABLE_EXT_IO)
         PNG::PNG
         TIFF::TIFF)
 
-    if(UNIX)
-      # Typically, Linux packages provide C++ stream interface for TIFF
+    if (TIFF_LIBRARY)
+      set(TIFFXX_NAMES tiffxx)
+      foreach(name ${TIFFXX_NAMES})
+        list(APPEND TIFFXX_NAMES_DEBUG "${name}d")
+      endforeach()
+      find_library(TIFFXX_LIBRARY_RELEASE NAMES ${TIFFXX_NAMES})
+      find_library(TIFFXX_LIBRARY_DEBUG NAMES ${TIFFXX_NAMES_DEBUG})
       find_path(TIFFXX_INCLUDE_DIR NAMES tiffio.hxx)
-      find_library(TIFFXX_LIBRARY NAMES tiffxx)
+      include(SelectLibraryConfigurations)
+      select_library_configurations(TIFFXX)
+      mark_as_advanced(TIFFXX_LIBRARY_RELEASE TIFFXX_LIBRARY_DEBUG)
+      include(FindPackageHandleStandardArgs)
+      find_package_handle_standard_args(TIFFXX REQUIRED_VARS TIFFXX_LIBRARY TIFFXX_INCLUDE_DIR)
       target_include_directories(gil_dependencies INTERFACE ${TIFFXX_INCLUDE_DIR})
       target_link_libraries(gil_dependencies INTERFACE ${TIFFXX_LIBRARY})
     endif()
@@ -181,8 +187,8 @@ if(GIL_ENABLE_EXT_IO)
         "${CMAKE_BINARY_DIR}/cmake/FindLibRaw.cmake")
     endif()
     find_package(LibRaw)
-    set(GIL_ENABLE_EXT_IO_RAW ${LibRaw_FOUND} CACHE BOOL "Enable IO RAW extension (requires libraw)" FORCE)
-    if(GIL_ENABLE_EXT_IO_RAW)
+    set(BOOST_GIL_ENABLE_EXT_IO_RAW ${LibRaw_FOUND} CACHE BOOL "Enable IO RAW extension (requires libraw)" FORCE)
+    if(BOOST_GIL_ENABLE_EXT_IO_RAW)
       target_include_directories(gil_dependencies INTERFACE ${LibRaw_INCLUDE_DIR})
       target_link_libraries(gil_dependencies INTERFACE ${LibRaw_LIBRARIES})
       target_compile_definitions(gil_dependencies INTERFACE ${LibRaw_DEFINITIONS})
@@ -194,7 +200,7 @@ endif()
 # clang-tidy
 # - default checks specified in .clang-tidy configuration file
 #-----------------------------------------------------------------------------
-if(GIL_USE_CLANG_TIDY AND CMAKE_VERSION VERSION_GREATER_EQUAL 3.6)
+if(BOOST_GIL_USE_CLANG_TIDY AND CMAKE_VERSION VERSION_GREATER_EQUAL 3.6)
   find_program(_clang_tidy
     NAMES clang-tidy-7 clang-tidy-6.0 clang-tidy-5.0 clang-tidy-4.0 clang-tidy
     DOC "Path to clang-tidy executable")
@@ -224,21 +230,23 @@ target_include_directories(gil_include_directories
 #-----------------------------------------------------------------------------
 # Tests
 #-----------------------------------------------------------------------------
-enable_testing()
+include(CTest)
 
-# On CI services, test the self-contained headers on-demand only to avoid build timeouts.
-# CI environment is common for Travis CI, AppVeyor, CircleCI, etc.
-# On Boost regression builds, CMake does not run, but Boost.Build,
-# so the header tests are not enabled there either.
-if(DEFINED ENV{CI})
-  set(GIL_BUILD_HEADER_TESTS OFF)
+if(BUILD_TESTING)
+  # On CI services, test the self-contained headers on-demand only to avoid build timeouts.
+  # CI environment is common for Travis CI, AppVeyor, CircleCI, etc.
+  # On Boost regression builds, CMake does not run, but Boost.Build,
+  # so the header tests are not enabled there either.
+  if(DEFINED ENV{CI})
+    set(BOOST_GIL_BUILD_HEADER_TESTS OFF)
+  endif()
+
+  add_subdirectory(test)
 endif()
-
-add_subdirectory(test)
 
 #-----------------------------------------------------------------------------
 # Examples
 #-----------------------------------------------------------------------------
-if(GIL_BUILD_EXAMPLES AND GIL_ENABLE_EXT_IO)
+if(BOOST_GIL_BUILD_EXAMPLES AND BOOST_GIL_ENABLE_EXT_IO)
   add_subdirectory(example)
 endif()

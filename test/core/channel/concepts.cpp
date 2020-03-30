@@ -1,28 +1,17 @@
 //
 // Copyright 2005-2007 Adobe Systems Incorporated
-// Copyright 2018 Mateusz Loskot <mateusz at loskot dot net>
+// Copyright 2018-2020 Mateusz Loskot <mateusz at loskot dot net>
 //
 // Distributed under the Boost Software License, Version 1.0
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-#include <boost/config.hpp>
-
-#if defined(BOOST_CLANG)
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wuninitialized"
-#endif
-
-#if defined(BOOST_GCC) && (BOOST_GCC >= 40900)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wuninitialized"
-#endif
-
 #include <boost/gil/concepts.hpp>
+
+#include <boost/core/lightweight_test.hpp>
+
 #include <cstdint>
 
-#define BOOST_TEST_MODULE test_channel_concepts
-#include "unit_test.hpp"
 #include "test_fixture.hpp"
 
 namespace gil = boost::gil;
@@ -92,7 +81,7 @@ channel_value_archetype channel_archetype::max_value()
     return channel_value_archetype();
 }
 
-BOOST_AUTO_TEST_CASE(channel_minimal_requirements)
+void test_channel_minimal_requirements()
 {
     // Do only compile-time tests for the archetype
     // (because asserts like val1<val2 fail)
@@ -101,4 +90,11 @@ BOOST_AUTO_TEST_CASE(channel_minimal_requirements)
     fixture::channel_value<channel_value_archetype>();
     fixture::channel_reference<channel_archetype>();
     fixture::channel_reference<channel_archetype const&>();
+}
+
+int main()
+{
+    test_channel_minimal_requirements();
+
+    return ::boost::report_errors();
 }

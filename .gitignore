@@ -16,6 +16,9 @@ doc/warnings.txt
 .vscode
 *.code-workspace
 
+# Clang/LLVM
+/.clang-format
+
 # CMake
 /*build*
 /cmake-build-debug/

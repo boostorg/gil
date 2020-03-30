@@ -10,3 +10,4 @@ import testing ;
 
 run for_each_pixel.cpp ;
 run std_fill.cpp ;
+run std_uninitialized_fill.cpp ;

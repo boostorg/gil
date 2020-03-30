@@ -19,7 +19,6 @@ please follow the workflow explained in this document.
   - [Install dependencies](#install-dependencies)
   - [Using Boost.Build](#using-boostbuild)
   - [Using CMake](#using-cmake)
-  - [Using Faber](#using-faber)
   - [Running clang-tidy](#running-clang-tidy)
 - [Guidelines](#guidelines)
 
@@ -40,6 +39,7 @@ please follow the workflow explained in this document.
 
 ## Pull Requests
 
+- **DO** base your work against the `develop` branch, not the `master`.
 - **DO** submit all major changes to code via pull requests (PRs) rather than through
   a direct commit. PRs will be CI-checked first, then reviewed and potentially merged
   by the repo maintainers after a peer review that includes at least one maintainer.
@@ -60,6 +60,7 @@ please follow the workflow explained in this document.
 - **DO** [mention] any users that should know about and/or review the change.
 - **DO** ensure each commit successfully builds. The entire PR must pass all tests in
   the Continuous Integration (CI) system before it'll be merged.
+- **DO** ensure any new features or changes to existing behaviours are covered with test cases.
 - **DO** address PR feedback in an additional commit(s) rather than amending the existing
   commits, and only rebase/squash them when necessary. This makes it easier for reviewers
   to track changes.
@@ -132,13 +133,13 @@ The preparation involves the following steps:
     **TIP:** For more convenient path-less invocation, you can copy the `b2`
     program to a location in your `PATH`.
 
-4. Optionally, create full content of `/boost` virtual directory with
+4. Create full content of `/boost` virtual directory with
 all Boost headers linked from the individual modular Boost libraries.
 If you skip this step, executing `b2` to run tests will automatically
 create the directory with all headers required by Boost.GIL and tests.
 
     ```shell
-    ./b2 -j8 headers
+    ./b2 headers
     ```
 
 **TIP:** If something goes wrong, you end up with incomplete or accidentally
@@ -314,11 +315,11 @@ By default, Boost.GIL uses Boost.Build to build all the executables.
 We also provide configuration for two alternative build systems:
 
 - [CMake](https://cmake.org)
-- [Faber](http://stefan.seefeld.name/faber/)
 
-**NOTE:** The CMake and Faber are optional and the corresponding build
-configurations for Boost.GIL do not offer equivalents for all Boost.Build features. Most important difference to recognise is that Boost.Build will
-automatically build any other Boost libraries required by Boost.GIL as dependencies.
+**NOTE:** The CMake is optional and the corresponding build configurations
+for Boost.GIL do not offer equivalents for all Boost.Build features.
+Most important difference to recognise is that Boost.Build will automatically
+build any other Boost libraries required by Boost.GIL as dependencies.
 
 ### Install dependencies
 
@@ -328,6 +329,8 @@ third-party libraries for read and write support of specific image formats:
 ```shell
 sudo apt-get install libjpeg-dev libpng-dev libtiff5-dev libraw-dev
 ```
+
+**TIP:** On Windows, use vcpkg with `user-config.jam` configuration provided in [example/b2/user-config-windows-vcpkg.jam](example/b2/).
 
 ### Using Boost.Build
 
@@ -353,22 +356,25 @@ Run core tests only specifying location of directory with tests:
 
 ```shell
 cd libs/gil
-../../b2 -j8 test/core
+../../b2 cxxstd=11 test/core
 ```
 
 Run all tests for selected extension (from Boost root directory, as alternative):
 
 ```shell
-./b2 -j8 libs/gil/test/io
-./b2 -j8 libs/gil/test/numeric
-./b2 -j8 libs/gil/test/toolbox
+./b2 cxxstd=11 libs/gil/test/io
+./b2 cxxstd=11 libs/gil/test/numeric
+./b2 cxxstd=11 libs/gil/test/toolbox
 ```
 
 Run I/O extension tests bundled in target called `simple`:
 
 ```shell
-./b2 libs/gil/test/io//simple
+./b2 cxxstd=11 libs/gil/test/io//simple
 ```
+
+**TIP:** Pass `b2` feature `cxxstd=11,14,17,2a` to request compilation for
+multiple C++ standard versions in single build run.
 
 ### Using CMake
 
@@ -393,17 +399,22 @@ The provided CMake configuration allows a couple of ways to develop Boost.GIL:
    `libs/gil`. This mode requires prior deployment of `boost` virtual directory
    with headers and stage build of required libraries, for example:
 
+For CMake, you only need to build Boost libraries required by Boost.Test library
+which is used to run GIL tests. Since the `CMAKE_CXX_STANDARD` option in the current
+[CMakeLists.txt](CMakeLists.txt) defaults to C++11, pass the default `cxxstd=11` to `b2`:
+
   ```shell
-  ./b2 -j8 headers
-  ./b2 -j8 variant=debug --with-test --with-filesystem stage
-  ./b2 -j8 variant=release --with-test --with-filesystem stage
+  ./b2 headers
+  ./b2 variant=debug,release cxxstd=11 --with-filesystem stage
   ```
 
   or, depending on specific requirements, more complete build:
 
   ```shell
-  ./b2 -j8 variant=debug,release address-model=32,64 --layout=versioned --with-test --with-filesystem stage
+  ./b2 variant=debug,release address-model=32,64 cxxstd=11 --layout=versioned --with-filesystem stage
   ```
+
+If you wish to build tests using different C++ standard version, then adjust the `cxxstd` accordingly.
 
 Using the installed Boost enables a lightweight mode for the library development,
 inside a stand-alone clone Boost.GIL repository and without any need to clone the
@@ -411,8 +422,7 @@ whole Boost super-project.
 
 **TIP:** For the lightweight setup, prefer latest release of Boost.
 
-For available custom CMake options, open the top-level `CMakeLists.txt`
-and search for `option`.
+For available custom CMake options, open the top-level `CMakeLists.txt` and search for `option`.
 
 Here is an example of such lightweight workflow in Linux environment (Debian-based):
 
@@ -451,7 +461,7 @@ Here is an example of such lightweight workflow in Linux environment (Debian-bas
         The option added in CMake 3.13.0.
       - option `-DBoost_COMPILER=-gcc5` or `-DBoost_COMPILER=-vc141` to help CMake earlier
         than 3.13 match your compiler with toolset used in the Boost library file names
-        (i.e. `libboost_unit_test_framework-gcc5-mt-x64-1_69` and not `-gcc55-`).
+        (i.e. `libboost_filesystem-gcc5-mt-x64-1_69` and not `-gcc55-`).
         Fixed in CMake 3.13.0.
       - if CMake is still failing to find Boost, you may try `-DBoost_DEBUG=ON` to
         get detailed diagnostics output from `FindBoost.cmake` module.
@@ -491,12 +501,6 @@ See [example/cmake/README.md](example/cmake/README.md) for more details.
 We provide [example/cmake/cmake-variants.yaml](https://github.com/boostorg/gil/blob/develop/example/cmake/cmake-variants.yaml)
 with reasonable default settings for the [CMake Tools](https://github.com/vector-of-bool/vscode-cmake-tools) extension.
 See [example/cmake/README.md](example/cmake/README.md) for more details.
-
-### Using Faber
-
-Maintainer: [@stefanseefeld](https://github.com/stefanseefeld)
-
-*TODO:* _Describe_
 
 ### Running clang-tidy
 

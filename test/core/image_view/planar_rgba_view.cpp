@@ -1,5 +1,5 @@
 //
-// Copyright 2018 Mateusz Loskot <mateusz at loskot dot net>
+// Copyright 2018-2020 Mateusz Loskot <mateusz at loskot dot net>
 //
 // Distributed under the Boost Software License, Version 1.0
 // See accompanying file LICENSE_1_0.txt or copy at
@@ -11,33 +11,59 @@
 
 #include <cstdint>
 
+namespace boost { namespace gil {
+namespace test { namespace fixture {
+
+gil::point_t d{2, 2};
+std::uint8_t r[] = { 1, 2, 3, 4 };
+std::uint8_t g[] = { 10, 20, 30, 40 };
+std::uint8_t b[] = { 110, 120, 130, 140 };
+std::uint8_t a[] = { 251, 252, 253, 254 };
+
+}}}}
+
 namespace gil = boost::gil;
+namespace fixture = boost::gil::test::fixture;
+
+void test_dimensions()
+{
+    auto v = gil::planar_rgba_view(fixture::d.x, fixture::d.y, fixture::r, fixture::g, fixture::b, fixture::a, sizeof(std::uint8_t) * 2);
+    BOOST_TEST(!v.empty());
+    BOOST_TEST(v.dimensions() == fixture::d);
+    BOOST_TEST(v.num_channels() == 4u);
+    BOOST_TEST(v.size() == static_cast<std::size_t>(fixture::d.x * fixture::d.y));
+}
+
+void test_front()
+{
+    auto v = gil::planar_rgba_view(fixture::d.x, fixture::d.y, fixture::r, fixture::g, fixture::b, fixture::a, sizeof(std::uint8_t) * 2);
+    gil::rgba8_pixel_t const pf{1, 10, 110, 251};
+    BOOST_TEST(v.front() == pf);
+}
+
+void test_back()
+{
+    auto v = gil::planar_rgba_view(fixture::d.x, fixture::d.y, fixture::r, fixture::g, fixture::b, fixture::a, sizeof(std::uint8_t) * 2);
+    gil::rgba8_pixel_t const pb{4, 40, 140, 254};
+    BOOST_TEST(v.back() == pb);
+}
+
+void test_pixel_equal_to_operator()
+{
+    auto v = gil::planar_rgba_view(fixture::d.x, fixture::d.y, fixture::r, fixture::g, fixture::b, fixture::a, sizeof(std::uint8_t) * 2);
+    for (std::ptrdiff_t i = 0; i < static_cast<std::ptrdiff_t>(v.size()); i++)
+    {
+        gil::rgba8_pixel_t const p{fixture::r[i], fixture::g[i], fixture::b[i], fixture::a[i]};
+        BOOST_TEST(v[i] == p);
+    }
+}
 
 int main()
 {
-    gil::point_t d{2, 2};
-    std::uint8_t r[] = { 1, 2, 3, 4 };
-    std::uint8_t g[] = { 10, 20, 30, 40 };
-    std::uint8_t b[] = { 110, 120, 130, 140 };
-    std::uint8_t a[] = { 251, 252, 253, 254 };
+    test_dimensions();
+    test_front();
+    test_back();
+    test_pixel_equal_to_operator();
 
-    auto v = gil::planar_rgba_view(d.x, d.y, r, g, b, a, sizeof(std::uint8_t) * 2);
-    BOOST_TEST(!v.empty());
-    BOOST_TEST(v.dimensions() == d);
-    BOOST_TEST(v.num_channels() == 4u);
-    BOOST_TEST(v.size() == static_cast<std::size_t>(d.x * d.y));
-
-    gil::rgba8_pixel_t const pf{1, 10, 110, 251};
-    BOOST_TEST(v.front() == pf);
-
-    gil::rgba8_pixel_t const pb{4, 40, 140, 254};
-    BOOST_TEST(v.back() == pb);
-
-    for (std::ptrdiff_t i = 0; i < v.size(); i++)
-    {
-        gil::rgba8_pixel_t const p{r[i], g[i], b[i], a[i]};
-        BOOST_TEST(v[i] == p);
-    }
-
-    return boost::report_errors();
+    return ::boost::report_errors();
 }

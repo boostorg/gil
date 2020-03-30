@@ -8,11 +8,7 @@
 
 import testing ;
 
-project
-    : requirements
-    <include>..
-    ;
-
 compile concepts.cpp ;
 compile-fail multiply_by_non_arithmetic_fail.cpp ;
+
 run point.cpp ;

@@ -5,14 +5,12 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-
-#include <cstddef>
-
 #include <boost/gil.hpp>
 #include <boost/gil/extension/numeric/convolve.hpp>
 
-#define BOOST_TEST_MODULE test_ext_convolve_2d
-#include "unit_test.hpp"
+#include <boost/core/lightweight_test.hpp>
+
+#include <cstddef>
 
 namespace gil = boost::gil;
 
@@ -42,9 +40,7 @@ std::uint8_t output[] =
     0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
-BOOST_AUTO_TEST_SUITE(convolve_2d)
-
-BOOST_AUTO_TEST_CASE(convolve_2d_with_normalized_mean_filter)
+void test_convolve_2d_with_normalized_mean_filter()
 {
     gil::gray8c_view_t src_view =
         gil::interleaved_view(9, 9, reinterpret_cast<const gil::gray8_pixel_t*>(img), 9);
@@ -64,4 +60,9 @@ BOOST_AUTO_TEST_CASE(convolve_2d_with_normalized_mean_filter)
     BOOST_TEST(gil::equal_pixels(out_view, dst_view));
 }
 
-BOOST_AUTO_TEST_SUITE_END()
+int main()
+{
+    test_convolve_2d_with_normalized_mean_filter();
+
+    return ::boost::report_errors();
+}

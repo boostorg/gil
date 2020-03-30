@@ -18,8 +18,10 @@
 //
 // Uncomment to enable debugging output
 //#define BOOST_GIL_TEST_DEBUG 1
-
+#include <boost/config.hpp> // BOOST_HAS_LONG_LONG
 #include <boost/gil/promote_integral.hpp>
+
+#include <boost/core/lightweight_test.hpp>
 
 #include <algorithm>
 #include <climits>
@@ -29,11 +31,6 @@
 #endif
 #include <limits>
 #include <string>
-
-#ifndef BOOST_TEST_MODULE
-#define BOOST_TEST_MODULE test_promote_integral
-#endif
-#include "unit_test.hpp"
 
 namespace bg = boost::gil;
 
@@ -75,12 +72,12 @@ struct test_max_values
         Promoted min_value = (std::numeric_limits<Integral>::min)();
         // Explicit casts to avoid warning: conversion to short int from int may alter its value
         min_value = static_cast<Promoted>(min_value * min_value);
-        BOOST_CHECK(absolute_value<Promoted>::apply(min_value) >= min_value);
-        BOOST_CHECK(absolute_value<Promoted>::apply(min_value) <= min_value);
+        BOOST_TEST(absolute_value<Promoted>::apply(min_value) >= min_value);
+        BOOST_TEST(absolute_value<Promoted>::apply(min_value) <= min_value);
         Promoted max_value = (std::numeric_limits<Integral>::max)();
         max_value = static_cast<Promoted>(max_value * max_value);
-        BOOST_CHECK(absolute_value<Promoted>::apply(max_value) >= max_value);
-        BOOST_CHECK(absolute_value<Promoted>::apply(max_value) <= max_value);
+        BOOST_TEST(absolute_value<Promoted>::apply(max_value) >= max_value);
+        BOOST_TEST(absolute_value<Promoted>::apply(max_value) <= max_value);
 
 #ifdef BOOST_GIL_TEST_DEBUG
         std::cout << "integral min_value^2: " << min_value << std::endl;
@@ -97,7 +94,7 @@ struct test_max_values<Integral, Promoted, false>
     {
         Promoted max_value = (std::numeric_limits<Integral>::max)();
         Promoted max_value_sqr = static_cast<Promoted>(max_value * max_value);
-        BOOST_CHECK(max_value_sqr < (std::numeric_limits<Promoted>::max)()
+        BOOST_TEST(max_value_sqr < (std::numeric_limits<Promoted>::max)()
                     &&
                     max_value_sqr > max_value);
 
@@ -128,6 +125,8 @@ std::size_t bit_size()
 {
     return bit_size_impl<T>::value;
 }
+
+#define BOOST_CHECK_MESSAGE(expr, msg) BOOST_TEST(expr)
 
 template <bool PromoteUnsignedToUnsigned>
 struct test_promote_integral
@@ -290,7 +289,7 @@ struct test_promotion<T, true, false>
     }
 };
 
-BOOST_AUTO_TEST_CASE( test_char )
+void test_char()
 {
     test_promotion<char>::apply("char");
     test_promotion<char, true>::apply("char");
@@ -300,7 +299,7 @@ BOOST_AUTO_TEST_CASE( test_char )
     test_promotion<unsigned char, true>::apply("uchar");
 }
 
-BOOST_AUTO_TEST_CASE( test_short )
+void test_short()
 {
     test_promotion<short>::apply("short");
     test_promotion<short, true>::apply("short");
@@ -308,7 +307,7 @@ BOOST_AUTO_TEST_CASE( test_short )
     test_promotion<unsigned short, true>::apply("ushort");
 }
 
-BOOST_AUTO_TEST_CASE( test_int )
+void test_int()
 {
     test_promotion<int>::apply("int");
     test_promotion<int, true>::apply("int");
@@ -316,7 +315,7 @@ BOOST_AUTO_TEST_CASE( test_int )
     test_promotion<unsigned int, true>::apply("uint");
 }
 
-BOOST_AUTO_TEST_CASE( test_long )
+void test_long()
 {
     test_promotion<long>::apply("long");
     test_promotion<long, true>::apply("long");
@@ -324,14 +323,14 @@ BOOST_AUTO_TEST_CASE( test_long )
     test_promotion<unsigned long, true>::apply("ulong");
 }
 
-BOOST_AUTO_TEST_CASE( test_std_size_t )
+void test_std_size_t()
 {
     test_promotion<std::size_t>::apply("size_t");
     test_promotion<std::size_t, true>::apply("size_t");
 }
 
 #ifdef BOOST_HAS_LONG_LONG
-BOOST_AUTO_TEST_CASE( test_long_long )
+void test_long_long()
 {
     test_promotion<boost::long_long_type>::apply("long long");
     test_promotion<boost::long_long_type, true>::apply("long long");
@@ -340,7 +339,7 @@ BOOST_AUTO_TEST_CASE( test_long_long )
 }
 #endif
 
-BOOST_AUTO_TEST_CASE( test_floating_point )
+void test_floating_point()
 {
     using tester1 = test_promote_integral<true>;
     using tester2 = test_promote_integral<false>;
@@ -353,4 +352,19 @@ BOOST_AUTO_TEST_CASE( test_floating_point )
     tester2::apply<float, float>("fp-f");
     tester2::apply<double, double>("fp-d");
     tester2::apply<long double, long double>("fp-ld");
+}
+
+int main()
+{
+    test_char();
+    test_short();
+    test_int();
+    test_long();
+    test_std_size_t();
+#ifdef BOOST_HAS_LONG_LONG
+    test_long_long();
+#endif
+    test_floating_point();
+
+    return boost::report_errors();
 }

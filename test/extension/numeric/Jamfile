@@ -9,21 +9,20 @@
 
 import testing ;
 
-project
-    : requirements
-    <library>/boost/test//boost_unit_test_framework
-    <link>shared:<define>BOOST_TEST_DYN_LINK=1
-    ;
-
 alias headers : [ generate_self_contained_headers extension/numeric ] ;
+
+compile-fail kernel_1d_fixed_even_size_fail.cpp ;
 
 run channel_numeric_operations.cpp ;
 run convolve.cpp ;
+run convolve_2d.cpp ;
 run convolve_cols.cpp ;
 run convolve_rows.cpp ;
+run extend_boundary.cpp ;
 run kernel.cpp ;
-compile-fail kernel_1d_fixed_even_size_fail.cpp ;
+run kernel_fixed.cpp ;
 run matrix3x2.cpp ;
-run numeric.cpp ;
 run pixel_numeric_operations.cpp ;
-run convolve_2d.cpp ;
+run pixel_numeric_operations_float.cpp ;
+run resample.cpp ;
+

@@ -46,7 +46,6 @@ git submodule --quiet update --init $GIT_SUBMODULE_OPTS \
     libs/mpl \
     libs/numeric/conversion \
     libs/preprocessor \
-    libs/test \
     libs/type_traits \
     libs/variant
 # Transitive (of GIL tests too)
@@ -87,7 +86,7 @@ git submodule --quiet update --init $GIT_SUBMODULE_OPTS \
 
 if [ -d ./.git ]; then
     echo "get-boost: git log --stat -1"
-    git log -1
+    git --no-pager log --stat -1
 fi
 
 echo "get-boost: Deleting $PWD/libs/gil cloned with Boost superproject"
@@ -100,7 +99,7 @@ if [ -d libs/gil/.git ]; then
     current_pwd=`pwd`
     cd libs/gil
     echo "get-boost: git log --stat -1"
-    git log -1
+    git --no-pager log --stat -1
     cd $current_pwd
 fi
 

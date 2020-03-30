@@ -71,24 +71,6 @@ environment:
 
 matrix:
   fast_finish: true
-  allow_failures:
-    - TOOLSET: msvc-14.1
-      ARCH: x86_64
-      VARIANT: release
-      CXXSTD: 17
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    - TOOLSET: msvc-14.1
-      ARCH: x86_64
-      VARIANT: release
-      CXXSTD: 14
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    - TOOLSET: msvc-14.1
-      ARCH: x86_64
-      VARIANT: debug
-      CXXSTD: 14
-      GENERATOR: "Visual Studio 15 2017 Win64"
-      CMAKE_CONFIG: Debug
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
 
 cache:
   - c:\tools\vcpkg\installed\
@@ -113,7 +95,7 @@ before_build:
   - cd boost-root
   - cmd /c bootstrap
   - .\b2 headers > NUL
-  - if DEFINED GENERATOR .\b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% cxxstd=%CXXSTD% --with-filesystem --with-test stage
+  - if DEFINED GENERATOR .\b2 address-model=%AM% toolset=%TOOLSET% variant=%VARIANT% cxxstd=%CXXSTD% --with-filesystem stage
 
 build: off
 

@@ -6,7 +6,7 @@
 # http://www.boost.org/LICENSE_1_0.txt)
 #
 [requires]
-libpng/1.6.34@bincrafters/stable
+libpng/1.6.37@bincrafters/stable
 libjpeg/9c@bincrafters/stable
 libtiff/4.0.9@bincrafters/stable
 

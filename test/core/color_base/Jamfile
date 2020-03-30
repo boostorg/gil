@@ -8,12 +8,9 @@
 
 import testing ;
 
-project
-    : requirements
-    <include>..
-    ;
-
 compile concepts.cpp ;
-compile homogeneous_color_base.cpp ;
 compile-fail static_transform_gray_to_rgb_fail.cpp ;
 compile-fail static_transform_rgb_to_cmyk_fail.cpp ;
+
+run homogeneous_color_base.cpp ;
+run static_transform.cpp ;

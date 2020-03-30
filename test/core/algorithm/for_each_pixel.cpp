@@ -1,5 +1,5 @@
 //
-// Copyright 2018 Mateusz Loskot <mateusz at loskot dot net>
+// Copyright 2018-2020 Mateusz Loskot <mateusz at loskot dot net>
 //
 // Distributed under the Boost Software License, Version 1.0
 // See accompanying file LICENSE_1_0.txt or copy at
@@ -28,5 +28,5 @@ int main()
 {
     test_lambda_expression();
 
-    return boost::report_errors();
+    return ::boost::report_errors();
 }

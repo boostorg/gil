@@ -13,18 +13,25 @@ import ../../config/checks/config : requires ;
 import os ;
 import path ;
 import regex ;
+import sequence ;
 import testing ;
 
-# Avoid warnings flood on Travis CI, AppVeyor, CircleCI, Azure Pipelines
-if ! [ os.environ CI ] && ! [ os.environ AGENT_JOBSTATUS ]
+# Avoid warnings flood on Travis CI, AppVeyor, CircleCI, Azure Pipelines, GitHub Actions
+if ! [ os.environ CI ] && ! [ os.environ AGENT_JOBSTATUS ] && ! [ os.environ GITHUB_ACTIONS ]
 {
-    DEVELOPMENT_EXTRA_WARNINGS =
-      <toolset>msvc:<cxxflags>/W4
-      <toolset>gcc:<cxxflags>"-pedantic -Wextra -Wcast-align -Wconversion -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter"
-      <toolset>clang,<variant>debug:<cxxflags>"-pedantic -Wextra -Wcast-align -Wconversion -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter -Wsign-conversion"
-      <toolset>clang,<variant>release:<cxxflags>"-pedantic -Wextra -Wcast-align -Wconversion -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter -Wsign-conversion"
-      <toolset>darwin:<cxxflags>"-pedantic -Wextra -Wcast-align -Wconversion -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter"
-      ;
+  DEVELOPMENT_EXTRA_WARNINGS =
+    <toolset>msvc:<cxxflags>"-W4"
+    <toolset>gcc:<cxxflags>"-pedantic -Wextra -Wcast-align -Wconversion -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter"
+    <toolset>clang,<variant>debug:<cxxflags>"-pedantic -Wextra -Wcast-align -Wconversion -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter -Wsign-conversion"
+    <toolset>clang,<variant>release:<cxxflags>"-pedantic -Wextra -Wcast-align -Wconversion -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter -Wsign-conversion"
+    <toolset>darwin:<cxxflags>"-pedantic -Wextra -Wcast-align -Wconversion -Wfloat-equal -Wshadow -Wsign-promo -Wstrict-aliasing -Wunused-parameter"
+    ;
+}
+else
+{
+  DEVELOPMENT_EXTRA_WARNINGS =
+    <toolset>msvc:<cxxflags>"-W1"
+    ;
 }
 
 project
@@ -33,8 +40,8 @@ project
     <include>.
     # TODO: Enable concepts check for all, not just test/core
     #<define>BOOST_GIL_USE_CONCEPT_CHECK=1
+    <toolset>msvc:<cxxflags>"-bigobj"
     <toolset>msvc:<asynch-exceptions>on
-    <toolset>msvc:<cxxflags>/bigobj
     <toolset>msvc:<define>_SCL_SECURE_NO_DEPRECATE
     <toolset>msvc:<define>_CRT_SECURE_NO_WARNINGS
     <toolset>msvc:<define>_CRT_NONSTDC_NO_DEPRECATE
@@ -98,11 +105,17 @@ rule generate_self_contained_headers ( headers_subpath * : exclude_subpaths * )
     #       test scripts have a problem with test names containing slashes.
 
     local top_headers_path = [ path.make $(BOOST_ROOT)/libs/gil/include/boost/gil ] ;
-
-    for local file in [ path.glob-tree $(top_headers_path)/$(headers_subpath) : *.hpp : $(exclude_subpaths) ]
+    local headers_path = $(top_headers_path) ;
+    if $(headers_subpath)
     {
+        headers_path = $(top_headers_path)/$(headers_subpath) ;
+    }
+
+    for local file in [ path.glob-tree $(headers_path) : *.hpp : $(exclude_subpaths) ]
+    {
+        local target_no = [ sequence.length $(targets) ] ;
         local rel_file = [ path.relative-to $(top_headers_path) $(file) ] ;
-        local target_name = [ regex.replace h/$(rel_file) "/" "-" ] ;
+        local target_name = [ regex.replace h/$(target_no)/$(rel_file) "/" "-" ] ;
         local target_name = [ regex.replace $(target_name) "\.hpp" "" ] ;
         targets += [
             compile $(BOOST_ROOT)/libs/gil/test/header/main.cpp

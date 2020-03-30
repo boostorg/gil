@@ -6,8 +6,8 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-#ifndef BOOST_GIL_TEST_TEST_FIXTURE_HPP
-#define BOOST_GIL_TEST_TEST_FIXTURE_HPP
+#ifndef BOOST_GIL_TEST_CORE_CHANNEL_TEST_FIXTURE_HPP
+#define BOOST_GIL_TEST_CORE_CHANNEL_TEST_FIXTURE_HPP
 
 #include <boost/gil/channel.hpp>
 #include <boost/gil/concepts.hpp>
@@ -209,7 +209,9 @@ struct packed_channels565
         channel1_ = gil::channel_traits<channel_0_5_t>::max_value();
         channel2_ = gil::channel_traits<channel_5_6_t>::max_value();
         channel3_ = gil::channel_traits<channel_11_5_t>::max_value();
+#ifdef BOOST_TEST
         BOOST_TEST(data_ == 65535);
+#endif
     }
 };
 
@@ -237,7 +239,9 @@ struct packed_dynamic_channels565
         channel1_ = gil::channel_traits<channel_5_t>::max_value();
         channel2_ = gil::channel_traits<channel_6_t>::max_value();
         channel3_ = gil::channel_traits<channel_5_t>::max_value();
+#ifdef BOOST_TEST
         BOOST_TEST(data_ == 65535);
+#endif
     }
 };
 

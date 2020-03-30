@@ -1,5 +1,5 @@
 //
-// Copyright 2018 Mateusz Loskot <mateusz at loskot dot net>
+// Copyright 2018-2020 Mateusz Loskot <mateusz at loskot dot net>
 //
 // Distributed under the Boost Software License, Version 1.0
 // See accompanying file LICENSE_1_0.txt or copy at
@@ -15,28 +15,41 @@
 #include <boost/gil/image_view.hpp>
 
 #include <boost/array.hpp>
+#include <boost/mp11.hpp>
 #include <boost/core/lightweight_test.hpp>
-#include <boost/range/algorithm/fill_n.hpp>
 
 #include <array>
 #include <cstdint>
 
 namespace gil = boost::gil;
 
-template <typename ArrayPixel>
-void test_array_as_range()
-{
-    static_assert(ArrayPixel().size() == 2, "two-element array expected");
+using array_pixel_types = ::boost::mp11::mp_list
+<
+    boost::array<int, 2>,
+    std::array<int, 2>
+>;
 
-    gil::image<ArrayPixel> img(1, 1);
-    std::fill(gil::view(img).begin(), gil::view(img).end(), ArrayPixel{0, 1});
-    BOOST_TEST(*gil::view(img).at(0,0) == (ArrayPixel{0, 1}));
-}
+struct test_array_as_pixel
+{
+    template <typename Pixel>
+    void operator()(Pixel const&)
+    {
+        using pixel_t = Pixel;
+        gil::image<pixel_t> img(1, 1);
+        std::fill(gil::view(img).begin(), gil::view(img).end(), pixel_t{0, 1});
+        auto a = *gil::view(img).at(0, 0);
+        auto e = pixel_t{0, 1};
+        BOOST_TEST(a == e);
+    }
+    static void run()
+    {
+        boost::mp11::mp_for_each<array_pixel_types>(test_array_as_pixel{});
+    }
+};
 
 int main()
 {
-    test_array_as_range<boost::array<int, 2>>();
-    test_array_as_range<std::array<int, 2>>();
+    test_array_as_pixel::run();
 
-    return boost::report_errors();
+    return ::boost::report_errors();
 }

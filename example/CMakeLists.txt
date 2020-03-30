@@ -20,7 +20,7 @@ foreach(_example ${_examples})
   target_compile_definitions(example_${_name} PRIVATE BOOST_GIL_USE_CONCEPT_CHECK=1)
   # Unfortunately, ALIAS of imported target is not supported
   # see https://github.com/conan-io/conan/issues/2125
-  if(GIL_USE_CONAN)
+  if(BOOST_GIL_USE_CONAN)
     target_link_libraries(example_${_name}
       PRIVATE
         gil_compile_options

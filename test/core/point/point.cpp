@@ -1,5 +1,5 @@
 //
-// Copyright 2018 Mateusz Loskot <mateusz at loskot dot net>
+// Copyright 2018-2020 Mateusz Loskot <mateusz at loskot dot net>
 //
 // Distributed under the Boost Software License, Version 1.0
 // See accompanying file LICENSE_1_0.txt or copy at
@@ -51,7 +51,16 @@ void test_index_operator()
     BOOST_TEST(p[1] == 2);
 }
 
-void test_op_addition()
+void test_addition_operator()
+{
+    gil::point<int> p1{1, 1};
+    gil::point<int> const p2{2, 4};
+    auto p3 = p1 + p2;
+    BOOST_TEST(p3.x == 3);
+    BOOST_TEST(p3.y == 5);
+}
+
+void test_addition_assignment_operator()
 {
     gil::point<int> p1{1, 1};
     gil::point<int> const p2{2, 4};
@@ -60,19 +69,25 @@ void test_op_addition()
     BOOST_TEST(p1.y == 5);
 }
 
-void test_op_subtraction()
+void test_subtraction_assignment_operator()
+{
+    gil::point<int> p1{2, 4};
+    gil::point<int> const p2{1, 1};
+    p1 -= p2;
+    BOOST_TEST(p1.x == 1);
+    BOOST_TEST(p1.y == 3);
+}
+
+void test_subtraction_operator()
 {
     gil::point<int> p1{2, 4};
     gil::point<int> const p2{1, 1};
     p1 = p1 - p2;
     BOOST_TEST(p1.x == 1);
     BOOST_TEST(p1.y == 3);
-    p1 -= p2;
-    BOOST_TEST(p1.x == 0);
-    BOOST_TEST(p1.y == 2);
 }
 
-void test_op_unary_minus()
+void test_unary_minus_operator()
 {
     gil::point<int> p1{2, 4};
     auto p2 = -p1;
@@ -83,7 +98,7 @@ void test_op_unary_minus()
     BOOST_TEST(p2.y == p1.y);
 }
 
-void test_op_division()
+void test_division_assignment_operator()
 {
     {
         gil::point<int> p1{2, 4};
@@ -107,7 +122,7 @@ void test_op_division()
     }
 }
 
-void test_op_multiplication()
+void test_multiplication_operator()
 {
     gil::point<int> p1{2, 4};
     p1 *= 2;
@@ -132,30 +147,51 @@ void test_op_multiplication()
     }
 }
 
-void test_bitwise_left_shift()
+void test_multiplication_assignment_operator()
+{
+    gil::point<int> p1{2, 4};
+    // point * m
+    {
+        auto p2 = p1 * int{2};
+        static_assert(std::is_same<decltype(p2.x), int>::value, "!int");
+        static_assert(std::is_same<decltype(p2.y), int>::value, "!int");
+        BOOST_TEST(p2.x == 4);
+        BOOST_TEST(p2.y == 8);
+    }
+    // m * point
+    {
+        auto p2 = double{2} * p1;
+        static_assert(std::is_same<decltype(p2.x), double>::value, "!double");
+        static_assert(std::is_same<decltype(p2.y), double>::value, "!double");
+        BOOST_TEST(p2.x >= 4); // means == but >= avoids compiler warning
+        BOOST_TEST(p2.y >= 8);
+    }
+}
+
+void test_bitwise_left_shift_operator()
 {
     gil::point<unsigned int> p{2, 4};
     p = p << 1;
-    BOOST_TEST(p.x == 4);
-    BOOST_TEST(p.y == 8);
+    BOOST_TEST(p.x == 4u);
+    BOOST_TEST(p.y == 8u);
 }
 
-void test_bitwise_right_shift()
+void test_bitwise_right_shift_operator()
 {
     gil::point<unsigned int> p{2, 4};
     p = p >> 1;
-    BOOST_TEST(p.x == 2 / 2);
-    BOOST_TEST(p.y == 4 / 2);
+    BOOST_TEST(p.x == 2u / 2);
+    BOOST_TEST(p.y == 4u / 2);
 }
 
-void test_cmp_equal()
+void test_equal_to_operator()
 {
     gil::point<int> p1{2, 4};
     gil::point<int> p2{2, 4};
     BOOST_TEST(p1 == p2);
 }
 
-void test_cmp_not_equal()
+void test_not_equal_to_operator()
 {
     gil::point<int> p1{1, 1};
     gil::point<int> p2{2, 4};
@@ -178,20 +214,19 @@ int main()
     test_user_constructor();
     test_copy_constructor();
     test_copy_assignment_operator();
-
     test_index_operator();
-
-    test_op_addition();
-    test_op_subtraction();
-    test_op_division();
-    test_op_multiplication();
-
-    test_bitwise_left_shift();
-    test_bitwise_right_shift();
-
-    test_cmp_equal();
-    test_cmp_not_equal();
-
+    test_addition_operator();
+    test_addition_assignment_operator();
+    test_subtraction_assignment_operator();
+    test_subtraction_operator();
+    test_unary_minus_operator();
+    test_division_assignment_operator();
+    test_multiplication_operator();
+    test_multiplication_assignment_operator();
+    test_bitwise_left_shift_operator();
+    test_bitwise_right_shift_operator();
+    test_equal_to_operator();
+    test_not_equal_to_operator();
     test_axis_value();
 
     return boost::report_errors();
