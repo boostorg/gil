@@ -83,7 +83,7 @@ don’t satisfy all the requirements of iterators. For example, they don’t
 supply increment and decrement operators because it is unclear which dimension
 the operators should advance along.
 N-dimensional locators model the following concept:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">RandomAccessNDLocatorConcept</span><span class="o">&lt;</span><span class="n">Regular</span> <span class="n">Loc</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">RandomAccessNDLocatorConcept</span><span class="o">&lt;</span><span class="n">Regular</span> <span class="n">Loc</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="k">typename</span> <span class="n">value_type</span><span class="p">;</span>        <span class="c1">// value over which the locator navigates</span>
   <span class="k">typename</span> <span class="n">reference</span><span class="p">;</span>         <span class="c1">// result of dereferencing</span>
@@ -128,7 +128,7 @@ N-dimensional locators model the following concept:</p>
 <span class="p">};</span>
 
 <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">Loc</span><span class="o">&gt;</span>
-<span class="n">concept</span> <span class="nl">MutableRandomAccessNDLocatorConcept</span>
+<span class="k">concept</span> <span class="nl">MutableRandomAccessNDLocatorConcept</span>
     <span class="p">:</span> <span class="n">RandomAccessNDLocatorConcept</span><span class="o">&lt;</span><span class="n">Loc</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="n">where</span> <span class="n">Mutable</span><span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span><span class="p">;</span>
@@ -136,7 +136,7 @@ N-dimensional locators model the following concept:</p>
 </pre></div>
 </div>
 <p>Two-dimensional locators have additional requirements:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">RandomAccess2DLocatorConcept</span><span class="o">&lt;</span><span class="n">RandomAccessNDLocatorConcept</span> <span class="n">Loc</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">RandomAccess2DLocatorConcept</span><span class="o">&lt;</span><span class="n">RandomAccessNDLocatorConcept</span> <span class="n">Loc</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="n">where</span> <span class="n">num_dimensions</span><span class="o">==</span><span class="mi">2</span><span class="p">;</span>
   <span class="n">where</span> <span class="n">Point2DConcept</span><span class="o">&lt;</span><span class="n">point_t</span><span class="o">&gt;</span><span class="p">;</span>
@@ -172,14 +172,14 @@ N-dimensional locators model the following concept:</p>
   <span class="n">y_coord_t</span> <span class="n">Loc</span><span class="o">::</span><span class="n">y_distance_to</span><span class="p">(</span><span class="k">const</span> <span class="n">Loc</span><span class="o">&amp;</span> <span class="n">loc2</span><span class="p">,</span> <span class="n">x_coord_t</span> <span class="n">x_diff</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="n">concept</span> <span class="n">MutableRandomAccess2DLocatorConcept</span><span class="o">&lt;</span><span class="n">RandomAccess2DLocatorConcept</span> <span class="n">Loc</span><span class="o">&gt;</span>
+<span class="k">concept</span> <span class="n">MutableRandomAccess2DLocatorConcept</span><span class="o">&lt;</span><span class="n">RandomAccess2DLocatorConcept</span> <span class="n">Loc</span><span class="o">&gt;</span>
     <span class="o">:</span> <span class="n">MutableRandomAccessNDLocatorConcept</span><span class="o">&lt;</span><span class="n">Loc</span><span class="o">&gt;</span> <span class="p">{};</span>
 </pre></div>
 </div>
 <p>2D locators can have a dynamic step not just horizontally, but
 vertically. This gives rise to the Y equivalent of
 <code class="docutils literal notranslate"><span class="pre">HasDynamicXStepTypeConcept</span></code>:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">HasDynamicYStepTypeConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">HasDynamicYStepTypeConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="k">typename</span> <span class="n">dynamic_y_step_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">;</span>
       <span class="n">where</span> <span class="n">Metafunction</span><span class="o">&lt;</span><span class="n">dynamic_y_step_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">;</span>
@@ -191,7 +191,7 @@ vertically. This gives rise to the Y equivalent of
 <p>Sometimes it is necessary to swap the meaning of X and Y for a given locator
 or image view type (for example, GIL provides a function to transpose an image
 view). Such locators and views must be transposable:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">HasTransposedTypeConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">HasTransposedTypeConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="k">typename</span> <span class="n">transposed_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">;</span>
       <span class="n">where</span> <span class="n">Metafunction</span><span class="o">&lt;</span><span class="n">transposed_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">;</span>
@@ -201,7 +201,7 @@ view). Such locators and views must be transposable:</p>
 <p>All GIL provided locators and views model <code class="docutils literal notranslate"><span class="pre">HasTransposedTypeConcept</span></code>.</p>
 <p>The locators GIL uses operate over models of <code class="docutils literal notranslate"><span class="pre">PixelConcept</span></code> and their x and
 y dimension types are the same. They model the following concept:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">PixelLocatorConcept</span><span class="o">&lt;</span><span class="n">RandomAccess2DLocatorConcept</span> <span class="n">Loc</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">PixelLocatorConcept</span><span class="o">&lt;</span><span class="n">RandomAccess2DLocatorConcept</span> <span class="n">Loc</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="n">where</span> <span class="n">PixelValueConcept</span><span class="o">&lt;</span><span class="n">value_type</span><span class="o">&gt;</span><span class="p">;</span>
   <span class="n">where</span> <span class="n">PixelIteratorConcept</span><span class="o">&lt;</span><span class="n">x_iterator</span><span class="o">&gt;</span><span class="p">;</span>
@@ -211,7 +211,7 @@ y dimension types are the same. They model the following concept:</p>
   <span class="k">typename</span> <span class="n">coord_t</span> <span class="o">=</span> <span class="n">x_coord_t</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="n">concept</span> <span class="n">MutablePixelLocatorConcept</span><span class="o">&lt;</span><span class="n">PixelLocatorConcept</span> <span class="n">Loc</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">MutableRandomAccess2DLocatorConcept</span><span class="o">&lt;</span><span class="n">Loc</span><span class="o">&gt;</span> <span class="p">{};</span>
+<span class="k">concept</span> <span class="n">MutablePixelLocatorConcept</span><span class="o">&lt;</span><span class="n">PixelLocatorConcept</span> <span class="n">Loc</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">MutableRandomAccess2DLocatorConcept</span><span class="o">&lt;</span><span class="n">Loc</span><span class="o">&gt;</span> <span class="p">{};</span>
 </pre></div>
 </div>
 <div class="admonition seealso">
@@ -358,8 +358,8 @@ using the x-iterators directly.</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2019-11-26 01:11:52.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+      Last updated on 2020-03-30 18:03:26.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.
     </div>
   </body>
 </html>

@@ -79,7 +79,7 @@
 <p>A point defines the location of a pixel inside an image. It can also be used
 to describe the dimensions of an image. In most general terms, points are
 N-dimensional and model the following concept:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">PointNDConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">Regular</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">PointNDConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">Regular</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
 <span class="p">{</span>
     <span class="c1">// the type of a coordinate along each axis</span>
     <span class="k">template</span> <span class="o">&lt;</span><span class="kt">size_t</span> <span class="n">K</span><span class="o">&gt;</span> <span class="k">struct</span> <span class="n">axis</span><span class="p">;</span> <span class="n">where</span> <span class="n">Metafunction</span><span class="o">&lt;</span><span class="n">axis</span><span class="o">&gt;</span><span class="p">;</span>
@@ -94,7 +94,7 @@ N-dimensional and model the following concept:</p>
 </div>
 <p>GIL uses a two-dimensional point, which is a refinement of <code class="docutils literal notranslate"><span class="pre">PointNDConcept</span></code>
 in which both dimensions are of the same type:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">Point2DConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">PointNDConcept</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">Point2DConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">PointNDConcept</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
 <span class="p">{</span>
     <span class="n">where</span> <span class="n">num_dimensions</span> <span class="o">==</span> <span class="mi">2</span><span class="p">;</span>
     <span class="n">where</span> <span class="n">SameType</span><span class="o">&lt;</span><span class="n">axis</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;::</span><span class="n">type</span><span class="p">,</span> <span class="n">axis</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">&gt;</span><span class="p">;</span>
@@ -134,8 +134,8 @@ coordinate type.</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2019-11-26 01:11:52.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+      Last updated on 2020-03-30 18:03:26.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.
     </div>
   </body>
 </html>

@@ -177,6 +177,7 @@ to be used easier in generic code. Synopsis:</p>
   <span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span> <span class="n">x_coord_t</span><span class="p">;</span>
   <span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span> <span class="n">y_coord_t</span><span class="p">;</span>
   <span class="k">typedef</span> <span class="n">point</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span><span class="o">&gt;</span> <span class="n">point_t</span><span class="p">;</span>
+  <span class="k">using</span> <span class="n">size_type</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="p">;</span>
 
   <span class="n">any_image_view</span><span class="p">();</span>
   <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span> <span class="k">explicit</span> <span class="n">any_image_view</span><span class="p">(</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">obj</span><span class="p">);</span>
@@ -188,6 +189,7 @@ to be used easier in generic code. Synopsis:</p>
   <span class="c1">// parameters of the currently instantiated view</span>
   <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">num_channels</span><span class="p">()</span>  <span class="k">const</span><span class="p">;</span>
   <span class="n">point_t</span>     <span class="nf">dimensions</span><span class="p">()</span>    <span class="k">const</span><span class="p">;</span>
+  <span class="n">size_type</span>   <span class="nf">size</span><span class="p">()</span>          <span class="k">const</span><span class="p">;</span>
   <span class="n">x_coord_t</span>   <span class="nf">width</span><span class="p">()</span>         <span class="k">const</span><span class="p">;</span>
   <span class="n">y_coord_t</span>   <span class="nf">height</span><span class="p">()</span>        <span class="k">const</span><span class="p">;</span>
 <span class="p">};</span>
@@ -332,8 +334,8 @@ uniformly as a collection and store them in the same container.</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2019-11-26 01:11:52.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+      Last updated on 2020-03-30 18:03:26.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.
     </div>
   </body>
 </html>
