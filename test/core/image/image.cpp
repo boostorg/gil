@@ -68,7 +68,8 @@ struct test_move_assignement
         gil::point_t const dimensions{256, 128};
         {
             image_t image = fixture::create_image<image_t>(dimensions.x, dimensions.y, 0);
-            image_t image2 = std::move(image);
+            image_t image2 = fixture::create_image<image_t>(dimensions.x * 2, dimensions.y * 2, 1);
+            image2 = std::move(image);
             BOOST_TEST_EQ(image2.dimensions(), dimensions);
             BOOST_TEST_EQ(image.dimensions(), gil::point_t{});
         }
