@@ -6,8 +6,9 @@
 # http://www.boost.org/LICENSE_1_0.txt)
 #
 foreach(_name
-  concepts
   bit_aligned_pixel_reference
+  color_convert_cmyk
+  concepts
   is_pixel
   is_planar
   num_channels
