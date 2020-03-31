@@ -86,17 +86,17 @@ void test_packed_pixel_gray3_assignment()
     fixture::packed_pixel_gray3 p1{int{5}};
     fixture::packed_pixel_gray3 p2;
     p2 = p1;
-    BOOST_TEST(p1._bitfield == p2._bitfield);
+    BOOST_TEST_EQ(p1._bitfield, p2._bitfield);
 }
 
 void test_packed_pixel_gray3_equality()
 {
     fixture::packed_pixel_gray3 p1{int{5}};
     fixture::packed_pixel_gray3 p2{int{5}};
-    BOOST_TEST(p1 == p2);
+    BOOST_TEST_EQ(p1, p2);
 
     fixture::packed_pixel_gray3 p3{int{3}};
-    BOOST_TEST(p2 != p3);
+    BOOST_TEST_NE(p2, p3);
 }
 
 void test_packed_pixel_gray3_assignment_gray_channel()
@@ -104,20 +104,20 @@ void test_packed_pixel_gray3_assignment_gray_channel()
     {
         fixture::packed_pixel_gray3 p1; // default-initialized
         p1 = int{5};
-        BOOST_TEST(p1._bitfield == int{5});
+        BOOST_TEST_EQ(p1._bitfield, int{5});
     }
 
     {
         fixture::packed_pixel_gray3 p1{0}; // value-initialized
         p1 = int{5};
-        BOOST_TEST(p1._bitfield == int{5});
+        BOOST_TEST_EQ(p1._bitfield, int{5});
     }
 }
 
 void test_packed_pixel_gray3_equality_gray_channel()
 {
     fixture::packed_pixel_gray3 p1{int{3}};
-    BOOST_TEST(p1 == int{3});
+    BOOST_TEST_EQ(p1, int{3});
 }
 
 void test_packed_pixel_bgr121_definition()
@@ -204,17 +204,17 @@ void test_packed_pixel_bgr121_assignment()
     fixture::packed_pixel_bgr121 p1{0, 3, 1};
     fixture::packed_pixel_bgr121 p2;
     p2 = p1;
-    BOOST_TEST(p1._bitfield == p2._bitfield);
+    BOOST_TEST_EQ(p1._bitfield, p2._bitfield);
 }
 
 void test_packed_pixel_bgr121_equality()
 {
     fixture::packed_pixel_bgr121 p1{1, 3, 0};
     fixture::packed_pixel_bgr121 p2{1, 3, 0};
-    BOOST_TEST(p1 == p2);
+    BOOST_TEST_EQ(p1, p2);
 
     fixture::packed_pixel_bgr121 p3{0, 3, 1};
-    BOOST_TEST(p2 != p3);
+    BOOST_TEST_NE(p2, p3);
 }
 
 void test_packed_pixel_rgb535_definition()
@@ -305,17 +305,17 @@ void test_packed_pixel_rgb535_assignment()
     fixture::packed_pixel_rgb535 p1{31, 7, 31};
     fixture::packed_pixel_rgb535 p2;
     p2 = p1;
-    BOOST_TEST(p1._bitfield == p2._bitfield);
+    BOOST_TEST_EQ(p1._bitfield, p2._bitfield);
 }
 
 void test_packed_pixel_rgb535_equality()
 {
     fixture::packed_pixel_rgb535 p1{7, 3, 7};
     fixture::packed_pixel_rgb535 p2{7, 3, 7};
-    BOOST_TEST(p1 == p2);
+    BOOST_TEST_EQ(p1, p2);
 
     fixture::packed_pixel_rgb535 p3{7, 7, 7};
-    BOOST_TEST(p2 != p3);
+    BOOST_TEST_NE(p2, p3);
 }
 
 int main()

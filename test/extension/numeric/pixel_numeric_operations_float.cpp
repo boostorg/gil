@@ -12,10 +12,12 @@
 
 #include <boost/core/lightweight_test.hpp>
 
+#include "test_utility_output_stream.hpp"
+
 namespace gil = boost::gil;
 
 // FIXME: Remove when https://github.com/boostorg/core/issues/38 happens
-#define BOOST_GIL_TEST_IS_CLOSE(a, b, epsilon) BOOST_TEST(std::abs((a) - (b)) < (epsilon))
+#define BOOST_GIL_TEST_IS_CLOSE(a, b, epsilon) BOOST_TEST_LT(std::abs((a) - (b)), (epsilon))
 
 void test_plus()
 {
@@ -25,16 +27,16 @@ void test_plus()
     gil::pixel_plus_t<gil::rgb8_pixel_t, gil::bgr8_pixel_t, gil::rgb8_pixel_t> op;
     gil::rgb8_pixel_t c = op(a, b);
 
-    BOOST_TEST(get_color(c, gil::red_t()) == 20);
-    BOOST_TEST(get_color(c, gil::green_t()) == 40);
-    BOOST_TEST(get_color(c, gil::blue_t()) == 60);
+    BOOST_TEST_EQ(get_color(c, gil::red_t()), 20);
+    BOOST_TEST_EQ(get_color(c, gil::green_t()), 40);
+    BOOST_TEST_EQ(get_color(c, gil::blue_t()), 60);
 
     gil::pixel_plus_t<gil::rgb8_pixel_t, gil::bgr8_pixel_t, gil::bgr8_pixel_t> op2;
     gil::bgr8_pixel_t d = op2(a, b);
 
-    BOOST_TEST(get_color(d, gil::red_t()) == 20);
-    BOOST_TEST(get_color(d, gil::green_t()) == 40);
-    BOOST_TEST(get_color(d, gil::blue_t()) == 60);
+    BOOST_TEST_EQ(get_color(d, gil::red_t()), 20);
+    BOOST_TEST_EQ(get_color(d, gil::green_t()), 40);
+    BOOST_TEST_EQ(get_color(d, gil::blue_t()), 60);
 }
 
 void test_multiply()
@@ -63,9 +65,9 @@ void test_divide()
         gil::pixel_divide_t<gil::rgb8_pixel_t, gil::bgr8_pixel_t, gil::rgb8_pixel_t> op;
         gil::rgb32f_pixel_t c = op(a, b);
 
-        BOOST_TEST(get_color(c, gil::red_t()) == 5);
-        BOOST_TEST(get_color(c, gil::green_t()) == 10);
-        BOOST_TEST(get_color(c, gil::blue_t()) == 15);
+        BOOST_TEST_EQ(get_color(c, gil::red_t()), 5);
+        BOOST_TEST_EQ(get_color(c, gil::green_t()), 10);
+        BOOST_TEST_EQ(get_color(c, gil::blue_t()), 15);
     }
 
     // float

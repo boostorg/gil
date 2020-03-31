@@ -29,8 +29,8 @@ struct test_convert_to
         channel_value_t min_v = gil::channel_convert<channel_t>(src_min_v);
         channel_value_t max_v = gil::channel_convert<channel_t>(src_max_v);
         fixture::channel_minmax_value<channel_value_t> expect;
-        BOOST_TEST(min_v == expect.min_v_);
-        BOOST_TEST(max_v == expect.max_v_);
+        BOOST_TEST_EQ(min_v, expect.min_v_);
+        BOOST_TEST_EQ(max_v, expect.max_v_);
     }
 };
 

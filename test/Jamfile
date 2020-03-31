@@ -127,6 +127,8 @@ rule generate_self_contained_headers ( headers_subpath * : exclude_subpaths * )
     return $(targets) ;
 }
 
+run test_utility_output_stream.cpp ;
+
 build-project core ;
 build-project legacy ;
 build-project extension ;

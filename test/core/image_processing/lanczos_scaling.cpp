@@ -56,7 +56,7 @@ void test_lanczos_black_image()
 void test_lanczos_response_on_zero()
 {
     //random value for a
-    BOOST_TEST(gil::lanczos(0, 2) == 1);
+    BOOST_TEST_EQ(gil::lanczos(0, 2), 1);
 }
 
 int main()

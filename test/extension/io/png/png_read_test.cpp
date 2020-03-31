@@ -20,6 +20,7 @@
 
 #include "paths.hpp"
 #include "scanline_read_test.hpp"
+#include "test_utility_output_stream.hpp"
 
 namespace gil = boost::gil;
 namespace fs = boost::filesystem;
@@ -115,12 +116,12 @@ void test_read_with_trns_chunk_color_type_0()
         read_image(png_path, img, settings);
         BOOST_TEST_EQ(backend._info._width, 32u);
         BOOST_TEST_EQ(backend._info._height, 32u);
-        BOOST_TEST(const_view(img).front() == gray_alpha8c_pixel_t(255, 0));
-        BOOST_TEST(const_view(img)[78] == gray_alpha8c_pixel_t(221, 255));
-        BOOST_TEST(const_view(img)[79] == gray_alpha8c_pixel_t(204, 255));
-        BOOST_TEST(const_view(img)[975] == gray_alpha8c_pixel_t(238, 255));
-        BOOST_TEST(const_view(img)[976] == gray_alpha8c_pixel_t(221, 255));
-        BOOST_TEST(const_view(img).back() == gray_alpha8c_pixel_t(255, 0));
+        BOOST_TEST_EQ(const_view(img).front(), gray_alpha8c_pixel_t(255, 0));
+        BOOST_TEST_EQ(const_view(img)[78], gray_alpha8c_pixel_t(221, 255));
+        BOOST_TEST_EQ(const_view(img)[79], gray_alpha8c_pixel_t(204, 255));
+        BOOST_TEST_EQ(const_view(img)[975], gray_alpha8c_pixel_t(238, 255));
+        BOOST_TEST_EQ(const_view(img)[976], gray_alpha8c_pixel_t(221, 255));
+        BOOST_TEST_EQ(const_view(img).back(), gray_alpha8c_pixel_t(255, 0));
     }
     {
         auto const png_path = png_in + "tbwn0g16.png";
@@ -137,12 +138,12 @@ void test_read_with_trns_chunk_color_type_0()
         read_image(png_path, img, settings);
         BOOST_TEST_EQ(backend._info._width, 32u);
         BOOST_TEST_EQ(backend._info._height, 32u);
-        BOOST_TEST(const_view(img).front() == gray_alpha16c_pixel_t(65535, 0));
-        BOOST_TEST(const_view(img)[78] == gray_alpha16c_pixel_t(58339, 65535));
-        BOOST_TEST(const_view(img)[79] == gray_alpha16c_pixel_t(51657, 65535));
-        BOOST_TEST(const_view(img)[975] == gray_alpha16c_pixel_t(62965, 65535));
-        BOOST_TEST(const_view(img)[976] == gray_alpha16c_pixel_t(58339, 65535));
-        BOOST_TEST(const_view(img).back() == gray_alpha16c_pixel_t(65535, 0));
+        BOOST_TEST_EQ(const_view(img).front(), gray_alpha16c_pixel_t(65535, 0));
+        BOOST_TEST_EQ(const_view(img)[78], gray_alpha16c_pixel_t(58339, 65535));
+        BOOST_TEST_EQ(const_view(img)[79], gray_alpha16c_pixel_t(51657, 65535));
+        BOOST_TEST_EQ(const_view(img)[975], gray_alpha16c_pixel_t(62965, 65535));
+        BOOST_TEST_EQ(const_view(img)[976], gray_alpha16c_pixel_t(58339, 65535));
+        BOOST_TEST_EQ(const_view(img).back(), gray_alpha16c_pixel_t(65535, 0));
     }
 }
 
@@ -169,12 +170,12 @@ void test_read_with_trns_chunk_color_type_2()
         read_image(png_path, img, settings);
         BOOST_TEST_EQ(backend._info._width, 32u);
         BOOST_TEST_EQ(backend._info._height, 32u);
-        BOOST_TEST(const_view(img).front() == gil::rgba16c_pixel_t(65535, 65535, 65535, 0));
-        BOOST_TEST(const_view(img)[78] == gil::rgba16c_pixel_t(58339, 58339, 58339, 65535));
-        BOOST_TEST(const_view(img)[79] == gil::rgba16c_pixel_t(51657, 51657, 51657, 65535));
-        BOOST_TEST(const_view(img)[975] == gil::rgba16c_pixel_t(62965, 62965, 62965, 65535));
-        BOOST_TEST(const_view(img)[976] == gil::rgba16c_pixel_t(58339, 58339, 58339, 65535));
-        BOOST_TEST(const_view(img).back() == gil::rgba16c_pixel_t(65535, 65535, 65535, 0));
+        BOOST_TEST_EQ(const_view(img).front(), gil::rgba16c_pixel_t(65535, 65535, 65535, 0));
+        BOOST_TEST_EQ(const_view(img)[78], gil::rgba16c_pixel_t(58339, 58339, 58339, 65535));
+        BOOST_TEST_EQ(const_view(img)[79], gil::rgba16c_pixel_t(51657, 51657, 51657, 65535));
+        BOOST_TEST_EQ(const_view(img)[975], gil::rgba16c_pixel_t(62965, 62965, 62965, 65535));
+        BOOST_TEST_EQ(const_view(img)[976], gil::rgba16c_pixel_t(58339, 58339, 58339, 65535));
+        BOOST_TEST_EQ(const_view(img).back(), gil::rgba16c_pixel_t(65535, 65535, 65535, 0));
     }
     {
         auto const png_path = png_in + "tbgn2c16.png";
@@ -191,12 +192,12 @@ void test_read_with_trns_chunk_color_type_2()
         read_image(png_path, img, settings);
         BOOST_TEST_EQ(backend._info._width, 32u);
         BOOST_TEST_EQ(backend._info._height, 32u);
-        BOOST_TEST(const_view(img).front() == gil::rgba16c_pixel_t(65535, 65535, 65535, 0));
-        BOOST_TEST(const_view(img)[78] == gil::rgba16c_pixel_t(58339, 58339, 58339, 65535));
-        BOOST_TEST(const_view(img)[79] == gil::rgba16c_pixel_t(51657, 51657, 51657, 65535));
-        BOOST_TEST(const_view(img)[975] == gil::rgba16c_pixel_t(62965, 62965, 62965, 65535));
-        BOOST_TEST(const_view(img)[976] == gil::rgba16c_pixel_t(58339, 58339, 58339, 65535));
-        BOOST_TEST(const_view(img).back() == gil::rgba16c_pixel_t(65535, 65535, 65535, 0));
+        BOOST_TEST_EQ(const_view(img).front(), gil::rgba16c_pixel_t(65535, 65535, 65535, 0));
+        BOOST_TEST_EQ(const_view(img)[78], gil::rgba16c_pixel_t(58339, 58339, 58339, 65535));
+        BOOST_TEST_EQ(const_view(img)[79], gil::rgba16c_pixel_t(51657, 51657, 51657, 65535));
+        BOOST_TEST_EQ(const_view(img)[975], gil::rgba16c_pixel_t(62965, 62965, 62965, 65535));
+        BOOST_TEST_EQ(const_view(img)[976], gil::rgba16c_pixel_t(58339, 58339, 58339, 65535));
+        BOOST_TEST_EQ(const_view(img).back(), gil::rgba16c_pixel_t(65535, 65535, 65535, 0));
     }
     {
         auto const png_path = png_in + "tbrn2c08.png";
@@ -213,12 +214,12 @@ void test_read_with_trns_chunk_color_type_2()
         read_image(png_path, img, settings);
         BOOST_TEST_EQ(backend._info._width, 32u);
         BOOST_TEST_EQ(backend._info._height, 32u);
-        BOOST_TEST(const_view(img).front() == gil::rgba8c_pixel_t(255, 255, 255, 0));
-        BOOST_TEST(const_view(img)[78] == gil::rgba8c_pixel_t(227, 227, 227, 255));
-        BOOST_TEST(const_view(img)[79] == gil::rgba8c_pixel_t(201, 201, 201, 255));
-        BOOST_TEST(const_view(img)[975] == gil::rgba8c_pixel_t(245, 245, 245, 255));
-        BOOST_TEST(const_view(img)[976] == gil::rgba8c_pixel_t(227, 227, 227, 255));
-        BOOST_TEST(const_view(img).back() == gil::rgba8c_pixel_t(255, 255, 255, 0));
+        BOOST_TEST_EQ(const_view(img).front(), gil::rgba8c_pixel_t(255, 255, 255, 0));
+        BOOST_TEST_EQ(const_view(img)[78], gil::rgba8c_pixel_t(227, 227, 227, 255));
+        BOOST_TEST_EQ(const_view(img)[79], gil::rgba8c_pixel_t(201, 201, 201, 255));
+        BOOST_TEST_EQ(const_view(img)[975], gil::rgba8c_pixel_t(245, 245, 245, 255));
+        BOOST_TEST_EQ(const_view(img)[976], gil::rgba8c_pixel_t(227, 227, 227, 255));
+        BOOST_TEST_EQ(const_view(img).back(), gil::rgba8c_pixel_t(255, 255, 255, 0));
     }
 }
 
@@ -245,12 +246,12 @@ void test_read_with_trns_chunk_color_type_3()
         read_image(png_path, img, settings);
         BOOST_TEST_EQ(backend._info._width, 32u);
         BOOST_TEST_EQ(backend._info._height, 32u);
-        BOOST_TEST(const_view(img).front() == gil::rgba8c_pixel_t(255, 255, 255, 0));
-        BOOST_TEST(const_view(img)[78] == gil::rgba8c_pixel_t(227, 227, 227, 255));
-        BOOST_TEST(const_view(img)[79] == gil::rgba8c_pixel_t(201, 201, 201, 255));
-        BOOST_TEST(const_view(img)[975] == gil::rgba8c_pixel_t(246, 246, 246, 255));
-        BOOST_TEST(const_view(img)[976] == gil::rgba8c_pixel_t(227, 227, 227, 255));
-        BOOST_TEST(const_view(img).back() == gil::rgba8c_pixel_t(255, 255, 255, 0));
+        BOOST_TEST_EQ(const_view(img).front(), gil::rgba8c_pixel_t(255, 255, 255, 0));
+        BOOST_TEST_EQ(const_view(img)[78], gil::rgba8c_pixel_t(227, 227, 227, 255));
+        BOOST_TEST_EQ(const_view(img)[79], gil::rgba8c_pixel_t(201, 201, 201, 255));
+        BOOST_TEST_EQ(const_view(img)[975], gil::rgba8c_pixel_t(246, 246, 246, 255));
+        BOOST_TEST_EQ(const_view(img)[976], gil::rgba8c_pixel_t(227, 227, 227, 255));
+        BOOST_TEST_EQ(const_view(img).back(), gil::rgba8c_pixel_t(255, 255, 255, 0));
     }
     {
         auto const png_path = png_in + "tbgn3p08.png";
@@ -267,12 +268,12 @@ void test_read_with_trns_chunk_color_type_3()
         read_image(png_path, img, settings);
         BOOST_TEST_EQ(backend._info._width, 32u);
         BOOST_TEST_EQ(backend._info._height, 32u);
-        BOOST_TEST(const_view(img).front() == gil::rgba8c_pixel_t(255, 255, 255, 0));
-        BOOST_TEST(const_view(img)[78] == gil::rgba8c_pixel_t(227, 227, 227, 255));
-        BOOST_TEST(const_view(img)[79] == gil::rgba8c_pixel_t(201, 201, 201, 255));
-        BOOST_TEST(const_view(img)[975] == gil::rgba8c_pixel_t(246, 246, 246, 255));
-        BOOST_TEST(const_view(img)[976] == gil::rgba8c_pixel_t(227, 227, 227, 255));
-        BOOST_TEST(const_view(img).back() == gil::rgba8c_pixel_t(255, 255, 255, 0));
+        BOOST_TEST_EQ(const_view(img).front(), gil::rgba8c_pixel_t(255, 255, 255, 0));
+        BOOST_TEST_EQ(const_view(img)[78], gil::rgba8c_pixel_t(227, 227, 227, 255));
+        BOOST_TEST_EQ(const_view(img)[79], gil::rgba8c_pixel_t(201, 201, 201, 255));
+        BOOST_TEST_EQ(const_view(img)[975], gil::rgba8c_pixel_t(246, 246, 246, 255));
+        BOOST_TEST_EQ(const_view(img)[976], gil::rgba8c_pixel_t(227, 227, 227, 255));
+        BOOST_TEST_EQ(const_view(img).back(), gil::rgba8c_pixel_t(255, 255, 255, 0));
     }
     {
         auto const png_path = png_in + "tp1n3p08.png";
@@ -289,12 +290,12 @@ void test_read_with_trns_chunk_color_type_3()
         read_image(png_path, img, settings);
         BOOST_TEST_EQ(backend._info._width, 32u);
         BOOST_TEST_EQ(backend._info._height, 32u);
-        BOOST_TEST(const_view(img).front() == gil::rgba8c_pixel_t(255, 255, 255, 0));
-        BOOST_TEST(const_view(img)[78] == gil::rgba8c_pixel_t(227, 227, 227, 255));
-        BOOST_TEST(const_view(img)[79] == gil::rgba8c_pixel_t(201, 201, 201, 255));
-        BOOST_TEST(const_view(img)[975] == gil::rgba8c_pixel_t(246, 246, 246, 255));
-        BOOST_TEST(const_view(img)[976] == gil::rgba8c_pixel_t(227, 227, 227, 255));
-        BOOST_TEST(const_view(img).back() == gil::rgba8c_pixel_t(255, 255, 255, 0));
+        BOOST_TEST_EQ(const_view(img).front(), gil::rgba8c_pixel_t(255, 255, 255, 0));
+        BOOST_TEST_EQ(const_view(img)[78], gil::rgba8c_pixel_t(227, 227, 227, 255));
+        BOOST_TEST_EQ(const_view(img)[79], gil::rgba8c_pixel_t(201, 201, 201, 255));
+        BOOST_TEST_EQ(const_view(img)[975], gil::rgba8c_pixel_t(246, 246, 246, 255));
+        BOOST_TEST_EQ(const_view(img)[976], gil::rgba8c_pixel_t(227, 227, 227, 255));
+        BOOST_TEST_EQ(const_view(img).back(), gil::rgba8c_pixel_t(255, 255, 255, 0));
     }
     {
         auto const png_path = png_in + "tm3n3p02.png";
@@ -311,11 +312,11 @@ void test_read_with_trns_chunk_color_type_3()
         read_image(png_path, img, settings);
         BOOST_TEST_EQ(backend._info._width, 32u);
         BOOST_TEST_EQ(backend._info._height, 32u);
-        BOOST_TEST(const_view(img).front() == gil::rgba8c_pixel_t(0, 0, 255, 0));
-        BOOST_TEST(const_view(img)[16] == gil::rgba8c_pixel_t(0, 0, 255, 85));
-        BOOST_TEST(const_view(img)[511] == gil::rgba8c_pixel_t(0, 0, 255, 85));
-        BOOST_TEST(const_view(img)[1007] == gil::rgba8c_pixel_t(0, 0, 255, 170));
-        BOOST_TEST(const_view(img).back() == gil::rgba8c_pixel_t(0, 0, 255, 255));
+        BOOST_TEST_EQ(const_view(img).front(), gil::rgba8c_pixel_t(0, 0, 255, 0));
+        BOOST_TEST_EQ(const_view(img)[16], gil::rgba8c_pixel_t(0, 0, 255, 85));
+        BOOST_TEST_EQ(const_view(img)[511], gil::rgba8c_pixel_t(0, 0, 255, 85));
+        BOOST_TEST_EQ(const_view(img)[1007], gil::rgba8c_pixel_t(0, 0, 255, 170));
+        BOOST_TEST_EQ(const_view(img).back(), gil::rgba8c_pixel_t(0, 0, 255, 255));
     }
 }
 #endif // BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES

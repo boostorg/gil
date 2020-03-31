@@ -33,17 +33,17 @@ namespace fixture = boost::gil::test::fixture;
 void test_consecutive_value()
 {
     fixture::consecutive_value<std::uint8_t> v(10);
-    BOOST_TEST(v() == std::uint8_t{11});
-    BOOST_TEST(v() == std::uint8_t{12});
-    BOOST_TEST(v() == std::uint8_t{13});
+    BOOST_TEST_EQ(v(), std::uint8_t{11});
+    BOOST_TEST_EQ(v(), std::uint8_t{12});
+    BOOST_TEST_EQ(v(), std::uint8_t{13});
 }
 
 void test_reverse_consecutive_value()
 {
     fixture::reverse_consecutive_value<std::uint8_t> v(10);
-    BOOST_TEST(v() == std::uint8_t{9});
-    BOOST_TEST(v() == std::uint8_t{8});
-    BOOST_TEST(v() == std::uint8_t{7});
+    BOOST_TEST_EQ(v(), std::uint8_t{9});
+    BOOST_TEST_EQ(v(), std::uint8_t{8});
+    BOOST_TEST_EQ(v(), std::uint8_t{7});
 }
 
 void test_random_value()
@@ -57,8 +57,8 @@ void test_random_value()
     std::sort(v.begin(), v.end());
     auto last = std::unique(v.begin(), v.end());
     v.erase(last, v.end());
-    BOOST_TEST(v.size() > 0);
-    BOOST_TEST(v.size() <= 10);
+    BOOST_TEST_GT(v.size(), 0);
+    BOOST_TEST_LE(v.size(), 10);
 }
 
 int main()

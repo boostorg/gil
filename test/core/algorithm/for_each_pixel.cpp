@@ -10,6 +10,8 @@
 
 #include <boost/core/lightweight_test.hpp>
 
+#include "test_utility_output_stream.hpp"
+
 namespace gil = boost::gil;
 
 void test_lambda_expression()
@@ -21,7 +23,7 @@ void test_lambda_expression()
     gil::for_each_pixel(gil::view(image), [&sum](gil::gray8_pixel_t& p) {
         sum += gil::at_c<0>(p);
     });
-    BOOST_TEST(sum == 2 * 2 * 128);
+    BOOST_TEST_EQ(sum, 2 * 2 * 128);
 }
 
 int main()

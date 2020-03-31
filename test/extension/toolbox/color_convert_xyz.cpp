@@ -19,6 +19,8 @@
 #define BOOST_GIL_TEST_DEBUG_OSTREAM std::cout
 #endif
 
+#include "test_utility_output_stream.hpp"
+
 namespace gil = boost::gil;
 
 const float SKEW = 0.0001f;
@@ -42,12 +44,12 @@ void test_rgb32f_xyz32f_1()
         << p32f_b[2]
         << '\n';
 
-    BOOST_TEST(abs(p32f[0] - p32f_b[0]) < SKEW);
-    BOOST_TEST(abs(p32f[1] - p32f_b[1]) < SKEW);
-    BOOST_TEST(abs(p32f[2] - p32f_b[2]) < SKEW);
-    BOOST_TEST(abs(xyz32f[0] - 0.562669) < SKEW);
-    BOOST_TEST(abs(xyz32f[1] - 0.597462) < SKEW);
-    BOOST_TEST(abs(xyz32f[2] - 0.096050) < SKEW);
+    BOOST_TEST_LT(abs(p32f[0] - p32f_b[0]), SKEW);
+    BOOST_TEST_LT(abs(p32f[1] - p32f_b[1]), SKEW);
+    BOOST_TEST_LT(abs(p32f[2] - p32f_b[2]), SKEW);
+    BOOST_TEST_LT(abs(xyz32f[0] - 0.562669), SKEW);
+    BOOST_TEST_LT(abs(xyz32f[1] - 0.597462), SKEW);
+    BOOST_TEST_LT(abs(xyz32f[2] - 0.096050), SKEW);
 }
 
 void test_rgb32f_xyz32f_2()
@@ -69,12 +71,12 @@ void test_rgb32f_xyz32f_2()
         << p32f_b[2]
         << '\n';
 
-    BOOST_TEST(abs(p32f[0] - p32f_b[0]) < SKEW);
-    BOOST_TEST(abs(p32f[1] - p32f_b[1]) < SKEW);
-    BOOST_TEST(abs(p32f[2] - p32f_b[2]) < SKEW);
-    BOOST_TEST(abs(xyz32f[0] - 0.197823) < SKEW);
-    BOOST_TEST(abs(xyz32f[1] - 0.114731) < SKEW);
-    BOOST_TEST(abs(xyz32f[2] - 0.048848) < SKEW);
+    BOOST_TEST_LT(abs(p32f[0] - p32f_b[0]), SKEW);
+    BOOST_TEST_LT(abs(p32f[1] - p32f_b[1]), SKEW);
+    BOOST_TEST_LT(abs(p32f[2] - p32f_b[2]), SKEW);
+    BOOST_TEST_LT(abs(xyz32f[0] - 0.197823), SKEW);
+    BOOST_TEST_LT(abs(xyz32f[1] - 0.114731), SKEW);
+    BOOST_TEST_LT(abs(xyz32f[2] - 0.048848), SKEW);
 }
 
 void test_xyz32f_rgb32f_1()
@@ -96,12 +98,12 @@ void test_xyz32f_rgb32f_1()
         << xyz32f_b[2]
         << '\n';
 
-    BOOST_TEST(abs(xyz32f_b[0] - xyz32f[0]) < SKEW);
-    BOOST_TEST(abs(xyz32f_b[1] - xyz32f[1]) < SKEW);
-    BOOST_TEST(abs(xyz32f_b[2] - xyz32f[2]) < SKEW);
-    BOOST_TEST(abs(p32f[0] - 0.628242) < SKEW);
-    BOOST_TEST(abs(p32f[1] - 0.735771) < SKEW);
-    BOOST_TEST(abs(p32f[2] - 0.236473) < SKEW);
+    BOOST_TEST_LT(abs(xyz32f_b[0] - xyz32f[0]), SKEW);
+    BOOST_TEST_LT(abs(xyz32f_b[1] - xyz32f[1]), SKEW);
+    BOOST_TEST_LT(abs(xyz32f_b[2] - xyz32f[2]), SKEW);
+    BOOST_TEST_LT(abs(p32f[0] - 0.628242), SKEW);
+    BOOST_TEST_LT(abs(p32f[1] - 0.735771), SKEW);
+    BOOST_TEST_LT(abs(p32f[2] - 0.236473), SKEW);
 }
 
 void test_xyz32f_rgb32f_2()
@@ -123,12 +125,12 @@ void test_xyz32f_rgb32f_2()
         << xyz32f_b[2]
         << '\n';
 
-    BOOST_TEST(abs(xyz32f_b[0] - xyz32f[0]) < SKEW);
-    BOOST_TEST(abs(xyz32f_b[1] - xyz32f[1]) < SKEW);
-    BOOST_TEST(abs(xyz32f_b[2] - xyz32f[2]) < SKEW);
-    BOOST_TEST(abs(p32f[0] - 0.763580) < SKEW);
-    BOOST_TEST(abs(p32f[1] - 0.591622) < SKEW);
-    BOOST_TEST(abs(p32f[2] - 0.510392) < SKEW);
+    BOOST_TEST_LT(abs(xyz32f_b[0] - xyz32f[0]), SKEW);
+    BOOST_TEST_LT(abs(xyz32f_b[1] - xyz32f[1]), SKEW);
+    BOOST_TEST_LT(abs(xyz32f_b[2] - xyz32f[2]), SKEW);
+    BOOST_TEST_LT(abs(p32f[0] - 0.763580), SKEW);
+    BOOST_TEST_LT(abs(p32f[1] - 0.591622), SKEW);
+    BOOST_TEST_LT(abs(p32f[2] - 0.510392), SKEW);
 }
 
 void test_rgb8u_xyz32f_1()
@@ -150,9 +152,9 @@ void test_rgb8u_xyz32f_1()
         << static_cast<int>(p8u_b[2])
         << '\n';
 
-    BOOST_TEST(p8u[0] == p8u_b[0]);
-    BOOST_TEST(p8u[1] == p8u_b[1]);
-    BOOST_TEST(p8u[2] == p8u_b[2]);
+    BOOST_TEST_EQ(p8u[0], p8u_b[0]);
+    BOOST_TEST_EQ(p8u[1], p8u_b[1]);
+    BOOST_TEST_EQ(p8u[2], p8u_b[2]);
 }
 
 void test_rgb8u_xyz32f_2()
@@ -174,9 +176,9 @@ void test_rgb8u_xyz32f_2()
         << static_cast<int>(p8u_b[2])
         << '\n';
 
-    BOOST_TEST(p8u[0] == p8u_b[0]);
-    BOOST_TEST(p8u[1] == p8u_b[1]);
-    BOOST_TEST(p8u[2] == p8u_b[2]);
+    BOOST_TEST_EQ(p8u[0], p8u_b[0]);
+    BOOST_TEST_EQ(p8u[1], p8u_b[1]);
+    BOOST_TEST_EQ(p8u[2], p8u_b[2]);
 }
 
 void test_rgb16u_xyz32f_1()
@@ -198,9 +200,9 @@ void test_rgb16u_xyz32f_1()
         << static_cast<int>(p16u_b[2])
         << '\n';
 
-    BOOST_TEST(p16u[0] == p16u_b[0]);
-    BOOST_TEST(p16u[1] == p16u_b[1]);
-    BOOST_TEST(p16u[2] == p16u_b[2]);
+    BOOST_TEST_EQ(p16u[0], p16u_b[0]);
+    BOOST_TEST_EQ(p16u[1], p16u_b[1]);
+    BOOST_TEST_EQ(p16u[2], p16u_b[2]);
 }
 
 int main()

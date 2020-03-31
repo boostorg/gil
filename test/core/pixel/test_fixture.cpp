@@ -25,6 +25,7 @@
 #include <ostream>
 
 #include "test_fixture.hpp"
+#include "test_utility_output_stream.hpp"
 
 namespace gil = boost::gil;
 namespace fixture = boost::gil::test::fixture;
@@ -37,7 +38,7 @@ struct test_pixel_value_default_constructor
         using pixel_t = Pixel;
         fixture::pixel_value<pixel_t> fix;
         pixel_t const default_value{};
-        BOOST_TEST(fix.pixel_ == default_value);
+        BOOST_TEST_EQ(fix.pixel_, default_value);
     }
     static void run()
     {
@@ -57,7 +58,7 @@ struct test_pixel_value_parameterized_constructor
         pixel_t sample_pixel;
         gil::static_fill(sample_pixel, sample_channel);
         fixture::pixel_value<pixel_t> fix{sample_pixel};
-        BOOST_TEST(fix.pixel_ == sample_pixel);
+        BOOST_TEST_EQ(fix.pixel_, sample_pixel);
     }
     static void run()
     {
@@ -72,8 +73,8 @@ struct test_pixel_reference_default_constructor
     {
         using pixel_t = Pixel;
         fixture::pixel_reference<pixel_t&> fix;
-        pixel_t const default_value{};
-        BOOST_TEST(fix.pixel_ == pixel_t{});
+        pixel_t pix_default{};
+        BOOST_TEST_EQ(fix.pixel_, pix_default);
     }
     static void run()
     {
@@ -93,7 +94,7 @@ struct test_pixel_reference_parameterized_constructor
         pixel_t sample_pixel;
         gil::static_fill(sample_pixel, sample_channel);
         fixture::pixel_reference<pixel_t&> fix{sample_pixel};
-        BOOST_TEST(fix.pixel_ == sample_pixel);
+        BOOST_TEST_EQ(fix.pixel_, sample_pixel);
     }
     static void run()
     {

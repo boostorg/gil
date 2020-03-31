@@ -16,7 +16,7 @@
 
 #include <type_traits>
 
-#include "test_utility.hpp"
+#include "test_utility_output_stream.hpp"
 #include "core/pixel/test_fixture.hpp"
 
 namespace gil = boost::gil;
@@ -32,7 +32,7 @@ std::string name() { return boost::core::demangle(typeid(T).name()); }
 #endif
 
 template <typename ColorSpaces>
-struct test_roundtrip
+struct test_roundtrip_convertible
 {
     template<typename Src, typename Dst>
     void operator()(mp11::mp_list<Src, Dst> const&) const
@@ -61,12 +61,12 @@ struct test_roundtrip
         boost::mp11::mp_for_each
         <
             mp11::mp_product<mp11::mp_list, ColorSpaces, ColorSpaces>
-        >(test_roundtrip{});
+        >(test_roundtrip_convertible{});
     }
 };
 
 template <typename ColorSpaces>
-struct test_all
+struct test_convertible
 {
     template<typename Src, typename Dst>
     void operator()(mp11::mp_list<Src, Dst> const&) const
@@ -89,28 +89,24 @@ struct test_all
         boost::mp11::mp_for_each
         <
             mp11::mp_product<mp11::mp_list, ColorSpaces, ColorSpaces>
-        >(test_all{});
+        >(test_convertible{});
     }
 };
 
 int main()
 {
-    using lossless_roundtrip_conversions = mp11::mp_list
+    test_convertible
     <
-        gil::gray_t,
-        gil::rgb_t
-    >;
-    test_roundtrip<lossless_roundtrip_conversions>::run();
+        mp11::mp_list<gil::cmyk_t, gil::gray_t, gil::rgb_t, gil::rgba_t>
+    >::run();
 
-    using all_conversions = mp11::mp_list
+    test_roundtrip_convertible
     <
-        gil::cmyk_t,
-        gil::gray_t,
-        gil::rgb_t,
-        gil::rgba_t
-    >;
+        mp11::mp_list<gil::gray_t, gil::rgb_t>
+    >::run();
 
-    test_all<all_conversions>::run();
-
+    test_roundtrip_convertible<mp11::mp_list<gil::cmyk_t>>::run();
+    test_roundtrip_convertible<mp11::mp_list<gil::gray_t>>::run();
+    test_roundtrip_convertible<mp11::mp_list<gil::rgba_t>>::run();
     return ::boost::report_errors();
 }

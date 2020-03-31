@@ -11,6 +11,8 @@
 
 #include <cstdint>
 
+#include "test_utility_output_stream.hpp"
+
 namespace boost { namespace gil {
 namespace test { namespace fixture {
 
@@ -29,23 +31,23 @@ void test_dimensions()
 {
     auto v = gil::planar_rgba_view(fixture::d.x, fixture::d.y, fixture::r, fixture::g, fixture::b, fixture::a, sizeof(std::uint8_t) * 2);
     BOOST_TEST(!v.empty());
-    BOOST_TEST(v.dimensions() == fixture::d);
-    BOOST_TEST(v.num_channels() == 4u);
-    BOOST_TEST(v.size() == static_cast<std::size_t>(fixture::d.x * fixture::d.y));
+    BOOST_TEST_EQ(v.dimensions(), fixture::d);
+    BOOST_TEST_EQ(v.num_channels(), 4u);
+    BOOST_TEST_EQ(v.size(), static_cast<std::size_t>(fixture::d.x * fixture::d.y));
 }
 
 void test_front()
 {
     auto v = gil::planar_rgba_view(fixture::d.x, fixture::d.y, fixture::r, fixture::g, fixture::b, fixture::a, sizeof(std::uint8_t) * 2);
     gil::rgba8_pixel_t const pf{1, 10, 110, 251};
-    BOOST_TEST(v.front() == pf);
+    BOOST_TEST_EQ(v.front(), pf);
 }
 
 void test_back()
 {
     auto v = gil::planar_rgba_view(fixture::d.x, fixture::d.y, fixture::r, fixture::g, fixture::b, fixture::a, sizeof(std::uint8_t) * 2);
     gil::rgba8_pixel_t const pb{4, 40, 140, 254};
-    BOOST_TEST(v.back() == pb);
+    BOOST_TEST_EQ(v.back(), pb);
 }
 
 void test_pixel_equal_to_operator()
@@ -54,7 +56,7 @@ void test_pixel_equal_to_operator()
     for (std::ptrdiff_t i = 0; i < static_cast<std::ptrdiff_t>(v.size()); i++)
     {
         gil::rgba8_pixel_t const p{fixture::r[i], fixture::g[i], fixture::b[i], fixture::a[i]};
-        BOOST_TEST(v[i] == p);
+        BOOST_TEST_EQ(v[i], p);
     }
 }
 
