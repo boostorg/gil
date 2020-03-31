@@ -14,10 +14,12 @@
 
 #include <cmath>
 
+#include "test_utility_output_stream.hpp"
+
 namespace gil = boost::gil;
 
 // FIXME: Remove when https://github.com/boostorg/core/issues/38 happens
-#define BOOST_GIL_TEST_IS_CLOSE(a, b, epsilon) BOOST_TEST(std::abs((a) - (b)) < (epsilon))
+#define BOOST_GIL_TEST_IS_CLOSE(a, b, epsilon) BOOST_TEST_LT(std::abs((a) - (b)), (epsilon))
 
 template <class F, class I>
 struct test_map_fn
@@ -72,25 +74,25 @@ void test_bilinear_sampler_test()
 
     gil::resample_pixels(gil::const_view(img), gil::view(dims), mf, gil::bilinear_sampler());
 
-    BOOST_TEST(gil::rgb8_pixel_t(128, 0, 0) == dv(0, 0));
-    BOOST_TEST(gil::rgb8_pixel_t(64, 64, 0) == dv(0, 1));
-    BOOST_TEST(gil::rgb8_pixel_t(0, 64, 64) == dv(0, 2));
-    BOOST_TEST(gil::rgb8_pixel_t(0, 0, 128) == dv(0, 3));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(128, 0, 0), dv(0, 0));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(64, 64, 0), dv(0, 1));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(0, 64, 64), dv(0, 2));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(0, 0, 128), dv(0, 3));
 
-    BOOST_TEST(gil::rgb8_pixel_t(64, 64, 0) == dv(1, 0));
-    BOOST_TEST(gil::rgb8_pixel_t(64, 96, 32) == dv(1, 1));
-    BOOST_TEST(gil::rgb8_pixel_t(64, 64, 64) == dv(1, 2));
-    BOOST_TEST(gil::rgb8_pixel_t(64, 0, 64) == dv(1, 3));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(64, 64, 0), dv(1, 0));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(64, 96, 32), dv(1, 1));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(64, 64, 64), dv(1, 2));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(64, 0, 64), dv(1, 3));
 
-    BOOST_TEST(gil::rgb8_pixel_t(0, 64, 64) == dv(2, 0));
-    BOOST_TEST(gil::rgb8_pixel_t(64, 64, 64) == dv(2, 1));
-    BOOST_TEST(gil::rgb8_pixel_t(96, 64, 32) == dv(2, 2));
-    BOOST_TEST(gil::rgb8_pixel_t(64, 64, 0) == dv(2, 3));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(0, 64, 64), dv(2, 0));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(64, 64, 64), dv(2, 1));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(96, 64, 32), dv(2, 2));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(64, 64, 0), dv(2, 3));
 
-    BOOST_TEST(gil::rgb8_pixel_t(0, 0, 128) == dv(3, 0));
-    BOOST_TEST(gil::rgb8_pixel_t(64, 0, 64) == dv(3, 1));
-    BOOST_TEST(gil::rgb8_pixel_t(64, 64, 0) == dv(3, 2));
-    BOOST_TEST(gil::rgb8_pixel_t(0, 128, 0) == dv(3, 3));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(0, 0, 128), dv(3, 0));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(64, 0, 64), dv(3, 1));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(64, 64, 0), dv(3, 2));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(0, 128, 0), dv(3, 3));
 }
 
 int main()

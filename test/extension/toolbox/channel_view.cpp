@@ -30,10 +30,10 @@ void test_channel_view()
 
     gil::rgb8_image_t img(100, 100);
     kth_channel_view_t const kth0 = gil::kth_channel_view<0>(gil::const_view(img));
-    BOOST_TEST(kth0.num_channels() == 1u);
+    BOOST_TEST_EQ(kth0.num_channels(), 1u);
 
     channel_view_t const red = gil::channel_view<gil::red_t>(gil::const_view(img));
-    BOOST_TEST(red.num_channels() == 1u);
+    BOOST_TEST_EQ(red.num_channels(), 1u);
 }
 
 int main()

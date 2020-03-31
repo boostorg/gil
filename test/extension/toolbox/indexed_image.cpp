@@ -12,6 +12,8 @@
 
 #include <cstdint>
 
+#include "test_utility_output_stream.hpp"
+
 namespace gil = boost::gil;
 
 void test_index_image()
@@ -28,7 +30,7 @@ void test_index_image()
         gil::fill_pixels(gil::view(img), gil::rgb8_pixel_t(255, 0, 0));
 
         gil::rgb8_pixel_t const p = *gil::view(img).xy_at(10, 10);
-        BOOST_TEST(p[0] == 255);
+        BOOST_TEST_EQ(p[0], 255);
     }
     {
         using image_t = gil::indexed_image<gil::gray8_pixel_t, gil::rgb8_pixel_t>;
@@ -44,22 +46,22 @@ void test_index_image()
 
         gil::gray8_pixel_t index{0};
         index = *img.get_indices_view().xy_at(0, 0); // verify values along first row
-        BOOST_TEST(static_cast<int>(index) == (0 + 1));
+        BOOST_TEST_EQ(static_cast<int>(index), (0 + 1));
         index = *img.get_indices_view().xy_at(128, 0);
-        BOOST_TEST(static_cast<int>(index) == (128 + 1));
+        BOOST_TEST_EQ(static_cast<int>(index), (128 + 1));
         // verify wrapping of value by the pixels generator above
         index = *img.get_indices_view().xy_at(255, 0);
-        BOOST_TEST(static_cast<int>(index) == 0);
+        BOOST_TEST_EQ(static_cast<int>(index), 0);
 
         // access via member function
         gil::rgb8_pixel_t const pixel1 = *img.get_palette_view().xy_at(index, 0);
-        BOOST_TEST(pixel1[0] == pixel1[1]);
-        BOOST_TEST(pixel1[1] == pixel1[2]);
+        BOOST_TEST_EQ(pixel1[0], pixel1[1]);
+        BOOST_TEST_EQ(pixel1[1], pixel1[2]);
 
         // access via free function
         gil::rgb8_pixel_t const pixel2 = *gil::view(img).xy_at(10, 1);
-        BOOST_TEST(pixel2[0] == pixel2[1]);
-        BOOST_TEST(pixel2[1] == pixel2[2]);
+        BOOST_TEST_EQ(pixel2[0], pixel2[1]);
+        BOOST_TEST_EQ(pixel2[1], pixel2[2]);
     }
     {
         using image_t = gil::indexed_image<gil::gray8_pixel_t, gil::rgb8_pixel_t>;
@@ -74,15 +76,15 @@ void test_index_image()
         gil::generate_pixels(img.get_palette_view(), pixel_generator);
 
         std::uint8_t index = *img.get_indices_view().xy_at(128, 0);
-        BOOST_TEST(static_cast<int>(index) == (128 + 1));
+        BOOST_TEST_EQ(static_cast<int>(index), (128 + 1));
 
         gil::rgb8_pixel_t const pixel1 = *img.get_palette_view().xy_at(index, 0);
-        BOOST_TEST(pixel1[0] == pixel1[1]);
-        BOOST_TEST(pixel1[1] == pixel1[2]);
+        BOOST_TEST_EQ(pixel1[0], pixel1[1]);
+        BOOST_TEST_EQ(pixel1[1], pixel1[2]);
 
         gil::rgb8_pixel_t const pixel2 = *view(img).xy_at(10, 1);
-        BOOST_TEST(pixel2[0] == pixel2[1]);
-        BOOST_TEST(pixel2[1] == pixel2[2]);
+        BOOST_TEST_EQ(pixel2[0], pixel2[1]);
+        BOOST_TEST_EQ(pixel2[1], pixel2[2]);
     }
     {
         using image_t = gil::indexed_image<std::uint8_t, gil::rgb8_pixel_t>;
@@ -134,13 +136,13 @@ void test_index_image_view()
     auto p = ii_view(gil::point_t(0, 0));
     auto q = *ii_view.at(gil::point_t(0, 0));
 
-    BOOST_TEST(gil::get_color(p, gil::red_t()) == 70);
-    BOOST_TEST(gil::get_color(p, gil::green_t()) == 80);
-    BOOST_TEST(gil::get_color(p, gil::blue_t()) == 90);
+    BOOST_TEST_EQ(gil::get_color(p, gil::red_t()), 70);
+    BOOST_TEST_EQ(gil::get_color(p, gil::green_t()), 80);
+    BOOST_TEST_EQ(gil::get_color(p, gil::blue_t()), 90);
 
-    BOOST_TEST(gil::get_color(q, gil::red_t()) == 70);
-    BOOST_TEST(gil::get_color(q, gil::green_t()) == 80);
-    BOOST_TEST(gil::get_color(q, gil::blue_t()) == 90);
+    BOOST_TEST_EQ(gil::get_color(q, gil::red_t()), 70);
+    BOOST_TEST_EQ(gil::get_color(q, gil::green_t()), 80);
+    BOOST_TEST_EQ(gil::get_color(q, gil::blue_t()), 90);
 }
 
 int main()

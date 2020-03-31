@@ -10,6 +10,8 @@
 
 #include <boost/core/lightweight_test.hpp>
 
+#include "test_utility_output_stream.hpp"
+
 namespace gil = boost::gil;
 
 void test_gray_to_rgba()
@@ -17,7 +19,7 @@ void test_gray_to_rgba()
     gil::gray8_pixel_t a(45);
     gil::rgba8_pixel_t b;
     gil::color_convert(a, b);
-    BOOST_TEST(b == gil::rgba8_pixel_t(45, 45, 45, 255));
+    BOOST_TEST_EQ(b, gil::rgba8_pixel_t(45, 45, 45, 255));
 }
 
 int main()

@@ -10,6 +10,7 @@
 #include <boost/core/lightweight_test.hpp>
 
 #include "test_fixture.hpp"
+#include "test_utility_output_stream.hpp"
 #include "core/pixel/test_fixture.hpp"
 
 namespace gil = boost::gil;
@@ -25,11 +26,11 @@ struct test_constructor_with_dimensions_pixel
         using pixel_t = typename image_t::view_t::value_type;
         pixel_t const rnd_pixel = fixture::pixel_generator<pixel_t>::random();
         image_t image(dimensions, rnd_pixel);
-        BOOST_TEST(image.width() == dimensions.x);
-        BOOST_TEST(image.height() == dimensions.y);
+        BOOST_TEST_EQ(image.width(), dimensions.x);
+        BOOST_TEST_EQ(image.height(), dimensions.y);
 
         for (pixel_t const &p : gil::view(image))
-            BOOST_TEST(p == rnd_pixel);
+            BOOST_TEST_EQ(p, rnd_pixel);
     }
     static void run()
     {

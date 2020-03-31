@@ -14,6 +14,7 @@
 #include <utility>
 
 #include "test_fixture.hpp"
+#include "test_utility_output_stream.hpp"
 
 namespace gil = boost::gil;
 namespace fixture = boost::gil::test::fixture;
@@ -34,30 +35,30 @@ void test_channel_arithmetic_mutable(std::true_type)
     f.min_v_++;
     --f.min_v_;
     f.min_v_--;
-    BOOST_TEST(v == f.min_v_);
+    BOOST_TEST_EQ(v, f.min_v_);
 
     f.min_v_ += one;
     f.min_v_ -= one;
-    BOOST_TEST(v == f.min_v_);
+    BOOST_TEST_EQ(v, f.min_v_);
 
     f.min_v_ *= one;
     f.min_v_ /= one;
-    BOOST_TEST(v == f.min_v_);
+    BOOST_TEST_EQ(v, f.min_v_);
 
     f.min_v_ = one; // assignable to scalar
-    BOOST_TEST(f.min_v_ == one);
+    BOOST_TEST_EQ(f.min_v_, one);
     f.min_v_ = v; // and to value type
-    BOOST_TEST(f.min_v_ == v);
+    BOOST_TEST_EQ(f.min_v_, v);
 
     // test swap
     channel_value_t v1 = f.min_v_;
     channel_value_t v2 = f.max_v_;
     std::swap(f.min_v_, f.max_v_);
-    BOOST_TEST(f.min_v_ > f.max_v_);
+    BOOST_TEST_GT(f.min_v_, f.max_v_);
     channel_value_t v3 = f.min_v_;
     channel_value_t v4 = f.max_v_;
-    BOOST_TEST(v1 == v4);
-    BOOST_TEST(v2 == v3);
+    BOOST_TEST_EQ(v1, v4);
+    BOOST_TEST_EQ(v2, v3);
 }
 
 template <typename ChannelFixtureBase>
@@ -65,10 +66,10 @@ void test_channel_arithmetic()
 {
     using fixture_t = fixture::channel<ChannelFixtureBase>;
     fixture_t f;
-    BOOST_TEST(f.min_v_ * 1 == f.min_v_);
-    BOOST_TEST(f.min_v_ / 1 == f.min_v_);
-    BOOST_TEST((f.min_v_ + 1) + 1 == f.min_v_ + 2);
-    BOOST_TEST((f.max_v_ - 1) - 1 == f.max_v_ - 2);
+    BOOST_TEST_EQ(f.min_v_ * 1, f.min_v_);
+    BOOST_TEST_EQ(f.min_v_ / 1, f.min_v_);
+    BOOST_TEST_EQ((f.min_v_ + 1) + 1, f.min_v_ + 2);
+    BOOST_TEST_EQ((f.max_v_ - 1) - 1, f.max_v_ - 2);
 
     using is_mutable_t = std::integral_constant
         <
