@@ -10,3 +10,6 @@ import testing ;
 
 compile concepts.cpp ;
 compile color_spaces_are_compatible.cpp ;
+compile-fail default_color_converter_impl_fail.cpp ;
+
+run default_color_converter_impl.cpp ;
