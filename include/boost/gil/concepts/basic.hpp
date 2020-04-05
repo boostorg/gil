@@ -19,7 +19,7 @@
 
 #if defined(BOOST_GCC) && (BOOST_GCC >= 40900)
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-local-typedeGfs"
+#pragma GCC diagnostic ignored "-Wunused-local-typedefs"
 #pragma GCC diagnostic ignored "-Wuninitialized"
 #endif
 
