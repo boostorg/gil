@@ -149,55 +149,68 @@ public:
         return *this;
     }
 
-    image& operator=(image&& img)
-    {
-        if (this != std::addressof(img))
-        {
-            auto const exchange_memory = [](image& lhs, image& rhs)
-            {
-                lhs._memory = boost::exchange(rhs._memory, nullptr);
-                lhs._align_in_bytes = boost::exchange(rhs._align_in_bytes, 0);
-                lhs._allocated_bytes = boost::exchange(rhs._allocated_bytes, 0);
-                lhs._view = boost::exchange(rhs._view, image::view_t{});
-            };
+  private:
+      using propagate_allocators = std::true_type;
+      using no_propagate_allocators = std::false_type;
 
-            constexpr bool pocma = std::allocator_traits<Alloc>::propagate_on_container_move_assignment::value;
-            if (pocma)
-            {
-                // non-sticky allocator, can adopt the memory, fast
-                destruct_pixels(this->_view);
-                this->deallocate();
-                this->_alloc = img._alloc;
-                exchange_memory(*this, img);
-            }
-            else if (_alloc == img._alloc)
-            {
-                // allocator stuck to the rhs, but it's equivalent of ours, we can still adopt the memory
-                destruct_pixels(_view);
-                this->deallocate();
-                exchange_memory(*this, img);
-            }
-            else
-            {
-                // cannot propagate the allocator and cannot adopt the memory
-                if (img._memory)
-                {
-                    allocate_and_copy(img.dimensions(), img._view);
-                    destruct_pixels(img._view);
-                    img.deallocate();
-                    img._view = image::view_t{};
-                }
-                else
-                {
-                    destruct_pixels(this->_view);
-                    this->deallocate();
-                    this->_view = view_t{};
-                }
-            }
-        }
+      template <class Alloc2>
+      using choose_pocma = typename std::conditional<
+          // TODO: Use std::allocator_traits<Allocator>::is_always_equal if available
+          std::is_empty<Alloc2>::value,
+          std::true_type,
+          typename std::allocator_traits<Alloc2>::propagate_on_container_move_assignment::type
+      >::type;
 
-        return *this;
-    }
+      static void exchange_memory(image& lhs, image& rhs)
+      {
+          lhs._memory = boost::exchange(rhs._memory, nullptr);
+          lhs._align_in_bytes = boost::exchange(rhs._align_in_bytes, 0);
+          lhs._allocated_bytes = boost::exchange(rhs._allocated_bytes, 0);
+          lhs._view = boost::exchange(rhs._view, image::view_t{});
+      };
+
+      void move_assign(image& img, propagate_allocators) noexcept {
+          // non-sticky allocator, can adopt the memory, fast
+          destruct_pixels(_view);
+          this->deallocate();
+          this->_alloc = img._alloc;
+          exchange_memory(*this, img);
+      }
+
+      void move_assign(image& img, no_propagate_allocators) {
+          if (_alloc == img._alloc) {
+              // allocator stuck to the rhs, but it's equivalent of ours, we can still adopt the memory
+              destruct_pixels(_view);
+              this->deallocate();
+              exchange_memory(*this, img);
+          } else {
+              // cannot propagate the allocator and cannot adopt the memory
+              if (img._memory)
+              {
+                  allocate_and_copy(img.dimensions(), img._view);
+                  destruct_pixels(img._view);
+                  img.deallocate();
+                  img._view = image::view_t{};
+              }
+              else
+              {
+                  destruct_pixels(this->_view);
+                  this->deallocate();
+                  this->_view = view_t{};
+              }
+          }
+      }
+    
+  public:
+      // TODO: Use noexcept(noexcept(move_assign(img, choose_pocma<allocator_type>{})))
+      // But https://gcc.gnu.org/bugzilla/show_bug.cgi?id=52869 prevents it (fixed in GCC > 9)
+      image& operator=(image&& img) {
+          if (this != std::addressof(img))
+              // Use rebinded alloc to choose pocma
+              move_assign(img, choose_pocma<allocator_type>{});
+
+          return *this;
+      }
 
     ~image()
     {
