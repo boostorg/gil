@@ -103,7 +103,7 @@ struct pixel_reference
     using pixel_t = typename std::remove_reference<PixelRef>::type;
     using parent_t = pixel_value<typename pixel_t::value_type, Tag>;
     using value_t = typename pixel_t::value_type;
-    type pixel_{}; // reference
+    type pixel_; // reference
 
     pixel_reference() : parent_t{}, pixel_(parent_t::pixel_) {}
     explicit pixel_reference(value_t const& pixel) : parent_t(pixel), pixel_(parent_t::pixel_)
