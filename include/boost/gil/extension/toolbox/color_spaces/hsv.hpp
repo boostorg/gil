@@ -130,7 +130,7 @@ struct default_color_converter_impl<hsv_t,rgb_t>
       float32_t red, green, blue;
 
       //If saturation is 0, the color is a shade of gray
-      if( abs( get_color( src, saturation_t() )) < 0.0001f  )
+      if (std::abs(get_color(src, saturation_t())) < 0.0001f)
       {
          // If saturation is 0, the color is a shade of gray
          red   = get_color( src, value_t() );
