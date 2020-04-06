@@ -146,7 +146,7 @@ class reference_core : public value_core<typename std::remove_reference<PixelRef
 {
 public:
     using type = PixelRef;
-    using pixel_t = typename boost::remove_reference<PixelRef>::type;
+    using pixel_t = typename std::remove_reference<PixelRef>::type;
     using parent_t = value_core<typename pixel_t::value_type, Tag>;
 
     type _pixel;
