@@ -155,13 +155,13 @@ void test_kernel_2d_fixed_assignment_operator()
 
 void test_kernel_1d_fixed_reverse_kernel()
 {
-    std::array<int, 3> values = {1, 2, 3};
+    std::array<int, 3> values = {{1, 2, 3}};
     gil::kernel_1d_fixed<int, 3> k(values.begin(), 1);
     BOOST_TEST_EQ((gil::kernel_1d_fixed<int, 3>::static_size), 3);
     BOOST_TEST_ALL_EQ(k.begin(), k.end(), values.begin(), values.end());
 
-    std::array<int, 3> values_rev = {3, 2, 1};
-    auto k_rev = gil::reverse_kernel(k);
+    std::array<int, 3> values_rev = {{3, 2, 1}};
+    auto const k_rev              = gil::reverse_kernel(k);
     BOOST_TEST_ALL_EQ(k_rev.begin(), k_rev.end(), values_rev.begin(), values_rev.end());
 }
 
