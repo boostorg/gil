@@ -87,7 +87,7 @@ public:
     {
         allocate_and_fill(dimensions, p_in);
     }
-    
+
     image(x_coord_t width, y_coord_t height,
           const Pixel& p_in,
           std::size_t alignment = 0,
@@ -200,7 +200,7 @@ public:
               }
           }
       }
-    
+
   public:
       // TODO: Use noexcept(noexcept(move_assign(img, choose_pocma<allocator_type>{})))
       // But https://gcc.gnu.org/bugzilla/show_bug.cgi?id=52869 prevents it (fixed in GCC > 9)
@@ -456,9 +456,10 @@ private:
 
         unsigned char* tmp=(_align_in_bytes>0) ? (unsigned char*)align((std::size_t)_memory,_align_in_bytes) : _memory;
         typename view_t::x_iterator first;
-        for (int i=0; i<num_channels<view_t>::value; ++i) {
-            dynamic_at_c(first,i) = (typename channel_type<view_t>::type*)tmp;
-            memunit_advance(dynamic_at_c(first,i), plane_size*i);
+        for (std::size_t i = 0; i < num_channels<view_t>::value; ++i)
+        {
+            dynamic_at_c(first, i) = (typename channel_type<view_t>::type*)tmp;
+            memunit_advance(dynamic_at_c(first, i), static_cast<std::ptrdiff_t>(plane_size * i));
         }
         _view=view_t(dimensions, typename view_t::locator(first, row_size));
 
@@ -477,13 +478,10 @@ private:
                                                      : _memory;
         typename view_t::x_iterator first;
 
-        for (int i = 0; i < num_channels< view_t >::value; ++i )
+        for (std::size_t i = 0; i < num_channels<view_t>::value; ++i)
         {
-            dynamic_at_c( first, i ) = (typename channel_type<view_t>::type*) tmp;
-
-            memunit_advance( dynamic_at_c(first,i)
-                           , plane_size*i
-                           );
+            dynamic_at_c(first, i) = (typename channel_type<view_t>::type*)tmp;
+            memunit_advance(dynamic_at_c(first, i), static_cast<std::ptrdiff_t>(plane_size * i));
         }
 
         _view = view_t(dims, typename view_t::locator(first, row_size));
