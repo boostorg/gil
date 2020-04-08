@@ -3,7 +3,7 @@
 All notable changes to [Boost.GIL](https://github.com/boostorg/gil/) project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## ## [1.73.0] - 2020-04-22 (beta)
+## [1.73.0] - 2020-04-22 (beta)
 
 ### Added
 - Added move constructor and move assignment operator to `image` class ([PR #457](https://github.com/boostorg/gil/pull/457)).
@@ -27,13 +27,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Fixed segmentation fault when reading corrupted PNG file ([PR #414](https://github.com/boostorg/gil/pull/414)).
 - Fixed illegal initialization of return values in the old IOv1 interface of I/O extension ([PR #409](https://github.com/boostorg/gil/pull/409)).
 
+### Acknowledgements
+
+Samuel Debionne, Thiago Henrique Hüpner, Pranam Lashkari, Mateusz Loskot, Debabrata Mandal, Olzhas Zhumabek
+
 ## [1.72.0] - 2019-12-11
 
 ### Added
 - GSoC 2019: Lanczos resampling for image down scaling ([PR #309](https://github.com/boostorg/gil/pull/309)).
 - GSoC 2019: Methods for binary thresholding, inverted binary thresholding and truncation thresholding ([PR #313](https://github.com/boostorg/gil/pull/313)).
 - GSoC 2019: Otsu thresholding method ([PR #314](https://github.com/boostorg/gil/pull/314)).
-- GSoC 2019: Adaptive thresholding using mean or gaussian-weighted sum of the neighbourhood area ([PR #315](https://github.com/boostorg/gil/pull/315)).
+- GSoC 2019: Adaptive thresholding using mean of the neighbourhood area ([PR #341](https://github.com/boostorg/gil/pull/341)).
+- GSoC 2019: Adaptive thresholding using gaussian-weighted sum of the neighbourhood area ([PR #379](https://github.com/boostorg/gil/pull/379)).
 - GSoC 2019: Harris response calculation (corner detector without non-maximum filtering) ([PR #350](https://github.com/boostorg/gil/pull/350)).
 - GSoC 2019: Hessian corner detector ([PR #364](https://github.com/boostorg/gil/pull/364)).
 - GSoC 2019: Types for defining 2D kernel, `kernel_2d` and `kernel_2d_fixed`, in Numeric extension ([PR #361](https://github.com/boostorg/gil/pull/361)).
@@ -64,6 +69,36 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Applied the [Rule of Three](https://en.wikipedia.org/wiki/Rule_of_three_(C%2B%2B_programming)) for numerous types.
 - Removed uses of deprecated implicit definition of defaulted copy assignment operator or copy constructor.
 
+### Acknowledgements
+
+Samuel Debionne, Tyler Deuty, Jean-David Gadina, Jan Houska, Pranam Lashkari, Mateusz Loskot, Stefan Seefeld, Miral Shah, Olzhas Zhumabek
+
+## [1.70.0] - 2019-04-12
+
+### Added
+- Numerous new test cases for existing features.
+- C++11 requirements checks to Boost.Build Jamfiles ([PR #260](https://github.com/boostorg/gil/pull/260)).
+
+### Changed
+- Split single `boost/gil/concepts.hpp` into multiple `boost/gil/concepts/*.hpp` headers ([PR #169](https://github.com/boostorg/gil/pull/169)).
+- Removed uses of `boost::enable_if` with `std::enable_if` ([PR #215](https://github.com/boostorg/gil/pull/215)).
+- Replaced own implementation of variant type used for `any_image` with Boost.Variant ([PR #231](https://github.com/boostorg/gil/pull/231)).
+- Moved original all-in-one test suite to `test/legacy/` ([PR #239](https://github.com/boostorg/gil/pull/239)).
+- Continued C++ modernization of the library source code.
+
+### Removed
+- Remove uses of deprecated `std::unary_function` and `std::binary_function` ([PR #191](https://github.com/boostorg/gil/pull/191)).
+- Removed uses of Boost.StaticAssert ([PR #207](https://github.com/boostorg/gil/pull/207)).
+- Removed uses of `BOOST_STATIC_CONSTANT` ([PR #211](https://github.com/boostorg/gil/pull/211)).
+- Removed uses of Boost.Function  ([PR #213](https://github.com/boostorg/gil/pull/213)), Boost.Bind and Boost.Lambda  ([PR #212](https://github.com/boostorg/gil/pull/212)).
+
+### Fixed
+- Fixed access to non-type results of metafunctions calls using `::value` convention ([PR #262](https://github.com/boostorg/gil/pull/262)).
+
+### Acknowledgements
+
+Samuel Debionne, Mateusz Loskot, Nikita Kniazev, Stefan Seefeld
+
 ## [1.69.0] - 2018-12-12
 
 ### Changed
@@ -79,6 +114,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Fixed conflict between `std::fill_n` and `boost::range::fill_n` ([PR #152](https://github.com/boostorg/gil/pull/152)).
 - Fixed issue with re-assignment of functor from `for_each_pixel` ([PR #139](https://github.com/boostorg/gil/pull/139)).
 - Fixed missing template keyword prior to dependent name `axis_iterator` ([PR #129](https://github.com/boostorg/gil/pull/129)).
+- Fixed loading of grayscale PNG with alpha channel  (tRNS chunks) ([PR #118](https://github.com/boostorg/gil/pull/118)).
+
+### Acknowledgements
+
+Mateusz Loskot, Marcel Metz, Stefan Seefeld
 
 ## [1.68.0] - 2018-08-09
 
@@ -94,15 +134,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Removed
 - The existing I/O v1 extension has been replaced with I/O v2.
 
+### Acknowledgements
+
+Niklas Angare, Jan Beich, Edward Diener, Peter Dimov, Daniela Engert, Bill Gallafent, Christian Henning, Daniel James, Nikita Kniazev, Mateusz Loskot, Marcel Metz, Martin Osborne, Antony Polukhin, Stefan Seefeld
+
 ## [1.53.0] - 2013-02-04
 
 ### Fixed
 - Fixed self-assignment warnings (Trac [#4919](https://svn.boost.org/trac10/ticket/4919)).
 
+### Acknowledgements
+
+Lubomir Bourdev, Marshall Clow, Beman Dawes, Daniela Engert, Bill Gallafent, Doug Gregor, Boris Gubenko, Christian Henning, Michael Jackson, Daniel James, Hailin Jin, Nikita Kniazev, Mateusz Loskot, John Maddock, Marcel Metz, Antony Polukhin, Stefan Seefeld
+
 ## [1.35.0] - 2008-03-29
 
 ### Added
 - First Boost release of Generic Image Library developed by Lubomir Bourdev and Hailin Jin following the [review and acceptance into Boost](https://lists.boost.org/Archives/boost/2006/11/112896.php).
+
+### Acknowledgements
+
+Lubomir Bourdev, Beman Dawes, Hailin Jin, John Maddock and all the reviewers of the library.
 
 ---------------------------------------------------------------------
 
