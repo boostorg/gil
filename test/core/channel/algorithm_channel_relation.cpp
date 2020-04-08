@@ -25,13 +25,13 @@ void test_channel_relation()
     channel_value_t const one = 1;
 
     fixture_t f;
-    BOOST_TEST(f.min_v_ <= f.max_v_);
-    BOOST_TEST(f.max_v_ >= f.min_v_);
-    BOOST_TEST(f.min_v_ < f.max_v_);
-    BOOST_TEST(f.max_v_ > f.min_v_);
-    BOOST_TEST(f.max_v_ != f.min_v_);
-    BOOST_TEST(f.min_v_ == f.min_v_);
-    BOOST_TEST(f.min_v_ != one); // comparable to integral
+    BOOST_TEST_LE(f.min_v_, f.max_v_);
+    BOOST_TEST_GE(f.max_v_, f.min_v_);
+    BOOST_TEST_LT(f.min_v_, f.max_v_);
+    BOOST_TEST_GT(f.max_v_, f.min_v_);
+    BOOST_TEST_NE(f.max_v_, f.min_v_);
+    BOOST_TEST_EQ(f.min_v_, f.min_v_);
+    BOOST_TEST_NE(f.min_v_, one); // comparable to integral
 }
 
 struct test_channel_value

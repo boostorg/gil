@@ -13,6 +13,7 @@
 #include <boost/core/lightweight_test.hpp>
 
 #include "test_fixture.hpp"
+#include "test_utility_output_stream.hpp"
 
 namespace gil = boost::gil;
 namespace fixture = boost::gil::test::fixture;
@@ -22,18 +23,18 @@ void test_xy_at()
     {
         gil::gray8_image_t image = fixture::make_image_gray8();
         auto view = gil::view(image);
-        BOOST_TEST(*view.xy_at(0, 0) == fixture::gray8_draw_pixel);
-        BOOST_TEST(*view.xy_at(1, 0) == fixture::gray8_back_pixel);
-        BOOST_TEST(*view.xy_at(0, 1) == fixture::gray8_back_pixel);
-        BOOST_TEST(*view.xy_at(1, 1) == fixture::gray8_draw_pixel);
+        BOOST_TEST_EQ(*view.xy_at(0, 0), fixture::gray8_draw_pixel);
+        BOOST_TEST_EQ(*view.xy_at(1, 0), fixture::gray8_back_pixel);
+        BOOST_TEST_EQ(*view.xy_at(0, 1), fixture::gray8_back_pixel);
+        BOOST_TEST_EQ(*view.xy_at(1, 1), fixture::gray8_draw_pixel);
     }
     {
         gil::rgb8_image_t image = fixture::make_image_rgb8();
         auto view = gil::view(image);
-        BOOST_TEST(*view.xy_at(0, 0) == fixture::rgb8_draw_pixel);
-        BOOST_TEST(*view.xy_at(1, 0) == fixture::rgb8_back_pixel);
-        BOOST_TEST(*view.xy_at(0, 1) == fixture::rgb8_back_pixel);
-        BOOST_TEST(*view.xy_at(1, 1) == fixture::rgb8_draw_pixel);
+        BOOST_TEST_EQ(*view.xy_at(0, 0), fixture::rgb8_draw_pixel);
+        BOOST_TEST_EQ(*view.xy_at(1, 0), fixture::rgb8_back_pixel);
+        BOOST_TEST_EQ(*view.xy_at(0, 1), fixture::rgb8_back_pixel);
+        BOOST_TEST_EQ(*view.xy_at(1, 1), fixture::rgb8_draw_pixel);
     }
 }
 

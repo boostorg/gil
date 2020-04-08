@@ -12,10 +12,12 @@
 
 #include <boost/core/lightweight_test.hpp>
 
+#include <cmath>
+
 namespace gil = boost::gil;
 
 // FIXME: Remove when https://github.com/boostorg/core/issues/38 happens
-#define BOOST_GIL_TEST_IS_CLOSE(a, b) BOOST_TEST(std::abs((a) - (b)) < (0.0005f))
+#define BOOST_GIL_TEST_IS_CLOSE(a, b) BOOST_TEST_LT(std::fabs((a) - (b)), (0.0005f))
 
 void test_lab_to_xyz()
 {

@@ -11,6 +11,7 @@
 #include <boost/core/lightweight_test.hpp>
 
 #include "test_fixture.hpp"
+#include "test_utility_output_stream.hpp"
 #include "core/image/test_fixture.hpp"
 
 namespace gil = boost::gil;
@@ -24,22 +25,22 @@ struct test_subimage_equals_image
         using image_t = Image;
         fixture::dynamic_image i0(fixture::create_image<image_t>(4, 4, 128));
         auto const v0 = gil::const_view(i0);
-        BOOST_TEST(v0.dimensions().x == 4);
-        BOOST_TEST(v0.dimensions().y == 4);
-        BOOST_TEST(v0.size() == 4 * 4);
+        BOOST_TEST_EQ(v0.dimensions().x, 4);
+        BOOST_TEST_EQ(v0.dimensions().y, 4);
+        BOOST_TEST_EQ(v0.size(), 4 * 4);
 
         // request with 2 x point_t values
         {
             auto v1 = gil::subimage_view(gil::view(i0), {0, 0}, i0.dimensions());
-            BOOST_TEST(v0.dimensions() == v1.dimensions());
-            BOOST_TEST(v0.size() == v1.size());
+            BOOST_TEST_EQ(v0.dimensions(), v1.dimensions());
+            BOOST_TEST_EQ(v0.size(), v1.size());
             BOOST_TEST(gil::equal_pixels(v0, v1));
         }
         // request with 4 x dimension values
         {
             auto v1 = gil::subimage_view(gil::view(i0), 0, 0, i0.dimensions().x, i0.dimensions().y);
-            BOOST_TEST(v0.dimensions() == v1.dimensions());
-            BOOST_TEST(v0.size() == v1.size());
+            BOOST_TEST_EQ(v0.dimensions(), v1.dimensions());
+            BOOST_TEST_EQ(v0.size(), v1.size());
             BOOST_TEST(gil::equal_pixels(v0, v1));
         }
     }

@@ -8,8 +8,12 @@
 #include <boost/gil/image.hpp>
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/typedefs.hpp>
+
 #include <boost/core/lightweight_test.hpp>
+
 #include "test_fixture.hpp"
+#include "test_utility_output_stream.hpp"
+
 namespace gil = boost::gil;
 namespace fixture = boost::gil::test::fixture;
 
@@ -20,19 +24,19 @@ void test_axis_0()
         auto view = gil::view(image);
         // 0,0
         auto axit = view.axis_iterator<0>(gil::point_t{0, 0});
-        BOOST_TEST(*axit == fixture::gray8_draw_pixel);
+        BOOST_TEST_EQ(*axit, fixture::gray8_draw_pixel);
         BOOST_TEST(axit == view.row_begin(0));
         // 0,1
         ++axit;
-        BOOST_TEST(*axit == fixture::gray8_back_pixel);
+        BOOST_TEST_EQ(*axit, fixture::gray8_back_pixel);
         // 1,1
         ++axit;
-        BOOST_TEST(*axit == fixture::gray8_back_pixel);
+        BOOST_TEST_EQ(*axit, fixture::gray8_back_pixel);
         BOOST_TEST(axit == view.row_end(0));
         BOOST_TEST(axit == view.row_begin(1));
         // 1,1
         ++axit;
-        BOOST_TEST(*axit == fixture::gray8_draw_pixel);
+        BOOST_TEST_EQ(*axit, fixture::gray8_draw_pixel);
         // 2,0 - pass the end
         ++axit;
         BOOST_TEST(axit == view.row_end(1));
@@ -42,18 +46,18 @@ void test_axis_0()
         auto view = gil::view(image);
         auto axit = view.axis_iterator<0>(gil::point_t{0, 0});
         BOOST_TEST(axit == view.row_begin(0));
-        BOOST_TEST(*axit == fixture::rgb8_draw_pixel);
+        BOOST_TEST_EQ(*axit, fixture::rgb8_draw_pixel);
         // 0,1
         ++axit;
-        BOOST_TEST(*axit == fixture::rgb8_back_pixel);
+        BOOST_TEST_EQ(*axit, fixture::rgb8_back_pixel);
         // 1,1
         ++axit;
         BOOST_TEST(axit == view.row_end(0));
-        BOOST_TEST(*axit == fixture::rgb8_back_pixel);
+        BOOST_TEST_EQ(*axit, fixture::rgb8_back_pixel);
         BOOST_TEST(axit == view.row_begin(1));
         // 1,1
         ++axit;
-        BOOST_TEST(*axit == fixture::rgb8_draw_pixel);
+        BOOST_TEST_EQ(*axit, fixture::rgb8_draw_pixel);
         // 2,0 - pass the end
         ++axit;
         BOOST_TEST(axit == view.row_end(1));
@@ -68,10 +72,10 @@ void test_axis_1()
         // 0,0
         auto axit = view.axis_iterator<1>(gil::point_t{0, 0});
         BOOST_TEST(axit == view.col_begin(0));
-        BOOST_TEST(*axit == fixture::gray8_draw_pixel);
+        BOOST_TEST_EQ(*axit, fixture::gray8_draw_pixel);
         // 0,1
         ++axit;
-        BOOST_TEST(*axit == fixture::gray8_back_pixel);
+        BOOST_TEST_EQ(*axit, fixture::gray8_back_pixel);
         // 0,2
         ++axit;
         BOOST_TEST(axit == view.col_end(0));

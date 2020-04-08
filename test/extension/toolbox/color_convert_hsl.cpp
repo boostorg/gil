@@ -13,6 +13,8 @@
 
 #include <cstdint>
 
+#include "test_utility_output_stream.hpp"
+
 namespace gil = boost::gil;
 
 void test_rgb_to_hsl()
@@ -21,9 +23,9 @@ void test_rgb_to_hsl()
     gil::hsl32f_pixel_t h;
     gil::color_convert(p, h);
 
-    BOOST_TEST(gil::get_color(h, gil::hsl_color_space::hue_t()) > 0.8);         // 0.83333331
-    BOOST_TEST(gil::get_color(h, gil::hsl_color_space::saturation_t()) == 1.0); // 1.00000000
-    BOOST_TEST(gil::get_color(h, gil::hsl_color_space::lightness_t()) > 0.25);  // 0.25098040
+    BOOST_TEST_GT(gil::get_color(h, gil::hsl_color_space::hue_t()), 0.8);        // 0.83333331
+    BOOST_TEST_EQ(gil::get_color(h, gil::hsl_color_space::saturation_t()), 1.0); // 1.00000000
+    BOOST_TEST_GT(gil::get_color(h, gil::hsl_color_space::lightness_t()), 0.25); // 0.25098040
 }
 
 void test_hsl_to_rgb()
@@ -34,7 +36,7 @@ void test_hsl_to_rgb()
 
     gil::rgb8_pixel_t b;
     gil::color_convert(h, b);
-    BOOST_TEST(b == p);
+    BOOST_TEST_EQ(b, p);
 }
 
 void test_image_assign_hsl()
@@ -52,7 +54,7 @@ void test_image_assign_hsl()
             float const hue = (x + 1.f) / w;
             gil::hsl32f_pixel_t const p(hue, 1.0, v);
             hsl_x_it[x] = p;
-            BOOST_TEST(gil::view(hsl_img)(x, y) == p);
+            BOOST_TEST_EQ(gil::view(hsl_img)(x, y), p);
         }
     }
 }
@@ -70,7 +72,7 @@ void test_copy_pixels_rgb_to_hsl()
     {
         gil::rgb8_pixel_t p;
         gil::color_convert(*it, p);
-        BOOST_TEST(p == rgb_pix);
+        BOOST_TEST_EQ(p, rgb_pix);
     }
 }
 

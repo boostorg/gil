@@ -12,13 +12,14 @@
 
 #include <boost/core/lightweight_test.hpp>
 
+#include <cmath>
 #include <cstdint>
 #include <limits>
 
 namespace gil = boost::gil;
 
 // FIXME: Remove when https://github.com/boostorg/core/issues/38 happens
-#define BOOST_GIL_TEST_IS_CLOSE(a, b, epsilon) BOOST_TEST(std::abs((a) - (b)) < (epsilon))
+#define BOOST_GIL_TEST_IS_CLOSE(a, b, epsilon) BOOST_TEST_LT(std::fabs((a) - (b)), (epsilon))
 
 struct int_minus_value  { static std::int8_t apply() { return -64; } };
 struct int_plus_value   { static std::int8_t apply() { return  64; } };
@@ -31,14 +32,14 @@ void test_scoped_channel_value_default_constructor()
 {
     fixture f;
     std::uint8_t v = f;
-    BOOST_TEST(v == std::uint8_t{0});
+    BOOST_TEST_EQ(v, std::uint8_t{0});
 }
 
 void test_scoped_channel_value_user_defined_constructors()
 {
     fixture f{1};
     std::uint8_t v = f;
-    BOOST_TEST(v == std::uint8_t{1});
+    BOOST_TEST_EQ(v, std::uint8_t{1});
 }
 
 void test_scoped_channel_value_copy_constructors()
@@ -46,8 +47,8 @@ void test_scoped_channel_value_copy_constructors()
     fixture f1{128};
     fixture f2{f1};
 
-    BOOST_TEST(std::uint8_t{f1} == std::uint8_t{128});
-    BOOST_TEST(std::uint8_t{f1} == std::uint8_t{f2});
+    BOOST_TEST_EQ(std::uint8_t{f1}, std::uint8_t{128});
+    BOOST_TEST_EQ(std::uint8_t{f1}, std::uint8_t{f2});
 }
 
 void test_scoped_channel_value_assignment()
@@ -55,7 +56,7 @@ void test_scoped_channel_value_assignment()
     fixture f;
     f = 64;
     std::uint8_t v = f;
-    BOOST_TEST(v == std::uint8_t{64});
+    BOOST_TEST_EQ(v, std::uint8_t{64});
 }
 
 void test_scoped_channel_value_float32_t()
@@ -63,10 +64,10 @@ void test_scoped_channel_value_float32_t()
     auto const epsilon = std::numeric_limits<float>::epsilon();
     // min
     BOOST_GIL_TEST_IS_CLOSE(gil::float_point_zero<float>::apply(), 0.0, epsilon);
-    BOOST_TEST(gil::channel_traits<gil::float32_t>::min_value() == 0.0);
+    BOOST_TEST_EQ(gil::channel_traits<gil::float32_t>::min_value(), 0.0);
     // max
     BOOST_GIL_TEST_IS_CLOSE(gil::float_point_one<float>::apply(), 1.0, epsilon);
-    BOOST_TEST(gil::channel_traits<gil::float32_t>::max_value() == 1.0);
+    BOOST_TEST_EQ(gil::channel_traits<gil::float32_t>::max_value(), 1.0);
 }
 
 void test_scoped_channel_value_float64_t()

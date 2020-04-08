@@ -12,30 +12,32 @@
 
 #include <algorithm>
 
+#include "test_utility_output_stream.hpp"
+
 namespace gil = boost::gil;
 
 void test_dx_sobel_kernel()
 {
-    const auto kernel = gil::generate_dx_sobel(1);
-    BOOST_TEST(std::equal(kernel.begin(), kernel.end(), gil::dx_sobel.begin()));
+    auto const kernel = gil::generate_dx_sobel(1);
+    BOOST_TEST_ALL_EQ(kernel.begin(), kernel.end(), gil::detail::dx_sobel.begin(), gil::detail::dx_sobel.end());
 }
 
 void test_dx_scharr_kernel()
 {
-    const auto kernel = gil::generate_dx_scharr(1);
-    BOOST_TEST(std::equal(kernel.begin(), kernel.end(), gil::dx_scharr.begin()));
+    auto const kernel = gil::generate_dx_scharr(1);
+    BOOST_TEST_ALL_EQ(kernel.begin(), kernel.end(), gil::detail::dx_scharr.begin(), gil::detail::dx_scharr.end());
 }
 
 void test_dy_sobel_kernel()
 {
-    const auto kernel = gil::generate_dy_sobel(1);
-    BOOST_TEST(std::equal(kernel.begin(), kernel.end(), gil::dy_sobel.begin()));
+    auto const kernel = gil::generate_dy_sobel(1);
+    BOOST_TEST_ALL_EQ(kernel.begin(), kernel.end(), gil::detail::dy_sobel.begin(), gil::detail::dy_sobel.end());
 }
 
 void test_dy_scharr_kernel()
 {
-    const auto kernel = gil::generate_dy_scharr(1);
-    BOOST_TEST(std::equal(kernel.begin(), kernel.end(), gil::dy_scharr.begin()));
+    auto const kernel = gil::generate_dy_scharr(1);
+    BOOST_TEST_ALL_EQ(kernel.begin(), kernel.end(), gil::detail::dy_scharr.begin(), gil::detail::dy_scharr.end());
 }
 
 int main()
