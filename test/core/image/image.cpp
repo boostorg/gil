@@ -68,7 +68,7 @@ struct test_constructor_from_other_image
     }
     static void run()
     {
-        boost::mp11::mp_for_each<fixture::multiband_image_types>(test_constructor_from_other_image{});
+        boost::mp11::mp_for_each<fixture::rgb_interleaved_image_types>(test_constructor_from_other_image{});
     }
 };
 

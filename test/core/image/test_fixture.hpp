@@ -38,7 +38,7 @@ using image_types = std::tuple
     gil::rgba32_image_t
 >;
 
-using multiband_image_types = std::tuple
+using rgb_interleaved_image_types = std::tuple
 <
     gil::bgr8_image_t,
     gil::bgr16_image_t,
