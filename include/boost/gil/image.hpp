@@ -339,7 +339,8 @@ public:
 
     view_t       _view;      // contains pointer to the pixels, the image size and ways to navigate pixels
     
-    template <typename P2, bool IP2, typename Alloc2> friend class image; // for construction from other type
+    // for construction from other type
+    template <typename P2, bool IP2, typename Alloc2> friend class image;
 private:
     unsigned char* _memory;
     std::size_t    _align_in_bytes;
