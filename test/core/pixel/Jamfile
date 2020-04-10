@@ -16,5 +16,6 @@ compile num_channels.cpp ;
 compile pixel_reference_is_mutable.cpp ;
 compile pixels_are_compatible.cpp ;
 
+run color_convert_cmyk.cpp ;
 run packed_pixel.cpp ;
 run test_fixture.cpp ;
