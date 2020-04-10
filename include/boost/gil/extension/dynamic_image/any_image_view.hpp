@@ -76,8 +76,7 @@ class any_image_view : public variant2::variant<Views...>
     using parent_t = variant2::variant<Views...>;
 
 public:    
-    using const_t = mp11::mp_rename<detail::views_get_const_t<any_image_view>, any_image_view>;
-    //using const_t = detail::views_get_const_t<any_image_view>;
+    using const_t = detail::views_get_const_t<any_image_view>;
     using x_coord_t = std::ptrdiff_t;
     using y_coord_t = std::ptrdiff_t;
     using point_t = point<std::ptrdiff_t>;
