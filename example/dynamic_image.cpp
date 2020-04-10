@@ -14,8 +14,7 @@ int main()
 {
     namespace gil = boost::gil;
 
-    using my_images_t = boost::mp11::mp_list<gil::gray8_image_t, gil::rgb8_image_t, gil::gray16_image_t, gil::rgb16_image_t>;
-    gil::any_image<my_images_t> dynamic_image;
+    gil::any_image<gil::gray8_image_t, gil::rgb8_image_t, gil::gray16_image_t, gil::rgb16_image_t> dynamic_image;
     gil::read_image("test.jpg", dynamic_image, gil::jpeg_tag());
     // Save the image upside down, preserving its native color space and channel depth
     auto view = gil::flipped_up_down_view(gil::const_view(dynamic_image));
