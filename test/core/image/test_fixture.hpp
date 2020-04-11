@@ -38,6 +38,19 @@ using image_types = std::tuple
     gil::rgba32_image_t
 >;
 
+using rgb_interleaved_image_types = std::tuple
+<
+    gil::bgr8_image_t,
+    gil::bgr16_image_t,
+    gil::bgr32_image_t,
+    gil::rgb8_image_t,
+    gil::rgb16_image_t,
+    gil::rgb32_image_t,
+    gil::rgba8_image_t,
+    gil::rgba16_image_t,
+    gil::rgba32_image_t
+>;
+
 template <typename Image, typename Generator>
 auto generate_image(std::ptrdiff_t size_x, std::ptrdiff_t size_y, Generator&& generate) -> Image
 {
