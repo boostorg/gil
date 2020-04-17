@@ -65,16 +65,16 @@
 
 <p><code>#include &lt;<a class="el" href="any__image_8hpp_source.html">any_image.hpp</a>&gt;</code></p>
 
-<p>Inherits type&lt; Images &gt;.</p>
+<p>Inherits variant&lt; Images... &gt;.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a5eb1e2b657007ec46ae5e0580171e7d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5eb1e2b657007ec46ae5e0580171e7d0"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>view_t</b> = <a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; detail::images_get_views_t&lt; Images &gt;&gt;</td></tr>
-<tr class="separator:a5eb1e2b657007ec46ae5e0580171e7d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af06262923ccc01f09d4cda26592ecf80"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af06262923ccc01f09d4cda26592ecf80"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>const_view_t</b> = <a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; detail::images_get_const_views_t&lt; Images &gt;&gt;</td></tr>
-<tr class="separator:af06262923ccc01f09d4cda26592ecf80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa7a4181b7f28de67650fa4868e47b89"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa7a4181b7f28de67650fa4868e47b89"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>view_t</b> = mp11::mp_rename&lt; detail::images_get_views_t&lt; <a class="el" href="classboost_1_1gil_1_1any__image.html">any_image</a> &gt;, <a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a> &gt;</td></tr>
+<tr class="separator:aaa7a4181b7f28de67650fa4868e47b89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a787492c48d4d7ed8d29a8c6bc9c2a7e8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a787492c48d4d7ed8d29a8c6bc9c2a7e8"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>const_view_t</b> = mp11::mp_rename&lt; detail::images_get_const_views_t&lt; <a class="el" href="classboost_1_1gil_1_1any__image.html">any_image</a> &gt;, <a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a> &gt;</td></tr>
+<tr class="separator:a787492c48d4d7ed8d29a8c6bc9c2a7e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f1a92adcae3b10cbad7fe560a94d1b1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2f1a92adcae3b10cbad7fe560a94d1b1"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>x_coord_t</b> = std::ptrdiff_t</td></tr>
 <tr class="separator:a2f1a92adcae3b10cbad7fe560a94d1b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -98,10 +98,10 @@ template&lt;typename Image &gt; </td></tr>
 template&lt;typename Image &gt; </td></tr>
 <tr class="memitem:a6adb3b7be63a7e1e99f41c5d27b3017a"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>any_image</b> (Image &amp;img, bool do_swap)</td></tr>
 <tr class="separator:a6adb3b7be63a7e1e99f41c5d27b3017a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32308751fc5e34ccfc42b368bbf86c73"><td class="memTemplParams" colspan="2"><a class="anchor" id="a32308751fc5e34ccfc42b368bbf86c73"></a>
-template&lt;typename OtherImages &gt; </td></tr>
-<tr class="memitem:a32308751fc5e34ccfc42b368bbf86c73"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>any_image</b> (<a class="el" href="classboost_1_1gil_1_1any__image.html">any_image</a>&lt; OtherImages &gt; const &amp;img)</td></tr>
-<tr class="separator:a32308751fc5e34ccfc42b368bbf86c73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad306c37b37f2eb9464e8df6ea4fbcbe"><td class="memTemplParams" colspan="2"><a class="anchor" id="aad306c37b37f2eb9464e8df6ea4fbcbe"></a>
+template&lt;typename... OtherImages&gt; </td></tr>
+<tr class="memitem:aad306c37b37f2eb9464e8df6ea4fbcbe"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>any_image</b> (<a class="el" href="classboost_1_1gil_1_1any__image.html">any_image</a>&lt; OtherImages... &gt; const &amp;img)</td></tr>
+<tr class="separator:aad306c37b37f2eb9464e8df6ea4fbcbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aba2e458291892f9f796c00582a2facaf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba2e458291892f9f796c00582a2facaf"></a>
 <a class="el" href="classboost_1_1gil_1_1any__image.html">any_image</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="classboost_1_1gil_1_1any__image.html">any_image</a> const &amp;img)</td></tr>
 <tr class="separator:aba2e458291892f9f796c00582a2facaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -109,10 +109,10 @@ template&lt;typename OtherImages &gt; </td></tr>
 template&lt;typename Image &gt; </td></tr>
 <tr class="memitem:aa1d6ed6e77e895e39fd9bc37f34e7902"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classboost_1_1gil_1_1any__image.html">any_image</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator=</b> (Image const &amp;img)</td></tr>
 <tr class="separator:aa1d6ed6e77e895e39fd9bc37f34e7902"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31ee6077b443a1eb297792d7dea83e7f"><td class="memTemplParams" colspan="2"><a class="anchor" id="a31ee6077b443a1eb297792d7dea83e7f"></a>
-template&lt;typename OtherImages &gt; </td></tr>
-<tr class="memitem:a31ee6077b443a1eb297792d7dea83e7f"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classboost_1_1gil_1_1any__image.html">any_image</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="classboost_1_1gil_1_1any__image.html">any_image</a>&lt; OtherImages &gt; const &amp;img)</td></tr>
-<tr class="separator:a31ee6077b443a1eb297792d7dea83e7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea38acfe3b9fdae578dec1c67b2fcdcb"><td class="memTemplParams" colspan="2"><a class="anchor" id="aea38acfe3b9fdae578dec1c67b2fcdcb"></a>
+template&lt;typename... OtherImages&gt; </td></tr>
+<tr class="memitem:aea38acfe3b9fdae578dec1c67b2fcdcb"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classboost_1_1gil_1_1any__image.html">any_image</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="classboost_1_1gil_1_1any__image.html">any_image</a>&lt; OtherImages... &gt; const &amp;img)</td></tr>
+<tr class="separator:aea38acfe3b9fdae578dec1c67b2fcdcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7625c48852788be3463d7320b5ea50e5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7625c48852788be3463d7320b5ea50e5"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>recreate</b> (const <a class="el" href="classboost_1_1gil_1_1point.html">point_t</a> &amp;dims, unsigned alignment=1)</td></tr>
 <tr class="separator:a7625c48852788be3463d7320b5ea50e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -133,7 +133,7 @@ y_coord_t&#160;</td><td class="memItemRight" valign="bottom"><b>height</b> () co
 <tr class="separator:a5d84f7f164c70ba5b617ffa1e69f71a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename Images&gt;<br />
+<div class="textblock"><h3>template&lt;typename... Images&gt;<br />
 class boost::gil::any_image&lt; Images &gt;</h3>
 
 <p>Represents a run-time specified image. Note it does NOT model <a class="el" href="structboost_1_1gil_1_1_image_concept.html" title="2-dimensional image whose value type models PixelValueConcept ">ImageConcept</a>. </p>

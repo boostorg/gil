@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=9"/>
     <meta name="generator" content="Doxygen 1.8.11"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Generic Image Library: color_converted_view_type&lt; any_image_view&lt; Views &gt;, DstP, CC &gt; Struct Template Reference</title>
+    <title>Generic Image Library: color_converted_view_type&lt; any_image_view&lt; Views... &gt;, DstP &gt; Struct Template Reference</title>
     <link href="tabs.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript" src="dynsections.js"></script>
@@ -47,34 +47,34 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>boost</b></li><li class="navelem"><b>gil</b></li><li class="navelem"><a class="el" href="structboost_1_1gil_1_1color__converted__view__type_3_01any__image__view_3_01_views_01_4_00_01_dst_p_00_01_c_c_01_4.html">color_converted_view_type&lt; any_image_view&lt; Views &gt;, DstP, CC &gt;</a></li>  </ul>
+<li class="navelem"><b>boost</b></li><li class="navelem"><b>gil</b></li><li class="navelem"><a class="el" href="structboost_1_1gil_1_1color__converted__view__type_3_01any__image__view_3_01_views_8_8_8_01_4_00_01_dst_p_01_4.html">color_converted_view_type&lt; any_image_view&lt; Views... &gt;, DstP &gt;</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
-<a href="structboost_1_1gil_1_1color__converted__view__type_3_01any__image__view_3_01_views_01_4_00_01_dst_p_00_01_c_c_01_4-members.html">List of all members</a>  </div>
+<a href="structboost_1_1gil_1_1color__converted__view__type_3_01any__image__view_3_01_views_8_8_8_01_4_00_01_dst_p_01_4-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">color_converted_view_type&lt; any_image_view&lt; Views &gt;, DstP, CC &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group___image_view.html">Image View</a> &raquo; <a class="el" href="group___image_view_algorithm.html">Algorithms and Utility Functions</a> &raquo; <a class="el" href="group___image_view_transformations.html">Image View Transformations</a> &raquo; <a class="el" href="group___image_view_transformations_color_convert.html">color_converted_view</a></div></div>  </div>
+<div class="title">color_converted_view_type&lt; any_image_view&lt; Views... &gt;, DstP &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group___image_view.html">Image View</a> &raquo; <a class="el" href="group___image_view_algorithm.html">Algorithms and Utility Functions</a> &raquo; <a class="el" href="group___image_view_transformations.html">Image View Transformations</a> &raquo; <a class="el" href="group___image_view_transformations_color_convert.html">color_converted_view</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Returns the type of a runtime-specified view, color-converted to a given pixel type with user specified color converter.  
- <a href="structboost_1_1gil_1_1color__converted__view__type_3_01any__image__view_3_01_views_01_4_00_01_dst_p_00_01_c_c_01_4.html#details">More...</a></p>
+<p>Returns the type of a runtime-specified view, color-converted to a given pixel type with the default coor converter.  
+ <a href="structboost_1_1gil_1_1color__converted__view__type_3_01any__image__view_3_01_views_8_8_8_01_4_00_01_dst_p_01_4.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="extension_2dynamic__image_2image__view__factory_8hpp_source.html">image_view_factory.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a63e33e2e03a14498f2b884908cbe0714"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a63e33e2e03a14498f2b884908cbe0714"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>type</b> = <a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; typename detail::views_get_ccv_type&lt; Views, DstP, CC &gt;::<a class="el" href="classboost_1_1gil_1_1any__image__view.html">type</a> &gt;</td></tr>
-<tr class="separator:a63e33e2e03a14498f2b884908cbe0714"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af56d5bfeaad2106dfaedab5c7a782277"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af56d5bfeaad2106dfaedab5c7a782277"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>type</b> = detail::views_get_ccv_type&lt; <a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; Views... &gt;, DstP, <a class="el" href="structboost_1_1gil_1_1default__color__converter.html">default_color_converter</a> &gt;</td></tr>
+<tr class="separator:af56d5bfeaad2106dfaedab5c7a782277"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename Views, typename DstP, typename CC&gt;<br />
-struct boost::gil::color_converted_view_type&lt; any_image_view&lt; Views &gt;, DstP, CC &gt;</h3>
+<div class="textblock"><h3>template&lt;typename... Views, typename DstP&gt;<br />
+struct boost::gil::color_converted_view_type&lt; any_image_view&lt; Views... &gt;, DstP &gt;</h3>
 
-<p>Returns the type of a runtime-specified view, color-converted to a given pixel type with user specified color converter. </p>
+<p>Returns the type of a runtime-specified view, color-converted to a given pixel type with the default coor converter. </p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
 <li><a class="el" href="extension_2dynamic__image_2image__view__factory_8hpp_source.html">extension/dynamic_image/image_view_factory.hpp</a></li>
 </ul>

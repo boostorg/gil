@@ -59,17 +59,17 @@ template&lt;typename View &gt; </td></tr>
 template&lt;typename View &gt; </td></tr>
 <tr class="memitem:gab3e804c4e010f0d5bed4f81e4bf05658"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>subsampled_view</b> (View const &amp;src, typename View::point_t const &amp;step) -&gt; typename dynamic_xy_step_type&lt; View &gt;::type</td></tr>
 <tr class="separator:gab3e804c4e010f0d5bed4f81e4bf05658"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9c2d20932444207d38ad66b2479b736a"><td class="memTemplParams" colspan="2">template&lt;typename Views &gt; </td></tr>
-<tr class="memitem:ga9c2d20932444207d38ad66b2479b736a"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_transformations_subsampled.html#ga9c2d20932444207d38ad66b2479b736a">subsampled_view</a> (any_image_view&lt; Views &gt; const &amp;src, point_t const &amp;step) -&gt; typename dynamic_xy_step_type&lt; any_image_view&lt; Views &gt;&gt;::type</td></tr>
-<tr class="separator:ga9c2d20932444207d38ad66b2479b736a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafa4dc506622bca5eeba7f1e6f45b0175"><td class="memTemplParams" colspan="2">template&lt;typename Views &gt; </td></tr>
-<tr class="memitem:gafa4dc506622bca5eeba7f1e6f45b0175"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_transformations_subsampled.html#gafa4dc506622bca5eeba7f1e6f45b0175">subsampled_view</a> (any_image_view&lt; Views &gt; const &amp;src, std::ptrdiff_t x_step, std::ptrdiff_t y_step) -&gt; typename dynamic_xy_step_type&lt; any_image_view&lt; Views &gt;&gt;::type</td></tr>
-<tr class="separator:gafa4dc506622bca5eeba7f1e6f45b0175"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac59e727b84791abf5884d2b0f7558034"><td class="memTemplParams" colspan="2">template&lt;typename... Views&gt; </td></tr>
+<tr class="memitem:gac59e727b84791abf5884d2b0f7558034"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_transformations_subsampled.html#gac59e727b84791abf5884d2b0f7558034">subsampled_view</a> (any_image_view&lt; Views... &gt; const &amp;src, point_t const &amp;step) -&gt; typename dynamic_xy_step_type&lt; any_image_view&lt; Views... &gt;&gt;::type</td></tr>
+<tr class="separator:gac59e727b84791abf5884d2b0f7558034"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa94ed553e5724b91ff1bba7ecbf33619"><td class="memTemplParams" colspan="2">template&lt;typename... Views&gt; </td></tr>
+<tr class="memitem:gaa94ed553e5724b91ff1bba7ecbf33619"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_transformations_subsampled.html#gaa94ed553e5724b91ff1bba7ecbf33619">subsampled_view</a> (any_image_view&lt; Views... &gt; const &amp;src, std::ptrdiff_t x_step, std::ptrdiff_t y_step) -&gt; typename dynamic_xy_step_type&lt; any_image_view&lt; Views... &gt;&gt;::type</td></tr>
+<tr class="separator:gaa94ed553e5724b91ff1bba7ecbf33619"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>view of a subsampled version of an <a class="el" href="classboost_1_1gil_1_1image__view.html" title="A lightweight object that interprets memory as a 2D array of pixels. Models ImageViewConcept,PixelBasedConcept,HasDynamicXStepTypeConcept,HasDynamicYStepTypeConcept,HasTransposedTypeConcept. ">image_view</a>, stepping over a number of channels in X and number of rows in Y </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga9c2d20932444207d38ad66b2479b736a"></a>
+<a class="anchor" id="gac59e727b84791abf5884d2b0f7558034"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -79,7 +79,7 @@ template&lt;typename View &gt; </td></tr>
         <tr>
           <td class="memname">auto boost::gil::subsampled_view </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; Views &gt; const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; Views... &gt; const &amp;&#160;</td>
           <td class="paramname"><em>src</em>, </td>
         </tr>
         <tr>
@@ -91,7 +91,7 @@ template&lt;typename View &gt; </td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td> -&gt; typename <a class="el" href="structboost_1_1gil_1_1dynamic__xy__step__type.html">dynamic_xy_step_type</a>&lt;<a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt;Views&gt;&gt;::type
+          <td></td><td> -&gt; typename <a class="el" href="structboost_1_1gil_1_1dynamic__xy__step__type.html">dynamic_xy_step_type</a>&lt;<a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt;Views...&gt;&gt;::type
 </td>
         </tr>
       </table>
@@ -110,7 +110,7 @@ template&lt;typename View &gt; </td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gafa4dc506622bca5eeba7f1e6f45b0175"></a>
+<a class="anchor" id="gaa94ed553e5724b91ff1bba7ecbf33619"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -120,7 +120,7 @@ template&lt;typename View &gt; </td></tr>
         <tr>
           <td class="memname">auto boost::gil::subsampled_view </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; Views &gt; const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; Views... &gt; const &amp;&#160;</td>
           <td class="paramname"><em>src</em>, </td>
         </tr>
         <tr>
@@ -138,7 +138,7 @@ template&lt;typename View &gt; </td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td> -&gt; typename <a class="el" href="structboost_1_1gil_1_1dynamic__xy__step__type.html">dynamic_xy_step_type</a>&lt;<a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt;Views&gt;&gt;::type
+          <td></td><td> -&gt; typename <a class="el" href="structboost_1_1gil_1_1dynamic__xy__step__type.html">dynamic_xy_step_type</a>&lt;<a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt;Views...&gt;&gt;::type
 </td>
         </tr>
       </table>
