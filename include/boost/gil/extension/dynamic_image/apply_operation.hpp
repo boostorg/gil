@@ -10,47 +10,47 @@
 
 #include <boost/gil/detail/mp11.hpp>
 
-#include <boost/variant/apply_visitor.hpp>
+#include <boost/variant2/variant.hpp>
 
 namespace boost { namespace gil {
 
 /// \ingroup Variant
 /// \brief Invokes a generic mutable operation (represented as a unary function object) on a variant
-template <typename Types, typename UnaryOp>
+template <typename ...Types, typename UnaryOp>
 BOOST_FORCEINLINE
-auto apply_operation(variant<Types>& arg, UnaryOp op)
+auto apply_operation(variant2::variant<Types...>& arg, UnaryOp op)
 #if defined(BOOST_NO_CXX14_DECLTYPE_AUTO) || defined(BOOST_NO_CXX11_DECLTYPE_N3276)
     -> typename UnaryOp::result_type
 #endif
 {
-    return apply_visitor(op, arg);
+    return variant2::visit(op, arg);
 }
 
 /// \ingroup Variant
 /// \brief Invokes a generic constant operation (represented as a unary function object) on a variant
-template <typename Types, typename UnaryOp>
+template <typename ...Types, typename UnaryOp>
 BOOST_FORCEINLINE
-auto apply_operation(variant<Types> const& arg, UnaryOp op)
+auto apply_operation(variant2::variant<Types...> const& arg, UnaryOp op)
 #if defined(BOOST_NO_CXX14_DECLTYPE_AUTO) || defined(BOOST_NO_CXX11_DECLTYPE_N3276)
     -> typename UnaryOp::result_type
 #endif
 {
-    return apply_visitor(op, arg);
+    return variant2::visit(op, arg);
 }
 
 /// \ingroup Variant
 /// \brief Invokes a generic constant operation (represented as a binary function object) on two variants
-template <typename Types1, typename Types2, typename BinaryOp>
+template <typename ...Types1, typename ...Types2, typename BinaryOp>
 BOOST_FORCEINLINE
 auto apply_operation(
-    variant<Types1> const& arg1,
-    variant<Types2> const& arg2,
+    variant2::variant<Types1...> const& arg1,
+    variant2::variant<Types2...> const& arg2,
     BinaryOp op)
 #if defined(BOOST_NO_CXX14_DECLTYPE_AUTO) || defined(BOOST_NO_CXX11_DECLTYPE_N3276)
     -> typename BinaryOp::result_type
 #endif
 {
-    return apply_visitor(op, arg1, arg2);
+    return variant2::visit(op, arg1, arg2);
 }
 
 }}  // namespace boost::gil
