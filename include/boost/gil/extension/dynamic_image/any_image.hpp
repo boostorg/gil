@@ -100,6 +100,9 @@ public:
 
     template <typename Image>
     explicit any_image(Image const& img) : parent_t(img) {}
+    
+    template <typename Image>
+    any_image(Image&& img) : parent_t(std::move(img)) {}
 
     template <typename Image>
     explicit any_image(Image& img, bool do_swap) : parent_t(img, do_swap) {}
