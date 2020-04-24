@@ -10,4 +10,5 @@ import testing ;
 
 alias headers : [ generate_self_contained_headers extension/dynamic_image ] ;
 
+run any_image.cpp ;
 run subimage_view.cpp ;

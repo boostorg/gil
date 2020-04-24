@@ -1,5 +1,6 @@
 //
 // Copyright 2005-2007 Adobe Systems Incorporated
+// Copyright 2020 Samuel Debionne
 //
 // Distributed under the Boost Software License, Version 1.0
 // See accompanying file LICENSE_1_0.txt or copy at
@@ -100,6 +101,9 @@ public:
 
     template <typename Image>
     explicit any_image(Image const& img) : parent_t(img) {}
+    
+    template <typename Image>
+    any_image(Image&& img) : parent_t(std::move(img)) {}
 
     template <typename Image>
     explicit any_image(Image& img, bool do_swap) : parent_t(img, do_swap) {}
