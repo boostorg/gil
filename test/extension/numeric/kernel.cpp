@@ -156,6 +156,31 @@ void test_kernel_1d_reverse_kernel()
     BOOST_TEST_EQ(k.size(), d.size());
 }
 
+void test_kernel_2d_reverse_kernel()
+{
+    std::vector<int> data = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    gil::detail::kernel_2d<int> d(data.begin(), data.size(), 2, 0);
+
+    BOOST_TEST_EQ(d.center_x(), 0);
+    BOOST_TEST_EQ(d.center_y(), 2);
+
+    auto k = gil::detail::reverse_kernel(d);
+
+    BOOST_TEST_EQ(k.center_x(), d.lower_size());
+    BOOST_TEST_EQ(k.center_x(), 0);
+
+    BOOST_TEST_EQ(k.center_y(), d.right_size());
+    BOOST_TEST_EQ(k.center_y(), 2);
+
+    // std::vector interface
+    BOOST_TEST_EQ(k.size(), d.size());
+
+    for (size_t i = 0; i < k.size() * k.size(); i++)
+    {
+        BOOST_TEST_EQ(d[i], k[(k.size()*k.size()) - 1 - i]);
+    }
+}
+
 int main()
 {
     test_kernel_1d_default_constructor();
@@ -169,6 +194,7 @@ int main()
     test_kernel_1d_assignment_operator();
     test_kernel_2d_assignment_operator();
     test_kernel_1d_reverse_kernel();
+    test_kernel_2d_reverse_kernel();
 
     return ::boost::report_errors();
 }
