@@ -8,49 +8,32 @@
 #ifndef BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_APPLY_OPERATION_HPP
 #define BOOST_GIL_EXTENSION_DYNAMIC_IMAGE_APPLY_OPERATION_HPP
 
-#include <boost/gil/detail/mp11.hpp>
-
 #include <boost/variant2/variant.hpp>
 
 namespace boost { namespace gil {
 
 /// \ingroup Variant
-/// \brief Invokes a generic mutable operation (represented as a unary function object) on a variant
-template <typename ...Types, typename UnaryOp>
+/// \brief Applies the visitor op to the variants
+template <typename Variant1, typename Visitor>
 BOOST_FORCEINLINE
-auto apply_operation(variant2::variant<Types...>& arg, UnaryOp op)
+auto apply_operation(Variant1&& arg1, Visitor&& op)
 #if defined(BOOST_NO_CXX14_DECLTYPE_AUTO) || defined(BOOST_NO_CXX11_DECLTYPE_N3276)
-    -> typename UnaryOp::result_type
+    -> typename Visitor::result_type
 #endif
 {
-    return variant2::visit(op, arg);
+    return variant2::visit(std::forward<Visitor>(op), std::forward<Variant1>(arg1));
 }
 
 /// \ingroup Variant
-/// \brief Invokes a generic constant operation (represented as a unary function object) on a variant
-template <typename ...Types, typename UnaryOp>
+/// \brief Applies the visitor op to the variants
+template <typename Variant1, typename Variant2, typename Visitor>
 BOOST_FORCEINLINE
-auto apply_operation(variant2::variant<Types...> const& arg, UnaryOp op)
+auto apply_operation(Variant1&& arg1, Variant2&& arg2, Visitor&& op)
 #if defined(BOOST_NO_CXX14_DECLTYPE_AUTO) || defined(BOOST_NO_CXX11_DECLTYPE_N3276)
-    -> typename UnaryOp::result_type
+-> typename Visitor::result_type
 #endif
 {
-    return variant2::visit(op, arg);
-}
-
-/// \ingroup Variant
-/// \brief Invokes a generic constant operation (represented as a binary function object) on two variants
-template <typename ...Types1, typename ...Types2, typename BinaryOp>
-BOOST_FORCEINLINE
-auto apply_operation(
-    variant2::variant<Types1...> const& arg1,
-    variant2::variant<Types2...> const& arg2,
-    BinaryOp op)
-#if defined(BOOST_NO_CXX14_DECLTYPE_AUTO) || defined(BOOST_NO_CXX11_DECLTYPE_N3276)
-    -> typename BinaryOp::result_type
-#endif
-{
-    return variant2::visit(op, arg1, arg2);
+    return variant2::visit(std::forward<Visitor>(op), std::forward<Variant1>(arg1), std::forward<Variant2>(arg2));
 }
 
 }}  // namespace boost::gil
