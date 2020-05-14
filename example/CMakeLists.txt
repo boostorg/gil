@@ -43,3 +43,12 @@ endforeach()
 
 unset(_example)
 unset(_examples)
+
+# Blaze targets
+if (BOOST_GIL_ENABLE_EXT_BLAZE)
+  foreach(blaze_example blaze)
+    add_executable(${blaze_example} ${blaze_example}.cpp)
+    target_link_libraries(${blaze_example} PRIVATE gil_include_directories gil_dependencies gil_compile_options)
+
+  endforeach()
+endif()
