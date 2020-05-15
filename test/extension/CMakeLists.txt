@@ -20,3 +20,7 @@ endif()
 if(BOOST_GIL_ENABLE_EXT_IO)
   add_subdirectory(io)
 endif()
+
+if (BOOST_GIL_ENABLE_EXT_BLAZE)
+  add_subdirectory(blaze)
+endif()
