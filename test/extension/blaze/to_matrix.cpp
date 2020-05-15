@@ -64,6 +64,5 @@ int main()
     rgb8_to_matrix_uniform();
     rgb8_to_matrix_distinct();
 
-
     return boost::report_errors();
 }

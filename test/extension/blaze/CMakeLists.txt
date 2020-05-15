@@ -8,7 +8,9 @@
 message(STATUS "Boost.GIL: Configuring tests in test/extension/blaze")
 foreach(_name
   to_matrix
-  )
+  pixel_to_vector
+  vector_to_pixel
+  to_image)
   set(_test t_ext_blaze_${_name})
   set(_target test_ext_blaze_${_name})
 
