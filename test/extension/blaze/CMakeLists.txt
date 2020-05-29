@@ -11,7 +11,8 @@ foreach(_name
   pixel_to_vector
   vector_to_pixel
   from_matrix
-  as_matrix)
+  as_matrix
+  as_matrix_channeled)
   set(_test t_ext_blaze_${_name})
   set(_target test_ext_blaze_${_name})
 
