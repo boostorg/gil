@@ -13,6 +13,6 @@ int main()
     element_type v({0, 0, 255});
     blaze::DynamicMatrix<element_type> matrix(16, 16, v);
 
-    auto image = gil::to_image<gil::rgb8_image_t>(matrix);
+    auto image = gil::from_matrix<gil::rgb8_image_t>(matrix);
     gil::write_view("output.png", gil::view(image), gil::png_tag{});
 }
