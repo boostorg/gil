@@ -12,7 +12,8 @@ foreach(_name
   vector_to_pixel
   from_matrix
   as_matrix
-  as_matrix_channeled)
+  as_matrix_channeled
+  true_channel_type)
   set(_test t_ext_blaze_${_name})
   set(_target test_ext_blaze_${_name})
 
