@@ -27,7 +27,7 @@ option(BOOST_GIL_ENABLE_EXT_BLAZE "Enable Blaze library extensions, tests and ex
 set(BOOST_GIL_BLAS_LIBRARY "" CACHE STRING "BLAS library to use with Blaze, only queried if BOOST_GIL_ENABLE_EXT_BLAZE is on")
 
 if (BOOST_GIL_ENABLE_EXT_BLAZE)
-  set(CMAKE_CXX_STANDARD 14 CACHE STRING "C++ standard version to use (requires at least 14 for Blaze)")
+  set(CMAKE_CXX_STANDARD 17 CACHE STRING "C++ standard version to use (requires at least 17 for Blaze extension)")
 else()
   set(CMAKE_CXX_STANDARD 11 CACHE STRING "C++ standard version to use (default is 11)")
 endif()
