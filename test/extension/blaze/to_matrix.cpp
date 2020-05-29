@@ -40,7 +40,7 @@ void test_to_matrix_type()
         auto result = gil::to_matrix(view, channel_index);
         for (std::size_t i = 0; i < view.height(); ++i) {
             for (std::size_t j = 0; j < view.width(); ++j) {
-                BOOST_TEST_EQ(result(j, i), view(i, j)[channel_index]);
+                BOOST_TEST(result(j, i) == view(i, j)[channel_index]);
             }
         }
     }
@@ -87,7 +87,7 @@ void test_to_matrix_out()
         gil::to_matrix(view, result, channel_index);
         for (std::size_t i = 0; i < view.height(); ++i) {
             for (std::size_t j = 0; j < view.width(); ++j) {
-                BOOST_TEST_EQ(result(j, i), view(i, j)[channel_index]);
+                BOOST_TEST(result(j, i) == view(i, j)[channel_index]);
             }
         }
     }
