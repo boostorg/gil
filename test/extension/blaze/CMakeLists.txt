@@ -7,13 +7,14 @@
 #
 message(STATUS "Boost.GIL: Configuring tests in test/extension/blaze")
 foreach(_name
+  true_channel_type
   to_matrix
-  pixel_to_vector
-  vector_to_pixel
-  from_matrix
+  to_matrix_channeled
   as_matrix
   as_matrix_channeled
-  true_channel_type)
+  pixel_to_vector
+  vector_to_pixel
+  from_matrix)
   set(_test t_ext_blaze_${_name})
   set(_target test_ext_blaze_${_name})
 
