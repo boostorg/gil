@@ -295,6 +295,113 @@ inline void compute_hessian_entries(
     detail::convolve_2d(dy, sobel_y, ddyy);
 }
 
+namespace detail {
+enum class direction: std::size_t {
+    north = 0,
+    south = 1,
+    west = 2,
+    east = 3,
+    north_east = 4,
+    south_east = 5,
+    south_west = 6,
+    north_west = 7
+};
+
+template <typename OutputView, typename InputView>
+void compute_nabla(InputView view, const std::vector<OutputView>& nabla) {
+    constexpr std::ptrdiff_t input_num_channels = num_channels<InputView>{};
+    static_assert(num_channels<OutputView>{} == input_num_channels, "input and output views must have the same amount of channels");
+    for (std::ptrdiff_t y = 1; y < view.height() - 1; ++y)
+    {
+        for (std::ptrdiff_t x = 1; x < view.width() - 1; ++x)
+        {
+            for (std::ptrdiff_t channel_index = 0; channel_index < input_num_channels; ++channel_index)
+            {
+                nabla[(std::size_t)direction::north](x, y) = view(x, y - 1)[channel_index] - view(x, y)[channel_index];
+                nabla[(std::size_t)direction::south](x, y) = view(x, y + 1)[channel_index] - view(x, y)[channel_index];
+                nabla[(std::size_t)direction::west](x, y) = view(x - 1, y)[channel_index] - view(x, y)[channel_index];
+                nabla[(std::size_t)direction::east](x, y) = view(x + 1, y)[channel_index] - view(x, y)[channel_index];
+
+                nabla[(std::size_t)direction::north_east](x, y) = view(x + 1, y - 1)[channel_index] - view(x, y)[channel_index];
+                nabla[(std::size_t)direction::south_east](x, y) = view(x + 1, y + 1)[channel_index] - view(x, y)[channel_index];
+                nabla[(std::size_t)direction::south_west](x, y) = view(x - 1, y + 1)[channel_index] - view(x, y)[channel_index];
+                nabla[(std::size_t)direction::north_west](x, y) = view(x - 1, y - 1)[channel_index] - view(x, y)[channel_index];
+            }
+        }
+    }
+}
+
+template <typename View>
+void calculate_diffusvity(std::vector<View> nablas, double kappa, const std::vector<View> diffusivities)
+{
+    using pixel_type = typename View::value_type;
+    using channel_type = typename channel_type<View>::type;
+    BOOST_ASSERT(nablas.size() == diffusivities.size());
+    for (std::size_t i = 0; i < nablas.size(); ++i) {
+        gil::transform_pixels(nablas[i], diffusivities[i], [kappa](pixel_type p)
+        {
+            auto op = [kappa](channel_type value)
+            {
+                value /= kappa;
+                auto result = std::exp(-value * value);
+                return result;               
+            };
+            pixel_type result_pixel;
+            static_transform(p, result_pixel, op);
+            return result_pixel;
+        });
+    }
+}
+} // namespace boost::gil::detail
+
+template <typename InputView, typename OutputView>
+void anisotropic_diffusion(InputView input, unsigned int num_iter, double delta_t, double kappa, OutputView output)
+{
+    gil::copy_pixels(input, output);
+    using element_type = typename OutputView::value_type;
+    using computation_image_type = image<element_type>;
+
+    for (unsigned int i = 0; i < num_iter; ++i) {
+        std::vector<computation_image_type> nabla_images(8, computation_image_type(input.dimensions()));
+        std::vector<typename computation_image_type::view_t> nabla;
+        std::transform(nabla_images.begin(), nabla_images.end(),
+                       std::back_inserter(nabla), [](computation_image_type& img)
+                        {
+                            return gil::view(img);
+                        });
+
+        std::vector<computation_image_type> diffusivity_images(8, computation_image_type(input.dimensions()));
+        std::vector<typename computation_image_type::view_t> diffusivity;
+        std::transform(diffusivity_images.begin(), diffusivity_images.end(),
+                       std::back_inserter(diffusivity), [](computation_image_type& img)
+                        {
+                            return gil::view(img);
+                        });
+
+        detail::compute_nabla(output, nabla);
+        detail::calculate_diffusvity(nabla, kappa, diffusivity);
+
+        float half = float(1.0f / 2);
+        constexpr std::ptrdiff_t channel_count = num_channels<OutputView>{};
+        for (std::ptrdiff_t y = 0; y < output.height(); ++y)
+        {
+            for (std::ptrdiff_t x = 0; x < output.width(); ++ x)
+            {
+                for (std::ptrdiff_t channel_index = 0; channel_index < channel_count; ++channel_index) {
+                    using detail::direction;
+                    auto delta = delta_t * (
+                        diffusivity[(std::size_t)direction::north](x, y)[channel_index] * nabla[(std::size_t)direction::north](x, y)[channel_index] + diffusivity[(std::size_t)direction::south](x, y)[channel_index] * nabla[(std::size_t)direction::south](x, y)[channel_index]
+                        + diffusivity[(std::size_t)direction::west](x, y)[channel_index] * nabla[(std::size_t)direction::west](x, y)[channel_index] + diffusivity[(std::size_t)direction::east](x, y)[channel_index] * nabla[(std::size_t)direction::east](x, y)[channel_index]
+                        + half * diffusivity[(std::size_t)direction::north_east](x, y)[channel_index] * nabla[(std::size_t)direction::north_east](x, y)[channel_index] + half * diffusivity[(std::size_t)direction::south_east](x, y)[channel_index] * nabla[(std::size_t)direction::south_east](x, y)[channel_index]
+                        + half * diffusivity[(std::size_t)direction::south_west](x, y)[channel_index] * nabla[(std::size_t)direction::south_west](x, y)[channel_index] + half * diffusivity[(std::size_t)direction::north_west](x, y)[channel_index] * nabla[(std::size_t)direction::north_west](x, y)[channel_index]
+                    );
+                    output(x, y)[channel_index] = output(x, y)[channel_index] + delta;
+                }
+            }
+        }
+    }
+}
+
 }} // namespace boost::gil
 
 #endif
