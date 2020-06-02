@@ -7,6 +7,7 @@
 #include <boost/gil/extension/io/png/tags.hpp>
 #include <boost/gil/extension/io/png.hpp>
 #include <boost/gil/io/typedefs.hpp>
+#include <boost/gil/pixel.hpp>
 
 #include <cmath>
 #include <string>
@@ -20,7 +21,7 @@ using gray_channel = std::integral_constant<int, 0>;
 namespace boost{namespace gil{
 using gray64f_view_t = gil::image_view<gil::memory_based_2d_locator<gil::memory_based_step_iterator<gil::gray64f_pixel_t*>>>;
 }}
-
+namespace boost{ namespace gil{
 enum direction {
     north = 0,
     south = 1,
@@ -32,33 +33,48 @@ enum direction {
     north_west = 7
 };
 
-void compute_nabla(gil::gray64f_view_t view, const std::vector<gil::gray32f_view_t>& nabla) {
+template <typename OutputView, typename InputView>
+void compute_nabla(InputView view, const std::vector<OutputView>& nabla) {
+    constexpr auto input_num_channels = num_channels<InputView>{};
+    static_assert(num_channels<OutputView>{} == input_num_channels);
     for (std::ptrdiff_t y = 1; y < view.height() - 1; ++y)
     {
         for (std::ptrdiff_t x = 1; x < view.width() - 1; ++x)
         {
-            nabla[north](x, y) = view(x, y - 1).at(gray_channel{}) - view(x, y).at(gray_channel{});
-            nabla[south](x, y) = view(x, y + 1).at(gray_channel{}) - view(x, y).at(gray_channel{});
-            nabla[west](x, y) = view(x - 1, y).at(gray_channel{}) - view(x, y).at(gray_channel{});
-            nabla[east](x, y) = view(x + 1, y).at(gray_channel{}) - view(x, y).at(gray_channel{});
+            for (std::ptrdiff_t channel_index = 0; channel_index < input_num_channels; ++channel_index)
+            {
+                nabla[north](x, y) = view(x, y - 1)[channel_index] - view(x, y)[channel_index];
+                nabla[south](x, y) = view(x, y + 1)[channel_index] - view(x, y)[channel_index];
+                nabla[west](x, y) = view(x - 1, y)[channel_index] - view(x, y)[channel_index];
+                nabla[east](x, y) = view(x + 1, y)[channel_index] - view(x, y)[channel_index];
 
-            nabla[north_east](x, y) = view(x + 1, y - 1).at(gray_channel{}) - view(x, y).at(gray_channel{});
-            nabla[south_east](x, y) = view(x + 1, y + 1).at(gray_channel{}) - view(x, y).at(gray_channel{});
-            nabla[south_west](x, y) = view(x - 1, y + 1).at(gray_channel{}) - view(x, y).at(gray_channel{});
-            nabla[north_west](x, y) = view(x - 1, y - 1).at(gray_channel{}) - view(x, y).at(gray_channel{});
+                nabla[north_east](x, y) = view(x + 1, y - 1)[channel_index] - view(x, y)[channel_index];
+                nabla[south_east](x, y) = view(x + 1, y + 1)[channel_index] - view(x, y)[channel_index];
+                nabla[south_west](x, y) = view(x - 1, y + 1)[channel_index] - view(x, y)[channel_index];
+                nabla[north_west](x, y) = view(x - 1, y - 1)[channel_index] - view(x, y)[channel_index];
+            }
         }
     }
 }
 
-void calculate_diffusvity(std::vector<gil::gray32f_view_t> nablas, double kappa, const std::vector<gil::gray32f_view_t> diffusivities)
+template <typename View>
+void calculate_diffusvity(std::vector<View> nablas, double kappa, const std::vector<View> diffusivities)
 {
+    using pixel_type = typename View::value_type;
+    using channel_type = typename channel_type<View>::type;
     BOOST_ASSERT(nablas.size() == diffusivities.size());
     for (std::size_t i = 0; i < nablas.size(); ++i) {
-        gil::transform_pixels(nablas[i], diffusivities[i], [kappa](gil::gray32f_pixel_t p)
+        gil::transform_pixels(nablas[i], diffusivities[i], [kappa](pixel_type p)
         {
-            float value = p.at(gray_channel{}) / kappa;
-            float result = std::exp(-value * value);
-            return result;
+            auto op = [kappa](channel_type value)
+            {
+                value /= kappa;
+                float result = std::exp(-value * value);
+                return result;               
+            };
+            pixel_type result_pixel;
+            static_transform(p, result_pixel, op);
+            return result_pixel;
         });
     }
 }
@@ -74,25 +90,28 @@ void print_images(const std::vector<ImageView>& views, const std::string& prefix
     }
 }
 
-void anisotropic_diffusion(gil::gray64f_view_t input, unsigned int num_iter, double delta_t, double kappa, gil::gray64f_view_t output)
+template <typename InputView, typename OutputView>
+void anisotropic_diffusion(InputView input, unsigned int num_iter, double delta_t, double kappa, OutputView output)
 {
     gil::copy_pixels(input, output);
+    using element_type = typename OutputView::value_type;
+    using computation_image_type = image<element_type>;
 
     for (unsigned int i = 0; i < num_iter; ++i) {
-        std::vector<gil::gray32f_image_t> nabla_images(8, gil::gray32f_image_t(input.dimensions()));
-        std::vector<gil::gray32f_view_t> nabla;
+        std::vector<computation_image_type> nabla_images(8, computation_image_type(input.dimensions()));
+        std::vector<typename computation_image_type::view_t> nabla;
         std::transform(nabla_images.begin(), nabla_images.end(),
-                       std::back_inserter(nabla), [](gil::gray32f_image_t& i)
+                       std::back_inserter(nabla), [](computation_image_type& img)
                         {
-                            return gil::view(i);
+                            return gil::view(img);
                         });
 
-        std::vector<gil::gray32f_image_t> diffusivity_images(8, gil::gray32f_image_t(input.dimensions()));
-        std::vector<gil::gray32f_view_t> diffusivity;
+        std::vector<computation_image_type> diffusivity_images(8, computation_image_type(input.dimensions()));
+        std::vector<typename computation_image_type::view_t> diffusivity;
         std::transform(diffusivity_images.begin(), diffusivity_images.end(),
-                       std::back_inserter(diffusivity), [](gil::gray32f_image_t& i)
+                       std::back_inserter(diffusivity), [](computation_image_type& img)
                         {
-                            return gil::view(i);
+                            return gil::view(img);
                         });
 
         compute_nabla(output, nabla);
@@ -102,21 +121,25 @@ void anisotropic_diffusion(gil::gray64f_view_t input, unsigned int num_iter, dou
         // print_images(diffusivity, "diffusivity");
 
         float half = float(1.0f / 2);
+        constexpr auto channel_count = num_channels<OutputView>{};
         for (std::ptrdiff_t y = 0; y < output.height(); ++y)
         {
             for (std::ptrdiff_t x = 0; x < output.width(); ++ x)
             {
-                float delta = delta_t * (
-                    diffusivity[north](x, y).at(gray_channel{}) * nabla[north](x, y).at(gray_channel{}) + diffusivity[south](x, y).at(gray_channel{}) * nabla[south](x, y).at(gray_channel{})
-                    + diffusivity[west](x, y).at(gray_channel{}) * nabla[west](x, y).at(gray_channel{}) + diffusivity[east](x, y).at(gray_channel{}) * nabla[east](x, y).at(gray_channel{})
-                    + half * diffusivity[north_east](x, y).at(gray_channel{}) * nabla[north_east](x, y).at(gray_channel{}) + half * diffusivity[south_east](x, y).at(gray_channel{}) * nabla[south_east](x, y).at(gray_channel{})
-                    + half * diffusivity[south_west](x, y).at(gray_channel{}) * nabla[south_west](x, y).at(gray_channel{}) + half * diffusivity[north_west](x, y).at(gray_channel{}) * nabla[north_west](x, y).at(gray_channel{})
-                );
-                output(x, y) = output(x, y).at(gray_channel{}) + delta;
+                for (std::ptrdiff_t channel_index = 0; channel_index < channel_count; ++channel_index) {
+                    float delta = delta_t * (
+                        diffusivity[north](x, y)[channel_index] * nabla[north](x, y)[channel_index] + diffusivity[south](x, y)[channel_index] * nabla[south](x, y)[channel_index]
+                        + diffusivity[west](x, y)[channel_index] * nabla[west](x, y)[channel_index] + diffusivity[east](x, y)[channel_index] * nabla[east](x, y)[channel_index]
+                        + half * diffusivity[north_east](x, y)[channel_index] * nabla[north_east](x, y)[channel_index] + half * diffusivity[south_east](x, y)[channel_index] * nabla[south_east](x, y)[channel_index]
+                        + half * diffusivity[south_west](x, y)[channel_index] * nabla[south_west](x, y)[channel_index] + half * diffusivity[north_west](x, y)[channel_index] * nabla[north_west](x, y)[channel_index]
+                    );
+                    output(x, y)[channel_index] = output(x, y)[channel_index] + delta;
+                }
             }
         }
     }
 }
+}}
 
 #include <iostream>
 
