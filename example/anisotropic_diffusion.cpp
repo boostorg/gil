@@ -13,30 +13,15 @@
 
 namespace gil = boost::gil;
 
-namespace boost{namespace gil{
-using gray64f_view_t = gil::image_view<gil::memory_based_2d_locator<gil::memory_based_step_iterator<gil::gray64f_pixel_t*>>>;
-}}
-
 #include <iostream>
 
-int main(int argc, char* argv[])
+void gray_version(const std::string& input_path, const std::string& output_path, std::uint64_t iteration_count, unsigned int kappa)
 {
-    if (argc != 5)
-    {
-        std::cerr << "usage: " << argv[0] << " <gray input.png> <output.png> <positive iteration count> <positive kappa~30>\n";
-        return -1;
-    }
-    std::string input_path = argv[1];
-    std::string output_path = argv[2];
-
-    unsigned int iteration_count = static_cast<unsigned int>(std::stoul(argv[3]));
-    unsigned int kappa = static_cast<unsigned int>(std::stoul(argv[4]));
-
     gil::gray8_image_t input;
     gil::read_image(input_path, input, gil::png_tag{});
     auto input_view = gil::view(input);
 
-    gil::gray64f_image_t gray(input.dimensions());
+    gil::gray32f_image_t gray(input.dimensions());
     auto gray_view = gil::view(gray);
 
     gil::transform_pixels(input_view, gray_view,
@@ -44,16 +29,71 @@ int main(int argc, char* argv[])
     {
         return p[0];
     });
-    gil::gray64f_image_t output(gray.dimensions());
+    gil::gray32f_image_t output(gray.dimensions());
     auto output_view = gil::view(output);
 
     gil::anisotropic_diffusion(gray_view, iteration_count, 1 / 7., kappa, output_view);
 
     gil::gray8_image_t true_output(output.dimensions());
-    gil::transform_pixels(output_view, gil::view(true_output), [](gil::gray64f_pixel_t p)
+    gil::transform_pixels(output_view, gil::view(true_output), [](gil::gray32f_pixel_t p)
     {
         return static_cast<gil::uint8_t>(p[0]);
     });
 
     gil::write_view(output_path, gil::view(true_output), gil::png_tag{});
+}
+
+void rgb_version(const std::string& input_path, const std::string& output_path, std::uint64_t iteration_count, unsigned int kappa)
+{
+    gil::rgb8_image_t input;
+    gil::read_image(input_path, input, gil::png_tag{});
+    auto input_view = gil::view(input);
+
+    gil::rgb32f_image_t gray(input.dimensions());
+    auto gray_view = gil::view(gray);
+
+    gil::transform_pixels(input_view, gray_view,
+    [](const gil::rgb8_pixel_t& p)
+    {
+        return gil::rgb32f_pixel_t(p[0], p[1], p[2]);
+    });
+    gil::rgb32f_image_t output(gray.dimensions());
+    auto output_view = gil::view(output);
+
+    gil::anisotropic_diffusion(gray_view, iteration_count, 1 / 7., kappa, output_view);
+
+    gil::rgb8_image_t true_output(output.dimensions());
+    gil::transform_pixels(output_view, gil::view(true_output), [](gil::rgb32f_pixel_t p)
+    {
+        return gil::rgb8_pixel_t(static_cast<gil::uint8_t>(p[0]),
+                static_cast<gil::uint8_t>(p[1]),
+                static_cast<gil::uint8_t>(p[2]));
+    });
+
+    gil::write_view(output_path, gil::view(true_output), gil::png_tag{});    
+}
+
+int main(int argc, char* argv[])
+{
+    if (argc != 6)
+    {
+        std::cerr << "usage: " << argv[0] << " <gray input.png> <output.png> <colorspace: gray|rgb> <positive iteration count> <positive kappa~30>\n";
+        return -1;
+    }
+    std::string input_path = argv[1];
+    std::string output_path = argv[2];
+    std::string colorspace = argv[3];
+
+    unsigned int iteration_count = static_cast<unsigned int>(std::stoul(argv[4]));
+    unsigned int kappa = static_cast<unsigned int>(std::stoul(argv[5]));    
+    if (colorspace == "gray")
+    {
+        gray_version(input_path, output_path, iteration_count, kappa);
+    } else if (colorspace == "rgb")
+    {
+        rgb_version(input_path, output_path, iteration_count, kappa);
+    } else 
+    {
+        std::cerr << "unknown colorspace option passed (did you type gray with A?)\n";
+    }
 }

@@ -317,15 +317,15 @@ void compute_nabla(InputView view, const std::vector<OutputView>& nabla) {
         {
             for (std::ptrdiff_t channel_index = 0; channel_index < input_num_channels; ++channel_index)
             {
-                nabla[(std::size_t)direction::north](x, y) = view(x, y - 1)[channel_index] - view(x, y)[channel_index];
-                nabla[(std::size_t)direction::south](x, y) = view(x, y + 1)[channel_index] - view(x, y)[channel_index];
-                nabla[(std::size_t)direction::west](x, y) = view(x - 1, y)[channel_index] - view(x, y)[channel_index];
-                nabla[(std::size_t)direction::east](x, y) = view(x + 1, y)[channel_index] - view(x, y)[channel_index];
+                nabla[(std::size_t)direction::north](x, y)[channel_index] = view(x, y - 1)[channel_index] - view(x, y)[channel_index];
+                nabla[(std::size_t)direction::south](x, y)[channel_index] = view(x, y + 1)[channel_index] - view(x, y)[channel_index];
+                nabla[(std::size_t)direction::west](x, y)[channel_index] = view(x - 1, y)[channel_index] - view(x, y)[channel_index];
+                nabla[(std::size_t)direction::east](x, y)[channel_index] = view(x + 1, y)[channel_index] - view(x, y)[channel_index];
 
-                nabla[(std::size_t)direction::north_east](x, y) = view(x + 1, y - 1)[channel_index] - view(x, y)[channel_index];
-                nabla[(std::size_t)direction::south_east](x, y) = view(x + 1, y + 1)[channel_index] - view(x, y)[channel_index];
-                nabla[(std::size_t)direction::south_west](x, y) = view(x - 1, y + 1)[channel_index] - view(x, y)[channel_index];
-                nabla[(std::size_t)direction::north_west](x, y) = view(x - 1, y - 1)[channel_index] - view(x, y)[channel_index];
+                nabla[(std::size_t)direction::north_east](x, y)[channel_index] = view(x + 1, y - 1)[channel_index] - view(x, y)[channel_index];
+                nabla[(std::size_t)direction::south_east](x, y)[channel_index] = view(x + 1, y + 1)[channel_index] - view(x, y)[channel_index];
+                nabla[(std::size_t)direction::south_west](x, y)[channel_index] = view(x - 1, y + 1)[channel_index] - view(x, y)[channel_index];
+                nabla[(std::size_t)direction::north_west](x, y)[channel_index] = view(x - 1, y - 1)[channel_index] - view(x, y)[channel_index];
             }
         }
     }
