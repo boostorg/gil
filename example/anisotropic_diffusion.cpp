@@ -16,13 +16,11 @@
 
 namespace gil = boost::gil;
 
-using gray_channel = std::integral_constant<int, 0>;
-
 namespace boost{namespace gil{
 using gray64f_view_t = gil::image_view<gil::memory_based_2d_locator<gil::memory_based_step_iterator<gil::gray64f_pixel_t*>>>;
 }}
 namespace boost{ namespace gil{
-enum direction {
+enum class direction: std::size_t {
     north = 0,
     south = 1,
     west = 2,
@@ -43,15 +41,15 @@ void compute_nabla(InputView view, const std::vector<OutputView>& nabla) {
         {
             for (std::ptrdiff_t channel_index = 0; channel_index < input_num_channels; ++channel_index)
             {
-                nabla[north](x, y) = view(x, y - 1)[channel_index] - view(x, y)[channel_index];
-                nabla[south](x, y) = view(x, y + 1)[channel_index] - view(x, y)[channel_index];
-                nabla[west](x, y) = view(x - 1, y)[channel_index] - view(x, y)[channel_index];
-                nabla[east](x, y) = view(x + 1, y)[channel_index] - view(x, y)[channel_index];
+                nabla[(std::size_t)direction::north](x, y) = view(x, y - 1)[channel_index] - view(x, y)[channel_index];
+                nabla[(std::size_t)direction::south](x, y) = view(x, y + 1)[channel_index] - view(x, y)[channel_index];
+                nabla[(std::size_t)direction::west](x, y) = view(x - 1, y)[channel_index] - view(x, y)[channel_index];
+                nabla[(std::size_t)direction::east](x, y) = view(x + 1, y)[channel_index] - view(x, y)[channel_index];
 
-                nabla[north_east](x, y) = view(x + 1, y - 1)[channel_index] - view(x, y)[channel_index];
-                nabla[south_east](x, y) = view(x + 1, y + 1)[channel_index] - view(x, y)[channel_index];
-                nabla[south_west](x, y) = view(x - 1, y + 1)[channel_index] - view(x, y)[channel_index];
-                nabla[north_west](x, y) = view(x - 1, y - 1)[channel_index] - view(x, y)[channel_index];
+                nabla[(std::size_t)direction::north_east](x, y) = view(x + 1, y - 1)[channel_index] - view(x, y)[channel_index];
+                nabla[(std::size_t)direction::south_east](x, y) = view(x + 1, y + 1)[channel_index] - view(x, y)[channel_index];
+                nabla[(std::size_t)direction::south_west](x, y) = view(x - 1, y + 1)[channel_index] - view(x, y)[channel_index];
+                nabla[(std::size_t)direction::north_west](x, y) = view(x - 1, y - 1)[channel_index] - view(x, y)[channel_index];
             }
         }
     }
@@ -76,17 +74,6 @@ void calculate_diffusvity(std::vector<View> nablas, double kappa, const std::vec
             static_transform(p, result_pixel, op);
             return result_pixel;
         });
-    }
-}
-
-template <typename ImageView>
-void print_images(const std::vector<ImageView>& views, const std::string& prefix = "./nabla")
-{
-    unsigned int counter = 0;
-    for (const auto& view: views)
-    {
-        gil::write_view(prefix + std::to_string(counter) + ".png", gil::color_converted_view<gil::gray8_pixel_t>(view), gil::png_tag{});
-        ++counter;
     }
 }
 
@@ -117,9 +104,6 @@ void anisotropic_diffusion(InputView input, unsigned int num_iter, double delta_
         compute_nabla(output, nabla);
         calculate_diffusvity(nabla, kappa, diffusivity);
 
-        // print_images(nabla);
-        // print_images(diffusivity, "diffusivity");
-
         float half = float(1.0f / 2);
         constexpr auto channel_count = num_channels<OutputView>{};
         for (std::ptrdiff_t y = 0; y < output.height(); ++y)
@@ -128,10 +112,10 @@ void anisotropic_diffusion(InputView input, unsigned int num_iter, double delta_
             {
                 for (std::ptrdiff_t channel_index = 0; channel_index < channel_count; ++channel_index) {
                     float delta = delta_t * (
-                        diffusivity[north](x, y)[channel_index] * nabla[north](x, y)[channel_index] + diffusivity[south](x, y)[channel_index] * nabla[south](x, y)[channel_index]
-                        + diffusivity[west](x, y)[channel_index] * nabla[west](x, y)[channel_index] + diffusivity[east](x, y)[channel_index] * nabla[east](x, y)[channel_index]
-                        + half * diffusivity[north_east](x, y)[channel_index] * nabla[north_east](x, y)[channel_index] + half * diffusivity[south_east](x, y)[channel_index] * nabla[south_east](x, y)[channel_index]
-                        + half * diffusivity[south_west](x, y)[channel_index] * nabla[south_west](x, y)[channel_index] + half * diffusivity[north_west](x, y)[channel_index] * nabla[north_west](x, y)[channel_index]
+                        diffusivity[(std::size_t)direction::north](x, y)[channel_index] * nabla[(std::size_t)direction::north](x, y)[channel_index] + diffusivity[(std::size_t)direction::south](x, y)[channel_index] * nabla[(std::size_t)direction::south](x, y)[channel_index]
+                        + diffusivity[(std::size_t)direction::west](x, y)[channel_index] * nabla[(std::size_t)direction::west](x, y)[channel_index] + diffusivity[(std::size_t)direction::east](x, y)[channel_index] * nabla[(std::size_t)direction::east](x, y)[channel_index]
+                        + half * diffusivity[(std::size_t)direction::north_east](x, y)[channel_index] * nabla[(std::size_t)direction::north_east](x, y)[channel_index] + half * diffusivity[(std::size_t)direction::south_east](x, y)[channel_index] * nabla[(std::size_t)direction::south_east](x, y)[channel_index]
+                        + half * diffusivity[(std::size_t)direction::south_west](x, y)[channel_index] * nabla[(std::size_t)direction::south_west](x, y)[channel_index] + half * diffusivity[(std::size_t)direction::north_west](x, y)[channel_index] * nabla[(std::size_t)direction::north_west](x, y)[channel_index]
                     );
                     output(x, y)[channel_index] = output(x, y)[channel_index] + delta;
                 }
@@ -166,7 +150,7 @@ int main(int argc, char* argv[])
     gil::transform_pixels(input_view, gray_view,
     [](const gil::gray8_pixel_t& p)
     {
-        return p.at(gray_channel{});
+        return p[0];
     });
     gil::gray64f_image_t output(gray.dimensions());
     auto output_view = gil::view(output);
@@ -176,7 +160,7 @@ int main(int argc, char* argv[])
     gil::gray8_image_t true_output(output.dimensions());
     gil::transform_pixels(output_view, gil::view(true_output), [](gil::gray64f_pixel_t p)
     {
-        return p.at(gray_channel{});
+        return p[0];
     });
 
     gil::write_view(output_path, gil::view(true_output), gil::png_tag{});
