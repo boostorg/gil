@@ -6,10 +6,11 @@
 // http://www.boost.org/LICENSE_1_0.txt
 //
 
-#ifndef BOOST_GIL_EXTENSION_HISTOGRAM_HISTOGRAM_HPP
-#define BOOST_GIL_EXTENSION_HISTOGRAM_HISTOGRAM_HPP
+#ifndef BOOST_GIL_HISTOGRAM_HPP
+#define BOOST_GIL_HISTOGRAM_HPP
 
 #include <boost/gil/concepts/concept_check.hpp>
+#include <boost/gil/concepts/detail/histogram.hpp>
 #include <boost/gil/gray.hpp>
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/image_view_factory.hpp>
@@ -45,43 +46,6 @@
 
 namespace boost { namespace gil {
 
-namespace detail {
-
-// Used to check if container implements operator[] and operator++
-template <typename T, typename = int>
-struct is_indexable : std::false_type {} ;
-
-template <typename T>
-struct is_indexable
-        <
-            T,
-            decltype((void) ++declval<T>()[0] , 0)
-        > : std::true_type {} ;
-
-// Used to check if container is resizable i.e. implements resize() member function
-template <typename T, typename = int>
-struct is_resizable : std::false_type {} ;
-
-template <typename T>
-struct is_resizable
-        <
-            T,
-            decltype((void) declval<T>().resize(1), 0)
-        > : std::true_type {} ;
-
-// Used to check if container is key-value type and the key is of std::integral type
-template <typename T, typename = void>
-struct has_integral_key_type : std::false_type {} ;
-
-template <typename T>
-struct has_integral_key_type
-        <
-            T,
-            typename std::enable_if<std::is_integral<typename T::key_type >::value >::type 
-        > : std::true_type {} ;
-
-} // namespace detail
-
 /// \ingroup Histogram
 /// \brief Use for indexable and resizable sequence containers 
 ///
@@ -90,6 +54,7 @@ struct has_integral_key_type
 /// difference from the next function is this function is helpful if older bin values in container
 /// is not to be erased i.e. accumulate the histograms.
 ///
+
 template
 <
     typename Container,
@@ -98,7 +63,7 @@ template
                 detail::is_indexable<Container>::value &&
                 detail::is_resizable<Container>::value, int>::type = 0
 >
-inline void image_histogram(SrcView const& srcview, Container &hist)
+inline void image_histogram(SrcView const& srcview, Container &histogram)
 {
     gil_function_requires<ImageViewConcept<SrcView>>();
     static_assert(std::is_arithmetic<typename Container::value_type>::value,
@@ -109,10 +74,10 @@ inline void image_histogram(SrcView const& srcview, Container &hist)
     using channel_t = typename channel_type<SrcView>::type;
     using pixel_t = pixel<channel_t, gray_layout_t>;
 
-    hist.resize(std::numeric_limits<channel_t>::max() + 1);
+    histogram.resize(std::numeric_limits<channel_t>::max() + 1);
 
-    for_each_pixel(color_converted_view<pixel_t>(srcview), [&hist](pixel_t const& p) {
-        ++hist[p];
+    for_each_pixel(color_converted_view<pixel_t>(srcview), [&](pixel_t const& p) {
+        ++histogram[p];
     });
 }
 
@@ -142,12 +107,12 @@ inline Container image_histogram(SrcView const& srcview)
     using channel_t = typename channel_type<SrcView>::type;
     using pixel_t = pixel<channel_t, gray_layout_t>;
 
-    Container hist(std::numeric_limits<channel_t>::max() + 1);
+    Container histogram(std::numeric_limits<channel_t>::max() + 1);
     
-    for_each_pixel(color_converted_view<pixel_t>(srcview), [&hist](pixel_t const& p) {
-        ++hist[p];
+    for_each_pixel(color_converted_view<pixel_t>(srcview), [&](pixel_t const& p) {
+        ++histogram[p];
     });
-    return hist;
+    return histogram;
 }
 
 /// \ingroup Histogram
@@ -166,7 +131,7 @@ template
                 !detail::is_resizable<Container>::value &&
                 std::is_arithmetic<typename Container::value_type>::value, int>::type = 0
 >
-inline void image_histogram(SrcView const& srcview, Container &hist)
+inline void image_histogram(SrcView const& srcview, Container &histogram)
 {
     gil_function_requires<ImageViewConcept<SrcView>>();
     static_assert(std::is_arithmetic<typename Container::value_type>::value,
@@ -176,9 +141,12 @@ inline void image_histogram(SrcView const& srcview, Container &hist)
 
     using channel_t = typename channel_type<SrcView>::type;
     using pixel_t = pixel<channel_t, gray_layout_t>;
+
+    const size_t pixel_max = std::numeric_limits<channel_t>::max();
+    const float scale = (histogram.size() - 1.0f) / pixel_max;
     
-    for_each_pixel(color_converted_view<pixel_t>(srcview), [&hist](pixel_t const& p) {
-        if (p < hist.size()) ++hist[p];
+    for_each_pixel(color_converted_view<pixel_t>(srcview), [&](pixel_t const& p) {
+        ++histogram[static_cast<typename Container::size_type>(p * scale)];
     });
 }
 
@@ -197,7 +165,7 @@ template
                 detail::is_indexable<Container>::value &&
                 detail::has_integral_key_type<Container>::value, int>::type = 0
 >
-inline void image_histogram(SrcView const& srcview, Container &hist)
+inline void image_histogram(SrcView const& srcview, Container &histogram)
 {
     gil_function_requires<ImageViewConcept<SrcView>>();
     static_assert(std::is_arithmetic<typename Container::mapped_type>::value,
@@ -206,8 +174,8 @@ inline void image_histogram(SrcView const& srcview, Container &hist)
     using channel_t = typename channel_type<SrcView>::type;
     using pixel_t = pixel<channel_t, gray_layout_t>;
 
-    for_each_pixel(color_converted_view<pixel_t>(srcview), [&hist](pixel_t const& p) {
-        ++hist[p];
+    for_each_pixel(color_converted_view<pixel_t>(srcview), [&](pixel_t const& p) {
+        ++histogram[p];
     });
 }
 
@@ -234,12 +202,12 @@ inline Container image_histogram(SrcView const& srcview)
     using channel_t = typename channel_type<SrcView>::type;
     using pixel_t = pixel<channel_t, gray_layout_t>;
 
-    Container hist;
+    Container histogram;
 
-    for_each_pixel(color_converted_view<pixel_t>(srcview), [&hist](pixel_t const& p) {
-        ++hist[p];
+    for_each_pixel(color_converted_view<pixel_t>(srcview), [&](pixel_t const& p) {
+        ++histogram[p];
     });
-    return hist;
+    return histogram;
 }
 
 }} // namespace boost::gil

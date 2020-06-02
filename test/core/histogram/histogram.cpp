@@ -29,6 +29,9 @@ gil::gray8_view_t v1 = view(img1);
 gil::rgb8_image_t img2(4, 4, gil::rgb8_pixel_t(1));
 gil::rgb8_view_t v2 = view(img2);
 
+gil::gray16_image_t img3(4, 4, gil::gray16_pixel_t(1));
+gil::gray16_view_t v3 = view(img3);
+
 template<typename T>
 bool check_equal(T &cont1, T &cont2, std::size_t size)
 {
@@ -53,7 +56,7 @@ bool check_equal(T &cont1, T &cont2)
 
 void check_vector_type_container()
 {
-    std::vector<int> c1,c1_expected(256,0);
+    std::vector<int> c1, c1_expected(256,0);
     c1_expected[1] = 16;
     c1 = gil::image_histogram<std::vector<int>>(v1);
     BOOST_TEST(check_equal(c1, c1_expected, c1_expected.size()));
@@ -62,7 +65,7 @@ void check_vector_type_container()
     gil::image_histogram(v1, c1);
     BOOST_TEST(check_equal(c1, c1_expected, c1_expected.size()));
 
-    std::vector<int> c2,c2_expected;
+    std::vector<int> c2, c2_expected;
     c2 = gil::image_histogram<std::vector<int>>(v2);
     c2_expected = gil::image_histogram<std::vector<int>>(gil::color_converted_view<gil::gray8_pixel_t>(v2));
     BOOST_TEST(check_equal(c2, c2_expected, c2_expected.size()));
@@ -71,20 +74,30 @@ void check_vector_type_container()
 
 void check_array_type_container()
 {
-    std::array<int, 256> c1{0},c1_expected{0};
+    std::array<int, 256> c1{0}, c1_expected{0};
     c1_expected[1] = 16;
     gil::image_histogram(v1, c1);
     BOOST_TEST(check_equal(c1, c1_expected, c1_expected.size()));
 
-    std::array<int, 256> c2{0},c2_expected{0};
+    c1_expected[1] = 32;
+    gil::image_histogram(v1, c1);
+    BOOST_TEST(check_equal(c1, c1_expected, c1_expected.size()));
+
+    std::array<int, 256> c2{0}, c2_expected{0};
     gil::image_histogram(v1, c2);
     gil::image_histogram(gil::color_converted_view<gil::gray8_pixel_t>(v2), c2_expected);
     BOOST_TEST(check_equal(c2, c2_expected, c2_expected.size()));
+
+    // Check binning
+    std::array<int, 256> c3{0}, c3_expected{0};
+    c3_expected[0] = 16;
+    gil::image_histogram(v3, c3);
+    BOOST_TEST(check_equal(c3, c3_expected, c3_expected.size()));
 }
 
 void check_deque_type_container()
 {
-    std::deque<int> c1,c1_expected(256,0);
+    std::deque<int> c1, c1_expected(256,0);
     c1_expected[1] = 16;
     c1 = gil::image_histogram<std::deque<int>>(v1);
     BOOST_TEST(check_equal(c1, c1_expected, c1_expected.size()));
@@ -93,7 +106,7 @@ void check_deque_type_container()
     gil::image_histogram(v1, c1);
     BOOST_TEST(check_equal(c1, c1_expected, c1_expected.size()));
 
-    std::deque<int> c2,c2_expected;
+    std::deque<int> c2, c2_expected;
     c2 = gil::image_histogram<std::deque<int>>(v2);
     c2_expected = gil::image_histogram<std::deque<int>>(gil::color_converted_view<gil::gray8_pixel_t>(v2));
     BOOST_TEST(check_equal(c2, c2_expected, c2_expected.size()));
@@ -101,7 +114,7 @@ void check_deque_type_container()
 
 void check_map_type_container()
 {
-    std::map<int, int> c1,c1_expected;
+    std::map<int, int> c1, c1_expected;
     c1_expected[1] = 16;
     c1 = gil::image_histogram<std::map<int, int>>(v1);
     BOOST_TEST(check_equal(c1, c1_expected));
@@ -110,7 +123,7 @@ void check_map_type_container()
     gil::image_histogram(v1, c1);
     BOOST_TEST(check_equal(c1, c1_expected));
 
-    std::map<int, int> c2,c2_expected;
+    std::map<int, int> c2, c2_expected;
     c2 = gil::image_histogram<std::map<int, int>>(v2);
     c2_expected = gil::image_histogram<std::map<int, int>>(gil::color_converted_view<gil::gray8_pixel_t>(v2));
     BOOST_TEST(check_equal(c2, c2_expected));
@@ -118,7 +131,7 @@ void check_map_type_container()
 
 void check_unordered_map_type_container()
 {
-    std::unordered_map<int, int> c1,c1_expected;
+    std::unordered_map<int, int> c1, c1_expected;
     c1_expected[1] = 16;
     c1 = gil::image_histogram<std::unordered_map<int, int>>(v1);
     BOOST_TEST(check_equal(c1, c1_expected));
@@ -127,7 +140,7 @@ void check_unordered_map_type_container()
     gil::image_histogram(v1, c1);
     BOOST_TEST(check_equal(c1, c1_expected));
 
-    std::unordered_map<int, int> c2,c2_expected;
+    std::unordered_map<int, int> c2, c2_expected;
     c2 = gil::image_histogram<std::unordered_map<int, int>>(v2);
     c2_expected = gil::image_histogram<std::unordered_map<int, int>>(gil::color_converted_view<gil::gray8_pixel_t>(v2));
     BOOST_TEST(check_equal(c2, c2_expected));

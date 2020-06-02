@@ -38,7 +38,7 @@ int main()
 	deq = image_histogram<std::deque<int>>(view(img));  // Works
 	image_histogram(view(img),deq);						// Works
 
-	std::array<int,0> arr;
+	std::array<int,100> arr;
 	image_histogram(view(img),arr); 					// Works
 
 	std::unordered_map<int,int> mp;
