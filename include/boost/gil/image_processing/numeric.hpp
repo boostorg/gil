@@ -342,7 +342,7 @@ void calculate_diffusvity(std::vector<View> nablas, double kappa, const std::vec
         {
             auto op = [kappa](channel_type value)
             {
-                value /= kappa;
+                value /= static_cast<channel_type>(kappa);
                 auto result = std::exp(-value * value);
                 return result;               
             };
@@ -354,12 +354,19 @@ void calculate_diffusvity(std::vector<View> nablas, double kappa, const std::vec
 }
 } // namespace boost::gil::detail
 
+/// \brief Performs diffusion according to Perona-Malik equation
+/// 
+/// Anisotropic diffusion is a smoothing algorithm that respects
+/// edge boundaries and can work as an edge detector if suitable
+/// iteration count is set and grayscale image view is used
+/// as an input
 template <typename InputView, typename OutputView>
 void anisotropic_diffusion(InputView input, unsigned int num_iter, double delta_t, double kappa, OutputView output)
 {
     gil::copy_pixels(input, output);
     using element_type = typename OutputView::value_type;
     using computation_image_type = image<element_type>;
+    using channel_type = typename channel_type<OutputView>::type;
 
     for (unsigned int i = 0; i < num_iter; ++i) {
         std::vector<computation_image_type> nabla_images(8, computation_image_type(input.dimensions()));
@@ -381,7 +388,7 @@ void anisotropic_diffusion(InputView input, unsigned int num_iter, double delta_
         detail::compute_nabla(output, nabla);
         detail::calculate_diffusvity(nabla, kappa, diffusivity);
 
-        float half = float(1.0f / 2);
+        channel_type half = channel_type(1.0f / 2);
         constexpr std::ptrdiff_t channel_count = num_channels<OutputView>{};
         for (std::ptrdiff_t y = 0; y < output.height(); ++y)
         {
@@ -389,12 +396,12 @@ void anisotropic_diffusion(InputView input, unsigned int num_iter, double delta_
             {
                 for (std::ptrdiff_t channel_index = 0; channel_index < channel_count; ++channel_index) {
                     using detail::direction;
-                    auto delta = delta_t * (
+                    channel_type delta = static_cast<channel_type>(delta_t * (
                         diffusivity[(std::size_t)direction::north](x, y)[channel_index] * nabla[(std::size_t)direction::north](x, y)[channel_index] + diffusivity[(std::size_t)direction::south](x, y)[channel_index] * nabla[(std::size_t)direction::south](x, y)[channel_index]
                         + diffusivity[(std::size_t)direction::west](x, y)[channel_index] * nabla[(std::size_t)direction::west](x, y)[channel_index] + diffusivity[(std::size_t)direction::east](x, y)[channel_index] * nabla[(std::size_t)direction::east](x, y)[channel_index]
                         + half * diffusivity[(std::size_t)direction::north_east](x, y)[channel_index] * nabla[(std::size_t)direction::north_east](x, y)[channel_index] + half * diffusivity[(std::size_t)direction::south_east](x, y)[channel_index] * nabla[(std::size_t)direction::south_east](x, y)[channel_index]
                         + half * diffusivity[(std::size_t)direction::south_west](x, y)[channel_index] * nabla[(std::size_t)direction::south_west](x, y)[channel_index] + half * diffusivity[(std::size_t)direction::north_west](x, y)[channel_index] * nabla[(std::size_t)direction::north_west](x, y)[channel_index]
-                    );
+                    ));
                     output(x, y)[channel_index] = output(x, y)[channel_index] + delta;
                 }
             }

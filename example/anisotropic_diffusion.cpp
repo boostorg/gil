@@ -15,7 +15,7 @@ namespace gil = boost::gil;
 
 #include <iostream>
 
-void gray_version(const std::string& input_path, const std::string& output_path, std::uint64_t iteration_count, unsigned int kappa)
+void gray_version(const std::string& input_path, const std::string& output_path, unsigned int iteration_count, unsigned int kappa)
 {
     gil::gray8_image_t input;
     gil::read_image(input_path, input, gil::png_tag{});
@@ -43,7 +43,7 @@ void gray_version(const std::string& input_path, const std::string& output_path,
     gil::write_view(output_path, gil::view(true_output), gil::png_tag{});
 }
 
-void rgb_version(const std::string& input_path, const std::string& output_path, std::uint64_t iteration_count, unsigned int kappa)
+void rgb_version(const std::string& input_path, const std::string& output_path, unsigned int iteration_count, unsigned int kappa)
 {
     gil::rgb8_image_t input;
     gil::read_image(input_path, input, gil::png_tag{});
