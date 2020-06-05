@@ -11,6 +11,8 @@
 #include <boost/gil/pixel.hpp>
 #include <boost/gil/typedefs.hpp>
 
+#include <vector>
+
 namespace boost{ namespace gil{
 namespace detail {
 enum class direction: std::size_t

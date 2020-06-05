@@ -17,7 +17,6 @@
 #include <iostream>
 #include <string>
 #include <type_traits>
-#include <vector>
 
 namespace gil = boost::gil;
 
