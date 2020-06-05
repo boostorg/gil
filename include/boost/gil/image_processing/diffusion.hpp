@@ -15,8 +15,8 @@
 
 namespace boost{ namespace gil{
 namespace detail {
-enum class direction: std::size_t
-{
+namespace direction {
+enum {
     north = 0,
     south = 1,
     west = 2,
@@ -26,6 +26,7 @@ enum class direction: std::size_t
     south_west = 6,
     north_west = 7
 };
+}
 
 // nabla is directed difference in pixels,
 // nabla north for example represents intensity
@@ -45,22 +46,23 @@ void compute_nabla(InputView view, std::vector<OutputView> const& nabla)
                 channel_index < input_num_channels;
                 ++channel_index)
             {
-                nabla[(std::size_t)direction::north](x, y)[channel_index] =
+                using namespace direction;
+                nabla[north](x, y)[channel_index] =
                     view(x, y - 1)[channel_index] - view(x, y)[channel_index];
-                nabla[(std::size_t)direction::south](x, y)[channel_index] =
+                nabla[south](x, y)[channel_index] =
                     view(x, y + 1)[channel_index] - view(x, y)[channel_index];
-                nabla[(std::size_t)direction::west](x, y)[channel_index] =
+                nabla[west](x, y)[channel_index] =
                     view(x - 1, y)[channel_index] - view(x, y)[channel_index];
-                nabla[(std::size_t)direction::east](x, y)[channel_index] =
+                nabla[east](x, y)[channel_index] =
                     view(x + 1, y)[channel_index] - view(x, y)[channel_index];
 
-                nabla[(std::size_t)direction::north_east](x, y)[channel_index] =
+                nabla[north_east](x, y)[channel_index] =
                     view(x + 1, y - 1)[channel_index] - view(x, y)[channel_index];
-                nabla[(std::size_t)direction::south_east](x, y)[channel_index] =
+                nabla[south_east](x, y)[channel_index] =
                     view(x + 1, y + 1)[channel_index] - view(x, y)[channel_index];
-                nabla[(std::size_t)direction::south_west](x, y)[channel_index] =
+                nabla[south_west](x, y)[channel_index] =
                     view(x - 1, y + 1)[channel_index] - view(x, y)[channel_index];
-                nabla[(std::size_t)direction::north_west](x, y)[channel_index] =
+                nabla[north_west](x, y)[channel_index] =
                     view(x - 1, y - 1)[channel_index] - view(x, y)[channel_index];
             }
         }
@@ -145,28 +147,27 @@ void anisotropic_diffusion(InputView input,
                     channel_index < channel_count;
                     ++channel_index)
                 {
-                    using detail::direction;
+                    using namespace detail::direction;
                     channel_type delta = static_cast<channel_type>(delta_t * (
-                        diffusivity[(std::size_t)direction::north](x, y)[channel_index]
-                            * nabla[(std::size_t)direction::north](x, y)[channel_index]
-                        + diffusivity[(std::size_t)direction::south](x, y)[channel_index]
-                            * nabla[(std::size_t)direction::south](x, y)[channel_index]
-                        + diffusivity[(std::size_t)direction::west](x, y)[channel_index]
-                            * nabla[(std::size_t)direction::west](x, y)[channel_index]
-                        + diffusivity[(std::size_t)direction::east](x, y)[channel_index]
-                            * nabla[(std::size_t)direction::east](x, y)[channel_index]
+                        diffusivity[north](x, y)[channel_index] * nabla[north](x, y)[channel_index]
+                        + diffusivity[south](x, y)[channel_index]
+                            * nabla[south](x, y)[channel_index]
+                        + diffusivity[west](x, y)[channel_index]
+                            * nabla[west](x, y)[channel_index]
+                        + diffusivity[east](x, y)[channel_index]
+                            * nabla[east](x, y)[channel_index]
                         + half
-                            * diffusivity[(std::size_t)direction::north_east](x, y)[channel_index]
-                            * nabla[(std::size_t)direction::north_east](x, y)[channel_index]
+                            * diffusivity[north_east](x, y)[channel_index]
+                            * nabla[north_east](x, y)[channel_index]
                         + half
-                            * diffusivity[(std::size_t)direction::south_east](x, y)[channel_index]
-                            * nabla[(std::size_t)direction::south_east](x, y)[channel_index]
+                            * diffusivity[south_east](x, y)[channel_index]
+                            * nabla[south_east](x, y)[channel_index]
                         + half
-                            * diffusivity[(std::size_t)direction::south_west](x, y)[channel_index]
-                            * nabla[(std::size_t)direction::south_west](x, y)[channel_index]
+                            * diffusivity[south_west](x, y)[channel_index]
+                            * nabla[south_west](x, y)[channel_index]
                         + half
-                            * diffusivity[(std::size_t)direction::north_west](x, y)[channel_index]
-                            * nabla[(std::size_t)direction::north_west](x, y)[channel_index]
+                            * diffusivity[north_west](x, y)[channel_index]
+                            * nabla[north_west](x, y)[channel_index]
                     ));
                     output(x, y)[channel_index] = output(x, y)[channel_index] + delta;
                 }
