@@ -29,8 +29,8 @@ enum class direction: std::size_t
 // nabla north for example represents intensity
 // change in the north direction (up), and nabla south
 // represents intensity change in south direction (down).
-template <typename OutputView, typename InputView>
-void compute_nabla(InputView view, const std::vector<OutputView>& nabla)
+template <typename InputView, typename OutputView>
+void compute_nabla(InputView view, std::vector<OutputView> const& nabla)
 {
     constexpr std::ptrdiff_t input_num_channels = num_channels<InputView>{};
     static_assert(num_channels<OutputView>{} == input_num_channels,
@@ -110,7 +110,8 @@ void anisotropic_diffusion(InputView input,
     using computation_image_type = image<element_type>;
     using channel_type = typename channel_type<OutputView>::type;
 
-    for (unsigned int i = 0; i < num_iter; ++i) {
+    for (unsigned int i = 0; i < num_iter; ++i)
+    {
         std::vector<computation_image_type> nabla_images(8,
             computation_image_type(input.dimensions()));
         std::vector<typename computation_image_type::view_t> nabla;
