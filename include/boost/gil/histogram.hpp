@@ -10,206 +10,189 @@
 #define BOOST_GIL_HISTOGRAM_HPP
 
 #include <boost/gil/concepts/concept_check.hpp>
-#include <boost/gil/concepts/detail/histogram.hpp>
-#include <boost/gil/gray.hpp>
-#include <boost/gil/image_view.hpp>
-#include <boost/gil/image_view_factory.hpp>
+#include <boost/gil/metafunctions.hpp>
+#include <boost/gil/pixel.hpp>
+#include <boost/container_hash/extensions.hpp>
+#include <boost/mp11.hpp>
 
-//////////////////////////////////////////////////////////
-/// Histogram
-/////////////////////////////////////////////////////////
-
-/// \defgroup Histogram Histogram Filling Algorithms
-/// \brief Collection of functions to provide histogram support in GIL using Standard
-///        Template Library Containers
-/// The conversion from Boost.GIL images to compatible histograms are provided. The supported
-/// container types would be std::vector, std::array, std::map, std::unordered_map, std::deque.
-/// 2 possible calling syntax are provided. The implementation is for 1D histograms hence
-/// multi-channeled image views are color converted to gray color layout.
-/// Example : 
-/// \code
-/// //This is the common case.
-/// std::vector<int> v = image_histogram<vector<int>>(view(img));
-///
-/// //Alternative, when there is a need to accumulate the histograms.
-/// image_histogram(view(img), hist); //hist - histogram container
-/// \endcode
-///
-/// Some general constraints on usage:-
-/// 1. Cannot use signed images with compatible random access containers.
-/// 2. Automatic resize of containers in case of shortage of bins, to ensure
-///    correctness comes before performance.
-/// 3. Container key type (if exists) has to be one of std::integral types to be 
-///    GIL compatible.
-/// 4. Container value type has to be of std::arithmetic types.
-///
+#include <type_traits>
+#include <unordered_map>
 
 namespace boost { namespace gil {
 
-/// \ingroup Histogram
-/// \brief Use for indexable and resizable sequence containers 
-///
-/// This overload corresponds to resizable sequence containers which have random access capability.
-//  This would correspond to containers from STL like std::vector and std::deque. The only 
-/// difference from the next function is this function is helpful if older bin values in container
-/// is not to be erased i.e. accumulate the histograms.
-///
+namespace detail {
 
-template
-<
-    typename Container,
-    typename SrcView,
-    typename std::enable_if<
-                detail::is_indexable<Container>::value &&
-                detail::is_resizable<Container>::value, int>::type = 0
->
-inline void image_histogram(SrcView const& srcview, Container &histogram)
+template<typename... T>
+struct hash_tuple {
+    std::size_t operator()(std::tuple<T...> const& arg) const
+    {
+        return boost::hash_value(arg);
+    }
+};
+
+// With C++14 and using auto we don't need the decltype anymore
+template<typename Pixel, std::size_t... I>
+auto pixel_to_tuple(Pixel const& p, boost::mp11::index_sequence<I...>) 
+    -> decltype(std::make_tuple(p[I]...))
 {
-    gil_function_requires<ImageViewConcept<SrcView>>();
-    static_assert(std::is_arithmetic<typename Container::value_type>::value,
-                    "Improper container type for images.");
-    static_assert(std::is_unsigned<typename channel_type<SrcView>::type>::value,
-                    "Improper container type for signed images.");
-
-    using channel_t = typename channel_type<SrcView>::type;
-    using pixel_t = pixel<channel_t, gray_layout_t>;
-
-    histogram.resize(std::numeric_limits<channel_t>::max() + 1);
-
-    for_each_pixel(color_converted_view<pixel_t>(srcview), [&](pixel_t const& p) {
-        ++histogram[p];
-    });
+    return std::make_tuple(p[I]...);
 }
 
-/// \ingroup Histogram
-/// \brief Use for indexable and resizable sequence containers
-///
-/// This overload is the same as the above except that it does not produce the
-/// accumulate effect for histogram bin values. It returns a new container of
-/// size large enough to hold entire range of corresponding pixel value in the input image.
-///
-template
-<
-    typename Container,
-    typename SrcView,
-    typename std::enable_if<
-                detail::is_indexable<Container>::value &&
-                detail::is_resizable<Container>::value, int>::type = 0
->
-inline Container image_histogram(SrcView const& srcview)
+template<typename Tuple, std::size_t... I>
+auto tuple_to_tuple(Tuple const& t, boost::mp11::index_sequence<I...>) 
+    -> decltype(std::make_tuple(std::get<I>(t)...))
 {
-    gil_function_requires<ImageViewConcept<SrcView>>();
-    static_assert(std::is_arithmetic<typename Container::value_type>::value,
-                    "Improper container type for images.");
-    static_assert(std::is_unsigned<typename channel_type<SrcView>::type>::value,
-                    "Improper container type for signed images.");
+    return std::make_tuple(std::get<I>(t)...);
+}
 
-    using channel_t = typename channel_type<SrcView>::type;
-    using pixel_t = pixel<channel_t, gray_layout_t>;
+} //namespace detail
 
-    Container histogram(std::numeric_limits<channel_t>::max() + 1);
+template<typename... T>
+class histogram : public std::unordered_map<std::tuple<T...>, int, detail::hash_tuple<T...> >
+{
+    using parent_t = std::unordered_map<std::tuple<T...>, int, detail::hash_tuple<T...> >;
+    using key_t    = typename parent_t::key_type;
+    using mapped_t = typename parent_t::mapped_type;
+public:
+    histogram() = default;
+
+    mapped_t& operator()(T... indices) {
+        auto key = std::make_tuple(indices...);
+        const size_t index_dimension = std::tuple_size<std::tuple<T...>>::value;
+        const size_t histogram_dimension = get_dimension();
+        static_assert(histogram_dimension == index_dimension, "Dimensions do not match.");
+
+        return parent_t::operator[](key);
+    }
     
-    for_each_pixel(color_converted_view<pixel_t>(srcview), [&](pixel_t const& p) {
-        ++histogram[p];
-    });
-    return histogram;
-}
+    static constexpr std::size_t get_dimension() {
+        return std::tuple_size<key_t>::value;
+    }
 
-/// \ingroup Histogram
-/// \brief Use for indexable and non-resizable sequence containers 
-///
-/// This overload differs from the first, it gives a partial histogram over the image
-/// for non-resizable sequence containers. No overload of accumulate type is provided in
-/// this case. Example container would be std::array.
-///
-template
-<
-    typename Container,
-    typename SrcView,
-    typename std::enable_if <
-                detail::is_indexable<Container>::value &&
-                !detail::is_resizable<Container>::value &&
-                std::is_arithmetic<typename Container::value_type>::value, int>::type = 0
->
-inline void image_histogram(SrcView const& srcview, Container &histogram)
-{
-    gil_function_requires<ImageViewConcept<SrcView>>();
-    static_assert(std::is_arithmetic<typename Container::value_type>::value,
-                    "Improper container type for images.");
-    static_assert(std::is_unsigned<typename channel_type<SrcView>::type>::value,
-                    "Improper container type for signed images.");
+    // Optional: Implement a is_tuple_compatible() also to show error
+    // before static_cast happens.
+    static constexpr bool is_pixel_compatible() {
+        using bin_types = boost::mp11::mp_list<T...>;
+        return boost::mp11::mp_all_of<bin_types, std::is_arithmetic>::value;
+    }
 
-    using channel_t = typename channel_type<SrcView>::type;
-    using pixel_t = pixel<channel_t, gray_layout_t>;
+    template<std::size_t... Dimensions, typename Tuple>
+    key_t key_from_tuple(Tuple const& t) const {
+        using index_list = boost::mp11::mp_list_c<std::size_t, Dimensions...>;
+        const std::size_t index_list_size = boost::mp11::mp_size<index_list>::value;
+        const std::size_t tuple_size = std::tuple_size<Tuple>::value;
+        const std::size_t histogram_dimension = get_dimension();
 
-    const size_t pixel_max = std::numeric_limits<channel_t>::max();
-    const float scale = (histogram.size() - 1.0f) / pixel_max;
+        static_assert( ((index_list_size != 0 && index_list_size == histogram_dimension) || 
+                        (tuple_size == histogram_dimension)),
+                        "Tuple and histogram key are not compatible.");
+        
+        using new_index_list = typename std::conditional<
+                                index_list_size == 0,
+                                boost::mp11::mp_list_c<std::size_t, 0>,
+                                index_list>::type;
+
+        const std::size_t min = boost::mp11::mp_min_element<
+                                    new_index_list,
+                                    boost::mp11::mp_less>::value;
+        const std::size_t max = boost::mp11::mp_max_element<
+                                    new_index_list,
+                                    boost::mp11::mp_less>::value;
+
+        static_assert( (0 <= min && max < tuple_size) || 
+                        index_list_size == 0,
+                        "Index out of Range");
+        
+        // With if-constexpr this code can be simplified
+        using sequence_type = typename std::conditional<
+                                index_list_size == 0,
+                                boost::mp11::make_index_sequence<histogram_dimension>,
+                                boost::mp11::index_sequence<Dimensions...>>::type;
+
+        auto key = detail::tuple_to_tuple(t, sequence_type{});
+        return cast_to_histogram_key(key, boost::mp11::make_index_sequence<histogram_dimension>{});
+    }
+
+
+    template<size_t... Dimensions, typename Pixel>
+    key_t key_from_pixel(Pixel const& p) const {
+        using index_list = boost::mp11::mp_list_c<std::size_t, Dimensions...>;
+        const std::size_t index_list_size = boost::mp11::mp_size<index_list>::value;
+        const std::size_t pixel_dimension = num_channels<Pixel>::value;
+        const std::size_t histogram_dimension = get_dimension();
+
+        static_assert( ((index_list_size != 0 && index_list_size == histogram_dimension) || 
+                        (index_list_size == 0 && pixel_dimension == histogram_dimension)) &&
+                        is_pixel_compatible(),
+                        "Pixels and histogram key are not compatible.");
+
+        using  new_index_list = typename std::conditional<
+                                index_list_size == 0,
+                                boost::mp11::mp_list_c<std::size_t, 0>,
+                                index_list>::type;
+
+        const std::size_t min = boost::mp11::mp_min_element<
+                                    new_index_list,
+                                    boost::mp11::mp_less>::value;
+        const std::size_t max = boost::mp11::mp_max_element<
+                                    new_index_list,
+                                    boost::mp11::mp_less>::value;
+
+        static_assert( (0 <= min && max < pixel_dimension) || 
+                        index_list_size == 0,
+                        "Index out of Range");
+        
+        using sequence_type = typename std::conditional<
+                                index_list_size == 0,
+                                boost::mp11::make_index_sequence<histogram_dimension>,
+                                boost::mp11::index_sequence<Dimensions...>>::type;
+
+        auto key =  detail::pixel_to_tuple(p, sequence_type{});
+        return cast_to_histogram_key(key, boost::mp11::make_index_sequence<histogram_dimension>{});
+    }
+
+    template<size_t... Dimensions, typename SrcView>
+    void fill(SrcView const& srcview) {
+        gil_function_requires<ImageViewConcept<SrcView>>();
+        static constexpr std::size_t image_dimension = num_channels<SrcView>::value;
+        using dimension_list = boost::mp11::mp_list_c<size_t, Dimensions...>;
+        using index_list = boost::mp11::index_sequence<Dimensions...>;
+        using pixel_t = typename SrcView::value_type;
+
+        static constexpr std::size_t num_dimensions = boost::mp11::mp_size<dimension_list>::value;
+
+        for_each_pixel(srcview, [&](pixel_t const& p){
+            parent_t::operator[](key_from_pixel<Dimensions...>(p))++;
+        });
+    }
+
+private:
     
-    for_each_pixel(color_converted_view<pixel_t>(srcview), [&](pixel_t const& p) {
-        ++histogram[static_cast<typename Container::size_type>(p * scale)];
-    });
-}
+    template<typename Tuple, std::size_t... I>
+    key_t cast_to_histogram_key(Tuple const& t, boost::mp11::index_sequence<I...>) const
+    {
+        using bin_types = boost::mp11::mp_list<T...>;
+        return std::make_tuple(
+                    static_cast<typename boost::mp11::mp_at_c<bin_types, I>>(std::get<I>(t))...);
+    }
+};
 
-/// \ingroup Histogram
-/// \brief Use for indexable and pair associative containers
 ///
-/// This overload corresponds to providing histogram support for pair associative containers like
-/// std::map, std::unordered_map, std::multimap and std::unordered_mulitmap. No extra constraints 
-/// other than what is already mentioned. This overload accumulates the histogram.
+/// fill_histogram - Overload this function to provide support for
+/// boost::gil::histogram or any other external histogram
 ///
-template
-<
-    typename Container,
-    typename SrcView,
-    typename std::enable_if<
-                detail::is_indexable<Container>::value &&
-                detail::has_integral_key_type<Container>::value, int>::type = 0
->
-inline void image_histogram(SrcView const& srcview, Container &histogram)
+
+template<typename SrcView, typename Container>
+void fill_histogram(SrcView const& srcview, Container& h);
+
+template<std::size_t... Dimensions, typename SrcView, typename... T>
+void fill_histogram(SrcView const& srcview, histogram<T...> &h, bool accumulate = false)
 {
-    gil_function_requires<ImageViewConcept<SrcView>>();
-    static_assert(std::is_arithmetic<typename Container::mapped_type>::value,
-                    "Improper container type for images.");
-
-    using channel_t = typename channel_type<SrcView>::type;
-    using pixel_t = pixel<channel_t, gray_layout_t>;
-
-    for_each_pixel(color_converted_view<pixel_t>(srcview), [&](pixel_t const& p) {
-        ++histogram[p];
-    });
+    if(!accumulate)
+        h.clear();
+    h.template fill<Dimensions...>(srcview);
 }
 
-/// \ingroup Histogram
-/// \brief Use for indexable and pair associative containers
-///
-/// This overload is the same as the above except that it does not produce the
-/// accumulate effect for histogram bin values.
-///
-template
-<   
-    typename Container,
-    typename SrcView,
-    typename std::enable_if<
-                detail::is_indexable<Container>::value &&
-                detail::has_integral_key_type<Container>::value, int>::type = 0
->
-inline Container image_histogram(SrcView const& srcview)
-{
-    gil_function_requires<ImageViewConcept<SrcView>>();
-    static_assert(std::is_arithmetic<typename Container::mapped_type>::value,
-                    "Improper container type for images.");
-
-    using channel_t = typename channel_type<SrcView>::type;
-    using pixel_t = pixel<channel_t, gray_layout_t>;
-
-    Container histogram;
-
-    for_each_pixel(color_converted_view<pixel_t>(srcview), [&](pixel_t const& p) {
-        ++histogram[p];
-    });
-    return histogram;
-}
-
-}} // namespace boost::gil
+}} //namespace boost::gil
 
 #endif

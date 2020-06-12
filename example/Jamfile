@@ -27,6 +27,8 @@ local sources =
     harris.cpp
     hessian.cpp
     histogram.cpp
+    histogram_class.cpp
+    histogram_extension.cpp
     interleaved_ptr.cpp
     mandelbrot.cpp
     packed_pixel.cpp
