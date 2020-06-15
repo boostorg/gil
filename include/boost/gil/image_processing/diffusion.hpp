@@ -60,7 +60,24 @@ void compute_nabla(InputView view, std::vector<OutputView> const &nabla)
 
         return lhs;
     };
+
+    // north: x, y - 1
+    // south: x, y + 1
+    // east: x + 1, y
+    // west: x - 1, y
+    // NW: x - 1, y - 1
+    // NE: x + 1, y - 1
+    // SE: x + 1, y + 1
+    // SW: x - 1, y + 1
+
     // NW corner
+    /*
+        XOOOO
+        OOOOO
+        OOOOO
+        OOOOO
+        OOOOO
+    */
     {
         const std::ptrdiff_t x = 0;
         const std::ptrdiff_t y = 0;
@@ -76,6 +93,13 @@ void compute_nabla(InputView view, std::vector<OutputView> const &nabla)
     }
 
     // NE corner
+    /*
+        OOOOX
+        OOOOO
+        OOOOO
+        OOOOO
+        OOOOO
+    */
     {
         const std::ptrdiff_t x = width - 1;
         const std::ptrdiff_t y = 0;
@@ -91,6 +115,13 @@ void compute_nabla(InputView view, std::vector<OutputView> const &nabla)
     }
 
     // SW corner
+    /*
+        OOOOO
+        OOOOO
+        OOOOO
+        OOOOO
+        XOOOO
+    */
     {
         const std::ptrdiff_t x = 0;
         const std::ptrdiff_t y = height - 1;
@@ -106,6 +137,13 @@ void compute_nabla(InputView view, std::vector<OutputView> const &nabla)
     }
 
     // SE corner
+    /*
+        OOOOO
+        OOOOO
+        OOOOO
+        OOOOO
+        OOOOX
+    */
     {
         const std::ptrdiff_t x = width - 1;
         const std::ptrdiff_t y = height - 1;
@@ -121,6 +159,13 @@ void compute_nabla(InputView view, std::vector<OutputView> const &nabla)
     }
 
     // first and last rows
+    /*
+        OXXXO
+        OOOOO
+        OOOOO
+        OOOOO
+        OXXXO
+    */
     {
         const std::ptrdiff_t y1 = 0;
         const std::ptrdiff_t y2 = height - 1;
@@ -148,6 +193,13 @@ void compute_nabla(InputView view, std::vector<OutputView> const &nabla)
     }
 
     // first and last columns
+    /*
+        OOOOO
+        XOOOX
+        XOOOX
+        XOOOX
+        OOOOO
+    */
     {
         const std::ptrdiff_t x1 = 0;
         const std::ptrdiff_t x2 = width - 1;
@@ -174,7 +226,14 @@ void compute_nabla(InputView view, std::vector<OutputView> const &nabla)
             nabla[north_west](x2, y) = minus(view(x2 - 1, y - 1), current2);
         }
     }
-
+    // middle case
+    /*
+        OOOOO
+        OXXXO
+        OXXXO
+        OXXXO
+        OOOOO
+    */
     for (std::ptrdiff_t y = 1; y < view.height() - 1; ++y)
     {
         for (std::ptrdiff_t x = 1; x < view.width() - 1; ++x)
@@ -204,6 +263,7 @@ void compute_nabla(InputView view, std::vector<OutputView> const &nabla)
     }
 }
 
+// formula is c = exp(-(nabla/kappa)^2)
 template <typename View>
 void calculate_diffusvity(std::vector<View> nablas, double kappa,
                           std::vector<View> const &diffusivities)
@@ -243,6 +303,9 @@ void anisotropic_diffusion(InputView input, unsigned int num_iter, double delta_
     using element_type = typename OutputView::value_type;
     using computation_image_type = image<element_type>;
     using channel_type = typename channel_type<OutputView>::type;
+    static_assert(
+        std::is_floating_point<channel_type>::value || std::is_same<channel_type, float32_t>::value,
+        "Output view must be floating point, otherwise accuracy loss will nullify diffusion");
 
     for (unsigned int i = 0; i < num_iter; ++i)
     {
