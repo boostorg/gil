@@ -53,6 +53,7 @@ class histogram : public std::unordered_map<std::tuple<T...>, int, detail::hash_
     using parent_t = std::unordered_map<std::tuple<T...>, int, detail::hash_tuple<T...> >;
     using key_t    = typename parent_t::key_type;
     using mapped_t = typename parent_t::mapped_type;
+    using value_t  = typename parent_t::value_type;
 public:
     histogram() = default;
 
@@ -83,6 +84,7 @@ public:
         const std::size_t tuple_size = std::tuple_size<Tuple>::value;
         const std::size_t histogram_dimension = get_dimension();
 
+        // Tuple size check not needed if we have a is_tuple_compatible()
         static_assert( ((index_list_size != 0 && index_list_size == histogram_dimension) || 
                         (tuple_size == histogram_dimension)),
                         "Tuple and histogram key are not compatible.");
@@ -114,7 +116,7 @@ public:
     }
 
 
-    template<size_t... Dimensions, typename Pixel>
+    template<std::size_t... Dimensions, typename Pixel>
     key_t key_from_pixel(Pixel const& p) const {
         using index_list = boost::mp11::mp_list_c<std::size_t, Dimensions...>;
         const std::size_t index_list_size = boost::mp11::mp_size<index_list>::value;
@@ -151,7 +153,7 @@ public:
         return cast_to_histogram_key(key, boost::mp11::make_index_sequence<histogram_dimension>{});
     }
 
-    template<size_t... Dimensions, typename SrcView>
+    template<std::size_t... Dimensions, typename SrcView>
     void fill(SrcView const& srcview) {
         gil_function_requires<ImageViewConcept<SrcView>>();
         static constexpr std::size_t image_dimension = num_channels<SrcView>::value;
@@ -164,6 +166,67 @@ public:
         for_each_pixel(srcview, [&](pixel_t const& p){
             parent_t::operator[](key_from_pixel<Dimensions...>(p))++;
         });
+    }
+
+    template<std::size_t... Dimensions, typename Tuple>
+    histogram sub_histogram(Tuple const& t) {
+        using index_list = boost::mp11::mp_list_c<std::size_t, Dimensions...>;
+        const std::size_t index_list_size = boost::mp11::mp_size<index_list>::value;
+        const std::size_t histogram_dimension = get_dimension();
+
+        const std::size_t min = boost::mp11::mp_min_element<
+                                    index_list,
+                                    boost::mp11::mp_less>::value;
+        const std::size_t max = boost::mp11::mp_max_element<
+                                    index_list,
+                                    boost::mp11::mp_less>::value;
+        // Also check is_tuple_compatible()
+        static_assert( (0 <= min && max < histogram_dimension) && 
+                        index_list_size < histogram_dimension,
+                        "Index out of Range");
+
+        auto key = cast_to_histogram_key(t, boost::mp11::make_index_sequence<get_dimension()>{});
+        auto sub_key = detail::tuple_to_tuple(key, boost::mp11::index_sequence<Dimensions...>{});
+        
+        histogram sub_h;
+        std::for_each( parent_t::begin(), parent_t::end(), [&](value_t const& k) {
+            if (sub_key == detail::tuple_to_tuple(k.first, 
+                                        boost::mp11::index_sequence<Dimensions...>{}))
+                sub_h[k.first] += parent_t::operator[](k.first);
+        });
+        return sub_h;
+    }
+
+    template
+    <
+        std::size_t... Dimensions,
+        typename BinTypes = boost::mp11::mp_list<T...>,
+        typename SubHistogramType = histogram<boost::mp11::mp_at_c<BinTypes, Dimensions>...>
+    >
+    SubHistogramType sub_histogram() {
+        using index_list = boost::mp11::mp_list_c<std::size_t, Dimensions...>;
+        const std::size_t index_list_size = boost::mp11::mp_size<index_list>::value;
+        const std::size_t histogram_dimension = get_dimension();
+
+        const std::size_t min = boost::mp11::mp_min_element<
+                                    index_list,
+                                    boost::mp11::mp_less>::value;
+        const std::size_t max = boost::mp11::mp_max_element<
+                                    index_list,
+                                    boost::mp11::mp_less>::value;
+        // Also check is_tuple_compatible()
+        static_assert( (0 <= min && max < histogram_dimension) && 
+                        index_list_size < histogram_dimension,
+                        "Index out of Range");
+                        
+        SubHistogramType sub_h;
+
+        std::for_each( parent_t::begin(), parent_t::end(), [&](value_t const& k) {
+            auto sub_key = detail::tuple_to_tuple(k.first, 
+                                        boost::mp11::index_sequence<Dimensions...>{});
+            sub_h[sub_key] += parent_t::operator[](k.first);
+        });
+        return sub_h;
     }
 
 private:
