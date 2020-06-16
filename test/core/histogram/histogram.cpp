@@ -206,10 +206,10 @@ void check_histogram_fill() {
     {
         if(h3(i, i+1, i+2) != 8)
         {
-            check_gray_fill = false;
+            check_rgb_fill = false;
         }
     }
-    BOOST_TEST(check_gray_fill);
+    BOOST_TEST(check_rgb_fill);
 
     h2.fill<1>(view(big_rgb_image));
     bool check_gray_fill2 = true;
