@@ -45,8 +45,8 @@ int main() {
     h(1,2,1)=1;
     h(3,3,1)=1;
     h(1,21,21)=1;
-    auto h1 = h.sub_histogram<0>();
-    std::cout<<"sub : "<<h1(1)<<"\n";
+    // auto h1 = h.sub_histogram<0>();
+    // std::cout<<"sub : "<<h1(1)<<"\n";
 
     auto h2 = h.sub_histogram<0,2>(std::tuple<int, int, int>(1, 0, 1));
     std::cout<<"sub : "<<h2(1, 1, 1)<<"\n";

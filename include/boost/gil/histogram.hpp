@@ -51,6 +51,7 @@ template<typename... T>
 class histogram : public std::unordered_map<std::tuple<T...>, int, detail::hash_tuple<T...> >
 {
     using parent_t = std::unordered_map<std::tuple<T...>, int, detail::hash_tuple<T...> >;
+    using bin_t    = boost::mp11::mp_list<T...>;
     using key_t    = typename parent_t::key_type;
     using mapped_t = typename parent_t::mapped_type;
     using value_t  = typename parent_t::value_type;
@@ -197,37 +198,35 @@ public:
         return sub_h;
     }
 
-    template
-    <
-        std::size_t... Dimensions,
-        typename BinTypes = boost::mp11::mp_list<T...>,
-        typename SubHistogramType = histogram<boost::mp11::mp_at_c<BinTypes, Dimensions>...>
-    >
-    SubHistogramType sub_histogram() {
-        using index_list = boost::mp11::mp_list_c<std::size_t, Dimensions...>;
-        const std::size_t index_list_size = boost::mp11::mp_size<index_list>::value;
-        const std::size_t histogram_dimension = get_dimension();
+    // template
+    // <
+    //     std::size_t... Dimensions
+    // >
+    // histogram<boost::mp11::mp_at_c<bin_t, Dimensions>...> sub_histogram() {
+    //     using index_list = boost::mp11::mp_list_c<std::size_t, Dimensions...>;
+    //     const std::size_t index_list_size = boost::mp11::mp_size<index_list>::value;
+    //     const std::size_t histogram_dimension = get_dimension();
 
-        const std::size_t min = boost::mp11::mp_min_element<
-                                    index_list,
-                                    boost::mp11::mp_less>::value;
-        const std::size_t max = boost::mp11::mp_max_element<
-                                    index_list,
-                                    boost::mp11::mp_less>::value;
-        // Also check is_tuple_compatible()
-        static_assert( (0 <= min && max < histogram_dimension) && 
-                        index_list_size < histogram_dimension,
-                        "Index out of Range");
+    //     const std::size_t min = boost::mp11::mp_min_element<
+    //                                 index_list,
+    //                                 boost::mp11::mp_less>::value;
+    //     const std::size_t max = boost::mp11::mp_max_element<
+    //                                 index_list,
+    //                                 boost::mp11::mp_less>::value;
+    //     // Also check is_tuple_compatible()
+    //     static_assert( (0 <= min && max < histogram_dimension) && 
+    //                     index_list_size < histogram_dimension,
+    //                     "Index out of Range");
                         
-        SubHistogramType sub_h;
+    //     // histogram<boost::mp11::mp_at_c<bin_t, Dimensions>...> sub_h;
 
-        std::for_each( parent_t::begin(), parent_t::end(), [&](value_t const& k) {
-            auto sub_key = detail::tuple_to_tuple(k.first, 
-                                        boost::mp11::index_sequence<Dimensions...>{});
-            sub_h[sub_key] += parent_t::operator[](k.first);
-        });
-        return sub_h;
-    }
+    //     // std::for_each( parent_t::begin(), parent_t::end(), [&](value_t const& k) {
+    //     //     auto sub_key = detail::tuple_to_tuple(k.first, 
+    //     //                                 boost::mp11::index_sequence<Dimensions...>{});
+    //     //     sub_h[sub_key] += parent_t::operator[](k.first);
+    //     // });
+    //     // return sub_h;
+    // }
 
 private:
     
@@ -237,6 +236,16 @@ private:
         using bin_types = boost::mp11::mp_list<T...>;
         return std::make_tuple(
                     static_cast<typename boost::mp11::mp_at_c<bin_types, I>>(std::get<I>(t))...);
+    }
+};
+
+template<typename... T>
+struct check_struct {
+    using type_list = boost::mp11::mp_list<T...>;
+    template<std::size_t... D>
+    check_struct<boost::mp11::mp_at_c<type_list, D>...> check() {
+        check_struct<boost::mp11::mp_at_c<type_list, D>...> f;
+        return f;
     }
 };
 
