@@ -52,4 +52,8 @@ int main() {
     std::cout<<"sub : "<<h2(1, 1, 1)<<"\n";
     std::cout<<"sub : "<<h2(1, 2, 1)<<"\n";
     std::cout<<"sub : "<<h2(3, 3, 1)<<"\n";
+
+    histogram<int, int, int> ha;
+    std::tuple<int, int, int> ta;
+    std::cout<<ha.is_tuple_compatible(ta);
 }

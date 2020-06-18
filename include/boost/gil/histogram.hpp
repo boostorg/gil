@@ -71,11 +71,25 @@ public:
         return std::tuple_size<key_t>::value;
     }
 
-    // Optional: Implement a is_tuple_compatible() also to show error
-    // before static_cast happens.
     static constexpr bool is_pixel_compatible() {
         using bin_types = boost::mp11::mp_list<T...>;
         return boost::mp11::mp_all_of<bin_types, std::is_arithmetic>::value;
+    }
+
+    template<typename Tuple>
+    bool is_tuple_compatible(Tuple const& t) {
+        const std::size_t tuple_size = std::tuple_size<Tuple>::value;
+        const std::size_t histogram_size = get_dimension();
+        // This code can be reduced by using if-constexpr
+        using sequence_type = typename std::conditional<
+                                tuple_size >= histogram_size,
+                                boost::mp11::make_index_sequence<histogram_size>,
+                                boost::mp11::make_index_sequence<tuple_size>>::type;
+                                
+        if(tuple_size_compatible(t))
+            return tuple_type_compatible<Tuple>(sequence_type{});
+        else
+            return false;
     }
 
     template<std::size_t... Dimensions, typename Tuple>
@@ -85,10 +99,9 @@ public:
         const std::size_t tuple_size = std::tuple_size<Tuple>::value;
         const std::size_t histogram_dimension = get_dimension();
 
-        // Tuple size check not needed if we have a is_tuple_compatible()
         static_assert( ((index_list_size != 0 && index_list_size == histogram_dimension) || 
                         (tuple_size == histogram_dimension)),
-                        "Tuple and histogram key are not compatible.");
+                        "Tuple and histogram key of different sizes");
         
         using new_index_list = typename std::conditional<
                                 index_list_size == 0,
@@ -106,14 +119,19 @@ public:
                         index_list_size == 0,
                         "Index out of Range");
         
+        using seq1 = boost::mp11::make_index_sequence<histogram_dimension>;
+        using seq2 = boost::mp11::index_sequence<Dimensions...>;
         // With if-constexpr this code can be simplified
         using sequence_type = typename std::conditional<
                                 index_list_size == 0,
-                                boost::mp11::make_index_sequence<histogram_dimension>,
-                                boost::mp11::index_sequence<Dimensions...>>::type;
+                                seq1,
+                                seq2>::type;
 
         auto key = detail::tuple_to_tuple(t, sequence_type{});
-        return cast_to_histogram_key(key, boost::mp11::make_index_sequence<histogram_dimension>{});
+        static_assert(  tuple_type_compatible<Tuple>(seq1{}), 
+                        "Tuple type and histogram type not compatible.");
+        
+        return cast_to_histogram_key(key, seq1{});
     }
 
 
@@ -145,13 +163,15 @@ public:
                         index_list_size == 0,
                         "Index out of Range");
         
+        using seq1 = boost::mp11::make_index_sequence<histogram_dimension>;
+        using seq2 = boost::mp11::index_sequence<Dimensions...>;
         using sequence_type = typename std::conditional<
                                 index_list_size == 0,
-                                boost::mp11::make_index_sequence<histogram_dimension>,
-                                boost::mp11::index_sequence<Dimensions...>>::type;
+                                seq1,
+                                seq2>::type;
 
         auto key =  detail::pixel_to_tuple(p, sequence_type{});
-        return cast_to_histogram_key(key, boost::mp11::make_index_sequence<histogram_dimension>{});
+        return cast_to_histogram_key(key, seq1{});
     }
 
     template<std::size_t... Dimensions, typename SrcView>
@@ -181,71 +201,77 @@ public:
         const std::size_t max = boost::mp11::mp_max_element<
                                     index_list,
                                     boost::mp11::mp_less>::value;
-        // Also check is_tuple_compatible()
+
         static_assert( (0 <= min && max < histogram_dimension) && 
                         index_list_size < histogram_dimension,
                         "Index out of Range");
 
-        auto key = cast_to_histogram_key(t, boost::mp11::make_index_sequence<get_dimension()>{});
-        auto sub_key = detail::tuple_to_tuple(key, boost::mp11::index_sequence<Dimensions...>{});
+        using seq1 = boost::mp11::make_index_sequence<get_dimension()>;
+        using seq2 = boost::mp11::index_sequence<Dimensions...>;
+
+        static_assert(  tuple_type_compatible<Tuple>(seq1{}), 
+                        "Tuple type and histogram type not compatible.");
+
+        auto key = cast_to_histogram_key(t, seq1{});
+        auto sub_key = detail::tuple_to_tuple(key, seq2{});
         
         histogram sub_h;
         std::for_each( parent_t::begin(), parent_t::end(), [&](value_t const& k) {
-            if (sub_key == detail::tuple_to_tuple(k.first, 
-                                        boost::mp11::index_sequence<Dimensions...>{}))
+            if (sub_key == detail::tuple_to_tuple(k.first, seq2{}))
                 sub_h[k.first] += parent_t::operator[](k.first);
         });
         return sub_h;
     }
 
-    // template
-    // <
-    //     std::size_t... Dimensions
-    // >
-    // histogram<boost::mp11::mp_at_c<bin_t, Dimensions>...> sub_histogram() {
-    //     using index_list = boost::mp11::mp_list_c<std::size_t, Dimensions...>;
-    //     const std::size_t index_list_size = boost::mp11::mp_size<index_list>::value;
-    //     const std::size_t histogram_dimension = get_dimension();
+    template<std::size_t... Dimensions>
+    histogram<boost::mp11::mp_at_c<bin_t, Dimensions>...> sub_histogram() {
+        using index_list = boost::mp11::mp_list_c<std::size_t, Dimensions...>;
+        const std::size_t index_list_size = boost::mp11::mp_size<index_list>::value;
+        const std::size_t histogram_dimension = get_dimension();
 
-    //     const std::size_t min = boost::mp11::mp_min_element<
-    //                                 index_list,
-    //                                 boost::mp11::mp_less>::value;
-    //     const std::size_t max = boost::mp11::mp_max_element<
-    //                                 index_list,
-    //                                 boost::mp11::mp_less>::value;
-    //     // Also check is_tuple_compatible()
-    //     static_assert( (0 <= min && max < histogram_dimension) && 
-    //                     index_list_size < histogram_dimension,
-    //                     "Index out of Range");
-                        
-    //     // histogram<boost::mp11::mp_at_c<bin_t, Dimensions>...> sub_h;
+        const std::size_t min = boost::mp11::mp_min_element<
+                                    index_list,
+                                    boost::mp11::mp_less>::value;
+        const std::size_t max = boost::mp11::mp_max_element<
+                                    index_list,
+                                    boost::mp11::mp_less>::value;
 
-    //     // std::for_each( parent_t::begin(), parent_t::end(), [&](value_t const& k) {
-    //     //     auto sub_key = detail::tuple_to_tuple(k.first, 
-    //     //                                 boost::mp11::index_sequence<Dimensions...>{});
-    //     //     sub_h[sub_key] += parent_t::operator[](k.first);
-    //     // });
-    //     // return sub_h;
-    // }
+        static_assert( (0 <= min && max < histogram_dimension) && 
+                        index_list_size < histogram_dimension,
+                        "Index out of Range");
+          
+        histogram<boost::mp11::mp_at_c<bin_t, Dimensions>...> sub_h;
+
+        std::for_each( parent_t::begin(), parent_t::end(), [&](value_t const& k) {
+            auto sub_key = detail::tuple_to_tuple(k.first, 
+                                        boost::mp11::index_sequence<Dimensions...>{});
+            sub_h[sub_key] += parent_t::operator[](k.first);
+        });
+        return sub_h;
+    }
 
 private:
     
     template<typename Tuple, std::size_t... I>
     key_t cast_to_histogram_key(Tuple const& t, boost::mp11::index_sequence<I...>) const
     {
-        using bin_types = boost::mp11::mp_list<T...>;
         return std::make_tuple(
-                    static_cast<typename boost::mp11::mp_at_c<bin_types, I>>(std::get<I>(t))...);
+                    static_cast<typename boost::mp11::mp_at_c<bin_t, I>>(std::get<I>(t))...);
     }
-};
 
-template<typename... T>
-struct check_struct {
-    using type_list = boost::mp11::mp_list<T...>;
-    template<std::size_t... D>
-    check_struct<boost::mp11::mp_at_c<type_list, D>...> check() {
-        check_struct<boost::mp11::mp_at_c<type_list, D>...> f;
-        return f;
+    template<typename Tuple, std::size_t... I>
+    static constexpr bool tuple_type_compatible(boost::mp11::index_sequence<I...>)
+    {
+        using tp = boost::mp11::mp_list<typename std::is_convertible<
+                            boost::mp11::mp_at_c<bin_t, I>,
+                            typename std::tuple_element<I, Tuple>::type>::type...>;
+        return boost::mp11::mp_all_of<tp, boost::mp11::mp_to_bool>::value;
+    }
+
+    template<typename Tuple>
+    static constexpr bool tuple_size_compatible(Tuple const& t)
+    {
+        return (std::tuple_size<Tuple>::value == get_dimension());
     }
 };
 

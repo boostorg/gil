@@ -145,6 +145,39 @@ void check_is_pixel_compatible() {
     BOOST_TEST(!h4.is_pixel_compatible());
 }
 
+void check_is_tuple_compatible() {
+    gil::histogram<int> h1;
+    gil::histogram<double> h2;
+    gil::histogram<int, double> h3;
+    gil::histogram<int, unsigned char> h4;
+    gil::histogram<int, std::string> h5;
+
+    std::tuple<int> t1;
+    std::tuple<float> t2;
+    std::tuple<int, double> t3;
+    std::tuple<int, unsigned char> t4;
+    std::tuple<int, std::string> t5;
+
+    BOOST_TEST(h1.is_tuple_compatible(t1));
+    BOOST_TEST(h1.is_tuple_compatible(t2));
+    BOOST_TEST(!h1.is_tuple_compatible(t3));
+    BOOST_TEST(!h1.is_tuple_compatible(t5));
+
+    BOOST_TEST(h2.is_tuple_compatible(t1));
+    BOOST_TEST(h2.is_tuple_compatible(t2));
+    BOOST_TEST(!h2.is_tuple_compatible(t3));
+
+    BOOST_TEST(!h3.is_tuple_compatible(t1));
+    BOOST_TEST(h3.is_tuple_compatible(t3));
+    BOOST_TEST(h3.is_tuple_compatible(t4));
+    BOOST_TEST(!h3.is_tuple_compatible(t5));
+
+    BOOST_TEST(!h4.is_tuple_compatible(t1));
+    BOOST_TEST(h4.is_tuple_compatible(t3));
+    BOOST_TEST(h4.is_tuple_compatible(t4));
+    BOOST_TEST(!h4.is_tuple_compatible(t5));
+}
+
 void check_histogram_key_from_tuple() {
     gil::histogram<int, int> h1;
     std::tuple<int, int> t1(1, 2);
@@ -263,11 +296,11 @@ void check_sub_histogram_without_tuple() {
     h(2, 1, "C", 1) = 1;
     h(2, 1, "D", 1) = 1;
     h(2, 3, "E", 4) = 1;
-    // auto h1 = h.sub_histogram<0,3>();
-    // BOOST_TEST(h1(1, 1) == 2); 
-    // BOOST_TEST(h1(2, 1) == 2); 
-    // BOOST_TEST(h1(2, 4) == 1); 
-    // BOOST_TEST(h1(5, 5) == 0);
+    auto h1 = h.sub_histogram<0,3>();
+    BOOST_TEST(h1(1, 1) == 2); 
+    BOOST_TEST(h1(2, 1) == 2); 
+    BOOST_TEST(h1(2, 4) == 1); 
+    BOOST_TEST(h1(5, 5) == 0);
 }
 
 void check_sub_histogram_with_tuple() {
@@ -289,10 +322,6 @@ void check_sub_histogram_with_tuple() {
     BOOST_TEST(h1(1, 3, "A", 1) == 2);
 }
 
-void temporary_check() {
-    gil::check_struct<int, int, std::string, int> f;
-    auto k = f.check<1,2>();
-}
 
 int main() {
 
@@ -301,13 +330,13 @@ int main() {
     check_histogram_constructors();
     check_indexing_operator();
     check_is_pixel_compatible();
+    check_is_tuple_compatible();
     check_histogram_key_from_tuple();
     check_histogram_key_from_pixel();
     check_histogram_fill();
     check_histogram_fill_algorithm();
-    // check_sub_histogram_without_tuple();
+    check_sub_histogram_without_tuple();
     check_sub_histogram_with_tuple();
-    temporary_check();
 
     return boost::report_errors();
 }   
