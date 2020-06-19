@@ -224,7 +224,7 @@ public:
     }
 
     template<std::size_t... Dimensions>
-    histogram<boost::mp11::mp_at_c<bin_t, Dimensions>...> sub_histogram() {
+    histogram<boost::mp11::mp_at<bin_t, boost::mp11::mp_size_t<Dimensions>>...> sub_histogram() {
         using index_list = boost::mp11::mp_list_c<std::size_t, Dimensions...>;
         const std::size_t index_list_size = boost::mp11::mp_size<index_list>::value;
         const std::size_t histogram_dimension = get_dimension();
@@ -240,7 +240,7 @@ public:
                         index_list_size < histogram_dimension,
                         "Index out of Range");
           
-        histogram<boost::mp11::mp_at_c<bin_t, Dimensions>...> sub_h;
+        histogram<boost::mp11::mp_at<bin_t, boost::mp11::mp_size_t<Dimensions>>...> sub_h;
 
         std::for_each( parent_t::begin(), parent_t::end(), [&](value_t const& k) {
             auto sub_key = detail::tuple_to_tuple(k.first, 
@@ -256,14 +256,16 @@ private:
     key_t cast_to_histogram_key(Tuple const& t, boost::mp11::index_sequence<I...>) const
     {
         return std::make_tuple(
-                    static_cast<typename boost::mp11::mp_at_c<bin_t, I>>(std::get<I>(t))...);
+                    static_cast<typename boost::mp11::mp_at<
+                                    bin_t, 
+                                    boost::mp11::mp_size_t<I>>>(std::get<I>(t))...);
     }
 
     template<typename Tuple, std::size_t... I>
     static constexpr bool tuple_type_compatible(boost::mp11::index_sequence<I...>)
     {
         using tp = boost::mp11::mp_list<typename std::is_convertible<
-                            boost::mp11::mp_at_c<bin_t, I>,
+                            boost::mp11::mp_at<bin_t, boost::mp11::mp_size_t<I>>,
                             typename std::tuple_element<I, Tuple>::type>::type...>;
         return boost::mp11::mp_all_of<tp, boost::mp11::mp_to_bool>::value;
     }
