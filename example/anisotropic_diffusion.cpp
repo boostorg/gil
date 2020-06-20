@@ -20,8 +20,8 @@
 
 namespace gil = boost::gil;
 
-void gray_version(std::string const &input_path, std::string const &output_path,
-                  unsigned int iteration_count, unsigned int kappa)
+void gray_version(std::string const& input_path, std::string const& output_path,
+                  unsigned int iteration_count, float kappa, float delta_t)
 {
     gil::gray8_image_t input;
     gil::read_image(input_path, input, gil::png_tag{});
@@ -30,13 +30,13 @@ void gray_version(std::string const &input_path, std::string const &output_path,
     gil::gray32f_image_t gray(input.dimensions());
     auto gray_view = gil::view(gray);
 
-    gil::transform_pixels(input_view, gray_view, [](const gil::gray8_pixel_t &p) { return p[0]; });
+    gil::transform_pixels(input_view, gray_view, [](const gil::gray8_pixel_t& p) { return p[0]; });
     double sum_before = 0;
     gil::for_each_pixel(gray_view, [&sum_before](gil::gray32f_pixel_t p) { sum_before += p[0]; });
     gil::gray32f_image_t output(gray.dimensions());
     auto output_view = gil::view(output);
 
-    gil::anisotropic_diffusion(gray_view, iteration_count, 1 / 7., kappa, output_view);
+    gil::anisotropic_diffusion(gray_view, output_view, iteration_count, delta_t, kappa);
     double sum_after = 0;
     gil::for_each_pixel(output_view, [&sum_after](gil::gray32f_pixel_t p) { sum_after += p[0]; });
 
@@ -51,8 +51,8 @@ void gray_version(std::string const &input_path, std::string const &output_path,
               << "difference: " << sum_after - sum_before << '\n';
 }
 
-void rgb_version(const std::string &input_path, const std::string &output_path,
-                 unsigned int iteration_count, unsigned int kappa)
+void rgb_version(const std::string& input_path, const std::string& output_path,
+                 unsigned int iteration_count, float kappa, float delta_t)
 {
     gil::rgb8_image_t input;
     gil::read_image(input_path, input, gil::png_tag{});
@@ -61,7 +61,7 @@ void rgb_version(const std::string &input_path, const std::string &output_path,
     gil::rgb32f_image_t gray(input.dimensions());
     auto gray_view = gil::view(gray);
 
-    gil::transform_pixels(input_view, gray_view, [](const gil::rgb8_pixel_t &p) {
+    gil::transform_pixels(input_view, gray_view, [](const gil::rgb8_pixel_t& p) {
         return gil::rgb32f_pixel_t(p[0], p[1], p[2]);
     });
     double sum_before[3] = {};
@@ -73,9 +73,9 @@ void rgb_version(const std::string &input_path, const std::string &output_path,
     gil::rgb32f_image_t output(gray.dimensions());
     auto output_view = gil::view(output);
 
-    gil::anisotropic_diffusion(gray_view, iteration_count, 1 / 7., kappa, output_view);
+    gil::anisotropic_diffusion(gray_view, output_view, iteration_count, delta_t, kappa);
     double sum_after[3] = {};
-    gil::for_each_pixel(gray_view, [&sum_after](gil::rgb32f_pixel_t p) {
+    gil::for_each_pixel(output_view, [&sum_after](gil::rgb32f_pixel_t p) {
         sum_after[0] += p[0];
         sum_after[1] += p[1];
         sum_after[2] += p[2];
@@ -96,13 +96,14 @@ void rgb_version(const std::string &input_path, const std::string &output_path,
               << sum_after[1] - sum_before[1] << ", " << sum_after[2] - sum_before[2] << ")\n";
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-    if (argc != 6)
+    if (argc != 7)
     {
         std::cerr << "usage: " << argv[0]
                   << " <input.png> <output.png>"
-                     " <colorspace: gray|rgb> <positive iteration count> <positive kappa~30>\n";
+                     " <colorspace: gray|rgb> <positive iteration count> <positive kappa~30> "
+                     "<delta_t = [0...1]>\n";
         return -1;
     }
     std::string input_path = argv[1];
@@ -110,14 +111,15 @@ int main(int argc, char *argv[])
     std::string colorspace = argv[3];
 
     unsigned int iteration_count = static_cast<unsigned int>(std::stoul(argv[4]));
-    unsigned int kappa = static_cast<unsigned int>(std::stoul(argv[5]));
+    float kappa = std::stof(argv[5]);
+    float delta_t = std::stof(argv[6]);
     if (colorspace == "gray")
     {
-        gray_version(input_path, output_path, iteration_count, kappa);
+        gray_version(input_path, output_path, iteration_count, kappa, delta_t);
     }
     else if (colorspace == "rgb")
     {
-        rgb_version(input_path, output_path, iteration_count, kappa);
+        rgb_version(input_path, output_path, iteration_count, kappa, delta_t);
     }
     else
     {

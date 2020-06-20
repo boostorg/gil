@@ -39,7 +39,7 @@ void heat_conservation_test(std::uint32_t seed)
 
     gil::gray32f_image_t output(32, 32);
     auto output_view = gil::view(output);
-    gil::anisotropic_diffusion(view, 10, 1 / 7.0, 30, output_view);
+    gil::anisotropic_diffusion(view, output_view, 10, 1 / 7.0f, 30);
     double after_diffusion[num_channels] = {0};
     for (const auto &pixel : output_view)
     {
@@ -103,7 +103,7 @@ void convergence_to_mean_test(std::uint32_t seed)
 
     gil::gray32f_image_t output(32, 32);
     auto output_view = gil::view(output);
-    gil::anisotropic_diffusion(view, 10, 1 / 7.0, 30, output_view);
+    gil::anisotropic_diffusion(view, output_view, 10, 1 / 7.0f, 30);
 
     double mean_after_diffusion[num_channels] = {0};
     double after_diffusion[num_channels] = {0};
