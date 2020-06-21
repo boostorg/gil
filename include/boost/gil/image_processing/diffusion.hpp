@@ -38,7 +38,7 @@ void anisotropic_diffusion(const InputView& input, const OutputView& output, uns
     using channel_type = typename channel_type<pixel_type>::type;
     const auto zero_pixel = []() {
         pixel_type pixel;
-        for (std::ptrdiff_t i = 0; i < num_channels<pixel_type>{}; ++i)
+        for (std::size_t i = 0; i < num_channels<pixel_type>{}; ++i)
         {
             pixel[i] = 0;
         }
@@ -50,10 +50,11 @@ void anisotropic_diffusion(const InputView& input, const OutputView& output, uns
     const point_t dims(width, height);
     computation_image result_image(width + 2, height + 2, zero_pixel);
     auto result = view(result_image);
-    auto result_region = subimage_view(result, 1, 1, width, height);
-    transform_pixels(input, result_region, [](const input_pixel_type& pixel) {
+    computation_image scratch_result_image(width + 2, height + 2, zero_pixel);
+    auto scratch_result = view(scratch_result_image);
+    transform_pixels(input, subimage_view(result, 1, 1, width, height), [](const input_pixel_type& pixel) {
         pixel_type converted;
-        for (std::ptrdiff_t i = 0; i < num_channels<pixel_type>{}; ++i)
+        for (std::size_t i = 0; i < num_channels<pixel_type>{}; ++i)
         {
             converted[i] = pixel[i];
         }
@@ -73,15 +74,14 @@ void anisotropic_diffusion(const InputView& input, const OutputView& output, uns
     const auto plus_delta_t = [delta_t](const pixel_type& lhs, const pixel_type& rhs) {
         pixel_type result_pixel;
         static_transform(lhs, rhs, result_pixel, [delta_t](channel_type ilhs, channel_type irhs) {
-            // std::cout << ilhs << ' ' << irhs << '\n';
             return (ilhs + irhs) * delta_t;
         });
         return result_pixel;
     };
 
-    const auto g = [kappa](const pixel_type& input) {
-        pixel_type result_pixel(input);
-        static_transform(input, result_pixel, [kappa](channel_type value) {
+    const auto g = [kappa](const pixel_type& input_pixel) {
+        pixel_type result_pixel(input_pixel);
+        static_transform(input_pixel, result_pixel, [kappa](channel_type value) {
             value /= kappa;
             return std::exp(-value * value);
         });
@@ -111,14 +111,13 @@ void anisotropic_diffusion(const InputView& input, const OutputView& output, uns
                                multiply);
                 auto sum =
                     std::accumulate(product.begin(), product.end(), zero_pixel, plus_delta_t);
-                pixel_type new_pixel;
-                static_transform(result(x, y), sum, new_pixel, std::plus<channel_type>{});
-                result(x, y) = new_pixel;
+                static_transform(result(x, y), sum, scratch_result(x, y), std::plus<channel_type>{});
             }
         }
+        std::swap(result, scratch_result);
     }
 
-    copy_pixels(result_region, output);
+    copy_pixels(subimage_view(result, 1, 1, width, height), output);
 }
 
 }} // namespace boost::gil

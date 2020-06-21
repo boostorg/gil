@@ -30,7 +30,7 @@ void heat_conservation_test(std::uint32_t seed)
     double before_diffusion[num_channels] = {0};
     for (auto &pixel : view)
     {
-        for (std::ptrdiff_t channel_index = 0; channel_index < num_channels; ++channel_index)
+        for (std::size_t channel_index = 0; channel_index < num_channels; ++channel_index)
         {
             pixel[channel_index] = dist(twister);
             before_diffusion[channel_index] += pixel[channel_index];
@@ -43,7 +43,7 @@ void heat_conservation_test(std::uint32_t seed)
     double after_diffusion[num_channels] = {0};
     for (const auto &pixel : output_view)
     {
-        for (std::ptrdiff_t channel_index = 0; channel_index < num_channels; ++channel_index)
+        for (std::size_t channel_index = 0; channel_index < num_channels; ++channel_index)
         {
             after_diffusion[channel_index] += pixel[channel_index];
         }
@@ -74,7 +74,7 @@ void convergence_to_mean_test(std::uint32_t seed)
     double before_diffusion[num_channels] = {0};
     for (auto &pixel : view)
     {
-        for (std::ptrdiff_t channel_index = 0; channel_index < num_channels; ++channel_index)
+        for (std::size_t channel_index = 0; channel_index < num_channels; ++channel_index)
         {
             pixel[channel_index] = dist(twister);
             mean_before_diffusion[channel_index] += pixel[channel_index];
@@ -88,7 +88,7 @@ void convergence_to_mean_test(std::uint32_t seed)
 
     for (auto &pixel : view)
     {
-        for (std::ptrdiff_t channel_index = 0; channel_index < num_channels; ++channel_index)
+        for (std::size_t channel_index = 0; channel_index < num_channels; ++channel_index)
         {
             double difference = pixel[channel_index] - mean_before_diffusion[channel_index];
             before_diffusion[channel_index] += difference * difference;
@@ -110,7 +110,7 @@ void convergence_to_mean_test(std::uint32_t seed)
 
     for (auto &pixel : output_view)
     {
-        for (std::ptrdiff_t channel_index = 0; channel_index < num_channels; ++channel_index)
+        for (std::size_t channel_index = 0; channel_index < num_channels; ++channel_index)
         {
             mean_after_diffusion[channel_index] += pixel[channel_index];
         }
@@ -123,7 +123,7 @@ void convergence_to_mean_test(std::uint32_t seed)
 
     for (auto &pixel : view)
     {
-        for (std::ptrdiff_t channel_index = 0; channel_index < num_channels; ++channel_index)
+        for (std::size_t channel_index = 0; channel_index < num_channels; ++channel_index)
         {
             double difference = pixel[channel_index] - mean_after_diffusion[channel_index];
             after_diffusion[channel_index] += difference * difference;
