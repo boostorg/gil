@@ -6,7 +6,7 @@
 // http://www.boost.org/LICENSE_1_0.txt
 //
 
-#include <boost/gil/extension/histogram/stl_histogram.hpp>
+#include <boost/gil/extension/histogram/std.hpp>
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/image.hpp>
 #include <boost/core/lightweight_test.hpp>

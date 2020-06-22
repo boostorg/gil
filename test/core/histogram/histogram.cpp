@@ -31,7 +31,7 @@ gil::gray8_image_t big_gray_image(8, 8);
 
 gil::rgb8_image_t big_rgb_image(8, 8);
 
-int big_matrix[] = 
+std::uint8_t big_matrix[] = 
 {
     1, 2, 3, 4, 5, 6, 7, 8,
     1, 2, 1, 2, 1, 2, 1, 2,
@@ -43,20 +43,20 @@ int big_matrix[] =
     7, 8, 7, 8, 7, 8, 7, 8
 };
 
-void fill_gray_image(std::size_t width, std::size_t height, int* matrix, gil::gray8_view_t const& view) {
-    for (std::size_t i = 0; i < height; ++i)
+void fill_gray_image(std::ptrdiff_t width, std::ptrdiff_t height, std::uint8_t* matrix, gil::gray8_view_t const& view) {
+    for (std::ptrdiff_t i = 0; i < height; ++i)
     {
-        for (std::size_t j = 0; j < width; ++j)
+        for (std::ptrdiff_t j = 0; j < width; ++j)
         {
             view(i, j) = matrix[i * height + j];
         }
     }
 }
 
-void fill_rgb_image(std::size_t width, std::size_t height, int* matrix, gil::rgb8_view_t const& view) {
-    for (std::size_t i = 0; i < height; ++i)
+void fill_rgb_image(std::ptrdiff_t width, std::ptrdiff_t height, std::uint8_t* matrix, gil::rgb8_view_t const& view) {
+    for (std::ptrdiff_t i = 0; i < height; ++i)
     {
-        for (std::size_t j = 0; j < width; ++j)
+        for (std::ptrdiff_t j = 0; j < width; ++j)
         {
             for(std::size_t k = 0; k < 3; ++k)
                 view(i, j)[k] = matrix[i * height + j] + k;
@@ -116,9 +116,9 @@ void check_histogram_constructors() {
     gil::histogram<int, int, int> h3;
     gil::histogram<int, int ,int> h4(h3);
 
-    BOOST_TEST(h1.get_dimension() == h2.get_dimension());
-    BOOST_TEST(h1.get_dimension() != h3.get_dimension());
-    BOOST_TEST(h3.get_dimension() == h4.get_dimension());
+    BOOST_TEST(h1.dimension() == h2.dimension());
+    BOOST_TEST(h1.dimension() != h3.dimension());
+    BOOST_TEST(h3.dimension() == h4.dimension());
 }
 
 void check_indexing_operator() {
