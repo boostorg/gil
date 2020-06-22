@@ -10,8 +10,10 @@
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/image.hpp>
 #include <boost/gil/pixel.hpp>
-#include <boost/core/lightweight_test.hpp>
+
 #include <boost/mp11.hpp>
+#include <boost/core/lightweight_test.hpp>
+
 #include <string>
 #include <iostream>
 
@@ -43,7 +45,8 @@ std::uint8_t big_matrix[] =
     7, 8, 7, 8, 7, 8, 7, 8
 };
 
-void fill_gray_image(std::ptrdiff_t width, std::ptrdiff_t height, std::uint8_t* matrix, gil::gray8_view_t const& view) {
+void fill_gray_image(std::ptrdiff_t width, std::ptrdiff_t height, std::uint8_t* matrix, gil::gray8_view_t const& view)
+{
     for (std::ptrdiff_t i = 0; i < height; ++i)
     {
         for (std::ptrdiff_t j = 0; j < width; ++j)
@@ -53,7 +56,8 @@ void fill_gray_image(std::ptrdiff_t width, std::ptrdiff_t height, std::uint8_t* 
     }
 }
 
-void fill_rgb_image(std::ptrdiff_t width, std::ptrdiff_t height, std::uint8_t* matrix, gil::rgb8_view_t const& view) {
+void fill_rgb_image(std::ptrdiff_t width, std::ptrdiff_t height, std::uint8_t* matrix, gil::rgb8_view_t const& view)
+{
     for (std::ptrdiff_t i = 0; i < height; ++i)
     {
         for (std::ptrdiff_t j = 0; j < width; ++j)
@@ -65,7 +69,8 @@ void fill_rgb_image(std::ptrdiff_t width, std::ptrdiff_t height, std::uint8_t* m
 }
 
 
-void check_helper_fn_pixel_to_tuple() {
+void check_helper_fn_pixel_to_tuple() 
+{
     gil::gray8_pixel_t g1(2);
     auto g2 = gil::detail::pixel_to_tuple(g1, mp11::make_index_sequence<1>{});
 
@@ -85,7 +90,8 @@ void check_helper_fn_pixel_to_tuple() {
     BOOST_TEST(r1[0] == std::get<2>(r3) && r1[1] == std::get<0>(r3) && r1[2] == std::get<1>(r3));
 }
 
-void check_helper_fn_tuple_to_tuple() {
+void check_helper_fn_tuple_to_tuple() 
+{
     std::tuple<int> t1(1);
     auto t2 = gil::detail::tuple_to_tuple(t1, mp11::make_index_sequence<1>{});
 
@@ -110,7 +116,8 @@ void check_helper_fn_tuple_to_tuple() {
 }
 
 
-void check_histogram_constructors() {
+void check_histogram_constructors() 
+{
     gil::histogram<int> h1;
     gil::histogram<int> h2 = h1;
     gil::histogram<int, int, int> h3;
@@ -121,7 +128,8 @@ void check_histogram_constructors() {
     BOOST_TEST(h3.dimension() == h4.dimension());
 }
 
-void check_indexing_operator() {
+void check_indexing_operator() 
+{
     gil::histogram<int> h1;
     h1(1) = 3;
     BOOST_TEST(h1(1) == 3);
@@ -133,7 +141,8 @@ void check_indexing_operator() {
     BOOST_TEST(h2(1, 'a', "B") == 0);
 }
 
-void check_is_pixel_compatible() {
+void check_is_pixel_compatible() 
+{
     gil::histogram<int> h1;
     gil::histogram<int, double> h2;
     gil::histogram<int, unsigned char> h3;
@@ -145,7 +154,8 @@ void check_is_pixel_compatible() {
     BOOST_TEST(!h4.is_pixel_compatible());
 }
 
-void check_is_tuple_compatible() {
+void check_is_tuple_compatible() 
+{
     gil::histogram<int> h1;
     gil::histogram<double> h2;
     gil::histogram<int, double> h3;
@@ -178,7 +188,8 @@ void check_is_tuple_compatible() {
     BOOST_TEST(!h4.is_tuple_compatible(t5));
 }
 
-void check_histogram_key_from_tuple() {
+void check_histogram_key_from_tuple() 
+{
     gil::histogram<int, int> h1;
     std::tuple<int, int> t1(1, 2);
     auto t2 = h1.key_from_tuple(t1);
@@ -195,7 +206,8 @@ void check_histogram_key_from_tuple() {
     BOOST_TEST(std::get<0>(t4) == 1 && std::get<1>(t4) == 4);
 }
 
-void check_histogram_key_from_pixel() {
+void check_histogram_key_from_pixel() 
+{
     gil::histogram<int> h1;
     gil::gray8_pixel_t g1(1);
     auto t1 = h1.key_from_pixel(g1);
@@ -213,7 +225,8 @@ void check_histogram_key_from_pixel() {
     BOOST_TEST(std::get<0>(t2) == 1 && std::get<1>(t2) == 3);
 }
 
-void check_histogram_fill() {
+void check_histogram_fill() 
+{
     fill_gray_image(8, 8, big_matrix, view(big_gray_image));
     fill_rgb_image(8, 8, big_matrix, view(big_rgb_image));
 
@@ -257,7 +270,8 @@ void check_histogram_fill() {
 
 }
 
-void check_histogram_fill_algorithm() {
+void check_histogram_fill_algorithm() 
+{
     fill_rgb_image(8, 8, big_matrix, view(big_rgb_image));
     gil::histogram<int> h1;
 
@@ -289,7 +303,8 @@ void check_histogram_fill_algorithm() {
     BOOST_TEST(check_2d);
 }
 
-void check_sub_histogram_without_tuple() {
+void check_sub_histogram_without_tuple() 
+{
     gil::histogram<int, int, std::string, int> h;
     h(1, 1, "A", 1) = 1;
     h(1, 2, "B", 1) = 1;
@@ -303,7 +318,8 @@ void check_sub_histogram_without_tuple() {
     BOOST_TEST(h1(5, 5) == 0);
 }
 
-void check_sub_histogram_with_tuple() {
+void check_sub_histogram_with_tuple() 
+{
     gil::histogram<int, int, std::string, int> h;
     h(1, 1, "A", 1) = 3;
     h(1, 2, "B", 1) = 1;
@@ -322,6 +338,59 @@ void check_sub_histogram_with_tuple() {
     BOOST_TEST(h1(1, 3, "A", 1) == 2);
 }
 
+void check_cumulative()
+{
+    gil::histogram<int> h1;
+    for (int i = 0; i < 8; i++)
+    {
+        h1(i) = 1;
+    }
+    h1.cumulative();
+    bool check1 = true;
+    for (int i = 0; i < 8; i++)
+    {
+        if(h1(i) != i+1)
+            check1 = false;
+    }    
+    BOOST_TEST(check1);
+
+    gil::histogram<int , int> h2;
+    h2(1, 3) = 1;
+    h2(1, 4) = 2;
+    h2(2, 1) = 3;
+    h2(2, 2) = 1;
+    h2(2, 5) = 2;
+    h2(3, 2) = 3;
+    h2(3, 9) = 1;
+    h2.cumulative();
+    BOOST_TEST(h2(1, 3) == 1);
+    BOOST_TEST(h2(1, 4) == 3);
+    BOOST_TEST(h2(2, 1) == 6);
+    BOOST_TEST(h2(2, 2) == 7);
+    BOOST_TEST(h2(2, 5) == 9);
+    BOOST_TEST(h2(3, 2) == 12);
+    BOOST_TEST(h2(3, 9) == 13);
+}
+
+void check_cumulative_histogram()
+{
+    gil::histogram<int , int> h2;
+    h2(1, 3) = 1;
+    h2(1, 4) = 2;
+    h2(2, 1) = 3;
+    h2(2, 2) = 1;
+    h2(2, 5) = 2;
+    h2(3, 2) = 3;
+    h2(3, 9) = 1;
+    gil::cumulative_histogram(h2);
+    BOOST_TEST(h2(1, 3) == 1);
+    BOOST_TEST(h2(1, 4) == 3);
+    BOOST_TEST(h2(2, 1) == 6);
+    BOOST_TEST(h2(2, 2) == 7);
+    BOOST_TEST(h2(2, 5) == 9);
+    BOOST_TEST(h2(3, 2) == 12);
+    BOOST_TEST(h2(3, 9) == 13);
+}
 
 int main() {
 
@@ -337,6 +406,8 @@ int main() {
     check_histogram_fill_algorithm();
     check_sub_histogram_without_tuple();
     check_sub_histogram_with_tuple();
+    check_cumulative();
+    check_cumulative_histogram();
 
     return boost::report_errors();
 }   

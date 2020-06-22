@@ -10,6 +10,7 @@
 #include <boost/gil/image.hpp>
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/image_view_factory.hpp>
+
 #include <boost/mp11.hpp>
 
 #include <iostream>

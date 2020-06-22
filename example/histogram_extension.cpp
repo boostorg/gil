@@ -8,6 +8,7 @@
 
 #include <boost/gil.hpp>
 #include <boost/gil/extension/histogram/std.hpp>
+
 #include <string>
 #include <array>
 #include <vector>

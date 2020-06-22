@@ -14,10 +14,12 @@
 #include <boost/gil/histogram.hpp>
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/image_view_factory.hpp>
+
 #include <vector>
 #include <array>
 #include <unordered_map>
 #include <map>
+#include <utility>
 
 //////////////////////////////////////////////////////////
 /// Histogram
@@ -146,6 +148,67 @@ void fill_histogram(SrcView const& srcview, std::map<T1, T2> &histogram, bool ac
     for_each_pixel(color_converted_view<pixel_t>(srcview), [&](pixel_t const& p) {
         ++histogram[p];
     });
+}
+
+template<typename T>
+void cumulative_histogram(std::vector<T> &histogram)
+{
+    static_assert(std::is_arithmetic<T>::value,
+                    "Improper container type for images.");
+    T cumulative_counter = 0;
+    for (std::size_t i = 0; i < histogram.size(); i++)
+    {
+        cumulative_counter += histogram[i];
+        histogram[i] = cumulative_counter;
+    }
+}
+
+template<typename T, std::size_t N>
+void cumulative_histogram(std::array<T, N> &histogram)
+{
+    static_assert(std::is_arithmetic<T>::value && N > 0,
+                    "Improper container type for images.");
+    T cumulative_counter = 0;
+    for (std::size_t i = 0; i < N; i++)
+    {
+        cumulative_counter += histogram[i];
+        histogram[i] = cumulative_counter;
+    }
+}
+
+template<typename T1, typename T2>
+void cumulative_histogram(std::unordered_map<T1, T2> &histogram)
+{
+    static_assert(std::is_arithmetic<T1>::value && std::is_integral<T2>::value,
+                    "Improper container type for images.");
+    using value_t = typename std::unordered_map<T1, T2>::value_type;
+    std::vector<std::pair<T1, T2>> sorted_keys(histogram.size());
+    std::size_t counter=0;
+
+    std::for_each(histogram.begin(), histogram.end(), [&](value_t const& v) {
+        sorted_keys[counter++] = std::make_pair(v.first, v.second);
+    });
+    
+    std::sort(sorted_keys.begin(), sorted_keys.end());
+    int cumulative_counter=0;
+    for(std::size_t i = 0; i < sorted_keys.size(); ++i)
+    {
+        cumulative_counter += sorted_keys[i].second;
+        histogram[sorted_keys[i].first] = cumulative_counter;
+    }
+}
+
+template<typename T1, typename T2>
+void cumulative_histogram(std::map<T1, T2> &histogram)
+{
+    static_assert(std::is_arithmetic<T1>::value && std::is_integral<T2>::value,
+                    "Improper container type for images.");
+    T2 cumulative_counter = 0;
+    for(auto const& it : histogram)
+    {
+        cumulative_counter += it.second;
+        histogram[it.first] = cumulative_counter;
+    }
 }
 
 }} // namespace boost::gil

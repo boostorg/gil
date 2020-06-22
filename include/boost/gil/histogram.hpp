@@ -12,11 +12,15 @@
 #include <boost/gil/concepts/concept_check.hpp>
 #include <boost/gil/metafunctions.hpp>
 #include <boost/gil/pixel.hpp>
+
 #include <boost/mp11.hpp>
+#include <boost/type_traits.hpp>
 #include <boost/functional/hash.hpp>
 
 #include <type_traits>
 #include <unordered_map>
+#include <utility>
+#include <vector>
 
 namespace boost { namespace gil {
 
@@ -253,7 +257,7 @@ public:
     }
 
     template<std::size_t... Dimensions>
-    histogram<boost::mp11::mp_at<bin_t, boost::mp11::mp_size_t<Dimensions>>...> sub_histogram() 
+    histogram<boost::mp11::mp_at<bin_t, boost::mp11::mp_size_t<Dimensions>>...> sub_histogram()
     {
         using index_list = boost::mp11::mp_list_c<std::size_t, Dimensions...>;
         std::size_t const index_list_size = boost::mp11::mp_size<index_list>::value;
@@ -277,15 +281,32 @@ public:
           
         histogram<boost::mp11::mp_at<bin_t, boost::mp11::mp_size_t<Dimensions>>...> sub_h;
 
-        std::for_each(base_t::begin(), base_t::end(), [&](value_t const& k) {
+        std::for_each(base_t::begin(), base_t::end(), [&](value_t const& v) {
             auto sub_key = detail::tuple_to_tuple
             (
-                k.first, 
+                v.first, 
                 boost::mp11::index_sequence<Dimensions...>{}
             );
-            sub_h[sub_key] += base_t::operator[](k.first);
+            sub_h[sub_key] += base_t::operator[](v.first);
         });
         return sub_h;
+    }
+
+    void cumulative()
+    {
+        using pair_t = std::pair<key_t, mapped_t>;
+        std::vector<pair_t> sorted_keys(base_t::size());
+        std::size_t counter=0;
+        std::for_each(base_t::begin(), base_t::end(), [&](value_t const& v) {
+            sorted_keys[counter++] = std::make_pair(v.first, v.second);
+        });
+        std::sort(sorted_keys.begin(), sorted_keys.end());
+        int cumulative_counter=0;
+        for(std::size_t i = 0; i < sorted_keys.size(); ++i)
+        {
+            cumulative_counter += sorted_keys[i].second;
+            base_t::operator[](sorted_keys[i].first) = cumulative_counter;
+        }
     }
 
 private:
@@ -330,7 +351,7 @@ private:
 ///
 
 template<typename SrcView, typename Container>
-void fill_histogram(SrcView const& srcview, Container& h);
+void fill_histogram(SrcView const&, Container&);
 
 template<std::size_t... Dimensions, typename SrcView, typename... T>
 void fill_histogram(SrcView const& srcview, histogram<T...> &histogram, bool accumulate = false)
@@ -338,6 +359,24 @@ void fill_histogram(SrcView const& srcview, histogram<T...> &histogram, bool acc
     if(!accumulate)
         histogram.clear();
     histogram.template fill<Dimensions...>(srcview);
+}
+
+///
+/// cumulative_histogram - Optionally overload this function with
+/// any external histogram class
+///
+
+template<typename Container>
+void cumulative_histogram(Container&);
+
+template<typename... T>
+void cumulative_histogram(histogram<T...> &histogram)
+{
+    // using bin_t = boost::mp11::mp_list<T...>;
+    using check_list = boost::mp11::mp_list<boost::has_less<T>...>;
+    static_assert(boost::mp11::mp_all_of<check_list, boost::mp11::mp_to_bool>::value,
+                    "Cumulative histogram not possible of this type");
+    histogram.cumulative();
 }
 
 }} //namespace boost::gil

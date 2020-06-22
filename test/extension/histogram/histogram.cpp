@@ -53,7 +53,7 @@ bool check_equal(T &cont1, T &cont2)
     return ch;
 }
 
-void check_vector_type_container()
+void check_fill_histogram_vector()
 {
     std::vector<int> c1, c1_expected(256,0);
     c1_expected[1] = 16;
@@ -71,7 +71,7 @@ void check_vector_type_container()
 }
 
 
-void check_array_type_container()
+void check_fill_histogram_array()
 {
     std::array<int, 256> c1{0}, c1_expected{0};
     c1_expected[1] = 16;
@@ -94,7 +94,7 @@ void check_array_type_container()
     BOOST_TEST(check_equal(c3, c3_expected, c3_expected.size()));
 }
 
-void check_map_type_container()
+void check_fill_histogram_map()
 {
     std::map<int, int> c1, c1_expected;
     c1_expected[1] = 16;
@@ -111,7 +111,7 @@ void check_map_type_container()
     BOOST_TEST(check_equal(c2, c2_expected));
 }
 
-void check_unordered_map_type_container()
+void check_fill_histogram_unordered_map()
 {
     std::unordered_map<int, int> c1, c1_expected;
     c1_expected[1] = 16;
@@ -128,13 +128,86 @@ void check_unordered_map_type_container()
     BOOST_TEST(check_equal(c2, c2_expected));
 }
 
+void check_cumulative_histogram_vector()
+{
+    std::vector<int> v(8);
+    for (std::size_t i = 0; i < v.size(); i++)
+    {
+        v[i] = 1;
+    }
+    gil::cumulative_histogram(v);
+    bool check = true;
+    for (std::size_t i = 0; i < v.size(); i++)
+    {
+        if(v[i] != int(i) + 1)
+            check = false;
+    }
+    BOOST_TEST(check);
+}
+
+void check_cumulative_histogram_array()
+{
+    std::array<int, 8> arr;
+    for (std::size_t i = 0; i < arr.size(); i++)
+    {
+        arr[i] = 1;
+    }
+    gil::cumulative_histogram(arr);
+    bool check = true;
+    for (std::size_t i = 0; i < arr.size(); i++)
+    {
+        if(arr[i] != int(i) + 1)
+            check = false;
+    }
+    BOOST_TEST(check);
+}
+
+void check_cumulative_histogram_map()
+{
+    std::map<int, int> mp;
+    for (std::size_t i = 0; i < 8; i++)
+    {
+        mp[i] = 1;
+    }
+    gil::cumulative_histogram(mp);
+    bool check = true;
+    for (std::size_t i = 0; i < mp.size(); i++)
+    {
+        if(mp[i] != int(i) + 1)
+            check = false;
+    }
+    BOOST_TEST(check);
+}
+
+void check_cumulative_histogram_unordered_map()
+{
+    std::unordered_map<int, int> mp;
+    for (std::size_t i = 0; i < 8; i++)
+    {
+        mp[i] = 1;
+    }
+    gil::cumulative_histogram(mp);
+    bool check = true;
+    for (std::size_t i = 0; i < mp.size(); i++)
+    {
+        if(mp[i] != int(i) + 1)
+            check = false;
+    }
+    BOOST_TEST(check);
+}
+
 
 int main()
 {
-    check_vector_type_container();
-    check_array_type_container();
-    check_map_type_container();
-    check_unordered_map_type_container();
+    check_fill_histogram_vector();
+    check_fill_histogram_array();
+    check_fill_histogram_map();
+    check_fill_histogram_unordered_map();
+    
+    check_cumulative_histogram_vector();
+    check_cumulative_histogram_array();
+    check_cumulative_histogram_map();
+    check_cumulative_histogram_unordered_map();
 
     return boost::report_errors();
 }
