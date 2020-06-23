@@ -13,9 +13,9 @@
 #include <boost/gil/metafunctions.hpp>
 #include <boost/gil/pixel.hpp>
 
-#include <boost/functional/hash.hpp>
 #include <boost/mp11.hpp>
 #include <boost/type_traits.hpp>
+#include <boost/functional/hash.hpp>
 
 #include <utility>
 #include <vector>
@@ -91,9 +91,12 @@ public:
         std::size_t const tuple_size     = std::tuple_size<Tuple>::value;
         std::size_t const histogram_size = dimension();
         // This code can be reduced by using if-constexpr
-        using sequence_type = typename std::conditional<
-            tuple_size >= histogram_size, boost::mp11::make_index_sequence<histogram_size>,
-            boost::mp11::make_index_sequence<tuple_size>>::type;
+        using sequence_type = typename std::conditional
+        <
+            tuple_size >= histogram_size,
+            boost::mp11::make_index_sequence<histogram_size>,
+            boost::mp11::make_index_sequence<tuple_size>
+        >::type;
 
         if (is_tuple_size_compatible(t))
             return is_tuple_type_compatible<Tuple>(sequence_type{});
@@ -114,8 +117,12 @@ public:
              (tuple_size == histogram_dimension)),
             "Tuple and histogram key of different sizes");
 
-        using new_index_list = typename std::conditional<
-            index_list_size == 0, boost::mp11::mp_list_c<std::size_t, 0>, index_list>::type;
+        using new_index_list = typename std::conditional
+        <
+            index_list_size == 0,
+            boost::mp11::mp_list_c<std::size_t, 0>,
+            index_list
+        >::type;
 
         std::size_t const min =
             boost::mp11::mp_min_element<new_index_list, boost::mp11::mp_less>::value;
@@ -149,12 +156,16 @@ public:
 
         static_assert(
             ((index_list_size != 0 && index_list_size == histogram_dimension) ||
-             (index_list_size == 0 && pixel_dimension == histogram_dimension)) &&
-                is_pixel_compatible(),
+            (index_list_size == 0 && pixel_dimension == histogram_dimension)) &&
+            is_pixel_compatible(),
             "Pixels and histogram key are not compatible.");
 
-        using new_index_list = typename std::conditional<
-            index_list_size == 0, boost::mp11::mp_list_c<std::size_t, 0>, index_list>::type;
+        using  new_index_list = typename std::conditional
+        <
+            index_list_size == 0,
+            boost::mp11::mp_list_c<std::size_t, 0>,
+            index_list
+        >::type;
 
         std::size_t const min =
             boost::mp11::mp_min_element<new_index_list, boost::mp11::mp_less>::value;
@@ -275,9 +286,14 @@ private:
     template <typename Tuple, std::size_t... I>
     static constexpr bool is_tuple_type_compatible(boost::mp11::index_sequence<I...>)
     {
-        using tp = boost::mp11::mp_list<typename std::is_convertible<
-            boost::mp11::mp_at<bin_t, boost::mp11::mp_size_t<I>>,
-            typename std::tuple_element<I, Tuple>::type>::type...>;
+        using tp = boost::mp11::mp_list
+        <
+            typename std::is_convertible
+            <
+                boost::mp11::mp_at<bin_t, boost::mp11::mp_size_t<I>>,
+                typename std::tuple_element<I, Tuple>::type
+            >::type...
+        >;
         return boost::mp11::mp_all_of<tp, boost::mp11::mp_to_bool>::value;
     }
 
