@@ -26,12 +26,28 @@ namespace boost { namespace gil {
 
 namespace detail {
 
+template <std::size_t Index, typename... T>
+inline typename std::enable_if<Index == sizeof...(T), void>::type
+    hash_tuple_impl(std::size_t& seed, std::tuple<T...> const& t)
+{
+}
+
+template <std::size_t Index, typename... T>
+inline typename std::enable_if<Index != sizeof...(T), void>::type
+    hash_tuple_impl(std::size_t& seed, std::tuple<T...> const& t)
+{
+    boost::hash_combine(seed, std::get<Index>(t));
+    hash_tuple_impl<Index + 1>(seed, t);
+}
+
 template <typename... T>
 struct hash_tuple
 {
-    std::size_t operator()(std::tuple<T...> const& arg) const
+    std::size_t operator()(std::tuple<T...> const& t) const
     {
-        return boost::hash_value(arg);
+        std::size_t seed = 0;
+        hash_tuple_impl<0>(seed, t);
+        return seed;
     }
 };
 

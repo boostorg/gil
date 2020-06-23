@@ -18,6 +18,23 @@
 
 using namespace boost::gil;
 
+// template <typename... T>
+// struct hash_tuple
+// {
+//     std::size_t operator()(std::tuple<T...> const& arg) const
+//     {
+//         std::size_t seed1 = 0;
+//         // for (std::size_t i = 0; i < std::tuple_size<std::tuple<T...>>::value; i++)
+//         // {
+//         boost::hash_combine(seed1, std::get<0>(arg));
+//         boost::hash_combine(seed1, std::get<1>(arg));
+//         // }
+//         std::size_t seed2 = boost::hash_value(arg);
+//         std::cout<<seed1<<" "<<seed2;
+//         return seed2;
+//     }
+// };
+
 int main() {
     //Check key_from_pixel
     histogram<int,int,int> a,c;
@@ -57,4 +74,7 @@ int main() {
     histogram<int, int, int> ha;
     std::tuple<int, int, int> ta;
     std::cout<<ha.is_tuple_compatible(ta);
+    std::tuple<int, std::string> as(123, "S213123123123");
+    detail::hash_tuple<int, std::string> g;
+    g(as);
 }
