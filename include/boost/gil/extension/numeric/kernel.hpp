@@ -21,6 +21,7 @@
 #include <memory>
 #include <vector>
 #include <cmath>
+#include <stdexcept>
 
 namespace boost { namespace gil {
 
