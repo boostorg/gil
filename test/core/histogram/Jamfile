@@ -8,4 +8,13 @@
 
 import testing ;
 
-run histogram.cpp ;
+compile constructor.cpp ;
+compile dimension.cpp ;
+run access.cpp ;
+run cumulative.cpp ;
+run fill.cpp ;
+run hash_tuple.cpp ;
+run helpers.cpp ;
+run is_compatible.cpp ;
+run key.cpp ;
+run sub_histogram.cpp ;

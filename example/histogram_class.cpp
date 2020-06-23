@@ -6,34 +6,42 @@
 // http://www.boost.org/LICENSE_1_0.txt
 //
 
+#include <cstddef>
+
+// For ADL lookup need to define before including histogram.hpp
+struct TestClass;
+
+namespace boost {
+std::size_t hash_value(TestClass const&);
+}
+
 #include <boost/gil/histogram.hpp>
 #include <boost/gil/image.hpp>
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/image_view_factory.hpp>
 
 #include <boost/mp11.hpp>
+#include <boost/container_hash/hash.hpp>
 
 #include <iostream>
 #include <tuple>
 
 using namespace boost::gil;
+using namespace boost::mp11;
 
-// template <typename... T>
-// struct hash_tuple
-// {
-//     std::size_t operator()(std::tuple<T...> const& arg) const
-//     {
-//         std::size_t seed1 = 0;
-//         // for (std::size_t i = 0; i < std::tuple_size<std::tuple<T...>>::value; i++)
-//         // {
-//         boost::hash_combine(seed1, std::get<0>(arg));
-//         boost::hash_combine(seed1, std::get<1>(arg));
-//         // }
-//         std::size_t seed2 = boost::hash_value(arg);
-//         std::cout<<seed1<<" "<<seed2;
-//         return seed2;
-//     }
-// };
+struct TestClass 
+{
+    int a;
+};
+
+namespace boost {
+
+std::size_t hash_value(TestClass const&)
+{
+    return 100;
+}
+
+} // namespace boost
 
 int main() {
     //Check key_from_pixel
@@ -43,7 +51,7 @@ int main() {
 
     histogram<int,int,std::string> e;
 
-    gray8_image_t v1(1,2,gray8_pixel_t(0));
+    rgb8_image_t v1(1,2,rgb8_pixel_t(2));
     // fill_histogram<1,2>(const_view(v1),a);   //Fails
 
     a(1, 1, 1) = 9;
@@ -74,7 +82,11 @@ int main() {
     histogram<int, int, int> ha;
     std::tuple<int, int, int> ta;
     std::cout<<ha.is_tuple_compatible(ta);
-    std::tuple<int, std::string> as(123, "S213123123123");
-    detail::hash_tuple<int, std::string> g;
-    g(as);
+    
+    std::size_t seed=0;
+    TestClass tc;
+    boost::hash<TestClass> tc_hasher;
+    tc_hasher(tc);
+    boost::hash_combine(seed, tc);
+    return 0;
 }

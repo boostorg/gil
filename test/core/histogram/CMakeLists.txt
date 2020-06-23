@@ -7,7 +7,16 @@
 #
 
 foreach(_name
-  histogram)
+  access
+  constructor
+  cumulative
+  dimension
+  fill
+  hash_tuple
+  helpers
+  is_compatible
+  key
+  sub_histogram)
   set(_test t_core_histogram_${_name})
   set(_target test_core_histogram_${_name})
 

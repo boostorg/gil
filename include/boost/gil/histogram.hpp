@@ -17,6 +17,7 @@
 #include <boost/type_traits.hpp>
 #include <boost/functional/hash.hpp>
 
+#include <tuple>
 #include <utility>
 #include <vector>
 #include <type_traits>
@@ -28,7 +29,7 @@ namespace detail {
 
 template <std::size_t Index, typename... T>
 inline typename std::enable_if<Index == sizeof...(T), void>::type
-    hash_tuple_impl(std::size_t& seed, std::tuple<T...> const& t)
+    hash_tuple_impl(std::size_t&, std::tuple<T...> const&)
 {
 }
 
@@ -102,7 +103,7 @@ public:
     }
 
     template <typename Tuple>
-    bool is_tuple_compatible(Tuple const& t)
+    bool is_tuple_compatible(Tuple const&)
     {
         std::size_t const tuple_size     = std::tuple_size<Tuple>::value;
         std::size_t const histogram_size = dimension();
@@ -114,7 +115,7 @@ public:
             boost::mp11::make_index_sequence<tuple_size>
         >::type;
 
-        if (is_tuple_size_compatible(t))
+        if (is_tuple_size_compatible<Tuple>())
             return is_tuple_type_compatible<Tuple>(sequence_type{});
         else
             return false;
@@ -314,7 +315,7 @@ private:
     }
 
     template <typename Tuple>
-    static constexpr bool is_tuple_size_compatible(Tuple const& t)
+    static constexpr bool is_tuple_size_compatible()
     {
         return (std::tuple_size<Tuple>::value == dimension());
     }
