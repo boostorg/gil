@@ -104,8 +104,8 @@ void anisotropic_diffusion(const InputView& input, const OutputView& output, uns
                     minus(result(x - 1, y), current), // west
                     minus(result(x + 1, y), current)  // east
                 };
-                std::array<pixel_type, 4> diffusivity{g(nabla[0]), g(nabla[1]), g(nabla[2]),
-                                                      g(nabla[3])};
+                std::array<pixel_type, 4> diffusivity;
+                std::transform(nabla.begin(), nabla.end(), diffusivity.begin(), g);
                 std::array<pixel_type, 4> product;
                 std::transform(nabla.begin(), nabla.end(), diffusivity.begin(), product.begin(),
                                multiply);
