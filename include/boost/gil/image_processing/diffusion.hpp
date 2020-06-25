@@ -72,7 +72,7 @@ void anisotropic_diffusion(const InputView& input, const OutputView& output, uns
         static_transform(lhs, rhs, result_pixel, std::multiplies<channel_type>{});
         return result_pixel;
     };
-    const auto plus_delta_t = [delta_t](const pixel_type& lhs, const pixel_type& rhs) {
+    const auto plus = [delta_t](const pixel_type& lhs, const pixel_type& rhs) {
         pixel_type result_pixel;
         static_transform(lhs, rhs, result_pixel,
                          [delta_t](channel_type ilhs, channel_type irhs) { return (ilhs + irhs); });
@@ -98,19 +98,29 @@ void anisotropic_diffusion(const InputView& input, const OutputView& output, uns
                 const auto x = relative_x + 1;
                 const auto y = relative_y + 1;
                 const auto current = result(x, y);
-                std::array<pixel_type, 4> nabla{
-                    minus(result(x, y - 1), current), // north
-                    minus(result(x, y + 1), current), // south
-                    minus(result(x - 1, y), current), // west
-                    minus(result(x + 1, y), current)  // east
+                constexpr std::size_t point_count = 8;
+                std::array<pixel_type, point_count> nabla{
+                    minus(result(x, y - 1), current),     // north
+                    minus(result(x, y + 1), current),     // south
+                    minus(result(x - 1, y), current),     // west
+                    minus(result(x + 1, y), current),     // east
+                    minus(result(x - 1, y - 1), current), // north west
+                    minus(result(x + 1, y - 1), current), // north east
+                    minus(result(x - 1, y + 1), current), // south west
+                    minus(result(x + 1, y + 1), current)  // south east
                 };
-                std::array<pixel_type, 4> diffusivity;
+                std::array<pixel_type, point_count> diffusivity;
                 std::transform(nabla.begin(), nabla.end(), diffusivity.begin(), g);
-                std::array<pixel_type, 4> product;
+                std::array<pixel_type, point_count> product;
                 std::transform(nabla.begin(), nabla.end(), diffusivity.begin(), product.begin(),
                                multiply);
-                auto sum =
-                    std::accumulate(product.begin(), product.end(), zero_pixel, plus_delta_t);
+
+                for (std::size_t i = 4; i < point_count; ++i)
+                {
+                    static_transform(product[i], product[i],
+                                     [](channel_type value) { return value / 2; });
+                }
+                auto sum = std::accumulate(product.begin(), product.end(), zero_pixel, plus);
                 static_transform(sum, sum,
                                  [delta_t](channel_type value) { return value * delta_t; });
                 static_transform(result(x, y), sum, scratch_result(x, y),
