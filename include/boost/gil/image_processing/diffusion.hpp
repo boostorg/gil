@@ -52,14 +52,15 @@ void anisotropic_diffusion(const InputView& input, const OutputView& output, uns
     auto result = view(result_image);
     computation_image scratch_result_image(width + 2, height + 2, zero_pixel);
     auto scratch_result = view(scratch_result_image);
-    transform_pixels(input, subimage_view(result, 1, 1, width, height), [](const input_pixel_type& pixel) {
-        pixel_type converted;
-        for (std::size_t i = 0; i < num_channels<pixel_type>{}; ++i)
-        {
-            converted[i] = pixel[i];
-        }
-        return converted;
-    });
+    transform_pixels(input, subimage_view(result, 1, 1, width, height),
+                     [](const input_pixel_type& pixel) {
+                         pixel_type converted;
+                         for (std::size_t i = 0; i < num_channels<pixel_type>{}; ++i)
+                         {
+                             converted[i] = pixel[i];
+                         }
+                         return converted;
+                     });
 
     const auto minus = [](const pixel_type& lhs, const pixel_type& rhs) {
         pixel_type result_pixel;
@@ -73,9 +74,8 @@ void anisotropic_diffusion(const InputView& input, const OutputView& output, uns
     };
     const auto plus_delta_t = [delta_t](const pixel_type& lhs, const pixel_type& rhs) {
         pixel_type result_pixel;
-        static_transform(lhs, rhs, result_pixel, [delta_t](channel_type ilhs, channel_type irhs) {
-            return (ilhs + irhs) * delta_t;
-        });
+        static_transform(lhs, rhs, result_pixel,
+                         [delta_t](channel_type ilhs, channel_type irhs) { return (ilhs + irhs); });
         return result_pixel;
     };
 
@@ -111,10 +111,14 @@ void anisotropic_diffusion(const InputView& input, const OutputView& output, uns
                                multiply);
                 auto sum =
                     std::accumulate(product.begin(), product.end(), zero_pixel, plus_delta_t);
-                static_transform(result(x, y), sum, scratch_result(x, y), std::plus<channel_type>{});
+                static_transform(sum, sum,
+                                 [delta_t](channel_type value) { return value * delta_t; });
+                static_transform(result(x, y), sum, scratch_result(x, y),
+                                 std::plus<channel_type>{});
             }
         }
-        std::swap(result, scratch_result);
+        using std::swap;
+        swap(result, scratch_result);
     }
 
     copy_pixels(subimage_view(result, 1, 1, width, height), output);
