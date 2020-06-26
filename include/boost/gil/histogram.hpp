@@ -25,6 +25,15 @@
 
 namespace boost { namespace gil {
 
+//////////////////////////////////////////////////////////
+/// Histogram
+//////////////////////////////////////////////////////////
+/// \defgroup Histogram Histogram
+/// \brief Contains description of the boost.gil.histogram class, extensions provided in place
+///        of the default class, algorithms over the histogram class (both extensions and the
+///        default class)
+///
+
 namespace detail {
 
 template <std::size_t Index, typename... T>
@@ -41,6 +50,15 @@ inline typename std::enable_if<Index != sizeof...(T), void>::type
     hash_tuple_impl<Index + 1>(seed, t);
 }
 
+/*  
+    Functor provided for the hashing of tuples. 
+    The following approach makes use hash_combine from 
+    boost::container_hash. Although there is a direct hashing 
+    available for tuples, this approach will ease adopting in
+    future to a std::hash_combine. In case std::hash extends
+    support to tuples this functor as well as the helper 
+    implementation hash_tuple_impl can be removed.
+*/
 template <typename... T>
 struct hash_tuple
 {
@@ -60,6 +78,7 @@ auto pixel_to_tuple(Pixel const& p, boost::mp11::index_sequence<I...>)
     return std::make_tuple(p[I]...);
 }
 
+// TODO: With C++14 and using auto we don't need the decltype anymore
 template <typename Tuple, std::size_t... I>
 auto tuple_to_tuple(Tuple const& t, boost::mp11::index_sequence<I...>)
     -> decltype(std::make_tuple(std::get<I>(t)...))
@@ -69,6 +88,21 @@ auto tuple_to_tuple(Tuple const& t, boost::mp11::index_sequence<I...>)
 
 }  //namespace detail
 
+///
+/// \class boost::gil::histogram
+/// \ingroup Histogram
+/// \brief Default histogram class provided by boost::gil.
+///
+/// The class inherits over the std::unordered_map provided by STL. A complete example/tutorial
+/// of how to use the class resides in *insert link*. 
+/// Simple calling syntax for a 3D dimensional histogram :
+/// \code
+/// histogram<int, int , int> h;
+/// h(1, 1, 1) = 0;
+/// \endcode
+/// This is just a starter to what all can be achieved with it, refer to the above link for the 
+/// full demo.
+///
 template <typename... T>
 class histogram : public std::unordered_map<std::tuple<T...>, int, detail::hash_tuple<T...>>
 {
@@ -81,11 +115,13 @@ class histogram : public std::unordered_map<std::tuple<T...>, int, detail::hash_
 public:
     histogram() = default;
 
+    /// \brief Returns the number of dimensions(axes) the class supports.
     static constexpr std::size_t dimension()
     {
         return std::tuple_size<key_t>::value;
     }
 
+    /// \brief Returns bin value corresponding to specified tuple
     mapped_t& operator()(T... indices)
     {
         auto key                              = std::make_tuple(indices...);
@@ -95,19 +131,23 @@ public:
 
         return base_t::operator[](key);
     }
-
+    
+    /// \brief Checks if the histogram class is compatible to be used with
+    ///        a GIL image type
     static constexpr bool is_pixel_compatible()
     {
         using bin_types = boost::mp11::mp_list<T...>;
         return boost::mp11::mp_all_of<bin_types, std::is_arithmetic>::value;
     }
 
+    /// \brief Checks if the histogram class is compatible to be used with
+    ///        the specified tuple type
     template <typename Tuple>
     bool is_tuple_compatible(Tuple const&)
     {
         std::size_t const tuple_size     = std::tuple_size<Tuple>::value;
         std::size_t const histogram_size = dimension();
-        // This code can be reduced by using if-constexpr
+        // TODO : Explore consequence of using if-constexpr
         using sequence_type = typename std::conditional
         <
             tuple_size >= histogram_size,
@@ -121,6 +161,8 @@ public:
             return false;
     }
 
+    /// \brief Returns a key compatible to be used as the histogram key
+    ///        from the input tuple
     template <std::size_t... Dimensions, typename Tuple>
     key_t key_from_tuple(Tuple const& t) const
     {
@@ -151,7 +193,7 @@ public:
 
         using seq1 = boost::mp11::make_index_sequence<histogram_dimension>;
         using seq2 = boost::mp11::index_sequence<Dimensions...>;
-        // With if-constexpr this code can be simplified
+        // TODO : Explore consequence of using if-constexpr
         using sequence_type = typename std::conditional<index_list_size == 0, seq1, seq2>::type;
 
         auto key = detail::tuple_to_tuple(t, sequence_type{});
@@ -162,7 +204,8 @@ public:
         return make_histogram_key(key, seq1{});
     }
 
-
+    /// \brief Returns a histogram compatible key from the input pixel which
+    ///        can be directly used
     template <std::size_t... Dimensions, typename Pixel>
     key_t key_from_pixel(Pixel const& p) const
     {
@@ -201,6 +244,7 @@ public:
         return make_histogram_key(key, seq1{});
     }
 
+    /// \brief Fills the histogram with the input image view
     template <std::size_t... Dimensions, typename SrcView>
     void fill(SrcView const& srcview)
     {
@@ -212,8 +256,9 @@ public:
         });
     }
 
+    /// \brief Can return a subset or a mask over the current histogram
     template <std::size_t... Dimensions, typename Tuple>
-    histogram sub_histogram(Tuple const& t)
+    histogram sub_histogram(Tuple const& t1, Tuple const& t2)
     {
         using index_list                      = boost::mp11::mp_list_c<std::size_t, Dimensions...>;
         std::size_t const index_list_size     = boost::mp11::mp_size<index_list>::value;
@@ -236,17 +281,21 @@ public:
             is_tuple_type_compatible<Tuple>(seq1{}),
             "Tuple type and histogram type not compatible.");
 
-        auto key     = make_histogram_key(t, seq1{});
-        auto sub_key = detail::tuple_to_tuple(key, seq2{});
+        auto low      = make_histogram_key(t1, seq1{});
+        auto low_key  = detail::tuple_to_tuple(low, seq2{});
+        auto high     = make_histogram_key(t2, seq1{});
+        auto high_key = detail::tuple_to_tuple(high, seq2{});
 
         histogram sub_h;
         std::for_each(base_t::begin(), base_t::end(), [&](value_t const& k) {
-            if (sub_key == detail::tuple_to_tuple(k.first, seq2{}))
+            auto tmp_key = detail::tuple_to_tuple(k.first, seq2{});
+            if (low_key <= tmp_key && tmp_key <= high_key)
                 sub_h[k.first] += base_t::operator[](k.first);
         });
         return sub_h;
     }
 
+    /// \brief Returns a sub-histogram over specified axes
     template <std::size_t... Dimensions>
     histogram<boost::mp11::mp_at<bin_t, boost::mp11::mp_size_t<Dimensions>>...> sub_histogram()
     {
@@ -274,6 +323,7 @@ public:
         return sub_h;
     }
 
+    /// \brief Converts the histogram into its cumulative version
     void cumulative()
     {
         using pair_t = std::pair<key_t, mapped_t>;
@@ -322,13 +372,33 @@ private:
 };
 
 ///
-/// fill_histogram - Overload this function to provide support for
-/// boost::gil::histogram or any other external histogram
+/// \fn void fill_histogram(SrcView const&, Container&)
+/// \ingroup Histogram
+/// \tparam SrcView Input image view
+/// \tparam Container Input histogram container
+/// \brief Overload this function to provide support for boost::gil::histogram or 
+/// any other external histogram
 ///
-
+/// Example :
+/// \code
+/// histogram<int> h;
+/// fill_histogram(view(img), h);
+/// \endcode
+///
 template <typename SrcView, typename Container>
 void fill_histogram(SrcView const&, Container&);
 
+///
+/// \overload void fill_histogram(SrcView const&, histogram<T...>&, bool)
+/// \ingroup Histogram
+/// \brief Overload version of fill_histogram 
+///
+/// Takes a third argument to determine whether to clear container before filling.
+/// For eg, when there is a need to accumulate the histograms do
+/// \code
+/// fill_histogram(view(img), hist, true);
+/// \endcode
+///
 template <std::size_t... Dimensions, typename SrcView, typename... T>
 void fill_histogram(SrcView const& srcview, histogram<T...>& histogram, bool accumulate = false)
 {
@@ -338,17 +408,17 @@ void fill_histogram(SrcView const& srcview, histogram<T...>& histogram, bool acc
 }
 
 ///
-/// cumulative_histogram - Optionally overload this function with
-/// any external histogram class
+/// \fn void cumulative_histogram(Container&)
+/// \ingroup Histogram Algorithms
+/// \tparam Container Input histogram container
+/// \brief Optionally overload this function with any external histogram class
 ///
-
 template <typename Container>
 void cumulative_histogram(Container&);
 
 template <typename... T>
 void cumulative_histogram(histogram<T...>& histogram)
 {
-    // using bin_t = boost::mp11::mp_list<T...>;
     using check_list = boost::mp11::mp_list<boost::has_less<T>...>;
     static_assert(
         boost::mp11::mp_all_of<check_list, boost::mp11::mp_to_bool>::value,

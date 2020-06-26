@@ -21,43 +21,31 @@
 #include <vector>
 #include <unordered_map>
 
-//////////////////////////////////////////////////////////
-/// Histogram
-/////////////////////////////////////////////////////////
+namespace boost { namespace gil {
 
-/// \defgroup Histogram Histogram Filling Algorithms
+//////////////////////////////////////////////////////////
+/// Histogram extension for STL container
+//////////////////////////////////////////////////////////
+/// \defgroup Histogram - STL Containers 
 /// \brief Collection of functions to provide histogram support in GIL using Standard
 ///        Template Library Containers
 /// The conversion from Boost.GIL images to compatible histograms are provided. The supported
-/// container types would be std::vector, std::array, std::map, std::unordered_map, std::deque.
-/// 2 possible calling syntax are provided. The implementation is for 1D histograms hence
-/// multi-channeled image views are color converted to gray color layout.
-/// Example :
-/// \code
-/// //This is the common case.
-/// std::vector<int> v = image_histogram<vector<int>>(view(img));
+/// container types would be std::vector, std::array, std::map & std::unordered_map.
 ///
-/// //Alternative, when there is a need to accumulate the histograms.
-/// image_histogram(view(img), hist); //hist - histogram container
-/// \endcode
-///
-/// Some general constraints on usage:-
-/// 1. Cannot use signed images with compatible random access containers.
-/// 2. Automatic resize of containers in case of shortage of bins, to ensure
+/// Some general constraints on STL extension:-
+/// 1. Supports only 1D histogram.
+/// 2. Cannot use signed images with compatible random access containers.
+/// 3. Automatic resize of std::array in case of shortage of bins, to ensure
 ///    correctness comes before performance.
-/// 3. Container key type (if exists) has to be one of std::integral types to be
+/// 4. Container key type (if exists) has to be one of std::integral types to be
 ///    GIL compatible.
-/// 4. Container value type has to be of std::arithmetic types.
+/// 5. Container value type has to be of std::arithmetic types.
 ///
 
-namespace boost { namespace gil {
-
-/// \ingroup Histogram
-/// \brief std::vector
 ///
-/// This overload corresponds to std::vector.
+/// \ingroup Histogram - STL Containers
+/// \brief Overload for std::vector of fill_histogram
 ///
-
 template <typename SrcView, typename T>
 void fill_histogram(SrcView const& srcview, std::vector<T>& histogram, bool accumulate = false)
 {
@@ -75,14 +63,12 @@ void fill_histogram(SrcView const& srcview, std::vector<T>& histogram, bool accu
     histogram.resize(std::numeric_limits<channel_t>::max() + 1);
 
     for_each_pixel(color_converted_view<pixel_t>(srcview), [&](pixel_t const& p) {
-        ++histogram[p];
+        ++histogram[static_cast<std::size_t>(p)];
     });
 }
 
-/// \ingroup Histogram
-/// \brief std::array
-///
-/// This overload corresponds to std::array.
+/// \ingroup Histogram - STL Containers
+/// \brief Overload for std::array of fill_histogram
 ///
 template <typename SrcView, typename T, std::size_t N>
 void fill_histogram(SrcView const& srcview, std::array<T, N>& histogram, bool accumulate = false)
@@ -107,10 +93,8 @@ void fill_histogram(SrcView const& srcview, std::array<T, N>& histogram, bool ac
     });
 }
 
-/// \ingroup Histogram
-/// \brief std::unordered_map
-///
-/// This overload corresponds to std::unordered_map.
+/// \ingroup Histogram - STL Containers
+/// \brief Overload for std::unordered_map of fill_histogram
 ///
 template <typename SrcView, typename T1, typename T2>
 void fill_histogram(
@@ -128,15 +112,13 @@ void fill_histogram(
         histogram.clear();
 
     for_each_pixel(color_converted_view<pixel_t>(srcview), [&](pixel_t const& p) {
-        ++histogram[p];
+        ++histogram[static_cast<std::size_t>(p)];
     });
 }
 
 
-/// \ingroup Histogram
-/// \brief std::map
-///
-/// This overload corresponds to std::map.
+/// \ingroup Histogram - STL Containers
+/// \brief Overload for std::map of fill_histogram
 ///
 template <typename SrcView, typename T1, typename T2>
 void fill_histogram(SrcView const& srcview, std::map<T1, T2>& histogram, bool accumulate = false)
@@ -153,10 +135,13 @@ void fill_histogram(SrcView const& srcview, std::map<T1, T2>& histogram, bool ac
         histogram.clear();
 
     for_each_pixel(color_converted_view<pixel_t>(srcview), [&](pixel_t const& p) {
-        ++histogram[p];
+        ++histogram[static_cast<std::size_t>(p)];
     });
 }
 
+/// \ingroup Histogram - STL Containers
+/// \brief Overload for std::vector of cumulative_histogram
+///
 template <typename T>
 void cumulative_histogram(std::vector<T>& histogram)
 {
@@ -169,6 +154,9 @@ void cumulative_histogram(std::vector<T>& histogram)
     }
 }
 
+/// \ingroup Histogram - STL Containers
+/// \brief Overload for std::array of cumulative_histogram
+///
 template <typename T, std::size_t N>
 void cumulative_histogram(std::array<T, N>& histogram)
 {
@@ -181,6 +169,9 @@ void cumulative_histogram(std::array<T, N>& histogram)
     }
 }
 
+/// \ingroup Histogram - STL Containers
+/// \brief Overload for std::unordered_map of cumulative_histogram
+///
 template <typename T1, typename T2>
 void cumulative_histogram(std::unordered_map<T1, T2>& histogram)
 {
@@ -204,6 +195,9 @@ void cumulative_histogram(std::unordered_map<T1, T2>& histogram)
     }
 }
 
+/// \ingroup Histogram - STL Containers
+/// \brief Overload for std::map of cumulative_histogram
+///
 template <typename T1, typename T2>
 void cumulative_histogram(std::map<T1, T2>& histogram)
 {
