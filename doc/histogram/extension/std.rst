@@ -1,0 +1,4 @@
+.. _std:
+
+STD extension
+=============
