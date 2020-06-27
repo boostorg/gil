@@ -39,7 +39,7 @@ void heat_conservation_test(std::uint32_t seed)
 
     gil::gray32f_image_t output(32, 32);
     auto output_view = gil::view(output);
-    gil::anisotropic_diffusion(view, output_view, 10, 1 / 6.0f, 5);
+    gil::anisotropic_diffusion(view, output_view, 10, {5, 1 / 6.0f});
     double after_diffusion[num_channels] = {0};
     for (const auto& pixel : output_view)
     {
@@ -55,7 +55,7 @@ void heat_conservation_test(std::uint32_t seed)
             std::abs(after_diffusion[channel_index] - before_diffusion[channel_index]) /
             after_diffusion[channel_index] * 100.0;
         std::cout << percentage << ' ';
-        BOOST_TEST(percentage < 10.0);
+        BOOST_TEST(percentage < 8.5);
     }
     std::cout << '\n';
 }

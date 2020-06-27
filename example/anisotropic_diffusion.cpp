@@ -36,7 +36,7 @@ void gray_version(std::string const& input_path, std::string const& output_path,
     gil::gray32f_image_t output(gray.dimensions());
     auto output_view = gil::view(output);
 
-    gil::anisotropic_diffusion(gray_view, output_view, iteration_count, delta_t, kappa);
+    gil::anisotropic_diffusion(gray_view, output_view, iteration_count, {kappa, delta_t});
     double sum_after = 0;
     gil::for_each_pixel(output_view, [&sum_after](gil::gray32f_pixel_t p) { sum_after += p[0]; });
 
@@ -73,7 +73,7 @@ void rgb_version(const std::string& input_path, const std::string& output_path,
     gil::rgb32f_image_t output(gray.dimensions());
     auto output_view = gil::view(output);
 
-    gil::anisotropic_diffusion(gray_view, output_view, iteration_count, delta_t, kappa);
+    gil::anisotropic_diffusion(gray_view, output_view, iteration_count, {kappa, delta_t});
     double sum_after[3] = {};
     gil::for_each_pixel(output_view, [&sum_after](gil::rgb32f_pixel_t p) {
         sum_after[0] += p[0];
