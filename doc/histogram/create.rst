@@ -18,6 +18,7 @@ we would do it this way::
 
 And done.
 
+
 **Method 2** - Using make_histogram()
 
 There is an alternative way to create the histogram directly from

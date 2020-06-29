@@ -1,4 +1,4 @@
-.. _stl_compat:
+.. _stl_compatibility:
 
 STL compatibility
 =================

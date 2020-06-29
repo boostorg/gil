@@ -28,5 +28,5 @@ The workflow should be:
     #. Provide overloads for fill_histogram(must), make_histogram(optional) etc. in a new file preferably named after the container type in extensions/histogram/.
     #. Add tests to test/extensions/histogram.
     #. Add docs to docs/histogram/extensions.
-    #. Other cmake,Jamfile,config etc. file changes.
+    #. Other cmake, Jamfile, config etc. file changes.
 

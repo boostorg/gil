@@ -9,10 +9,12 @@ histogram class and functions used in many image processing algorithms.
    :caption: Table of Contents
 
    overview
-   create_a_histogram
-   fill_it
-   make_a_sub_histogram
-   cumulative_histogram
+   create
+   fill
+   subhistogram
+   cumulativehistogram
    stl_compatibility
-   entend_support
-   limitations.rst
+   utilities
+   extend
+   limitations
+   extension/index

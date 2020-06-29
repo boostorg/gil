@@ -21,7 +21,7 @@ The following flow is recommended:
     #. :ref:`fill_it`
     #. :ref:`sub_histogram`
     #. :ref:`cumulative_histogram`
-    #. :ref:`stl_compat`
+    #. :ref:`stl_compatibility`
     #. :ref:`extend_support`
     #. :ref:`limitations`
 

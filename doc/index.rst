@@ -26,8 +26,7 @@ Core Library Documentation
 
    design/index
    image_processing/index
-   histogram/core/index
-   histogram/extension/index
+   histogram/index
    API Reference <./reference/index.html#://>
 
 Extensions Documentation
