@@ -15,16 +15,19 @@ namespace boost {
 std::size_t hash_value(TestClass const&);
 }
 
-#include <boost/gil/histogram.hpp>
-#include <boost/gil/image.hpp>
-#include <boost/gil/image_view.hpp>
-#include <boost/gil/image_view_factory.hpp>
+#include <boost/gil.hpp>
+#include <boost/gil/extension/histogram/std.hpp>
 
 #include <boost/mp11.hpp>
 #include <boost/container_hash/hash.hpp>
 
 #include <iostream>
 #include <tuple>
+#include <string>
+#include <array>
+#include <vector>
+#include <map>
+#include <unordered_map>
 
 using namespace boost::gil;
 using namespace boost::mp11;
@@ -73,8 +76,8 @@ int main() {
     h(1,21,21)=1;
     // auto h1 = h.sub_histogram<0>();
     // std::cout<<"sub : "<<h1(1)<<"\n";
-
-    auto h2 = h.sub_histogram<0,2>(std::tuple<int, int, int>(1, 0, 1));
+    std::tuple<int, int, int> val(1, 0, 1); 
+    auto h2 = h.sub_histogram<0,2>(val, val);
     std::cout<<"sub : "<<h2(1, 1, 1)<<"\n";
     std::cout<<"sub : "<<h2(1, 2, 1)<<"\n";
     std::cout<<"sub : "<<h2(3, 3, 1)<<"\n";
@@ -88,5 +91,27 @@ int main() {
     boost::hash<TestClass> tc_hasher;
     tc_hasher(tc);
     boost::hash_combine(seed, tc);
+
+    // Extension example
+    gray8_image_t img(4,4,gray8_pixel_t(1));
+	gray8_image_t img1(4,4,gray8_pixel_t(1));
+	
+	// Checking calls with different overloaded container types
+
+	std::vector<int> v;
+	fill_histogram(const_view(img), v);  			
+	fill_histogram(const_view(img), v, true);       
+
+	std::map<int,int> m;
+	fill_histogram(view(img),m);  					
+	fill_histogram(view(img),m, true);				
+
+	std::array<int,100> arr;
+	fill_histogram(view(img), arr); 				
+	fill_histogram(view(img), arr, true); 			
+
+	std::unordered_map<int,int> mp;
+	fill_histogram(view(img), mp);  				
+	fill_histogram(view(img), mp, true);	
     return 0;
 }
