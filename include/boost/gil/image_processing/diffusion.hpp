@@ -35,6 +35,7 @@ struct diffusion_strategy
         const auto minus = [](const PixelType& lhs, const PixelType& rhs) {
             PixelType result_pixel;
             static_transform(lhs, rhs, result_pixel, std::minus<channel_type>{});
+
             return result_pixel;
         };
         const auto multiply = [](const PixelType& lhs, const PixelType& rhs) {
@@ -51,10 +52,16 @@ struct diffusion_strategy
 
         const auto g = [local_kappa](const PixelType& input_pixel) {
             PixelType result_pixel(input_pixel);
-            static_transform(input_pixel, result_pixel, [local_kappa](channel_type value) {
-                value /= local_kappa;
-                return std::exp(-value * value);
-            });
+            channel_type sum = 0;
+            static_for_each(result_pixel,
+                            [&sum](channel_type channel_value) { sum += std::abs(channel_value); });
+            channel_type sigma = local_kappa * num_channels<PixelType>{} * channel_type(255);
+            channel_type exponent = (sum * sum) / (sigma * sigma);
+            static_fill(result_pixel, std::exp(exponent));
+            // static_transform(scratch_pixel, result_pixel, [local_kappa](channel_type value) {
+            //     value /= local_kappa * num_channels<PixelType>{} * channel_type(255);
+            //     return std::exp(-value * value);
+            // });
 
             return result_pixel;
         };
@@ -77,16 +84,14 @@ struct diffusion_strategy
         std::array<PixelType, point_count> product;
         std::transform(nabla.begin(), nabla.end(), diffusivity.begin(), product.begin(), multiply);
 
-        for (std::size_t i = 4; i < point_count; ++i)
-        {
-            static_transform(product[i], product[i], [](channel_type value) { return value / 2; });
-        }
+        // for (std::size_t i = 4; i < point_count; ++i)
+        // {
+        //     static_transform(product[i], product[i], [](channel_type value) { return value / 2;
+        //     });
+        // }
         const auto zero_pixel = []() {
             PixelType pixel;
-            for (std::size_t i = 0; i < num_channels<PixelType>{}; ++i)
-            {
-                pixel[i] = 0;
-            }
+            static_fill(pixel, channel_type(0));
 
             return pixel;
         }();
