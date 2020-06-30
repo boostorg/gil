@@ -59,4 +59,5 @@ int main() {
     check_histogram_key_from_pixel();
 
     return boost::report_errors();
-}   
+}
+   

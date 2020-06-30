@@ -72,4 +72,4 @@ int main() {
     check_cumulative_histogram();
 
     return boost::report_errors();
-}   
+}
