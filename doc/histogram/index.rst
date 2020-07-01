@@ -12,7 +12,7 @@ histogram class and functions used in many image processing algorithms.
    create
    fill
    subhistogram
-   cumulativehistogram
+   cumulative
    stl_compatibility
    utilities
    extend

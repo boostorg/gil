@@ -24,11 +24,29 @@ Let's consider you need an histogram with an axis over class Test.
 
 .. code-block:: cpp
 
-    // File : test.hpp
+    // File : ./test.hpp
+    #include <cstddef>
+    #include <functional>
+
     struct Test 
     {
         int a;
+        Test(): a(0) {}
+        Test(int c) : a(c) {}
+        bool operator==(Test const& other) const
+        {
+            return (a == other.a);
+        }
     };
+
+    namespace boost {
+        std::size_t hash_value(Test const& t)
+        {
+            // Replace with your hashing code
+            std::hash<int> hasher;
+            return hasher(t.a);
+        }
+    }
 
 Now lets get to the main code.
 
@@ -36,20 +54,16 @@ Now lets get to the main code.
 
     #include <test.hpp> 
     #include <boost/gil.hpp>
+    #include <iostream>
     // Mind the order of include i.e. test.hpp before boost/gil.hpp
 
-    using namespace boogt::gil;
-    namespace boost {
-        std::size_t hash_value(Test const& t)
-        {
-            // Your hashing code
-        }
-    }
+    using namespace boost::gil;
 
     int main() 
     {
-        histogram<Test> h;
-        Test t;
+        boost::gil::histogram<Test> h;
+        Test t(1);
         h(t) = 1;
+        std::cout<<h(t);
     }
 
