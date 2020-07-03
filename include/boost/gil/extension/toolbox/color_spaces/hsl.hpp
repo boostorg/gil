@@ -75,6 +75,7 @@ struct default_color_converter_impl< rgb_t, hsl_t >
       {
 
          float32_t diff = max_color - min_color;
+         float32_t sum = max_color + min_color;
 
          // lightness calculation
 
@@ -84,13 +85,11 @@ struct default_color_converter_impl< rgb_t, hsl_t >
 
          if( lightness < 0.5f )
          {
-            saturation = diff
-                       / ( min_color + max_color );
+            saturation = diff / ( sum );
          }
          else
          {
-            saturation = ( max_color - min_color )
-                       / ( 2.f - diff );
+            saturation = diff / ( 2.f - sum );
 
          }
 
