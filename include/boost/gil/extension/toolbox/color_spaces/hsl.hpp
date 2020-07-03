@@ -114,7 +114,7 @@ struct default_color_converter_impl< rgb_t, hsl_t >
          {
             // max_color is blue
             hue = 4.f
-                + ( temp_red - temp_blue )
+                + ( temp_red - temp_green )
                 / diff;
          }
 
