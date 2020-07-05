@@ -123,10 +123,59 @@ void check_histogram_fill_algorithm()
     BOOST_TEST(check_2d);
 }
 
+void check_normalize()
+{
+    auto epsilon = 1e-6;
+    // 1D histogram
+    double expected[64];
+    gil::histogram<int> h1;
+    int sum = 0;
+    for (std::size_t i = 0; i < 64; i++)
+    {
+        h1(i) = big_matrix[i];
+        sum += big_matrix[i];
+    }
+    for (std::size_t i = 0; i < 64; i++)
+    {
+        expected[i] = double(big_matrix[i]) / sum;
+    }
+    h1.normalize();
+
+    bool check = true;
+    for (std::size_t i = 0; i < 64; i++)
+    {
+        check = check & (abs(expected[i] - h1(i)) < epsilon); 
+    }
+    BOOST_TEST(check);
+
+    // 2D histogram
+    double expected2[8][8];
+    gil::histogram<int, int> h2;
+    int sum2 = 0;
+    for (std::size_t i = 0; i < 64; i++)
+    {
+        h2(i/8, i%8) = big_matrix[i];
+        sum2 += big_matrix[i];
+    }
+    for (std::size_t i = 0; i < 64; i++)
+    {
+        expected2[i/8][i%8] = double(big_matrix[i]) / sum2;
+    }
+    h2.normalize();
+
+    bool check2 = true;
+    for (std::size_t i = 0; i < 64; i++)
+    {
+        check2 = check2 & (abs(expected2[i/8][i%8] - h2(i/8,i%8)) < epsilon); 
+    }
+    BOOST_TEST(check2);
+}
+
 int main() {
 
     check_histogram_fill();
     check_histogram_fill_algorithm();
+    check_normalize();
 
     return boost::report_errors();
 }   

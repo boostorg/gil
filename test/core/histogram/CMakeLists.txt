@@ -11,12 +11,12 @@ foreach(_name
   constructor
   cumulative
   dimension
-  fill
   hash_tuple
   helpers
   is_compatible
   key
-  sub_histogram)
+  sub_histogram
+  utilities)
   set(_test t_core_histogram_${_name})
   set(_target test_core_histogram_${_name})
 

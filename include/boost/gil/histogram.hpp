@@ -119,9 +119,9 @@ bool tuple_compare(Tuple const& t1, Tuple const& t2, boost::mp11::index_sequence
 /// full demo.
 ///
 template <typename... T>
-class histogram : public std::unordered_map<std::tuple<T...>, int, detail::hash_tuple<T...>>
+class histogram : public std::unordered_map<std::tuple<T...>, double, detail::hash_tuple<T...>>
 {
-    using base_t   = std::unordered_map<std::tuple<T...>, int, detail::hash_tuple<T...>>;
+    using base_t   = std::unordered_map<std::tuple<T...>, double, detail::hash_tuple<T...>>;
     using bin_t    = boost::mp11::mp_list<T...>;
     using key_t    = typename base_t::key_type;
     using mapped_t = typename base_t::mapped_type;
@@ -338,6 +338,18 @@ public:
         return sub_h;
     }
 
+    /// \brief Normalize this histogram class 
+    void normalize()
+    {
+        double sum = 0.0;
+        std::for_each(base_t::begin(), base_t::end(), [&](value_t const& v) {
+            sum += v.second;
+        });
+        std::for_each(base_t::begin(), base_t::end(), [&](value_t const& v) {
+            base_t::operator[](v.first) = v.second / sum;
+        });
+    }
+
 private:
     template <typename Tuple, std::size_t... I>
     key_t make_histogram_key(Tuple const& t, boost::mp11::index_sequence<I...>) const
@@ -428,11 +440,12 @@ histogram<T...> cumulative_histogram(histogram<T...>& hist)
         "Cumulative histogram not possible of this type");
     
     using histogram_t = histogram<T...>;
-    using pair_t = std::pair<typename histogram_t::key_type, typename histogram_t::mapped_type>;
+    using pair_t  = std::pair<typename histogram_t::key_type, typename histogram_t::mapped_type>;
     using value_t = typename histogram_t::value_type;
 
     histogram_t cumulative_hist;
-    if (hist.dimension() == 1)
+    std::size_t const dims = histogram_t::dimension();
+    if (dims == 1)
     {
         std::vector<pair_t> sorted_keys(hist.size());
         std::size_t counter = 0;
@@ -453,7 +466,8 @@ histogram<T...> cumulative_histogram(histogram<T...>& hist)
             auto cumulative_counter = static_cast<typename histogram_t::mapped_type>(0);
             std::for_each(hist.begin(), hist.end(), [&](value_t const& v2) {
                 bool comp = detail::tuple_compare(
-                    v2.first, v1.first, boost::mp11::make_index_sequence<histogram_t::dimension()>{});
+                    v2.first, v1.first,
+                    boost::mp11::make_index_sequence<histogram_t::dimension()>{});
                 if (comp)
                     cumulative_counter += hist[v2.first];
             });
