@@ -18,7 +18,7 @@
 
 namespace gil = boost::gil;
 
-template <typename ImageType>
+template <typename ImageType, typename OutputImageType>
 void heat_conservation_test(std::uint32_t seed)
 {
     std::mt19937 twister(seed);
@@ -37,7 +37,7 @@ void heat_conservation_test(std::uint32_t seed)
         }
     }
 
-    gil::gray32f_image_t output(32, 32);
+    OutputImageType output(32, 32);
     auto output_view = gil::view(output);
     gil::default_anisotropic_diffusion(view, output_view, 10, 5);
     double after_diffusion[num_channels] = {0};
@@ -52,10 +52,13 @@ void heat_conservation_test(std::uint32_t seed)
     for (std::ptrdiff_t channel_index = 0; channel_index < num_channels; ++channel_index)
     {
         const auto percentage =
-            std::abs(after_diffusion[channel_index] - before_diffusion[channel_index]) /
-            after_diffusion[channel_index] * 100.0;
+            before_diffusion[channel_index] != 0
+                ? std::abs(after_diffusion[channel_index] - before_diffusion[channel_index]) /
+                      after_diffusion[channel_index] * 100.0
+                : std::abs(after_diffusion[channel_index] - before_diffusion[channel_index]) /
+                      after_diffusion[channel_index] * 100.0;
         std::cout << percentage << ' ';
-        BOOST_TEST(percentage < 8.5);
+        BOOST_TEST(percentage < 1);
     }
     std::cout << '\n';
 }
@@ -67,9 +70,9 @@ int main()
         std::cout << "seed: " << seed << '\n';
         std::cout << "conservation of heat test:\n"
                   << "gray8 test:\n";
-        heat_conservation_test<gil::gray8_image_t>(seed);
+        heat_conservation_test<gil::gray8_image_t, gil::gray32f_image_t>(seed);
         std::cout << "rgb8 test:\n";
-        heat_conservation_test<gil::rgb8_image_t>(seed);
+        heat_conservation_test<gil::rgb8_image_t, gil::rgb32f_image_t>(seed);
 
         // std::cout << "convergence to mean test:\n"
         //           << "gray8 test:\n";
