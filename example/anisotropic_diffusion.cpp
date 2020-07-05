@@ -21,7 +21,7 @@
 namespace gil = boost::gil;
 
 void gray_version(std::string const& input_path, std::string const& output_path,
-                  unsigned int iteration_count, float kappa, float delta_t)
+                  unsigned int iteration_count, float kappa)
 {
     gil::gray8_image_t input;
     gil::read_image(input_path, input, gil::png_tag{});
@@ -36,7 +36,8 @@ void gray_version(std::string const& input_path, std::string const& output_path,
     gil::gray32f_image_t output(gray.dimensions());
     auto output_view = gil::view(output);
 
-    gil::anisotropic_diffusion(gray_view, output_view, iteration_count, {kappa, delta_t});
+    // gil::anisotropic_diffusion(gray_view, output_view, iteration_count, {kappa, delta_t});
+    gil::default_anisotropic_diffusion(gray_view, output_view, iteration_count, kappa);
     double sum_after = 0;
     gil::for_each_pixel(output_view, [&sum_after](gil::gray32f_pixel_t p) { sum_after += p[0]; });
 
@@ -52,7 +53,7 @@ void gray_version(std::string const& input_path, std::string const& output_path,
 }
 
 void rgb_version(const std::string& input_path, const std::string& output_path,
-                 unsigned int iteration_count, float kappa, float delta_t)
+                 unsigned int iteration_count, float kappa)
 {
     gil::rgb8_image_t input;
     gil::read_image(input_path, input, gil::png_tag{});
@@ -73,7 +74,8 @@ void rgb_version(const std::string& input_path, const std::string& output_path,
     gil::rgb32f_image_t output(gray.dimensions());
     auto output_view = gil::view(output);
 
-    gil::anisotropic_diffusion(gray_view, output_view, iteration_count, {kappa, delta_t});
+    // gil::anisotropic_diffusion(gray_view, output_view, iteration_count, {kappa, delta_t});
+    gil::default_anisotropic_diffusion(gray_view, output_view, iteration_count, kappa);
     double sum_after[3] = {};
     gil::for_each_pixel(output_view, [&sum_after](gil::rgb32f_pixel_t p) {
         sum_after[0] += p[0];
@@ -98,12 +100,11 @@ void rgb_version(const std::string& input_path, const std::string& output_path,
 
 int main(int argc, char* argv[])
 {
-    if (argc != 7)
+    if (argc != 6)
     {
         std::cerr << "usage: " << argv[0]
                   << " <input.png> <output.png>"
-                     " <colorspace: gray|rgb> <positive iteration count> <positive kappa~30> "
-                     "<delta_t = [0...1]>\n";
+                     " <colorspace: gray|rgb> <positive iteration count> <positive kappa~30>\n";
         return -1;
     }
     std::string input_path = argv[1];
@@ -112,14 +113,13 @@ int main(int argc, char* argv[])
 
     unsigned int iteration_count = static_cast<unsigned int>(std::stoul(argv[4]));
     float kappa = std::stof(argv[5]);
-    float delta_t = std::stof(argv[6]);
     if (colorspace == "gray")
     {
-        gray_version(input_path, output_path, iteration_count, kappa, delta_t);
+        gray_version(input_path, output_path, iteration_count, kappa);
     }
     else if (colorspace == "rgb")
     {
-        rgb_version(input_path, output_path, iteration_count, kappa, delta_t);
+        rgb_version(input_path, output_path, iteration_count, kappa);
     }
     else
     {

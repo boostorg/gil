@@ -5,6 +5,7 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
+#include "boost/gil/detail/math.hpp"
 #include <boost/gil/algorithm.hpp>
 #include <boost/gil/color_base_algorithm.hpp>
 #include <boost/gil/image.hpp>
@@ -18,92 +19,213 @@
 #include <vector>
 
 namespace boost { namespace gil {
-
-template <typename PixelType>
-struct diffusion_strategy
+namespace diffusion {
+struct perona_malik_diffusivity
 {
-    using channel_type = typename channel_type<PixelType>::type;
-    channel_type kappa;
-    channel_type delta_t;
-    template <typename View>
-    PixelType operator()(View padded_view, point_t origin)
+    double kappa;
+    template <typename Pixel>
+    Pixel operator()(Pixel input)
     {
-        // seems like lambda capture doesn't work for member variables in C++11
-        const auto local_delta_t = delta_t;
-        const auto local_kappa = kappa;
+        using channel_type = typename channel_type<Pixel>::type;
+        // C++11 doesn't seem to capture members
+        auto local_kappa = kappa;
+        static_transform(input, input, [local_kappa](channel_type value) {
+            value /= local_kappa;
+            return std::exp(-std::abs(value));
+        });
 
-        const auto minus = [](const PixelType& lhs, const PixelType& rhs) {
-            PixelType result_pixel;
-            static_transform(lhs, rhs, result_pixel, std::minus<channel_type>{});
-
-            return result_pixel;
-        };
-        const auto multiply = [](const PixelType& lhs, const PixelType& rhs) {
-            PixelType result_pixel;
-            static_transform(lhs, rhs, result_pixel, std::multiplies<channel_type>{});
-            return result_pixel;
-        };
-        const auto plus = [](const PixelType& lhs, const PixelType& rhs) {
-            PixelType result_pixel;
-            static_transform(lhs, rhs, result_pixel,
-                             [](channel_type ilhs, channel_type irhs) { return (ilhs + irhs); });
-            return result_pixel;
-        };
-
-        const auto g = [local_kappa](const PixelType& input_pixel) {
-            PixelType result_pixel(input_pixel);
-            channel_type sum = 0;
-            static_for_each(result_pixel,
-                            [&sum](channel_type channel_value) { sum += std::abs(channel_value); });
-            channel_type sigma = local_kappa * num_channels<PixelType>{} * channel_type(255);
-            channel_type exponent = (sum * sum) / (sigma * sigma);
-            static_fill(result_pixel, std::exp(exponent));
-            // static_transform(scratch_pixel, result_pixel, [local_kappa](channel_type value) {
-            //     value /= local_kappa * num_channels<PixelType>{} * channel_type(255);
-            //     return std::exp(-value * value);
-            // });
-
-            return result_pixel;
-        };
-        const auto x = origin.x;
-        const auto y = origin.y;
-        const auto current = padded_view(x, y);
-        constexpr std::size_t point_count = 8;
-        std::array<PixelType, point_count> nabla{
-            minus(padded_view(x, y - 1), current),     // north
-            minus(padded_view(x, y + 1), current),     // south
-            minus(padded_view(x - 1, y), current),     // west
-            minus(padded_view(x + 1, y), current),     // east
-            minus(padded_view(x - 1, y - 1), current), // north west
-            minus(padded_view(x + 1, y - 1), current), // north east
-            minus(padded_view(x - 1, y + 1), current), // south west
-            minus(padded_view(x + 1, y + 1), current)  // south east
-        };
-        std::array<PixelType, point_count> diffusivity;
-        std::transform(nabla.begin(), nabla.end(), diffusivity.begin(), g);
-        std::array<PixelType, point_count> product;
-        std::transform(nabla.begin(), nabla.end(), diffusivity.begin(), product.begin(), multiply);
-
-        // for (std::size_t i = 4; i < point_count; ++i)
-        // {
-        //     static_transform(product[i], product[i], [](channel_type value) { return value / 2;
-        //     });
-        // }
-        const auto zero_pixel = []() {
-            PixelType pixel;
-            static_fill(pixel, channel_type(0));
-
-            return pixel;
-        }();
-        auto sum = std::accumulate(product.begin(), product.end(), zero_pixel, plus);
-        static_transform(sum, sum,
-                         [local_delta_t](channel_type value) { return value * local_delta_t; });
-        PixelType result_pixel;
-        static_transform(padded_view(x, y), sum, result_pixel, std::plus<channel_type>{});
-
-        return result_pixel;
+        return input;
     }
 };
+
+struct gaussian_diffusivity
+{
+    double kappa;
+    template <typename Pixel>
+    Pixel operator()(Pixel input)
+    {
+        using channel_type = typename channel_type<Pixel>::type;
+        // C++11 doesn't seem to capture members
+        auto local_kappa = kappa;
+        static_transform(input, input, [local_kappa](channel_type value) {
+            value /= local_kappa;
+            return std::exp(-value * value);
+        });
+
+        return input;
+    }
+};
+
+struct wide_regions_diffusivity
+{
+    double kappa;
+    template <typename Pixel>
+    Pixel operator()(Pixel input)
+    {
+        using channel_type = typename channel_type<Pixel>::type;
+        // C++11 doesn't seem to capture members
+        auto local_kappa = kappa;
+        static_transform(input, input, [local_kappa](channel_type value) {
+            value /= local_kappa;
+            return 1.0 / (1.0 + value * value);
+        });
+
+        return input;
+    }
+};
+
+struct more_wide_regions_diffusivity
+{
+    double kappa;
+    template <typename Pixel>
+    Pixel operator()(Pixel input)
+    {
+        using channel_type = typename channel_type<Pixel>::type;
+        // C++11 doesn't seem to capture members
+        auto local_kappa = kappa;
+        static_transform(input, input, [local_kappa](channel_type value) {
+            value /= local_kappa;
+            return 1.0 / std::sqrt((1.0 + value * value));
+        });
+
+        return input;
+    }
+};
+} // namespace diffusion
+
+namespace laplace_function {
+template <typename PixelType>
+using stencil_type = std::array<PixelType, 8>;
+
+struct stencil_4points
+{
+    double delta_t = 0.25;
+
+    template <typename SubImageView>
+    stencil_type<typename SubImageView::value_type> compute_laplace(SubImageView view,
+                                                                    point_t origin)
+    {
+        stencil_type<typename SubImageView::value_type> stencil;
+        auto out = stencil.begin();
+        auto current = view(origin);
+        using channel_type = typename channel_type<typename SubImageView::value_type>::type;
+        std::array<gil::point_t, 4> offsets{point_t{0, -1}, point_t{-1, 0}, point_t{+1, 0},
+                                            point_t{0, 1}};
+        for (auto offset : offsets)
+        {
+            ++out; // skip 45 degree values;
+            static_transform(view(origin.x + offset.x, origin.y + offset.y), current, *out++,
+                             std::minus<channel_type>{});
+        }
+    }
+
+    template <typename Pixel>
+    Pixel reduce(const stencil_type<Pixel>& stencil)
+    {
+        auto first = stencil.begin();
+        auto last = stencil.end();
+        using channel_type = typename channel_type<Pixel>::value_type;
+        auto result = []() {
+            Pixel zero_pixel;
+            static_fill(zero_pixel, channel_type(0));
+            return zero_pixel;
+        }();
+
+        for (; first != last; ++first)
+        {
+            static_transform(result, *first, result, std::plus<channel_type>{});
+        }
+        Pixel delta_t_pixel;
+        static_fill(delta_t_pixel, delta_t);
+        static_transform(result, delta_t_pixel, result, std::multiplies<channel_type>{});
+
+        return result;
+    }
+};
+
+struct stencil_8points_standard
+{
+    double delta_t = 0.125;
+
+    template <typename SubImageView>
+    stencil_type<typename SubImageView::value_type> compute_laplace(SubImageView view,
+                                                                    point_t origin)
+    {
+        stencil_type<typename SubImageView::value_type> stencil;
+        auto out = stencil.begin();
+        auto current = view(origin);
+        using channel_type = typename channel_type<typename SubImageView::value_type>::type;
+        std::array<gil::point_t, 8> offsets{point_t{-1, -1}, point_t{0, -1}, point_t{+1, -1},
+                                            point_t{-1, 0},  point_t{+1, 0}, point_t{-1, +1},
+                                            point_t{0, +1},  point_t{+1, +1}};
+        for (auto offset : offsets)
+        {
+            static_transform(view(origin.x + offset.x, origin.y + offset.y), current, *out++,
+                             std::minus<channel_type>{});
+        }
+
+        return stencil;
+    }
+
+    template <typename Pixel>
+    Pixel reduce(const stencil_type<Pixel>& stencil)
+    {
+        auto first = stencil.begin();
+        auto last = stencil.end();
+        using channel_type = typename channel_type<Pixel>::type;
+        auto result = []() {
+            Pixel zero_pixel;
+            static_fill(zero_pixel, channel_type(0));
+            return zero_pixel;
+        }();
+        auto half = std::next(first, 4);
+        for (; first != half; ++first)
+        {
+            static_transform(result, *first, result, std::plus<channel_type>{});
+        }
+
+        for (first = half; first != last; ++first)
+        {
+            Pixel half_pixel;
+            static_fill(half_pixel, channel_type(1 / 2.0));
+            static_transform(*first, half_pixel, half_pixel, std::multiplies<channel_type>{});
+            static_transform(result, half_pixel, result, std::plus<channel_type>{});
+        }
+
+        Pixel delta_t_pixel;
+        static_fill(delta_t_pixel, delta_t);
+        static_transform(result, delta_t_pixel, result, std::multiplies<channel_type>{});
+
+        return result;
+    }
+};
+} // namespace laplace_function
+
+namespace brightness_function {
+using laplace_function::stencil_type;
+struct identity
+{
+    template <typename Pixel>
+    stencil_type<Pixel> operator()(const stencil_type<Pixel>& stencil)
+    {
+        return stencil;
+    }
+};
+
+// TODO: Figure out how to implement color gradient brightness, as it
+// seems to need dx and dy using sobel or scharr kernels
+
+// TODO: Implement luminance based brightness function
+
+} // namespace brightness_function
+
+template <typename InputView, typename OutputView>
+void default_anisotropic_diffusion(const InputView& input, const OutputView& output,
+                                   unsigned int num_iter, double kappa)
+{
+    anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_8points_standard{},
+                          brightness_function::identity{}, diffusion::gaussian_diffusivity{kappa});
+}
 
 /// \brief Performs diffusion according to Perona-Malik equation
 ///
@@ -115,22 +237,23 @@ struct diffusion_strategy
 /// iteration count is set and grayscale image view is used
 /// as an input
 template <typename InputView, typename OutputView,
-          typename ComputationStrategy = diffusion_strategy<typename OutputView::value_type>>
+          typename LaplaceStrategy = laplace_function::stencil_8points_standard,
+          typename BrightnessFunction = brightness_function::identity,
+          typename DiffusivityFunction = diffusion::gaussian_diffusivity>
 void anisotropic_diffusion(const InputView& input, const OutputView& output, unsigned int num_iter,
-                           ComputationStrategy strategy)
+                           LaplaceStrategy laplace, BrightnessFunction brightness,
+                           DiffusivityFunction diffusivity)
 {
     using input_pixel_type = typename InputView::value_type;
     using pixel_type = typename OutputView::value_type;
+    using channel_type = typename channel_type<pixel_type>::type;
     using computation_image = image<pixel_type>;
     const auto width = input.width();
     const auto height = input.height();
     const point_t dims(width, height);
     const auto zero_pixel = []() {
         pixel_type pixel;
-        for (std::size_t i = 0; i < num_channels<pixel_type>{}; ++i)
-        {
-            pixel[i] = 0;
-        }
+        static_fill(pixel, static_cast<channel_type>(0));
 
         return pixel;
     }();
@@ -156,7 +279,19 @@ void anisotropic_diffusion(const InputView& input, const OutputView& output, uns
             {
                 auto x = relative_x + 1;
                 auto y = relative_y + 1;
-                scratch_result(x, y) = strategy(result, {x, y});
+                auto stencil = laplace.compute_laplace(result, point_t(x, y));
+                auto brightness_stencil = brightness(stencil);
+                laplace_function::stencil_type<pixel_type> diffusivity_stencil;
+                std::transform(brightness_stencil.begin(), brightness_stencil.end(),
+                               diffusivity_stencil.begin(), diffusivity);
+                laplace_function::stencil_type<pixel_type> product_stencil;
+                std::transform(stencil.begin(), stencil.end(), diffusivity_stencil.begin(),
+                               product_stencil.begin(), [](pixel_type lhs, pixel_type rhs) {
+                                   static_transform(lhs, rhs, lhs, std::multiplies<channel_type>{});
+                                   return lhs;
+                               });
+                static_transform(result(x, y), laplace.reduce(product_stencil),
+                                 scratch_result(x, y), std::plus<channel_type>{});
             }
         }
         using std::swap;
