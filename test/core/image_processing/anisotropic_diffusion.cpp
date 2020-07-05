@@ -22,7 +22,7 @@ template <typename ImageType>
 void heat_conservation_test(std::uint32_t seed)
 {
     std::mt19937 twister(seed);
-    std::uniform_int_distribution<gil::uint8_t> dist;
+    std::uniform_int_distribution<gil::uint16_t> dist;
 
     ImageType image(32, 32);
     auto view = gil::view(image);
@@ -32,7 +32,7 @@ void heat_conservation_test(std::uint32_t seed)
     {
         for (std::size_t channel_index = 0; channel_index < num_channels; ++channel_index)
         {
-            pixel[channel_index] = dist(twister);
+            pixel[channel_index] = static_cast<gil::uint8_t>(dist(twister));
             before_diffusion[channel_index] += pixel[channel_index];
         }
     }
