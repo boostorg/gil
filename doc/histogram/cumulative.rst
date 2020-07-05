@@ -18,9 +18,7 @@ Example:
         /*
         Fill histogram ...
         */
-        h.cumulative();
-        // OR
-        cumulative_histogram(h);
+        auto h1 = cumulative_histogram(h);
 
 Tip: *In case you need to store the cumulative histogram elsewhere, consider creating a copy of the histogram
 and then call the function*.
