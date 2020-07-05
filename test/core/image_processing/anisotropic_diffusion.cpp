@@ -22,7 +22,7 @@ template <typename ImageType>
 void heat_conservation_test(std::uint32_t seed)
 {
     std::mt19937 twister(seed);
-    std::uniform_int_distribution<gil::uint16_t> dist;
+    std::uniform_int_distribution<gil::uint16_t> dist(0, std::numeric_limits<gil::uint8_t>::max());
 
     ImageType image(32, 32);
     auto view = gil::view(image);
