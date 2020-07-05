@@ -19,50 +19,50 @@ void check_cumulative()
     {
         h1(i) = 1;
     }
-    h1.cumulative();
+    auto h2 = cumulative_histogram(h1);
     bool check1 = true;
     for (int i = 0; i < 8; i++)
     {
-        if(h1(i) != i+1)
+        if(h2(i) != i+1)
             check1 = false;
     }    
     BOOST_TEST(check1);
 
-    gil::histogram<int , int> h2;
-    h2(1, 3) = 1;
-    h2(1, 4) = 2;
-    h2(2, 1) = 3;
-    h2(2, 2) = 1;
-    h2(2, 5) = 2;
-    h2(3, 2) = 3;
-    h2(3, 9) = 1;
-    h2.cumulative();
-    BOOST_TEST(h2(1, 3) == 1);
-    BOOST_TEST(h2(1, 4) == 3);
-    BOOST_TEST(h2(2, 1) == 6);
-    BOOST_TEST(h2(2, 2) == 7);
-    BOOST_TEST(h2(2, 5) == 9);
-    BOOST_TEST(h2(3, 2) == 12);
-    BOOST_TEST(h2(3, 9) == 13);
+    gil::histogram<int , int> h3;
+    h3(1, 3) = 1;
+    h3(1, 4) = 2;
+    h3(2, 1) = 3;
+    h3(2, 2) = 1;
+    h3(2, 5) = 2;
+    h3(3, 2) = 3;
+    h3(3, 9) = 1;
+    auto h4 = cumulative_histogram(h3);
+    BOOST_TEST(h4(1, 3) == 1);
+    BOOST_TEST(h4(1, 4) == 3);
+    BOOST_TEST(h4(2, 1) == 3);
+    BOOST_TEST(h4(2, 2) == 4);
+    BOOST_TEST(h4(2, 5) == 9);
+    BOOST_TEST(h4(3, 2) == 7);
+    BOOST_TEST(h4(3, 9) == 13);
 }
 
 void check_cumulative_histogram()
 {
-    gil::histogram<int , int> h2;
-    h2(1, 3) = 1;
-    h2(1, 4) = 2;
-    h2(2, 1) = 3;
-    h2(2, 2) = 1;
-    h2(2, 5) = 2;
-    h2(3, 2) = 3;
-    h2(3, 9) = 1;
-    gil::cumulative_histogram(h2);
+    gil::histogram<int , int> h1;
+    h1(1, 3) = 1;
+    h1(1, 4) = 2;
+    h1(2, 1) = 3;
+    h1(2, 2) = 1;
+    h1(2, 5) = 2;
+    h1(3, 2) = 3;
+    h1(3, 9) = 1;
+    auto h2 = gil::cumulative_histogram(h1);
     BOOST_TEST(h2(1, 3) == 1);
     BOOST_TEST(h2(1, 4) == 3);
-    BOOST_TEST(h2(2, 1) == 6);
-    BOOST_TEST(h2(2, 2) == 7);
+    BOOST_TEST(h2(2, 1) == 3);
+    BOOST_TEST(h2(2, 2) == 4);
     BOOST_TEST(h2(2, 5) == 9);
-    BOOST_TEST(h2(3, 2) == 12);
+    BOOST_TEST(h2(3, 2) == 7);
     BOOST_TEST(h2(3, 9) == 13);
 }
 

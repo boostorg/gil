@@ -17,6 +17,7 @@
 #include <boost/type_traits.hpp>
 #include <boost/functional/hash.hpp>
 
+#include <iostream>
 #include <tuple>
 #include <utility>
 #include <vector>
@@ -84,6 +85,20 @@ auto tuple_to_tuple(Tuple const& t, boost::mp11::index_sequence<I...>)
     -> decltype(std::make_tuple(std::get<I>(t)...))
 {
     return std::make_tuple(std::get<I>(t)...);
+}
+
+// TODO: With C++14 and using auto we don't need the decltype anymore
+template <typename Tuple, std::size_t... I>
+bool tuple_compare(Tuple const& t1, Tuple const& t2, boost::mp11::index_sequence<I...>)
+{
+    std::array<bool, std::tuple_size<Tuple>::value> comp_list;
+    comp_list = {std::get<I>(t1) <= std::get<I>(t2)...};
+    bool comp = true;
+    for (std::size_t i = 0; i < comp_list.size(); i++)
+    {
+        comp = comp & comp_list[i];
+    }
+    return comp;
 }
 
 }  //namespace detail
@@ -323,24 +338,6 @@ public:
         return sub_h;
     }
 
-    /// \brief Converts the histogram into its cumulative version
-    void cumulative()
-    {
-        using pair_t = std::pair<key_t, mapped_t>;
-        std::vector<pair_t> sorted_keys(base_t::size());
-        std::size_t counter = 0;
-        std::for_each(base_t::begin(), base_t::end(), [&](value_t const& v) {
-            sorted_keys[counter++] = std::make_pair(v.first, v.second);
-        });
-        std::sort(sorted_keys.begin(), sorted_keys.end());
-        int cumulative_counter = 0;
-        for (std::size_t i = 0; i < sorted_keys.size(); ++i)
-        {
-            cumulative_counter += sorted_keys[i].second;
-            base_t::operator[](sorted_keys[i].first) = cumulative_counter;
-        }
-    }
-
 private:
     template <typename Tuple, std::size_t... I>
     key_t make_histogram_key(Tuple const& t, boost::mp11::index_sequence<I...>) const
@@ -400,11 +397,11 @@ void fill_histogram(SrcView const&, Container&);
 /// \endcode
 ///
 template <std::size_t... Dimensions, typename SrcView, typename... T>
-void fill_histogram(SrcView const& srcview, histogram<T...>& histogram, bool accumulate = false)
+void fill_histogram(SrcView const& srcview, histogram<T...>& hist, bool accumulate = false)
 {
     if (!accumulate)
-        histogram.clear();
-    histogram.template fill<Dimensions...>(srcview);
+        hist.clear();
+    hist.template fill<Dimensions...>(srcview);
 }
 
 ///
@@ -413,17 +410,57 @@ void fill_histogram(SrcView const& srcview, histogram<T...>& histogram, bool acc
 /// \tparam Container Input histogram container
 /// \brief Optionally overload this function with any external histogram class
 ///
+/// Cumulative histogram is calculated over any arbitrary dimensional
+/// histogram. The only tradeoff could be the runtime complexity which in
+/// the worst case would be max( #pixel_values , #bins ) * #dimensions.
+/// For single dimensional histograms the complexity has been brought down to
+/// #bins * log( #bins ) by sorting the keys and then calculating the cumulative version.
+///
 template <typename Container>
-void cumulative_histogram(Container&);
+Container cumulative_histogram(Container&);
 
 template <typename... T>
-void cumulative_histogram(histogram<T...>& histogram)
+histogram<T...> cumulative_histogram(histogram<T...>& hist)
 {
     using check_list = boost::mp11::mp_list<boost::has_less<T>...>;
     static_assert(
         boost::mp11::mp_all_of<check_list, boost::mp11::mp_to_bool>::value,
         "Cumulative histogram not possible of this type");
-    histogram.cumulative();
+    
+    using histogram_t = histogram<T...>;
+    using pair_t = std::pair<typename histogram_t::key_type, typename histogram_t::mapped_type>;
+    using value_t = typename histogram_t::value_type;
+
+    histogram_t cumulative_hist;
+    if (hist.dimension() == 1)
+    {
+        std::vector<pair_t> sorted_keys(hist.size());
+        std::size_t counter = 0;
+        std::for_each(hist.begin(), hist.end(), [&](value_t const& v) {
+            sorted_keys[counter++] = std::make_pair(v.first, v.second);
+        });
+        std::sort(sorted_keys.begin(), sorted_keys.end());
+        auto cumulative_counter = static_cast<typename histogram_t::mapped_type>(0);
+        for (std::size_t i = 0; i < sorted_keys.size(); ++i)
+        {
+            cumulative_counter += sorted_keys[i].second;
+            cumulative_hist[(sorted_keys[i].first)] = cumulative_counter;
+        }
+    }
+    else
+    {
+        std::for_each(hist.begin(), hist.end(), [&](value_t const& v1) {
+            auto cumulative_counter = static_cast<typename histogram_t::mapped_type>(0);
+            std::for_each(hist.begin(), hist.end(), [&](value_t const& v2) {
+                bool comp = detail::tuple_compare(
+                    v2.first, v1.first, boost::mp11::make_index_sequence<histogram_t::dimension()>{});
+                if (comp)
+                    cumulative_counter += hist[v2.first];
+            });
+            cumulative_hist[v1.first] = cumulative_counter;
+        });
+    }
+    return cumulative_hist;
 }
 
 }}  //namespace boost::gil

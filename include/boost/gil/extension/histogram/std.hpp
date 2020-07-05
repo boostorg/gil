@@ -19,7 +19,6 @@
 #include <map>
 #include <utility>
 #include <vector>
-#include <unordered_map>
 
 namespace boost { namespace gil {
 
@@ -30,7 +29,7 @@ namespace boost { namespace gil {
 /// \brief Collection of functions to provide histogram support in GIL using Standard
 ///        Template Library Containers
 /// The conversion from Boost.GIL images to compatible histograms are provided. The supported
-/// container types would be std::vector, std::array, std::map & std::unordered_map.
+/// container types would be std::vector, std::array, std::map.
 ///
 /// Some general constraints on STL extension:-
 /// 1. Supports only 1D histogram.
@@ -94,30 +93,6 @@ void fill_histogram(SrcView const& srcview, std::array<T, N>& histogram, bool ac
 }
 
 /// \ingroup Histogram - STL Containers
-/// \brief Overload for std::unordered_map of fill_histogram
-///
-template <typename SrcView, typename T1, typename T2>
-void fill_histogram(
-    SrcView const& srcview, std::unordered_map<T1, T2>& histogram, bool accumulate = false)
-{
-    gil_function_requires<ImageViewConcept<SrcView>>();
-    static_assert(
-        std::is_arithmetic<T1>::value && std::is_integral<T2>::value,
-        "Improper container type for images.");
-
-    using channel_t = typename channel_type<SrcView>::type;
-    using pixel_t   = pixel<channel_t, gray_layout_t>;
-
-    if (!accumulate)
-        histogram.clear();
-
-    for_each_pixel(color_converted_view<pixel_t>(srcview), [&](pixel_t const& p) {
-        ++histogram[static_cast<std::size_t>(p)];
-    });
-}
-
-
-/// \ingroup Histogram - STL Containers
 /// \brief Overload for std::map of fill_histogram
 ///
 template <typename SrcView, typename T1, typename T2>
@@ -143,64 +118,43 @@ void fill_histogram(SrcView const& srcview, std::map<T1, T2>& histogram, bool ac
 /// \brief Overload for std::vector of cumulative_histogram
 ///
 template <typename T>
-void cumulative_histogram(std::vector<T>& histogram)
+std::vector<T> cumulative_histogram(std::vector<T>& hist)
 {
+    std::vector<T> cumulative_hist(hist.size());
     static_assert(std::is_arithmetic<T>::value, "Improper container type for images.");
     T cumulative_counter = 0;
-    for (std::size_t i = 0; i < histogram.size(); i++)
+    for (std::size_t i = 0; i < hist.size(); i++)
     {
-        cumulative_counter += histogram[i];
-        histogram[i] = cumulative_counter;
+        cumulative_counter += hist[i];
+        cumulative_hist[i] = cumulative_counter;
     }
+    return cumulative_hist;
 }
 
 /// \ingroup Histogram - STL Containers
 /// \brief Overload for std::array of cumulative_histogram
 ///
 template <typename T, std::size_t N>
-void cumulative_histogram(std::array<T, N>& histogram)
+std::array<T, N> cumulative_histogram(std::array<T, N>& histogram)
 {
+    std::array<T, N> cumulative_hist;
     static_assert(std::is_arithmetic<T>::value && N > 0, "Improper container type for images.");
     T cumulative_counter = 0;
     for (std::size_t i = 0; i < N; i++)
     {
         cumulative_counter += histogram[i];
-        histogram[i] = cumulative_counter;
+        cumulative_hist[i] = cumulative_counter;
     }
-}
-
-/// \ingroup Histogram - STL Containers
-/// \brief Overload for std::unordered_map of cumulative_histogram
-///
-template <typename T1, typename T2>
-void cumulative_histogram(std::unordered_map<T1, T2>& histogram)
-{
-    static_assert(
-        std::is_arithmetic<T1>::value && std::is_integral<T2>::value,
-        "Improper container type for images.");
-    using value_t = typename std::unordered_map<T1, T2>::value_type;
-    std::vector<std::pair<T1, T2>> sorted_keys(histogram.size());
-    std::size_t counter = 0;
-
-    std::for_each(histogram.begin(), histogram.end(), [&](value_t const& v) {
-        sorted_keys[counter++] = std::make_pair(v.first, v.second);
-    });
-
-    std::sort(sorted_keys.begin(), sorted_keys.end());
-    int cumulative_counter = 0;
-    for (std::size_t i = 0; i < sorted_keys.size(); ++i)
-    {
-        cumulative_counter += sorted_keys[i].second;
-        histogram[sorted_keys[i].first] = cumulative_counter;
-    }
+    return cumulative_hist;
 }
 
 /// \ingroup Histogram - STL Containers
 /// \brief Overload for std::map of cumulative_histogram
 ///
 template <typename T1, typename T2>
-void cumulative_histogram(std::map<T1, T2>& histogram)
+std::map<T1, T2> cumulative_histogram(std::map<T1, T2>& histogram)
 {
+    std::map<T1, T2> cumulative_hist;
     static_assert(
         std::is_arithmetic<T1>::value && std::is_integral<T2>::value,
         "Improper container type for images.");
@@ -208,8 +162,9 @@ void cumulative_histogram(std::map<T1, T2>& histogram)
     for (auto const& it : histogram)
     {
         cumulative_counter += it.second;
-        histogram[it.first] = cumulative_counter;
+        cumulative_hist[it.first] = cumulative_counter;
     }
+    return cumulative_hist;
 }
 
 }}  // namespace boost::gil

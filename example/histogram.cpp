@@ -109,9 +109,9 @@ int main() {
 	std::array<int,100> arr;
 	fill_histogram(view(img), arr); 				
 	fill_histogram(view(img), arr, true); 			
-
-	std::unordered_map<int,int> mp;
-	fill_histogram(view(img), mp);  				
-	fill_histogram(view(img), mp, true);	
+				
+    std::tuple<int, float> t1(3, 3.9), t2(3, 1);
+    auto ans = boost::gil::detail::tuple_compare(t1, t2, boost::mp11::make_index_sequence<2>{});
+    std::cout<<ans;
     return 0;
 }
