@@ -39,7 +39,7 @@ void heat_conservation_test(std::uint32_t seed)
 
     gil::gray32f_image_t output(32, 32);
     auto output_view = gil::view(output);
-    gil::anisotropic_diffusion(view, output_view, 10, {5, 1 / 6.0f});
+    gil::default_anisotropic_diffusion(view, output_view, 10, 5);
     double after_diffusion[num_channels] = {0};
     for (const auto& pixel : output_view)
     {
@@ -59,84 +59,6 @@ void heat_conservation_test(std::uint32_t seed)
     }
     std::cout << '\n';
 }
-
-// template <typename ImageType>
-// void convergence_to_mean_test(std::uint32_t seed)
-// {
-//     std::mt19937 twister(seed);
-//     std::uniform_int_distribution<gil::uint8_t> dist;
-
-//     const std::size_t size = 32;
-//     ImageType image(size, size);
-//     auto view = gil::view(image);
-//     constexpr std::ptrdiff_t num_channels = gil::num_channels<decltype(view)>::value;
-//     double mean_before_diffusion[num_channels] = {0};
-//     double before_diffusion[num_channels] = {0};
-//     for (auto& pixel : view)
-//     {
-//         for (std::size_t channel_index = 0; channel_index < num_channels; ++channel_index)
-//         {
-//             pixel[channel_index] = dist(twister);
-//             mean_before_diffusion[channel_index] += pixel[channel_index];
-//         }
-//     }
-
-//     for (std::ptrdiff_t channel_index = 0; channel_index < num_channels; ++channel_index)
-//     {
-//         mean_before_diffusion[channel_index] /= size * size;
-//     }
-
-//     for (auto& pixel : view)
-//     {
-//         for (std::size_t channel_index = 0; channel_index < num_channels; ++channel_index)
-//         {
-//             double difference = pixel[channel_index] - mean_before_diffusion[channel_index];
-//             before_diffusion[channel_index] += difference * difference;
-//         }
-//     }
-
-//     for (std::ptrdiff_t channel_index = 0; channel_index < num_channels; ++channel_index)
-//     {
-//         before_diffusion[channel_index] /= size * size;
-//         before_diffusion[channel_index] = std::sqrt(before_diffusion[channel_index]);
-//     }
-
-//     gil::gray32f_image_t output(32, 32);
-//     auto output_view = gil::view(output);
-//     gil::anisotropic_diffusion(view, output_view, 10, 1 / 7.0f, 30);
-
-//     double mean_after_diffusion[num_channels] = {0};
-//     double after_diffusion[num_channels] = {0};
-
-//     for (auto& pixel : output_view)
-//     {
-//         for (std::size_t channel_index = 0; channel_index < num_channels; ++channel_index)
-//         {
-//             mean_after_diffusion[channel_index] += pixel[channel_index];
-//         }
-//     }
-
-//     for (std::ptrdiff_t channel_index = 0; channel_index < num_channels; ++channel_index)
-//     {
-//         mean_after_diffusion[channel_index] /= size * size;
-//     }
-
-//     for (auto& pixel : view)
-//     {
-//         for (std::size_t channel_index = 0; channel_index < num_channels; ++channel_index)
-//         {
-//             double difference = pixel[channel_index] - mean_after_diffusion[channel_index];
-//             after_diffusion[channel_index] += difference * difference;
-//         }
-//     }
-
-//     for (std::ptrdiff_t channel_index = 0; channel_index < num_channels; ++channel_index)
-//     {
-//         after_diffusion[channel_index] /= size * size;
-//         after_diffusion[channel_index] = std::sqrt(after_diffusion[channel_index]);
-//         BOOST_TEST(before_diffusion[channel_index] > after_diffusion[channel_index]);
-//     }
-// }
 
 int main()
 {
