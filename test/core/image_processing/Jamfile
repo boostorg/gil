@@ -19,3 +19,4 @@ run hessian.cpp ;
 run sobel_scharr.cpp ;
 run box_filter.cpp ;
 run median_filter.cpp ;
+run anisotropic_diffusion ;
