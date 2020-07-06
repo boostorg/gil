@@ -57,29 +57,30 @@ void heat_conservation_test(std::uint32_t seed)
                       after_diffusion[channel_index] * 100.0
                 : std::abs(after_diffusion[channel_index] - before_diffusion[channel_index]) /
                       after_diffusion[channel_index] * 100.0;
+#ifdef BOOST_GIL_TEST_DEBUG
         std::cout << percentage << ' ';
+#endif
         BOOST_TEST(percentage < 1);
     }
+#ifdef BOOST_GIL_TEST_DEBUG
     std::cout << '\n';
+#endif
 }
 
 int main()
 {
     for (std::uint32_t seed = 0; seed < 1000; ++seed)
     {
+#ifdef BOOST_GIL_TEST_DEBUG
         std::cout << "seed: " << seed << '\n';
         std::cout << "conservation of heat test:\n"
                   << "gray8 test:\n";
+#endif
         heat_conservation_test<gil::gray8_image_t, gil::gray32f_image_t>(seed);
+#ifdef BOOST_GIL_TEST_DEBUG
         std::cout << "rgb8 test:\n";
+#endif
         heat_conservation_test<gil::rgb8_image_t, gil::rgb32f_image_t>(seed);
-
-        // std::cout << "convergence to mean test:\n"
-        //           << "gray8 test:\n";
-
-        // convergence_to_mean_test<gil::gray8_image_t>(seed);
-        // std::cout << "rgb8 test:\n";
-        // convergence_to_mean_test<gil::rgb8_image_t>(seed);
     }
 
     return boost::report_errors();
