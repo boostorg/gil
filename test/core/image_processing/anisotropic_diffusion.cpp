@@ -5,6 +5,7 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
+#include <boost/gil/color_base_algorithm.hpp>
 #include <boost/gil/image.hpp>
 #include <boost/gil/image_processing/diffusion.hpp>
 #include <boost/gil/image_view.hpp>
@@ -17,6 +18,21 @@
 #include <random>
 
 namespace gil = boost::gil;
+
+template <typename PixelType, typename DiffusionFunction>
+void diffusion_function_check(DiffusionFunction diffusion)
+{
+    using limits = std::numeric_limits<gil::uint8_t>;
+    using channel_type = typename gil::channel_type<PixelType>::type;
+    for (channel_type value = limits::min(); value <= limits::max(); ++value)
+    {
+        PixelType pixel;
+        gil::static_fill(pixel, value);
+        auto diffusivity_value = diffusion(pixel);
+        gil::static_for_each(diffusivity_value,
+                             [](channel_type value) { BOOST_TEST(0 <= value && value <= 1.0); });
+    }
+}
 
 template <typename ImageType, typename OutputImageType>
 void heat_conservation_test(std::uint32_t seed)
@@ -81,6 +97,25 @@ int main()
         std::cout << "rgb8 test:\n";
 #endif
         heat_conservation_test<gil::rgb8_image_t, gil::rgb32f_image_t>(seed);
+    }
+
+    for (double kappa = 5; kappa <= 70; ++kappa)
+    {
+        diffusion_function_check<gil::rgb32f_pixel_t>(
+            gil::diffusion::perona_malik_diffusivity{kappa});
+        diffusion_function_check<gil::rgb32f_pixel_t>(gil::diffusion::gaussian_diffusivity{kappa});
+        diffusion_function_check<gil::rgb32f_pixel_t>(
+            gil::diffusion::wide_regions_diffusivity{kappa});
+        diffusion_function_check<gil::rgb32f_pixel_t>(
+            gil::diffusion::more_wide_regions_diffusivity{kappa});
+
+        diffusion_function_check<gil::gray32f_pixel_t>(
+            gil::diffusion::perona_malik_diffusivity{kappa});
+        diffusion_function_check<gil::gray32f_pixel_t>(gil::diffusion::gaussian_diffusivity{kappa});
+        diffusion_function_check<gil::gray32f_pixel_t>(
+            gil::diffusion::wide_regions_diffusivity{kappa});
+        diffusion_function_check<gil::gray32f_pixel_t>(
+            gil::diffusion::more_wide_regions_diffusivity{kappa});
     }
 
     return boost::report_errors();

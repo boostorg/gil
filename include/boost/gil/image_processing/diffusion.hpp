@@ -215,7 +215,20 @@ struct identity
 // TODO: Figure out how to implement color gradient brightness, as it
 // seems to need dx and dy using sobel or scharr kernels
 
-// TODO: Implement luminance based brightness function
+struct rgb_luminance
+{
+    using pixel_type = rgb32f_pixel_t;
+    stencil_type<pixel_type> operator()(const stencil_type<pixel_type>& stencil)
+    {
+        stencil_type<pixel_type> output;
+        std::transform(stencil.begin(), stencil.end(), output.begin(), [](const pixel_type& pixel) {
+            float32_t luminance = 0.2126f * pixel[0] + 0.7152f * pixel[1] + 0.0722f * pixel[2];
+            pixel_type result_pixel;
+            static_fill(result_pixel, luminance);
+        });
+        return output;
+    }
+};
 
 } // namespace brightness_function
 
