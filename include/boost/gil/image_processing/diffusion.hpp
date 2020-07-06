@@ -219,37 +219,73 @@ struct identity
 
 } // namespace brightness_function
 
-enum class matlab_connectivity {
+enum class matlab_connectivity
+{
     minimal,
     maximal
 };
 
-enum class matlab_conduction_method {
+enum class matlab_conduction_method
+{
     exponential,
     quadratic
 };
 
 template <typename InputView, typename OutputView>
-void matlab_anisotropic_diffusion(const InputView& input, const OutputView& output,
-                                   unsigned int num_iter, double kappa, matlab_connectivity connectivity, matlab_conduction_method conduction_method)
+void classic_anisotropic_diffusion(const InputView& input, const OutputView& output,
+                                   unsigned int num_iter, double kappa)
 {
-    if (connectivity == matlab_connectivity::minimal) {
-        if (conduction_method == matlab_conduction_method::exponential) {
-            anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_4points{}, brightness_function::identity{}, diffusion::gaussian_diffusivity{kappa});
-        } else if (conduction_method == matlab_conduction_method::quadratic) {
-            anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_4points{}, brightness_function::identity{}, diffusion::gaussian_diffusivity{kappa});
-        } else {
+    anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_4points{},
+                          brightness_function::identity{},
+                          diffusion::perona_malik_diffusivity{kappa});
+}
+
+template <typename InputView, typename OutputView>
+void matlab_anisotropic_diffusion(const InputView& input, const OutputView& output,
+                                  unsigned int num_iter, double kappa,
+                                  matlab_connectivity connectivity,
+                                  matlab_conduction_method conduction_method)
+{
+    if (connectivity == matlab_connectivity::minimal)
+    {
+        if (conduction_method == matlab_conduction_method::exponential)
+        {
+            anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_4points{},
+                                  brightness_function::identity{},
+                                  diffusion::gaussian_diffusivity{kappa});
+        }
+        else if (conduction_method == matlab_conduction_method::quadratic)
+        {
+            anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_4points{},
+                                  brightness_function::identity{},
+                                  diffusion::gaussian_diffusivity{kappa});
+        }
+        else
+        {
             throw std::logic_error("unhandled conduction method found");
         }
-    } else if (connectivity == matlab_connectivity::maximal) {
-        if (conduction_method == matlab_conduction_method::exponential) {
-            anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_4points{}, brightness_function::identity{}, diffusion::gaussian_diffusivity{kappa});
-        } else if (conduction_method == matlab_conduction_method::quadratic) {
-            anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_4points{}, brightness_function::identity{}, diffusion::gaussian_diffusivity{kappa});
-        } else {
+    }
+    else if (connectivity == matlab_connectivity::maximal)
+    {
+        if (conduction_method == matlab_conduction_method::exponential)
+        {
+            anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_4points{},
+                                  brightness_function::identity{},
+                                  diffusion::gaussian_diffusivity{kappa});
+        }
+        else if (conduction_method == matlab_conduction_method::quadratic)
+        {
+            anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_4points{},
+                                  brightness_function::identity{},
+                                  diffusion::gaussian_diffusivity{kappa});
+        }
+        else
+        {
             throw std::logic_error("unhandled conduction method found");
         }
-    } else {
+    }
+    else
+    {
         throw std::logic_error("unhandled connectivity found");
     }
 }
