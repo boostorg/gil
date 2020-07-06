@@ -34,6 +34,25 @@ void diffusion_function_check(DiffusionFunction diffusion)
     }
 }
 
+void brightness_function_test()
+{
+    std::vector<gil::rgb32f_pixel_t> rgb_pixels{
+        gil::rgb32f_pixel_t(0, 11, 14),     gil::rgb32f_pixel_t(2, 117, 200),
+        gil::rgb32f_pixel_t(223, 2, 180),   gil::rgb32f_pixel_t(250, 254, 100),
+        gil::rgb32f_pixel_t(255, 255, 255),
+    };
+    for (const auto& pixel : rgb_pixels)
+    {
+        boost::gil::laplace_function::stencil_type<gil::rgb32f_pixel_t> stencil;
+        std::fill(stencil.begin(), stencil.end(), pixel);
+        auto brightness_stencil = boost::gil::brightness_function::identity{}(stencil);
+        for (const auto& brightness_pixel : brightness_stencil)
+        {
+            BOOST_TEST(pixel == brightness_pixel);
+        }
+    }
+}
+
 template <typename ImageType, typename OutputImageType>
 void heat_conservation_test(std::uint32_t seed)
 {
@@ -117,6 +136,8 @@ int main()
         diffusion_function_check<gil::gray32f_pixel_t>(
             gil::diffusion::more_wide_regions_diffusivity{kappa});
     }
+
+    brightness_function_test();
 
     return boost::report_errors();
 }

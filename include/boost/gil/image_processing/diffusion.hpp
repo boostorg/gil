@@ -225,6 +225,7 @@ struct rgb_luminance
             float32_t luminance = 0.2126f * pixel[0] + 0.7152f * pixel[1] + 0.0722f * pixel[2];
             pixel_type result_pixel;
             static_fill(result_pixel, luminance);
+            return result_pixel;
         });
         return output;
     }
