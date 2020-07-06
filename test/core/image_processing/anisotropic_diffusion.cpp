@@ -14,6 +14,7 @@
 
 #include <boost/core/lightweight_test.hpp>
 
+#include <cmath>
 #include <limits>
 #include <random>
 
@@ -44,6 +45,38 @@ void brightness_function_test()
     for (const auto& pixel : rgb_pixels)
     {
         boost::gil::laplace_function::stencil_type<gil::rgb32f_pixel_t> stencil;
+        std::fill(stencil.begin(), stencil.end(), pixel);
+        auto brightness_stencil = boost::gil::brightness_function::identity{}(stencil);
+        for (const auto& brightness_pixel : brightness_stencil)
+        {
+            BOOST_TEST(pixel == brightness_pixel);
+        }
+    }
+
+    std::vector<float> corresponding_luminance_values{8.878f, 98.5436f, 61.8362f, 242.0308f, 255};
+    std::size_t index = 0;
+    for (const auto& pixel : rgb_pixels)
+    {
+        boost::gil::laplace_function::stencil_type<gil::rgb32f_pixel_t> stencil;
+        std::fill(stencil.begin(), stencil.end(), pixel);
+        auto brightness_stencil = boost::gil::brightness_function::rgb_luminance{}(stencil);
+        for (const auto& brightness_pixel : brightness_stencil)
+        {
+            gil::static_for_each(brightness_pixel, [&corresponding_luminance_values,
+                                                    index](boost::gil::float32_t value) {
+                BOOST_TEST(std::abs(value - corresponding_luminance_values[index]) < 1.0f);
+            });
+        }
+        ++index;
+    }
+
+    std::vector<gil::gray32f_pixel_t> gray_pixels{
+        gil::gray32f_pixel_t(11),  gil::gray32f_pixel_t(0),  gil::gray32f_pixel_t(255),
+        gil::gray32f_pixel_t(123), gil::gray32f_pixel_t(17),
+    };
+    for (const auto& pixel : gray_pixels)
+    {
+        boost::gil::laplace_function::stencil_type<gil::gray32f_pixel_t> stencil;
         std::fill(stencil.begin(), stencil.end(), pixel);
         auto brightness_stencil = boost::gil::brightness_function::identity{}(stencil);
         for (const auto& brightness_pixel : brightness_stencil)
