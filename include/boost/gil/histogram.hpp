@@ -17,7 +17,6 @@
 #include <boost/type_traits.hpp>
 #include <boost/functional/hash.hpp>
 
-#include <iostream>
 #include <tuple>
 #include <utility>
 #include <vector>
@@ -257,6 +256,37 @@ public:
 
         auto key = detail::pixel_to_tuple(p, sequence_type{});
         return make_histogram_key(key, seq1{});
+    }
+
+    /// \brief Return nearest smaller key to specified histogram key
+    key_t nearest_key(key_t const& k) const
+    {
+        using check_list = boost::mp11::mp_list<boost::has_less<T>...>;
+        static_assert(
+            boost::mp11::mp_all_of<check_list, boost::mp11::mp_to_bool>::value,
+            "Keys are not comparable.");
+        auto nearest_k = k;
+        if (base_t::find(k) != base_t::end())
+        {
+            return nearest_k;
+        }
+        else
+        {
+            bool once = true;
+            std::for_each(base_t::begin(), base_t::end(), [&](value_t const& v) {
+                if (v.first <= k)
+                {
+                    if (once)
+                    {
+                        once      = !once;
+                        nearest_k = v.first;
+                    }
+                    else if (nearest_k < v.first)
+                        nearest_k = v.first;
+                }
+            });
+            return nearest_k;
+        }
     }
 
     /// \brief Fills the histogram with the input image view
