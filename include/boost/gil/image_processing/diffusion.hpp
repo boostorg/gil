@@ -124,7 +124,7 @@ struct stencil_4points
     {
         auto first = stencil.begin();
         auto last = stencil.end();
-        using channel_type = typename channel_type<Pixel>::value_type;
+        using channel_type = typename channel_type<Pixel>::type;
         auto result = []() {
             Pixel zero_pixel;
             static_fill(zero_pixel, channel_type(0));
