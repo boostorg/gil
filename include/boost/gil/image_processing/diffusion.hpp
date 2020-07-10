@@ -149,9 +149,9 @@ struct stencil_5points
             return zero_pixel;
         }();
 
-        for (; first != last; ++first)
+        for (std::size_t index : {1u, 3u, 5u, 7u})
         {
-            static_transform(result, *first, result, std::plus<channel_type>{});
+            static_transform(result, stencil[index], result, std::plus<channel_type>{});
         }
         Pixel delta_t_pixel;
         static_fill(delta_t_pixel, delta_t);
