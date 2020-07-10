@@ -99,6 +99,12 @@ namespace laplace_function {
 // West       East   ===> 7   3 ===> (-1, 0)          (+1, 0)
 // SW   South SE          6 5 4      (-1, +1) (0, +1) (+1, +1)
 
+std::array<gil::point_t, 8> get_directed_offsets()
+{
+    return {point_t{-1, -1}, point_t{0, -1}, point_t{+1, -1}, point_t{+1, 0},
+            point_t{+1, +1}, point_t{0, +1}, point_t{-1, +1}, point_t{-1, 0}};
+}
+
 template <typename PixelType>
 using stencil_type = std::array<PixelType, 8>;
 
@@ -110,19 +116,23 @@ struct stencil_5points
     stencil_type<typename SubImageView::value_type> compute_laplace(SubImageView view,
                                                                     point_t origin)
     {
-        stencil_type<typename SubImageView::value_type> stencil;
-        auto out = stencil.begin();
         auto current = view(origin);
+        stencil_type<typename SubImageView::value_type> stencil;
         using channel_type = typename channel_type<typename SubImageView::value_type>::type;
-        std::array<gil::point_t, 4> offsets{point_t{0, -1}, point_t{+1, 0}, point_t{0, +1},
-                                            point_t{-1, 0}};
+        std::array<gil::point_t, 8> offsets(get_directed_offsets());
         typename SubImageView::value_type zero_pixel;
         static_fill(zero_pixel, 0);
-        for (auto offset : offsets)
+        for (std::size_t index = 0; index < offsets.size(); ++index)
         {
-            *out++ = zero_pixel;
-            static_transform(view(origin.x + offset.x, origin.y + offset.y), current, *out++,
-                             std::minus<channel_type>{});
+            if (index % 2 != 0)
+            {
+                static_transform(view(origin.x + offsets[index].x, origin.y + offsets[index].y),
+                                 current, stencil[index], std::minus<channel_type>{});
+            }
+            else
+            {
+                stencil[index] = zero_pixel;
+            }
         }
         return stencil;
     }
@@ -163,9 +173,7 @@ struct stencil_9points_standard
         auto out = stencil.begin();
         auto current = view(origin);
         using channel_type = typename channel_type<typename SubImageView::value_type>::type;
-        std::array<gil::point_t, 8> offsets{point_t{-1, -1}, point_t{0, -1},  point_t{+1, -1},
-                                            point_t{+1, 0},  point_t{+1, +1}, point_t{0, +1},
-                                            point_t{-1, +1}, point_t{-1, 0}};
+        std::array<gil::point_t, 8> offsets(get_directed_offsets());
         for (auto offset : offsets)
         {
             static_transform(view(origin.x + offset.x, origin.y + offset.y), current, *out++,
