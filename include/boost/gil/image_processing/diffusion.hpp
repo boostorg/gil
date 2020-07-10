@@ -94,6 +94,11 @@ struct more_wide_regions_diffusivity
 } // namespace diffusion
 
 namespace laplace_function {
+// The functions assume clockwise enumeration of stencil points, as such
+// NW   North NE          0 1 2      (-1, -1) (0, -1) (+1, -1)
+// West       East   ===> 7   3 ===> (-1, 0)          (+1, 0)
+// SW   South SE          6 5 4      (-1, +1) (0, +1) (+1, +1)
+
 template <typename PixelType>
 using stencil_type = std::array<PixelType, 8>;
 
