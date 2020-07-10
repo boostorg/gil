@@ -97,7 +97,7 @@ namespace laplace_function {
 template <typename PixelType>
 using stencil_type = std::array<PixelType, 8>;
 
-struct stencil_4points
+struct stencil_5points
 {
     double delta_t = 0.25;
 
@@ -146,7 +146,7 @@ struct stencil_4points
     }
 };
 
-struct stencil_8points_standard
+struct stencil_9points_standard
 {
     double delta_t = 0.125;
 
@@ -250,7 +250,7 @@ template <typename InputView, typename OutputView>
 void classic_anisotropic_diffusion(const InputView& input, const OutputView& output,
                                    unsigned int num_iter, double kappa)
 {
-    anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_4points{},
+    anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_5points{},
                           brightness_function::identity{},
                           diffusion::perona_malik_diffusivity{kappa});
 }
@@ -265,13 +265,13 @@ void matlab_anisotropic_diffusion(const InputView& input, const OutputView& outp
     {
         if (conduction_method == matlab_conduction_method::exponential)
         {
-            anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_4points{},
+            anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_5points{},
                                   brightness_function::identity{},
                                   diffusion::gaussian_diffusivity{kappa});
         }
         else if (conduction_method == matlab_conduction_method::quadratic)
         {
-            anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_4points{},
+            anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_5points{},
                                   brightness_function::identity{},
                                   diffusion::gaussian_diffusivity{kappa});
         }
@@ -284,13 +284,13 @@ void matlab_anisotropic_diffusion(const InputView& input, const OutputView& outp
     {
         if (conduction_method == matlab_conduction_method::exponential)
         {
-            anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_4points{},
+            anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_5points{},
                                   brightness_function::identity{},
                                   diffusion::gaussian_diffusivity{kappa});
         }
         else if (conduction_method == matlab_conduction_method::quadratic)
         {
-            anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_4points{},
+            anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_5points{},
                                   brightness_function::identity{},
                                   diffusion::gaussian_diffusivity{kappa});
         }
@@ -309,7 +309,7 @@ template <typename InputView, typename OutputView>
 void default_anisotropic_diffusion(const InputView& input, const OutputView& output,
                                    unsigned int num_iter, double kappa)
 {
-    anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_8points_standard{},
+    anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_9points_standard{},
                           brightness_function::identity{}, diffusion::gaussian_diffusivity{kappa});
 }
 
@@ -323,7 +323,7 @@ void default_anisotropic_diffusion(const InputView& input, const OutputView& out
 /// iteration count is set and grayscale image view is used
 /// as an input
 template <typename InputView, typename OutputView,
-          typename LaplaceStrategy = laplace_function::stencil_8points_standard,
+          typename LaplaceStrategy = laplace_function::stencil_9points_standard,
           typename BrightnessFunction = brightness_function::identity,
           typename DiffusivityFunction = diffusion::gaussian_diffusivity>
 void anisotropic_diffusion(const InputView& input, const OutputView& output, unsigned int num_iter,

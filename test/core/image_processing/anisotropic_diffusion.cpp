@@ -179,8 +179,8 @@ void laplace_functions_test()
     auto rgb = gil::view(rgb_image);
     auto gray = gil::view(gray_image);
 
-    auto _4way = gil::laplace_function::stencil_4points{};
-    auto _8way = gil::laplace_function::stencil_8points_standard{};
+    auto _4way = gil::laplace_function::stencil_5points{};
+    auto _8way = gil::laplace_function::stencil_9points_standard{};
     for (std::ptrdiff_t y = 1; y < image_size.y - 1; ++y)
     {
         for (std::ptrdiff_t x = 1; x < image_size.x - 1; ++x)
