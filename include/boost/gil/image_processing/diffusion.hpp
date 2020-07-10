@@ -109,14 +109,17 @@ struct stencil_4points
         auto out = stencil.begin();
         auto current = view(origin);
         using channel_type = typename channel_type<typename SubImageView::value_type>::type;
-        std::array<gil::point_t, 4> offsets{point_t{0, -1}, point_t{-1, 0}, point_t{+1, 0},
-                                            point_t{0, 1}};
+        std::array<gil::point_t, 4> offsets{point_t{0, -1}, point_t{+1, 0}, point_t{0, +1},
+                                            point_t{-1, 0}};
+        typename SubImageView::value_type zero_pixel;
+        static_fill(zero_pixel, 0);
         for (auto offset : offsets)
         {
-            ++out; // skip 45 degree values;
+            *out++ = zero_pixel;
             static_transform(view(origin.x + offset.x, origin.y + offset.y), current, *out++,
                              std::minus<channel_type>{});
         }
+        return stencil;
     }
 
     template <typename Pixel>
@@ -155,9 +158,9 @@ struct stencil_8points_standard
         auto out = stencil.begin();
         auto current = view(origin);
         using channel_type = typename channel_type<typename SubImageView::value_type>::type;
-        std::array<gil::point_t, 8> offsets{point_t{-1, -1}, point_t{0, -1}, point_t{+1, -1},
-                                            point_t{-1, 0},  point_t{+1, 0}, point_t{-1, +1},
-                                            point_t{0, +1},  point_t{+1, +1}};
+        std::array<gil::point_t, 8> offsets{point_t{-1, -1}, point_t{0, -1},  point_t{+1, -1},
+                                            point_t{+1, 0},  point_t{+1, +1}, point_t{0, +1},
+                                            point_t{-1, +1}, point_t{-1, 0}};
         for (auto offset : offsets)
         {
             static_transform(view(origin.x + offset.x, origin.y + offset.y), current, *out++,
@@ -170,25 +173,23 @@ struct stencil_8points_standard
     template <typename Pixel>
     Pixel reduce(const stencil_type<Pixel>& stencil)
     {
-        auto first = stencil.begin();
-        auto last = stencil.end();
         using channel_type = typename channel_type<Pixel>::type;
         auto result = []() {
             Pixel zero_pixel;
             static_fill(zero_pixel, channel_type(0));
             return zero_pixel;
         }();
-        auto half = std::next(first, 4);
-        for (; first != half; ++first)
+        for (std::size_t index : {1u, 3u, 5u, 7u})
         {
-            static_transform(result, *first, result, std::plus<channel_type>{});
+            static_transform(result, stencil[index], result, std::plus<channel_type>{});
         }
 
-        for (first = half; first != last; ++first)
+        for (std::size_t index : {0u, 2u, 4u, 6u})
         {
             Pixel half_pixel;
             static_fill(half_pixel, channel_type(1 / 2.0));
-            static_transform(*first, half_pixel, half_pixel, std::multiplies<channel_type>{});
+            static_transform(stencil[index], half_pixel, half_pixel,
+                             std::multiplies<channel_type>{});
             static_transform(result, half_pixel, result, std::plus<channel_type>{});
         }
 
