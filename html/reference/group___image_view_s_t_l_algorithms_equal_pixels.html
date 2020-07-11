@@ -56,27 +56,27 @@ template&lt;typename View1 , typename View2 &gt; </td></tr>
 <tr class="memitem:gaf92f26110623cac64ee3c1165b9781be"><td class="memTemplItemLeft" align="right" valign="top">BOOST_FORCEINLINE bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_s_t_l_algorithms_equal_pixels.html#gaf92f26110623cac64ee3c1165b9781be">equal_pixels</a> (const View1 &amp;v1, const View2 &amp;v2)</td></tr>
 <tr class="memdesc:gaf92f26110623cac64ee3c1165b9781be"><td class="mdescLeft">&#160;</td><td class="mdescRight">std::equal for image views <br /></td></tr>
 <tr class="separator:gaf92f26110623cac64ee3c1165b9781be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3d3e8bd57960cf2abdc39590049fe136"><td class="memTemplParams" colspan="2">template&lt;typename Types , typename View &gt; </td></tr>
-<tr class="memitem:ga3d3e8bd57960cf2abdc39590049fe136"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_s_t_l_algorithms_equal_pixels.html#ga3d3e8bd57960cf2abdc39590049fe136">equal_pixels</a> (any_image_view&lt; Types &gt; const &amp;src, View const &amp;dst)</td></tr>
-<tr class="separator:ga3d3e8bd57960cf2abdc39590049fe136"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaad5a1acd892e6398d2c24056c8e5655"><td class="memTemplParams" colspan="2">template&lt;typename View , typename Types &gt; </td></tr>
-<tr class="memitem:gaaad5a1acd892e6398d2c24056c8e5655"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_s_t_l_algorithms_equal_pixels.html#gaaad5a1acd892e6398d2c24056c8e5655">equal_pixels</a> (View const &amp;src, any_image_view&lt; Types &gt; const &amp;dst)</td></tr>
-<tr class="separator:gaaad5a1acd892e6398d2c24056c8e5655"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaba3545b4f45b4a4c93cf655f1ae29264"><td class="memTemplParams" colspan="2">template&lt;typename Types1 , typename Types2 &gt; </td></tr>
-<tr class="memitem:gaba3545b4f45b4a4c93cf655f1ae29264"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_s_t_l_algorithms_equal_pixels.html#gaba3545b4f45b4a4c93cf655f1ae29264">equal_pixels</a> (any_image_view&lt; Types1 &gt; const &amp;src, any_image_view&lt; Types2 &gt; const &amp;dst)</td></tr>
-<tr class="separator:gaba3545b4f45b4a4c93cf655f1ae29264"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1012eaed87b0d3a15879f295567926ab"><td class="memTemplParams" colspan="2">template&lt;typename... Types, typename View &gt; </td></tr>
+<tr class="memitem:ga1012eaed87b0d3a15879f295567926ab"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_s_t_l_algorithms_equal_pixels.html#ga1012eaed87b0d3a15879f295567926ab">equal_pixels</a> (any_image_view&lt; Types... &gt; const &amp;src, View const &amp;dst)</td></tr>
+<tr class="separator:ga1012eaed87b0d3a15879f295567926ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4bb8421d1fd022322240cb0d11ecbdf4"><td class="memTemplParams" colspan="2">template&lt;typename View , typename... Types&gt; </td></tr>
+<tr class="memitem:ga4bb8421d1fd022322240cb0d11ecbdf4"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_s_t_l_algorithms_equal_pixels.html#ga4bb8421d1fd022322240cb0d11ecbdf4">equal_pixels</a> (View const &amp;src, any_image_view&lt; Types... &gt; const &amp;dst)</td></tr>
+<tr class="separator:ga4bb8421d1fd022322240cb0d11ecbdf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafbe9418eaff97a6a08add93a786feb7c"><td class="memTemplParams" colspan="2">template&lt;typename... Types1, typename... Types2&gt; </td></tr>
+<tr class="memitem:gafbe9418eaff97a6a08add93a786feb7c"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_s_t_l_algorithms_equal_pixels.html#gafbe9418eaff97a6a08add93a786feb7c">equal_pixels</a> (any_image_view&lt; Types1... &gt; const &amp;src, any_image_view&lt; Types2... &gt; const &amp;dst)</td></tr>
+<tr class="separator:gafbe9418eaff97a6a08add93a786feb7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>std::equal for image views </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga3d3e8bd57960cf2abdc39590049fe136"></a>
+<a class="anchor" id="ga1012eaed87b0d3a15879f295567926ab"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">bool boost::gil::equal_pixels </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; Types &gt; const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; Types... &gt; const &amp;&#160;</td>
           <td class="paramname"><em>src</em>, </td>
         </tr>
         <tr>
@@ -102,7 +102,7 @@ template&lt;typename View1 , typename View2 &gt; </td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gaaad5a1acd892e6398d2c24056c8e5655"></a>
+<a class="anchor" id="ga4bb8421d1fd022322240cb0d11ecbdf4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -115,7 +115,7 @@ template&lt;typename View1 , typename View2 &gt; </td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; Types &gt; const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; Types... &gt; const &amp;&#160;</td>
           <td class="paramname"><em>dst</em>&#160;</td>
         </tr>
         <tr>
@@ -135,20 +135,20 @@ template&lt;typename View1 , typename View2 &gt; </td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gaba3545b4f45b4a4c93cf655f1ae29264"></a>
+<a class="anchor" id="gafbe9418eaff97a6a08add93a786feb7c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">bool boost::gil::equal_pixels </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; Types1 &gt; const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; Types1... &gt; const &amp;&#160;</td>
           <td class="paramname"><em>src</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; Types2 &gt; const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; Types2... &gt; const &amp;&#160;</td>
           <td class="paramname"><em>dst</em>&#160;</td>
         </tr>
         <tr>

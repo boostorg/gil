@@ -65,13 +65,13 @@
 
 <p><code>#include &lt;<a class="el" href="any__image__view_8hpp_source.html">any_image_view.hpp</a>&gt;</code></p>
 
-<p>Inherits type&lt; Views &gt;.</p>
+<p>Inherits variant&lt; Views... &gt;.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:ab18caaead0ddb1474d001f5dc91c3ad9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab18caaead0ddb1474d001f5dc91c3ad9"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>const_t</b> = <a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; detail::views_get_const_t&lt; Views &gt;&gt;</td></tr>
-<tr class="separator:ab18caaead0ddb1474d001f5dc91c3ad9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b0449ccdc7b12de30470d58767c19cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5b0449ccdc7b12de30470d58767c19cc"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>const_t</b> = detail::views_get_const_t&lt; <a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a> &gt;</td></tr>
+<tr class="separator:a5b0449ccdc7b12de30470d58767c19cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f1a92adcae3b10cbad7fe560a94d1b1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2f1a92adcae3b10cbad7fe560a94d1b1"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>x_coord_t</b> = std::ptrdiff_t</td></tr>
 <tr class="separator:a2f1a92adcae3b10cbad7fe560a94d1b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -94,10 +94,10 @@ Public Member Functions</h2></td></tr>
 template&lt;typename View &gt; </td></tr>
 <tr class="memitem:a040965d28eaa229fb77aee6278d00a1b"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>any_image_view</b> (View const &amp;view)</td></tr>
 <tr class="separator:a040965d28eaa229fb77aee6278d00a1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:accfe9ad258a5d3376463e1c9e360ea7e"><td class="memTemplParams" colspan="2"><a class="anchor" id="accfe9ad258a5d3376463e1c9e360ea7e"></a>
-template&lt;typename OtherViews &gt; </td></tr>
-<tr class="memitem:accfe9ad258a5d3376463e1c9e360ea7e"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>any_image_view</b> (<a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; OtherViews &gt; const &amp;view)</td></tr>
-<tr class="separator:accfe9ad258a5d3376463e1c9e360ea7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ca77d7eab7724bafc4c7942ca5c5bed"><td class="memTemplParams" colspan="2"><a class="anchor" id="a8ca77d7eab7724bafc4c7942ca5c5bed"></a>
+template&lt;typename... OtherViews&gt; </td></tr>
+<tr class="memitem:a8ca77d7eab7724bafc4c7942ca5c5bed"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>any_image_view</b> (<a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; OtherViews... &gt; const &amp;view)</td></tr>
+<tr class="separator:a8ca77d7eab7724bafc4c7942ca5c5bed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ae448f15af336769a05d9c98b104f17"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3ae448f15af336769a05d9c98b104f17"></a>
 <a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a> const &amp;view)</td></tr>
 <tr class="separator:a3ae448f15af336769a05d9c98b104f17"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -105,10 +105,10 @@ template&lt;typename OtherViews &gt; </td></tr>
 template&lt;typename View &gt; </td></tr>
 <tr class="memitem:a2e045932aa13082dcfbcf408cf8bf152"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator=</b> (View const &amp;view)</td></tr>
 <tr class="separator:a2e045932aa13082dcfbcf408cf8bf152"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6dd4b64fc4bfe88de7203f3afa377fa8"><td class="memTemplParams" colspan="2"><a class="anchor" id="a6dd4b64fc4bfe88de7203f3afa377fa8"></a>
-template&lt;typename OtherViews &gt; </td></tr>
-<tr class="memitem:a6dd4b64fc4bfe88de7203f3afa377fa8"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; OtherViews &gt; const &amp;view)</td></tr>
-<tr class="separator:a6dd4b64fc4bfe88de7203f3afa377fa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac674b1888f52a34a69e62e28285b2281"><td class="memTemplParams" colspan="2"><a class="anchor" id="ac674b1888f52a34a69e62e28285b2281"></a>
+template&lt;typename... OtherViews&gt; </td></tr>
+<tr class="memitem:ac674b1888f52a34a69e62e28285b2281"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; OtherViews... &gt; const &amp;view)</td></tr>
+<tr class="separator:ac674b1888f52a34a69e62e28285b2281"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e7336b5e1b9d3674e5bb27d4adbb46a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e7336b5e1b9d3674e5bb27d4adbb46a"></a>
 std::size_t&#160;</td><td class="memItemRight" valign="bottom"><b>num_channels</b> () const </td></tr>
 <tr class="separator:a7e7336b5e1b9d3674e5bb27d4adbb46a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -126,7 +126,7 @@ y_coord_t&#160;</td><td class="memItemRight" valign="bottom"><b>height</b> () co
 <tr class="separator:a5d84f7f164c70ba5b617ffa1e69f71a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename Views&gt;<br />
+<div class="textblock"><h3>template&lt;typename... Views&gt;<br />
 class boost::gil::any_image_view&lt; Views &gt;</h3>
 
 <p>Represents a run-time specified image view. Models <a class="el" href="structboost_1_1gil_1_1_has_dynamic_x_step_type_concept.html" title="Concept for iterators, locators and views that can define a type just like the given iterator...">HasDynamicXStepTypeConcept</a>, <a class="el" href="structboost_1_1gil_1_1_has_dynamic_y_step_type_concept.html" title="Concept for locators and views that can define a type just like the given locator or view...">HasDynamicYStepTypeConcept</a>, Note that this class does NOT model <a class="el" href="structboost_1_1gil_1_1_image_view_concept.html" title="GIL&#39;s 2-dimensional view over immutable GIL pixels. ">ImageViewConcept</a>. </p>

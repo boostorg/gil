@@ -430,7 +430,7 @@ example will properly match an RGB source with a BGR destination.</p>
     <span class="kt">signed</span> <span class="kt">short</span><span class="o">*</span> <span class="n">dst_pixels</span><span class="p">,</span> <span class="kt">ptrdiff_t</span> <span class="n">dst_row_bytes</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="n">rgb8c_view_t</span>  <span class="n">src</span> <span class="o">=</span> <span class="n">interleaved_view</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="p">(</span><span class="n">rgb8_pixel_t</span> <span class="k">const</span><span class="o">*</span><span class="p">)</span><span class="n">src_pixels</span><span class="p">,</span> <span class="n">src_row_bytes</span><span class="p">);</span>
-  <span class="n">rgb16s_view_t</span> <span class="n">dst</span> <span class="o">=</span> <span class="n">interleaved_view</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="p">(</span><span class="n">rgb16s_pixel_t</span><span class="o">*</span><span class="p">)</span><span class="n">dst_pixels</span><span class="p">,</span> <span class="n">dst_row_bytes</span><span class="p">);</span>
+  <span class="n">bgr16s_view_t</span> <span class="n">dst</span> <span class="o">=</span> <span class="n">interleaved_view</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="p">(</span><span class="n">bgr16s_pixel_t</span><span class="o">*</span><span class="p">)</span><span class="n">dst_pixels</span><span class="p">,</span> <span class="n">dst_row_bytes</span><span class="p">);</span>
   <span class="n">x_gradient</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">);</span>
 <span class="p">}</span>
 
@@ -863,10 +863,10 @@ statement. Algorithms that perform an operation for each pixel in an
 image view have practically no performance degradation when used with
 a variant.</p>
 <p>Here is how we can construct a variant and invoke the algorithm:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;boost/mpl/vector.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;boost/gil/extension/io/jpeg_dynamic_io.hpp&gt;</span><span class="cp"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;boost/mp11.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;boost/gil/extension/io/jpeg/old.hpp&gt;</span><span class="cp"></span>
 
-<span class="k">typedef</span> <span class="n">mpl</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">gray8_image_t</span><span class="p">,</span> <span class="n">gray16_image_t</span><span class="p">,</span> <span class="n">rgb8_image_t</span><span class="p">,</span> <span class="n">rgb16_image_t</span><span class="o">&gt;</span> <span class="n">my_img_types</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">mp11</span><span class="o">::</span><span class="n">mp_list</span><span class="o">&lt;</span><span class="n">gray8_image_t</span><span class="p">,</span> <span class="n">gray16_image_t</span><span class="p">,</span> <span class="n">rgb8_image_t</span><span class="p">,</span> <span class="n">rgb16_image_t</span><span class="o">&gt;</span> <span class="n">my_img_types</span><span class="p">;</span>
 <span class="n">any_image</span><span class="o">&lt;</span><span class="n">my_img_types</span><span class="o">&gt;</span> <span class="n">runtime_image</span><span class="p">;</span>
 <span class="n">jpeg_read_image</span><span class="p">(</span><span class="s">&quot;input.jpg&quot;</span><span class="p">,</span> <span class="n">runtime_image</span><span class="p">);</span>
 
@@ -953,8 +953,8 @@ code with different compilers.</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2020-04-08 23:04:40.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.0.
+      Last updated on 2020-07-11 19:07:01.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.1.2.
     </div>
   </body>
 </html>

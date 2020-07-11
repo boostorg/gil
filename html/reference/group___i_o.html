@@ -104,10 +104,10 @@ template&lt;typename Device , typename View , typename FormatTag , typename Log 
 template&lt;typename String , typename View , typename FormatTag , typename Log &gt; </td></tr>
 <tr class="memitem:gad1818e8779fe3c702cff7a56f923beb0"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>write_view</b> (String const &amp;file_name, View const &amp;view, image_write_info&lt; FormatTag, Log &gt; const &amp;info, typename std::enable_if&lt; mp11::mp_and&lt; typename detail::is_supported_path_spec&lt; String &gt;::type, typename is_format_tag&lt; FormatTag &gt;::type, typename is_write_supported&lt; typename get_pixel_type&lt; View &gt;::type, FormatTag &gt;::type &gt;::value &gt;::type *=nullptr)</td></tr>
 <tr class="separator:gad1818e8779fe3c702cff7a56f923beb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7dd99f2010b46f211aca3d61debadcae"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga7dd99f2010b46f211aca3d61debadcae"></a>
-template&lt;typename Device , typename Views , typename FormatTag , typename Log &gt; </td></tr>
-<tr class="memitem:ga7dd99f2010b46f211aca3d61debadcae"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>write_view</b> (Device &amp;device, any_image_view&lt; Views &gt; const &amp;views, image_write_info&lt; FormatTag, Log &gt; const &amp;info, typename std::enable_if&lt; mp11::mp_and&lt; typename detail::is_write_device&lt; FormatTag, Device &gt;::type, typename is_format_tag&lt; FormatTag &gt;::type &gt;::value &gt;::type *=0)</td></tr>
-<tr class="separator:ga7dd99f2010b46f211aca3d61debadcae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga42cde0919a1777d0e48556464df57162"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga42cde0919a1777d0e48556464df57162"></a>
+template&lt;typename Device , typename... Views, typename FormatTag , typename Log &gt; </td></tr>
+<tr class="memitem:ga42cde0919a1777d0e48556464df57162"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>write_view</b> (Device &amp;device, any_image_view&lt; Views... &gt; const &amp;views, image_write_info&lt; FormatTag, Log &gt; const &amp;info, typename std::enable_if&lt; mp11::mp_and&lt; typename detail::is_write_device&lt; FormatTag, Device &gt;::type, typename is_format_tag&lt; FormatTag &gt;::type &gt;::value &gt;::type *=0)</td></tr>
+<tr class="separator:ga42cde0919a1777d0e48556464df57162"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Support for reading and writing images to file. </p>

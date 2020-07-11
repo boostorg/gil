@@ -411,7 +411,7 @@ Here is how we can use our generic version with images of different types:
       signed short* dst_pixels, ptrdiff_t dst_row_bytes)
   {
     rgb8c_view_t  src = interleaved_view(w, h, (rgb8_pixel_t const*)src_pixels, src_row_bytes);
-    rgb16s_view_t dst = interleaved_view(w, h, (rgb16s_pixel_t*)dst_pixels, dst_row_bytes);
+    bgr16s_view_t dst = interleaved_view(w, h, (bgr16s_pixel_t*)dst_pixels, dst_row_bytes);
     x_gradient(src, dst);
   }
 
@@ -897,10 +897,10 @@ Here is how we can construct a variant and invoke the algorithm:
 
 .. code-block:: cpp
 
-  #include <boost/mpl/vector.hpp>
-  #include <boost/gil/extension/io/jpeg_dynamic_io.hpp>
+  #include <boost/mp11.hpp>
+  #include <boost/gil/extension/io/jpeg/old.hpp>
 
-  typedef mpl::vector<gray8_image_t, gray16_image_t, rgb8_image_t, rgb16_image_t> my_img_types;
+  typedef mp11::mp_list<gray8_image_t, gray16_image_t, rgb8_image_t, rgb16_image_t> my_img_types;
   any_image<my_img_types> runtime_image;
   jpeg_read_image("input.jpg", runtime_image);
 
