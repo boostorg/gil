@@ -236,6 +236,7 @@ script:
       echo "using $TOOLSET : : $COMPILER : ;" > ~/user-config.jam
     ./b2 -j 2 $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT cxxstd=$CXXSTD libs/gil/test/core
     ./b2 -j 2 $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT cxxstd=$CXXSTD libs/gil/test/legacy
+    ./b2 -j 2 $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT cxxstd=$CXXSTD libs/gil/test/extension/dynamic_image
     ./b2 -j 2 $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT cxxstd=$CXXSTD libs/gil/test/extension/numeric
     ./b2 -j 2 $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT cxxstd=$CXXSTD libs/gil/test/extension/toolbox
     ./b2 -j 2 $B2_OPTIONS toolset=$TOOLSET variant=$VARIANT cxxstd=$CXXSTD libs/gil/test/extension/io//simple

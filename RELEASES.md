@@ -3,7 +3,32 @@
 All notable changes to [Boost.GIL](https://github.com/boostorg/gil/) project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [1.73.0] - 2020-04-22 (beta)
+## [1.74.0] - 2020-08-12
+
+### Added
+- Added new constructor initializing `any_image` from r-value reference to any image ([PR #486](https://github.com/boostorg/gil/pull/486))
+- Implemented mechanism to reverse `kernel_2d` ([PR #489](https://github.com/boostorg/gil/pull/489))
+
+### Changed
+- Replace Boost.Variant with Boost.Variant2 ([PR #474](https://github.com/boostorg/gil/pull/474))
+- Use perfect forwarding from apply_operation to visit ([PR #491](https://github.com/boostorg/gil/pull/491))
+
+### Removed
+- Removed dependency on Boost.Variant
+
+### Fixed
+- Fixed invalid conversion from RGB8 to CMYK32 due to overflow ([PR #470](https://github.com/boostorg/gil/pull/470))
+- Fixed `image` constructor from other image ([PR #477](https://github.com/boostorg/gil/pull/477))
+- Fixed error `plane_view_t` is not a class or namespace name ([PR #481](https://github.com/boostorg/gil/pull/481))
+- Fixed `interleaved_view` factory using `point<std::ptrdiff_t>` for dimension ([PR #487](https://github.com/boostorg/gil/pull/487))
+- Fixed documentation replacing uses MPL with MP11 in tutorial ([PR #494](https://github.com/boostorg/gil/pull/494))
+- Fixed missing header in `numeric/kernel.hpp` to make it self-contained ([PR #502](https://github.com/boostorg/gil/pull/502))
+
+### Acknowledgements
+
+Samuel Debionne, Pranam Lashkari, Mateusz Loskot, Debabrata Mandal
+
+## [1.73.0] - 2020-04-22
 
 ### Added
 - Added move constructor and move assignment operator to `image` class ([PR #457](https://github.com/boostorg/gil/pull/457)).

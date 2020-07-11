@@ -21,21 +21,18 @@ Here is an example:
 
   #define ASSERT_SAME(A,B) static_assert(is_same< A,B >::value, "")
 
-  // Define the set of allowed images
-  typedef mpl::vector<rgb8_image_t, cmyk16_planar_image_t> my_images_t;
-
-  // Create any_image class (or any_image_view) class
-  typedef any_image<my_images_t> my_any_image_t;
+  // Create any_image class (or any_image_view) class with a set of allowed images
+  typedef any_image<rgb8_image_t, cmyk16_planar_image_t> my_any_image_t;
 
   // Associated view types are available (equivalent to the ones in image_t)
-  typedef any_image_view<mpl::vector2<rgb8_view_t,  cmyk16_planar_view_t > > AV;
+  typedef any_image_view<rgb8_view_t, cmyk16_planar_view_t> AV;
   ASSERT_SAME(my_any_image_t::view_t, AV);
 
-  typedef any_image_view<mpl::vector2<rgb8c_view_t, cmyk16c_planar_view_t> > CAV;
+  typedef any_image_view<rgb8c_view_t, cmyk16c_planar_view_t>> CAV;
   ASSERT_SAME(my_any_image_t::const_view_t, CAV);
   ASSERT_SAME(my_any_image_t::const_view_t, my_any_image_t::view_t::const_t);
 
-  typedef any_image_view<mpl::vector2<rgb8_step_view_t, cmyk16_planar_step_view_t> > SAV;
+  typedef any_image_view<rgb8_step_view_t, cmyk16_planar_step_view_t> SAV;
   ASSERT_SAME(typename dynamic_x_step_type<my_any_image_t::view_t>::type, SAV);
 
   // Assign it a concrete image at run time:
@@ -47,73 +44,15 @@ Here is an example:
   // Assigning to an image not in the allowed set throws an exception
   myImg = gray8_image_t();        // will throw std::bad_cast
 
-The ``any_image`` and ``any_image_view`` subclass from GIL ``variant`` class,
-which breaks down the instantiated type into a non-templated underlying base
-type and a unique instantiation type identifier. The underlying base instance
-is represented as a block of bytes.
-The block is large enough to hold the largest of the specified types.
-
-GIL variant is similar to ``boost::variant`` in spirit (hence we borrow the
-name from there) but it differs in several ways from the current boost
-implementation. Perhaps the biggest difference is that GIL variant always
-takes a single argument, which is a model of MPL Random Access Sequence
-enumerating the allowed types. Having a single interface allows GIL variant
-to be used easier in generic code. Synopsis:
-
-.. code-block:: cpp
-
-  template <typename Types>    // models MPL Random Access Container
-  class variant
-  {
-    ...         _bits;
-    std::size_t _index;
-  public:
-    typedef Types types_t;
-
-    variant();
-    variant(const variant& v);
-    virtual ~variant();
-
-    variant& operator=(const variant& v);
-    template <typename TS> friend bool operator==(const variant<TS>& x, const variant<TS>& y);
-    template <typename TS> friend bool operator!=(const variant<TS>& x, const variant<TS>& y);
-
-    // Construct/assign to type T. Throws std::bad_cast if T is not in Types
-    template <typename T> explicit variant(const T& obj);
-    template <typename T> variant& operator=(const T& obj);
-
-    // Construct/assign by swapping T with its current instance. Only possible if they are swappable
-    template <typename T> explicit variant(T& obj, bool do_swap);
-    template <typename T> void move_in(T& obj);
-
-    template <typename T> static bool has_type();
-
-    template <typename T> const T& _dynamic_cast() const;
-    template <typename T>       T& _dynamic_cast();
-
-    template <typename T> bool current_type_is() const;
-  };
-
-  template <typename UOP, typename Types>
-   UOP::result_type apply_operation(variant<Types>& v, UOP op);
-  template <typename UOP, typename Types>
-   UOP::result_type apply_operation(const variant<Types>& v, UOP op);
-
-  template <typename BOP, typename Types1, typename Types2>
-   BOP::result_type apply_operation(      variant<Types1>& v1,       variant<Types2>& v2, UOP op);
-
-  template <typename BOP, typename Types1, typename Types2>
-   BOP::result_type apply_operation(const variant<Types1>& v1,       variant<Types2>& v2, UOP op);
-
-  template <typename BOP, typename Types1, typename Types2>
-   BOP::result_type apply_operation(const variant<Types1>& v1, const variant<Types2>& v2, UOP op);
+The ``any_image`` and ``any_image_view`` subclass from Boost.Variant2 ``variant`` class,
+a never valueless variant type, compatible with ``std::variant`` in C++17.
 
 GIL ``any_image_view`` and ``any_image`` are subclasses of ``variant``:
 
 .. code-block:: cpp
 
-  template <typename ImageViewTypes>
-  class any_image_view : public variant<ImageViewTypes>
+  template <typename ...ImageViewTypes>
+  class any_image_view : public variant<ImageViewTypes...>
   {
   public:
     typedef ... const_t; // immutable equivalent of this
@@ -137,10 +76,9 @@ GIL ``any_image_view`` and ``any_image`` are subclasses of ``variant``:
     y_coord_t   height()        const;
   };
 
-  template <typename ImageTypes>
-  class any_image : public variant<ImageTypes>
+  template <typename ...ImageTypes>
+  class any_image : public variant<ImageTypes...>
   {
-    typedef variant<ImageTypes> parent_t;
   public:
     typedef ... const_view_t;
     typedef ... view_t;
