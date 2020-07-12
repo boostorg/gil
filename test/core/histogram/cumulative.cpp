@@ -46,30 +46,9 @@ void check_cumulative()
     BOOST_TEST(h4(3, 9) == 13);
 }
 
-void check_cumulative_histogram()
-{
-    gil::histogram<int , int> h1;
-    h1(1, 3) = 1;
-    h1(1, 4) = 2;
-    h1(2, 1) = 3;
-    h1(2, 2) = 1;
-    h1(2, 5) = 2;
-    h1(3, 2) = 3;
-    h1(3, 9) = 1;
-    auto h2 = gil::cumulative_histogram(h1);
-    BOOST_TEST(h2(1, 3) == 1);
-    BOOST_TEST(h2(1, 4) == 3);
-    BOOST_TEST(h2(2, 1) == 3);
-    BOOST_TEST(h2(2, 2) == 4);
-    BOOST_TEST(h2(2, 5) == 9);
-    BOOST_TEST(h2(3, 2) == 7);
-    BOOST_TEST(h2(3, 9) == 13);
-}
-
 int main() {
 
     check_cumulative();
-    check_cumulative_histogram();
 
     return boost::report_errors();
 }

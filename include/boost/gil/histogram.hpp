@@ -86,7 +86,6 @@ auto tuple_to_tuple(Tuple const& t, boost::mp11::index_sequence<I...>)
     return std::make_tuple(std::get<I>(t)...);
 }
 
-// TODO: With C++14 and using auto we don't need the decltype anymore
 template <typename Tuple, std::size_t... I>
 bool tuple_compare(Tuple const& t1, Tuple const& t2, boost::mp11::index_sequence<I...>)
 {
@@ -108,13 +107,13 @@ bool tuple_compare(Tuple const& t1, Tuple const& t2, boost::mp11::index_sequence
 /// \brief Default histogram class provided by boost::gil.
 ///
 /// The class inherits over the std::unordered_map provided by STL. A complete example/tutorial
-/// of how to use the class resides in *insert link*. 
+/// of how to use the class resides in the docs. 
 /// Simple calling syntax for a 3D dimensional histogram :
 /// \code
 /// histogram<int, int , int> h;
 /// h(1, 1, 1) = 0;
 /// \endcode
-/// This is just a starter to what all can be achieved with it, refer to the above link for the 
+/// This is just a starter to what all can be achieved with it, refer to the docs for the 
 /// full demo.
 ///
 template <typename... T>
