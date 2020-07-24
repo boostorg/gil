@@ -10,11 +10,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Implemented mechanism to reverse `kernel_2d` ([PR #489](https://github.com/boostorg/gil/pull/489))
 
 ### Changed
-- Replace Boost.Variant with Boost.Variant2 ([PR #474](https://github.com/boostorg/gil/pull/474))
+- BREAKING: Replace Boost.Variant with Boost.Variant2 ([PR #474](https://github.com/boostorg/gil/pull/474)) which completes removal on uses of Boost.MPL (missing from Boost 1.72.0 change added [PR #274](https://github.com/boostorg/gil/pull/274)).
 - Use perfect forwarding from apply_operation to visit ([PR #491](https://github.com/boostorg/gil/pull/491))
 
 ### Removed
-- Removed dependency on Boost.Variant
+- BREAKING: Removed dependency on Boost.Variant
 
 ### Fixed
 - Fixed invalid conversion from RGB8 to CMYK32 due to overflow ([PR #470](https://github.com/boostorg/gil/pull/470))
