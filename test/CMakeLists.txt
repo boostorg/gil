@@ -33,6 +33,6 @@ add_subdirectory(legacy)
 add_subdirectory(extension)
 
 # TODO: Split headers tests into core and extensions, see Jamfile-s
-# if(BOOST_GIL_BUILD_HEADERS_TESTS)
-#   add_subdirectory(headers)
-# endif()
+if(BOOST_GIL_BUILD_HEADER_TESTS)
+  add_subdirectory(header)
+endif()
