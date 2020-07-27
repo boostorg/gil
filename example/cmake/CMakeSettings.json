@@ -66,7 +66,7 @@
         { "name": "BOOST_GIL_BUILD_HEADER_TESTS", "value": "${env.DEFAULT_GIL_BUILD_HEADER_TESTS}" },
         { "name": "BOOST_GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "${env.DEFAULT_GIL_ENABLE_EXT_DYNAMIC_IMAGE}" },
         { "name": "BOOST_GIL_ENABLE_EXT_IO", "value": "${env.DEFAULT_GIL_ENABLE_EXT_IO}" },
-        { "name": "BOOST_BOOST_GIL_ENABLE_EXT_NUMERIC", "value": "${env.DEFAULT_GIL_ENABLE_EXT_NUMERIC}" },
+        { "name": "BOOST_GIL_ENABLE_EXT_NUMERIC", "value": "${env.DEFAULT_GIL_ENABLE_EXT_NUMERIC}" },
         { "name": "BOOST_GIL_ENABLE_EXT_TOOLBOX", "value": "${env.DEFAULT_GIL_ENABLE_EXT_TOOLBOX}" },
         { "name": "BOOST_GIL_USE_CONAN", "value": "${env.DEFAULT_GIL_USE_CONAN}" },
         { "name": "BOOST_GIL_USE_CLANG_TIDY", "value": "${env.DEFAULT_GIL_USE_CLANG_TIDY}" }
