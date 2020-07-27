@@ -18,7 +18,7 @@ template <typename Variant1, typename Visitor>
 BOOST_FORCEINLINE
 auto apply_operation(Variant1&& arg1, Visitor&& op)
 #if defined(BOOST_NO_CXX14_DECLTYPE_AUTO) || defined(BOOST_NO_CXX11_DECLTYPE_N3276)
-    -> typename Visitor::result_type
+    -> decltype(variant2::visit(std::forward<Visitor>(op), std::forward<Variant1>(arg1)))
 #endif
 {
     return variant2::visit(std::forward<Visitor>(op), std::forward<Variant1>(arg1));
@@ -30,7 +30,7 @@ template <typename Variant1, typename Variant2, typename Visitor>
 BOOST_FORCEINLINE
 auto apply_operation(Variant1&& arg1, Variant2&& arg2, Visitor&& op)
 #if defined(BOOST_NO_CXX14_DECLTYPE_AUTO) || defined(BOOST_NO_CXX11_DECLTYPE_N3276)
--> typename Visitor::result_type
+    -> decltype(variant2::visit(std::forward<Visitor>(op), std::forward<Variant1>(arg1), std::forward<Variant2>(arg2)))
 #endif
 {
     return variant2::visit(std::forward<Visitor>(op), std::forward<Variant1>(arg1), std::forward<Variant2>(arg2));
