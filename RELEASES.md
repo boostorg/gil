@@ -10,11 +10,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Implemented mechanism to reverse `kernel_2d` ([PR #489](https://github.com/boostorg/gil/pull/489))
 
 ### Changed
-- Replace Boost.Variant with Boost.Variant2 ([PR #474](https://github.com/boostorg/gil/pull/474))
+- BREAKING: Replace Boost.Variant with Boost.Variant2 ([PR #474](https://github.com/boostorg/gil/pull/474)) which completes removal on uses of Boost.MPL (missing from Boost 1.72.0 change added [PR #274](https://github.com/boostorg/gil/pull/274)).
 - Use perfect forwarding from apply_operation to visit ([PR #491](https://github.com/boostorg/gil/pull/491))
 
 ### Removed
-- Removed dependency on Boost.Variant
+- BREAKING: Removed dependency on Boost.Variant
 
 ### Fixed
 - Fixed invalid conversion from RGB8 to CMYK32 due to overflow ([PR #470](https://github.com/boostorg/gil/pull/470))
@@ -82,7 +82,7 @@ Samuel Debionne, Thiago Henrique Hüpner, Pranam Lashkari, Mateusz Loskot, Debab
 - Move all tests, core features and extensions, inside `test/` directory ([PR #302](https://github.com/boostorg/gil/pull/302)).
 
 ### Removed
-- Replace Boost.MPL with Boost.MP11 ([PR #274](https://github.com/boostorg/gil/pull/274)).
+- BREAKING: Replace Boost.MPL with Boost.MP11 ([PR #274](https://github.com/boostorg/gil/pull/274)).
 - Removed use of Boost.TypeTraits ([PR #274](https://github.com/boostorg/gil/pull/274)).
 - Dropped support for GCC <= 4.8 ([PR #296](https://github.com/boostorg/gil/pull/296)).
 - Remove `include/boost/gil/version.hpp` file as unused ([PR #403](https://github.com/boostorg/gil/pull/403)).
@@ -148,7 +148,7 @@ Mateusz Loskot, Marcel Metz, Stefan Seefeld
 ## [1.68.0] - 2018-08-09
 
 ### Added
-- The library now requires a C++11-compliant compiler.
+- BREAKING: The library now requires a C++11-compliant compiler.
 - New top-level all-in-one `include/boost/gil.hpp` header.
 - Added Toolbox extension following the [review and acceptance into Boost](https://lists.boost.org/boost-announce/2011/01/0281.php).
 

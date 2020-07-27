@@ -9,6 +9,7 @@
 #include <boost/gil/extension/toolbox/metafunctions/is_bit_aligned.hpp>
 
 #include <boost/gil/channel.hpp>
+#include <boost/gil/packed_pixel.hpp>
 #include <boost/gil/detail/is_channel_integral.hpp>
 
 #include <type_traits>
