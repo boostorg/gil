@@ -113,5 +113,16 @@ int main() {
     std::tuple<int, float> t1(3, 3.9), t2(3, 1);
     auto ans = boost::gil::detail::tuple_compare(t1, t2, boost::mp11::make_index_sequence<2>{});
     std::cout<<ans;
+    std::cout<<(std::tuple<int, int>(1, 5)<std::tuple<int, int>(4, 2));
+    boost::gil::detail::filler<1> f;
+    boost::gil::histogram<int> hh;
+    std::tuple<int> low(0), high(20);
+    f(hh, low, high);
+    for(auto it:hh)
+    {
+        std::cout<<std::get<0>(it.first)<<" "<<it.second<<"\n";
+    }
+    cmyk8_image_t g;
+    std::vector<std::vector<bool>> d = {{1}};
     return 0;
 }

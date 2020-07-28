@@ -17,6 +17,7 @@
 #include <boost/type_traits.hpp>
 #include <boost/functional/hash.hpp>
 
+#include <iostream>
 #include <tuple>
 #include <utility>
 #include <vector>
@@ -98,6 +99,35 @@ bool tuple_compare(Tuple const& t1, Tuple const& t2, boost::mp11::index_sequence
     }
     return comp;
 }
+
+template <typename Tuple>
+bool tuple_compare(Tuple const& t1, Tuple const& t2)
+{
+    std::size_t const tuple_size = std::tuple_size<Tuple>::value;
+    auto index_list = boost::mp11::make_index_sequence<tuple_size>{};
+    return tuple_compare(t1, t2, index_list);
+}
+
+template<std::size_t Dimension>
+struct filler
+{
+    template<typename Container, typename Tuple>
+    void operator()(Container& hist, Tuple& lower, Tuple& upper) {}
+};
+
+template<>
+struct filler<1>
+{
+    template<typename Container, typename Tuple>
+    void operator()(Container& hist, Tuple& lower, Tuple& upper)
+    {
+        for(auto i = std::get<0>(lower); i < std::get<0>(upper); ++i)
+        {
+            hist[i] = 0;
+        }
+        hist[std::get<0>(upper)]=0;
+    }
+};
 
 }  //namespace detail
 
@@ -290,14 +320,28 @@ public:
 
     /// \brief Fills the histogram with the input image view
     template <std::size_t... Dimensions, typename SrcView>
-    void fill(SrcView const& srcview)
+    void fill(
+        SrcView const& srcview,
+        bool applymask = false,
+        std::vector<std::vector<bool>> mask = {},  
+        key_t lower = key_t(),
+        key_t upper = key_t(),
+        bool setlimits = false)
     {
         gil_function_requires<ImageViewConcept<SrcView>>();
-        using pixel_t = typename SrcView::value_type;
 
-        for_each_pixel(srcview, [&](pixel_t const& p) {
-            base_t::operator[](key_from_pixel<Dimensions...>(p))++;
-        });
+        for(std::ptrdiff_t src_y = 0; src_y < srcview.height(); ++src_y)
+        {
+            auto src_it = srcview.row_begin(src_y);
+            for(std::ptrdiff_t src_x = 0; src_x < srcview.width(); ++src_x)
+            {
+                if(applymask && !mask[src_y][src_x])
+                    continue;
+                auto key = key_from_pixel<Dimensions...>(src_it[src_x]);
+                if(!setlimits||(detail::tuple_compare(lower, key)&&detail::tuple_compare(key, upper)))
+                    base_t::operator[](key)++;
+            }
+        }
     }
 
     /// \brief Can return a subset or a mask over the current histogram
@@ -374,6 +418,7 @@ public:
         std::for_each(base_t::begin(), base_t::end(), [&](value_t const& v) {
             sum += v.second;
         });
+        std::cout<<(long int)sum<<"asfe";
         std::for_each(base_t::begin(), base_t::end(), [&](value_t const& v) {
             base_t::operator[](v.first) = v.second / sum;
         });
@@ -438,11 +483,25 @@ void fill_histogram(SrcView const&, Container&);
 /// \endcode
 ///
 template <std::size_t... Dimensions, typename SrcView, typename... T>
-void fill_histogram(SrcView const& srcview, histogram<T...>& hist, bool accumulate = false)
+void fill_histogram(
+    SrcView const& srcview,
+    histogram<T...>& hist,
+    bool accumulate = false,
+    bool sparsefill = true,
+    bool applymask = false,
+    std::vector<std::vector<bool>> mask = {},
+    typename histogram<T...>::key_type lower = {},
+    typename histogram<T...>::key_type upper = {},
+    bool setlimits = false)
 {
     if (!accumulate)
         hist.clear();
-    hist.template fill<Dimensions...>(srcview);
+    
+    detail::filler<histogram<T...>::dimension()> f;
+    if(!sparsefill)
+        f(hist, lower, upper);
+    
+    hist.template fill<Dimensions...>(srcview, applymask, mask, lower, upper, setlimits);
 }
 
 ///
@@ -457,7 +516,7 @@ void fill_histogram(SrcView const& srcview, histogram<T...>& hist, bool accumula
 /// For single dimensional histograms the complexity has been brought down to
 /// #bins * log( #bins ) by sorting the keys and then calculating the cumulative version.
 ///
-template <typename Container>
+template <typename Container, typename >
 Container cumulative_histogram(Container&);
 
 template <typename... T>
