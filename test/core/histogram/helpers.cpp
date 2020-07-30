@@ -64,10 +64,50 @@ void check_helper_fn_tuple_to_tuple()
                 std::get<2>(r1) == std::get<1>(r3));
 }
 
+void check_helper_tuple_limit()
+{
+    using type1 = std::tuple<int, short>;
+    using type2 = std::tuple<unsigned int, unsigned char>;
+    type1 t1_min(std::numeric_limits<int>::min(), std::numeric_limits<short>::min());
+    type1 t1_max(std::numeric_limits<int>::max(), std::numeric_limits<short>::max());
+    type2 t2_min(std::numeric_limits<unsigned int>::min(), std::numeric_limits<unsigned char>::min());
+    type2 t2_max(std::numeric_limits<unsigned int>::max(), std::numeric_limits<unsigned char>::max());
+
+    BOOST_TEST(t1_min == gil::detail::tuple_limit<type1>::min());
+    BOOST_TEST(t1_max == gil::detail::tuple_limit<type1>::max());
+    BOOST_TEST(t2_min == gil::detail::tuple_limit<type2>::min());
+    BOOST_TEST(t2_max == gil::detail::tuple_limit<type2>::max());
+
+}
+
+void check_filler()
+{
+    boost::gil::histogram<int> h;
+    boost::gil::detail::filler<1> f;
+    std::tuple<int> l1{4}, h1{13};
+    f(h, l1, h1);
+
+    std::tuple<int> l2{20}, h2{33};
+    f(h, l2, h2);
+
+    bool check = true;
+    for(int i = 0; i < 100; i++)
+    {
+        if((i >= 4 && i <= 13) || (i >= 20 && i <= 33))
+        {
+            if(h.find(std::tuple<int>(i))==h.end())
+                check = false;
+        }
+    }
+    BOOST_TEST(check);
+}
+
 int main() {
 
     check_helper_fn_pixel_to_tuple();
     check_helper_fn_tuple_to_tuple();
+    check_helper_tuple_limit();
+    check_filler();
 
     return boost::report_errors();
 }

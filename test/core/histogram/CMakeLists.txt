@@ -11,6 +11,7 @@ foreach(_name
   constructor
   cumulative
   dimension
+  fill
   hash_tuple
   helpers
   is_compatible

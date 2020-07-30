@@ -124,5 +124,9 @@ int main() {
     }
     cmyk8_image_t g;
     std::vector<std::vector<bool>> d = {{1}};
+
+    std::cout<<"\n";
+    std::cout<<int(std::get<0>(boost::gil::detail::tuple_limit<std::tuple<unsigned char>>::min()))<<std::endl;
+    std::cout<<int(std::get<1>(boost::gil::detail::tuple_limit<std::tuple<unsigned char, int>>::min()));
     return 0;
 }

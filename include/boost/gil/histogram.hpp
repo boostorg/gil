@@ -108,6 +108,33 @@ bool tuple_compare(Tuple const& t1, Tuple const& t2)
     return tuple_compare(t1, t2, index_list);
 }
 
+template<typename Tuple>
+struct tuple_limit
+{
+    static constexpr Tuple min()
+    {
+        return min_impl(boost::mp11::make_index_sequence<std::tuple_size<Tuple>::value>{});
+    }
+    static constexpr Tuple max()
+    {
+        return max_impl(boost::mp11::make_index_sequence<std::tuple_size<Tuple>::value>{});
+    }
+
+private:
+
+    template<std::size_t... I>
+    static constexpr Tuple min_impl(boost::mp11::index_sequence<I...>)
+    {
+        return std::make_tuple(std::numeric_limits<typename std::tuple_element<I, Tuple>::type>::min()...);
+    }
+
+    template<std::size_t... I>
+    static constexpr Tuple max_impl(boost::mp11::index_sequence<I...>)
+    {
+        return std::make_tuple(std::numeric_limits<typename std::tuple_element<I, Tuple>::type>::max()...);
+    }
+};
+
 template<std::size_t Dimension>
 struct filler
 {
@@ -121,11 +148,11 @@ struct filler<1>
     template<typename Container, typename Tuple>
     void operator()(Container& hist, Tuple& lower, Tuple& upper)
     {
-        for(auto i = std::get<0>(lower); i < std::get<0>(upper); ++i)
+        for(int i = std::get<0>(lower); i < std::get<0>(upper); ++i)
         {
-            hist[i] = 0;
+            hist(i) = 0;
         }
-        hist[std::get<0>(upper)]=0;
+        hist(std::get<0>(upper))=0;
     }
 };
 
@@ -418,7 +445,7 @@ public:
         std::for_each(base_t::begin(), base_t::end(), [&](value_t const& v) {
             sum += v.second;
         });
-        std::cout<<(long int)sum<<"asfe";
+        // std::cout<<(long int)sum<<"asfe";
         std::for_each(base_t::begin(), base_t::end(), [&](value_t const& v) {
             base_t::operator[](v.first) = v.second / sum;
         });
@@ -490,8 +517,8 @@ void fill_histogram(
     bool sparsefill = true,
     bool applymask = false,
     std::vector<std::vector<bool>> mask = {},
-    typename histogram<T...>::key_type lower = {},
-    typename histogram<T...>::key_type upper = {},
+    typename histogram<T...>::key_type lower = detail::tuple_limit<typename histogram<T...>::key_type>::min(),
+    typename histogram<T...>::key_type upper = detail::tuple_limit<typename histogram<T...>::key_type>::max(),
     bool setlimits = false)
 {
     if (!accumulate)
