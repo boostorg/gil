@@ -61,19 +61,19 @@ The algorithm is applied on a few standard images. One of the transformations in
 
 **Grayscale Image**
 
-.. figure:: barbara.png
-    :width: 600px
+.. figure:: barbara.jpg
+    :width: 512px
     :align: center
-    :height: 300px
+    :height: 256px
     :alt: Could not load image.
     :figclass: align-center
 
 **RGB**
 
-.. figure:: church.png
-    :width: 600px
+.. figure:: church.jpg
+    :width: 900px
     :align: center
-    :height: 250px
+    :height: 300px
     :alt: Could not load image.
     :figclass: align-center
 

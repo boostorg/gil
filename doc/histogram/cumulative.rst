@@ -6,8 +6,13 @@ Making a cumulative histogram
 Overview
 --------
 
-A cumulative histogram is exactly what it sounds like. The GIL histogram class has the option
-to convert itself into its cumulative version. Since the container needs to first get an ordering
+A cumulative histogram is a histogram in which each bin stores the count / frequency of itself
+as well as all the bins with keys 'smaller' than the particular bin.
+As such, a notion of ordering among its keys should be existant in the histogram.
+
+The GIL histogram class has the ability to convert itself into its cumulative version. 
+
+Since the container needs to first get an ordering
 over the keys a key sorting takes place before calculating the cumulative histogram. 
 
 Example:

@@ -10,17 +10,16 @@ Extending the class
 User defined Axes
 -----------------
 
-In case we need a histogram with an axes of an arbitrary type not identified by
-the standard, you need to provide a overload for the hashing function used by the 
-class.
+In case you need a histogram with an axes of an arbitrary type that is not identified by
+the C++ Standard Library, you need to provide a overload for the hashing function that is 
+used in the histogram class.
 
-GIL's histogram class uses boost\:\:hash_combine in a sub routine to generate a hash from
+GIL's histogram class uses ``boost::hash_combine`` in a sub routine to generate a hash from
 the key.
 
-So we need to provide an overload of boost\:\:hash_combine for the purpose.
+So we need to provide an overload of ``boost::hash_combine`` for the purpose.
 
-Example:
-Let's consider you need an histogram with an axis over class Test.
+For example, let's consider you need a histogram with an axis over class Test.
 
 .. code-block:: cpp
 
@@ -30,8 +29,8 @@ Let's consider you need an histogram with an axis over class Test.
 
     struct Test 
     {
-        int a;
-        Test(): a(0) {}
+        int a{0};
+        Test() = default;
         Test(int c) : a(c) {}
         bool operator==(Test const& other) const
         {
@@ -48,7 +47,7 @@ Let's consider you need an histogram with an axis over class Test.
         }
     }
 
-Now lets get to the main code.
+Now lets get to the usage example.
 
 .. code-block:: cpp 
 

@@ -10,15 +10,15 @@ Fill histogram
 Overview
 --------
 
-We will demonstrate the available options for filling and getting in data into the histogram
-to cater from the most simplest to the complex needs that might arise.
+We will demonstrate the available options for filling an instance of the `histogram` class with
+values that cater from the most simplest to the complex needs that might arise.
 
 Basic
 -----
 
 #. Use operator()
 
-    **Task** - Add value to a particular cell/key/bin in histogram
+    **Task** - Add value to a particular cell / key / bin in histogram
 
     .. code-block:: cpp
 
@@ -28,7 +28,7 @@ Basic
 #. Use operator[]
 
     This requires to input the indices in a format the histogram internally stores its keys,
-    which is of std::tuple due to its simple interface.
+    which is of ``std::tuple`` due to its simple interface.
 
     **Task** - Output value of a bin
 
