@@ -37,12 +37,19 @@ namespace boost { namespace gil {
 
 namespace detail {
 
+/// \defgroup Histogram-Helpers Histogram-Helpers
+/// \brief Helper implementations supporting the histogram class.
+
+/// \ingroup Histogram-Helpers
+///
 template <std::size_t Index, typename... T>
 inline typename std::enable_if<Index == sizeof...(T), void>::type
     hash_tuple_impl(std::size_t&, std::tuple<T...> const&)
 {
 }
 
+/// \ingroup Histogram-Helpers
+///
 template <std::size_t Index, typename... T>
 inline typename std::enable_if<Index != sizeof...(T), void>::type
     hash_tuple_impl(std::size_t& seed, std::tuple<T...> const& t)
@@ -51,15 +58,15 @@ inline typename std::enable_if<Index != sizeof...(T), void>::type
     hash_tuple_impl<Index + 1>(seed, t);
 }
 
-/*  
-    Functor provided for the hashing of tuples. 
-    The following approach makes use hash_combine from 
-    boost::container_hash. Although there is a direct hashing 
-    available for tuples, this approach will ease adopting in
-    future to a std::hash_combine. In case std::hash extends
-    support to tuples this functor as well as the helper 
-    implementation hash_tuple_impl can be removed.
-*/
+/// \ingroup Histogram-Helpers
+/// \brief Functor provided for the hashing of tuples. 
+///        The following approach makes use hash_combine from 
+///        boost::container_hash. Although there is a direct hashing 
+///        available for tuples, this approach will ease adopting in
+///        future to a std::hash_combine. In case std::hash extends
+///        support to tuples this functor as well as the helper 
+///        implementation hash_tuple_impl can be removed.
+///
 template <typename... T>
 struct hash_tuple
 {
@@ -71,7 +78,9 @@ struct hash_tuple
     }
 };
 
-// TODO: With C++14 and using auto we don't need the decltype anymore
+/// \ingroup Histogram-Helpers
+/// \todo With C++14 and using auto we don't need the decltype anymore
+///
 template <typename Pixel, std::size_t... I>
 auto pixel_to_tuple(Pixel const& p, boost::mp11::index_sequence<I...>)
     -> decltype(std::make_tuple(p[I]...))
@@ -79,7 +88,9 @@ auto pixel_to_tuple(Pixel const& p, boost::mp11::index_sequence<I...>)
     return std::make_tuple(p[I]...);
 }
 
-// TODO: With C++14 and using auto we don't need the decltype anymore
+/// \ingroup Histogram-Helpers
+/// \todo With C++14 and using auto we don't need the decltype anymore
+///
 template <typename Tuple, std::size_t... I>
 auto tuple_to_tuple(Tuple const& t, boost::mp11::index_sequence<I...>)
     -> decltype(std::make_tuple(std::get<I>(t)...))
@@ -87,6 +98,8 @@ auto tuple_to_tuple(Tuple const& t, boost::mp11::index_sequence<I...>)
     return std::make_tuple(std::get<I>(t)...);
 }
 
+/// \ingroup Histogram-Helpers
+///
 template <typename Tuple, std::size_t... I>
 bool tuple_compare(Tuple const& t1, Tuple const& t2, boost::mp11::index_sequence<I...>)
 {
@@ -100,15 +113,24 @@ bool tuple_compare(Tuple const& t1, Tuple const& t2, boost::mp11::index_sequence
     return comp;
 }
 
+/// \ingroup Histogram-Helpers
+/// \brief Compares 2 tuples and outputs t1 <= t2 
+///        Comparison is not in a lexicographic manner but on every element of the tuple hence
+///        (2, 2) > (1, 3) evaluates to false
+///
 template <typename Tuple>
 bool tuple_compare(Tuple const& t1, Tuple const& t2)
 {
     std::size_t const tuple_size = std::tuple_size<Tuple>::value;
-    auto index_list = boost::mp11::make_index_sequence<tuple_size>{};
+    auto index_list              = boost::mp11::make_index_sequence<tuple_size>{};
     return tuple_compare(t1, t2, index_list);
 }
 
-template<typename Tuple>
+/// \ingroup Histogram-Helpers
+/// \brief Provides equivalent of std::numeric_limits for type std::tuple
+///        tuple_limit gets called with only tuples having integral elements
+///
+template <typename Tuple>
 struct tuple_limit
 {
     static constexpr Tuple min()
@@ -121,38 +143,50 @@ struct tuple_limit
     }
 
 private:
-
-    template<std::size_t... I>
+    template <std::size_t... I>
     static constexpr Tuple min_impl(boost::mp11::index_sequence<I...>)
     {
-        return std::make_tuple(std::numeric_limits<typename std::tuple_element<I, Tuple>::type>::min()...);
+        return std::make_tuple(
+            std::numeric_limits<typename std::tuple_element<I, Tuple>::type>::min()...);
     }
 
-    template<std::size_t... I>
+    template <std::size_t... I>
     static constexpr Tuple max_impl(boost::mp11::index_sequence<I...>)
     {
-        return std::make_tuple(std::numeric_limits<typename std::tuple_element<I, Tuple>::type>::max()...);
+        return std::make_tuple(
+            std::numeric_limits<typename std::tuple_element<I, Tuple>::type>::max()...);
     }
 };
 
-template<std::size_t Dimension>
+/// \ingroup Histogram-Helpers
+/// \brief Filler is used to fill the histogram class with all values between a specified range
+///        This functor is used when sparsefill is false, since all the keys need to be present
+///        in that case.
+///        Currently on 1D implementation is available, extend by adding specialization for 2D
+///        and higher dimensional cases.
+///
+template <std::size_t Dimension>
 struct filler
 {
-    template<typename Container, typename Tuple>
-    void operator()(Container& hist, Tuple& lower, Tuple& upper) {}
+    template <typename Container, typename Tuple>
+    void operator()(Container&, Tuple&, Tuple&)
+    {
+    }
 };
 
-template<>
+/// \ingroup Histogram-Helpers
+/// \brief Specialisation for 1D histogram.
+template <>
 struct filler<1>
 {
-    template<typename Container, typename Tuple>
+    template <typename Container, typename Tuple>
     void operator()(Container& hist, Tuple& lower, Tuple& upper)
     {
-        for(int i = std::get<0>(lower); i < std::get<0>(upper); ++i)
+        for (auto i = std::get<0>(lower); i < std::get<0>(upper); ++i)
         {
             hist(i) = 0;
         }
-        hist(std::get<0>(upper))=0;
+        hist(std::get<0>(upper)) = 0;
     }
 };
 
@@ -349,23 +383,24 @@ public:
     template <std::size_t... Dimensions, typename SrcView>
     void fill(
         SrcView const& srcview,
-        bool applymask = false,
-        std::vector<std::vector<bool>> mask = {},  
-        key_t lower = key_t(),
-        key_t upper = key_t(),
-        bool setlimits = false)
+        bool applymask                      = false,
+        std::vector<std::vector<bool>> mask = {},
+        key_t lower                         = key_t(),
+        key_t upper                         = key_t(),
+        bool setlimits                      = false)
     {
         gil_function_requires<ImageViewConcept<SrcView>>();
 
-        for(std::ptrdiff_t src_y = 0; src_y < srcview.height(); ++src_y)
+        for (std::ptrdiff_t src_y = 0; src_y < srcview.height(); ++src_y)
         {
             auto src_it = srcview.row_begin(src_y);
-            for(std::ptrdiff_t src_x = 0; src_x < srcview.width(); ++src_x)
+            for (std::ptrdiff_t src_x = 0; src_x < srcview.width(); ++src_x)
             {
-                if(applymask && !mask[src_y][src_x])
+                if (applymask && !mask[src_y][src_x])
                     continue;
                 auto key = key_from_pixel<Dimensions...>(src_it[src_x]);
-                if(!setlimits||(detail::tuple_compare(lower, key)&&detail::tuple_compare(key, upper)))
+                if (!setlimits ||
+                    (detail::tuple_compare(lower, key) && detail::tuple_compare(key, upper)))
                     base_t::operator[](key)++;
             }
         }
@@ -482,8 +517,8 @@ private:
 };
 
 ///
-/// \fn void fill_histogram(SrcView const&, Container&)
-/// \ingroup Histogram
+/// \fn void fill_histogram
+/// \ingroup Histogram Algorithms
 /// \tparam SrcView Input image view
 /// \tparam Container Input histogram container
 /// \brief Overload this function to provide support for boost::gil::histogram or 
@@ -499,8 +534,17 @@ template <typename SrcView, typename Container>
 void fill_histogram(SrcView const&, Container&);
 
 ///
-/// \overload void fill_histogram(SrcView const&, histogram<T...>&, bool)
-/// \ingroup Histogram
+/// \fn void fill_histogram
+/// \ingroup Histogram Algorithms
+/// @param srcview     Input  Input image view
+/// @param hist        Output Histogram to be filled
+/// @param accumulate  Input  Specify whether to accumulate over the values already present in h (default = false)
+/// @param sparsaefill Input  Specify whether to have a sparse or continuous histogram (default = true)
+/// @param applymask   Input  Specify if image mask is to be specified
+/// @param mask        Input  Mask as a 2D vector. Used only if prev argument specified
+/// @param lower       Input  Lower limit on the values in histogram (default numeric_limit::min() on axes)
+/// @param upper       Input  Upper limit on the values in histogram (default numeric_limit::max() on axes)
+/// @param setlimits   Input  Use specified limits if this is true (default is false)
 /// \brief Overload version of fill_histogram 
 ///
 /// Takes a third argument to determine whether to clear container before filling.
@@ -513,19 +557,21 @@ template <std::size_t... Dimensions, typename SrcView, typename... T>
 void fill_histogram(
     SrcView const& srcview,
     histogram<T...>& hist,
-    bool accumulate = false,
-    bool sparsefill = true,
-    bool applymask = false,
+    bool accumulate                     = false,
+    bool sparsefill                     = true,
+    bool applymask                      = false,
     std::vector<std::vector<bool>> mask = {},
-    typename histogram<T...>::key_type lower = detail::tuple_limit<typename histogram<T...>::key_type>::min(),
-    typename histogram<T...>::key_type upper = detail::tuple_limit<typename histogram<T...>::key_type>::max(),
+    typename histogram<T...>::key_type lower =
+        detail::tuple_limit<typename histogram<T...>::key_type>::min(),
+    typename histogram<T...>::key_type upper =
+        detail::tuple_limit<typename histogram<T...>::key_type>::max(),
     bool setlimits = false)
 {
     if (!accumulate)
         hist.clear();
     
     detail::filler<histogram<T...>::dimension()> f;
-    if(!sparsefill)
+    if (!sparsefill)
         f(hist, lower, upper);
     
     hist.template fill<Dimensions...>(srcview, applymask, mask, lower, upper, setlimits);
@@ -543,7 +589,7 @@ void fill_histogram(
 /// For single dimensional histograms the complexity has been brought down to
 /// #bins * log( #bins ) by sorting the keys and then calculating the cumulative version.
 ///
-template <typename Container, typename >
+template <typename Container>
 Container cumulative_histogram(Container&);
 
 template <typename... T>
