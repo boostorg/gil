@@ -50,7 +50,7 @@ void rasterize_line_naive(std::ptrdiff_t width, std::ptrdiff_t height, RAIterato
     for (std::ptrdiff_t x = 1; x < point_count; ++x)
     {
         double y = m * x;
-        auto discrete_y = static_cast<std::ptrdiff_t>(std::round(y));
+        auto discrete_y = std::llround(y);
         auto next_point = needs_flip ? point_t{discrete_y, x} : point_t{x, discrete_y};
         *output_first++ = next_point;
     }
@@ -77,7 +77,7 @@ void rasterize_line_incr(std::ptrdiff_t width, std::ptrdiff_t height, RAIterator
     for (std::ptrdiff_t x = 1; x < point_count; ++x)
     {
         y += m;
-        auto discrete_y = static_cast<std::ptrdiff_t>(std::round(y));
+        auto discrete_y = std::llround(y);
         auto next_point = needs_flip ? point_t{discrete_y, x} : point_t{x, discrete_y};
         *output_first++ = next_point;
     }
@@ -97,7 +97,7 @@ void rasterize_line_bresenham(std::ptrdiff_t width, std::ptrdiff_t height, RAIte
         return needs_flip ? static_cast<double>(width) / height
                           : static_cast<double>(height) / width;
     }();
-    double error_term = -1;
+    double error_term = 0;
     std::ptrdiff_t y = 0;
     *output_first++ = point_t(0, 0);
     for (std::ptrdiff_t x = 1; x < point_count; ++x)
