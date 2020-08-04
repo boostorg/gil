@@ -3,7 +3,7 @@
 #include <cstddef>
 
 namespace boost { namespace gil {
-inline std::ptrdiff_t estimate_point_count_naive(std::ptrdiff_t width, std::ptrdiff_t height)
+inline std::ptrdiff_t estimate_point_count(std::ptrdiff_t width, std::ptrdiff_t height)
 {
     return width > height ? width : height;
 }
@@ -31,14 +31,43 @@ void rasterize_vertical_line(RAIterator first, RAIterator last)
 }
 
 template <typename RAIterator>
-void rasterize_line_incr(std::ptrdiff_t width, std::ptrdiff_t height, RAIterator output_first)
+void rasterize_line_naive(std::ptrdiff_t width, std::ptrdiff_t height, RAIterator output_first)
 {
-    const auto point_count = estimate_point_count_naive(width, height);
+    const auto point_count = estimate_point_count(width, height);
     // walk over longer axis, swap coordinates later
     const bool needs_flip = point_count != width;
     // m is guaranteed to be <= 1
-    const double m =
-        needs_flip ? static_cast<double>(width) / height : static_cast<double>(height) / width;
+    const double m = [needs_flip, width, height](){
+        if (width == 1 || height == 1) {
+            return 0.0;
+        }
+
+        return needs_flip ? static_cast<double>(width) / height : static_cast<double>(height) / width;
+    }();
+    *output_first++ = point_t(0, 0);
+    for (std::ptrdiff_t x = 1; x < point_count; ++x)
+    {
+        double y = m * x;
+        auto discrete_y = static_cast<std::ptrdiff_t>(std::round(y));
+        auto next_point = needs_flip ? point_t{discrete_y, x} : point_t{x, discrete_y};
+        *output_first++ = next_point;
+    }
+}
+
+template <typename RAIterator>
+void rasterize_line_incr(std::ptrdiff_t width, std::ptrdiff_t height, RAIterator output_first)
+{
+    const auto point_count = estimate_point_count(width, height);
+    // walk over longer axis, swap coordinates later
+    const bool needs_flip = point_count != width;
+    // m is guaranteed to be <= 1
+    const double m = [needs_flip, width, height](){
+        if (width == 1 || height == 1) {
+            return 0.0;
+        }
+
+        return needs_flip ? static_cast<double>(width) / height : static_cast<double>(height) / width;
+    }();
     double y = 0;
     *output_first++ = point_t(0, 0);
     for (std::ptrdiff_t x = 1; x < point_count; ++x)

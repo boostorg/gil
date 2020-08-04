@@ -13,9 +13,9 @@ namespace gil = boost::gil;
 
 const std::ptrdiff_t size = 256;
 
-void line_naive(std::ptrdiff_t width, std::ptrdiff_t height, const std::string& output_name)
+void line_incr(std::ptrdiff_t width, std::ptrdiff_t height, const std::string& output_name)
 {
-    std::vector<gil::point_t> line_points(gil::estimate_point_count_naive(width, height));
+    std::vector<gil::point_t> line_points(gil::estimate_point_count(width, height));
 
     gil::gray8_image_t image(size, size);
     auto view = gil::view(image);
@@ -29,8 +29,29 @@ void line_naive(std::ptrdiff_t width, std::ptrdiff_t height, const std::string& 
     gil::write_view(output_name, view, gil::png_tag{});
 }
 
+void line_naive(std::ptrdiff_t width, std::ptrdiff_t height, const std::string& output_name)
+{
+    std::vector<gil::point_t> line_points(gil::estimate_point_count(width, height));
+
+    gil::gray8_image_t image(size, size);
+    auto view = gil::view(image);
+
+    gil::rasterize_line_naive(width, height, line_points.begin());
+    for (const auto& point : line_points)
+    {
+        view(point) = std::numeric_limits<gil::uint8_t>::max();
+    }
+
+    gil::write_view(output_name, view, gil::png_tag{});
+}
+
 int main()
 {
+    line_incr(256, 256, "line-incr-256-256.png");
+    line_incr(256, 128, "line-incr-256-128.png");
+    line_incr(256, 1, "line-incr-256-1.png");
+    line_incr(1, 256, "line-incr-1-256.png");
+
     line_naive(256, 256, "line-naive-256-256.png");
     line_naive(256, 128, "line-naive-256-128.png");
     line_naive(256, 1, "line-naive-256-1.png");
