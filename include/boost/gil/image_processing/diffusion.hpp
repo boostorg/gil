@@ -19,8 +19,8 @@
 #include <vector>
 
 namespace boost { namespace gil {
-namespace diffusion {
-struct perona_malik_diffusivity
+namespace conductivity {
+struct perona_malik_conductivity
 {
     double kappa;
     template <typename Pixel>
@@ -38,7 +38,7 @@ struct perona_malik_diffusivity
     }
 };
 
-struct gaussian_diffusivity
+struct gaussian_conductivity
 {
     double kappa;
     template <typename Pixel>
@@ -56,7 +56,7 @@ struct gaussian_diffusivity
     }
 };
 
-struct wide_regions_diffusivity
+struct wide_regions_conductivity
 {
     double kappa;
     template <typename Pixel>
@@ -74,7 +74,7 @@ struct wide_regions_diffusivity
     }
 };
 
-struct more_wide_regions_diffusivity
+struct more_wide_regions_conductivity
 {
     double kappa;
     template <typename Pixel>
@@ -265,7 +265,7 @@ void classic_anisotropic_diffusion(const InputView& input, const OutputView& out
 {
     anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_5points{},
                           brightness_function::identity{},
-                          diffusion::perona_malik_diffusivity{kappa});
+                          conductivity::perona_malik_conductivity{kappa});
 }
 
 template <typename InputView, typename OutputView>
@@ -280,13 +280,13 @@ void matlab_anisotropic_diffusion(const InputView& input, const OutputView& outp
         {
             anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_5points{},
                                   brightness_function::identity{},
-                                  diffusion::gaussian_diffusivity{kappa});
+                                  conductivity::gaussian_conductivity{kappa});
         }
         else if (conduction_method == matlab_conduction_method::quadratic)
         {
             anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_5points{},
                                   brightness_function::identity{},
-                                  diffusion::gaussian_diffusivity{kappa});
+                                  conductivity::gaussian_conductivity{kappa});
         }
         else
         {
@@ -299,13 +299,13 @@ void matlab_anisotropic_diffusion(const InputView& input, const OutputView& outp
         {
             anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_5points{},
                                   brightness_function::identity{},
-                                  diffusion::gaussian_diffusivity{kappa});
+                                  conductivity::gaussian_conductivity{kappa});
         }
         else if (conduction_method == matlab_conduction_method::quadratic)
         {
             anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_5points{},
                                   brightness_function::identity{},
-                                  diffusion::gaussian_diffusivity{kappa});
+                                  conductivity::gaussian_conductivity{kappa});
         }
         else
         {
@@ -323,7 +323,7 @@ void default_anisotropic_diffusion(const InputView& input, const OutputView& out
                                    unsigned int num_iter, double kappa)
 {
     anisotropic_diffusion(input, output, num_iter, laplace_function::stencil_9points_standard{},
-                          brightness_function::identity{}, diffusion::gaussian_diffusivity{kappa});
+                          brightness_function::identity{}, conductivity::gaussian_conductivity{kappa});
 }
 
 /// \brief Performs diffusion according to Perona-Malik equation
@@ -338,7 +338,7 @@ void default_anisotropic_diffusion(const InputView& input, const OutputView& out
 template <typename InputView, typename OutputView,
           typename LaplaceStrategy = laplace_function::stencil_9points_standard,
           typename BrightnessFunction = brightness_function::identity,
-          typename DiffusivityFunction = diffusion::gaussian_diffusivity>
+          typename DiffusivityFunction = conductivity::gaussian_conductivity>
 void anisotropic_diffusion(const InputView& input, const OutputView& output, unsigned int num_iter,
                            LaplaceStrategy laplace, BrightnessFunction brightness,
                            DiffusivityFunction diffusivity)

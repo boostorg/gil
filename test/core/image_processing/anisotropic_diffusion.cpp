@@ -277,20 +277,20 @@ int main()
     for (double kappa = 5; kappa <= 70; ++kappa)
     {
         diffusion_function_check<gil::rgb32f_pixel_t>(
-            gil::diffusion::perona_malik_diffusivity{kappa});
-        diffusion_function_check<gil::rgb32f_pixel_t>(gil::diffusion::gaussian_diffusivity{kappa});
+            gil::conductivity::perona_malik_conductivity{kappa});
+        diffusion_function_check<gil::rgb32f_pixel_t>(gil::conductivity::gaussian_conductivity{kappa});
         diffusion_function_check<gil::rgb32f_pixel_t>(
-            gil::diffusion::wide_regions_diffusivity{kappa});
+            gil::conductivity::wide_regions_conductivity{kappa});
         diffusion_function_check<gil::rgb32f_pixel_t>(
-            gil::diffusion::more_wide_regions_diffusivity{kappa});
+            gil::conductivity::more_wide_regions_conductivity{kappa});
 
         diffusion_function_check<gil::gray32f_pixel_t>(
-            gil::diffusion::perona_malik_diffusivity{kappa});
-        diffusion_function_check<gil::gray32f_pixel_t>(gil::diffusion::gaussian_diffusivity{kappa});
+            gil::conductivity::perona_malik_conductivity{kappa});
+        diffusion_function_check<gil::gray32f_pixel_t>(gil::conductivity::gaussian_conductivity{kappa});
         diffusion_function_check<gil::gray32f_pixel_t>(
-            gil::diffusion::wide_regions_diffusivity{kappa});
+            gil::conductivity::wide_regions_conductivity{kappa});
         diffusion_function_check<gil::gray32f_pixel_t>(
-            gil::diffusion::more_wide_regions_diffusivity{kappa});
+            gil::conductivity::more_wide_regions_conductivity{kappa});
     }
 
     brightness_function_test();
