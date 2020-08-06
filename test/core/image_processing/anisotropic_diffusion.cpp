@@ -179,17 +179,17 @@ void laplace_functions_test()
     auto rgb = gil::view(rgb_image);
     auto gray = gil::view(gray_image);
 
-    auto _4way = gil::laplace_function::stencil_5points{};
-    auto _8way = gil::laplace_function::stencil_9points_standard{};
+    auto s4way = gil::laplace_function::stencil_5points{};
+    auto s8way = gil::laplace_function::stencil_9points_standard{};
     for (std::ptrdiff_t y = 1; y < image_size.y - 1; ++y)
     {
         for (std::ptrdiff_t x = 1; x < image_size.x - 1; ++x)
         {
-            auto rgb_4way_stencil = _4way.compute_laplace(rgb, {x, y});
-            auto gray_4way_stencil = _4way.compute_laplace(gray, {x, y});
+            auto rgb_4way_stencil = s4way.compute_laplace(rgb, {x, y});
+            auto gray_4way_stencil = s4way.compute_laplace(gray, {x, y});
 
-            auto rgb_8way_stencil = _8way.compute_laplace(rgb, {x, y});
-            auto gray_8way_stencil = _8way.compute_laplace(gray, {x, y});
+            auto rgb_8way_stencil = s8way.compute_laplace(rgb, {x, y});
+            auto gray_8way_stencil = s8way.compute_laplace(gray, {x, y});
 
             test_stencil_pixels(rgb_4way_stencil, zero_rgb_pixel);
             test_stencil_pixels(rgb_8way_stencil, zero_rgb_pixel);
@@ -232,9 +232,9 @@ void laplace_functions_test()
 
     auto test_point = gil::point_t(2, 2);
     std::array<float, 8> _4way_expected{0, -14, 0, 33, 0, 6, 0, -8};
-    auto rgb_4way = _4way.compute_laplace(rgb, test_point);
+    auto rgb_4way = s4way.compute_laplace(rgb, test_point);
     test_stencil(rgb_4way, _4way_expected);
-    auto gray_4way = _4way.compute_laplace(gray, test_point);
+    auto gray_4way = s4way.compute_laplace(gray, test_point);
     test_stencil(gray_4way, _4way_expected);
 
     // 8 way stencil should be
@@ -243,25 +243,25 @@ void laplace_functions_test()
     // 65 6 15
 
     std::array<float, 8> _8way_expected{-20, -14, -23, 33, 15, 6, 65, -8};
-    auto rgb_8way = _8way.compute_laplace(rgb, test_point);
+    auto rgb_8way = s8way.compute_laplace(rgb, test_point);
     test_stencil(rgb_8way, _8way_expected);
-    auto gray_8way = _8way.compute_laplace(gray, test_point);
+    auto gray_8way = s8way.compute_laplace(gray, test_point);
     test_stencil(gray_8way, _8way_expected);
 
     // reduce result for 4 way should be (-14 - 8 + 6 + 33) * 0.25 = 4.25
-    auto rgb_reduced_4way = _4way.reduce(rgb_4way);
+    auto rgb_reduced_4way = s4way.reduce(rgb_4way);
     gil::static_for_each(rgb_reduced_4way,
                          [](gil::float32_t value) { BOOST_TEST(value == 4.25f); });
-    auto gray_reduced_4way = _4way.reduce(gray_4way);
+    auto gray_reduced_4way = s4way.reduce(gray_4way);
     gil::static_for_each(gray_reduced_4way,
                          [](gil::float32_t value) { BOOST_TEST(value == 4.25f); });
 
     // reduce result for 8 way should be ((-20-23+15+65)*0.5+(-14+33+6-8)) * 0.125 = (18.5+17) *
     // 0.125 = 4.4375
-    auto rgb_reduced_8way = _8way.reduce(rgb_8way);
+    auto rgb_reduced_8way = s8way.reduce(rgb_8way);
     gil::static_for_each(rgb_reduced_8way,
                          [](gil::float32_t value) { BOOST_TEST(value == 4.4375); });
-    auto gray_reduced_8way = _8way.reduce(gray_8way);
+    auto gray_reduced_8way = s8way.reduce(gray_8way);
     gil::static_for_each(gray_reduced_8way,
                          [](gil::float32_t value) { BOOST_TEST(value == 4.4375); });
 }
