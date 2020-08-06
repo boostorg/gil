@@ -28,9 +28,8 @@ struct perona_malik_conductivity
     {
         using channel_type = typename channel_type<Pixel>::type;
         // C++11 doesn't seem to capture members
-        auto local_kappa = kappa;
-        static_transform(input, input, [local_kappa](channel_type value) {
-            value /= local_kappa;
+        static_transform(input, input, [this](channel_type value) {
+            value /= kappa;
             return std::exp(-std::abs(value));
         });
 
@@ -46,9 +45,8 @@ struct gaussian_conductivity
     {
         using channel_type = typename channel_type<Pixel>::type;
         // C++11 doesn't seem to capture members
-        auto local_kappa = kappa;
-        static_transform(input, input, [local_kappa](channel_type value) {
-            value /= local_kappa;
+        static_transform(input, input, [this](channel_type value) {
+            value /= kappa;
             return std::exp(-value * value);
         });
 
@@ -64,9 +62,8 @@ struct wide_regions_conductivity
     {
         using channel_type = typename channel_type<Pixel>::type;
         // C++11 doesn't seem to capture members
-        auto local_kappa = kappa;
-        static_transform(input, input, [local_kappa](channel_type value) {
-            value /= local_kappa;
+        static_transform(input, input, [this](channel_type value) {
+            value /= kappa;
             return 1.0 / (1.0 + value * value);
         });
 
@@ -82,9 +79,8 @@ struct more_wide_regions_conductivity
     {
         using channel_type = typename channel_type<Pixel>::type;
         // C++11 doesn't seem to capture members
-        auto local_kappa = kappa;
-        static_transform(input, input, [local_kappa](channel_type value) {
-            value /= local_kappa;
+        static_transform(input, input, [this](channel_type value) {
+            value /= kappa;
             return 1.0 / std::sqrt((1.0 + value * value));
         });
 
