@@ -89,12 +89,23 @@ struct more_wide_regions_conductivity
 };
 } // namespace diffusion
 
+/**
+    \brief contains discrete approximations of 2D Laplacian operator
+*/
 namespace laplace_function {
 // The functions assume clockwise enumeration of stencil points, as such
 // NW   North NE          0 1 2      (-1, -1) (0, -1) (+1, -1)
 // West       East   ===> 7   3 ===> (-1, 0)          (+1, 0)
 // SW   South SE          6 5 4      (-1, +1) (0, +1) (+1, +1)
 
+/**
+    \brief This function makes sure all Laplace functions enumerate
+    values in the same order and direction.
+
+    The first element is difference North West direction, second in North,
+    and so on in clockwise manner. Leave element as zero if it is not
+    to be computed.
+*/
 std::array<gil::point_t, 8> get_directed_offsets()
 {
     return {point_t{-1, -1}, point_t{0, -1}, point_t{+1, -1}, point_t{+1, 0},
@@ -104,6 +115,11 @@ std::array<gil::point_t, 8> get_directed_offsets()
 template <typename PixelType>
 using stencil_type = std::array<PixelType, 8>;
 
+/**
+    \brief 5 point stencil approximation of Laplacian
+
+    Only main 4 directions are non-zero, the rest are zero
+*/
 struct stencil_5points
 {
     double delta_t = 0.25;
@@ -157,6 +173,12 @@ struct stencil_5points
     }
 };
 
+/**
+    \brief 9 point stencil approximation of Laplacian
+
+    This is full 8 way approximation, though diagonal
+    elements are halved during reduction.
+*/
 struct stencil_9points_standard
 {
     double delta_t = 0.125;
