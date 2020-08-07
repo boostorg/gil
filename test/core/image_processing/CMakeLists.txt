@@ -36,7 +36,8 @@ foreach(_name
   median_filter
   sobel_scharr
   anisotropic_diffusion
-  hough_parameter)
+  hough_parameter
+  hough_line_transform)
   set(_test t_core_image_processing_${_name})
   set(_target test_core_image_processing_${_name})
 
