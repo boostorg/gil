@@ -107,7 +107,10 @@ int main()
 {
     for (std::ptrdiff_t height = 1; height < width; ++height)
     {
-        hough_line_test(height, width - height - 1);
+        for (std::ptrdiff_t intercept = 1; intercept <= width - height - 1; ++intercept)
+        {
+            hough_line_test(height, intercept);
+        }
     }
     return boost::report_errors();
 }
