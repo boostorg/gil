@@ -22,7 +22,7 @@ that can be applied for a variety of tasks.
 int main()
 {
    // Create a histogram class. Use uint or unsigned short as the default axes type in most cases.
-    histogram<uint> h;
+    histogram<unsigned char> h;
 
     // Fill histogram with GIL images (of any color space)
     gray8_image_t g;
