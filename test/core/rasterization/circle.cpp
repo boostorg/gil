@@ -10,17 +10,19 @@ void test_equation_following_test(std::ptrdiff_t radius)
     std::vector<gil::point_t> circle_points(gil::estimate_circle_point_count(radius));
     std::ptrdiff_t r_squared = radius * radius;
     gil::rasterize_circle_midpoint(radius, {0, 0}, circle_points.begin());
+    std::vector<gil::point_t> first_octant(gil::estimate_circle_point_count(radius) / 2);
 
-    for (const auto& point : circle_points)
+    for (std::size_t i = 0, octant_index = 0; i < circle_points.size(); i += 8, ++octant_index)
     {
-        std::ptrdiff_t one_greater_x = point.x + 1;
-        std::ptrdiff_t expected_x_diff = one_greater_x * one_greater_x - point.x * point.x;
-        std::ptrdiff_t one_greater_y = point.y + 1;
-        std::ptrdiff_t expected_y_diff = one_greater_y * one_greater_y - point.y * point.y;
-        std::ptrdiff_t response = std::abs(point.x * point.x + point.y * point.y - r_squared);
-        // allow tolerance of off by one on each coordinate,
-        // thus (x + 1)^2 - x^2 + (y + 1)^2 - y^2
-        BOOST_TEST(response <= expected_x_diff + expected_y_diff);
+        first_octant[octant_index] = circle_points[i];
+    }
+
+    for (const auto& point : first_octant)
+    {
+        double y_exact = std::sqrt(radius * radius - point.x * point.x);
+        std::ptrdiff_t lower_result = static_cast<std::ptrdiff_t>(std::floor(y_exact)) - 1;
+        std::ptrdiff_t upper_result = static_cast<std::ptrdiff_t>(std::ceil(y_exact)) + 1;
+        BOOST_TEST(point.y >= lower_result || point.y <= upper_result);
     }
 }
 
