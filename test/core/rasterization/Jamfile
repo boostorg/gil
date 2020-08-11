@@ -9,3 +9,4 @@
 import testing ;
 
 run line.cpp ;
+run circle.cpp ;

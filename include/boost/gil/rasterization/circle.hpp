@@ -31,16 +31,14 @@ void rasterize_circle_midpoint(std::ptrdiff_t radius, point_t offset, RAIterator
         *d_first++ = point_t{yneg, xpos};
         *d_first++ = point_t{yneg, xneg};
     };
-    std::ptrdiff_t iteration_distance =
-        static_cast<std::ptrdiff_t>(std::round(radius * std::cos(boost::gil::detail::pi / 4)));
+    std::ptrdiff_t iteration_distance = estimate_circle_point_count(radius) / 8;
     std::ptrdiff_t y_current = radius;
-    double r_squared = static_cast<double>(radius * radius);
+    std::ptrdiff_t r_squared = radius * radius;
     translate_mirror_points({0, y_current});
-    for (std::ptrdiff_t x = 1; x <= iteration_distance; ++x)
+    for (std::ptrdiff_t x = 1; x < iteration_distance; ++x)
     {
-        auto y = y_current - 0.5;
-        double midpoint = x * x + y * y - r_squared;
-        if (midpoint >= 0.0)
+        std::ptrdiff_t midpoint = x * x + y_current * y_current - y_current - r_squared;
+        if (midpoint > 0)
         {
             --y_current;
         }
