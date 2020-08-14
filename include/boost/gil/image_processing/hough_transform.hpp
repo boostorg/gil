@@ -1,9 +1,13 @@
 #ifndef BOOST_GIL_IMAGE_PROCESSING_HOUGH_TRANSFORM_HPP
 #define BOOST_GIL_IMAGE_PROCESSING_HOUGH_TRANSFORM_HPP
 
+#include <algorithm>
 #include <boost/gil/image_processing/hough_parameter.hpp>
+#include <boost/gil/rasterization/circle.hpp>
 #include <cmath>
 #include <cstddef>
+#include <iterator>
+#include <vector>
 
 namespace boost { namespace gil {
 template <typename InputView, typename OutputView>
@@ -43,6 +47,56 @@ void hough_line_transform(const InputView& input_view, const OutputView& accumul
                 }
             }
         }
+    }
+}
+
+template <typename ImageView, typename ForwardIterator>
+void hough_circle_transform_brute(const ImageView& input,
+                                  const hough_parameter<std::ptrdiff_t> radius_parameter,
+                                  const hough_parameter<std::ptrdiff_t> x_parameter,
+                                  const hough_parameter<std::ptrdiff_t>& y_parameter,
+                                  ForwardIterator d_first)
+{
+    const auto width = input.width();
+    const auto height = input.height();
+    for (std::size_t radius_index = 0; radius_index < radius_parameter.step_count; ++radius_index)
+    {
+        const auto radius = radius_parameter.start_point +
+                            radius_parameter.step_size * static_cast<std::ptrdiff_t>(radius_index);
+        std::vector<point_t> circle_points(estimate_circle_point_count(radius));
+        rasterize_circle_midpoint(radius, {0, 0}, circle_points.begin());
+        const auto translate = [](std::vector<point_t>& points, point_t offset) {
+            std::transform(points.begin(), points.end(), points.begin(), [offset](point_t point) {
+                return point_t(point.x + offset.x, point.y + offset.y);
+            });
+        };
+
+        // in case somebody passes iterator to likes of std::vector<bool>
+        typename std::iterator_traits<ForwardIterator>::reference current_image = *d_first;
+
+        // the algorithm has to traverse over parameter space and look at input, instead
+        // of vice versa, as otherwise it will call translate too many times, as input
+        // is usually bigger than the coordinate portion of parameter space.
+        // This might cause extensive cache misses
+        for (std::size_t x_index = 0; x_index < x_parameter.step_count; ++x_index)
+        {
+            for (std::size_t y_index = 0; y_index < y_parameter.step_count; ++y_index)
+            {
+                const auto x = x_parameter.start_point + x_index * x_parameter.step_size;
+                const auto y = y_parameter.start_point + y_index * y_parameter.step_size;
+
+                auto translated_circle = circle_points;
+                translate(translated_circle, {x, y});
+                for (const auto& point : translated_circle)
+                {
+                    if (input(point))
+                    {
+                        ++current_image(x_index, y_index)[0];
+                    }
+                }
+            }
+        }
+        ++d_first;
     }
 }
 
