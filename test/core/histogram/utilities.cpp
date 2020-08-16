@@ -13,6 +13,7 @@
 
 #include <boost/core/lightweight_test.hpp>
 #include <iostream>
+#include <vector>
 
 namespace gil = boost::gil;
 namespace mp11 = boost::mp11;
@@ -109,10 +110,105 @@ void check_nearest_key()
 
 }
 
+void check_equals()
+{
+    gil::histogram<unsigned char> h, h2;
+    h(1) = 3;
+    h(4) = 1;
+    h(2) = 6;
+    h(7) = 3;
+    h(9) = 7;
+    h2 = h;
+    BOOST_TEST(h2.equals(h));
+
+    gil::histogram<double> h3;
+    h3(1) = 3;
+    h3(4) = 1;
+    h3(2) = 6;
+    h3(7) = 3;
+    h3(9) = 7;
+    BOOST_TEST(h3.equals(h));
+}
+
+void check_sum()
+{
+    gil::histogram<unsigned char> h;
+    h(1) = 3;
+    h(4) = 1;
+    h(2) = 6;
+    h(7) = 3;
+    h(9) = 7;
+    auto sm = h.sum();
+    BOOST_TEST(sm == 20);
+}
+
+void check_max_key()
+{
+    gil::histogram<unsigned char> h;
+    h(1) = 3;
+    h(4) = 1;
+    h(2) = 6;
+    h(7) = 3;
+    h(9) = 7;
+    BOOST_TEST(std::get<0>(h.max_key()) == 9);
+
+    gil::histogram<unsigned char, int> h2;
+    h2(1, 4) = 3;
+    h2(4, 2) = 1;
+    h2(2, 5) = 6;
+    h2(7, 4) = 3;
+    h2(9, 1) = 7;
+    h2(9, 3) = 7;
+    BOOST_TEST(std::get<0>(h2.max_key()) == 9 && std::get<1>(h2.max_key()) == 3);
+}
+
+void check_min_key()
+{
+    gil::histogram<unsigned char> h;
+    h(1) = 3;
+    h(4) = 1;
+    h(2) = 6;
+    h(7) = 3;
+    h(9) = 7;
+    BOOST_TEST(std::get<0>(h.min_key()) == 1);
+
+    gil::histogram<unsigned char, int> h2;
+    h2(1, 4) = 3;
+    h2(4, 2) = 1;
+    h2(2, 5) = 6;
+    h2(7, 4) = 3;
+    h2(9, 1) = 7;
+    h2(9, 3) = 7;
+    BOOST_TEST(std::get<0>(h2.min_key()) == 1 && std::get<1>(h2.min_key()) == 4);
+}
+
+void check_sorted_keys()
+{
+    gil::histogram<unsigned char> h;
+    h(1) = 3;
+    h(4) = 1;
+    h(2) = 6;
+    h(7) = 3;
+    h(9) = 7;
+
+    std::vector<std::tuple<unsigned char>> v;
+    v.push_back(std::tuple<unsigned char>(1));
+    v.push_back(std::tuple<unsigned char>(2));
+    v.push_back(std::tuple<unsigned char>(4));
+    v.push_back(std::tuple<unsigned char>(7));
+    v.push_back(std::tuple<unsigned char>(9));
+    BOOST_TEST(v == h.sorted_keys());
+}
+
 int main() {
 
     check_normalize();
     check_nearest_key();
+    check_equals();
+    check_max_key();
+    check_min_key();
+    check_sum();
+    check_sorted_keys();
 
     return boost::report_errors();
 }   

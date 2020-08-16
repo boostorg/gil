@@ -22,6 +22,7 @@
 #include <utility>
 #include <vector>
 #include <type_traits>
+#include <map>
 #include <unordered_map>
 
 namespace boost { namespace gil {
@@ -169,7 +170,7 @@ template <std::size_t Dimension>
 struct filler
 {
     template <typename Container, typename Tuple>
-    void operator()(Container&, Tuple&, Tuple&)
+    void operator()(Container&, Tuple&, Tuple&, std::size_t)
     {
     }
 };
@@ -180,13 +181,13 @@ template <>
 struct filler<1>
 {
     template <typename Container, typename Tuple>
-    void operator()(Container& hist, Tuple& lower, Tuple& upper)
+    void operator()(Container& hist, Tuple& lower, Tuple& upper, std::size_t bin_width = 1)
     {
-        for (auto i = std::get<0>(lower); i < std::get<0>(upper); ++i)
+        for (auto i = std::get<0>(lower); std::get<0>(upper) - i >= bin_width; i += bin_width)
         {
-            hist(i) = 0;
+            hist(i / bin_width) = 0;
         }
-        hist(std::get<0>(upper)) = 0;
+        hist(std::get<0>(upper) / bin_width) = 0;
     }
 };
 
@@ -234,6 +235,28 @@ public:
         static_assert(histogram_dimension == index_dimension, "Dimensions do not match.");
 
         return base_t::operator[](key);
+    }
+
+    /// \brief Checks if 2 histograms are equal. Ignores type, and checks if 
+    ///        the keys (after type casting) match.
+    template <typename OtherType>
+    bool equals(OtherType const& otherhist) const
+    {
+        bool check = (dimension() == otherhist.dimension());
+
+        using other_value_t = typename OtherType::value_type;
+        std::for_each(otherhist.begin(), otherhist.end(), [&](other_value_t const& v) {
+            key_t key = key_from_tuple(v.first);
+            if (base_t::find(key) != base_t::end())
+            {
+                check = check & (base_t::at(key) == otherhist.at(v.first));
+            }
+            else
+            {
+                check = false;
+            }
+        });
+        return check;
     }
     
     /// \brief Checks if the histogram class is compatible to be used with
@@ -383,6 +406,7 @@ public:
     template <std::size_t... Dimensions, typename SrcView>
     void fill(
         SrcView const& srcview,
+        std::size_t bin_width               = 1,
         bool applymask                      = false,
         std::vector<std::vector<bool>> mask = {},
         key_t lower                         = key_t(),
@@ -390,6 +414,7 @@ public:
         bool setlimits                      = false)
     {
         gil_function_requires<ImageViewConcept<SrcView>>();
+        using channel_t = typename channel_type<SrcView>::type;
 
         for (std::ptrdiff_t src_y = 0; src_y < srcview.height(); ++src_y)
         {
@@ -398,7 +423,11 @@ public:
             {
                 if (applymask && !mask[src_y][src_x])
                     continue;
-                auto key = key_from_pixel<Dimensions...>(src_it[src_x]);
+                auto scaled_px = src_it[src_x];
+                static_for_each(scaled_px, [&](channel_t& ch) {
+                    ch = ch / bin_width;
+                });
+                auto key = key_from_pixel<Dimensions...>(scaled_px);
                 if (!setlimits ||
                     (detail::tuple_compare(lower, key) && detail::tuple_compare(key, upper)))
                     base_t::operator[](key)++;
@@ -486,6 +515,49 @@ public:
         });
     }
 
+    /// \brief Return the sum count of all bins
+    double sum() const
+    {
+        double sum = 0.0;
+        std::for_each(base_t::begin(), base_t::end(), [&](value_t const& v) {
+            sum += v.second;
+        });
+        return sum;
+    }
+
+    /// \brief Return the minimum key in histogram
+    key_t min_key() const
+    {
+        key_t min_key = base_t::begin()->first;
+        std::for_each(base_t::begin(), base_t::end(), [&](value_t const& v) {
+            if (v.first < min_key)
+                min_key = v.first;
+        });
+        return min_key;
+    }
+
+    /// \brief Return the maximum key in histogram
+    key_t max_key() const
+    {
+        key_t max_key = base_t::begin()->first;
+        std::for_each(base_t::begin(), base_t::end(), [&](value_t const& v) {
+            if (v.first > max_key)
+                max_key = v.first;
+        });
+        return max_key;
+    }
+
+    /// \brief Return sorted keys in a vector
+    std::vector<key_t> sorted_keys() const
+    {
+        std::vector<key_t> sorted_keys;
+        std::for_each(base_t::begin(), base_t::end(), [&](value_t const& v) {
+            sorted_keys.push_back(v.first);
+        });
+        std::sort(sorted_keys.begin(), sorted_keys.end());
+        return sorted_keys;
+    }
+
 private:
     template <typename Tuple, std::size_t... I>
     key_t make_histogram_key(Tuple const& t, boost::mp11::index_sequence<I...>) const
@@ -538,6 +610,7 @@ void fill_histogram(SrcView const&, Container&);
 /// \ingroup Histogram Algorithms
 /// @param srcview     Input  Input image view
 /// @param hist        Output Histogram to be filled
+/// @param bin_width   Input  Specify the bin widths for the histogram.
 /// @param accumulate  Input  Specify whether to accumulate over the values already present in h (default = false)
 /// @param sparsaefill Input  Specify whether to have a sparse or continuous histogram (default = true)
 /// @param applymask   Input  Specify if image mask is to be specified
@@ -557,6 +630,7 @@ template <std::size_t... Dimensions, typename SrcView, typename... T>
 void fill_histogram(
     SrcView const& srcview,
     histogram<T...>& hist,
+    std::size_t bin_width               = 1,
     bool accumulate                     = false,
     bool sparsefill                     = true,
     bool applymask                      = false,
@@ -572,9 +646,9 @@ void fill_histogram(
     
     detail::filler<histogram<T...>::dimension()> f;
     if (!sparsefill)
-        f(hist, lower, upper);
+        f(hist, lower, upper, bin_width);
     
-    hist.template fill<Dimensions...>(srcview, applymask, mask, lower, upper, setlimits);
+    hist.template fill<Dimensions...>(srcview, bin_width, applymask, mask, lower, upper, setlimits);
 }
 
 ///
@@ -590,10 +664,10 @@ void fill_histogram(
 /// #bins * log( #bins ) by sorting the keys and then calculating the cumulative version.
 ///
 template <typename Container>
-Container cumulative_histogram(Container&);
+Container cumulative_histogram(Container const&);
 
 template <typename... T>
-histogram<T...> cumulative_histogram(histogram<T...>& hist)
+histogram<T...> cumulative_histogram(histogram<T...> const& hist)
 {
     using check_list = boost::mp11::mp_list<boost::has_less<T>...>;
     static_assert(
@@ -630,7 +704,7 @@ histogram<T...> cumulative_histogram(histogram<T...>& hist)
                     v2.first, v1.first,
                     boost::mp11::make_index_sequence<histogram_t::dimension()>{});
                 if (comp)
-                    cumulative_counter += hist[v2.first];
+                    cumulative_counter += hist.at(v2.first);
             });
             cumulative_hist[v1.first] = cumulative_counter;
         });

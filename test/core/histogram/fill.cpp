@@ -112,7 +112,7 @@ void check_histogram_fill()
     // Check with limits
     std::tuple<int> lower{2}, higher{6};
     h1.clear();
-    h1.fill(big_gray_view, false, {{}}, lower, higher, true);
+    h1.fill(big_gray_view, 1, false, {{}}, lower, higher, true);
     check_gray_fill = true;
     for (std::size_t i = 1; i <= 8; ++i)
     {
@@ -129,7 +129,7 @@ void check_histogram_fill()
 
     std::tuple<int, int ,int> lower1{2,2,2}, higher1{6,6,6};
     h3.clear();
-    h3.fill(big_rgb_view, false, {{}}, lower1, higher1, true);
+    h3.fill(big_rgb_view, 1, false, {{}}, lower1, higher1, true);
 
     check_rgb_fill = true;
     for (std::size_t i = 1; i <= 8; ++i)
@@ -147,7 +147,7 @@ void check_histogram_fill()
 
     h2.clear();
     // std::tuple<int> lower{2}, higher{6};
-    h2.fill<1>(big_rgb_view, false, {{}}, lower, higher, true);
+    h2.fill<1>(big_rgb_view, 1, false, {{}}, lower, higher, true);
     check_gray_fill2 = true;
     for (std::size_t i = 1; i <= 8; ++i)
     {
@@ -165,7 +165,7 @@ void check_histogram_fill()
     //Check mask
     gil::histogram<int> h4;
     std::tuple<int> low{1}, high{8};
-    gil::fill_histogram(sparse_gray_view, h4, false, false, true, mask, low, high, true);
+    gil::fill_histogram(sparse_gray_view, h4, 1, false, false, true, mask, low, high, true);
     
     bool check_1d = true;
     for (std::size_t i = 1; i <= 8; ++i)
@@ -180,7 +180,7 @@ void check_histogram_fill()
 
 void check_histogram_fill_algorithm() 
 {
-    gil::histogram<int> h1;
+    gil::histogram<short> h1;
 
     gil::fill_histogram<1>(big_rgb_view, h1);
     
@@ -211,7 +211,7 @@ void check_histogram_fill_algorithm()
     gil::histogram<int> h3;
 
     std::tuple<int> low(1), high(8);
-    gil::fill_histogram(sparse_gray_view, h3, false, false, false, {{}}, low, high, true);
+    gil::fill_histogram(sparse_gray_view, h3, 1, false, false, false, {{}}, low, high, true);
     
     check_1d = true;
     for (std::size_t i = 1; i <= 8; ++i)
@@ -228,10 +228,24 @@ void check_histogram_fill_algorithm()
     BOOST_TEST(check_1d);
 }
 
+void check_fill_bin_width()
+{
+    gil::histogram<unsigned char> h1;
+    gil::fill_histogram(big_gray_view, h1, 2);
+    bool check1 = true;
+    for(std::size_t i = 1; i <= 3; ++i)
+    {
+        check1 = check1 & (h1(i) == 16);
+    }
+    check1 = check1 & (h1(0) == 8) & (h1(4) == 8);
+    BOOST_TEST(check1);
+}
+
 int main() {
 
     check_histogram_fill();
     check_histogram_fill_algorithm();
+    check_fill_bin_width();
 
     return boost::report_errors();
 }

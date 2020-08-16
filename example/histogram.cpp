@@ -32,6 +32,7 @@ int main()
     (
         view(g), // Input image view
         h,       // Histogram to be filled
+        1,       // Histogram bin widths
         false,   // Specify whether to accumulate over the values already present in h (default = false)
         true,    // Specify whether to have a sparse or continuous histogram (default = true)
         false,   // Specify if image mask is to be specified
