@@ -6,8 +6,8 @@
 namespace boost { namespace gil {
 std::size_t estimate_circle_point_count_trig(std::ptrdiff_t radius)
 {
-    // const auto diameter = radius * 2 - 1;
-    const double minimum_angle_step = std::atan2(1.0, radius);
+    const auto diameter = radius * 2 - 1;
+    const double minimum_angle_step = std::atan2(1.0, diameter);
     return static_cast<std::size_t>(std::round(detail::pi / 4 / minimum_angle_step) + 1) * 8;
 }
 
