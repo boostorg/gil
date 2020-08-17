@@ -6,7 +6,7 @@
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/rasterization/circle.hpp>
 #include <boost/gil/typedefs.hpp>
-
+#include <cmath>
 #include <limits>
 #include <vector>
 
@@ -19,8 +19,8 @@ int main()
     auto buffer = gil::view(buffer_image);
 
     const std::ptrdiff_t radius = 64;
-    std::vector<gil::point_t> circle_points(gil::estimate_circle_point_count(radius));
-    gil::rasterize_circle_midpoint(radius, {128, 128}, circle_points.begin());
+    std::vector<gil::point_t> circle_points(gil::estimate_circle_point_count_trig(radius));
+    gil::rasterize_circle_trig(radius, {128, 128}, circle_points.begin());
     for (const auto& point : circle_points)
     {
         buffer(point) = std::numeric_limits<gil::uint8_t>::max();
