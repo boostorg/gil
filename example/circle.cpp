@@ -19,8 +19,9 @@ int main()
     auto buffer = gil::view(buffer_image);
 
     const std::ptrdiff_t radius = 64;
-    std::vector<gil::point_t> circle_points(gil::estimate_circle_point_count_trig(radius));
-    gil::rasterize_circle_trig(radius, {128, 128}, circle_points.begin());
+    const auto rasterizer = gil::trigonometric_circle_rasterizer{};
+    std::vector<gil::point_t> circle_points(rasterizer.point_count(radius));
+    rasterizer(radius, {128, 128}, circle_points.begin());
     for (const auto& point : circle_points)
     {
         buffer(point) = std::numeric_limits<gil::uint8_t>::max();

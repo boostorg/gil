@@ -18,8 +18,9 @@ int main()
 
     const std::ptrdiff_t circle_radius = 16;
     const gil::point_t circle_center = {64, 64};
-    std::vector<gil::point_t> circle_points(gil::estimate_circle_point_count(circle_radius));
-    gil::rasterize_circle_midpoint(circle_radius, circle_center, circle_points.begin());
+    const auto rasterizer = gil::trigonometric_circle_rasterizer{};
+    std::vector<gil::point_t> circle_points(rasterizer.point_count(circle_radius));
+    rasterizer(circle_radius, circle_center, circle_points.begin());
     for (const auto& point : circle_points)
     {
         input(point) = std::numeric_limits<gil::uint8_t>::max();
