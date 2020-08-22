@@ -26,10 +26,11 @@ void translate(std::vector<gil::point_t>& points, std::ptrdiff_t intercept)
 
 void hough_line_test(std::ptrdiff_t height, std::ptrdiff_t intercept)
 {
+    const auto rasterizer = gil::bresenham_line_rasterizer{};
     gil::gray8_image_t image(width, width, gil::gray8_pixel_t(0));
     auto input = gil::view(image);
-    std::vector<gil::point_t> line_points(gil::estimate_point_count(width, height));
-    gil::rasterize_line_bresenham(width, height, line_points.begin());
+    std::vector<gil::point_t> line_points(rasterizer.point_count(width, height));
+    rasterizer(width, height, line_points.begin());
     translate(line_points, intercept);
     for (const auto& p : line_points)
     {

@@ -50,13 +50,12 @@ void hough_line_transform(const InputView& input_view, const OutputView& accumul
     }
 }
 
-template <typename ImageView, typename ForwardIterator,
-          typename Rasterizer = trigonometric_circle_rasterizer>
+template <typename ImageView, typename ForwardIterator, typename Rasterizer>
 void hough_circle_transform_brute(const ImageView& input,
                                   const hough_parameter<std::ptrdiff_t> radius_parameter,
                                   const hough_parameter<std::ptrdiff_t> x_parameter,
                                   const hough_parameter<std::ptrdiff_t>& y_parameter,
-                                  ForwardIterator d_first, Rasterizer rasterizer = {})
+                                  ForwardIterator d_first, Rasterizer rasterizer)
 {
     const auto width = input.width();
     const auto height = input.height();
@@ -66,6 +65,9 @@ void hough_circle_transform_brute(const ImageView& input,
                             radius_parameter.step_size * static_cast<std::ptrdiff_t>(radius_index);
         std::vector<point_t> circle_points(rasterizer.point_count(radius));
         rasterizer(radius, {0, 0}, circle_points.begin());
+        // sort by scanline to improve cache coherence for row major images
+        std::sort(circle_points.begin(), circle_points.end(),
+                  [](const point_t& lhs, const point_t& rhs) { return lhs.y < rhs.y; });
         const auto translate = [](std::vector<point_t>& points, point_t offset) {
             std::transform(points.begin(), points.end(), points.begin(), [offset](point_t point) {
                 return point_t(point.x + offset.x, point.y + offset.y);

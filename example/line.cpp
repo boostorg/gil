@@ -15,12 +15,13 @@ const std::ptrdiff_t size = 256;
 
 void line_bresenham(std::ptrdiff_t width, std::ptrdiff_t height, const std::string& output_name)
 {
-    std::vector<gil::point_t> line_points(gil::estimate_point_count(width, height));
+    const auto rasterizer = gil::bresenham_line_rasterizer{};
+    std::vector<gil::point_t> line_points(rasterizer.point_count(width, height));
 
     gil::gray8_image_t image(size, size);
     auto view = gil::view(image);
 
-    gil::rasterize_line_bresenham(width, height, line_points.begin());
+    rasterizer(width, height, line_points.begin());
     for (const auto& point : line_points)
     {
         view(point) = std::numeric_limits<gil::uint8_t>::max();

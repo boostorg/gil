@@ -18,7 +18,7 @@ int main()
 
     const std::ptrdiff_t circle_radius = 16;
     const gil::point_t circle_center = {64, 64};
-    const auto rasterizer = gil::trigonometric_circle_rasterizer{};
+    const auto rasterizer = gil::midpoint_circle_rasterizer{};
     std::vector<gil::point_t> circle_points(rasterizer.point_count(circle_radius));
     rasterizer(circle_radius, circle_center, circle_points.begin());
     for (const auto& point : circle_points)
@@ -42,6 +42,6 @@ int main()
                    [](gil::gray16_image_t& img) { return gil::view(img); });
 
     gil::hough_circle_transform_brute(input, radius_parameter, x_parameter, y_parameter,
-                                      parameter_space_views.begin());
+                                      parameter_space_views.begin(), rasterizer);
     std::cout << parameter_space_views[3](3, 3) << '\n';
 }
