@@ -85,8 +85,8 @@ void hough_circle_transform_brute(const ImageView& input,
         {
             for (std::size_t y_index = 0; y_index < y_parameter.step_count; ++y_index)
             {
-                const auto x = x_parameter.start_point + x_index * x_parameter.step_size;
-                const auto y = y_parameter.start_point + y_index * y_parameter.step_size;
+                const std::ptrdiff_t x = x_parameter.start_point + x_index * x_parameter.step_size;
+                const std::ptrdiff_t y = y_parameter.start_point + y_index * y_parameter.step_size;
 
                 auto translated_circle = circle_points;
                 translate(translated_circle, {x, y});
