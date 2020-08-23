@@ -24,18 +24,14 @@ struct trigonometric_circle_rasterizer
     {
         const double minimum_angle_step = std::atan2(1.0, radius);
         auto translate_mirror_points = [&d_first, offset](point_t p) {
-            std::ptrdiff_t xpos = offset.x + p.x;
-            std::ptrdiff_t xneg = offset.x - p.x;
-            std::ptrdiff_t ypos = offset.y + p.y;
-            std::ptrdiff_t yneg = offset.y - p.y;
-            *d_first++ = point_t{xpos, ypos};
-            *d_first++ = point_t{xpos, yneg};
-            *d_first++ = point_t{xneg, ypos};
-            *d_first++ = point_t{xneg, yneg};
-            *d_first++ = point_t{ypos, xpos};
-            *d_first++ = point_t{ypos, xneg};
-            *d_first++ = point_t{yneg, xpos};
-            *d_first++ = point_t{yneg, xneg};
+            *d_first++ = point_t{offset.x + p.x, offset.y + p.y};
+            *d_first++ = point_t{offset.x + p.x, offset.y - p.y};
+            *d_first++ = point_t{offset.x - p.x, offset.y + p.y};
+            *d_first++ = point_t{offset.x - p.x, offset.y - p.y};
+            *d_first++ = point_t{offset.x + p.y, offset.y + p.x};
+            *d_first++ = point_t{offset.x + p.y, offset.y - p.x};
+            *d_first++ = point_t{offset.x - p.y, offset.y + p.x};
+            *d_first++ = point_t{offset.x - p.y, offset.y - p.x};
         };
         const std::ptrdiff_t iteration_count = point_count(radius) / 8;
         double angle = 0;
@@ -64,18 +60,14 @@ struct midpoint_circle_rasterizer
     void operator()(std::ptrdiff_t radius, point_t offset, RAIterator d_first) const
     {
         auto translate_mirror_points = [&d_first, offset](point_t p) {
-            std::ptrdiff_t xpos = offset.x + p.x;
-            std::ptrdiff_t xneg = offset.x - p.x;
-            std::ptrdiff_t ypos = offset.y + p.y;
-            std::ptrdiff_t yneg = offset.y - p.y;
-            *d_first++ = point_t{xpos, ypos};
-            *d_first++ = point_t{xpos, yneg};
-            *d_first++ = point_t{xneg, ypos};
-            *d_first++ = point_t{xneg, yneg};
-            *d_first++ = point_t{ypos, xpos};
-            *d_first++ = point_t{ypos, xneg};
-            *d_first++ = point_t{yneg, xpos};
-            *d_first++ = point_t{yneg, xneg};
+            *d_first++ = point_t{offset.x + p.x, offset.y + p.y};
+            *d_first++ = point_t{offset.x + p.x, offset.y - p.y};
+            *d_first++ = point_t{offset.x - p.x, offset.y + p.y};
+            *d_first++ = point_t{offset.x - p.x, offset.y - p.y};
+            *d_first++ = point_t{offset.x + p.y, offset.y + p.x};
+            *d_first++ = point_t{offset.x + p.y, offset.y - p.x};
+            *d_first++ = point_t{offset.x - p.y, offset.y + p.x};
+            *d_first++ = point_t{offset.x - p.y, offset.y - p.x};
         };
         std::ptrdiff_t iteration_distance = point_count(radius) / 8;
         std::ptrdiff_t y_current = radius;
