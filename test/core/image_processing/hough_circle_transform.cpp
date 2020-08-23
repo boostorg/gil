@@ -53,7 +53,7 @@ void exact_fit_test(std::ptrdiff_t radius, gil::point_t offset, Rasterizer raste
 
 int main()
 {
-    const int test_dim_length = 50;
+    const int test_dim_length = 20;
     for (std::ptrdiff_t radius = 5; radius < test_dim_length; ++radius)
     {
         for (std::ptrdiff_t x_offset = radius; x_offset < radius + test_dim_length; ++x_offset)
