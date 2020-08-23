@@ -21,4 +21,4 @@ run box_filter.cpp ;
 run median_filter.cpp ;
 run anisotropic_diffusion.cpp ;
 run hough_line_transform.cpp ;
-run hough_circle_transform ;
+run hough_circle_transform.cpp ;
