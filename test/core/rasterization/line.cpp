@@ -10,9 +10,10 @@ namespace gil = boost::gil;
 void line_equation_following_test(std::ptrdiff_t width, std::ptrdiff_t height)
 {
     double m = static_cast<double>(height) / width;
-    const auto point_count = gil::estimate_point_count(width, height);
+    const auto rasterizer = gil::bresenham_line_rasterizer{};
+    const auto point_count = rasterizer.point_count(width, height);
     std::vector<gil::point_t> bresenham_points(point_count);
-    gil::rasterize_line_bresenham(width, height, bresenham_points.begin());
+    rasterizer(width, height, bresenham_points.begin());
 
     for (std::ptrdiff_t i = 0; i < point_count; ++i)
     {
