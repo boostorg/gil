@@ -7,11 +7,16 @@ namespace boost { namespace gil {
 
 struct trigonometric_circle_rasterizer
 {
-    std::ptrdiff_t point_count(std::ptrdiff_t radius) const noexcept
+    double minimum_angle_step(std::ptrdiff_t radius) const noexcept
     {
         const auto diameter = radius * 2 - 1;
-        const double minimum_angle_step = std::atan2(1.0, diameter);
-        return 8 * static_cast<std::ptrdiff_t>(std::round(detail::pi / 4 / minimum_angle_step) + 1);
+        return std::atan2(1.0, diameter);
+    }
+
+    std::ptrdiff_t point_count(std::ptrdiff_t radius) const noexcept
+    {
+        return 8 * static_cast<std::ptrdiff_t>(
+                       std::round(detail::pi / 4 / minimum_angle_step(radius)) + 1);
     }
 
     template <typename RAIterator>
