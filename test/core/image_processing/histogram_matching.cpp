@@ -73,21 +73,6 @@ void vector_to_gray_image(boost::gil::gray8_image_t& img,
 }
 
 template<typename SrcView>
-void print(SrcView const& g)
-{
-    std::cout<<"\n";
-    for(size_t i=0; i<g.height(); i++)
-    {
-        auto src_it = g.row_begin(i);
-        for(size_t j=0; j<g.width(); j++)
-        {
-            std::cout<<int(src_it[j])<<" ";
-        }
-        std::cout<<"\n";
-    }
-}
-
-template<typename SrcView>
 bool equal_histograms(SrcView const& v1, SrcView const& v2, double threshold = epsilon)
 {
     double sum=0.0;

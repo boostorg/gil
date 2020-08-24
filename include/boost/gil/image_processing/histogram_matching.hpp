@@ -5,6 +5,7 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
+
 #ifndef BOOST_GIL_IMAGE_PROCESSING_HISTOGRAM_MATCHING_HPP
 #define BOOST_GIL_IMAGE_PROCESSING_HISTOGRAM_MATCHING_HPP
 
@@ -19,14 +20,28 @@
 
 namespace boost { namespace gil {
 
-/*
-    Algoithm :-
-    1. Calculate histogram A(pixel) of input image and G(pixel) of reference image.
-    2. Compute the normalized cumulative(CDF) histograms of A and G.
-    3. Match the histograms using transofrmation  => CDF(A(px)) = CDF(G(px'))
-                                                  => px' = Inv-CDF (CDF(px))
-*/
+/////////////////////////////////////////
+/// Histogram Matching(HM)
+/////////////////////////////////////////
+/// \defgroup HM HM
+/// \brief Contains implementation and description of the algorithm used to compute
+///        global histogram matching of input images.
+///
+///        Algorithm :-
+///        1. Calculate histogram A(pixel) of input image and G(pixel) of reference image.
+///        2. Compute the normalized cumulative(CDF) histograms of A and G.
+///        3. Match the histograms using transofrmation  => CDF(A(px)) = CDF(G(px'))
+///                                                      => px' = Inv-CDF (CDF(px))
+///
 
+/// \fn histogram_matching
+/// \ingroup HM
+/// \tparam SrcKeyType Key Type of input histogram
+/// @param src_hist INPUT Input source histogram
+/// @param ref_hist INPUT Input reference histogram
+/// \brief Overload for histogram matching algorithm, takes in a single source histogram &
+///        reference histogram and returns the color map used for histogram matching.
+///
 template <typename SrcKeyType, typename RefKeyType>
 std::map<SrcKeyType, SrcKeyType>
     histogram_matching(histogram<SrcKeyType> const& src_hist, histogram<RefKeyType> const& ref_hist)
@@ -35,6 +50,18 @@ std::map<SrcKeyType, SrcKeyType>
     return histogram_matching(src_hist, ref_hist, dst_hist);
 }
 
+/// \overload histogram_matching
+/// \ingroup HM
+/// \tparam SrcKeyType Key Type of input histogram
+/// \tparam RefKeyType Key Type of reference histogram
+/// \tparam DstKeyType Key Type of output histogram
+/// @param src_hist INPUT source histogram
+/// @param ref_hist INPUT reference histogram
+/// @param dst_hist OUTPUT Output histogram
+/// \brief Overload for histogram matching algorithm, takes in source histogram, reference 
+///        histogram & destination histogram and returns the color map used for histogram
+///        matching as well as transforming the destination histogram.
+///
 template <typename SrcKeyType, typename RefKeyType, typename DstKeyType>
 std::map<SrcKeyType, DstKeyType> histogram_matching(
     histogram<SrcKeyType> const& src_hist,
@@ -90,11 +117,25 @@ std::map<SrcKeyType, DstKeyType> histogram_matching(
     return inverse_mapping;
 }
 
+/// \overload histogram_matching
+/// \ingroup HM
+/// @param src_view  INPUT source image view
+/// @param ref_view  INPUT Reference image view
+/// @param dst_view  OUTPUT Output image view
+/// @param bin_width INPUT Histogram bin width
+/// @param mask      INPUT Specify is mask is to be used
+/// @param src_mask  INPUT Mask vector over input image
+/// @param ref_mask  INPUT Mask vector over reference image
+/// \brief Overload for histogram matching algorithm, takes in both source, reference & 
+///        destination image views and histogram matches the input image using the 
+///        reference image.
+///
 template <typename SrcView, typename ReferenceView, typename DstView>
 void histogram_matching(
     SrcView const& src_view,
     ReferenceView const& ref_view,
     DstView const& dst_view,
+    std::size_t bin_width = 1,
     bool mask = false,
     std::vector<std::vector<bool>> src_mask = {},
     std::vector<std::vector<bool>> ref_mask = {})
@@ -136,11 +177,11 @@ void histogram_matching(
         histogram<source_channel_t> src_histogram;
         histogram<ref_channel_t> ref_histogram;
         fill_histogram(
-            nth_channel_view(src_view, i), src_histogram, 1, false, false, mask, src_mask,
+            nth_channel_view(src_view, i), src_histogram, bin_width, false, false, mask, src_mask,
             std::tuple<source_channel_t>(src_pixel_min),
             std::tuple<source_channel_t>(src_pixel_max), true);
         fill_histogram(
-            nth_channel_view(ref_view, i), ref_histogram, 1, false, false, mask, ref_mask,
+            nth_channel_view(ref_view, i), ref_histogram, bin_width, false, false, mask, ref_mask,
             std::tuple<ref_channel_t>(ref_pixel_min), std::tuple<ref_channel_t>(ref_pixel_max),
             true);
         auto inverse_mapping = histogram_matching(src_histogram, ref_histogram);
