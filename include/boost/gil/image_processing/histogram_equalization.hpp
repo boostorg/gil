@@ -17,17 +17,30 @@
 
 namespace boost { namespace gil {
 
-/*
-    Algoithm :-
-    1. If histogram A is to be equalized compute the cumulative histogram of A.
-    2. Let CFD(A) refer to the cumulative histogram of A
-    3. For a uniform histogram A', CDF(A') = A'
-    4. We need to transfrom A to A' such that
-    5. CDF(A') = CDF(A) => A' = CDF(A)
-    6. Hence the pixel transform , px => histogram_of_ith_channel[px].
-    TODO: Extend for bit aligned images
-*/
 
+/////////////////////////////////////////
+/// Histogram Equalization(HE)
+/////////////////////////////////////////
+/// \defgroup HE HE
+/// \brief Contains implementation and description of the algorithm used to compute
+///        global histogram equalization of input images.
+///
+///        Algorithm :-
+///        1. If histogram A is to be equalized compute the cumulative histogram of A.
+///        2. Let CFD(A) refer to the cumulative histogram of A
+///        3. For a uniform histogram A', CDF(A') = A'
+///        4. We need to transfrom A to A' such that
+///        5. CDF(A') = CDF(A) => A' = CDF(A)
+///        6. Hence the pixel transform , px => histogram_of_ith_channel[px].
+///
+
+/// \fn histogram_equalization
+/// \ingroup HE
+/// \tparam SrcKeyType Key Type of input histogram
+/// @param src_hist INPUT Input source histogram
+/// \brief Overload for histogram equalization algorithm, takes in a single source histogram 
+///        and returns the color map used for histogram equalization.
+///
 template <typename SrcKeyType>
 std::map<SrcKeyType, SrcKeyType> histogram_equalization(histogram<SrcKeyType> const& src_hist)
 {
@@ -35,6 +48,16 @@ std::map<SrcKeyType, SrcKeyType> histogram_equalization(histogram<SrcKeyType> co
     return histogram_equalization(src_hist, dst_hist);
 }
 
+/// \overload histogram_equalization
+/// \ingroup HE
+/// \tparam SrcKeyType Key Type of input histogram
+/// \tparam DstKeyType Key Type of output histogram
+/// @param src_hist INPUT source histogram
+/// @param dst_hist OUTPUT Output histogram
+/// \brief Overload for histogram equalization algorithm, takes in both source histogram &
+///        destination histogram and returns the color map used for histogram equalization
+///        as well as transforming the destination histogram.
+///
 template <typename SrcKeyType, typename DstKeyType>
 std::map<SrcKeyType, DstKeyType>
     histogram_equalization(histogram<SrcKeyType> const& src_hist, histogram<DstKeyType>& dst_hist)
@@ -62,7 +85,16 @@ std::map<SrcKeyType, DstKeyType>
     return color_map;
 }
 
-
+/// \overload histogram_equalization
+/// \ingroup HE
+/// @param src_view  INPUT source image view
+/// @param dst_view  OUTPUT Output image view
+/// @param bin_width INPUT Histogram bin width
+/// @param mask      INPUT Specify is mask is to be used
+/// @param src_mask  INPUT Mask vector over input image
+/// \brief Overload for histogram equalization algorithm, takes in both source & destination
+///        image views and histogram equalizes the input image.
+///
 template <typename SrcView, typename DstView>
 void histogram_equalization(
     SrcView const& src_view,
