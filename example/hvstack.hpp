@@ -1,6 +1,7 @@
 #include "boost/gil/image_view_factory.hpp"
 #include <boost/gil/image.hpp>
 #include <boost/gil/image_view.hpp>
+#include <numeric>
 #include <stdexcept>
 #include <vector>
 
@@ -13,25 +14,31 @@ void hstack(const std::vector<View>& views, const View& output_view)
         throw std::invalid_argument("empty views vector is passed - cannot create stacked image");
     }
 
-    auto dimensions = views.front().dimensions();
+    auto height = views.front().height();
+    auto width = views.front().width();
     for (const auto& view : views)
     {
-        if (view.dimensions() != dimensions)
+        if (view.height() != height)
         {
-            throw std::invalid_argument("one or many views are not of the same dimension");
+            throw std::invalid_argument("one or many views are not of the same height");
         }
     }
 
-    auto full_width = dimensions.x * views.size();
-    if (output_view.width() != full_width || output_view.height() != dimensions.y)
+    std::ptrdiff_t full_width =
+        std::accumulate(views.begin(), views.end(), 0,
+                        [](std::ptrdiff_t old, const View& view) { return old + view.width(); });
+    if (output_view.width() != full_width || output_view.height() != height)
     {
         throw std::invalid_argument("the destination view is not of the right dimensions");
     }
 
+    std::ptrdiff_t current_x = 0;
     for (std::size_t i = 0; i < views.size(); ++i)
     {
-        auto subview = subimage_view(output_view, dimensions.x * i, 0, dimensions.x, dimensions.y);
+        auto subview =
+            subimage_view(output_view, current_x, 0, views[i].width(), views[i].height());
         copy_pixels(views[i], subview);
+        current_x += views[i].width();
     }
 }
 
@@ -44,7 +51,11 @@ image<typename View::value_type> hstack(const std::vector<View>& views)
     }
 
     auto dimensions = views.front().dimensions();
-    image<typename View::value_type> result_image(dimensions.x * views.size(), dimensions.y);
+    std::ptrdiff_t full_width =
+        std::accumulate(views.begin(), views.end(), 0,
+                        [](std::ptrdiff_t old, const View& view) { return old + view.width(); });
+    std::ptrdiff_t height = views.front().height();
+    image<typename View::value_type> result_image(full_width, height);
     hstack(views, view(result_image));
     return result_image;
 }
@@ -57,25 +68,31 @@ void vstack(const std::vector<View>& views, const View& output_view)
         throw std::invalid_argument("empty views vector is passed - cannot create stacked image");
     }
 
-    auto dimensions = views.front().dimensions();
+    auto full_height =
+        std::accumulate(views.begin(), views.end(), 0,
+                        [](std::ptrdiff_t old, const View& view) { return old + view.height(); });
+    std::ptrdiff_t width = views.front().height();
+
     for (const auto& view : views)
     {
-        if (view.dimensions() != dimensions)
+        if (view.width() != width)
         {
-            throw std::invalid_argument("one or many views are not of the same dimension");
+            throw std::invalid_argument("one or many views are not of the same width");
         }
     }
 
-    auto full_height = dimensions.y * views.size();
-    if (output_view != full_height || output_view.width() != dimensions.x)
+    if (output_view != full_height || output_view.width() != width)
     {
         throw std::invalid_argument("the destination view is not of the right dimensions");
     }
 
+    std::ptrdiff_t current_y = 0;
     for (std::size_t i = 0; i < views.size(); ++i)
     {
-        auto subview = subimage_view(output_view, 0, dimensions.y * i, dimensions.x, dimensions.y);
+        auto subview =
+            subimage_view(output_view, 0, current_y, views[i].width(), views[i].height());
         copy_pixels(views[i], subview);
+        current_y += views[i].height();
     }
 }
 
@@ -87,8 +104,12 @@ image<typename View::value_type> vstack(const std::vector<View>& views)
         throw std::invalid_argument("empty views vector is passed - cannot create stacked image");
     }
 
-    auto dimensions = views.front().dimensions();
-    image<typename View::value_type> result_image(dimensions.x, dimensions.y * views.size());
+    auto full_height =
+        std::accumulate(views.begin(), views.end(), 0,
+                        [](std::ptrdiff_t old, const View& view) { return old + view.height(); });
+    std::ptrdiff_t width = views.front().height();
+
+    image<typename View::value_type> result_image(width, full_height);
     hstack(views, view(result_image));
     return result_image;
 }
