@@ -9,6 +9,3 @@ processing algorithms used for contrast enhancement.
    :caption: Table of Contents
 
    overview
-   histogram_equalization
-   histogram_matching
-   ahe
