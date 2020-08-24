@@ -8,14 +8,12 @@
 #ifndef BOOST_GIL_IMAGE_PROCESSING_HISTOGRAM_EQUALIZATION_HPP
 #define BOOST_GIL_IMAGE_PROCESSING_HISTOGRAM_EQUALIZATION_HPP
 
-#include <boost/gil/image.hpp>
 #include <boost/gil/histogram.hpp>
+#include <boost/gil/image.hpp>
 
-// #include <iostream>
-// #include <utility>
+#include <cmath>
 #include <map>
 #include <vector>
-#include <cmath>
 
 namespace boost { namespace gil {
 
@@ -31,17 +29,15 @@ namespace boost { namespace gil {
 */
 
 template <typename SrcKeyType>
-std::map<SrcKeyType, SrcKeyType> histogram_equalization(
-    histogram<SrcKeyType> const& src_hist)
+std::map<SrcKeyType, SrcKeyType> histogram_equalization(histogram<SrcKeyType> const& src_hist)
 {
     histogram<SrcKeyType> dst_hist;
     return histogram_equalization(src_hist, dst_hist);
 }
 
 template <typename SrcKeyType, typename DstKeyType>
-std::map<SrcKeyType, DstKeyType> histogram_equalization(
-    histogram<SrcKeyType> const& src_hist,
-    histogram<DstKeyType>& dst_hist)
+std::map<SrcKeyType, DstKeyType>
+    histogram_equalization(histogram<SrcKeyType> const& src_hist, histogram<DstKeyType>& dst_hist)
 {
     static_assert(
         std::is_integral<SrcKeyType>::value &&
@@ -50,16 +46,14 @@ std::map<SrcKeyType, DstKeyType> histogram_equalization(
 
     using value_t = typename histogram<SrcKeyType>::value_type;
     dst_hist.clear();
-    double sum = src_hist.sum();
-    // Use when setlimits are added to the algorithm
-    // SrcKeyType min_key = std::get<0>(src_hist.min_key());
-    // SrcKeyType max_key = std::get<0>(src_hist.max_key());
-    SrcKeyType min_key = std::numeric_limits<DstKeyType>::min();
-    SrcKeyType max_key = std::numeric_limits<DstKeyType>::max();
+    double sum          = src_hist.sum();
+    SrcKeyType min_key  = std::numeric_limits<DstKeyType>::min();
+    SrcKeyType max_key  = std::numeric_limits<DstKeyType>::max();
     auto cumltv_srchist = cumulative_histogram(src_hist);
     std::map<SrcKeyType, DstKeyType> color_map;
     std::for_each(cumltv_srchist.begin(), cumltv_srchist.end(), [&](value_t const& v) {
-        DstKeyType trnsfrmd_key = static_cast<DstKeyType>((v.second * (max_key - min_key)) / sum + min_key);
+        DstKeyType trnsfrmd_key =
+            static_cast<DstKeyType>((v.second * (max_key - min_key)) / sum + min_key);
         color_map[std::get<0>(v.first)] = trnsfrmd_key;
     });
     std::for_each(src_hist.begin(), src_hist.end(), [&](value_t const& v) {
@@ -79,10 +73,6 @@ void histogram_equalization(
 {
     gil_function_requires<ImageViewConcept<SrcView>>();
     gil_function_requires<MutableImageViewConcept<DstView>>();
-    
-    // static_assert(
-    //     src_view.dimensions() == dst_view.dimensions(),
-    //     "Source and destination views must have same dimensions.");
 
     static_assert(
         color_spaces_are_compatible<
@@ -107,11 +97,6 @@ void histogram_equalization(
         fill_histogram(nth_channel_view(src_view, i), h, bin_width, false, false, mask, src_mask);
         h.normalize();
         auto h2 = cumulative_histogram(h);
-        // auto color_map = histogram_equalization(h);
-        // for(auto it:h2)
-        // {
-        //     std::cout<<int(std::get<0>(it.first))<<" "<<it.second<<std::endl;
-        // }
         for (std::ptrdiff_t src_y = 0; src_y < height; ++src_y)
         {
             auto src_it = nth_channel_view(src_view, i).row_begin(src_y);

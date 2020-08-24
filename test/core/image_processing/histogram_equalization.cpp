@@ -142,16 +142,6 @@ bool equal_pixels(SrcView const& v1, SrcView const& v2, double threshold)
             }
         }
     }
-    // boost::gil::for_each_pixel(v1, [&](pixel_t const& p) {
-    //     boost::gil::static_for_each(p, [&](channel_t const& c) {
-    //         sum+=c;
-    //     });
-    // });
-    // boost::gil::for_each_pixel(v2, [&](pixel_t const& p) {
-    //     boost::gil::static_for_each(p, [&](channel_t const& c) {
-    //         sum-=c;
-    //     });
-    // });
     return ( abs(sum) / (num_pixels * num_channels * (max_p - min_p)) < threshold );
 }
 
@@ -174,17 +164,6 @@ void test_random_image()
 
     histogram_equalization(process_1, process_2);
     BOOST_TEST(process_1.equals(process_2));
-
-    // for(auto it:processed_1)
-    // {
-    //     std::cout<<int(std::get<0>(it.first))<<" "<<it.second<<std::endl;
-    // }
-
-    // std::cout<<std::endl;
-    // for(auto it:processed_2)
-    // {
-    //     std::cout<<int(std::get<0>(it.first))<<" "<<it.second<<std::endl;
-    // }
 }
 
 void test_random_image_with_mask()
