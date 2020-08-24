@@ -10,6 +10,21 @@
 #include <vector>
 
 namespace boost { namespace gil {
+/// \defgroup HoughTransform
+/// \brief A family of shape detectors that are specified by equation
+///
+/// Hough transform is a method of mapping (voting) an object which can be described by
+/// equation to single point in accumulator array (also called parameter space).
+/// Each set pixel in edge map votes for every shape it can be part of.
+/// Circle and ellipse transforms are very costly to brute force, while
+/// non-brute-forcing algorithms tend to gamble on probabilities.
+
+/// \ingroup HoughTransform
+/// \brief Vote for best fit of a line in parameter space
+///
+/// The input must be an edge map with grayscale pixels. Be aware of overflow inside
+/// accumulator array. The theta parameter is best computed through factory function
+/// provided in hough_parameter.hpp
 template <typename InputView, typename OutputView>
 void hough_line_transform(const InputView& input_view, const OutputView& accumulator_array,
                           const hough_parameter<double>& theta,
@@ -50,6 +65,13 @@ void hough_line_transform(const InputView& input_view, const OutputView& accumul
     }
 }
 
+/// \ingroup HoughTransform
+/// \brief Vote for best fit of a circle in parameter space according to rasterizer
+///
+/// The input must be an edge map with grayscale pixels. Be aware of overflow inside
+/// accumulator array. Rasterizer is used to rasterize a circle for voting. The circle
+/// then is translated for every origin (x, y) in x y parameter space. For available
+/// circle rasterizers, please look at rasterization/circle.hpp
 template <typename ImageView, typename ForwardIterator, typename Rasterizer>
 void hough_circle_transform_brute(const ImageView& input,
                                   const hough_parameter<std::ptrdiff_t> radius_parameter,

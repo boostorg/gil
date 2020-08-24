@@ -3,6 +3,11 @@
 #include <cstddef>
 
 namespace boost { namespace gil {
+/// \ingroup HoughTransform
+/// \brief A type to encapsulate Hough transform parameter range
+///
+/// This type provides a way to express value range for a parameter
+/// as well as some factory functions to simplify initialization
 template <typename T>
 struct hough_parameter
 {
@@ -10,6 +15,12 @@ struct hough_parameter
     T step_size;
     std::size_t step_count;
 
+    /// \ingroup HoughTransform
+    /// \brief Create Hough parameter from value neighborhood and step count
+    ///
+    /// This function will take start_point as middle point, and in both
+    /// directions will try to walk half_step_count times until distance of
+    /// neighborhood is reached
     static hough_parameter<T> from_step_count(T start_point, T neighborhood,
                                               std::size_t half_step_count)
     {
@@ -18,6 +29,12 @@ struct hough_parameter
         return {start_point - neighborhood, step_size, step_count};
     }
 
+    /// \ingroup HoughTransform
+    /// \brief Create Hough parameter from value neighborhood and step size
+    ///
+    /// This function will take start_point as middle point, and in both
+    /// directions will try to walk step_size at a time until distance of
+    /// neighborhood is reached
     static hough_parameter<T> from_step_size(T start_point, T neighborhood, T step_size)
     {
         std::size_t step_count =
@@ -30,12 +47,32 @@ struct hough_parameter
     }
 };
 
+/// \ingroup HoughTransform
+/// \brief Calculate minimum angle which would be observable if walked on a circle
+///
+/// When drawing a circle or moving around a point in circular motion, it is
+/// important to not do too many steps, but also to not have disconnected
+/// trajectory. This function will calculate the minimum angle that is observable
+/// when walking on a circle or tilting a line.
+/// WARNING: do keep in mind IEEE 754 quirks, e.g. no-associativity,
+/// no-commutativity and precision. Do not expect expressions that are
+/// mathematically the same to produce the same values
 inline double minimum_angle_step(point_t dimensions)
 {
     auto longer_dimension = dimensions.x > dimensions.y ? dimensions.x : dimensions.y;
     return std::atan2(1, longer_dimension);
 }
 
+/// \ingroup HoughTransform
+/// \brief Create a Hough transform parameter with optimal angle step
+///
+/// Due to computational intensity and noise sensitivity of Hough transform,
+/// having any candidates missed or computed again is problematic. This function
+/// will properly encapsulate optimal value range around approx_angle with amplitude of
+/// neighborhood in each direction.
+/// WARNING: do keep in mind IEEE 754 quirks, e.g. no-associativity,
+/// no-commutativity and precision. Do not expect expressions that are
+/// mathematically the same to produce the same values
 inline hough_parameter<double> make_theta_parameter(double approx_angle, double neighborhood,
                                                     point_t dimensions)
 {

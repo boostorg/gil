@@ -3,6 +3,27 @@
 #include <cstddef>
 
 namespace boost { namespace gil {
+/// \defgroup Rasterization
+/// \brief A set of functions to rasterize shapes
+///
+/// Due to images being discrete, most shapes require specialized algorithms to handle rasterization
+/// efficiently and solve problem of connectivity and being close to the original shape.
+
+/// \defgroup LineRasterization
+/// \ingroup Rasterization
+/// \brief A set of rasterizers for lines
+///
+/// The main problem with line rasterization is to do it efficiently, e.g. less floating point
+/// operations. There are multiple algorithms that on paper should reach the same result, but
+/// due to quirks of IEEE-754 they don't. Please select one and stick to it if possible. At
+/// the moment only Bresenham rasterizer is implemented.
+
+/// \ingroup LineRasterization
+/// \brief Rasterize a line according to Bresenham algorithm
+///
+/// Do note that if either width or height is 1, slope is set to zero.
+/// reference:
+/// https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm#:~:text=Bresenham's%20line%20algorithm%20is%20a,straight%20line%20between%20two%20points.
 struct bresenham_line_rasterizer
 {
     constexpr std::ptrdiff_t point_count(std::ptrdiff_t width, std::ptrdiff_t height) const noexcept

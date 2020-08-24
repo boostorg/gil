@@ -4,21 +4,40 @@
 #include <cstddef>
 
 namespace boost { namespace gil {
+/// \defgroup CircleRasterization
+/// \ingroup Rasterization
+/// \brief Circle rasterization algorithms
+///
+/// The main problems are connectivity and equation following. Circle can be easily moved
+/// to new offset, and rotation has no effect on it (not recommended to do rotation).
 
+/// \ingroup CircleRasterization
+/// \brief Rasterize trigonometric circle according to radius by sine and radius by cosine
+///
+/// This rasterizer is the one used that is used in standard Hough circle transform in
+/// the books. It is also quite expensive to compute.
+/// WARNING: the product of this rasterizer does not follow circle equation, even though it
+/// produces quite round like shapes.
 struct trigonometric_circle_rasterizer
 {
+    /// \brief Calculates minimum angle step that is distinguishable when walking on circle
+    ///
+    /// It is important to not have disconnected circle and to not compute unnecessarily,
+    /// thus the result of this function is used when rendering.
     double minimum_angle_step(std::ptrdiff_t radius) const noexcept
     {
         const auto diameter = radius * 2 - 1;
         return std::atan2(1.0, diameter);
     }
 
+    /// \brief Calculate the amount of points that rasterizer will output
     std::ptrdiff_t point_count(std::ptrdiff_t radius) const noexcept
     {
         return 8 * static_cast<std::ptrdiff_t>(
                        std::round(detail::pi / 4 / minimum_angle_step(radius)) + 1);
     }
 
+    /// \brief perform rasterization and output into d_first
     template <typename RAIterator>
     void operator()(std::ptrdiff_t radius, point_t offset, RAIterator d_first) const
     {
@@ -45,8 +64,15 @@ struct trigonometric_circle_rasterizer
     }
 };
 
+/// \ingroup CircleRasterization
+/// \brief Perform circle rasterization according to Midpoint algorithm
+///
+/// This algorithm givess reasonable output and is cheap to compute.
+/// reference:
+/// https://en.wikipedia.org/wiki/Midpoint_circle_algorithm
 struct midpoint_circle_rasterizer
 {
+    /// \brief Calculate the amount of points that rasterizer will output
     std::ptrdiff_t point_count(std::ptrdiff_t radius) const noexcept
     {
         // the reason for pulling 8 out is so that when the expression radius * cos(45 degrees)
@@ -56,6 +82,7 @@ struct midpoint_circle_rasterizer
                        std::round(radius * std::cos(boost::gil::detail::pi / 4)) + 1);
     }
 
+    /// \brief perform rasterization and output into d_first
     template <typename RAIterator>
     void operator()(std::ptrdiff_t radius, point_t offset, RAIterator d_first) const
     {
