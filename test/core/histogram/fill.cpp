@@ -69,10 +69,9 @@ gil::gray8c_view_t big_gray_view = gil::interleaved_view(8, 8, reinterpret_cast<
 
 gil::rgb8c_view_t big_rgb_view = gil::interleaved_view(8, 8, reinterpret_cast<gil::rgb8c_pixel_t*>(big_rgb_matrix), 24);
 
-void check_histogram_fill() 
+void check_histogram_fill_test1() 
 {
-    gil::histogram<int> h1, h2;
-    gil::histogram<int, int, int> h3;
+    gil::histogram<int> h1;
 
     h1.fill(big_gray_view);
 
@@ -85,7 +84,11 @@ void check_histogram_fill()
         }
     }
     BOOST_TEST(check_gray_fill);
+}
 
+void check_histogram_fill_test2() 
+{
+    gil::histogram<int, int, int> h3;
     h3.fill(big_rgb_view);
 
     bool check_rgb_fill = true;
@@ -97,7 +100,11 @@ void check_histogram_fill()
         }
     }
     BOOST_TEST(check_rgb_fill);
+}
 
+void check_histogram_fill_test3() 
+{
+    gil::histogram<int> h2;
     h2.fill<1>(big_rgb_view);
     bool check_gray_fill2 = true;
     for (std::size_t i = 1; i <= 8; ++i)
@@ -108,11 +115,16 @@ void check_histogram_fill()
         }
     }
     BOOST_TEST(check_gray_fill2);
+}
 
+void check_histogram_fill_test4() 
+{
+    gil::histogram<int> h1;
     // Check with limits
     std::tuple<int> lower{2}, higher{6};
     h1.clear();
     h1.fill(big_gray_view, 1, false, {{}}, lower, higher, true);
+    bool check_gray_fill = true;
     check_gray_fill = true;
     for (std::size_t i = 1; i <= 8; ++i)
     {
@@ -126,11 +138,16 @@ void check_histogram_fill()
         }
     }
     BOOST_TEST(check_gray_fill);
+}
 
+void check_histogram_fill_test5() 
+{
+    gil::histogram<int, int, int> h3;
     std::tuple<int, int ,int> lower1{2,2,2}, higher1{6,6,6};
     h3.clear();
     h3.fill(big_rgb_view, 1, false, {{}}, lower1, higher1, true);
 
+    bool check_rgb_fill = true;
     check_rgb_fill = true;
     for (std::size_t i = 1; i <= 8; ++i)
     {
@@ -144,16 +161,21 @@ void check_histogram_fill()
         }
     }
     BOOST_TEST(check_rgb_fill);
+}
 
+void check_histogram_fill_test6() 
+{
+    gil::histogram<int> h2;
     h2.clear();
-    // std::tuple<int> lower{2}, higher{6};
+    std::tuple<int> lower{2}, higher{6};
     h2.fill<1>(big_rgb_view, 1, false, {{}}, lower, higher, true);
+    bool check_gray_fill2 = true;
     check_gray_fill2 = true;
     for (std::size_t i = 1; i <= 8; ++i)
     {
         if(i+1 < 2 || i+1 > 6)
         {
-            check_gray_fill = check_gray_fill & (h2(i+1)==0);continue;
+            check_gray_fill2 = check_gray_fill2 & (h2(i+1)==0);continue;
         }
         if(h2(i+1) != 8)
         {
@@ -161,8 +183,11 @@ void check_histogram_fill()
         }
     }
     BOOST_TEST(check_gray_fill2);
+}
 
-    //Check mask
+void check_histogram_fill_test7() 
+{
+    //Check masking
     gil::histogram<int> h4;
     std::tuple<int> low{1}, high{8};
     gil::fill_histogram(sparse_gray_view, h4, 1, false, false, true, mask, low, high, true);
@@ -243,7 +268,13 @@ void check_fill_bin_width()
 
 int main() {
 
-    check_histogram_fill();
+    check_histogram_fill_test1();
+    check_histogram_fill_test2();
+    check_histogram_fill_test3();
+    check_histogram_fill_test4();
+    check_histogram_fill_test5();
+    check_histogram_fill_test6();
+    check_histogram_fill_test7();
     check_histogram_fill_algorithm();
     check_fill_bin_width();
 
