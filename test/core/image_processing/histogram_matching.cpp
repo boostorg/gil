@@ -5,12 +5,11 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#include <boost/gil/histogram.hpp>
-#include <boost/gil/image_processing/histogram_matching.hpp>
+
 #include <boost/gil/image_view.hpp>
-// #include <boost/gil/io/write_view.hpp>
-// #include <boost/gil/extension/io/png.hpp>
+#include <boost/gil/histogram.hpp>
 #include <boost/gil/color_base_algorithm.hpp>
+#include <boost/gil/image_processing/histogram_matching.hpp>
 #include <boost/gil/extension/toolbox/metafunctions/get_pixel_type.hpp>
 #include <boost/core/lightweight_test.hpp>
 
@@ -91,8 +90,6 @@ void print(SrcView const& g)
 template<typename SrcView>
 bool equal_histograms(SrcView const& v1, SrcView const& v2, double threshold = epsilon)
 {
-    // boost::gil::write_view("im.png", v1, boost::gil::png_tag{});
-    // boost::gil::write_view("ref.png", v2, boost::gil::png_tag{});
     double sum=0.0;
     using channel_t = typename boost::gil::channel_type<SrcView>::type;
     boost::gil::histogram<channel_t> h1, h2;
@@ -103,24 +100,11 @@ bool equal_histograms(SrcView const& v1, SrcView const& v2, double threshold = e
     
     boost::gil::fill_histogram(v1, h1, 1, false, false);
     boost::gil::fill_histogram(v2, h2, 1, false, false);
-    // for(auto it:h1)
-    // {
-    //     std::cout<<int(std::get<0>(it.first))<<" "<<it.second<<std::endl;
-    // }
     auto ch1 = boost::gil::cumulative_histogram(h1);
     auto ch2 = boost::gil::cumulative_histogram(h2);
-    // for(auto it:ch1)
-    // {
-    //     std::cout<<int(std::get<0>(it.first))<<" "<<it.second<<std::endl;
-    // }
-    // for(auto it:ch2)
-    // {
-    //     std::cout<<int(std::get<0>(it.first))<<" "<<it.second<<std::endl;
-    // }
     std::for_each(ch1.begin(), ch1.end(), [&](value_t const& v) {
         sum+=abs(v.second-ch1[v.first]);
     });
-    // std::cout<<sum<<" ";
     return ( abs(sum) / (ch1.size() * (max_p - min_p)) < threshold );
 }
 

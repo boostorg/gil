@@ -13,8 +13,8 @@
 #include <boost/gil/image.hpp>
 
 #include <algorithm>
-#include <map>
 #include <cmath>
+#include <map>
 #include <vector>
 
 namespace boost { namespace gil {
@@ -27,16 +27,15 @@ namespace boost { namespace gil {
                                                   => px' = Inv-CDF (CDF(px))
 */
 
-template<typename SrcKeyType, typename RefKeyType>
-std::map<SrcKeyType, SrcKeyType> histogram_matching(
-    histogram<SrcKeyType> const& src_hist,
-    histogram<RefKeyType> const& ref_hist)
+template <typename SrcKeyType, typename RefKeyType>
+std::map<SrcKeyType, SrcKeyType>
+    histogram_matching(histogram<SrcKeyType> const& src_hist, histogram<RefKeyType> const& ref_hist)
 {
     histogram<SrcKeyType> dst_hist;
     return histogram_matching(src_hist, ref_hist, dst_hist);
 }
 
-template<typename SrcKeyType, typename RefKeyType, typename DstKeyType>
+template <typename SrcKeyType, typename RefKeyType, typename DstKeyType>
 std::map<SrcKeyType, DstKeyType> histogram_matching(
     histogram<SrcKeyType> const& src_hist,
     histogram<RefKeyType> const& ref_hist,
@@ -50,15 +49,15 @@ std::map<SrcKeyType, DstKeyType> histogram_matching(
 
     using value_t = typename histogram<SrcKeyType>::value_type;
     dst_hist.clear();
-    double src_sum = src_hist.sum();
-    double ref_sum = ref_hist.sum();
+    double src_sum      = src_hist.sum();
+    double ref_sum      = ref_hist.sum();
     auto cumltv_srchist = cumulative_histogram(src_hist);
     auto cumltv_refhist = cumulative_histogram(ref_hist);
     std::map<SrcKeyType, RefKeyType> inverse_mapping;
     
     std::vector<typename histogram<RefKeyType>::key_type> src_keys, ref_keys;
-    src_keys = src_hist.sorted_keys();
-    ref_keys = ref_hist.sorted_keys();
+    src_keys             = src_hist.sorted_keys();
+    ref_keys             = ref_hist.sorted_keys();
     std::ptrdiff_t start = ref_keys.size() - 1;
     RefKeyType ref_max;
     if (start >= 0)
@@ -75,7 +74,8 @@ std::map<SrcKeyType, DstKeyType> histogram_matching(
             abs(cumltv_refhist(std::min<RefKeyType>(ref_max, std::get<0>(ref_keys[start + 1]))) -
                 src_val))
         {
-            inverse_mapping[std::get<0>(src_keys[j])] = std::min<RefKeyType>(ref_max, std::get<0>(ref_keys[start + 1]));
+            inverse_mapping[std::get<0>(src_keys[j])] = 
+                std::min<RefKeyType>(ref_max, std::get<0>(ref_keys[start + 1]));
         }
         else
         {
