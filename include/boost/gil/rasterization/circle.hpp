@@ -1,3 +1,14 @@
+// Boost.GIL (Generic Image Library) - tests
+//
+// Copyright 2020 Olzhas Zhumabek <anonymous.from.applecity@gmail.com>
+//
+// Use, modification and distribution are subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+//
+#ifndef BOOST_GIL_RASTERIZATION_CIRCLE_HPP
+#define BOOST_GIL_RASTERIZATION_CIRCLE_HPP
+
 #include <boost/gil/detail/math.hpp>
 #include <boost/gil/point.hpp>
 #include <cmath>
@@ -38,8 +49,8 @@ struct trigonometric_circle_rasterizer
     }
 
     /// \brief perform rasterization and output into d_first
-    template <typename RAIterator>
-    void operator()(std::ptrdiff_t radius, point_t offset, RAIterator d_first) const
+    template <typename RandomAccessIterator>
+    void operator()(std::ptrdiff_t radius, point_t offset, RandomAccessIterator d_first) const
     {
         const double minimum_angle_step = std::atan2(1.0, radius);
         auto translate_mirror_points = [&d_first, offset](point_t p) {
@@ -112,3 +123,4 @@ struct midpoint_circle_rasterizer
     }
 };
 }} // namespace boost::gil
+#endif

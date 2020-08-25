@@ -24,6 +24,8 @@
 #include <boost/gil/gray.hpp>
 #include <boost/gil/histogram.hpp>
 #include <boost/gil/image.hpp>
+#include <boost/gil/image_processing/scaling.hpp>
+#include <boost/gil/image_processing/threshold.hpp>
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/image_view_factory.hpp>
 #include <boost/gil/iterator_from_2d.hpp>
@@ -38,13 +40,13 @@
 #include <boost/gil/point.hpp>
 #include <boost/gil/position_iterator.hpp>
 #include <boost/gil/premultiply.hpp>
+#include <boost/gil/rasterization/circle.hpp>
+#include <boost/gil/rasterization/line.hpp>
 #include <boost/gil/rgb.hpp>
 #include <boost/gil/rgba.hpp>
 #include <boost/gil/step_iterator.hpp>
 #include <boost/gil/typedefs.hpp>
 #include <boost/gil/utilities.hpp>
 #include <boost/gil/virtual_locator.hpp>
-#include <boost/gil/image_processing/scaling.hpp>
-#include <boost/gil/image_processing/threshold.hpp>
 
 #endif

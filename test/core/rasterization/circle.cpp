@@ -6,7 +6,7 @@
 namespace gil = boost::gil;
 
 template <typename Rasterizer>
-void test_equation_following(std::ptrdiff_t radius, Rasterizer rasterizer)
+void test_rasterizer_follows_equation(std::ptrdiff_t radius, Rasterizer rasterizer)
 {
 
     std::vector<gil::point_t> circle_points(rasterizer.point_count(radius));
@@ -56,7 +56,7 @@ int main()
 {
     for (std::ptrdiff_t radius = 5; radius <= 512; ++radius)
     {
-        test_equation_following(radius, gil::midpoint_circle_rasterizer{});
+        test_rasterizer_follows_equation(radius, gil::midpoint_circle_rasterizer{});
         // TODO: find out a new testing procedure for trigonometric rasterizer
         // test_equation_following(radius, gil::trigonometric_circle_rasterizer{});
         test_connectivity(radius, gil::midpoint_circle_rasterizer{});

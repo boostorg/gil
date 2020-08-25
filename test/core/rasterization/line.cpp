@@ -7,7 +7,7 @@
 
 namespace gil = boost::gil;
 
-void line_equation_following_test(std::ptrdiff_t width, std::ptrdiff_t height)
+void test_bresenham_rasterizer_follows_equation(std::ptrdiff_t width, std::ptrdiff_t height)
 {
     double m = static_cast<double>(height) / width;
     const auto rasterizer = gil::bresenham_line_rasterizer{};
@@ -22,21 +22,16 @@ void line_equation_following_test(std::ptrdiff_t width, std::ptrdiff_t height)
     }
 }
 
-void equation_following_test_cases()
+int main()
 {
     const std::ptrdiff_t size = 256;
     for (std::ptrdiff_t width = 1; width < size; ++width)
     {
         for (std::ptrdiff_t height = 1; height <= width; ++height)
         {
-            line_equation_following_test(width, width);
+            test_bresenham_rasterizer_follows_equation(width, width);
         }
     }
-}
-
-int main()
-{
-    equation_following_test_cases();
 
     return boost::report_errors();
 }

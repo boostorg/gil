@@ -1,10 +1,13 @@
-#include "boost/gil/extension/io/png/tags.hpp"
-#include "boost/gil/point.hpp"
+// Boost.GIL (Generic Image Library) - tests
+//
+// Copyright 2020 Olzhas Zhumabek <anonymous.from.applecity@gmail.com>
+//
+// Use, modification and distribution are subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+//
+#include <boost/gil.hpp>
 #include <boost/gil/extension/io/png.hpp>
-#include <boost/gil/image.hpp>
-#include <boost/gil/image_view.hpp>
-#include <boost/gil/rasterization/line.hpp>
-#include <boost/gil/typedefs.hpp>
 
 #include <limits>
 #include <vector>

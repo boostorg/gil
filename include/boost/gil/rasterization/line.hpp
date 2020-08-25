@@ -1,3 +1,12 @@
+// Boost.GIL (Generic Image Library) - tests
+//
+// Copyright 2020 Olzhas Zhumabek <anonymous.from.applecity@gmail.com>
+//
+// Use, modification and distribution are subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+//
+
 #include <boost/gil/point.hpp>
 #include <cmath>
 #include <cstddef>
@@ -31,8 +40,9 @@ struct bresenham_line_rasterizer
         return width > height ? width : height;
     }
 
-    template <typename RAIterator>
-    void operator()(std::ptrdiff_t width, std::ptrdiff_t height, RAIterator output_first) const
+    template <typename RandomAccessIterator>
+    void operator()(std::ptrdiff_t width, std::ptrdiff_t height,
+                    RandomAccessIterator output_first) const
     {
         const auto target_count = point_count(width, height);
         const bool needs_flip = target_count != width;

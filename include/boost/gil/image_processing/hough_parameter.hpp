@@ -1,3 +1,14 @@
+// Boost.GIL (Generic Image Library) - tests
+//
+// Copyright 2020 Olzhas Zhumabek <anonymous.from.applecity@gmail.com>
+//
+// Use, modification and distribution are subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+//
+#ifndef BOOST_GIL_IMAGE_PROCESSING_HOUGH_PARAMETER_HPP
+#define BOOST_GIL_IMAGE_PROCESSING_HOUGH_PARAMETER_HPP
+
 #include <boost/gil/point.hpp>
 #include <cmath>
 #include <cstddef>
@@ -84,3 +95,4 @@ inline hough_parameter<double> make_theta_parameter(double approx_angle, double 
     return hough_parameter<double>::from_step_size(approx_angle, neighborhood, angle_step);
 }
 }} // namespace boost::gil
+#endif
