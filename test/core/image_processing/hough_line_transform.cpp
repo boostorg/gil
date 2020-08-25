@@ -53,7 +53,7 @@ void hough_line_test(std::ptrdiff_t height, std::ptrdiff_t intercept)
     const double expected_theta = std::round(theta / minimum_angle_step) * minimum_angle_step;
 
     const std::size_t half_step_count = 3;
-    const std::size_t expected_index = 3;
+    const std::ptrdiff_t expected_index = 3;
     const std::size_t accumulator_array_dimensions = half_step_count * 3 + 1;
     auto radius_param =
         gil::hough_parameter<std::ptrdiff_t>::from_step_count(expected_radius, 3, half_step_count);
