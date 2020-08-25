@@ -74,6 +74,16 @@ struct random_value
         return uid_(rng_);
     }
 
+    T range_min() const noexcept
+    {
+        return uid_.a();
+    }
+
+    T range_max() const noexcept
+    {
+        return uid_.b();
+    }
+
     std::mt19937 rng_;
     std::uniform_int_distribution<typename gil::promote_integral<T>::type> uid_;
 };
