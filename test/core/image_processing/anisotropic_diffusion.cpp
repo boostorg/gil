@@ -5,6 +5,7 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
+#include "../test_fixture.hpp"
 #include "boost/gil/algorithm.hpp"
 #include <boost/gil/color_base_algorithm.hpp>
 #include <boost/gil/image.hpp>
@@ -91,8 +92,8 @@ void brightness_function_test()
 template <typename ImageType, typename OutputImageType>
 void heat_conservation_test(std::uint32_t seed)
 {
-    std::mt19937 twister(seed);
-    std::uniform_int_distribution<gil::uint16_t> dist(0, std::numeric_limits<gil::uint8_t>::max());
+    gil::test::fixture::random_value<std::uint32_t> dist(seed, 0,
+                                                         std::numeric_limits<gil::uint8_t>::max());
 
     ImageType image(32, 32);
     auto view = gil::view(image);
@@ -102,7 +103,7 @@ void heat_conservation_test(std::uint32_t seed)
     {
         for (std::size_t channel_index = 0; channel_index < num_channels; ++channel_index)
         {
-            pixel[channel_index] = static_cast<gil::uint8_t>(dist(twister));
+            pixel[channel_index] = static_cast<gil::uint8_t>(dist());
             before_diffusion[channel_index] += pixel[channel_index];
         }
     }
@@ -268,7 +269,7 @@ void laplace_functions_test()
 
 int main()
 {
-    for (std::uint32_t seed = 0; seed < 1000; ++seed)
+    for (std::uint32_t seed = 0; seed < 100; ++seed)
     {
         heat_conservation_test<gil::gray8_image_t, gil::gray32f_image_t>(seed);
         heat_conservation_test<gil::rgb8_image_t, gil::rgb32f_image_t>(seed);
@@ -278,7 +279,8 @@ int main()
     {
         diffusion_function_check<gil::rgb32f_pixel_t>(
             gil::conductivity::perona_malik_conductivity{kappa});
-        diffusion_function_check<gil::rgb32f_pixel_t>(gil::conductivity::gaussian_conductivity{kappa});
+        diffusion_function_check<gil::rgb32f_pixel_t>(
+            gil::conductivity::gaussian_conductivity{kappa});
         diffusion_function_check<gil::rgb32f_pixel_t>(
             gil::conductivity::wide_regions_conductivity{kappa});
         diffusion_function_check<gil::rgb32f_pixel_t>(
@@ -286,7 +288,8 @@ int main()
 
         diffusion_function_check<gil::gray32f_pixel_t>(
             gil::conductivity::perona_malik_conductivity{kappa});
-        diffusion_function_check<gil::gray32f_pixel_t>(gil::conductivity::gaussian_conductivity{kappa});
+        diffusion_function_check<gil::gray32f_pixel_t>(
+            gil::conductivity::gaussian_conductivity{kappa});
         diffusion_function_check<gil::gray32f_pixel_t>(
             gil::conductivity::wide_regions_conductivity{kappa});
         diffusion_function_check<gil::gray32f_pixel_t>(
