@@ -24,7 +24,7 @@ void line_bresenham(std::ptrdiff_t width, std::ptrdiff_t height, const std::stri
     gil::gray8_image_t image(size, size);
     auto view = gil::view(image);
 
-    rasterizer(width, height, line_points.begin());
+    rasterizer({0, 0}, {width - 1, height - 1}, line_points.begin());
     for (const auto& point : line_points)
     {
         view(point) = std::numeric_limits<gil::uint8_t>::max();

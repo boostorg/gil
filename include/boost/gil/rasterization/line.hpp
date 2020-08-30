@@ -11,21 +11,26 @@
 #include <cmath>
 #include <cstddef>
 
-namespace boost { namespace gil {
+namespace boost
+{
+namespace gil
+{
 /// \defgroup Rasterization
 /// \brief A set of functions to rasterize shapes
 ///
-/// Due to images being discrete, most shapes require specialized algorithms to handle rasterization
-/// efficiently and solve problem of connectivity and being close to the original shape.
+/// Due to images being discrete, most shapes require specialized algorithms to
+/// handle rasterization efficiently and solve problem of connectivity and being
+/// close to the original shape.
 
 /// \defgroup LineRasterization
 /// \ingroup Rasterization
 /// \brief A set of rasterizers for lines
 ///
-/// The main problem with line rasterization is to do it efficiently, e.g. less floating point
-/// operations. There are multiple algorithms that on paper should reach the same result, but
-/// due to quirks of IEEE-754 they don't. Please select one and stick to it if possible. At
-/// the moment only Bresenham rasterizer is implemented.
+/// The main problem with line rasterization is to do it efficiently, e.g. less
+/// floating point operations. There are multiple algorithms that on paper
+/// should reach the same result, but due to quirks of IEEE-754 they don't.
+/// Please select one and stick to it if possible. At the moment only Bresenham
+/// rasterizer is implemented.
 
 /// \ingroup LineRasterization
 /// \brief Rasterize a line according to Bresenham algorithm
@@ -40,34 +45,49 @@ struct bresenham_line_rasterizer
         return width > height ? width : height;
     }
 
-    template <typename RandomAccessIterator>
-    void operator()(std::ptrdiff_t width, std::ptrdiff_t height,
-                    RandomAccessIterator output_first) const
+    std::ptrdiff_t point_count(point_t start, point_t end) const noexcept
     {
-        const auto target_count = point_count(width, height);
-        const bool needs_flip = target_count != width;
-        const double m = [needs_flip, width, height]() {
-            if (width == 1 || height == 1)
-            {
-                return 0.0;
-            }
+        const auto abs_width = std::abs(end.x - start.x);
+        const auto abs_height = std::abs(end.y - start.y);
+        return point_count(abs_width, abs_height);
+    }
 
-            return needs_flip ? static_cast<double>(width) / height
-                              : static_cast<double>(height) / width;
-        }();
-        double error_term = 0;
-        std::ptrdiff_t y = 0;
-        *output_first++ = point_t(0, 0);
-        for (std::ptrdiff_t x = 1; x < target_count; ++x)
+    template <typename RandomAccessIterator>
+    void operator()(point_t start, point_t end, RandomAccessIterator d_first) const
+    {
+        if (start == end)
         {
-            error_term += m;
+            // put the point and immediately exit, as later on division by zero will
+            // occur
+            *d_first = start;
+            return;
+        }
+
+        auto width = end.x - start.x;
+        auto height = end.y - start.y;
+        const bool needs_flip = std::abs(width) < std::abs(height);
+        if (needs_flip)
+        {
+            // transpose the coordinate system if uncomfortable angle detected
+            std::swap(width, height);
+            std::swap(start.x, start.y);
+            std::swap(end.x, end.y);
+        }
+        const std::ptrdiff_t x_increment = width >= 0 ? 1 : -1;
+        const std::ptrdiff_t y_increment = height >= 0 ? 1 : -1;
+        const double slope = std::abs(static_cast<double>(height) / static_cast<double>(width));
+        std::ptrdiff_t y = start.y;
+        double error_term = 0;
+        for (std::ptrdiff_t x = start.x; x <= end.x; x += x_increment)
+        {
+            // transpose coordinate system back to proper form if needed
+            *d_first++ = needs_flip ? point_t{y, x} : point_t{x, y};
+            error_term += slope;
             if (error_term >= 0.5)
             {
                 --error_term;
-                ++y;
+                y += y_increment;
             }
-            auto next_point = needs_flip ? point_t{y, x} : point_t{x, y};
-            *output_first++ = next_point;
         }
     }
 };
