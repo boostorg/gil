@@ -13,7 +13,7 @@ void test_bresenham_rasterizer_follows_equation(std::ptrdiff_t width, std::ptrdi
     const auto rasterizer = gil::bresenham_line_rasterizer{};
     const auto point_count = rasterizer.point_count(width, height);
     std::vector<gil::point_t> bresenham_points(point_count);
-    rasterizer(width, height, bresenham_points.begin());
+    rasterizer({0, 0}, {width - 1, height - 1}, bresenham_points.begin());
 
     for (std::ptrdiff_t i = 0; i < point_count; ++i)
     {

@@ -27,9 +27,11 @@ const std::ptrdiff_t width = 64;
 
 void translate(std::vector<gil::point_t>& points, std::ptrdiff_t intercept)
 {
-    std::transform(points.begin(), points.end(), points.begin(), [intercept](gil::point_t point) {
-        return gil::point_t{point.x, point.y + intercept};
-    });
+    std::transform(points.begin(), points.end(), points.begin(),
+                   [intercept](gil::point_t point)
+                   {
+                       return gil::point_t{point.x, point.y + intercept};
+                   });
 }
 
 void hough_line_test(std::ptrdiff_t height, std::ptrdiff_t intercept)
@@ -38,7 +40,7 @@ void hough_line_test(std::ptrdiff_t height, std::ptrdiff_t intercept)
     gil::gray8_image_t image(width, width, gil::gray8_pixel_t(0));
     auto input = gil::view(image);
     std::vector<gil::point_t> line_points(rasterizer.point_count(width, height));
-    rasterizer(width, height, line_points.begin());
+    rasterizer({0, 0}, {width - 1, height - 1}, line_points.begin());
     translate(line_points, intercept);
     for (const auto& p : line_points)
     {
@@ -88,7 +90,7 @@ int main()
 {
     for (std::ptrdiff_t height = 1; height < width; ++height)
     {
-        for (std::ptrdiff_t intercept = 1; intercept <= width - height - 1; ++intercept)
+        for (std::ptrdiff_t intercept = 1; intercept < width - height; ++intercept)
         {
             hough_line_test(height, intercept);
         }
