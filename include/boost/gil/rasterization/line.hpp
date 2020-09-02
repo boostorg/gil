@@ -47,8 +47,8 @@ struct bresenham_line_rasterizer
 
     std::ptrdiff_t point_count(point_t start, point_t end) const noexcept
     {
-        const auto abs_width = std::abs(end.x - start.x);
-        const auto abs_height = std::abs(end.y - start.y);
+        const auto abs_width = std::abs(end.x - start.x) + 1;
+        const auto abs_height = std::abs(end.y - start.y) + 1;
         return point_count(abs_width, abs_height);
     }
 
@@ -75,10 +75,11 @@ struct bresenham_line_rasterizer
         }
         const std::ptrdiff_t x_increment = width >= 0 ? 1 : -1;
         const std::ptrdiff_t y_increment = height >= 0 ? 1 : -1;
-        const double slope = std::abs(static_cast<double>(height) / static_cast<double>(width));
+        const double slope =
+            height == 1 ? 0 : std::abs(static_cast<double>(height) / static_cast<double>(width));
         std::ptrdiff_t y = start.y;
         double error_term = 0;
-        for (std::ptrdiff_t x = start.x; x <= end.x; x += x_increment)
+        for (std::ptrdiff_t x = start.x; x != end.x; x += x_increment)
         {
             // transpose coordinate system back to proper form if needed
             *d_first++ = needs_flip ? point_t{y, x} : point_t{x, y};
@@ -89,6 +90,7 @@ struct bresenham_line_rasterizer
                 y += y_increment;
             }
         }
+        *d_first = end;
     }
 };
 
