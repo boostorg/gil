@@ -4,7 +4,9 @@
 #include <boost/gil/rasterization/line.hpp>
 
 #include <cmath>
+#include <cstddef>
 #include <iostream>
+#include <iterator>
 #include <random>
 #include <vector>
 
@@ -62,8 +64,8 @@ line_type create_line(endpoints points)
 
 void test_start_end(const line_type& line_points, endpoints points)
 {
-    BOOST_TEST(line_points.front() == points.start);
-    BOOST_TEST(line_points.back() == points.end);
+    BOOST_TEST_EQ(line_points.front(), points.start);
+    BOOST_TEST_EQ(line_points.back(), points.end);
 }
 
 void test_two_way_equivalence(const line_type& forward, line_type backward)
@@ -72,7 +74,7 @@ void test_two_way_equivalence(const line_type& forward, line_type backward)
     BOOST_TEST_ALL_EQ(forward.begin(), forward.end(), backward.begin(), backward.end());
 }
 
-void test_connectivity(const line_type& line_points)
+void test_connectivity(line_type const& line_points)
 {
     for (std::size_t i = 1; i < line_points.size(); ++i)
     {
@@ -83,22 +85,43 @@ void test_connectivity(const line_type& line_points)
     }
 }
 
+void print_endpoints(endpoints points)
+{
+    std::cout << points.start << " to " << points.end << '\n';
+}
+
+void print_line(line_type const& line)
+{
+    std::copy(line.begin(), line.end(), std::ostream_iterator<gil::point_t>(std::cout, ", "));
+    std::cout << '\n';
+}
+
+void print_equation(double slope, double intercept)
+{
+    std::cout << "y=" << slope << "x+" << intercept << '\n';
+}
+
 void test_bresenham_rasterizer_follows_equation(const line_type& line_points)
 {
-    const auto start = line_points.front();
-    const auto end = line_points.back();
+    std::cout << line_points.size() << '\n';
+    auto start = line_points.front();
+    auto end = line_points.back();
 
-    const auto width = end.x - start.x;
-    const auto height = end.y - start.y;
+    auto width = std::abs(end.x - start.x);
+    auto height = std::abs(end.y - start.y);
     const double slope = static_cast<double>(height) / static_cast<double>(width);
-    const std::ptrdiff_t intercept = static_cast<std::ptrdiff_t>(
-        std::round(static_cast<double>(start.y) - slope * static_cast<double>(start.x)));
-    const std::ptrdiff_t error_tolerance = 4; // one point off is okay
+    const double intercept = static_cast<double>(start.y) - slope * static_cast<double>(start.x);
+    print_line(line_points);
+    print_equation(slope, intercept);
+    print_endpoints({start, end});
     for (const auto& point : line_points)
     {
-        double response = point.x * slope + intercept - point.y;
+        double const expected_y = slope * static_cast<double>(point.x) + intercept;
         // BOOST_TEST_LE(std::abs(response), error_tolerance);
-        BOOST_TEST(std::abs(response) <= error_tolerance || std::isnan(response));
+        // BOOST_TEST(std::abs(response) <= error_tolerance);
+        auto const difference =
+            std::abs(point.y - static_cast<std::ptrdiff_t>(std::round(expected_y)));
+        BOOST_TEST_LE(difference, 2);
     }
 }
 
@@ -112,7 +135,7 @@ int main()
     //         test_bresenham_rasterizer_follows_equation(width, width);
     //     }
     // }
-    for (std::size_t seed = 0; seed < 101; ++seed)
+    for (std::size_t seed = 0; seed < 1; ++seed)
     {
         std::mt19937 twister(seed);
         std::uniform_int_distribution<std::ptrdiff_t> distr(0, size - 1);
@@ -125,9 +148,9 @@ int main()
             auto backward_line = create_line({endpoints.end, endpoints.start});
             test_two_way_equivalence(forward_line, backward_line);
             test_connectivity(forward_line);
-            test_connectivity(backward_line);
+            // test_connectivity(backward_line);
             test_bresenham_rasterizer_follows_equation(forward_line);
-            test_bresenham_rasterizer_follows_equation(backward_line);
+            // test_bresenham_rasterizer_follows_equation(backward_line);
         }
     }
 

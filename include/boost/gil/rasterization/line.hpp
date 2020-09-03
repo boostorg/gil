@@ -63,9 +63,9 @@ struct bresenham_line_rasterizer
             return;
         }
 
-        auto width = end.x - start.x;
-        auto height = end.y - start.y;
-        const bool needs_flip = std::abs(width) < std::abs(height);
+        auto width = std::abs(end.x - start.x);
+        auto height = std::abs(end.y - start.y);
+        bool const needs_flip = width < height;
         if (needs_flip)
         {
             // transpose the coordinate system if uncomfortable angle detected
@@ -73,10 +73,10 @@ struct bresenham_line_rasterizer
             std::swap(start.x, start.y);
             std::swap(end.x, end.y);
         }
-        const std::ptrdiff_t x_increment = width >= 0 ? 1 : -1;
-        const std::ptrdiff_t y_increment = height >= 0 ? 1 : -1;
-        const double slope =
-            height == 1 ? 0 : std::abs(static_cast<double>(height) / static_cast<double>(width));
+        std::ptrdiff_t const x_increment = end.x > start.x ? 1 : -1;
+        std::ptrdiff_t const y_increment = end.y > start.y ? 1 : -1;
+        double const slope =
+            height == 1 ? 0 : static_cast<double>(height) / static_cast<double>(width);
         std::ptrdiff_t y = start.y;
         double error_term = 0;
         for (std::ptrdiff_t x = start.x; x != end.x; x += x_increment)
@@ -90,7 +90,7 @@ struct bresenham_line_rasterizer
                 y += y_increment;
             }
         }
-        *d_first = end;
+        *d_first++ = needs_flip ? point_t{end.y, end.x} : end;
     }
 };
 
