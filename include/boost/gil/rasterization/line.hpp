@@ -73,8 +73,8 @@ struct bresenham_line_rasterizer
             std::swap(start.x, start.y);
             std::swap(end.x, end.y);
         }
-        std::ptrdiff_t const x_increment = end.x > start.x ? 1 : -1;
-        std::ptrdiff_t const y_increment = end.y > start.y ? 1 : -1;
+        std::ptrdiff_t const x_increment = end.x >= start.x ? 1 : -1;
+        std::ptrdiff_t const y_increment = end.y >= start.y ? 1 : -1;
         double const slope =
             height == 1 ? 0 : static_cast<double>(height) / static_cast<double>(width);
         std::ptrdiff_t y = start.y;

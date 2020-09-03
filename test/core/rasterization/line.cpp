@@ -107,21 +107,29 @@ void test_bresenham_rasterizer_follows_equation(const line_type& line_points)
     auto start = line_points.front();
     auto end = line_points.back();
 
+    const double sign = [start, end]()
+    {
+        auto const width_sign = end.x < start.x;
+        auto const height_sign = end.y < start.y;
+        auto const slope_sign = width_sign != height_sign;
+        return slope_sign ? -1 : 1;
+    }();
     auto width = std::abs(end.x - start.x);
     auto height = std::abs(end.y - start.y);
     const double slope = static_cast<double>(height) / static_cast<double>(width);
-    const double intercept = static_cast<double>(start.y) - slope * static_cast<double>(start.x);
+    const double intercept =
+        static_cast<double>(start.y) - sign * slope * static_cast<double>(start.x);
     print_line(line_points);
     print_equation(slope, intercept);
     print_endpoints({start, end});
     for (const auto& point : line_points)
     {
-        double const expected_y = slope * static_cast<double>(point.x) + intercept;
+        double const expected_y = sign * slope * static_cast<double>(point.x) + intercept;
         // BOOST_TEST_LE(std::abs(response), error_tolerance);
         // BOOST_TEST(std::abs(response) <= error_tolerance);
         auto const difference =
             std::abs(point.y - static_cast<std::ptrdiff_t>(std::round(expected_y)));
-        BOOST_TEST_LE(difference, 2);
+        BOOST_TEST_LE(difference, static_cast<std::ptrdiff_t>(slope + 1));
     }
 }
 
@@ -142,6 +150,7 @@ int main()
         const std::size_t sample_count = 100;
         for (std::size_t sample_index = 0; sample_index < sample_count; ++sample_index)
         {
+            std::cout << "=============================================\n";
             auto endpoints = create_endpoints(twister, distr);
             auto forward_line = create_line(endpoints);
             test_start_end(forward_line, endpoints);
