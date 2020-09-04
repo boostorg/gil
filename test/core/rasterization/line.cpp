@@ -1,3 +1,12 @@
+// Boost.GIL (Generic Image Library) - tests
+//
+// Copyright 2020 Olzhas Zhumabek <anonymous.from.applecity@gmail.com>
+//
+// Use, modification and distribution are subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+//
+
 #include <algorithm>
 #include <boost/core/lightweight_test.hpp>
 #include <boost/gil/point.hpp>
@@ -52,11 +61,12 @@ void test_start_end(const line_type& line_points, endpoints points)
     BOOST_TEST_EQ(line_points.back(), points.end);
 }
 
-void test_two_way_equivalence(const line_type& forward, line_type backward)
-{
-    std::reverse(backward.begin(), backward.end());
-    BOOST_TEST_ALL_EQ(forward.begin(), forward.end(), backward.begin(), backward.end());
-}
+// Look at TODO below
+// void test_two_way_equivalence(const line_type& forward, line_type backward)
+// {
+//     std::reverse(backward.begin(), backward.end());
+//     BOOST_TEST_ALL_EQ(forward.begin(), forward.end(), backward.begin(), backward.end());
+// }
 
 void test_connectivity(line_type const& line_points)
 {
@@ -74,8 +84,8 @@ void test_bresenham_rasterizer_follows_equation(line_type line_points)
     auto start = line_points.front();
     auto end = line_points.back();
 
-    auto width = std::abs(end.x - start.x);
-    auto height = std::abs(end.y - start.y);
+    auto width = std::abs(end.x - start.x) + 1;
+    auto height = std::abs(end.y - start.y) + 1;
     if (width < height)
     {
         std::swap(width, height);
@@ -120,7 +130,8 @@ int main()
             auto endpoints = create_endpoints(twister, distr);
             auto forward_line = create_line(endpoints);
             test_start_end(forward_line, endpoints);
-            auto backward_line = create_line({endpoints.end, endpoints.start});
+            // TODO: figure out if forward/backward equivalence is possible to provide
+            // auto backward_line = create_line({endpoints.end, endpoints.start});
             // test_two_way_equivalence(forward_line, backward_line);
             test_connectivity(forward_line);
             // test_connectivity(backward_line);

@@ -63,8 +63,8 @@ struct bresenham_line_rasterizer
             return;
         }
 
-        auto width = std::abs(end.x - start.x);
-        auto height = std::abs(end.y - start.y);
+        auto width = std::abs(end.x - start.x) + 1;
+        auto height = std::abs(end.y - start.y) + 1;
         bool const needs_flip = width < height;
         if (needs_flip)
         {
