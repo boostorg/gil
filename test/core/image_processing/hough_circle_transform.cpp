@@ -45,10 +45,13 @@ void exact_fit_test(std::ptrdiff_t radius, gil::point_t offset, Rasterizer raste
 
     std::vector<gil::gray16_image_t> output_images(
         radius_parameter.step_count,
-        gil::gray8_image_t(x_parameter.step_count, y_parameter.step_count));
+        gil::gray16_image_t(x_parameter.step_count, y_parameter.step_count));
     std::vector<gil::gray16_view_t> output_views(radius_parameter.step_count);
     std::transform(output_images.begin(), output_images.end(), output_views.begin(),
-                   [](gil::gray16_image_t& img) { return gil::view(img); });
+                   [](gil::gray16_image_t& img)
+                   {
+                       return gil::view(img);
+                   });
     gil::hough_circle_transform_brute(input, radius_parameter, x_parameter, y_parameter,
                                       output_views.begin(), rasterizer);
     if (output_views[0](0, 0) != rasterizer.point_count(radius))
