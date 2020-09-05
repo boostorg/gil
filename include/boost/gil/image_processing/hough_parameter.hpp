@@ -13,7 +13,10 @@
 #include <cmath>
 #include <cstddef>
 
-namespace boost { namespace gil {
+namespace boost
+{
+namespace gil
+{
 /// \ingroup HoughTransform
 /// \brief A type to encapsulate Hough transform parameter range
 ///
@@ -54,7 +57,8 @@ struct hough_parameter
         // landing exactly on that value when starting from start_point
         // also use parentheses on step_count / 2 because flooring is exactly
         // what we want
-        return {start_point - step_size * (step_count / 2), step_size, step_count};
+        return {start_point - step_size * (static_cast<T>(step_count) / static_cast<T>(2)),
+                step_size, step_count};
     }
 };
 
