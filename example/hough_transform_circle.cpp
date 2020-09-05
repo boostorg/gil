@@ -44,7 +44,10 @@ int main()
     std::vector<gil::gray16_view_t> parameter_space_views(parameter_space_images.size());
     std::transform(parameter_space_images.begin(), parameter_space_images.end(),
                    parameter_space_views.begin(),
-                   [](gil::gray16_image_t& img) { return gil::view(img); });
+                   [](gil::gray16_image_t& img)
+                   {
+                       return gil::view(img);
+                   });
 
     gil::hough_circle_transform_brute(input, radius_parameter, x_parameter, y_parameter,
                                       parameter_space_views.begin(), rasterizer);
