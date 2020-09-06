@@ -40,7 +40,12 @@ struct hough_parameter
     {
         T step_size = neighborhood / half_step_count;
         std::size_t step_count = half_step_count * 2 + 1;
-        return {start_point - neighborhood, step_size, step_count};
+        // explicitly fill out members, as aggregate init will error out with narrowing
+        hough_parameter<T> parameter;
+        parameter.start_point = start_point - neighborhood;
+        parameter.step_size = step_size;
+        parameter.step_count = step_count;
+        return parameter;
     }
 
     /// \ingroup HoughTransform
@@ -57,8 +62,13 @@ struct hough_parameter
         // landing exactly on that value when starting from start_point
         // also use parentheses on step_count / 2 because flooring is exactly
         // what we want
-        return {start_point - step_size * (static_cast<T>(step_count) / static_cast<T>(2)),
-                step_size, step_count};
+
+        // explicitly fill out members, as aggregate init will error out with narrowing
+        hough_parameter<T> parameter;
+        parameter.start_point = start_point - step_size * (step_count / 2);
+        parameter.step_size = step_size;
+        parameter.step_count = step_count;
+        return parameter;
     }
 };
 
