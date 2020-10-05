@@ -302,7 +302,7 @@ The <code class="docutils literal notranslate"><span class="pre">scanline_read_i
 The following code sample shows the usage:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="n">tiff_tag</span> <span class="n">tag_t</span><span class="p">;</span>
 
-<span class="k">typedef</span> <span class="n">scanline_reader</span><span class="o">&lt;</span> <span class="k">typename</span> <span class="n">get_read_device</span><span class="o">&lt;</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span>
+<span class="k">typedef</span> <span class="n">scanline_reader</span><span class="o">&lt;</span> <span class="k">typename</span> <span class="nc">get_read_device</span><span class="o">&lt;</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span>
                                                  <span class="p">,</span> <span class="n">tag_t</span>
                                                  <span class="o">&gt;::</span><span class="n">type</span>
                         <span class="p">,</span> <span class="n">tag_t</span>
@@ -602,26 +602,26 @@ implementations and then trying to follow a couple of guidelines:</p>
 </li>
 <li><p>Add the code to the <code class="docutils literal notranslate"><span class="pre">boost::gil::detail</span></code> namespace</p></li>
 <li><p>Create a tag type for the new format. Like this:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nl">xxx_tag</span> <span class="p">:</span> <span class="n">format_tag</span> <span class="p">{};</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">xxx_tag</span> <span class="o">:</span> <span class="n">format_tag</span> <span class="p">{};</span>
 </pre></div>
 </div>
 </li>
 <li><p>Create the image_read_info for the new format. It contains all the
 information that are necessary to read an image. It should be filled
 and returned by the <code class="docutils literal notranslate"><span class="pre">get_info</span></code> member of the reader class. See below:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;&gt;</span> <span class="k">struct</span> <span class="n">image_read_info</span><span class="o">&lt;</span> <span class="n">xxx_tag</span> <span class="o">&gt;</span> <span class="p">{};</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;&gt;</span> <span class="k">struct</span> <span class="nc">image_read_info</span><span class="o">&lt;</span> <span class="n">xxx_tag</span> <span class="o">&gt;</span> <span class="p">{};</span>
 </pre></div>
 </div>
 </li>
 <li><p>Create the image_write_info for the new format. It contains all the
 information that are necessary to write an image:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;&gt;</span> <span class="k">struct</span> <span class="n">image_write_info</span><span class="o">&lt;</span> <span class="n">xxx_tag</span> <span class="o">&gt;</span> <span class="p">{};</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;&gt;</span> <span class="k">struct</span> <span class="nc">image_write_info</span><span class="o">&lt;</span> <span class="n">xxx_tag</span> <span class="o">&gt;</span> <span class="p">{};</span>
 </pre></div>
 </div>
 </li>
 <li><p>Use the following reader skeleton as a start:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span> <span class="k">typename</span> <span class="n">Device</span>
-        <span class="p">,</span> <span class="k">typename</span> <span class="n">ConversionPolicy</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span> <span class="k">typename</span> <span class="nc">Device</span>
+        <span class="p">,</span> <span class="k">typename</span> <span class="nc">ConversionPolicy</span>
         <span class="o">&gt;</span>
 <span class="k">class</span> <span class="nc">reader</span><span class="o">&lt;</span> <span class="n">Device</span>
             <span class="p">,</span> <span class="n">xxx_tag</span>
@@ -633,7 +633,7 @@ information that are necessary to write an image:</p>
 <span class="p">{</span>
 <span class="k">private</span><span class="o">:</span>
 
-    <span class="k">typedef</span> <span class="k">typename</span> <span class="n">ConversionPolicy</span><span class="o">::</span><span class="n">color_converter_type</span> <span class="n">cc_t</span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="k">typename</span> <span class="nc">ConversionPolicy</span><span class="o">::</span><span class="n">color_converter_type</span> <span class="n">cc_t</span><span class="p">;</span>
 
 <span class="k">public</span><span class="o">:</span>
 
@@ -655,7 +655,7 @@ information that are necessary to write an image:</p>
         <span class="c1">// your implementation here</span>
     <span class="p">}</span>
 
-    <span class="k">template</span><span class="o">&lt;</span> <span class="k">typename</span> <span class="n">View</span> <span class="o">&gt;</span>
+    <span class="k">template</span><span class="o">&lt;</span> <span class="k">typename</span> <span class="nc">View</span> <span class="o">&gt;</span>
     <span class="kt">void</span> <span class="n">apply</span><span class="p">(</span> <span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">dst_view</span> <span class="p">)</span>
     <span class="p">{</span>
         <span class="c1">// your implementation here</span>
@@ -665,7 +665,7 @@ information that are necessary to write an image:</p>
 </div>
 </li>
 <li><p>The writer skeleton:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span> <span class="k">typename</span> <span class="n">Device</span> <span class="o">&gt;</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span> <span class="k">typename</span> <span class="nc">Device</span> <span class="o">&gt;</span>
 <span class="k">class</span> <span class="nc">writer</span><span class="o">&lt;</span> <span class="n">Device</span>
             <span class="p">,</span> <span class="n">xxx_tag</span>
             <span class="o">&gt;</span>
@@ -676,13 +676,13 @@ information that are necessary to write an image:</p>
     <span class="o">:</span> <span class="n">out</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
     <span class="p">{}</span>
 
-    <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">View</span><span class="o">&gt;</span>
+    <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">View</span><span class="o">&gt;</span>
     <span class="kt">void</span> <span class="n">apply</span><span class="p">(</span> <span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">view</span> <span class="p">)</span>
     <span class="p">{</span>
         <span class="c1">// your implementation here</span>
     <span class="p">}</span>
 
-    <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">View</span><span class="o">&gt;</span>
+    <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">View</span><span class="o">&gt;</span>
     <span class="kt">void</span> <span class="n">apply</span><span class="p">(</span> <span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span>                        <span class="n">view</span>
               <span class="p">,</span> <span class="k">const</span> <span class="n">image_write_info</span><span class="o">&lt;</span> <span class="n">xxx_tag</span> <span class="o">&gt;&amp;</span> <span class="n">info</span> <span class="p">)</span>
     <span class="p">{</span>
@@ -736,8 +736,8 @@ to enable the tests:</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2020-07-27 23:07:26.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.1.2.
+      Last updated on 2020-10-05 21:10:05.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1.
     </div>
   </body>
 </html>

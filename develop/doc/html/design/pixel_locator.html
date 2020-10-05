@@ -83,30 +83,30 @@ don’t satisfy all the requirements of iterators. For example, they don’t
 supply increment and decrement operators because it is unclear which dimension
 the operators should advance along.
 N-dimensional locators model the following concept:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">RandomAccessNDLocatorConcept</span><span class="o">&lt;</span><span class="n">Regular</span> <span class="n">Loc</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="nc">RandomAccessNDLocatorConcept</span><span class="o">&lt;</span><span class="n">Regular</span> <span class="n">Loc</span><span class="o">&gt;</span>
 <span class="p">{</span>
-  <span class="k">typename</span> <span class="n">value_type</span><span class="p">;</span>        <span class="c1">// value over which the locator navigates</span>
-  <span class="k">typename</span> <span class="n">reference</span><span class="p">;</span>         <span class="c1">// result of dereferencing</span>
-  <span class="k">typename</span> <span class="n">difference_type</span><span class="p">;</span> <span class="n">where</span> <span class="n">PointNDConcept</span><span class="o">&lt;</span><span class="n">difference_type</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">// return value of operator-.</span>
-  <span class="k">typename</span> <span class="n">const_t</span><span class="p">;</span>           <span class="c1">// same as Loc, but operating over immutable values</span>
-  <span class="k">typename</span> <span class="n">cached_location_t</span><span class="p">;</span> <span class="c1">// type to store relative location (for efficient repeated access)</span>
-  <span class="k">typename</span> <span class="n">point_t</span>  <span class="o">=</span> <span class="n">difference_type</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="nc">value_type</span><span class="p">;</span>        <span class="c1">// value over which the locator navigates</span>
+  <span class="k">typename</span> <span class="nc">reference</span><span class="p">;</span>         <span class="c1">// result of dereferencing</span>
+  <span class="k">typename</span> <span class="nc">difference_type</span><span class="p">;</span> <span class="n">where</span> <span class="n">PointNDConcept</span><span class="o">&lt;</span><span class="n">difference_type</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">// return value of operator-.</span>
+  <span class="k">typename</span> <span class="nc">const_t</span><span class="p">;</span>           <span class="c1">// same as Loc, but operating over immutable values</span>
+  <span class="k">typename</span> <span class="nc">cached_location_t</span><span class="p">;</span> <span class="c1">// type to store relative location (for efficient repeated access)</span>
+  <span class="k">typename</span> <span class="nc">point_t</span>  <span class="o">=</span> <span class="n">difference_type</span><span class="p">;</span>
 
   <span class="k">static</span> <span class="k">const</span> <span class="kt">size_t</span> <span class="n">num_dimensions</span><span class="p">;</span> <span class="c1">// dimensionality of the locator</span>
   <span class="n">where</span> <span class="n">num_dimensions</span> <span class="o">=</span> <span class="n">point_t</span><span class="o">::</span><span class="n">num_dimensions</span><span class="p">;</span>
 
   <span class="c1">// The difference_type and iterator type along each dimension. The iterators may only differ in</span>
   <span class="c1">// difference_type. Their value_type must be the same as Loc::value_type</span>
-  <span class="k">template</span> <span class="o">&lt;</span><span class="kt">size_t</span> <span class="n">D</span><span class="o">&gt;</span> <span class="k">struct</span> <span class="n">axis</span> <span class="p">{</span>
-      <span class="k">typename</span> <span class="n">coord_t</span> <span class="o">=</span> <span class="n">point_t</span><span class="o">::</span><span class="n">axis</span><span class="o">&lt;</span><span class="n">D</span><span class="o">&gt;::</span><span class="n">coord_t</span><span class="p">;</span>
-      <span class="k">typename</span> <span class="n">iterator</span><span class="p">;</span> <span class="n">where</span> <span class="n">RandomAccessTraversalConcept</span><span class="o">&lt;</span><span class="n">iterator</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">// iterator along D-th axis.</span>
+  <span class="k">template</span> <span class="o">&lt;</span><span class="kt">size_t</span> <span class="n">D</span><span class="o">&gt;</span> <span class="k">struct</span> <span class="nc">axis</span> <span class="p">{</span>
+      <span class="k">typename</span> <span class="nc">coord_t</span> <span class="o">=</span> <span class="n">point_t</span><span class="o">::</span><span class="n">axis</span><span class="o">&lt;</span><span class="n">D</span><span class="o">&gt;::</span><span class="n">coord_t</span><span class="p">;</span>
+      <span class="k">typename</span> <span class="nc">iterator</span><span class="p">;</span> <span class="n">where</span> <span class="n">RandomAccessTraversalConcept</span><span class="o">&lt;</span><span class="n">iterator</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">// iterator along D-th axis.</span>
       <span class="n">where</span> <span class="n">iterator</span><span class="o">::</span><span class="n">value_type</span> <span class="o">==</span> <span class="n">value_type</span><span class="p">;</span>
   <span class="p">};</span>
 
   <span class="c1">// Defines the type of a locator similar to this type, except it invokes Deref upon dereferencing</span>
-  <span class="k">template</span> <span class="o">&lt;</span><span class="n">PixelDereferenceAdaptorConcept</span> <span class="n">Deref</span><span class="o">&gt;</span> <span class="k">struct</span> <span class="n">add_deref</span> <span class="p">{</span>
-      <span class="k">typename</span> <span class="n">type</span><span class="p">;</span>        <span class="n">where</span> <span class="n">RandomAccessNDLocatorConcept</span><span class="o">&lt;</span><span class="n">type</span><span class="o">&gt;</span><span class="p">;</span>
-      <span class="k">static</span> <span class="n">type</span> <span class="nf">make</span><span class="p">(</span><span class="k">const</span> <span class="n">Loc</span><span class="o">&amp;</span> <span class="n">loc</span><span class="p">,</span> <span class="k">const</span> <span class="n">Deref</span><span class="o">&amp;</span> <span class="n">deref</span><span class="p">);</span>
+  <span class="k">template</span> <span class="o">&lt;</span><span class="n">PixelDereferenceAdaptorConcept</span> <span class="n">Deref</span><span class="o">&gt;</span> <span class="k">struct</span> <span class="nc">add_deref</span> <span class="p">{</span>
+      <span class="k">typename</span> <span class="nc">type</span><span class="p">;</span>        <span class="n">where</span> <span class="n">RandomAccessNDLocatorConcept</span><span class="o">&lt;</span><span class="n">type</span><span class="o">&gt;</span><span class="p">;</span>
+      <span class="k">static</span> <span class="n">type</span> <span class="n">make</span><span class="p">(</span><span class="k">const</span> <span class="n">Loc</span><span class="o">&amp;</span> <span class="n">loc</span><span class="p">,</span> <span class="k">const</span> <span class="n">Deref</span><span class="o">&amp;</span> <span class="n">deref</span><span class="p">);</span>
   <span class="p">};</span>
 
   <span class="n">Loc</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">+=</span><span class="p">(</span><span class="n">Loc</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">difference_type</span><span class="o">&amp;</span><span class="p">);</span>
@@ -127,24 +127,24 @@ N-dimensional locators model the following concept:</p>
   <span class="k">template</span> <span class="o">&lt;</span><span class="kt">size_t</span> <span class="n">D</span><span class="o">&gt;</span> <span class="n">axis</span><span class="o">&lt;</span><span class="n">D</span><span class="o">&gt;::</span><span class="n">iterator</span>        <span class="n">Loc</span><span class="o">::</span><span class="n">axis_iterator</span><span class="p">(</span><span class="k">const</span> <span class="n">difference_type</span><span class="o">&amp;</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">Loc</span><span class="o">&gt;</span>
-<span class="k">concept</span> <span class="nl">MutableRandomAccessNDLocatorConcept</span>
-    <span class="p">:</span> <span class="n">RandomAccessNDLocatorConcept</span><span class="o">&lt;</span><span class="n">Loc</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">Loc</span><span class="o">&gt;</span>
+<span class="k">concept</span> <span class="nc">MutableRandomAccessNDLocatorConcept</span>
+    <span class="o">:</span> <span class="n">RandomAccessNDLocatorConcept</span><span class="o">&lt;</span><span class="n">Loc</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="n">where</span> <span class="n">Mutable</span><span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span><span class="p">;</span>
 <span class="p">};</span>
 </pre></div>
 </div>
 <p>Two-dimensional locators have additional requirements:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">RandomAccess2DLocatorConcept</span><span class="o">&lt;</span><span class="n">RandomAccessNDLocatorConcept</span> <span class="n">Loc</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="nc">RandomAccess2DLocatorConcept</span><span class="o">&lt;</span><span class="n">RandomAccessNDLocatorConcept</span> <span class="n">Loc</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="n">where</span> <span class="n">num_dimensions</span><span class="o">==</span><span class="mi">2</span><span class="p">;</span>
   <span class="n">where</span> <span class="n">Point2DConcept</span><span class="o">&lt;</span><span class="n">point_t</span><span class="o">&gt;</span><span class="p">;</span>
 
-  <span class="k">typename</span> <span class="n">x_iterator</span> <span class="o">=</span> <span class="n">axis</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;::</span><span class="n">iterator</span><span class="p">;</span>
-  <span class="k">typename</span> <span class="n">y_iterator</span> <span class="o">=</span> <span class="n">axis</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;::</span><span class="n">iterator</span><span class="p">;</span>
-  <span class="k">typename</span> <span class="n">x_coord_t</span>  <span class="o">=</span> <span class="n">axis</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;::</span><span class="n">coord_t</span><span class="p">;</span>
-  <span class="k">typename</span> <span class="n">y_coord_t</span>  <span class="o">=</span> <span class="n">axis</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;::</span><span class="n">coord_t</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="nc">x_iterator</span> <span class="o">=</span> <span class="n">axis</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;::</span><span class="n">iterator</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="nc">y_iterator</span> <span class="o">=</span> <span class="n">axis</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;::</span><span class="n">iterator</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="nc">x_coord_t</span>  <span class="o">=</span> <span class="n">axis</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;::</span><span class="n">coord_t</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="nc">y_coord_t</span>  <span class="o">=</span> <span class="n">axis</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;::</span><span class="n">coord_t</span><span class="p">;</span>
 
   <span class="c1">// Only available to locators that have dynamic step in Y</span>
   <span class="c1">//Loc::Loc(const Loc&amp; loc, y_coord_t);</span>
@@ -172,16 +172,16 @@ N-dimensional locators model the following concept:</p>
   <span class="n">y_coord_t</span> <span class="n">Loc</span><span class="o">::</span><span class="n">y_distance_to</span><span class="p">(</span><span class="k">const</span> <span class="n">Loc</span><span class="o">&amp;</span> <span class="n">loc2</span><span class="p">,</span> <span class="n">x_coord_t</span> <span class="n">x_diff</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="k">concept</span> <span class="n">MutableRandomAccess2DLocatorConcept</span><span class="o">&lt;</span><span class="n">RandomAccess2DLocatorConcept</span> <span class="n">Loc</span><span class="o">&gt;</span>
+<span class="k">concept</span> <span class="nc">MutableRandomAccess2DLocatorConcept</span><span class="o">&lt;</span><span class="n">RandomAccess2DLocatorConcept</span> <span class="n">Loc</span><span class="o">&gt;</span>
     <span class="o">:</span> <span class="n">MutableRandomAccessNDLocatorConcept</span><span class="o">&lt;</span><span class="n">Loc</span><span class="o">&gt;</span> <span class="p">{};</span>
 </pre></div>
 </div>
 <p>2D locators can have a dynamic step not just horizontally, but
 vertically. This gives rise to the Y equivalent of
 <code class="docutils literal notranslate"><span class="pre">HasDynamicXStepTypeConcept</span></code>:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">HasDynamicYStepTypeConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="nc">HasDynamicYStepTypeConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="o">&gt;</span>
 <span class="p">{</span>
-  <span class="k">typename</span> <span class="n">dynamic_y_step_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="nc">dynamic_y_step_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">;</span>
       <span class="n">where</span> <span class="n">Metafunction</span><span class="o">&lt;</span><span class="n">dynamic_y_step_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">;</span>
 <span class="p">};</span>
 </pre></div>
@@ -191,9 +191,9 @@ vertically. This gives rise to the Y equivalent of
 <p>Sometimes it is necessary to swap the meaning of X and Y for a given locator
 or image view type (for example, GIL provides a function to transpose an image
 view). Such locators and views must be transposable:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">HasTransposedTypeConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="nc">HasTransposedTypeConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="o">&gt;</span>
 <span class="p">{</span>
-  <span class="k">typename</span> <span class="n">transposed_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="nc">transposed_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">;</span>
       <span class="n">where</span> <span class="n">Metafunction</span><span class="o">&lt;</span><span class="n">transposed_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">;</span>
 <span class="p">};</span>
 </pre></div>
@@ -201,17 +201,17 @@ view). Such locators and views must be transposable:</p>
 <p>All GIL provided locators and views model <code class="docutils literal notranslate"><span class="pre">HasTransposedTypeConcept</span></code>.</p>
 <p>The locators GIL uses operate over models of <code class="docutils literal notranslate"><span class="pre">PixelConcept</span></code> and their x and
 y dimension types are the same. They model the following concept:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">PixelLocatorConcept</span><span class="o">&lt;</span><span class="n">RandomAccess2DLocatorConcept</span> <span class="n">Loc</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="nc">PixelLocatorConcept</span><span class="o">&lt;</span><span class="n">RandomAccess2DLocatorConcept</span> <span class="n">Loc</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="n">where</span> <span class="n">PixelValueConcept</span><span class="o">&lt;</span><span class="n">value_type</span><span class="o">&gt;</span><span class="p">;</span>
   <span class="n">where</span> <span class="n">PixelIteratorConcept</span><span class="o">&lt;</span><span class="n">x_iterator</span><span class="o">&gt;</span><span class="p">;</span>
   <span class="n">where</span> <span class="n">PixelIteratorConcept</span><span class="o">&lt;</span><span class="n">y_iterator</span><span class="o">&gt;</span><span class="p">;</span>
   <span class="n">where</span> <span class="n">x_coord_t</span> <span class="o">==</span> <span class="n">y_coord_t</span><span class="p">;</span>
 
-  <span class="k">typename</span> <span class="n">coord_t</span> <span class="o">=</span> <span class="n">x_coord_t</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="nc">coord_t</span> <span class="o">=</span> <span class="n">x_coord_t</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="k">concept</span> <span class="n">MutablePixelLocatorConcept</span><span class="o">&lt;</span><span class="n">PixelLocatorConcept</span> <span class="n">Loc</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">MutableRandomAccess2DLocatorConcept</span><span class="o">&lt;</span><span class="n">Loc</span><span class="o">&gt;</span> <span class="p">{};</span>
+<span class="k">concept</span> <span class="nc">MutablePixelLocatorConcept</span><span class="o">&lt;</span><span class="n">PixelLocatorConcept</span> <span class="n">Loc</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">MutableRandomAccess2DLocatorConcept</span><span class="o">&lt;</span><span class="n">Loc</span><span class="o">&gt;</span> <span class="p">{};</span>
 </pre></div>
 </div>
 <div class="admonition seealso">
@@ -237,7 +237,7 @@ that have their pixels in memory. It takes a model of <code class="docutils lite
 over pixels as a template parameter. (When instantiated with a model of
 <code class="docutils literal notranslate"><span class="pre">MutableStepIteratorConcept</span></code>, it models <code class="docutils literal notranslate"><span class="pre">MutablePixelLocatorConcept</span></code>).</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// StepIterator models StepIteratorConcept, MemoryBasedIteratorConcept</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">StepIterator</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">StepIterator</span><span class="o">&gt;</span>
 <span class="k">class</span> <span class="nc">memory_based_2d_locator</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -287,12 +287,12 @@ required by <code class="docutils literal notranslate"><span class="pre">PixelLo
 they need to provide other models of <code class="docutils literal notranslate"><span class="pre">PixelLocatorConcept</span></code>.</p>
 <p>Here is some sample code using locators:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">loc</span><span class="o">=</span><span class="n">img</span><span class="p">.</span><span class="n">xy_at</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">);</span>            <span class="c1">// start at pixel (x=10,y=10)</span>
-<span class="n">above</span><span class="o">=</span><span class="n">loc</span><span class="p">.</span><span class="n">cache_location</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>  <span class="c1">// remember relative locations of neighbors above and below</span>
+<span class="n">above</span><span class="o">=</span><span class="n">loc</span><span class="p">.</span><span class="n">cache_location</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">-1</span><span class="p">);</span>  <span class="c1">// remember relative locations of neighbors above and below</span>
 <span class="n">below</span><span class="o">=</span><span class="n">loc</span><span class="p">.</span><span class="n">cache_location</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 <span class="o">++</span><span class="n">loc</span><span class="p">.</span><span class="n">x</span><span class="p">();</span>                       <span class="c1">// move to (11,10)</span>
 <span class="n">loc</span><span class="p">.</span><span class="n">y</span><span class="p">()</span><span class="o">+=</span><span class="mi">15</span><span class="p">;</span>                     <span class="c1">// move to (11,25)</span>
 <span class="n">loc</span><span class="o">-=</span><span class="n">point</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">ptrdiff_t</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="c1">// move to (10,24)</span>
-<span class="o">*</span><span class="n">loc</span><span class="o">=</span><span class="p">(</span><span class="n">loc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="n">loc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>     <span class="c1">// set pixel (10,24) to the average of (10,23) and (10,25) (grayscale pixels only)</span>
+<span class="o">*</span><span class="n">loc</span><span class="o">=</span><span class="p">(</span><span class="n">loc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">-1</span><span class="p">)</span><span class="o">+</span><span class="n">loc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>     <span class="c1">// set pixel (10,24) to the average of (10,23) and (10,25) (grayscale pixels only)</span>
 <span class="o">*</span><span class="n">loc</span><span class="o">=</span><span class="p">(</span><span class="n">loc</span><span class="p">[</span><span class="n">above</span><span class="p">]</span><span class="o">+</span><span class="n">loc</span><span class="p">[</span><span class="n">below</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>  <span class="c1">// the same, but faster using cached relative neighbor locations</span>
 </pre></div>
 </div>
@@ -317,7 +317,7 @@ the natural memory-friendly order left-to-right inside
 top-to-bottom. It takes a locator, the width of the image and the
 current X position. This is sufficient information for it to determine
 when to do a “carriage return”. Synopsis:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">Locator</span><span class="o">&gt;</span>  <span class="c1">// Models PixelLocatorConcept</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">Locator</span><span class="o">&gt;</span>  <span class="c1">// Models PixelLocatorConcept</span>
 <span class="k">class</span> <span class="nc">iterator_from_2d</span>
 <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
@@ -358,8 +358,8 @@ using the x-iterators directly.</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2020-07-27 23:07:26.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.1.2.
+      Last updated on 2020-10-05 21:10:05.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1.
     </div>
   </body>
 </html>

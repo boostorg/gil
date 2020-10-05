@@ -121,16 +121,16 @@ cases. Here is, for example, how to overload color conversion so that
 color conversion to gray inverts the result but everything else
 remains the same:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// make the default use GIL&#39;s default</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">SrcColorSpace</span><span class="p">,</span> <span class="k">typename</span> <span class="n">DstColorSpace</span><span class="o">&gt;</span>
-<span class="k">struct</span> <span class="nl">my_color_converter_impl</span>
-<span class="p">:</span> <span class="k">public</span> <span class="n">default_color_converter_impl</span><span class="o">&lt;</span><span class="n">SrcColorSpace</span><span class="p">,</span><span class="n">DstColorSpace</span><span class="o">&gt;</span> <span class="p">{};</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">SrcColorSpace</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">DstColorSpace</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="nc">my_color_converter_impl</span>
+<span class="o">:</span> <span class="k">public</span> <span class="n">default_color_converter_impl</span><span class="o">&lt;</span><span class="n">SrcColorSpace</span><span class="p">,</span><span class="n">DstColorSpace</span><span class="o">&gt;</span> <span class="p">{};</span>
 
 <span class="c1">// provide specializations only for cases you care about</span>
 <span class="c1">// (in this case, if the destination is grayscale, invert it)</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">SrcColorSpace</span><span class="o">&gt;</span>
-<span class="k">struct</span> <span class="n">my_color_converter_impl</span><span class="o">&lt;</span><span class="n">SrcColorSpace</span><span class="p">,</span><span class="n">gray_t</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">SrcColorSpace</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="nc">my_color_converter_impl</span><span class="o">&lt;</span><span class="n">SrcColorSpace</span><span class="p">,</span><span class="n">gray_t</span><span class="o">&gt;</span>
 <span class="p">{</span>
-  <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">SrcP</span><span class="p">,</span> <span class="k">typename</span> <span class="n">DstP</span><span class="o">&gt;</span>  <span class="c1">// Model PixelConcept</span>
+  <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">SrcP</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">DstP</span><span class="o">&gt;</span>  <span class="c1">// Model PixelConcept</span>
   <span class="kt">void</span> <span class="k">operator</span><span class="p">()(</span><span class="k">const</span> <span class="n">SrcP</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">,</span> <span class="n">DstP</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">)</span> <span class="k">const</span>
   <span class="p">{</span>
       <span class="n">default_color_converter_impl</span><span class="o">&lt;</span><span class="n">SrcColorSpace</span><span class="p">,</span><span class="n">gray_t</span><span class="o">&gt;</span><span class="p">()(</span><span class="n">src</span><span class="p">,</span><span class="n">dst</span><span class="p">);</span>
@@ -139,13 +139,13 @@ remains the same:</p>
 <span class="p">};</span>
 
 <span class="c1">// create a color converter object that dispatches to your own implementation</span>
-<span class="k">struct</span> <span class="n">my_color_converter</span>
+<span class="k">struct</span> <span class="nc">my_color_converter</span>
 <span class="p">{</span>
-  <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">SrcP</span><span class="p">,</span> <span class="k">typename</span> <span class="n">DstP</span><span class="o">&gt;</span>  <span class="c1">// Model PixelConcept</span>
+  <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">SrcP</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">DstP</span><span class="o">&gt;</span>  <span class="c1">// Model PixelConcept</span>
   <span class="kt">void</span> <span class="k">operator</span><span class="p">()(</span><span class="k">const</span> <span class="n">SrcP</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">,</span><span class="n">DstP</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">)</span> <span class="k">const</span>
   <span class="p">{</span>
-      <span class="k">typedef</span> <span class="k">typename</span> <span class="n">color_space_type</span><span class="o">&lt;</span><span class="n">SrcP</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">SrcColorSpace</span><span class="p">;</span>
-      <span class="k">typedef</span> <span class="k">typename</span> <span class="n">color_space_type</span><span class="o">&lt;</span><span class="n">DstP</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">DstColorSpace</span><span class="p">;</span>
+      <span class="k">typedef</span> <span class="k">typename</span> <span class="nc">color_space_type</span><span class="o">&lt;</span><span class="n">SrcP</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">SrcColorSpace</span><span class="p">;</span>
+      <span class="k">typedef</span> <span class="k">typename</span> <span class="nc">color_space_type</span><span class="o">&lt;</span><span class="n">DstP</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">DstColorSpace</span><span class="p">;</span>
       <span class="n">my_color_converter_impl</span><span class="o">&lt;</span><span class="n">SrcColorSpace</span><span class="p">,</span><span class="n">DstColorSpace</span><span class="o">&gt;</span><span class="p">()(</span><span class="n">src</span><span class="p">,</span><span class="n">dst</span><span class="p">);</span>
   <span class="p">}</span>
 <span class="p">};</span>
@@ -169,8 +169,8 @@ pixel access). First we need to define a model of
 <code class="docutils literal notranslate"><span class="pre">PixelDereferenceAdaptorConcept</span></code>; a function object that will be
 called when we dereference a pixel iterator. It will call
 <code class="docutils literal notranslate"><span class="pre">color_convert</span></code> to convert to the destination pixel type:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">SrcConstRefP</span><span class="p">,</span>  <span class="c1">// const reference to the source pixel</span>
-        <span class="k">typename</span> <span class="n">DstP</span><span class="o">&gt;</span>          <span class="c1">// Destination pixel value (models PixelValueConcept)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">SrcConstRefP</span><span class="p">,</span>  <span class="c1">// const reference to the source pixel</span>
+        <span class="k">typename</span> <span class="nc">DstP</span><span class="o">&gt;</span>          <span class="c1">// Destination pixel value (models PixelValueConcept)</span>
 <span class="k">class</span> <span class="nc">color_convert_deref_fn</span>
 <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
@@ -193,23 +193,23 @@ called when we dereference a pixel iterator. It will call
 <p>We then use the <code class="docutils literal notranslate"><span class="pre">add_deref</span></code> member struct of image views to construct the
 type of a view that invokes a given function object (<code class="docutils literal notranslate"><span class="pre">deref_t</span></code>) upon
 dereferencing. In our case, it performs color conversion:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">SrcView</span><span class="p">,</span> <span class="k">typename</span> <span class="n">DstP</span><span class="o">&gt;</span>
-<span class="k">struct</span> <span class="n">color_converted_view_type</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">SrcView</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">DstP</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="nc">color_converted_view_type</span>
 <span class="p">{</span>
 <span class="k">private</span><span class="o">:</span>
-  <span class="k">typedef</span> <span class="k">typename</span> <span class="n">SrcView</span><span class="o">::</span><span class="n">const_t</span><span class="o">::</span><span class="n">reference</span> <span class="n">src_pix_ref</span><span class="p">;</span>  <span class="c1">// const reference to pixel in SrcView</span>
+  <span class="k">typedef</span> <span class="k">typename</span> <span class="nc">SrcView</span><span class="o">::</span><span class="n">const_t</span><span class="o">::</span><span class="n">reference</span> <span class="n">src_pix_ref</span><span class="p">;</span>  <span class="c1">// const reference to pixel in SrcView</span>
   <span class="k">typedef</span> <span class="n">color_convert_deref_fn</span><span class="o">&lt;</span><span class="n">src_pix_ref</span><span class="p">,</span> <span class="n">DstP</span><span class="o">&gt;</span> <span class="n">deref_t</span><span class="p">;</span> <span class="c1">// the dereference adaptor that performs color conversion</span>
-  <span class="k">typedef</span> <span class="k">typename</span> <span class="n">SrcView</span><span class="o">::</span><span class="k">template</span> <span class="n">add_deref</span><span class="o">&lt;</span><span class="n">deref_t</span><span class="o">&gt;</span> <span class="n">add_ref_t</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="k">typename</span> <span class="nc">SrcView</span><span class="o">::</span><span class="k">template</span> <span class="n">add_deref</span><span class="o">&lt;</span><span class="n">deref_t</span><span class="o">&gt;</span> <span class="n">add_ref_t</span><span class="p">;</span>
 <span class="k">public</span><span class="o">:</span>
-  <span class="k">typedef</span> <span class="k">typename</span> <span class="n">add_ref_t</span><span class="o">::</span><span class="n">type</span> <span class="n">type</span><span class="p">;</span> <span class="c1">// the color converted view type</span>
-  <span class="k">static</span> <span class="n">type</span> <span class="nf">make</span><span class="p">(</span><span class="k">const</span> <span class="n">SrcView</span><span class="o">&amp;</span> <span class="n">sv</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">add_ref_t</span><span class="o">::</span><span class="n">make</span><span class="p">(</span><span class="n">sv</span><span class="p">,</span> <span class="n">deref_t</span><span class="p">());</span> <span class="p">}</span>
+  <span class="k">typedef</span> <span class="k">typename</span> <span class="nc">add_ref_t</span><span class="o">::</span><span class="n">type</span> <span class="n">type</span><span class="p">;</span> <span class="c1">// the color converted view type</span>
+  <span class="k">static</span> <span class="n">type</span> <span class="n">make</span><span class="p">(</span><span class="k">const</span> <span class="n">SrcView</span><span class="o">&amp;</span> <span class="n">sv</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">add_ref_t</span><span class="o">::</span><span class="n">make</span><span class="p">(</span><span class="n">sv</span><span class="p">,</span> <span class="n">deref_t</span><span class="p">());</span> <span class="p">}</span>
 <span class="p">};</span>
 </pre></div>
 </div>
 <p>Finally our <code class="docutils literal notranslate"><span class="pre">color_converted_view</span></code> code simply creates color-converted view
 from the source view:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">DstP</span><span class="p">,</span> <span class="k">typename</span> <span class="n">View</span><span class="o">&gt;</span> <span class="kr">inline</span>
-<span class="k">typename</span> <span class="n">color_converted_view_type</span><span class="o">&lt;</span><span class="n">View</span><span class="p">,</span><span class="n">DstP</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">color_convert_view</span><span class="p">(</span><span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">DstP</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">View</span><span class="o">&gt;</span> <span class="kr">inline</span>
+<span class="k">typename</span> <span class="nc">color_converted_view_type</span><span class="o">&lt;</span><span class="n">View</span><span class="p">,</span><span class="n">DstP</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">color_convert_view</span><span class="p">(</span><span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="k">return</span> <span class="n">color_converted_view_type</span><span class="o">&lt;</span><span class="n">View</span><span class="p">,</span><span class="n">DstP</span><span class="o">&gt;::</span><span class="n">make</span><span class="p">(</span><span class="n">src</span><span class="p">);</span>
 <span class="p">}</span>
@@ -234,8 +234,8 @@ defines the Mandelbrot set.</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2020-07-27 23:07:26.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.1.2.
+      Last updated on 2020-10-05 21:10:05.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1.
     </div>
   </body>
 </html>

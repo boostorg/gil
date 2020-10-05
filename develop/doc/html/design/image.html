@@ -84,13 +84,13 @@ ranges, not containers. Similarly most GIL algorithms operate on image views
 (which images provide).</p>
 <p>In the most general form images are N-dimensional and satisfy the following
 concept:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">RandomAccessNDImageConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">Img</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">Regular</span><span class="o">&lt;</span><span class="n">Img</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="nc">RandomAccessNDImageConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">Img</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">Regular</span><span class="o">&lt;</span><span class="n">Img</span><span class="o">&gt;</span>
 <span class="p">{</span>
-  <span class="k">typename</span> <span class="n">view_t</span><span class="p">;</span> <span class="n">where</span> <span class="n">MutableRandomAccessNDImageViewConcept</span><span class="o">&lt;</span><span class="n">view_t</span><span class="o">&gt;</span><span class="p">;</span>
-  <span class="k">typename</span> <span class="n">const_view_t</span> <span class="o">=</span> <span class="n">view_t</span><span class="o">::</span><span class="n">const_t</span><span class="p">;</span>
-  <span class="k">typename</span> <span class="n">point_t</span>      <span class="o">=</span> <span class="n">view_t</span><span class="o">::</span><span class="n">point_t</span><span class="p">;</span>
-  <span class="k">typename</span> <span class="n">value_type</span>   <span class="o">=</span> <span class="n">view_t</span><span class="o">::</span><span class="n">value_type</span><span class="p">;</span>
-  <span class="k">typename</span> <span class="n">allocator_type</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="nc">view_t</span><span class="p">;</span> <span class="n">where</span> <span class="n">MutableRandomAccessNDImageViewConcept</span><span class="o">&lt;</span><span class="n">view_t</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="nc">const_view_t</span> <span class="o">=</span> <span class="n">view_t</span><span class="o">::</span><span class="n">const_t</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="nc">point_t</span>      <span class="o">=</span> <span class="n">view_t</span><span class="o">::</span><span class="n">point_t</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="nc">value_type</span>   <span class="o">=</span> <span class="n">view_t</span><span class="o">::</span><span class="n">value_type</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="nc">allocator_type</span><span class="p">;</span>
 
   <span class="n">Img</span><span class="o">::</span><span class="n">Img</span><span class="p">(</span><span class="n">point_t</span> <span class="n">dims</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">alignment</span><span class="o">=</span><span class="mi">0</span><span class="p">);</span>
   <span class="n">Img</span><span class="o">::</span><span class="n">Img</span><span class="p">(</span><span class="n">point_t</span> <span class="n">dims</span><span class="p">,</span> <span class="n">value_type</span> <span class="n">fill_value</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">alignment</span><span class="p">);</span>
@@ -105,10 +105,10 @@ concept:</p>
 </pre></div>
 </div>
 <p>Two-dimensional images have additional requirements:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">RandomAccess2DImageConcept</span><span class="o">&lt;</span><span class="n">RandomAccessNDImageConcept</span> <span class="n">Img</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="nc">RandomAccess2DImageConcept</span><span class="o">&lt;</span><span class="n">RandomAccessNDImageConcept</span> <span class="n">Img</span><span class="o">&gt;</span>
 <span class="p">{</span>
-  <span class="k">typename</span> <span class="n">x_coord_t</span> <span class="o">=</span> <span class="n">const_view_t</span><span class="o">::</span><span class="n">x_coord_t</span><span class="p">;</span>
-  <span class="k">typename</span> <span class="n">y_coord_t</span> <span class="o">=</span> <span class="n">const_view_t</span><span class="o">::</span><span class="n">y_coord_t</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="nc">x_coord_t</span> <span class="o">=</span> <span class="n">const_view_t</span><span class="o">::</span><span class="n">x_coord_t</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="nc">y_coord_t</span> <span class="o">=</span> <span class="n">const_view_t</span><span class="o">::</span><span class="n">y_coord_t</span><span class="p">;</span>
 
   <span class="n">Img</span><span class="o">::</span><span class="n">Img</span><span class="p">(</span><span class="n">x_coord_t</span> <span class="n">width</span><span class="p">,</span> <span class="n">y_coord_t</span> <span class="n">height</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">alignment</span><span class="o">=</span><span class="mi">0</span><span class="p">);</span>
   <span class="n">Img</span><span class="o">::</span><span class="n">Img</span><span class="p">(</span><span class="n">x_coord_t</span> <span class="n">width</span><span class="p">,</span> <span class="n">y_coord_t</span> <span class="n">height</span><span class="p">,</span> <span class="n">value_type</span> <span class="n">fill_value</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">alignment</span><span class="p">);</span>
@@ -122,10 +122,10 @@ concept:</p>
 </pre></div>
 </div>
 <p>GIL images have views that model <code class="docutils literal notranslate"><span class="pre">ImageViewConcept</span></code> and operate on pixels.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">ImageConcept</span><span class="o">&lt;</span><span class="n">RandomAccess2DImageConcept</span> <span class="n">Img</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="nc">ImageConcept</span><span class="o">&lt;</span><span class="n">RandomAccess2DImageConcept</span> <span class="n">Img</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="n">where</span> <span class="n">MutableImageViewConcept</span><span class="o">&lt;</span><span class="n">view_t</span><span class="o">&gt;</span><span class="p">;</span>
-  <span class="k">typename</span> <span class="n">coord_t</span>  <span class="o">=</span> <span class="n">view_t</span><span class="o">::</span><span class="n">coord_t</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="nc">coord_t</span>  <span class="o">=</span> <span class="n">view_t</span><span class="o">::</span><span class="n">coord_t</span><span class="p">;</span>
 <span class="p">};</span>
 </pre></div>
 </div>
@@ -146,9 +146,9 @@ because immutable images are not very useful.</p>
 (the pixel) and models <code class="docutils literal notranslate"><span class="pre">ImageConcept</span></code>:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span> <span class="k">template</span>
  <span class="o">&lt;</span>
-     <span class="k">typename</span> <span class="n">Pixel</span><span class="p">,</span> <span class="c1">// Models PixelValueConcept</span>
+     <span class="k">typename</span> <span class="nc">Pixel</span><span class="p">,</span> <span class="c1">// Models PixelValueConcept</span>
      <span class="kt">bool</span> <span class="n">IsPlanar</span><span class="p">,</span>  <span class="c1">// planar or interleaved image</span>
-     <span class="k">typename</span> <span class="n">A</span><span class="o">=</span><span class="n">std</span><span class="o">::</span><span class="n">allocator</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="kt">char</span><span class="o">&gt;</span>
+     <span class="k">typename</span> <span class="nc">A</span><span class="o">=</span><span class="n">std</span><span class="o">::</span><span class="n">allocator</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="kt">char</span><span class="o">&gt;</span>
  <span class="o">&gt;</span>
 <span class="k">class</span> <span class="nc">image</span><span class="p">;</span>
 </pre></div>
@@ -175,8 +175,8 @@ there are no padding bits at the end of rows of packed images.</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2020-07-27 23:07:26.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.1.2.
+      Last updated on 2020-10-05 21:10:05.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1.
     </div>
   </body>
 </html>

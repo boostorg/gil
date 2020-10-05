@@ -90,30 +90,30 @@ For example, a constant image view cannot be resized, but may allow modifying
 the pixels. For pixel-immutable operations, use constant-value image view
 (also called non-mutable image view). Most general N-dimensional views satisfy
 the following concept:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">RandomAccessNDImageViewConcept</span><span class="o">&lt;</span><span class="n">Regular</span> <span class="n">View</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="nc">RandomAccessNDImageViewConcept</span><span class="o">&lt;</span><span class="n">Regular</span> <span class="n">View</span><span class="o">&gt;</span>
 <span class="p">{</span>
-  <span class="k">typename</span> <span class="n">value_type</span><span class="p">;</span>      <span class="c1">// for pixel-based views, the pixel type</span>
-  <span class="k">typename</span> <span class="n">reference</span><span class="p">;</span>       <span class="c1">// result of dereferencing</span>
-  <span class="k">typename</span> <span class="n">difference_type</span><span class="p">;</span> <span class="c1">// result of operator-(iterator,iterator) (1-dimensional!)</span>
-  <span class="k">typename</span> <span class="n">const_t</span><span class="p">;</span>  <span class="n">where</span> <span class="n">RandomAccessNDImageViewConcept</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">// same as View, but over immutable values</span>
-  <span class="k">typename</span> <span class="n">point_t</span><span class="p">;</span>  <span class="n">where</span> <span class="n">PointNDConcept</span><span class="o">&lt;</span><span class="n">point_t</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">// N-dimensional point</span>
-  <span class="k">typename</span> <span class="n">locator</span><span class="p">;</span>  <span class="n">where</span> <span class="n">RandomAccessNDLocatorConcept</span><span class="o">&lt;</span><span class="n">locator</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">// N-dimensional locator.</span>
-  <span class="k">typename</span> <span class="n">iterator</span><span class="p">;</span> <span class="n">where</span> <span class="n">RandomAccessTraversalConcept</span><span class="o">&lt;</span><span class="n">iterator</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">// 1-dimensional iterator over all values</span>
-  <span class="k">typename</span> <span class="n">reverse_iterator</span><span class="p">;</span> <span class="n">where</span> <span class="n">RandomAccessTraversalConcept</span><span class="o">&lt;</span><span class="n">reverse_iterator</span><span class="o">&gt;</span><span class="p">;</span>
-  <span class="k">typename</span> <span class="n">size_type</span><span class="p">;</span>       <span class="c1">// the return value of size()</span>
+  <span class="k">typename</span> <span class="nc">value_type</span><span class="p">;</span>      <span class="c1">// for pixel-based views, the pixel type</span>
+  <span class="k">typename</span> <span class="nc">reference</span><span class="p">;</span>       <span class="c1">// result of dereferencing</span>
+  <span class="k">typename</span> <span class="nc">difference_type</span><span class="p">;</span> <span class="c1">// result of operator-(iterator,iterator) (1-dimensional!)</span>
+  <span class="k">typename</span> <span class="nc">const_t</span><span class="p">;</span>  <span class="n">where</span> <span class="n">RandomAccessNDImageViewConcept</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">// same as View, but over immutable values</span>
+  <span class="k">typename</span> <span class="nc">point_t</span><span class="p">;</span>  <span class="n">where</span> <span class="n">PointNDConcept</span><span class="o">&lt;</span><span class="n">point_t</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">// N-dimensional point</span>
+  <span class="k">typename</span> <span class="nc">locator</span><span class="p">;</span>  <span class="n">where</span> <span class="n">RandomAccessNDLocatorConcept</span><span class="o">&lt;</span><span class="n">locator</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">// N-dimensional locator.</span>
+  <span class="k">typename</span> <span class="nc">iterator</span><span class="p">;</span> <span class="n">where</span> <span class="n">RandomAccessTraversalConcept</span><span class="o">&lt;</span><span class="n">iterator</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">// 1-dimensional iterator over all values</span>
+  <span class="k">typename</span> <span class="nc">reverse_iterator</span><span class="p">;</span> <span class="n">where</span> <span class="n">RandomAccessTraversalConcept</span><span class="o">&lt;</span><span class="n">reverse_iterator</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="nc">size_type</span><span class="p">;</span>       <span class="c1">// the return value of size()</span>
 
   <span class="c1">// Equivalent to RandomAccessNDLocatorConcept::axis</span>
-  <span class="k">template</span> <span class="o">&lt;</span><span class="kt">size_t</span> <span class="n">D</span><span class="o">&gt;</span> <span class="k">struct</span> <span class="n">axis</span> <span class="p">{</span>
-      <span class="k">typename</span> <span class="n">coord_t</span> <span class="o">=</span> <span class="n">point_t</span><span class="o">::</span><span class="n">axis</span><span class="o">&lt;</span><span class="n">D</span><span class="o">&gt;::</span><span class="n">coord_t</span><span class="p">;</span>
-      <span class="k">typename</span> <span class="n">iterator</span><span class="p">;</span> <span class="n">where</span> <span class="n">RandomAccessTraversalConcept</span><span class="o">&lt;</span><span class="n">iterator</span><span class="o">&gt;</span><span class="p">;</span>   <span class="c1">// iterator along D-th axis.</span>
+  <span class="k">template</span> <span class="o">&lt;</span><span class="kt">size_t</span> <span class="n">D</span><span class="o">&gt;</span> <span class="k">struct</span> <span class="nc">axis</span> <span class="p">{</span>
+      <span class="k">typename</span> <span class="nc">coord_t</span> <span class="o">=</span> <span class="n">point_t</span><span class="o">::</span><span class="n">axis</span><span class="o">&lt;</span><span class="n">D</span><span class="o">&gt;::</span><span class="n">coord_t</span><span class="p">;</span>
+      <span class="k">typename</span> <span class="nc">iterator</span><span class="p">;</span> <span class="n">where</span> <span class="n">RandomAccessTraversalConcept</span><span class="o">&lt;</span><span class="n">iterator</span><span class="o">&gt;</span><span class="p">;</span>   <span class="c1">// iterator along D-th axis.</span>
       <span class="n">where</span> <span class="n">SameType</span><span class="o">&lt;</span><span class="n">coord_t</span><span class="p">,</span> <span class="n">iterator</span><span class="o">::</span><span class="n">difference_type</span><span class="o">&gt;</span><span class="p">;</span>
       <span class="n">where</span> <span class="n">SameType</span><span class="o">&lt;</span><span class="n">iterator</span><span class="o">::</span><span class="n">value_type</span><span class="p">,</span><span class="n">value_type</span><span class="o">&gt;</span><span class="p">;</span>
   <span class="p">};</span>
 
   <span class="c1">// Defines the type of a view similar to this type, except it invokes Deref upon dereferencing</span>
-  <span class="k">template</span> <span class="o">&lt;</span><span class="n">PixelDereferenceAdaptorConcept</span> <span class="n">Deref</span><span class="o">&gt;</span> <span class="k">struct</span> <span class="n">add_deref</span> <span class="p">{</span>
-      <span class="k">typename</span> <span class="n">type</span><span class="p">;</span>        <span class="n">where</span> <span class="n">RandomAccessNDImageViewConcept</span><span class="o">&lt;</span><span class="n">type</span><span class="o">&gt;</span><span class="p">;</span>
-      <span class="k">static</span> <span class="n">type</span> <span class="nf">make</span><span class="p">(</span><span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">v</span><span class="p">,</span> <span class="k">const</span> <span class="n">Deref</span><span class="o">&amp;</span> <span class="n">deref</span><span class="p">);</span>
+  <span class="k">template</span> <span class="o">&lt;</span><span class="n">PixelDereferenceAdaptorConcept</span> <span class="n">Deref</span><span class="o">&gt;</span> <span class="k">struct</span> <span class="nc">add_deref</span> <span class="p">{</span>
+      <span class="k">typename</span> <span class="nc">type</span><span class="p">;</span>        <span class="n">where</span> <span class="n">RandomAccessNDImageViewConcept</span><span class="o">&lt;</span><span class="n">type</span><span class="o">&gt;</span><span class="p">;</span>
+      <span class="k">static</span> <span class="n">type</span> <span class="n">make</span><span class="p">(</span><span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">v</span><span class="p">,</span> <span class="k">const</span> <span class="n">Deref</span><span class="o">&amp;</span> <span class="n">deref</span><span class="p">);</span>
   <span class="p">};</span>
 
   <span class="k">static</span> <span class="k">const</span> <span class="kt">size_t</span> <span class="n">num_dimensions</span> <span class="o">=</span> <span class="n">point_t</span><span class="o">::</span><span class="n">num_dimensions</span><span class="p">;</span>
@@ -137,22 +137,22 @@ the following concept:</p>
   <span class="n">reference</span> <span class="nf">operator</span><span class="p">()(</span><span class="n">View</span><span class="p">,</span><span class="k">const</span> <span class="n">point_t</span><span class="o">&amp;</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="k">concept</span> <span class="n">MutableRandomAccessNDImageViewConcept</span><span class="o">&lt;</span><span class="n">RandomAccessNDImageViewConcept</span> <span class="n">View</span><span class="o">&gt;</span>
+<span class="k">concept</span> <span class="nc">MutableRandomAccessNDImageViewConcept</span><span class="o">&lt;</span><span class="n">RandomAccessNDImageViewConcept</span> <span class="n">View</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="n">where</span> <span class="n">Mutable</span><span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span><span class="p">;</span>
 <span class="p">};</span>
 </pre></div>
 </div>
 <p>Two-dimensional image views have the following extra requirements:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">RandomAccess2DImageViewConcept</span><span class="o">&lt;</span><span class="n">RandomAccessNDImageViewConcept</span> <span class="n">View</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="nc">RandomAccess2DImageViewConcept</span><span class="o">&lt;</span><span class="n">RandomAccessNDImageViewConcept</span> <span class="n">View</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="n">where</span> <span class="n">num_dimensions</span><span class="o">==</span><span class="mi">2</span><span class="p">;</span>
 
-  <span class="k">typename</span> <span class="n">x_iterator</span> <span class="o">=</span> <span class="n">axis</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;::</span><span class="n">iterator</span><span class="p">;</span>
-  <span class="k">typename</span> <span class="n">y_iterator</span> <span class="o">=</span> <span class="n">axis</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;::</span><span class="n">iterator</span><span class="p">;</span>
-  <span class="k">typename</span> <span class="n">x_coord_t</span>  <span class="o">=</span> <span class="n">axis</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;::</span><span class="n">coord_t</span><span class="p">;</span>
-  <span class="k">typename</span> <span class="n">y_coord_t</span>  <span class="o">=</span> <span class="n">axis</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;::</span><span class="n">coord_t</span><span class="p">;</span>
-  <span class="k">typename</span> <span class="n">xy_locator</span> <span class="o">=</span> <span class="n">locator</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="nc">x_iterator</span> <span class="o">=</span> <span class="n">axis</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;::</span><span class="n">iterator</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="nc">y_iterator</span> <span class="o">=</span> <span class="n">axis</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;::</span><span class="n">iterator</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="nc">x_coord_t</span>  <span class="o">=</span> <span class="n">axis</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;::</span><span class="n">coord_t</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="nc">y_coord_t</span>  <span class="o">=</span> <span class="n">axis</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;::</span><span class="n">coord_t</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="nc">xy_locator</span> <span class="o">=</span> <span class="n">locator</span><span class="p">;</span>
 
   <span class="n">x_coord_t</span> <span class="n">View</span><span class="o">::</span><span class="n">width</span><span class="p">()</span>  <span class="k">const</span><span class="p">;</span>
   <span class="n">y_coord_t</span> <span class="n">View</span><span class="o">::</span><span class="n">height</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
@@ -179,33 +179,33 @@ the following concept:</p>
   <span class="n">y_iterator</span> <span class="n">View</span><span class="o">::</span><span class="n">y_at</span><span class="p">(</span><span class="n">x_coord_t</span><span class="p">,</span><span class="n">y_coord_t</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="k">concept</span> <span class="n">MutableRandomAccess2DImageViewConcept</span><span class="o">&lt;</span><span class="n">RandomAccess2DImageViewConcept</span> <span class="n">View</span><span class="o">&gt;</span>
+<span class="k">concept</span> <span class="nc">MutableRandomAccess2DImageViewConcept</span><span class="o">&lt;</span><span class="n">RandomAccess2DImageViewConcept</span> <span class="n">View</span><span class="o">&gt;</span>
   <span class="o">:</span> <span class="n">MutableRandomAccessNDImageViewConcept</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;</span> <span class="p">{};</span>
 </pre></div>
 </div>
 <p>Image views that GIL typically uses operate on value types that model
 <code class="docutils literal notranslate"><span class="pre">PixelValueConcept</span></code> and have some additional requirements:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">ImageViewConcept</span><span class="o">&lt;</span><span class="n">RandomAccess2DImageViewConcept</span> <span class="n">View</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="nc">ImageViewConcept</span><span class="o">&lt;</span><span class="n">RandomAccess2DImageViewConcept</span> <span class="n">View</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="n">where</span> <span class="n">PixelValueConcept</span><span class="o">&lt;</span><span class="n">value_type</span><span class="o">&gt;</span><span class="p">;</span>
   <span class="n">where</span> <span class="n">PixelIteratorConcept</span><span class="o">&lt;</span><span class="n">x_iterator</span><span class="o">&gt;</span><span class="p">;</span>
   <span class="n">where</span> <span class="n">PixelIteratorConcept</span><span class="o">&lt;</span><span class="n">y_iterator</span><span class="o">&gt;</span><span class="p">;</span>
   <span class="n">where</span> <span class="n">x_coord_t</span> <span class="o">==</span> <span class="n">y_coord_t</span><span class="p">;</span>
 
-  <span class="k">typename</span> <span class="n">coord_t</span> <span class="o">=</span> <span class="n">x_coord_t</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="nc">coord_t</span> <span class="o">=</span> <span class="n">x_coord_t</span><span class="p">;</span>
 
   <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">View</span><span class="o">::</span><span class="n">num_channels</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 <span class="p">};</span>
 
 
-<span class="k">concept</span> <span class="n">MutableImageViewConcept</span><span class="o">&lt;</span><span class="n">ImageViewConcept</span> <span class="n">View</span><span class="o">&gt;</span>
+<span class="k">concept</span> <span class="nc">MutableImageViewConcept</span><span class="o">&lt;</span><span class="n">ImageViewConcept</span> <span class="n">View</span><span class="o">&gt;</span>
   <span class="o">:</span> <span class="n">MutableRandomAccess2DImageViewConcept</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;</span>
 <span class="p">{};</span>
 </pre></div>
 </div>
 <p>Two image views are compatible if they have compatible pixels and the same
 number of dimensions:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">ViewsCompatibleConcept</span><span class="o">&lt;</span><span class="n">ImageViewConcept</span> <span class="n">V1</span><span class="p">,</span> <span class="n">ImageViewConcept</span> <span class="n">V2</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="nc">ViewsCompatibleConcept</span><span class="o">&lt;</span><span class="n">ImageViewConcept</span> <span class="n">V1</span><span class="p">,</span> <span class="n">ImageViewConcept</span> <span class="n">V2</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="n">where</span> <span class="n">PixelsCompatibleConcept</span><span class="o">&lt;</span><span class="n">V1</span><span class="o">::</span><span class="n">value_type</span><span class="p">,</span> <span class="n">V2</span><span class="o">::</span><span class="n">value_type</span><span class="o">&gt;</span><span class="p">;</span>
   <span class="n">where</span> <span class="n">V1</span><span class="o">::</span><span class="n">num_dimensions</span> <span class="o">==</span> <span class="n">V2</span><span class="o">::</span><span class="n">num_dimensions</span><span class="p">;</span>
@@ -235,7 +235,7 @@ templated over a model of <code class="docutils literal notranslate"><span class
 model of <code class="docutils literal notranslate"><span class="pre">MutablePixelLocatorConcept</span></code>, it models
 <code class="docutils literal notranslate"><span class="pre">MutableImageViewConcept</span></code>). Synopsis:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Locator models PixelLocatorConcept, could be MutablePixelLocatorConcept</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">Locator</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">Locator</span><span class="o">&gt;</span>
 <span class="k">class</span> <span class="nc">image_view</span>
 <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
@@ -263,14 +263,14 @@ space, bit depth, channel ordering or planar vs. interleaved structure.
 Interleaved views are constructed using <code class="docutils literal notranslate"><span class="pre">interleaved_view</span></code>, supplying the
 image dimensions, number of bytes per row, and a pointer to the first pixel:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Iterator models pixel iterator (e.g. rgb8_ptr_t or rgb8c_ptr_t)</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">Iterator</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">Iterator</span><span class="o">&gt;</span>
 <span class="n">image_view</span><span class="o">&lt;</span><span class="p">...</span><span class="o">&gt;</span> <span class="n">interleaved_view</span><span class="p">(</span><span class="kt">ptrdiff_t</span> <span class="n">width</span><span class="p">,</span> <span class="kt">ptrdiff_t</span> <span class="n">height</span><span class="p">,</span> <span class="n">Iterator</span> <span class="n">pixels</span><span class="p">,</span> <span class="kt">ptrdiff_t</span> <span class="n">rowsize</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Planar views are defined for every color space and take each plane separately.
 Here is the RGB one:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Iterator models channel iterator (e.g. bits8* or bits8 const*)</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">Iterator</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">Iterator</span><span class="o">&gt;</span>
 <span class="n">image_view</span><span class="o">&lt;</span><span class="p">...</span><span class="o">&gt;</span> <span class="n">planar_rgb_view</span><span class="p">(</span>
     <span class="kt">ptrdiff_t</span> <span class="n">width</span><span class="p">,</span> <span class="kt">ptrdiff_t</span> <span class="n">height</span><span class="p">,</span>
     <span class="n">IC</span> <span class="n">r</span><span class="p">,</span> <span class="n">IC</span> <span class="n">g</span><span class="p">,</span> <span class="n">IC</span> <span class="n">b</span><span class="p">,</span> <span class="kt">ptrdiff_t</span> <span class="n">rowsize</span><span class="p">);</span>
@@ -286,24 +286,24 @@ policy of how image data is interpreted. The result could be a view whose type
 is derived from the type of the source. GIL uses the following metafunctions
 to get the derived types:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Some result view types</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">View</span><span class="o">&gt;</span>
-<span class="k">struct</span> <span class="nl">dynamic_xy_step_type</span> <span class="p">:</span> <span class="k">public</span> <span class="n">dynamic_y_step_type</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">dynamic_x_step_type</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">&gt;</span> <span class="p">{};</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">View</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="nc">dynamic_xy_step_type</span> <span class="o">:</span> <span class="k">public</span> <span class="n">dynamic_y_step_type</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">dynamic_x_step_type</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">&gt;</span> <span class="p">{};</span>
 
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">View</span><span class="o">&gt;</span>
-<span class="k">struct</span> <span class="nl">dynamic_xy_step_transposed_type</span> <span class="p">:</span> <span class="k">public</span> <span class="n">dynamic_xy_step_type</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">transposed_type</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">&gt;</span> <span class="p">{};</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">View</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="nc">dynamic_xy_step_transposed_type</span> <span class="o">:</span> <span class="k">public</span> <span class="n">dynamic_xy_step_type</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">transposed_type</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">&gt;</span> <span class="p">{};</span>
 
 <span class="c1">// color and bit depth converted view to match pixel type P</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">SrcView</span><span class="p">,</span> <span class="c1">// Models ImageViewConcept</span>
-        <span class="k">typename</span> <span class="n">DstP</span><span class="p">,</span>    <span class="c1">// Models PixelConcept</span>
-        <span class="k">typename</span> <span class="n">ColorConverter</span><span class="o">=</span><span class="n">gil</span><span class="o">::</span><span class="n">default_color_converter</span><span class="o">&gt;</span>
-<span class="k">struct</span> <span class="n">color_converted_view_type</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">SrcView</span><span class="p">,</span> <span class="c1">// Models ImageViewConcept</span>
+        <span class="k">typename</span> <span class="nc">DstP</span><span class="p">,</span>    <span class="c1">// Models PixelConcept</span>
+        <span class="k">typename</span> <span class="nc">ColorConverter</span><span class="o">=</span><span class="n">gil</span><span class="o">::</span><span class="n">default_color_converter</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="nc">color_converted_view_type</span>
 <span class="p">{</span>
   <span class="k">typedef</span> <span class="p">...</span> <span class="n">type</span><span class="p">;</span>     <span class="c1">// image view adaptor with value type DstP, over SrcView</span>
 <span class="p">};</span>
 
 <span class="c1">// single-channel view of the N-th channel of a given view</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">SrcView</span><span class="o">&gt;</span>
-<span class="k">struct</span> <span class="n">nth_channel_view_type</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">SrcView</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="nc">nth_channel_view_type</span>
 <span class="p">{</span>
   <span class="k">typedef</span> <span class="p">...</span> <span class="n">type</span><span class="p">;</span>
 <span class="p">};</span>
@@ -311,29 +311,29 @@ to get the derived types:</p>
 </div>
 <p>GIL Provides the following view transformations:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// flipped upside-down, left-to-right, transposed view</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">View</span><span class="o">&gt;</span> <span class="k">typename</span> <span class="n">dynamic_y_step_type</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;::</span><span class="n">type</span>             <span class="n">flipped_up_down_view</span><span class="p">(</span><span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">);</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">View</span><span class="o">&gt;</span> <span class="k">typename</span> <span class="n">dynamic_x_step_type</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;::</span><span class="n">type</span>             <span class="n">flipped_left_right_view</span><span class="p">(</span><span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">);</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">View</span><span class="o">&gt;</span> <span class="k">typename</span> <span class="n">dynamic_xy_step_transposed_type</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">transposed_view</span><span class="p">(</span><span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">);</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">View</span><span class="o">&gt;</span> <span class="k">typename</span> <span class="nc">dynamic_y_step_type</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;::</span><span class="n">type</span>             <span class="n">flipped_up_down_view</span><span class="p">(</span><span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">);</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">View</span><span class="o">&gt;</span> <span class="k">typename</span> <span class="nc">dynamic_x_step_type</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;::</span><span class="n">type</span>             <span class="n">flipped_left_right_view</span><span class="p">(</span><span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">);</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">View</span><span class="o">&gt;</span> <span class="k">typename</span> <span class="nc">dynamic_xy_step_transposed_type</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">transposed_view</span><span class="p">(</span><span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">);</span>
 
 <span class="c1">// rotations</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">View</span><span class="o">&gt;</span> <span class="k">typename</span> <span class="n">dynamic_xy_step_type</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;::</span><span class="n">type</span>            <span class="n">rotated180_view</span><span class="p">(</span><span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">);</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">View</span><span class="o">&gt;</span> <span class="k">typename</span> <span class="n">dynamic_xy_step_transposed_type</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">rotated90cw_view</span><span class="p">(</span><span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">);</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">View</span><span class="o">&gt;</span> <span class="k">typename</span> <span class="n">dynamic_xy_step_transposed_type</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">rotated90ccw_view</span><span class="p">(</span><span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">);</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">View</span><span class="o">&gt;</span> <span class="k">typename</span> <span class="nc">dynamic_xy_step_type</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;::</span><span class="n">type</span>            <span class="n">rotated180_view</span><span class="p">(</span><span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">);</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">View</span><span class="o">&gt;</span> <span class="k">typename</span> <span class="nc">dynamic_xy_step_transposed_type</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">rotated90cw_view</span><span class="p">(</span><span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">);</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">View</span><span class="o">&gt;</span> <span class="k">typename</span> <span class="nc">dynamic_xy_step_transposed_type</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">rotated90ccw_view</span><span class="p">(</span><span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">);</span>
 
 <span class="c1">// view of an axis-aligned rectangular area within an image</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">View</span><span class="o">&gt;</span> <span class="n">View</span>                                                 <span class="n">subimage_view</span><span class="p">(</span><span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">,</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">View</span><span class="o">&gt;</span> <span class="n">View</span>                                                 <span class="n">subimage_view</span><span class="p">(</span><span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">,</span>
            <span class="k">const</span> <span class="n">View</span><span class="o">::</span><span class="n">point_t</span><span class="o">&amp;</span> <span class="n">top_left</span><span class="p">,</span> <span class="k">const</span> <span class="n">View</span><span class="o">::</span><span class="n">point_t</span><span class="o">&amp;</span> <span class="n">dimensions</span><span class="p">);</span>
 
 <span class="c1">// subsampled view (skipping pixels in X and Y)</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">View</span><span class="o">&gt;</span> <span class="k">typename</span> <span class="n">dynamic_xy_step_type</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;::</span><span class="n">type</span>            <span class="n">subsampled_view</span><span class="p">(</span><span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">,</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">View</span><span class="o">&gt;</span> <span class="k">typename</span> <span class="nc">dynamic_xy_step_type</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;::</span><span class="n">type</span>            <span class="n">subsampled_view</span><span class="p">(</span><span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">,</span>
            <span class="k">const</span> <span class="n">View</span><span class="o">::</span><span class="n">point_t</span><span class="o">&amp;</span> <span class="n">step</span><span class="p">);</span>
 
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">View</span><span class="p">,</span> <span class="k">typename</span> <span class="n">P</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">View</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">P</span><span class="o">&gt;</span>
 <span class="n">color_converted_view_type</span><span class="o">&lt;</span><span class="n">View</span><span class="p">,</span><span class="n">P</span><span class="o">&gt;::</span><span class="n">type</span>                                       <span class="n">color_converted_view</span><span class="p">(</span><span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">);</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">View</span><span class="p">,</span> <span class="k">typename</span> <span class="n">P</span><span class="p">,</span> <span class="k">typename</span> <span class="n">CCV</span><span class="o">&gt;</span> <span class="c1">// with a custom color converter</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">View</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">P</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">CCV</span><span class="o">&gt;</span> <span class="c1">// with a custom color converter</span>
 <span class="n">color_converted_view_type</span><span class="o">&lt;</span><span class="n">View</span><span class="p">,</span><span class="n">P</span><span class="p">,</span><span class="n">CCV</span><span class="o">&gt;::</span><span class="n">type</span>                                   <span class="n">color_converted_view</span><span class="p">(</span><span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">);</span>
 
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">View</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">View</span><span class="o">&gt;</span>
 <span class="n">nth_channel_view_type</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;::</span><span class="n">view_t</span>                                           <span class="n">nth_channel_view</span><span class="p">(</span><span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">view</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -341,12 +341,12 @@ to get the derived types:</p>
 Here is, for example, how the flip views are implemented. The flip upside-down
 view creates a view whose first pixel is the bottom left pixel of the original
 view and whose y-step is the negated step of the source.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">View</span><span class="o">&gt;</span>
-<span class="k">typename</span> <span class="n">dynamic_y_step_type</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">flipped_up_down_view</span><span class="p">(</span><span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">View</span><span class="o">&gt;</span>
+<span class="k">typename</span> <span class="nc">dynamic_y_step_type</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">flipped_up_down_view</span><span class="p">(</span><span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="n">gil_function_requires</span><span class="o">&lt;</span><span class="n">ImageViewConcept</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">();</span>
-  <span class="k">typedef</span> <span class="k">typename</span> <span class="n">dynamic_y_step_type</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">RView</span><span class="p">;</span>
-  <span class="k">return</span> <span class="nf">RView</span><span class="p">(</span><span class="n">src</span><span class="p">.</span><span class="n">dimensions</span><span class="p">(),</span><span class="k">typename</span> <span class="n">RView</span><span class="o">::</span><span class="n">xy_locator</span><span class="p">(</span><span class="n">src</span><span class="p">.</span><span class="n">xy_at</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">src</span><span class="p">.</span><span class="n">height</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span><span class="o">-</span><span class="mi">1</span><span class="p">));</span>
+  <span class="k">typedef</span> <span class="k">typename</span> <span class="nc">dynamic_y_step_type</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">RView</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nf">RView</span><span class="p">(</span><span class="n">src</span><span class="p">.</span><span class="n">dimensions</span><span class="p">(),</span><span class="k">typename</span> <span class="nc">RView</span><span class="o">::</span><span class="n">xy_locator</span><span class="p">(</span><span class="n">src</span><span class="p">.</span><span class="n">xy_at</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">src</span><span class="p">.</span><span class="n">height</span><span class="p">()</span><span class="mi">-1</span><span class="p">),</span><span class="mi">-1</span><span class="p">));</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -383,30 +383,30 @@ The algorithms in this section resemble STL algorithms, but they abstract away
 the nested loops and take views (as opposed to ranges) as input.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Equivalents of std::copy and std::uninitialized_copy</span>
 <span class="c1">// where ImageViewConcept&lt;V1&gt;, MutableImageViewConcept&lt;V2&gt;, ViewsCompatibleConcept&lt;V1,V2&gt;</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">V1</span><span class="p">,</span> <span class="k">typename</span> <span class="n">V2</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">V1</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">V2</span><span class="o">&gt;</span>
 <span class="kt">void</span> <span class="n">copy_pixels</span><span class="p">(</span><span class="k">const</span> <span class="n">V1</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">,</span> <span class="k">const</span> <span class="n">V2</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">);</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">V1</span><span class="p">,</span> <span class="k">typename</span> <span class="n">V2</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">V1</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">V2</span><span class="o">&gt;</span>
 <span class="kt">void</span> <span class="n">uninitialized_copy_pixels</span><span class="p">(</span><span class="k">const</span> <span class="n">V1</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">,</span> <span class="k">const</span> <span class="n">V2</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">);</span>
 
 <span class="c1">// Equivalents of std::fill and std::uninitialized_fill</span>
 <span class="c1">// where MutableImageViewConcept&lt;V&gt;, PixelConcept&lt;Value&gt;, PixelsCompatibleConcept&lt;Value,V::value_type&gt;</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">V</span><span class="p">,</span> <span class="k">typename</span> <span class="n">Value</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">V</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">Value</span><span class="o">&gt;</span>
 <span class="kt">void</span> <span class="n">fill_pixels</span><span class="p">(</span><span class="k">const</span> <span class="n">V</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">,</span> <span class="k">const</span> <span class="n">Value</span><span class="o">&amp;</span> <span class="n">val</span><span class="p">);</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">V</span><span class="p">,</span> <span class="k">typename</span> <span class="n">Value</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">V</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">Value</span><span class="o">&gt;</span>
 <span class="kt">void</span> <span class="n">uninitialized_fill_pixels</span><span class="p">(</span><span class="k">const</span> <span class="n">V</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">,</span> <span class="k">const</span> <span class="n">Value</span><span class="o">&amp;</span> <span class="n">val</span><span class="p">);</span>
 
 <span class="c1">// Equivalent of std::for_each</span>
 <span class="c1">// where ImageViewConcept&lt;V&gt;, boost::UnaryFunctionConcept&lt;F&gt;</span>
 <span class="c1">// where PixelsCompatibleConcept&lt;V::reference, F::argument_type&gt;</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">V</span><span class="p">,</span> <span class="k">typename</span> <span class="n">F</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">V</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">F</span><span class="o">&gt;</span>
 <span class="n">F</span> <span class="n">for_each_pixel</span><span class="p">(</span><span class="k">const</span> <span class="n">V</span><span class="o">&amp;</span> <span class="n">view</span><span class="p">,</span> <span class="n">F</span> <span class="n">fun</span><span class="p">);</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">V</span><span class="p">,</span> <span class="k">typename</span> <span class="n">F</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">V</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">F</span><span class="o">&gt;</span>
 <span class="n">F</span> <span class="n">for_each_pixel_position</span><span class="p">(</span><span class="k">const</span> <span class="n">V</span><span class="o">&amp;</span> <span class="n">view</span><span class="p">,</span> <span class="n">F</span> <span class="n">fun</span><span class="p">);</span>
 
 <span class="c1">// Equivalent of std::generate</span>
 <span class="c1">// where MutableImageViewConcept&lt;V&gt;, boost::UnaryFunctionConcept&lt;F&gt;</span>
 <span class="c1">// where PixelsCompatibleConcept&lt;V::reference, F::argument_type&gt;</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">V</span><span class="p">,</span> <span class="k">typename</span> <span class="n">F</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">V</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">F</span><span class="o">&gt;</span>
 <span class="kt">void</span> <span class="n">generate_pixels</span><span class="p">(</span><span class="k">const</span> <span class="n">V</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">,</span> <span class="n">F</span> <span class="n">fun</span><span class="p">);</span>
 
 <span class="c1">// Equivalent of std::transform with one source</span>
@@ -414,9 +414,9 @@ the nested loops and take views (as opposed to ranges) as input.</p>
 <span class="c1">// where boost::UnaryFunctionConcept&lt;F&gt;</span>
 <span class="c1">// where PixelsCompatibleConcept&lt;V1::const_reference, F::argument_type&gt;</span>
 <span class="c1">// where PixelsCompatibleConcept&lt;F::result_type, V2::reference&gt;</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">V1</span><span class="p">,</span> <span class="k">typename</span> <span class="n">V2</span><span class="p">,</span> <span class="k">typename</span> <span class="n">F</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">V1</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">V2</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">F</span><span class="o">&gt;</span>
 <span class="n">F</span> <span class="n">transform_pixels</span><span class="p">(</span><span class="k">const</span> <span class="n">V1</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">,</span> <span class="k">const</span> <span class="n">V2</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">,</span> <span class="n">F</span> <span class="n">fun</span><span class="p">);</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">V1</span><span class="p">,</span> <span class="k">typename</span> <span class="n">V2</span><span class="p">,</span> <span class="k">typename</span> <span class="n">F</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">V1</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">V2</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">F</span><span class="o">&gt;</span>
 <span class="n">F</span> <span class="n">transform_pixel_positions</span><span class="p">(</span><span class="k">const</span> <span class="n">V1</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">,</span> <span class="k">const</span> <span class="n">V2</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">,</span> <span class="n">F</span> <span class="n">fun</span><span class="p">);</span>
 
 <span class="c1">// Equivalent of std::transform with two sources</span>
@@ -425,22 +425,22 @@ the nested loops and take views (as opposed to ranges) as input.</p>
 <span class="c1">// where PixelsCompatibleConcept&lt;V1::const_reference, F::first_argument_type&gt;</span>
 <span class="c1">// where PixelsCompatibleConcept&lt;V2::const_reference, F::second_argument_type&gt;</span>
 <span class="c1">// where PixelsCompatibleConcept&lt;F::result_type, V3::reference&gt;</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">V1</span><span class="p">,</span> <span class="k">typename</span> <span class="n">V2</span><span class="p">,</span> <span class="k">typename</span> <span class="n">V3</span><span class="p">,</span> <span class="k">typename</span> <span class="n">F</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">V1</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">V2</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">V3</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">F</span><span class="o">&gt;</span>
 <span class="n">F</span> <span class="n">transform_pixels</span><span class="p">(</span><span class="k">const</span> <span class="n">V1</span><span class="o">&amp;</span> <span class="n">src1</span><span class="p">,</span> <span class="k">const</span> <span class="n">V2</span><span class="o">&amp;</span> <span class="n">src2</span><span class="p">,</span> <span class="k">const</span> <span class="n">V3</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">,</span> <span class="n">F</span> <span class="n">fun</span><span class="p">);</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">V1</span><span class="p">,</span> <span class="k">typename</span> <span class="n">V2</span><span class="p">,</span> <span class="k">typename</span> <span class="n">V3</span><span class="p">,</span> <span class="k">typename</span> <span class="n">F</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">V1</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">V2</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">V3</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">F</span><span class="o">&gt;</span>
 <span class="n">F</span> <span class="n">transform_pixel_positions</span><span class="p">(</span><span class="k">const</span> <span class="n">V1</span><span class="o">&amp;</span> <span class="n">src1</span><span class="p">,</span> <span class="k">const</span> <span class="n">V2</span><span class="o">&amp;</span> <span class="n">src2</span><span class="p">,</span> <span class="k">const</span> <span class="n">V3</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">,</span> <span class="n">F</span> <span class="n">fun</span><span class="p">);</span>
 
 <span class="c1">// Copies a view into another, color converting the pixels if needed, with the default or user-defined color converter</span>
 <span class="c1">// where ImageViewConcept&lt;V1&gt;, MutableImageViewConcept&lt;V2&gt;</span>
 <span class="c1">// V1::value_type must be convertible to V2::value_type.</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">V1</span><span class="p">,</span> <span class="k">typename</span> <span class="n">V2</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">V1</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">V2</span><span class="o">&gt;</span>
 <span class="kt">void</span> <span class="n">copy_and_convert_pixels</span><span class="p">(</span><span class="k">const</span> <span class="n">V1</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">,</span> <span class="k">const</span> <span class="n">V2</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">);</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">V1</span><span class="p">,</span> <span class="k">typename</span> <span class="n">V2</span><span class="p">,</span> <span class="k">typename</span> <span class="n">ColorConverter</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">V1</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">V2</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">ColorConverter</span><span class="o">&gt;</span>
 <span class="kt">void</span> <span class="n">copy_and_convert_pixels</span><span class="p">(</span><span class="k">const</span> <span class="n">V1</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">,</span> <span class="k">const</span> <span class="n">V2</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">,</span> <span class="n">ColorConverter</span> <span class="n">ccv</span><span class="p">);</span>
 
 <span class="c1">// Equivalent of std::equal</span>
 <span class="c1">// where ImageViewConcept&lt;V1&gt;, ImageViewConcept&lt;V2&gt;, ViewsCompatibleConcept&lt;V1,V2&gt;</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">V1</span><span class="p">,</span> <span class="k">typename</span> <span class="n">V2</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">V1</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">V2</span><span class="o">&gt;</span>
 <span class="kt">bool</span> <span class="n">equal_pixels</span><span class="p">(</span><span class="k">const</span> <span class="n">V1</span><span class="o">&amp;</span> <span class="n">view1</span><span class="p">,</span> <span class="k">const</span> <span class="n">V2</span><span class="o">&amp;</span> <span class="n">view2</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -487,8 +487,8 @@ development and is not optimized for speed</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2020-07-27 23:07:26.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.1.2.
+      Last updated on 2020-10-05 21:10:05.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1.
     </div>
   </body>
 </html>

@@ -105,20 +105,20 @@ pixel references:</p>
 </pre></div>
 </div>
 <p>Here is how to use pixels in generic code:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">GrayPixel</span><span class="p">,</span> <span class="k">typename</span> <span class="n">RGBPixel</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">GrayPixel</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">RGBPixel</span><span class="o">&gt;</span>
 <span class="kt">void</span> <span class="n">gray_to_rgb</span><span class="p">(</span><span class="k">const</span> <span class="n">GrayPixel</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">,</span> <span class="n">RGBPixel</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="n">gil_function_requires</span><span class="o">&lt;</span><span class="n">PixelConcept</span><span class="o">&lt;</span><span class="n">GrayPixel</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">();</span>
   <span class="n">gil_function_requires</span><span class="o">&lt;</span><span class="n">MutableHomogeneousPixelConcept</span><span class="o">&lt;</span><span class="n">RGBPixel</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">();</span>
 
-  <span class="k">typedef</span> <span class="k">typename</span> <span class="n">color_space_type</span><span class="o">&lt;</span><span class="n">GrayPixel</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">gray_cs_t</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="k">typename</span> <span class="nc">color_space_type</span><span class="o">&lt;</span><span class="n">GrayPixel</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">gray_cs_t</span><span class="p">;</span>
   <span class="k">static_assert</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">is_same</span><span class="o">&lt;</span><span class="n">gray_cs_t</span><span class="p">,</span><span class="n">gray_t</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
 
-  <span class="k">typedef</span> <span class="k">typename</span> <span class="n">color_space_type</span><span class="o">&lt;</span><span class="n">RGBPixel</span><span class="o">&gt;::</span><span class="n">type</span>  <span class="n">rgb_cs_t</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="k">typename</span> <span class="nc">color_space_type</span><span class="o">&lt;</span><span class="n">RGBPixel</span><span class="o">&gt;::</span><span class="n">type</span>  <span class="n">rgb_cs_t</span><span class="p">;</span>
   <span class="k">static_assert</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">is_same</span><span class="o">&lt;</span><span class="n">rgb_cs_t</span><span class="p">,</span><span class="n">rgb_t</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">);</span>
 
-  <span class="k">typedef</span> <span class="k">typename</span> <span class="n">channel_type</span><span class="o">&lt;</span><span class="n">GrayPixel</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">gray_channel_t</span><span class="p">;</span>
-  <span class="k">typedef</span> <span class="k">typename</span> <span class="n">channel_type</span><span class="o">&lt;</span><span class="n">RGBPixel</span><span class="o">&gt;::</span><span class="n">type</span>  <span class="n">rgb_channel_t</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="k">typename</span> <span class="nc">channel_type</span><span class="o">&lt;</span><span class="n">GrayPixel</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">gray_channel_t</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="k">typename</span> <span class="nc">channel_type</span><span class="o">&lt;</span><span class="n">RGBPixel</span><span class="o">&gt;::</span><span class="n">type</span>  <span class="n">rgb_channel_t</span><span class="p">;</span>
 
   <span class="n">gray_channel_t</span> <span class="n">gray</span> <span class="o">=</span> <span class="n">get_color</span><span class="p">(</span><span class="n">src</span><span class="p">,</span><span class="n">gray_color_t</span><span class="p">());</span>
   <span class="n">static_fill</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">channel_convert</span><span class="o">&lt;</span><span class="n">rgb_channel_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">gray</span><span class="p">));</span>
@@ -147,16 +147,16 @@ pixels. Size of canvas of an image can never be smaller than the image itself.</
 <p>Suppose we want to convolve an image with multiple kernels, the largest of
 which is 2K+1 x 2K+1 pixels. It may be worth creating a margin of K pixels
 around the image borders. Here is how to do it:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">SrcView</span><span class="p">,</span>   <span class="c1">// Models ImageViewConcept (the source view)</span>
-        <span class="k">typename</span> <span class="n">DstImage</span><span class="o">&gt;</span>  <span class="c1">// Models ImageConcept     (the returned image)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">SrcView</span><span class="p">,</span>   <span class="c1">// Models ImageViewConcept (the source view)</span>
+        <span class="k">typename</span> <span class="nc">DstImage</span><span class="o">&gt;</span>  <span class="c1">// Models ImageConcept     (the returned image)</span>
 <span class="kt">void</span> <span class="n">create_with_margin</span><span class="p">(</span><span class="k">const</span> <span class="n">SrcView</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">,</span> <span class="n">DstImage</span><span class="o">&amp;</span> <span class="n">result</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="n">gil_function_requires</span><span class="o">&lt;</span><span class="n">ImageViewConcept</span><span class="o">&lt;</span><span class="n">SrcView</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">();</span>
   <span class="n">gil_function_requires</span><span class="o">&lt;</span><span class="n">ImageConcept</span><span class="o">&lt;</span><span class="n">DstImage</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">();</span>
-  <span class="n">gil_function_requires</span><span class="o">&lt;</span><span class="n">ViewsCompatibleConcept</span><span class="o">&lt;</span><span class="n">SrcView</span><span class="p">,</span> <span class="k">typename</span> <span class="n">DstImage</span><span class="o">::</span><span class="n">view_t</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">();</span>
+  <span class="n">gil_function_requires</span><span class="o">&lt;</span><span class="n">ViewsCompatibleConcept</span><span class="o">&lt;</span><span class="n">SrcView</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">DstImage</span><span class="o">::</span><span class="n">view_t</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">();</span>
 
   <span class="n">result</span><span class="o">=</span><span class="n">DstImage</span><span class="p">(</span><span class="n">src</span><span class="p">.</span><span class="n">width</span><span class="p">()</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">k</span><span class="p">,</span> <span class="n">src</span><span class="p">.</span><span class="n">height</span><span class="p">()</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">k</span><span class="p">);</span>
-  <span class="k">typename</span> <span class="n">DstImage</span><span class="o">::</span><span class="n">view_t</span> <span class="n">centerImg</span><span class="o">=</span><span class="n">subimage_view</span><span class="p">(</span><span class="n">view</span><span class="p">(</span><span class="n">result</span><span class="p">),</span> <span class="n">k</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">src</span><span class="p">.</span><span class="n">width</span><span class="p">(),</span><span class="n">src</span><span class="p">.</span><span class="n">height</span><span class="p">());</span>
+  <span class="k">typename</span> <span class="nc">DstImage</span><span class="o">::</span><span class="n">view_t</span> <span class="n">centerImg</span><span class="o">=</span><span class="n">subimage_view</span><span class="p">(</span><span class="n">view</span><span class="p">(</span><span class="n">result</span><span class="p">),</span> <span class="n">k</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">src</span><span class="p">.</span><span class="n">width</span><span class="p">(),</span><span class="n">src</span><span class="p">.</span><span class="n">height</span><span class="p">());</span>
   <span class="n">std</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><span class="n">src</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">src</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">centerImg</span><span class="p">.</span><span class="n">begin</span><span class="p">());</span>
 <span class="p">}</span>
 </pre></div>
@@ -166,7 +166,7 @@ shallow image of its center area of top left corner at (k,k) and of identical
 size as <code class="docutils literal notranslate"><span class="pre">src</span></code>, and finally we copied <code class="docutils literal notranslate"><span class="pre">src</span></code> into that center image. If the
 margin needs initialization, we could have done it with <code class="docutils literal notranslate"><span class="pre">fill_pixels</span></code>. Here
 is how to simplify this code using the <code class="docutils literal notranslate"><span class="pre">copy_pixels</span></code> algorithm:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">SrcView</span><span class="p">,</span> <span class="k">typename</span> <span class="n">DstImage</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">SrcView</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">DstImage</span><span class="o">&gt;</span>
 <span class="kt">void</span> <span class="n">create_with_margin</span><span class="p">(</span><span class="k">const</span> <span class="n">SrcView</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">,</span> <span class="n">DstImage</span><span class="o">&amp;</span> <span class="n">result</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="n">result</span><span class="p">.</span><span class="n">recreate</span><span class="p">(</span><span class="n">src</span><span class="p">.</span><span class="n">width</span><span class="p">()</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">k</span><span class="p">,</span> <span class="n">src</span><span class="p">.</span><span class="n">height</span><span class="p">()</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">k</span><span class="p">);</span>
@@ -191,17 +191,17 @@ taking into account both static and run-time parameters.</p>
 <p>The histogram can be computed by counting the number of pixel values that fall
 in each bin. The following method takes a grayscale (one-dimensional) image
 view, since only grayscale pixels are convertible to integers:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">GrayView</span><span class="p">,</span> <span class="k">typename</span> <span class="n">R</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">GrayView</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">R</span><span class="o">&gt;</span>
 <span class="kt">void</span> <span class="n">grayimage_histogram</span><span class="p">(</span><span class="k">const</span> <span class="n">GrayView</span><span class="o">&amp;</span> <span class="n">img</span><span class="p">,</span> <span class="n">R</span><span class="o">&amp;</span> <span class="n">hist</span><span class="p">)</span>
 <span class="p">{</span>
-  <span class="k">for</span> <span class="p">(</span><span class="k">typename</span> <span class="n">GrayView</span><span class="o">::</span><span class="n">iterator</span> <span class="n">it</span><span class="o">=</span><span class="n">img</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">it</span><span class="o">!=</span><span class="n">img</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="o">++</span><span class="n">it</span><span class="p">)</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">typename</span> <span class="nc">GrayView</span><span class="o">::</span><span class="n">iterator</span> <span class="n">it</span><span class="o">=</span><span class="n">img</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">it</span><span class="o">!=</span><span class="n">img</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="o">++</span><span class="n">it</span><span class="p">)</span>
       <span class="o">++</span><span class="n">hist</span><span class="p">[</span><span class="o">*</span><span class="n">it</span><span class="p">];</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>Using <code class="docutils literal notranslate"><span class="pre">boost::lambda</span></code> and GIL’s <code class="docutils literal notranslate"><span class="pre">for_each_pixel</span></code> algorithm, we can write
 this more compactly:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">GrayView</span><span class="p">,</span> <span class="k">typename</span> <span class="n">R</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">GrayView</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">R</span><span class="o">&gt;</span>
 <span class="kt">void</span> <span class="n">grayimage_histogram</span><span class="p">(</span><span class="k">const</span> <span class="n">GrayView</span><span class="o">&amp;</span> <span class="n">v</span><span class="p">,</span> <span class="n">R</span><span class="o">&amp;</span> <span class="n">hist</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="n">for_each_pixel</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="o">++</span><span class="n">var</span><span class="p">(</span><span class="n">hist</span><span class="p">)[</span><span class="n">_1</span><span class="p">]);</span>
@@ -211,7 +211,7 @@ this more compactly:</p>
 <p>Where <code class="docutils literal notranslate"><span class="pre">for_each_pixel</span></code> invokes <code class="docutils literal notranslate"><span class="pre">std::for_each</span></code> and <code class="docutils literal notranslate"><span class="pre">var</span></code> and <code class="docutils literal notranslate"><span class="pre">_1</span></code> are
 <code class="docutils literal notranslate"><span class="pre">boost::lambda</span></code> constructs. To compute the luminosity histogram, we call the
 above method using the grayscale view of an image:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">View</span><span class="p">,</span> <span class="k">typename</span> <span class="n">R</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">View</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">R</span><span class="o">&gt;</span>
 <span class="kt">void</span> <span class="n">luminosity_histogram</span><span class="p">(</span><span class="k">const</span> <span class="n">View</span><span class="o">&amp;</span> <span class="n">v</span><span class="p">,</span> <span class="n">R</span><span class="o">&amp;</span> <span class="n">hist</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="n">grayimage_histogram</span><span class="p">(</span><span class="n">color_converted_view</span><span class="o">&lt;</span><span class="n">gray8_pixel_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">v</span><span class="p">),</span><span class="n">hist</span><span class="p">);</span>
@@ -264,8 +264,8 @@ channel depth. They could be either planar or interleaved.</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2020-07-27 23:07:26.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.1.2.
+      Last updated on 2020-10-05 21:10:05.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1.
     </div>
   </body>
 </html>
