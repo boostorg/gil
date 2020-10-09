@@ -109,9 +109,9 @@ public:
     {
        allocate_and_copy(img.dimensions(),img._view);
     }
-    
+
     template <typename Loc,
-              typename std::enable_if<std::is_convertible<typename Loc::value_type, Pixel>::value, int>::type = 0>
+              typename std::enable_if<pixels_are_compatible<typename Loc::value_type, Pixel>::value, int>::type = 0>
     image(const image_view<Loc>& view,
           std::size_t alignment = 0,
           const Alloc alloc_in = Alloc()) : _memory(nullptr), _align_in_bytes(alignment), _alloc(alloc_in)
