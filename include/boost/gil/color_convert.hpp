@@ -162,10 +162,10 @@ struct default_color_converter_impl<rgb_t, cmyk_t>
         src_t const b = get_color(src, blue_t());
 
         using uint_t = typename channel_type<cmyk8_pixel_t>::type;
-        uint_t c = channel_invert(channel_convert<uint_t>(r)); // c = 1 - r 
+        uint_t c = channel_invert(channel_convert<uint_t>(r)); // c = 1 - r
         uint_t m = channel_invert(channel_convert<uint_t>(g)); // m = 1 - g
         uint_t y = channel_invert(channel_convert<uint_t>(b)); // y = 1 - b
-        uint_t k = (std::min)(c,(std::min)(m,y));              //k = minimum(c, m, y)
+        uint_t k = (std::min)(c,(std::min)(m,y));              // k = minimum(c, m, y)
 
         // Apply color correction, strengthening, reducing non-zero components by
         // s = 1 / (1 - k) for k < 1, where 1 denotes dst_t max, otherwise s = 1 (literal).
