@@ -22,5 +22,5 @@ target_link_libraries(bench_flip
 
 if(BUILD_BENCHMARK_OPENCV)
     find_package(OpenCV REQUIRED)
-    add_subdirectory(bench)
+    add_subdirectory(opencv)
 endif()
