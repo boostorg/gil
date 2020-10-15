@@ -5,7 +5,7 @@
 # http://www.boost.org/LICENSE_1_0.txt)
 
 add_executable(bench_ocv_rotation
-  bench_rotation.cpp
+    bench_rotation.cpp
 )
 
 target_link_libraries(bench_ocv_rotation
@@ -29,5 +29,18 @@ target_link_libraries(bench_ocv_flip
 )
 
 target_include_directories(bench_ocv_flip
+    PRIVATE ${OpenCV_INCLUDE_DIRS}
+)
+
+add_executable(bench_ocv_transpose
+  bench_transpose.cpp
+)
+
+target_link_libraries(bench_ocv_transpose
+    benchmark::benchmark
+    ${OpenCV_LIBS}
+)
+
+target_include_directories(bench_ocv_transpose
     PRIVATE ${OpenCV_INCLUDE_DIRS}
 )
