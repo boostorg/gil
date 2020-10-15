@@ -16,10 +16,9 @@ template <blaze::AlignmentFlag IsAligned = blaze::unaligned,
 auto as_matrix(GrayView const& source)
 {
     using channel_t = typename boost::gil::channel_type<GrayView>::type;
-    //propagate_const on channel_t
 
     return blaze::CustomMatrix<channel_t, IsAligned, IsPadded, StorageOrder>(
-        reinterpret_cast<channel_t*>(&source(0, 0)),
+        boost::gil::interleaved_view_get_raw_data(source),
         source.height(),
         source.width());
 }
