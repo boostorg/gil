@@ -5,7 +5,7 @@
 # http://www.boost.org/LICENSE_1_0.txt)
 
 add_executable(bench_rotation
-  bench_rotation.cpp
+    bench_rotation.cpp
 )
 
 target_link_libraries(bench_rotation
@@ -20,7 +20,20 @@ target_link_libraries(bench_flip
     benchmark::benchmark
 )
 
+add_executable(bench_transpose
+  bench_transpose.cpp
+)
+
+target_link_libraries(bench_transpose
+    benchmark::benchmark
+)
+
 if(BUILD_BENCHMARK_OPENCV)
     find_package(OpenCV REQUIRED)
     add_subdirectory(opencv)
+endif()
+
+if(BUILD_BENCHMARK_BLAZE)
+    find_package(blaze REQUIRED)
+    add_subdirectory(blaze)
 endif()
