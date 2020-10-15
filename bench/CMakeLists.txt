@@ -28,6 +28,14 @@ target_link_libraries(bench_transpose
     benchmark::benchmark
 )
 
+add_executable(bench_transpose_impl
+  bench_transpose_impl.cpp
+)
+
+target_link_libraries(bench_transpose_impl
+    benchmark::benchmark
+)
+
 if(BUILD_BENCHMARK_OPENCV)
     find_package(OpenCV REQUIRED)
     add_subdirectory(opencv)
