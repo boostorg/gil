@@ -13,6 +13,14 @@ target_link_libraries(bench_ipp_transpose
     ipp::ipp
 )
 
+add_executable(bench_ipp_flip
+    bench_flip.cpp
+)
+
+target_link_libraries(bench_ipp_flip
+    benchmark::benchmark
+    ipp::ipp
+)
 
 add_executable(test_ipp_transpose
     test_transpose.cpp
