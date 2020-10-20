@@ -19,7 +19,7 @@ static void transpose(benchmark::State& state)
 
     for (auto _ : state) {
         // The code to benchmark
-        transpose(in,out);
+        transpose(in, out);
     }
 }
 BENCHMARK(transpose)->RangeMultiplier(2)->Range(256, 8 << 10);
@@ -34,7 +34,7 @@ static void transpose_inplace(benchmark::State& state)
 
     for (auto _ : state) {
         // The code to benchmark
-        transpose(in,in);
+        transpose(in, in);
     }
 }
 BENCHMARK(transpose_inplace)->RangeMultiplier(2)->Range(256, 8 << 10);

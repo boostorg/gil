@@ -61,3 +61,15 @@ endforeach()
 
 unset(_benchmarks)
 unset(_benchmark)
+
+if(BOOST_GIL_BUILD_BENCHMARKS_OPENCV)
+    add_subdirectory(opencv)
+endif()
+
+if(BOOST_GIL_BUILD_BENCHMARKS_BLAZE)
+    add_subdirectory(blaze)
+endif()
+
+if(BOOST_GIL_BUILD_BENCHMARKS_IPP)
+    add_subdirectory(ipp)
+endif()

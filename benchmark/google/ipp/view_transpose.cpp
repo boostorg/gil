@@ -17,6 +17,7 @@ static void ipp_transpose(benchmark::State& state)
     size_t dim = state.range(0);
 
     gray8_image_t in(dim, dim);
+    generate_pixels(view(in), [i = 0]() mutable -> std::uint8_t { return ++i; });
     gray8_image_t out(dim, dim);
 
     IppiSize srcRoi = { dim, dim };
@@ -28,6 +29,9 @@ static void ipp_transpose(benchmark::State& state)
             boost::gil::interleaved_view_get_raw_data(view(out)), (int) out.width(),
             srcRoi);
     }
+    
+    if (!equal_pixels(transposed_view(const_view(in)), const_view(out))))
+        state.SkipWithError("ipp_transpose wrong result");
 }
 BENCHMARK(ipp_transpose)->RangeMultiplier(2)->Range(256, 8 << 10);
 
@@ -38,6 +42,8 @@ static void ipp_transpose_inplace(benchmark::State& state)
     size_t dim = state.range(0);
 
     gray8_image_t in(dim, dim);
+    generate_pixels(view(in), [i = 0]() mutable -> std::uint8_t { return ++i; });
+    gray8_image_t in_ref(in);
 
     IppiSize srcRoi = { dim, dim };
 
@@ -47,6 +53,9 @@ static void ipp_transpose_inplace(benchmark::State& state)
             boost::gil::interleaved_view_get_raw_data(view(in)), (int) in.width(),
             srcRoi);
     }
+    
+    if (!equal_pixels(transposed_view(const_view(in_ref)), const_view(in))))
+        state.SkipWithError("ipp_transpose_inplace wrong result");
 }
 BENCHMARK(ipp_transpose_inplace)->RangeMultiplier(2)->Range(256, 8 << 10);
 
