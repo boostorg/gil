@@ -41,7 +41,7 @@ static void blaze_transpose(benchmark::State& state)
         mat_out = blaze::trans(mat_in);
     }
     
-    if (!equal_pixels(transposed_view(const_view(in)), const_view(in))))
+    if (!equal_pixels(transposed_view(const_view(in)), const_view(in)))
         state.SkipWithError("blaze_transpose wrong result");
 }
 BENCHMARK(blaze_transpose)->RangeMultiplier(2)->Range(256, 8 << 10);
@@ -63,7 +63,7 @@ static void blaze_transpose_inplace(benchmark::State& state)
         blaze::transpose(mat_in_out);
     }
     
-    if (!equal_pixels(transposed_view(const_view(in_ref)), const_view(in))))
+    if (!equal_pixels(transposed_view(const_view(in_ref)), const_view(in)))
         state.SkipWithError("blaze_transpose_inplace wrong result");
 }
 BENCHMARK(blaze_transpose_inplace)->RangeMultiplier(2)->Range(256, 8 << 10);
