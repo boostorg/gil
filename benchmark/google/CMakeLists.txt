@@ -33,6 +33,9 @@ set_property(TARGET gil_googlebenchmark PROPERTY IMPORTED_LOCATION
 if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
   find_library(SHLWAPI Shlwapi.lib)
   target_link_libraries(gil_googlebenchmark INTERFACE SHLWAPI)
+else()
+  find_package(Threads)
+  target_link_libraries(gil_googlebenchmark INTERFACE ${CMAKE_THREAD_LIBS_INIT} rt)
 endif()
 
 add_dependencies(gil_googlebenchmark project_googlebenchmark)
@@ -41,9 +44,9 @@ add_dependencies(gil_googlebenchmark project_googlebenchmark)
 # Build benchmarks
 #-----------------------------------------------------------------------------
 if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.12.0)
-  file(GLOB_RECURSE _benchmarks ${CMAKE_CURRENT_LIST_DIR}/*.cpp CONFIGURE_DEPEND)
+  file(GLOB _benchmarks ${CMAKE_CURRENT_LIST_DIR}/*.cpp CONFIGURE_DEPEND)
 else()
-  file(GLOB_RECURSE _benchmarks ${CMAKE_CURRENT_LIST_DIR}/*.cpp)
+  file(GLOB _benchmarks ${CMAKE_CURRENT_LIST_DIR}/*.cpp)
 endif()
 
 foreach(_benchmark ${_benchmarks})

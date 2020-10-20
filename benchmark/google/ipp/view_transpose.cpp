@@ -30,7 +30,7 @@ static void ipp_transpose(benchmark::State& state)
             srcRoi);
     }
     
-    if (!equal_pixels(transposed_view(const_view(in)), const_view(out))))
+    if (!equal_pixels(transposed_view(const_view(in)), const_view(out)))
         state.SkipWithError("ipp_transpose wrong result");
 }
 BENCHMARK(ipp_transpose)->RangeMultiplier(2)->Range(256, 8 << 10);
@@ -54,7 +54,7 @@ static void ipp_transpose_inplace(benchmark::State& state)
             srcRoi);
     }
     
-    if (!equal_pixels(transposed_view(const_view(in_ref)), const_view(in))))
+    if (!equal_pixels(transposed_view(const_view(in_ref)), const_view(in)))
         state.SkipWithError("ipp_transpose_inplace wrong result");
 }
 BENCHMARK(ipp_transpose_inplace)->RangeMultiplier(2)->Range(256, 8 << 10);
