@@ -24,10 +24,10 @@ struct dynamic_xy_step_transposed_type;
 namespace detail {
 
 template <typename View>
-struct get_const_t { using type = typename View::const_t; };
+using get_const_t = typename View::const_t;
 
 template <typename Views>
-struct views_get_const_t : mp11::mp_transform<get_const_t, Views> {};
+using views_get_const_t = mp11::mp_transform<get_const_t, Views>;
 
 // works for both image_view and image
 struct any_type_get_num_channels
