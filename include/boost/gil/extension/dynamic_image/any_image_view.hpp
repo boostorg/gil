@@ -1,5 +1,6 @@
 //
 // Copyright 2005-2007 Adobe Systems Incorporated
+// Copyright 2020 Samuel Debionne
 //
 // Distributed under the Boost Software License, Version 1.0
 // See accompanying file LICENSE_1_0.txt or copy at
@@ -82,16 +83,7 @@ public:
     using point_t = point<std::ptrdiff_t>;
     using size_type = std::size_t;
 
-    any_image_view() = default;
-    any_image_view(any_image_view const& view) : parent_t((parent_t const&)view) {}
-
-    template <typename View>
-    explicit any_image_view(View const& view) : parent_t(view) {}
-
-    template <typename ...OtherViews>
-    any_image_view(any_image_view<OtherViews...> const& view)
-        : parent_t((variant2::variant<OtherViews...> const&)view)
-    {}
+    using parent_t::parent_t;
 
     any_image_view& operator=(any_image_view const& view)
     {
