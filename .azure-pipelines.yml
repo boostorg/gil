@@ -26,6 +26,7 @@ jobs:
           sudo -E apt-get update
           sudo -E apt-get -yq --no-install-suggests --no-install-recommends install libpng-dev libjpeg-dev libtiff5-dev libraw-dev
         displayName: 'Install dependencies'
+      - template: .ci/azure-pipelines/steps-install-blaze.yml
       - template: .ci/azure-pipelines/steps-install-boost.yml
       - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
 
@@ -41,6 +42,7 @@ jobs:
           sudo -E apt-get update
           sudo -E apt-get -yq --no-install-suggests --no-install-recommends install libpng-dev libjpeg-dev libtiff5-dev libraw-dev
         displayName: 'Install dependencies'
+      - template: .ci/azure-pipelines/steps-install-blaze.yml
       - template: .ci/azure-pipelines/steps-install-boost.yml
       - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
         parameters:
@@ -58,6 +60,7 @@ jobs:
           architecture: 'x64'
       - template: .ci/azure-pipelines/steps-check-cmake.yml
       - template: .ci/azure-pipelines/steps-install-conan.yml
+      - template: .ci/azure-pipelines/steps-install-blaze.yml
       - template: .ci/azure-pipelines/steps-install-boost.yml
       - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
         parameters:
@@ -75,6 +78,7 @@ jobs:
           architecture: 'x64'
       - template: .ci/azure-pipelines/steps-check-cmake.yml
       - template: .ci/azure-pipelines/steps-install-conan.yml
+      - template: .ci/azure-pipelines/steps-install-blaze.yml
       - template: .ci/azure-pipelines/steps-install-boost.yml
       - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
         parameters:
@@ -94,6 +98,7 @@ jobs:
       - template: .ci/azure-pipelines/steps-install-boost.yml
         parameters:
           toolset: darwin
+      - template: .ci/azure-pipelines/steps-install-blaze.yml
       - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
         parameters:
           use_conan: 'ON'

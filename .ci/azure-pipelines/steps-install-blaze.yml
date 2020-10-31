@@ -1,0 +1,14 @@
+# Azure pipelines for Boost.GIL
+#
+# Copyright 2019 Olzhas Zhumabek <anonymous.from.applecity@gmail.com>
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE_1_0.txt or copy at http://boost.org/LICENSE_1_0.txt)
+
+steps:
+  - bash: |
+      git clone --depth=1 --branch v3.8 https://bitbucket.org/blaze-lib/blaze.git
+      cd blaze
+      mkdir build && cd build
+      cmake ..
+      sudo make install
+    displayName: "Install Blaze"
