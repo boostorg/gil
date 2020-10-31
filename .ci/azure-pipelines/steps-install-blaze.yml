@@ -9,6 +9,6 @@ steps:
       git clone --depth=1 https://scarlet-roses@bitbucket.org/scarlet-roses/blaze.git
       cd blaze
       mkdir build && cd build
-      cmake -DUSE_LAPACK=OFF -DBLAZE_BLAS_MODE=OFF -DBLAZE_CACHE_SIZE_AUTO=OFF ..
+      cmake -DUSE_LAPACK=OFF -DBLAZE_BLAS_MODE=OFF -DBLAZE_CACHE_SIZE_AUTO=OFF -DBLAZE_CACHE_SIZE_DEFAULT=131072 ..
       sudo make install
     displayName: "Install Blaze"
