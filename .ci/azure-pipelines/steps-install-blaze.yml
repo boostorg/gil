@@ -9,6 +9,6 @@ steps:
       git clone --depth=1 --branch v3.8 https://bitbucket.org/blaze-lib/blaze.git
       cd blaze
       mkdir build && cd build
-      cmake ..
+      cmake -DUSE_LAPACK=OFF -DBLAZE_BLAS_MODE=OFF ..
       sudo make install
     displayName: "Install Blaze"
