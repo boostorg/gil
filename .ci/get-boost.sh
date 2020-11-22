@@ -44,7 +44,6 @@ git submodule --quiet update --init $GIT_SUBMODULE_OPTS \
     libs/iterator \
     libs/mp11 \
     libs/mpl \
-    libs/numeric/conversion \
     libs/preprocessor \
     libs/type_traits \
     libs/variant2
