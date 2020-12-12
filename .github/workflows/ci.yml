@@ -172,7 +172,14 @@ jobs:
           b2 -d0 headers
 
       - name: Run tests
+        if: startsWith(matrix.toolset, 'msvc')
         shell: cmd
         run: |
           cd ../boost-root
           b2 -j3 --abbreviate-paths libs/%LIBRARY%/test toolset=${{matrix.toolset}} cxxstd=${{matrix.cxxstd}} address-model=${{matrix.addrmd}} variant=debug,release
+      - name: Run tests
+        if: startsWith(matrix.toolset, 'gcc')
+        shell: cmd
+        run: |
+          cd ../boost-root
+          b2 -j3 --abbreviate-paths libs/%LIBRARY%/test toolset=${{matrix.toolset}} cxxstd=${{matrix.cxxstd}} address-model=${{matrix.addrmd}} cxxflags=-mbig-obj variant=debug,release
