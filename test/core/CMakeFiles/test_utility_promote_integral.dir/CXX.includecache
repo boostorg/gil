@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/prathamesh/gil/test/core/promote_integral.cpp
+boost/config.hpp
+-
+boost/gil/promote_integral.hpp
+-
+boost/core/lightweight_test.hpp
+-
+algorithm
+-
+climits
+-
+cstddef
+-
+iostream
+-
+limits
+-
+string
+-
+
+include/boost/gil/promote_integral.hpp
+boost/mp11/list.hpp
+-
+climits
+-
+cstddef
+-
+type_traits
+-
+
