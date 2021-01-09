@@ -12,7 +12,7 @@
 using namespace boost::gil;
 
 int main()
-{
+{//home/prathamesh/gil/example/test_adaptive.png
     gray8_image_t img;
     read_image("test_adaptive.png", img, png_tag{});
     gray8_image_t img_out(img.dimensions());
