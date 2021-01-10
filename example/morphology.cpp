@@ -9,7 +9,7 @@ int main()
     using namespace boost::gil;
     gray8_image_t img;
     read_image("opening.png", img, png_tag{});
-    std::vector<float>ker_vec = {0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1};
+    std::vector<float>ker_vec(9,0.1f);
     detail::kernel_2d<float> ker_mat(ker_vec.begin(), ker_vec.size(), 1, 1);
     gray8_image_t img_out_dilation(img.dimensions()),img_out_erosion(img.dimensions());
     threshold_binary(const_view(img), view(img),170, 255);
