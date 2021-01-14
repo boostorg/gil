@@ -5,9 +5,8 @@
 #include <boost/gil/extension/numeric/kernel.hpp>
 #include <boost/gil/extension/numeric/convolve.hpp>
 
-boost::gil::gray8_image_t img;
 
-//This function is used for applying basic threshold and convolution operations which are applied 
+//This function is used for applying basic thresholding and convolution operations which are applied 
 //under the hood for all morphological transformations.
 template <typename SrcView, typename Kernel>
 boost::gil::gray8_image_t thresh_con_thresh(SrcView const& src_view, Kernel const& ker_mat,const int threshold1,const int threshold2)
@@ -20,26 +19,34 @@ boost::gil::gray8_image_t thresh_con_thresh(SrcView const& src_view, Kernel cons
     return intermediate_img;
 }
 
+// Dilation:If 1 or more bright pixels coincide with the structuring element during convolution,
+// center pixel is made bright.We can vary the number of times dilation happens by varying the 
+// argument 'iterations' in the dilate function.
 template <typename SrcView, typename Kernel>
 boost::gil::gray8_image_t dilate(SrcView const& src_view, Kernel const& ker_mat,const int iterations)
 {
     boost::gil::gray8_image_t img_out_dilation(src_view.dimensions());
-    img_out_dilation = img;
+    boost::gil::transform_pixels(src_view,view(img_out_dilation),[](const boost::gil::gray8_pixel_t& p){return p[0];});
     for(int i=0;i<iterations;++i)
         img_out_dilation = thresh_con_thresh(view(img_out_dilation),ker_mat,170,26);
     return img_out_dilation;
 }
 
+//Erosion:If 8 or more bright pixels coincide with the structuring element during convolution,
+//center pixel is made bright.We can vary the number of times erosion happens by varying the 
+//argument 'iterations' in the erode function.
 template <typename SrcView, typename Kernel>
 boost::gil::gray8_image_t erode(SrcView const& src_view, Kernel const& ker_mat,const int iterations)
 {
     boost::gil::gray8_image_t img_out_erosion(src_view.dimensions());
-    img_out_erosion = img;
+    boost::gil::transform_pixels(src_view,view(img_out_erosion),[](const boost::gil::gray8_pixel_t& p){return p[0];});
     for(int i=0;i<iterations;++i)
         img_out_erosion = thresh_con_thresh(view(img_out_erosion),ker_mat,170,204);
     return img_out_erosion;
 }
 
+//Opening:Opening is just another name of erosion followed by dilation.
+//It is useful in removing noise.
 template <typename SrcView, typename Kernel>
 boost::gil::gray8_image_t opening(SrcView const& src_view, Kernel const& ker_mat)
 {
@@ -48,6 +55,9 @@ boost::gil::gray8_image_t opening(SrcView const& src_view, Kernel const& ker_mat
     return dilate(view(img_out_opening),ker_mat,1);
 }
 
+//Closing:Closing is reverse of Opening, Dilation followed by Erosion.
+//It is useful in closing small holes inside the foreground objects, or small black points 
+//on the object.
 template <typename SrcView, typename Kernel>
 boost::gil::gray8_image_t closing(SrcView const& src_view, Kernel const& ker_mat)
 {
@@ -84,6 +94,8 @@ void difference(SrcView const& src_view, DstView const& dst_view , DiffView cons
     }
 }
 
+//Morphological Gradient:It is the difference between dilation and erosion of an image.
+//The result will look like the outline of the object.
 template <typename SrcView, typename Kernel>
 boost::gil::gray8_image_t morphological_gradient(SrcView const& src_view, Kernel const& ker_mat)
 {
@@ -95,6 +107,7 @@ boost::gil::gray8_image_t morphological_gradient(SrcView const& src_view, Kernel
     return res_image;
 }
 
+//Top Hat:It is the difference between input image and Opening of the image.
 template <typename SrcView, typename Kernel>
 boost::gil::gray8_image_t top_hat(SrcView const& src_view, Kernel const& ker_mat)
 {
@@ -105,6 +118,7 @@ boost::gil::gray8_image_t top_hat(SrcView const& src_view, Kernel const& ker_mat
     return res_image;
 }
 
+//Black Hat:It is the difference between the closing of the input image and input image.
 template <typename SrcView, typename Kernel>
 boost::gil::gray8_image_t black_hat(SrcView const& src_view, Kernel const& ker_mat)
 {
@@ -115,34 +129,16 @@ boost::gil::gray8_image_t black_hat(SrcView const& src_view, Kernel const& ker_m
     return res_image;
 }
 
-//Summary of applied morphological concepts
 //Structuring element is SE = [0.1,0.1,0.1]
 //                            |0.1,0.1,0.1|
 //                            [0.1,0.1,0.1]
 //SE(1,1)(center pixel) is the one which coincides with the currently considered pixel of the 
 //image to be convolved. 
-//1.Dilation:If 1 or more bright pixels coincide with the structuring element during convolution,
-//center pixel is made bright.We can vary the number of times dilation happens by varying the 
-//argument 'iterations' in the dilate function.
-//2.Erosion:If 8 or more bright pixels coincide with the structuring element during convolution,
-//center pixel is made bright.We can vary the number of times erosion happens by varying the 
-//argument 'iterations' in the erode function.
-//3.Opening:Opening is just another name of erosion followed by dilation.
-//It is useful in removing noise.
-//4.Closing:Closing is reverse of Opening, Dilation followed by Erosion.
-//It is useful in closing small holes inside the foreground objects, or small black points 
-//on the object.
-//5.Morphological Gradient:It is the difference between dilation and erosion of an image.
-//The result will look like the outline of the object.
-//6.Top Hat:It is the difference between input image and Opening of the image.
-//7.Black Hat:It is the difference between the closing of the input image and input image.
-
-//Functions have been made for applying above morphological transformations which
-//return the transformed image.
 
 int main()
 {
     using namespace boost::gil;
+    boost::gil::gray8_image_t img;
     read_image("original.png", img, png_tag{});
     std::vector<float>ker_vec(9,0.1f);//Structuring element
     detail::kernel_2d<float> ker_mat(ker_vec.begin(), ker_vec.size(), 1, 1);
