@@ -6,7 +6,7 @@
 //                                    |0.1,0.1,0.1|
 //                                    [0.1,0.1,0.1]
 //SE(1,1)(center pixel) is the one which coincides with the currently considered pixel of the 
-//image to be convolved. 
+//image to be convolved. The structuring element can be easily changed by the user.
 
 int main()
 {
