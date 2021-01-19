@@ -1,3 +1,5 @@
+#ifndef BOOST_GIL_EXTENSION_DRAW_CIRCLE_AND_RECT_HPP
+#define BOOST_GIL_EXTENSION_DRAW_CIRCLE_AND_RECT_HPP
 #include <math.h>
 
 template <typename SrcView>
@@ -72,3 +74,4 @@ void draw_circle(SrcView const& src_view, const int center_x, const int center_y
         );
     }
 }
+#endif //BOOST_GIL_EXTENSION_DRAW_CIRCLE_AND_RECT_HPP 
