@@ -1,26 +1,68 @@
 #ifndef BOOST_GIL_IMAGE_PROCESSING_MORPHOLOGY_HPP
 #define BOOST_GIL_IMAGE_PROCESSING_MORPHOLOGY_HPP
 
-#include <boost/gil/image_processing/threshold.hpp>
 #include <boost/gil/extension/numeric/kernel.hpp>
-#include <boost/gil/extension/numeric/convolve.hpp>
 
+template <typename SrcView, typename DstView, typename Kernel>
+void morph_impl(SrcView const& src_view, DstView const& dst_view, Kernel const& kernel,const int identifier)
+{
+    int flip_ker_row, flip_ker_col, row_boundary, col_boundary;
+    int max_overlapped_element,min_overlapped_element;
+    for (std::ptrdiff_t view_row = 0; view_row < src_view.height(); ++view_row)
+    {
+        for (std::ptrdiff_t view_col = 0; view_col < src_view.width(); ++view_col)
+        {
+            max_overlapped_element = 0,min_overlapped_element = 256;
+            for (std::size_t kernel_row = 0; kernel_row < kernel.size(); ++kernel_row)
+            {
+                flip_ker_row = kernel.size() - 1 - kernel_row;      // row index of flipped kernel
 
-//This function is used for applying basic thresholding and convolution operations which are applied 
-//under the hood for all morphological transformations.
+                for (std::size_t kernel_col = 0; kernel_col < kernel.size(); ++kernel_col)
+                {
+                    flip_ker_col = kernel.size() - 1 - kernel_col; // column index of flipped kernel
+
+                    // index of input signal, used for checking boundary
+                    row_boundary = view_row + (kernel.center_y() - flip_ker_row);
+                    col_boundary = view_col + (kernel.center_x() - flip_ker_col);
+
+                    // ignore input samples which are out of bound
+                    if (row_boundary >= 0 && row_boundary < src_view.height() &&
+                        col_boundary >= 0 && col_boundary < src_view.width())
+                    {
+                        if(src_view(col_boundary, row_boundary) > max_overlapped_element)
+                            max_overlapped_element = src_view(col_boundary, row_boundary);
+                        if(src_view(col_boundary, row_boundary) < min_overlapped_element)
+                            min_overlapped_element = src_view(col_boundary, row_boundary);
+                    }
+                }
+            }
+            if(identifier)//identifier = 1 for dilation
+                dst_view(view_col, view_row) = max_overlapped_element;
+            else //identifier = 0 for erosion
+                dst_view(view_col, view_row) = min_overlapped_element; 
+        }
+    }
+}
+
 template <typename SrcView, typename Kernel>
-boost::gil::gray8_image_t thresh_con_thresh(SrcView const& src_view, Kernel const& ker_mat,const int threshold1,const int threshold2)
+boost::gil::gray8_image_t morph(SrcView const& src_view, Kernel const& ker_mat,const int identifier)
 {
     using namespace boost::gil;
+    BOOST_ASSERT(ker_mat.size() != 0);
     boost::gil::gray8_image_t intermediate_img(src_view.dimensions());
-    threshold_binary(src_view, view(intermediate_img),threshold1, 255);
-    detail::convolve_2d(view(intermediate_img), ker_mat, view(intermediate_img));
-    threshold_binary(const_view(intermediate_img),view(intermediate_img),threshold2,255);
+    for (std::size_t i = 0; i < src_view.num_channels(); i++)
+    {
+        morph_impl(
+            nth_channel_view(src_view, i),
+            nth_channel_view(view(intermediate_img), i),
+            ker_mat,identifier
+        );
+    }
     return intermediate_img;
 }
 
-// Dilation:If 1 or more bright pixels coincide with the structuring element during convolution,
-// center pixel is made bright.We can vary the number of times dilation happens by varying the 
+// Dilation:Give the maximum overlapped value to the pixel overlapping with the center element of 
+//structuring element.We can vary the number of times dilation happens by varying the 
 // argument 'iterations' in the dilate function.
 template <typename SrcView, typename Kernel>
 boost::gil::gray8_image_t dilate(SrcView const& src_view, Kernel const& ker_mat,const int iterations)
@@ -28,12 +70,12 @@ boost::gil::gray8_image_t dilate(SrcView const& src_view, Kernel const& ker_mat,
     boost::gil::gray8_image_t img_out_dilation(src_view.dimensions());
     boost::gil::transform_pixels(src_view,view(img_out_dilation),[](const boost::gil::gray8_pixel_t& p){return p[0];});
     for(int i=0;i<iterations;++i)
-        img_out_dilation = thresh_con_thresh(view(img_out_dilation),ker_mat,170,26);
+        img_out_dilation = morph(view(img_out_dilation),ker_mat,1);
     return img_out_dilation;
 }
 
-//Erosion:If 8 or more bright pixels coincide with the structuring element during convolution,
-//center pixel is made bright.We can vary the number of times erosion happens by varying the 
+//Erosion:Give the minimum overlapped value to the pixel overlapping with the center element of 
+//structuring element.We can vary the number of times erosion happens by varying the 
 //argument 'iterations' in the erode function.
 template <typename SrcView, typename Kernel>
 boost::gil::gray8_image_t erode(SrcView const& src_view, Kernel const& ker_mat,const int iterations)
@@ -41,7 +83,7 @@ boost::gil::gray8_image_t erode(SrcView const& src_view, Kernel const& ker_mat,c
     boost::gil::gray8_image_t img_out_erosion(src_view.dimensions());
     boost::gil::transform_pixels(src_view,view(img_out_erosion),[](const boost::gil::gray8_pixel_t& p){return p[0];});
     for(int i=0;i<iterations;++i)
-        img_out_erosion = thresh_con_thresh(view(img_out_erosion),ker_mat,170,204);
+        img_out_erosion = morph(view(img_out_erosion),ker_mat,0);
     return img_out_erosion;
 }
 

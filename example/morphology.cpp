@@ -2,9 +2,9 @@
 #include <boost/gil/image_processing/morphology.hpp>
 #include <vector>
 
-//current structuring element is SE = [0.1,0.1,0.1]
-//                                    |0.1,0.1,0.1|
-//                                    [0.1,0.1,0.1]
+//Default structuring element is SE = [1,1,1]
+//                                    |1,1,1|
+//                                    [1,1,1]
 //SE(1,1)(center pixel) is the one which coincides with the currently considered pixel of the 
 //image to be convolved. The structuring element can be easily changed by the user.
 
@@ -13,7 +13,13 @@ int main()
     using namespace boost::gil;
     boost::gil::gray8_image_t img;
     read_image("original.png", img, png_tag{});
-    std::vector<float>ker_vec(9,0.1f);//Structuring element
+
+    //Image can be converted to a binary format with high value as 255 and low value as 0
+    //by uncommenting the following threshold operator.This can be used for binary morphological
+    //operations.
+    threshold_binary(view(img), view(img),170, 255);
+
+    std::vector<float>ker_vec(9,1.0f);//Structuring element
     detail::kernel_2d<float> ker_mat(ker_vec.begin(), ker_vec.size(), 1, 1);
     gray8_image_t img_out_dilation(img.dimensions()),img_out_erosion(img.dimensions()),img_out_opening(img.dimensions());
     gray8_image_t img_out_closing(img.dimensions()),img_out_mg(img.dimensions()),img_out_top_hat(img.dimensions());
