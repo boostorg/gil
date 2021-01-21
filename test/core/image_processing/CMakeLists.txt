@@ -7,6 +7,7 @@
 # http://www.boost.org/LICENSE_1_0.txt)
 #
 foreach(_name
+    morphology
     threshold_binary
     threshold_truncate
     threshold_otsu)
