@@ -44,8 +44,6 @@ int main(int argc,char **argv)
         for(int i=3;i<argc;++i)
             ++operations[argv[i]];
     }
-    for(int i=0;i<argc;++i)
-        std::cout<<argv[i]<<"\n";
     using namespace boost::gil;
     gray8_image_t img;
     read_image(argv[1], img, png_tag{});
