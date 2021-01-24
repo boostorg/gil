@@ -21,6 +21,22 @@ matrix:
     - env: BOGUS_JOB=true
   include:
     - os: linux
+      env: COMPILER=g++-6 VARIANT=debug TOOLSET=gcc CXXSTD=11 B2_OPTIONS="coverage=on"
+      addons:
+        apt:
+          packages:
+            - g++-6
+            - libpng-dev
+            - libjpeg-dev
+            - libtiff5-dev
+            - libraw-dev
+            - lcov
+          sources:
+            - ubuntu-toolchain-r-test
+      after_success:
+        - bash libs/gil/.ci/coverage.sh
+
+    - os: linux
       env: COMPILER=g++-5 VARIANT=debug TOOLSET=gcc CXXSTD=11 TEST_HEADERS=1
       addons:
         apt:
