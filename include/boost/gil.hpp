@@ -22,6 +22,7 @@
 #include <boost/gil/deprecated.hpp>
 #include <boost/gil/device_n.hpp>
 #include <boost/gil/gray.hpp>
+#include <boost/gil/histogram.hpp>
 #include <boost/gil/image.hpp>
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/image_view_factory.hpp>
