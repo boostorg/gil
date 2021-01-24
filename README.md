@@ -29,7 +29,7 @@ Documentation | AppVeyor        | Azure Pipelines | Travis CI       | CircleCI  
 
 Boost.GIL is a part of the [Boost C++ Libraries](http://github.com/boostorg).
 
-The Boost Generic Image Library (GIL) is a **C++11** library that abstracts image
+The Boost Generic Image Library (GIL) is a **C++11** header-only library that abstracts image
 representations from algorithms and allows writing code that can work on a
 variety of images with performance similar to hand-writing for a specific image type.
 

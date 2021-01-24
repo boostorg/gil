@@ -69,7 +69,7 @@ class pixel_value
 public:
     using type = Pixel;
     using pixel_t = type;
-    type pixel_{};
+    type pixel_;
 
     pixel_value() = default;
     explicit pixel_value(pixel_t const& pixel)

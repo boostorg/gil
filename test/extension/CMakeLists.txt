@@ -9,6 +9,10 @@ if(BOOST_GIL_ENABLE_EXT_DYNAMIC_IMAGE)
   add_subdirectory(dynamic_image)
 endif()
 
+if(BOOST_GIL_ENABLE_EXT_HISTOGRAM)
+  add_subdirectory(histogram)
+endif()
+
 if(BOOST_GIL_ENABLE_EXT_NUMERIC)
   add_subdirectory(numeric)
 endif()
