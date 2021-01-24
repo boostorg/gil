@@ -7,7 +7,7 @@
     { "BuildDir": "${workspaceRoot}\\_build" },
     { "InstallDir": "${workspaceRoot}\\_install" },
     { "DEFAULT_BUILD_TESTING": "OFF" },
-    { "DEFAULT_Boost_ADDITIONAL_VERSIONS": "1.73;1.72;1.71" },
+    { "DEFAULT_Boost_ADDITIONAL_VERSIONS": "1.74;1.73;1.72;1.71" },
     { "DEFAULT_Boost_COMPILER": "-vc142;-vc141" },
     { "DEFAULT_Boost_DEBUG": "ON" },
     { "DEFAULT_GIL_BUILD_EXAMPLES": "ON" },
@@ -66,7 +66,7 @@
         { "name": "BOOST_GIL_BUILD_HEADER_TESTS", "value": "${env.DEFAULT_GIL_BUILD_HEADER_TESTS}" },
         { "name": "BOOST_GIL_ENABLE_EXT_DYNAMIC_IMAGE", "value": "${env.DEFAULT_GIL_ENABLE_EXT_DYNAMIC_IMAGE}" },
         { "name": "BOOST_GIL_ENABLE_EXT_IO", "value": "${env.DEFAULT_GIL_ENABLE_EXT_IO}" },
-        { "name": "BOOST_BOOST_GIL_ENABLE_EXT_NUMERIC", "value": "${env.DEFAULT_GIL_ENABLE_EXT_NUMERIC}" },
+        { "name": "BOOST_GIL_ENABLE_EXT_NUMERIC", "value": "${env.DEFAULT_GIL_ENABLE_EXT_NUMERIC}" },
         { "name": "BOOST_GIL_ENABLE_EXT_TOOLBOX", "value": "${env.DEFAULT_GIL_ENABLE_EXT_TOOLBOX}" },
         { "name": "BOOST_GIL_USE_CONAN", "value": "${env.DEFAULT_GIL_USE_CONAN}" },
         { "name": "BOOST_GIL_USE_CLANG_TIDY", "value": "${env.DEFAULT_GIL_USE_CLANG_TIDY}" }
