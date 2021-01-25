@@ -57,10 +57,10 @@ void compute_harris_responses(
             float dxdy = 0;
             float ddyy = 0;
             for (gil::gray32f_view_t::coord_t y_kernel = 0;
-                y_kernel < window_length;
+                y_kernel < static_cast<std::ptrdiff_t>(window_length);
                 ++y_kernel) {
                 for (gil::gray32f_view_t::coord_t x_kernel = 0;
-                    x_kernel < window_length;
+                    x_kernel < static_cast<std::ptrdiff_t>(window_length);
                     ++x_kernel) {
                     ddxx += m11(x + x_kernel - half_length, y + y_kernel - half_length)
                         .at(std::integral_constant<int, 0>{}) * weights.at(x_kernel, y_kernel);
