@@ -233,10 +233,10 @@ git push <username> feature/foo
 Finally, sign in to your GitHub account and
 [create a pull request](https://help.github.com/articles/creating-a-pull-request/).
 
-Your pull request will be automatically built and tests will run on Travis CI
-and AppVeyor (see [README](README.md) for builds status). Please, keep an eye
-on those CI builds and correct any problems detected in your contribution
-by updating your pull request.
+Your pull request will be automatically built and tests will run on GitHub ACtions,
+Azure Pipelines, AppVeyor and Circle CI (see [README](README.md) for builds status).
+Please, keep an eye on those CI builds and correct any problems detected in your
+contribution by updating your pull request.
 
 ### 5. Update your pull request
 
@@ -300,7 +300,7 @@ request from reviewer, just add new commits:
 cd libs/gil
 git checkout feature/foo
 git add -A
-git commit -m "Fix build Travis CI failures"
+git commit -m "Fix CI build failure"
 git push <username> feature/foo
 ```
 
@@ -345,32 +345,33 @@ development environment.
 as they are executed. It is useful to inspect compilation flags.
 
 If no target or directory is specified, everything in the current directory
-is built. For example, all Boost.GIL tests can be built and run using:
+is built. For example, **all** Boost.GIL tests can be built and run using:
 
 ```shell
 cd libs/gil
-../../b2
+b2
 ```
 
 Run core tests only specifying location of directory with tests:
 
 ```shell
 cd libs/gil
-../../b2 cxxstd=11 test/core
+b2 cxxstd=11 test/core
 ```
 
 Run all tests for selected extension (from Boost root directory, as alternative):
 
 ```shell
-./b2 cxxstd=11 libs/gil/test/io
-./b2 cxxstd=11 libs/gil/test/numeric
-./b2 cxxstd=11 libs/gil/test/toolbox
+b2 cxxstd=11 libs/gil/test/extension/dynamic_image
+b2 cxxstd=11 libs/gil/test/extension/io
+b2 cxxstd=11 libs/gil/test/extension/numeric
+b2 cxxstd=11 libs/gil/test/extension/toolbox
 ```
 
 Run I/O extension tests bundled in target called `simple`:
 
 ```shell
-./b2 cxxstd=11 libs/gil/test/io//simple
+b2 cxxstd=11 libs/gil/test/io//simple
 ```
 
 **TIP:** Pass `b2` feature `cxxstd=11,14,17,2a` to request compilation for
