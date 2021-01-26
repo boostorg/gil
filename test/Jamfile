@@ -16,7 +16,7 @@ import regex ;
 import sequence ;
 import testing ;
 
-# Avoid warnings flood on Travis CI, AppVeyor, CircleCI, Azure Pipelines, GitHub Actions
+# Avoid warnings flood from CI builds
 if ! [ os.environ CI ] && ! [ os.environ AGENT_JOBSTATUS ] && ! [ os.environ GITHUB_ACTIONS ]
 {
   DEVELOPMENT_EXTRA_WARNINGS =
