@@ -12,6 +12,8 @@
 
 namespace gil = boost::gil;
 
+// This function helps us fill pixels of a view given as 2nd argument with elements of the vector
+// given as 1st argument.
 void pixel_fill(std::vector<std::vector<int> > &original_binary_vector, boost::gil::gray8_image_t &original_img)
 {
     for (std::ptrdiff_t view_row = 0; view_row < view(original_img).height(); ++view_row)
@@ -97,6 +99,19 @@ int main()
         {  0,0,   0, 137, 137, 138},
         {  0,0,   0,   0,   1,   0},
         {  0,0,   0,   3,   2, 138}};
+    std::vector<std::vector<int> > orig_dil_imp{
+        { 255, 100, 100, 100},
+        { 100, 100, 100, 100},
+        { 100, 100, 100, 100}
+    };
+    std::vector<std::vector<int> > exp_dil_imp{
+        { 255, 255, 100, 100},
+        { 255, 255, 100, 100},
+        { 100, 100, 100, 100}
+    };
+
+    // All vectors defined above will be used for creating expected image views which are supposed
+    // to match the views obtained after applying morphological operations. 
 
     gil::gray8_image_t original_img(6,8),obtained_dilation(6,8),expected_dilation(6,8);
     gil::gray8_image_t obtained_erosion(6,8),expected_erosion(6,8);
@@ -105,6 +120,8 @@ int main()
     gil::gray8_image_t obtained_mg(6,8),expected_mg(6,8);
     gil::gray8_image_t obtained_top_hat(6,8),expected_top_hat(6,8);
     gil::gray8_image_t obtained_black_hat(6,8),expected_black_hat(6,8);
+
+    gil::gray8_image_t obtained_imp_dil(4,3),expected_imp_dil(4,3),original_imp_dil(4,3);
 
     std::vector<float>ker_vec(9,1.0f);//Structuring element
     gil::detail::kernel_2d<float> ker_mat(ker_vec.begin(), ker_vec.size(), 1, 1);
@@ -118,6 +135,11 @@ int main()
     pixel_fill(exp_top_hat,expected_top_hat);
     pixel_fill(exp_black_hat,expected_black_hat);
 
+    pixel_fill(orig_dil_imp,original_imp_dil);
+    pixel_fill(exp_dil_imp,expected_imp_dil);
+
+    // Different morphological operations are applied on the same initial image to obtain results
+    // of our implementation which are then compared with expected results.
     gil::dilate(view(original_img),view(obtained_dilation),ker_mat,1);
     gil::erode(view(original_img),view(obtained_erosion),ker_mat,1);
     gil::opening(view(original_img),view(obtained_opening),ker_mat);
@@ -125,7 +147,9 @@ int main()
     gil::morphological_gradient(view(original_img),view(obtained_mg),ker_mat);
     gil::top_hat(view(original_img),view(obtained_top_hat),ker_mat);
     gil::black_hat(view(original_img),view(obtained_black_hat),ker_mat);
+    gil::dilate(view(original_imp_dil),view(obtained_imp_dil),ker_mat,1);
     
+    // Testing obtained results with expected results.
     BOOST_TEST(gil::equal_pixels(gil::view(obtained_dilation), gil::view(expected_dilation)));
     BOOST_TEST(gil::equal_pixels(gil::view(obtained_erosion), gil::view(expected_erosion)));
     BOOST_TEST(gil::equal_pixels(gil::view(obtained_opening), gil::view(expected_opening)));
@@ -133,5 +157,7 @@ int main()
     BOOST_TEST(gil::equal_pixels(gil::view(obtained_mg), gil::view(expected_mg)));
     BOOST_TEST(gil::equal_pixels(gil::view(obtained_top_hat), gil::view(expected_top_hat)));
     BOOST_TEST(gil::equal_pixels(gil::view(obtained_black_hat), gil::view(expected_black_hat)));
+    BOOST_TEST(gil::equal_pixels(gil::view(obtained_imp_dil), gil::view(expected_imp_dil)));
+
     return boost::report_errors();
 }
