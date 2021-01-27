@@ -28,7 +28,7 @@ void morph_impl(SrcView const& src_view, DstView const& dst_view, Kernel const& 
                 morphological_operations identifier)
 {
     std::ptrdiff_t flip_ker_row, flip_ker_col, row_boundary, col_boundary;
-    float product;
+    typename channel_type<typename SrcView::value_type>::type product;
     typename channel_type<typename SrcView::value_type>::type target_element;
     for (std::ptrdiff_t view_row = 0; view_row < src_view.height(); ++view_row)
     {
@@ -60,12 +60,12 @@ void morph_impl(SrcView const& src_view, DstView const& dst_view, Kernel const& 
                             if(identifier == boost::gil::morphological_operations::dilation)
                             {
                                 if(src_view(col_boundary,row_boundary) > target_element)
-                                    target_element = src_view(col_boundary,row_boundary);
+                                    target_element = product;
                             }
                             else if(identifier == boost::gil::morphological_operations::erosion)
                             {
                                 if(src_view(col_boundary,row_boundary) < target_element)
-                                    target_element = src_view(col_boundary,row_boundary);
+                                    target_element = product;
                             }
                         }
                     }
