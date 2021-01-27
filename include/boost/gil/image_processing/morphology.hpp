@@ -10,8 +10,6 @@
 #define BOOST_GIL_IMAGE_PROCESSING_MORPHOLOGY_HPP
 #include <boost/gil/extension/numeric/kernel.hpp>
 #include <boost/gil/gray.hpp>
-#include <boost/gil/algorithm.hpp>
-#include <boost/gil/image_view.hpp>
 #include <boost/gil/image_processing/threshold.hpp>
 
 namespace gil = boost::gil;
@@ -28,7 +26,6 @@ void morph_impl(SrcView const& src_view, DstView const& dst_view, Kernel const& 
                 morphological_operations identifier)
 {
     std::ptrdiff_t flip_ker_row, flip_ker_col, row_boundary, col_boundary;
-    typename channel_type<typename SrcView::value_type>::type product;
     typename channel_type<typename SrcView::value_type>::type target_element;
     for (std::ptrdiff_t view_row = 0; view_row < src_view.height(); ++view_row)
     {
@@ -55,17 +52,15 @@ void morph_impl(SrcView const& src_view, DstView const& dst_view, Kernel const& 
                         // non-zero kernel_element as
                         if(kernel.at(flip_ker_row,flip_ker_col))
                         {
-                            product = src_view(col_boundary, row_boundary) *
-                                                             kernel.at(flip_ker_row, flip_ker_col);
                             if(identifier == boost::gil::morphological_operations::dilation)
                             {
-                                if(src_view(col_boundary,row_boundary) > target_element)
-                                    target_element = product;
+                                if(src_view(col_boundary, row_boundary) > target_element)
+                                    target_element = src_view(col_boundary, row_boundary);
                             }
                             else if(identifier == boost::gil::morphological_operations::erosion)
                             {
-                                if(src_view(col_boundary,row_boundary) < target_element)
-                                    target_element = product;
+                                if(src_view(col_boundary, row_boundary) < target_element)
+                                    target_element = src_view(col_boundary, row_boundary);
                             }
                         }
                     }
@@ -76,8 +71,8 @@ void morph_impl(SrcView const& src_view, DstView const& dst_view, Kernel const& 
     }
 }
 
-
-
+// This function is used for modifying pixel values of the input image view according to the type
+// type of morphological operation specified by the argument 'identifier'.
 template <typename SrcView, typename DstView,typename Kernel>
 void morph(SrcView const& src_view, DstView & dst_view,Kernel const& ker_mat, 
                                                             morphological_operations identifier)
@@ -102,8 +97,6 @@ void morph(SrcView const& src_view, DstView & dst_view,Kernel const& ker_mat,
     copy_pixels(view(intermediate_img),dst_view);
 }
 
-// This function calculates the difference between pixel values of first image_view and second
-// image_view.This function can be used for rgb as well as grayscale images.
 template <typename SrcView, typename DiffView>
 void difference_impl(SrcView const& src_view1, SrcView const& src_view2, DiffView const& diff_view)
 {
@@ -112,6 +105,8 @@ void difference_impl(SrcView const& src_view1, SrcView const& src_view2, DiffVie
             diff_view(view_col, view_row) = src_view1(view_col,view_row) - src_view2(view_col,view_row);
 }
 
+// This function calculates the difference between pixel values of first image_view and second
+// image_view.It can be used for rgb as well as grayscale images.
 template <typename SrcView, typename DiffView>
 void difference(SrcView const& src_view1, SrcView const& src_view2 , DiffView const& diff_view)
 {
@@ -126,35 +121,59 @@ void difference(SrcView const& src_view1, SrcView const& src_view2 , DiffView co
 }
 }// namespace boost::gil::detail
 
-// Dilation : Give the maximum overlapped value to the pixel overlapping with the center element of 
-// structuring element.We can vary the number of times dilation happens by varying the 
-// argument 'iterations' in the dilate function.
+/// \addtogroup ImageProcessing
+/// @{
 
-// IntOpview is a name for views which are used for performing intermediate operations used for creating 
-// the required view.
+// IntOpView : View utilized for performing intermediate operations which will contribute in 
+// creating the resultant view . This will contain final resultant view after dilation is performed.
+
+
+/// \brief Applies morphological dilation on the input image view using given structuring element.
+/// It gives the maximum overlapped value to the pixel overlapping with the center element of 
+/// structuring element.
+/// \param src_view - Source/input image view.
+/// \param int_op_view - Output image view.
+/// \param ker_mat - Kernel matrix/structuring element containing 0's and 1's which will be used for applying dilation.
+/// \param iterations - Specifies the number of times dilation is to be applied on the input image view.
+/// \tparam SrcView type of source image, models gil::ImageViewConcept.
+/// \tparam IntOptView type of output image, models gil::MutableImageViewConcept.
+/// \tparam Kernel type of structuring element. 
 template <typename SrcView, typename IntOpView,typename Kernel>
 void dilate(SrcView const& src_view, IntOpView const& int_op_view,Kernel const& ker_mat,
-                                                                            const int iterations)
+                                                                            int iterations)
 {
     copy_pixels(src_view,int_op_view);
     for(int i=0;i<iterations;++i)
         morph(int_op_view,int_op_view,ker_mat,boost::gil::morphological_operations::dilation);
 }
 
-// Erosion : Give the minimum overlapped value to the pixel overlapping with the center element of 
-// structuring element.We can vary the number of times erosion happens by varying the 
-// argument 'iterations' in the erode function.
+/// \brief Applies morphological erosion on the input image view using given structuring element.
+/// It gives the minimum overlapped value to the pixel overlapping with the center element of 
+/// structuring element.
+/// \param src_view - Source/input image view.
+/// \param int_op_view - Output image view.
+/// \param ker_mat - Kernel matrix/structuring element containing 0's and 1's which will be used for applying erosion.
+/// \param iterations - Specifies the number of times erosion is to be applied on the input image view.
+/// \tparam SrcView type of source image, models gil::ImageViewConcept.
+/// \tparam IntOptView type of output image, models gil::MutableImageViewConcept.
+/// \tparam Kernel type of structuring element.
 template <typename SrcView, typename IntOpView,typename Kernel>
 void erode(SrcView const& src_view, IntOpView const& int_op_view,Kernel const& ker_mat,
-                                                                            const int iterations)
+                                                                            int iterations)
 {
     copy_pixels(src_view,int_op_view);
     for(int i=0;i<iterations;++i)
         morph(int_op_view,int_op_view,ker_mat,boost::gil::morphological_operations::erosion);
 }
 
-// Opening : Opening is just another name of erosion followed by dilation.
-// It is useful in removing noise.
+/// \brief Performs erosion and then dilation on the input image view . This operation is utilized
+/// for removing noise from images.
+/// \param src_view - Source/input image view.
+/// \param int_op_view - Output image view.
+/// \param ker_mat - Kernel matrix/structuring element containing 0's and 1's which will be used for applying the opening operation.
+/// \tparam SrcView type of source image, models gil::ImageViewConcept.
+/// \tparam IntOptView type of output image, models gil::MutableImageViewConcept.
+/// \tparam Kernel type of structuring element.
 template <typename SrcView, typename IntOpView,typename Kernel>
 void opening(SrcView const& src_view, IntOpView const& int_op_view,Kernel const& ker_mat)
 {
@@ -162,9 +181,15 @@ void opening(SrcView const& src_view, IntOpView const& int_op_view,Kernel const&
     dilate(int_op_view,int_op_view,ker_mat,1);
 }
 
-// Closing : Closing is reverse of Opening, Dilation followed by Erosion.
-// It is useful in closing small holes inside the foreground objects, or small black points 
-// on the object.
+/// \brief Performs dilation and then erosion on the input image view which is exactly opposite
+/// to the opening operation . Closing operation can be utilized for closing small holes inside 
+/// foreground objects.
+/// \param src_view - Source/input image view.
+/// \param int_op_view - Output image view.
+/// \param ker_mat - Kernel matrix/structuring element containing 0's and 1's which will be used for applying the closing operation.
+/// \tparam SrcView type of source image, models gil::ImageViewConcept.
+/// \tparam IntOptView type of output image, models gil::MutableImageViewConcept.
+/// \tparam Kernel type of structuring element.
 template <typename SrcView, typename IntOpView,typename Kernel>
 void closing(SrcView const& src_view, IntOpView const& int_op_view,Kernel const& ker_mat)
 {
@@ -172,8 +197,15 @@ void closing(SrcView const& src_view, IntOpView const& int_op_view,Kernel const&
     erode(int_op_view,int_op_view,ker_mat,1);
 }
 
-// Morphological Gradient : It is the difference between dilation and erosion of an image.
-// The result will look like the outline of the object.
+/// \brief Calculates the difference between image views generated after applying dilation
+/// dilation and erosion on an image . The resultant image will look like the outline of the 
+/// object(s) present in the image.
+/// \param src_view - Source/input image view.
+/// \param dst_view - Destination view which will store the final result of morphological gradient operation.
+/// \param ker_mat - Kernel matrix/structuring element containing 0's and 1's which will be used for applying the morphological gradient operation.
+/// \tparam SrcView type of source image, models gil::ImageViewConcept.
+/// \tparam DstView type of output image, models gil::MutableImageViewConcept.
+/// \tparam Kernel type of structuring element.
 template <typename SrcView, typename DstView, typename Kernel>
 void morphological_gradient(SrcView const& src_view, DstView const& dst_view, Kernel const& ker_mat)
 {
@@ -184,7 +216,14 @@ void morphological_gradient(SrcView const& src_view, DstView const& dst_view, Ke
     difference(view(int_dilate),view(int_erode),dst_view);
 }
 
-// Top Hat : It is the difference between input image and Opening of the image.
+/// \brief Calculates the difference between input image view and the view generated by opening
+/// operation on the input image view.
+/// \param src_view - Source/input image view.
+/// \param dst_view - Destination view which will store the final result of top hat operation.
+/// \param ker_mat - Kernel matrix/structuring element containing 0's and 1's which will be used for applying the top hat operation.
+/// \tparam SrcView type of source image, models gil::ImageViewConcept.
+/// \tparam DstView type of output image, models gil::MutableImageViewConcept.
+/// \tparam Kernel type of structuring element.
 template <typename SrcView, typename DstView, typename Kernel>
 void top_hat(SrcView const& src_view, DstView const& dst_view, Kernel const& ker_mat)
 {
@@ -194,7 +233,13 @@ void top_hat(SrcView const& src_view, DstView const& dst_view, Kernel const& ker
     difference(src_view,view(int_opening),dst_view);
 }
 
-// Black Hat : It is the difference between the closing of the input image and input image.
+/// \brief Calculates the difference between closing of the input image and input image.
+/// \param src_view - Source/input image view.
+/// \param dst_view - Destination view which will store the final result of black hat operation.
+/// \param ker_mat - Kernel matrix/structuring element containing 0's and 1's which will be used for applying the black hat operation.
+/// \tparam SrcView type of source image, models gil::ImageViewConcept.
+/// \tparam DstView type of output image, models gil::MutableImageViewConcept.
+/// \tparam Kernel type of structuring element.
 template <typename SrcView, typename DstView, typename Kernel>
 void black_hat(SrcView const& src_view, DstView const& dst_view, Kernel const& ker_mat)
 {
@@ -204,5 +249,6 @@ void black_hat(SrcView const& src_view, DstView const& dst_view, Kernel const& k
     difference(view(int_closing), src_view,dst_view);
 }
     }
+/// @}
 }// namespace boost::gil
 #endif // BOOST_GIL_IMAGE_PROCESSING_MORPHOLOGY_HPP
