@@ -161,8 +161,6 @@ void non_overlapping_interpolated_clahe(
     std::size_t const channels = num_channels<SrcView>::value;
     coord_t const width        = src_view.width();
     coord_t const height       = src_view.height();
-    std::size_t pixel_max      = std::numeric_limits<dst_channel_t>::max();
-    std::size_t pixel_min      = std::numeric_limits<dst_channel_t>::min();
 
     // Find control points
 
