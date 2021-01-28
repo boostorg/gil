@@ -97,8 +97,8 @@ std::map<SrcKeyType, DstKeyType> histogram_matching(
         {
             start--;
         }
-        if (abs(cumltv_refhist[ref_keys[start]] - src_val) >
-            abs(cumltv_refhist(std::min<RefKeyType>(ref_max, std::get<0>(ref_keys[start + 1]))) -
+        if (std::abs(cumltv_refhist[ref_keys[start]] - src_val) >
+            std::abs(cumltv_refhist(std::min<RefKeyType>(ref_max, std::get<0>(ref_keys[start + 1]))) -
                 src_val))
         {
             inverse_mapping[std::get<0>(src_keys[j])] = 

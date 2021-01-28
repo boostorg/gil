@@ -13,6 +13,7 @@
 
 #include <boost/core/lightweight_test.hpp>
 
+#include <cmath>
 #include <vector>
 
 namespace gil = boost::gil;
@@ -53,7 +54,7 @@ void check_actual_clip_limit()
             excess += actual_limit - h(i);
         max_bin_val = std::max<long>(max_bin_val, h(i));
     }
-    BOOST_TEST((abs(excess / h.size() + actual_limit) - limit * h.sum()) < epsilon);
+    BOOST_TEST((std::abs(excess / h.size() + actual_limit) - limit * h.sum()) < epsilon);
 }
 
 void check_clip_and_redistribute()
@@ -75,7 +76,7 @@ void check_clip_and_redistribute()
     gil::detail::clip_and_redistribute(h, h2, limit);
     for(std::size_t i = 0; i < 100; i++)
     {
-        check = check & (abs(limit * h.sum() - h2(i)) < epsilon);
+        check = check & (std::abs(limit * h.sum() - h2(i)) < epsilon);
     }
     BOOST_TEST(check);
 }
