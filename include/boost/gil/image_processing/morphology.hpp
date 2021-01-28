@@ -21,6 +21,19 @@ namespace boost{
                 erosion,
             };
 namespace detail{
+/// \addtogroup ImageProcessing
+/// @{
+
+/// \brief Implements morphological operations at pixel level.This function compares neighbouring 
+/// pixel values according to the kernel and choose minimum/mamximum neighbouring pixel value and 
+/// assigns it to the pixel under consideration.
+/// \param src_view - Source/Input image view.
+/// \param dst_view - View which stores the final result of operations performed by this function.
+/// \param kernel - Kernel matrix/structuring element containing 0's and 1's which will be used for applying the required morphological operation.
+/// \param identifier - Indicates the type of morphological operation to be applied.
+/// \tparam SrcView type of source image.
+/// \tparam DstView type of output image.
+/// \tparam Kernel type of structuring element.
 template <typename SrcView, typename DstView, typename Kernel>
 void morph_impl(SrcView const& src_view, DstView const& dst_view, Kernel const& kernel,
                 morphological_operations identifier)
@@ -71,8 +84,15 @@ void morph_impl(SrcView const& src_view, DstView const& dst_view, Kernel const& 
     }
 }
 
-// This function is used for modifying pixel values of the input image view according to the type
-// type of morphological operation specified by the argument 'identifier'.
+/// \brief Checks feasibility of the desired operation and passes parameter values to the
+/// function morph_impl alongwith individual channel views of the input image.
+/// \param src_view - Source/Input image view.
+/// \param dst_view - View which stores the final result of operations performed by this function.
+/// \param kernel - Kernel matrix/structuring element containing 0's and 1's which will be used for applying the required morphological operation.
+/// \param identifier - Indicates the type of morphological operation to be applied.
+/// \tparam SrcView type of source image.
+/// \tparam DstView type of output image.
+/// \tparam Kernel type of structuring element.
 template <typename SrcView, typename DstView,typename Kernel>
 void morph(SrcView const& src_view, DstView & dst_view,Kernel const& ker_mat, 
                                                             morphological_operations identifier)
@@ -97,6 +117,13 @@ void morph(SrcView const& src_view, DstView & dst_view,Kernel const& ker_mat,
     copy_pixels(view(intermediate_img),dst_view);
 }
 
+/// \brief Calculates the difference between pixel values of first image_view and second
+/// image_view.
+/// \param src_view1 - First parameter for subtraction of views.
+/// \param src_view2 - Second parameter for subtraction of views.
+/// \param diff_view - View containing result of the subtraction of second view from the first view.
+/// \tparam SrcView type of source/Input images used for subtraction.
+/// \tparam DiffView type of image view containing the result of subtraction.
 template <typename SrcView, typename DiffView>
 void difference_impl(SrcView const& src_view1, SrcView const& src_view2, DiffView const& diff_view)
 {
@@ -105,8 +132,13 @@ void difference_impl(SrcView const& src_view1, SrcView const& src_view2, DiffVie
             diff_view(view_col, view_row) = src_view1(view_col,view_row) - src_view2(view_col,view_row);
 }
 
-// This function calculates the difference between pixel values of first image_view and second
-// image_view.It can be used for rgb as well as grayscale images.
+/// \brief Passes parameter values to the function 'difference_impl' alongwith individual 
+/// channel views of input images.
+/// \param src_view1 - First parameter for subtraction of views.
+/// \param src_view2 - Second parameter for subtraction of views.
+/// \param diff_view - View containing result of the subtraction of second view from the first view.
+/// \tparam SrcView type of source/Input images used for subtraction.
+/// \tparam DiffView type of image view containing the result of subtraction.
 template <typename SrcView, typename DiffView>
 void difference(SrcView const& src_view1, SrcView const& src_view2 , DiffView const& diff_view)
 {
@@ -121,8 +153,7 @@ void difference(SrcView const& src_view1, SrcView const& src_view2 , DiffView co
 }
 }// namespace boost::gil::detail
 
-/// \addtogroup ImageProcessing
-/// @{
+
 
 // IntOpView : View utilized for performing intermediate operations which will contribute in 
 // creating the resultant view . 
