@@ -63,7 +63,7 @@ double actual_clip_limit(SrcHist const& src_hist, double cliplimit = 0.03)
             if (v.second > middle)
                 excess += v.second - middle;
         });
-        if (abs(excess - (cliplimit - middle) * num_bins) < epsilon)
+        if (std::abs(excess - (cliplimit - middle) * num_bins) < epsilon)
             break;
         else if (excess > (cliplimit - middle) * num_bins)
             high = middle - 1;
