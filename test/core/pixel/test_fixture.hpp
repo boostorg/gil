@@ -21,7 +21,6 @@
 
 #include <boost/core/ignore_unused.hpp>
 #include <boost/mp11.hpp>
-#include <boost/mp11/mpl.hpp> // for compatibility with Boost.Test
 
 #include <cstdint>
 #include <iterator>
