@@ -738,7 +738,7 @@ enum class view_x_view_planarity
 {
     true_x_true,
     false_x_true,
-    all_x_true
+    all_x_false
 };
 
 /// std::uninitialized_copy for pairs of planar iterators
@@ -779,7 +779,7 @@ void uninitialized_copy_aux(It1 first1,
                             It1 last1, 
                             It2 first2, 
                             It2 last2, 
-                            std::integral_constant<view_x_view_planarity, view_x_view_planarity::false_x_true>)
+                            std::integral_constant<view_x_view_planarity, view_x_view_planarity::all_x_false>)
 {
     std::uninitialized_copy(first1, last1, first2);
 }
@@ -791,7 +791,7 @@ void uninitialized_copy_aux(It1 first1,
                             It1 last1, 
                             It2 first2, 
                             It2 last2,
-                            std::integral_constant<view_x_view_planarity, view_x_view_planarity::all_x_true>)
+                            std::integral_constant<view_x_view_planarity, view_x_view_planarity::false_x_true>)
 {
     default_construct_range(first2, last2);
 
@@ -810,10 +810,10 @@ void uninitialized_copy_pixels(View1 const& view1, View2 const& view2)
     using view_x_view_planarity = detail::view_x_view_planarity;
     using vxv_planarity = std::integral_constant<view_x_view_planarity,
                                     !is_planar<View2>::value ? 
-                                        view_x_view_planarity::false_x_true : 
+                                        view_x_view_planarity::all_x_false : 
                                         (is_planar<View1>::value ?
-                                            view_x_view_planarity::true_x_true :
-                                            view_x_view_planarity::all_x_true)>;
+                                            view_x_view_planarity::true_x_true:
+                                            view_x_view_planarity::false_x_true)>;
     BOOST_ASSERT(view1.dimensions() == view2.dimensions());
 
     if (view1.is_1d_traversable() && view2.is_1d_traversable())
