@@ -26,6 +26,7 @@
 #include <boost/gil/image.hpp>
 #include <boost/gil/image_processing/hough_parameter.hpp>
 #include <boost/gil/image_processing/hough_transform.hpp>
+#include <boost/gil/image_processing/morphology.hpp>
 #include <boost/gil/image_processing/scaling.hpp>
 #include <boost/gil/image_processing/threshold.hpp>
 #include <boost/gil/image_view.hpp>

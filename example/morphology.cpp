@@ -6,20 +6,21 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 #include <boost/gil/extension/io/png.hpp>
-#include <boost/gil/image_processing/morphology.hpp>
+#include <boost/gil.hpp>
 #include <vector>
-#include<iostream>
-#include<map>
-#include<string>
+#include <iostream>
+#include <map>
+#include <string>
+
 // Default structuring element is SE = [1,1,1]
 //                                     |1,1,1|
 //                                     [1,1,1]
 // SE(1,1)(center pixel) is the one which coincides with the currently considered pixel of the 
 // image to be convolved. The structuring element can be easily changed by the user.
-
-int main(int argc,char **argv)
+namespace gil = boost::gil;
+int main(int argc, char **argv)
 {
-    std::map<std::string,bool>operations;
+    std::map<std::string, bool> operations;
     if(argc < 4 || argc > 11)
     {
         throw std::invalid_argument("Wrong format of command line arguments.\n"
@@ -43,9 +44,8 @@ int main(int argc,char **argv)
         for(int i=3;i<argc;++i)
             operations[argv[i]] = true;
     }
-    using namespace boost::gil;
-    gray8_image_t img;
-    read_image(argv[1], img, png_tag{});
+    gil::gray8_image_t img;
+    gil::read_image(argv[1], img, gil::png_tag{});
 
     // Image can be converted to a binary format with high value as 255 and low value as 0
     // by using the threshold operator . This can be used for binary morphological operations .
@@ -55,77 +55,77 @@ int main(int argc,char **argv)
         threshold_binary(view(img), view(img),170, 255);
         std::string name = argv[2];
         name += "-binary.png";
-        write_view(name, view(img), png_tag{});
+        gil::write_view(name, view(img), gil::png_tag{});
     }
 
-    std::vector<float>ker_vec(9,1.0f);// Structuring element
-    detail::kernel_2d<float> ker_mat(ker_vec.begin(), ker_vec.size(), 1, 1);
-    gray8_image_t img_out_dilation(img.dimensions()),img_out_erosion(img.dimensions()),img_out_opening(img.dimensions());
-    gray8_image_t img_out_closing(img.dimensions()),img_out_mg(img.dimensions()),img_out_top_hat(img.dimensions());
-    gray8_image_t img_out_black_hat(img.dimensions());
+    std::vector<float> ker_vec(9, 1.0f);// Structuring element
+    gil::detail::kernel_2d<float> ker_mat(ker_vec.begin(), ker_vec.size(), 1, 1);
+    gil::gray8_image_t img_out_dilation(img.dimensions()), img_out_erosion(img.dimensions()), img_out_opening(img.dimensions());
+    gil::gray8_image_t img_out_closing(img.dimensions()), img_out_mg(img.dimensions()), img_out_top_hat(img.dimensions());
+    gil::gray8_image_t img_out_black_hat(img.dimensions());
     
     // Do not pass empty input image views in functions defined below for morphological operations 
     // to avoid errors.
     if(operations["dilation"])
     {
         // dilate(input_image_view,output_image_view,structuring_element,iterations)
-        dilate(view(img),view(img_out_dilation),ker_mat,1);
+        dilate(view(img), view(img_out_dilation), ker_mat, 1);
         std::string name = argv[2];
         name += "-dilation.png";
-        write_view( name, view(img_out_dilation), png_tag{});
+        gil::write_view( name, view(img_out_dilation), gil::png_tag{});
     }
     
     if(operations["erosion"])
     {
         // erode(input_image_view,output_image_view,structuring_element,iterations)
-        erode(view(img),view(img_out_erosion),ker_mat,1);
+        erode(view(img), view(img_out_erosion), ker_mat, 1);
         std::string name = argv[2];
         name += "-erosion.png";
-        write_view( name, view(img_out_erosion), png_tag{});
+        gil::write_view( name, view(img_out_erosion), gil::png_tag{});
     }
     
     if(operations["opening"])
     {
         // opening(input_image_view,output_image_view,structuring_element)
-        opening(view(img),view(img_out_opening),ker_mat);
+        opening(view(img), view(img_out_opening), ker_mat);
         std::string name = argv[2];
         name += "-opening.png";
-        write_view( name, view(img_out_opening), png_tag{});
+        gil::write_view( name, view(img_out_opening), gil::png_tag{});
     }
     
     if(operations["closing"])
     {
         // closing(input_image_view,output_image_view,structuring_element)
-        closing(view(img),view(img_out_closing),ker_mat);
+        closing(view(img), view(img_out_closing), ker_mat);
         std::string name = argv[2];
         name += "-closing.png";
-        write_view( name, view(img_out_closing), png_tag{});
+        gil::write_view( name, view(img_out_closing), gil::png_tag{});
     }
     
     if(operations["morphological_gradient"])
     {
         // morphological_gradient(input_image_view,output_image_view,structuring_element)
-        morphological_gradient(view(img),view(img_out_mg),ker_mat);
+        morphological_gradient(view(img), view(img_out_mg), ker_mat);
         std::string name = argv[2];
         name += "-morphological_gradient.png";
-        write_view(name, view(img_out_mg), png_tag{});
+        gil::write_view(name, view(img_out_mg), gil::png_tag{});
     }
     
     if(operations["top_hat"])
     {
         // top_hat(input_image_view,output_image_view,structuring_element)
-        top_hat(view(img),view(img_out_top_hat),ker_mat);
+        top_hat(view(img), view(img_out_top_hat), ker_mat);
         std::string name = argv[2];
         name += "-top_hat.png";
-        write_view(name, view(img_out_top_hat), png_tag{});
+        gil::write_view(name, view(img_out_top_hat), gil::png_tag{});
     }
     
     if(operations["black_hat"])
     {
         // black_hat(input_image_view,output_image_view,structuring_element)
-        black_hat(view(img),view(img_out_black_hat),ker_mat);
+        black_hat(view(img), view(img_out_black_hat), ker_mat);
         std::string name = argv[2];
         name += "-black_hat.png";
-        write_view( name, view(img_out_black_hat), png_tag{});
+        gil::write_view( name, view(img_out_black_hat), gil::png_tag{});
     }
 }

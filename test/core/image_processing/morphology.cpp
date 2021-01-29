@@ -14,7 +14,7 @@ namespace gil = boost::gil;
 
 // This function helps us fill pixels of a view given as 2nd argument with elements of the vector
 // given as 1st argument.
-void pixel_fill(std::vector<std::vector<int> > &original_binary_vector, boost::gil::gray8_image_t &original_img)
+void pixel_fill(std::vector<std::vector<int>>& original_binary_vector, boost::gil::gray8_image_t& original_img)
 {
     for (std::ptrdiff_t view_row = 0; view_row < view(original_img).height(); ++view_row)
     {
@@ -27,7 +27,7 @@ void pixel_fill(std::vector<std::vector<int> > &original_binary_vector, boost::g
 
 int main()
 {
-    std::vector<std::vector<int> > original_binary_vector {
+    std::vector<std::vector<int>> original_binary_vector {
         {  0,  0,   0,   0,   0,   0},
         {  0,  0, 127, 144, 143,   0},
         {  0,  0, 128,   0, 142,   0},
@@ -36,35 +36,35 @@ int main()
         {  0,  0, 131,   0,   0,   0},
         {  0,  0, 132, 137, 136, 138},
         {  0,  0, 133, 134, 135,   0}};
-    std::vector<std::vector<int> > orig_dil_imp{
+    std::vector<std::vector<int>> orig_dil_imp{
         { 255, 100, 100, 100},
         { 100, 100, 100, 100},
         { 100, 100, 100, 100}
     };
     // All vectors defined below will be used for creating expected image views which are supposed
     // to match the views obtained after applying morphological operations.  
-    std::vector<std::vector<int> > exp_dil {
-        {  0,127, 144, 144, 144, 143},
-        {  0,128, 144, 144, 144, 143},
-        {  0,129, 144, 144, 144, 143},
-        {  0,130, 140, 142, 142, 142},
-        {  0,131, 140, 141, 141, 141},
-        {  0,132, 140, 140, 140, 139},
-        {  0,133, 137, 137, 138, 138},
-        {  0,133, 137, 137, 138, 138}};
+    std::vector<std::vector<int>> exp_dil {
+        {  0, 127, 144, 144, 144, 143},
+        {  0, 128, 144, 144, 144, 143},
+        {  0, 129, 144, 144, 144, 143},
+        {  0, 130, 140, 142, 142, 142},
+        {  0, 131, 140, 141, 141, 141},
+        {  0, 132, 140, 140, 140, 139},
+        {  0, 133, 137, 137, 138, 138},
+        {  0, 133, 137, 137, 138, 138}};
     // Following vector intends to check result of dilation operation when it is applied 2 times on
     // the original image.
-    std::vector<std::vector<int> > exp_dil_iter2{
-        {  128,144, 144, 144, 144, 144},
-        {  129,144, 144, 144, 144, 144},
-        {  130,144, 144, 144, 144, 144},
-        {  131,144, 144, 144, 144, 144},
-        {  132,140, 142, 142, 142, 142},
-        {  133,140, 141, 141, 141, 141},
-        {  133,140, 140, 140, 140, 140},
-        {  133,137, 137, 138, 138, 138}
+    std::vector<std::vector<int>> exp_dil_iter2{
+        {  128, 144, 144, 144, 144, 144},
+        {  129, 144, 144, 144, 144, 144},
+        {  130, 144, 144, 144, 144, 144},
+        {  131, 144, 144, 144, 144, 144},
+        {  132, 140, 142, 142, 142, 142},
+        {  133, 140, 141, 141, 141, 141},
+        {  133, 140, 140, 140, 140, 140},
+        {  133, 137, 137, 138, 138, 138}
     };
-    std::vector<std::vector<int> > exp_er {
+    std::vector<std::vector<int>> exp_er {
         {  0,  0,   0,   0,   0,   0},
         {  0,  0,   0,   0,   0,   0},
         {  0,  0,   0,   0,   0,   0},
@@ -75,7 +75,7 @@ int main()
         {  0,  0,   0, 132,   0,   0}};
     // Following vector intends to check result of erosion operation when it is applied 2 times on
     // the original image.
-    std::vector<std::vector<int> > exp_er_iter2{
+    std::vector<std::vector<int>> exp_er_iter2{
         {  0,  0,   0,   0,   0,   0},
         {  0,  0,   0,   0,   0,   0},
         {  0,  0,   0,   0,   0,   0},
@@ -84,7 +84,7 @@ int main()
         {  0,  0,   0,   0,   0,   0},
         {  0,  0,   0,   0,   0,   0},
         {  0,  0,   0,   0,   0,   0}};
-    std::vector<std::vector<int> > exp_opening {
+    std::vector<std::vector<int>> exp_opening {
         {  0,  0,   0,   0,   0,   0},
         {  0,  0,   0,   0,   0,   0},
         {  0,  0,   0,   0,   0,   0},
@@ -93,25 +93,25 @@ int main()
         {  0,  0,   0,   0,   0,   0},
         {  0,  0, 132, 132, 132,   0},
         {  0,  0, 132, 132, 132,   0}};
-    std::vector<std::vector<int> > exp_closing {
-        {  0,0, 127, 144, 143, 143},
-        {  0,0, 127, 144, 143, 143},
-        {  0,0, 128, 140, 142, 142},
-        {  0,0, 129, 140, 141, 141},
-        {  0,0, 130, 140, 139, 139},
-        {  0,0, 131, 137, 137, 138},
-        {  0,0, 132, 137, 137, 138},
-        {  0,0, 133, 137, 137, 138}};
-    std::vector<std::vector<int> > exp_mg {
-        {  0,127, 144, 144, 144, 143},
-        {  0,128, 144, 144, 144, 143},
-        {  0,129, 144, 144, 144, 143},
-        {  0,130, 140, 142, 142, 142},
-        {  0,131, 140, 141, 141, 141},
-        {  0,132, 140, 140, 140, 139},
-        {  0,133, 137, 137, 138, 138},
-        {  0,133, 137,   5, 138, 138}};
-    std::vector<std::vector<int> > exp_top_hat {
+    std::vector<std::vector<int>> exp_closing {
+        {  0,  0, 127, 144, 143, 143},
+        {  0,  0, 127, 144, 143, 143},
+        {  0,  0, 128, 140, 142, 142},
+        {  0,  0, 129, 140, 141, 141},
+        {  0,  0, 130, 140, 139, 139},
+        {  0,  0, 131, 137, 137, 138},
+        {  0,  0, 132, 137, 137, 138},
+        {  0,  0, 133, 137, 137, 138}};
+    std::vector<std::vector<int>> exp_mg {
+        {  0, 127, 144, 144, 144, 143},
+        {  0, 128, 144, 144, 144, 143},
+        {  0, 129, 144, 144, 144, 143},
+        {  0, 130, 140, 142, 142, 142},
+        {  0, 131, 140, 141, 141, 141},
+        {  0, 132, 140, 140, 140, 139},
+        {  0, 133, 137, 137, 138, 138},
+        {  0, 133, 137,   5, 138, 138}};
+    std::vector<std::vector<int>> exp_top_hat {
         {  0,  0,   0,   0,   0,   0},
         {  0,  0, 127, 144, 143,   0},
         {  0,  0, 128,   0, 142,   0},
@@ -120,16 +120,16 @@ int main()
         {  0,  0, 131,   0,   0,   0},
         {  0,  0,   0,   5,   4, 138},
         {  0,  0,   1,   2,   3,   0}};
-    std::vector<std::vector<int> > exp_black_hat {
-        {  0,0, 127, 144, 143, 143},
-        {  0,0,   0,   0,   0, 143},
-        {  0,0,   0, 140,   0, 142},
-        {  0,0,   0, 140,   0, 141},
-        {  0,0,   0,   0,   0, 139},
-        {  0,0,   0, 137, 137, 138},
-        {  0,0,   0,   0,   1,   0},
-        {  0,0,   0,   3,   2, 138}};
-    std::vector<std::vector<int> > exp_dil_imp{
+    std::vector<std::vector<int>> exp_black_hat {
+        {  0,  0, 127, 144, 143, 143},
+        {  0,  0,   0,   0,   0, 143},
+        {  0,  0,   0, 140,   0, 142},
+        {  0,  0,   0, 140,   0, 141},
+        {  0,  0,   0,   0,   0, 139},
+        {  0,  0,   0, 137, 137, 138},
+        {  0,  0,   0,   0,   1,   0},
+        {  0,  0,   0,   3,   2, 138}};
+    std::vector<std::vector<int>> exp_dil_imp{
         { 255, 255, 100, 100},
         { 255, 255, 100, 100},
         { 100, 100, 100, 100}

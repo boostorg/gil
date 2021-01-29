@@ -30,6 +30,7 @@ local sources =
     histogram.cpp
     interleaved_ptr.cpp
     mandelbrot.cpp
+    morphology.cpp
     packed_pixel.cpp
     resize.cpp
     sobel_scharr.cpp

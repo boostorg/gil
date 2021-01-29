@@ -12,14 +12,13 @@
 #include <boost/gil/gray.hpp>
 #include <boost/gil/image_processing/threshold.hpp>
 
-namespace gil = boost::gil;
 namespace boost{
     namespace gil{
-        enum class morphological_operations
-            {
-                dilation,
-                erosion,
-            };
+enum class morphological_operation
+{
+    dilation,
+    erosion,
+};
 namespace detail{
 /// \addtogroup ImageProcessing
 /// @{
@@ -36,7 +35,7 @@ namespace detail{
 /// \tparam Kernel type of structuring element.
 template <typename SrcView, typename DstView, typename Kernel>
 void morph_impl(SrcView const& src_view, DstView const& dst_view, Kernel const& kernel,
-                morphological_operations identifier)
+                morphological_operation identifier)
 {
     std::ptrdiff_t flip_ker_row, flip_ker_col, row_boundary, col_boundary;
     typename channel_type<typename SrcView::value_type>::type target_element;
@@ -63,14 +62,14 @@ void morph_impl(SrcView const& src_view, DstView const& dst_view, Kernel const& 
                     {
                         // We ensure that we consider only those pixels which are overlapped on a
                         // non-zero kernel_element as
-                        if(kernel.at(flip_ker_row,flip_ker_col))
+                        if(kernel.at(flip_ker_row, flip_ker_col))
                         {
-                            if(identifier == boost::gil::morphological_operations::dilation)
+                            if(identifier == morphological_operation::dilation)
                             {
                                 if(src_view(col_boundary, row_boundary) > target_element)
                                     target_element = src_view(col_boundary, row_boundary);
                             }
-                            else if(identifier == boost::gil::morphological_operations::erosion)
+                            else if(identifier == morphological_operation::erosion)
                             {
                                 if(src_view(col_boundary, row_boundary) < target_element)
                                     target_element = src_view(col_boundary, row_boundary);
@@ -95,15 +94,14 @@ void morph_impl(SrcView const& src_view, DstView const& dst_view, Kernel const& 
 /// \tparam Kernel type of structuring element.
 template <typename SrcView, typename DstView,typename Kernel>
 void morph(SrcView const& src_view, DstView & dst_view,Kernel const& ker_mat, 
-                                                            morphological_operations identifier)
+           morphological_operation identifier)
 {
-    using namespace boost::gil;
     BOOST_ASSERT(ker_mat.size() != 0 && src_view.dimensions() == dst_view.dimensions());
 
-    typedef typename channel_type<SrcView>::type d_channel_t;
-    typedef typename channel_convert_to_unsigned<d_channel_t>::type channel_t;
-    typedef pixel<channel_t, gray_layout_t> gray_pixel_t;
-    typedef image<gray_pixel_t, false> src_gray_image;
+    using d_channel_t = typename channel_type<SrcView>::type ;
+    using channel_t = typename channel_convert_to_unsigned<d_channel_t>::type ;
+    using gray_pixel_t = pixel<channel_t, gray_layout_t> ;
+    using src_gray_image = image<gray_pixel_t, false>;
     src_gray_image intermediate_img(src_view.dimensions());
 
     for (std::size_t i = 0; i < src_view.num_channels(); i++)
@@ -114,7 +112,7 @@ void morph(SrcView const& src_view, DstView & dst_view,Kernel const& ker_mat,
             ker_mat,identifier
         );
     }
-    copy_pixels(view(intermediate_img),dst_view);
+    copy_pixels(view(intermediate_img), dst_view);
 }
 
 /// \brief Calculates the difference between pixel values of first image_view and second
@@ -129,7 +127,7 @@ void difference_impl(SrcView const& src_view1, SrcView const& src_view2, DiffVie
 {
     for (std::ptrdiff_t view_row = 0; view_row < src_view1.height(); ++view_row)
         for (std::ptrdiff_t view_col = 0; view_col < src_view1.width(); ++view_col)
-            diff_view(view_col, view_row) = src_view1(view_col,view_row) - src_view2(view_col,view_row);
+            diff_view(view_col, view_row) = src_view1(view_col, view_row) - src_view2(view_col, view_row);
 }
 
 /// \brief Passes parameter values to the function 'difference_impl' alongwith individual 
@@ -171,11 +169,11 @@ void difference(SrcView const& src_view1, SrcView const& src_view2 , DiffView co
 /// \tparam Kernel type of structuring element. 
 template <typename SrcView, typename IntOpView,typename Kernel>
 void dilate(SrcView const& src_view, IntOpView const& int_op_view,Kernel const& ker_mat,
-                                                                            int iterations)
+            int iterations)
 {
-    copy_pixels(src_view,int_op_view);
+    copy_pixels(src_view, int_op_view);
     for(int i=0;i<iterations;++i)
-        morph(int_op_view,int_op_view,ker_mat,boost::gil::morphological_operations::dilation);
+        morph(int_op_view, int_op_view,ker_mat, morphological_operation::dilation);
 }
 
 /// \brief Applies morphological erosion on the input image view using given structuring element.
@@ -190,11 +188,11 @@ void dilate(SrcView const& src_view, IntOpView const& int_op_view,Kernel const& 
 /// \tparam Kernel type of structuring element.
 template <typename SrcView, typename IntOpView,typename Kernel>
 void erode(SrcView const& src_view, IntOpView const& int_op_view,Kernel const& ker_mat,
-                                                                            int iterations)
+           int iterations)
 {
-    copy_pixels(src_view,int_op_view);
+    copy_pixels(src_view, int_op_view);
     for(int i=0;i<iterations;++i)
-        morph(int_op_view,int_op_view,ker_mat,boost::gil::morphological_operations::erosion);
+        morph(int_op_view, int_op_view,ker_mat, morphological_operation::erosion);
 }
 
 /// \brief Performs erosion and then dilation on the input image view . This operation is utilized
@@ -208,8 +206,8 @@ void erode(SrcView const& src_view, IntOpView const& int_op_view,Kernel const& k
 template <typename SrcView, typename IntOpView,typename Kernel>
 void opening(SrcView const& src_view, IntOpView const& int_op_view,Kernel const& ker_mat)
 {
-    erode(src_view,int_op_view,ker_mat,1);
-    dilate(int_op_view,int_op_view,ker_mat,1);
+    erode(src_view, int_op_view, ker_mat, 1);
+    dilate(int_op_view, int_op_view, ker_mat, 1);
 }
 
 /// \brief Performs dilation and then erosion on the input image view which is exactly opposite
@@ -224,8 +222,8 @@ void opening(SrcView const& src_view, IntOpView const& int_op_view,Kernel const&
 template <typename SrcView, typename IntOpView,typename Kernel>
 void closing(SrcView const& src_view, IntOpView const& int_op_view,Kernel const& ker_mat)
 {
-    dilate(src_view,int_op_view,ker_mat,1);
-    erode(int_op_view,int_op_view,ker_mat,1);
+    dilate(src_view, int_op_view, ker_mat, 1);
+    erode(int_op_view, int_op_view, ker_mat, 1);
 }
 
 /// \brief Calculates the difference between image views generated after applying dilation
@@ -241,10 +239,10 @@ template <typename SrcView, typename DstView, typename Kernel>
 void morphological_gradient(SrcView const& src_view, DstView const& dst_view, Kernel const& ker_mat)
 {
     using namespace boost::gil;
-    gray8_image_t int_dilate(src_view.dimensions()),int_erode(src_view.dimensions());
-    dilate(src_view,view(int_dilate),ker_mat,1);
-    erode(src_view,view(int_erode),ker_mat,1);
-    difference(view(int_dilate),view(int_erode),dst_view);
+    gray8_image_t int_dilate(src_view.dimensions()), int_erode(src_view.dimensions());
+    dilate(src_view, view(int_dilate), ker_mat, 1);
+    erode(src_view, view(int_erode), ker_mat, 1);
+    difference(view(int_dilate), view(int_erode), dst_view);
 }
 
 /// \brief Calculates the difference between input image view and the view generated by opening
@@ -260,8 +258,8 @@ void top_hat(SrcView const& src_view, DstView const& dst_view, Kernel const& ker
 {
     using namespace boost::gil;
     gray8_image_t int_opening(src_view.dimensions());
-    opening(src_view,view(int_opening),ker_mat);
-    difference(src_view,view(int_opening),dst_view);
+    opening(src_view, view(int_opening), ker_mat);
+    difference(src_view, view(int_opening), dst_view);
 }
 
 /// \brief Calculates the difference between closing of the input image and input image.
@@ -276,8 +274,8 @@ void black_hat(SrcView const& src_view, DstView const& dst_view, Kernel const& k
 {
     using namespace boost::gil;
     gray8_image_t int_closing(src_view.dimensions());
-    closing(src_view,view(int_closing),ker_mat);
-    difference(view(int_closing), src_view,dst_view);
+    closing(src_view, view(int_closing), ker_mat);
+    difference(view(int_closing), src_view, dst_view);
 }
     }
 /// @}
