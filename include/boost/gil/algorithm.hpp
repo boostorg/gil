@@ -800,7 +800,7 @@ void uninitialized_copy_aux(It1 first1,
                             It2 last2,
                             interleaved_2_planar_type)
 {
-    default_construct_range(first2, last2);
+    default_construct_aux(first2, last2, std::true_type());
 
     typename It2::difference_type n = last2 - first2;
     copier_n<It1,It2>()(first1, n, first2);
@@ -815,7 +815,7 @@ template <typename View1, typename View2>
 void uninitialized_copy_pixels(View1 const& view1, View2 const& view2)
 {
     using copy_planarity_condition = detail::copy_planarity_condition;
-    using vxv_planarity = std::integral_constant<copy_planarity_condition
+    using vxv_planarity = std::integral_constant<copy_planarity_condition,
                                     !is_planar<View2>::value ?
                                         copy_planarity_condition::mixed_2_interleaved :
                                         (is_planar<View1>::value ?
