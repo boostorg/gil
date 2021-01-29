@@ -60,8 +60,8 @@ gil::gray8_image_t to_grayscale(gil::rgb8_view_t original)
 
 void apply_gaussian_blur(gil::gray8_view_t input_view, gil::gray8_view_t output_view)
 {
-    constexpr static auto filter_height = 5ull;
-    constexpr static auto filter_width = 5ull;
+    constexpr static std::ptrdiff_t filter_height = 5ull;
+    constexpr static std::ptrdiff_t filter_width = 5ull;
     constexpr static double filter[filter_height][filter_width] =
     {
         { 2,  4,  6,  4,  2 },
@@ -80,9 +80,9 @@ void apply_gaussian_blur(gil::gray8_view_t input_view, gil::gray8_view_t output_
         for (std::ptrdiff_t y = 0; y < height; ++y)
         {
             double intensity = 0.0;
-            for (std::ptrdiff_t filter_y = 0; filter_y < static_cast<std::ptrdiff_t>(filter_height); ++filter_y)
+            for (std::ptrdiff_t filter_y = 0; filter_y < filter_height; ++filter_y)
             {
-                for (std::ptrdiff_t filter_x = 0; filter_x < static_cast<std::ptrdiff_t>(filter_width); ++filter_x)
+                for (std::ptrdiff_t filter_x = 0; filter_x < filter_width; ++filter_x)
                 {
                     int image_x = x - filter_width / 2 + filter_x;
                     int image_y = y - filter_height / 2 + filter_y;

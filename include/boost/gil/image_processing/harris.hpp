@@ -44,7 +44,7 @@ void compute_harris_responses(
             " tensor from the same image");
     }
 
-    auto const window_length = weights.size();
+    std::ptrdiff_t const window_length = weights.size();
     auto const width = m11.width();
     auto const height = m11.height();
     auto const half_length = window_length / 2;
@@ -57,10 +57,10 @@ void compute_harris_responses(
             float dxdy = 0;
             float ddyy = 0;
             for (gil::gray32f_view_t::coord_t y_kernel = 0;
-                y_kernel < static_cast<std::ptrdiff_t>(window_length);
+                y_kernel < window_length;
                 ++y_kernel) {
                 for (gil::gray32f_view_t::coord_t x_kernel = 0;
-                    x_kernel < static_cast<std::ptrdiff_t>(window_length);
+                    x_kernel < window_length;
                     ++x_kernel) {
                     ddxx += m11(x + x_kernel - half_length, y + y_kernel - half_length)
                         .at(std::integral_constant<int, 0>{}) * weights.at(x_kernel, y_kernel);
