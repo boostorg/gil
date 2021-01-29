@@ -5,6 +5,11 @@ on: [push,pull_request]
 env:
   LIBRARY: gil
   UBSAN_OPTIONS: print_stacktrace=1
+  COMPILER: g++-6 
+  VARIANT: debug 
+  TOOLSET: gcc 
+  CXXSTD: 11 
+  B2_OPTIONS: "coverage=on"
 
 jobs:
   test:
