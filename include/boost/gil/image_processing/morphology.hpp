@@ -191,7 +191,7 @@ void erode(SrcView const& src_view, IntOpView const& int_op_view,Kernel const& k
            int iterations)
 {
     copy_pixels(src_view, int_op_view);
-    for(int i=0;i<iterations;++i)
+    for(int i = 0;i < iterations; ++i)
         morph(int_op_view, int_op_view,ker_mat, morphological_operation::erosion);
 }
 
