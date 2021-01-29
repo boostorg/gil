@@ -1,0 +1,35 @@
+name: Codecov coverage
+
+on: 
+  pull_request:
+  push:
+    branches:
+      - master
+      - develop
+      - codecov
+      - feature/**
+
+env:
+  LIBRARY: gil
+  UBSAN_OPTIONS: print_stacktrace=1
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2 # Check out our repository
+    - run: sudo apt update 
+    - run: 
+        sudo apt-get install g++-6
+        && sudo apt-get install libpng-dev
+        && sudo apt-get install libjpeg-dev
+        && sudo apt-get install libtiff5-dev
+        && sudo apt-get install libraw-dev
+        && sudo apt-get install lcov #Install dependencies
+    - run:
+        set -e
+        lcov --directory bin.v2 --capture --no-external --directory $(pwd) --output-file coverage.info > /dev/null 2>&1
+        lcov --extract coverage.info $(pwd)'/boost/gil/*' --output-file coverage.info > /dev/null
+        lcov --list coverage.info
+        cd libs/gil
+    - run: bash <(curl -s https://codecov.io/bash) -f ../../coverage.info || echo "Codecov did not collect coverage reports" # Upload to Codecov
