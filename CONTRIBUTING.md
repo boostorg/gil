@@ -61,12 +61,13 @@ please follow the workflow explained in this document.
 - **DO** ensure each commit successfully builds. The entire PR must pass all tests in
   the Continuous Integration (CI) system before it'll be merged.
 - **DO** ensure any new features or changes to existing behaviours are covered with test cases.
-- **DO** address PR feedback in an additional commit(s) rather than amending the existing
-  commits, and only rebase/squash them when necessary. This makes it easier for reviewers
-  to track changes.
+- **DO** address PR feedback in an additional commit(s) rather than amending the existing commits.
+  This makes it easier for reviewers to track changes.
+- **DO** sync your PR branch with the upstream `develop` branch frequently resolving any conflicts if necessary.
+  You can either `git merge upstream/develop` or `git rebase upstream/develop` with `git push --force` for the latter.
+  The merge may make it easier for reviewers to track changes though.
 - **DO** assume that the [Squash and Merge] will be used to merge your commit unless you
   request otherwise in the PR.
-- **DO** NOT fix merge conflicts using a merge commit. Prefer git rebase.
 - **DO** NOT submit changes to the original legacy tests, see
   [test/legacy/README.md](test/legacy/README.md).
 
@@ -233,10 +234,10 @@ git push <username> feature/foo
 Finally, sign in to your GitHub account and
 [create a pull request](https://help.github.com/articles/creating-a-pull-request/).
 
-Your pull request will be automatically built and tests will run on Travis CI
-and AppVeyor (see [README](README.md) for builds status). Please, keep an eye
-on those CI builds and correct any problems detected in your contribution
-by updating your pull request.
+Your pull request will be automatically built and tests will run on GitHub ACtions,
+Azure Pipelines, AppVeyor and Circle CI (see [README](README.md) for builds status).
+Please, keep an eye on those CI builds and correct any problems detected in your
+contribution by updating your pull request.
 
 ### 5. Update your pull request
 
@@ -300,7 +301,7 @@ request from reviewer, just add new commits:
 cd libs/gil
 git checkout feature/foo
 git add -A
-git commit -m "Fix build Travis CI failures"
+git commit -m "Fix CI build failure"
 git push <username> feature/foo
 ```
 

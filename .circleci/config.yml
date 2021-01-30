@@ -87,6 +87,7 @@ env_gcc_cpp11_dbg: &env_gcc_cpp11_dbg
     - OPTIMIZ: ""
     - CXXSTD: "11"
     - LNKFLAG: ""
+    - B2_VERBOSE: "0"
 
 env_gcc_cpp11_opt_speed: &env_gcc_cpp11_opt_speed
   environment:
@@ -95,6 +96,7 @@ env_gcc_cpp11_opt_speed: &env_gcc_cpp11_opt_speed
     - OPTIMIZ: "optimization=speed"
     - CXXSTD: "11"
     - LNKFLAG: ""
+    - B2_VERBOSE: "0"
 
 env_clang_cpp11_dbg: &env_clang_cpp11_dbg
   environment:
@@ -103,6 +105,7 @@ env_clang_cpp11_dbg: &env_clang_cpp11_dbg
     - OPTIMIZ: ""
     - CXXSTD: "11"
     - LNKFLAG: ""
+    - B2_VERBOSE: "0"
 
 env_clang_cpp11_opt_speed: &env_clang_cpp11_opt_speed
   environment:
@@ -111,6 +114,7 @@ env_clang_cpp11_opt_speed: &env_clang_cpp11_opt_speed
     - OPTIMIZ: "optimization=speed"
     - CXXSTD: "11"
     - LNKFLAG: ""
+    - B2_VERBOSE: "0"
 
 ##############################################################################
 # Build configurations

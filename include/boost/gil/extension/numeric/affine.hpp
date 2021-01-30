@@ -89,6 +89,25 @@ point<F> transform(matrix3x2<F> const& mat, point<F2> const& src)
     return src * mat;
 }
 
+/// Returns the inverse of the given affine transformation matrix
+///
+/// \warning Floating point arithmetic, use Boost.Rational if precision maters
+template <typename T>
+boost::gil::matrix3x2<T> inverse(boost::gil::matrix3x2<T> m)
+{
+    T const determinant = m.a * m.d - m.b * m.c;
+
+    boost::gil::matrix3x2<T> res;
+    res.a = m.d / determinant;
+    res.b = -m.b / determinant;
+    res.c = -m.c / determinant;
+    res.d = m.a / determinant;
+    res.e = (m.c * m.f - m.d * m.e) / determinant;
+    res.f = (m.b * m.e - m.a * m.f) / determinant;
+
+    return res;
+}
+
 }} // namespace boost::gil
 
 #endif
