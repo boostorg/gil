@@ -14,11 +14,11 @@
 
 namespace boost {
 namespace gil {
-enum class morphological_operation {
+namespace detail {
+  enum class morphological_operation {
   dilation,
   erosion,
 };
-namespace detail {
 /// \addtogroup ImageProcessing
 /// @{
 
@@ -60,14 +60,15 @@ void morph_impl(SrcView const &src_view, DstView const &dst_view,
               col_boundary >= 0 && col_boundary < src_view.width()) {
             // We ensure that we consider only those pixels which are overlapped
             // on a non-zero kernel_element as
-            if (kernel.at(flip_ker_row, flip_ker_col)) {
-              if (identifier == morphological_operation::dilation) {
-                if (src_view(col_boundary, row_boundary) > target_element)
-                  target_element = src_view(col_boundary, row_boundary);
-              } else if (identifier == morphological_operation::erosion) {
-                if (src_view(col_boundary, row_boundary) < target_element)
-                  target_element = src_view(col_boundary, row_boundary);
-              }
+            if(kernel.at(flip_ker_row,flip_ker_col) == 0){
+              continue;
+            }
+            if (identifier == morphological_operation::dilation) {
+              if (src_view(col_boundary, row_boundary) > target_element)
+                target_element = src_view(col_boundary, row_boundary);
+            } else if (identifier == morphological_operation::erosion) {
+              if (src_view(col_boundary, row_boundary) < target_element)
+                target_element = src_view(col_boundary, row_boundary);
             }
           }
         }
@@ -88,10 +89,16 @@ void morph_impl(SrcView const &src_view, DstView const &dst_view,
 /// \tparam DstView type of output image.
 /// \tparam Kernel type of structuring element.
 template <typename SrcView, typename DstView, typename Kernel>
-void morph(SrcView const &src_view, DstView &dst_view, Kernel const &ker_mat,
+void morph(SrcView const &src_view, DstView const &dst_view, Kernel const &ker_mat,
            morphological_operation identifier) {
   BOOST_ASSERT(ker_mat.size() != 0 &&
                src_view.dimensions() == dst_view.dimensions());
+  gil_function_requires<ImageViewConcept<SrcView>>();
+  gil_function_requires<MutableImageViewConcept<DstView>>();
+
+  gil_function_requires<ColorSpacesCompatibleConcept<
+                              typename color_space_type<SrcView>::type,
+                              typename color_space_type<DstView>::type>>();
 
   using d_channel_t = typename channel_type<SrcView>::type;
   using channel_t = typename channel_convert_to_unsigned<d_channel_t>::type;
@@ -133,6 +140,13 @@ void difference_impl(SrcView const &src_view1, SrcView const &src_view2,
 template <typename SrcView, typename DiffView>
 void difference(SrcView const &src_view1, SrcView const &src_view2,
                 DiffView const &diff_view) {
+  gil_function_requires<ImageViewConcept<SrcView>>();
+  gil_function_requires<MutableImageViewConcept<DiffView>>();
+
+  gil_function_requires<ColorSpacesCompatibleConcept<
+                              typename color_space_type<SrcView>::type,
+                              typename color_space_type<DiffView>::type>>();
+
   for (std::size_t i = 0; i < src_view1.num_channels(); i++) {
     difference_impl(nth_channel_view(src_view1, i),
                     nth_channel_view(src_view2, i),
@@ -159,7 +173,7 @@ void dilate(SrcView const &src_view, IntOpView const &int_op_view,
             Kernel const &ker_mat, int iterations) {
   copy_pixels(src_view, int_op_view);
   for (int i = 0; i < iterations; ++i)
-    morph(int_op_view, int_op_view, ker_mat, morphological_operation::dilation);
+    morph(int_op_view, int_op_view, ker_mat, detail::morphological_operation::dilation);
 }
 
 /// \brief Applies morphological erosion on the input image view using given
@@ -177,7 +191,7 @@ void erode(SrcView const &src_view, IntOpView const &int_op_view,
            Kernel const &ker_mat, int iterations) {
   copy_pixels(src_view, int_op_view);
   for (int i = 0; i < iterations; ++i)
-    morph(int_op_view, int_op_view, ker_mat, morphological_operation::erosion);
+    morph(int_op_view, int_op_view, ker_mat, detail::morphological_operation::erosion);
 }
 
 /// \brief Performs erosion and then dilation on the input image view . This

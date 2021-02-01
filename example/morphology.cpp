@@ -32,10 +32,11 @@ int main(int argc, char **argv) {
     // operations considering binary conversion to be an
     // operation.Output_image_template argument is the common component which
     // will be added in all output images followed by a hyphen and the operation
-    // name. Example :
+    // name.
+    // Example :
     // ./example_morphology morphology_original.png out black_hat top_hat
-    // morphological_gradient dilation erosion opening closing binary Order of
-    // arguments entered will not matter with the exception of binary operation
+    // morphological_gradient dilation erosion opening closing binary
+    // Order of arguments entered will not matter with the exception of binary operation
     // used for binary morphological operations.If binary is entered through the
     // command line, it will always be the first operation to be applied.
     return -1;
