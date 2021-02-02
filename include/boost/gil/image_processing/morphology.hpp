@@ -50,7 +50,12 @@ void morph_impl(SrcView const &src_view, DstView const &dst_view,
              ++kernel_col) {
           flip_ker_col =
               kernel.size() - 1 - kernel_col; // column index of flipped kernel
-
+              
+            // We ensure that we consider only those pixels which are overlapped
+            // on a non-zero kernel_element as
+            if(kernel.at(flip_ker_row,flip_ker_col) == 0){
+              continue;
+            }
           // index of input signal, used for checking boundary
           row_boundary = view_row + (kernel.center_y() - flip_ker_row);
           col_boundary = view_col + (kernel.center_x() - flip_ker_col);
@@ -58,11 +63,7 @@ void morph_impl(SrcView const &src_view, DstView const &dst_view,
           // ignore input samples which are out of bound
           if (row_boundary >= 0 && row_boundary < src_view.height() &&
               col_boundary >= 0 && col_boundary < src_view.width()) {
-            // We ensure that we consider only those pixels which are overlapped
-            // on a non-zero kernel_element as
-            if(kernel.at(flip_ker_row,flip_ker_col) == 0){
-              continue;
-            }
+            
             if (identifier == morphological_operation::dilation) {
               if (src_view(col_boundary, row_boundary) > target_element)
                 target_element = src_view(col_boundary, row_boundary);
@@ -100,11 +101,7 @@ void morph(SrcView const &src_view, DstView const &dst_view, Kernel const &ker_m
                               typename color_space_type<SrcView>::type,
                               typename color_space_type<DstView>::type>>();
 
-  using d_channel_t = typename channel_type<SrcView>::type;
-  using channel_t = typename channel_convert_to_unsigned<d_channel_t>::type;
-  using gray_pixel_t = pixel<channel_t, gray_layout_t>;
-  using src_gray_image = image<gray_pixel_t, false>;
-  src_gray_image intermediate_img(src_view.dimensions());
+  gil::image<typename DstView::value_type> intermediate_img(src_view.dimensions());
 
   for (std::size_t i = 0; i < src_view.num_channels(); i++) {
     morph_impl(nth_channel_view(src_view, i),
@@ -239,8 +236,8 @@ template <typename SrcView, typename DstView, typename Kernel>
 void morphological_gradient(SrcView const &src_view, DstView const &dst_view,
                             Kernel const &ker_mat) {
   using namespace boost::gil;
-  gray8_image_t int_dilate(src_view.dimensions()),
-      int_erode(src_view.dimensions());
+  gil::image<typename DstView::value_type> int_dilate(src_view.dimensions()),
+                  int_erode(src_view.dimensions());
   dilate(src_view, view(int_dilate), ker_mat, 1);
   erode(src_view, view(int_erode), ker_mat, 1);
   difference(view(int_dilate), view(int_erode), dst_view);
@@ -258,7 +255,7 @@ template <typename SrcView, typename DstView, typename Kernel>
 void top_hat(SrcView const &src_view, DstView const &dst_view,
              Kernel const &ker_mat) {
   using namespace boost::gil;
-  gray8_image_t int_opening(src_view.dimensions());
+  gil::image<typename DstView::value_type> int_opening(src_view.dimensions());
   opening(src_view, view(int_opening), ker_mat);
   difference(src_view, view(int_opening), dst_view);
 }
@@ -275,7 +272,7 @@ template <typename SrcView, typename DstView, typename Kernel>
 void black_hat(SrcView const &src_view, DstView const &dst_view,
                Kernel const &ker_mat) {
   using namespace boost::gil;
-  gray8_image_t int_closing(src_view.dimensions());
+  gil::image<typename DstView::value_type> int_closing(src_view.dimensions());
   closing(src_view, view(int_closing), ker_mat);
   difference(view(int_closing), src_view, dst_view);
 }
