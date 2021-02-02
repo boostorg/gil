@@ -106,7 +106,7 @@ namespace laplace_function {
     and so on in clockwise manner. Leave element as zero if it is not
     to be computed.
 */
-std::array<gil::point_t, 8> get_directed_offsets()
+inline std::array<gil::point_t, 8> get_directed_offsets()
 {
     return {point_t{-1, -1}, point_t{0, -1}, point_t{+1, -1}, point_t{+1, 0},
             point_t{+1, +1}, point_t{0, +1}, point_t{-1, +1}, point_t{-1, 0}};
