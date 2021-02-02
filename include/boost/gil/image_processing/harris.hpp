@@ -44,7 +44,7 @@ void compute_harris_responses(
             " tensor from the same image");
     }
 
-    auto const window_length = weights.size();
+    std::ptrdiff_t const window_length = weights.size();
     auto const width = m11.width();
     auto const height = m11.height();
     auto const half_length = window_length / 2;

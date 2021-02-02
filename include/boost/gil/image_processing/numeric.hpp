@@ -48,7 +48,7 @@ inline double lanczos(double x, std::ptrdiff_t a)
     if (0 <= x && x <= 0)
         return 1;
 
-    if (-a < x && x < a)
+    if (static_cast<double>(-a) < x && x < static_cast<double>(a))
         return normalized_sinc(x) / normalized_sinc(x / static_cast<double>(a));
 
     return 0;

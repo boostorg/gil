@@ -84,7 +84,7 @@ struct homogeneous_color_base<Element, Layout, 1>
         typename U = Element,
         typename = typename std::enable_if<!std::is_reference<U>::value>::type
     >
-    homogeneous_color_base() : v0_{} {};
+    homogeneous_color_base() : v0_{} {}
 
     explicit homogeneous_color_base(Element v) : v0_(v) {}
 
