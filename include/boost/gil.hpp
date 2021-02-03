@@ -61,4 +61,4 @@
 #include <boost/gil/image_processing/scaling.hpp>
 #include <boost/gil/image_processing/threshold.hpp>
 
-#endif
+#endif // BOOST_GIL_HPP
