@@ -21,13 +21,10 @@
 #include <boost/gil/concepts.hpp>
 #include <boost/gil/deprecated.hpp>
 #include <boost/gil/device_n.hpp>
+#include <boost/gil/dynamic_step.hpp>
 #include <boost/gil/gray.hpp>
 #include <boost/gil/histogram.hpp>
 #include <boost/gil/image.hpp>
-#include <boost/gil/image_processing/hough_parameter.hpp>
-#include <boost/gil/image_processing/hough_transform.hpp>
-#include <boost/gil/image_processing/scaling.hpp>
-#include <boost/gil/image_processing/threshold.hpp>
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/image_view_factory.hpp>
 #include <boost/gil/iterator_from_2d.hpp>
@@ -42,6 +39,7 @@
 #include <boost/gil/point.hpp>
 #include <boost/gil/position_iterator.hpp>
 #include <boost/gil/premultiply.hpp>
+#include <boost/gil/promote_integral.hpp>
 #include <boost/gil/rasterization/circle.hpp>
 #include <boost/gil/rasterization/line.hpp>
 #include <boost/gil/rgb.hpp>
@@ -50,5 +48,17 @@
 #include <boost/gil/typedefs.hpp>
 #include <boost/gil/utilities.hpp>
 #include <boost/gil/virtual_locator.hpp>
+#include <boost/gil/image_processing/adaptive_histogram_equalization.hpp>
+#include <boost/gil/image_processing/diffusion.hpp>
+#include <boost/gil/image_processing/filter.hpp>
+#include <boost/gil/image_processing/harris.hpp>
+#include <boost/gil/image_processing/hessian.hpp>
+#include <boost/gil/image_processing/histogram_equalization.hpp>
+#include <boost/gil/image_processing/histogram_matching.hpp>
+#include <boost/gil/image_processing/hough_parameter.hpp>
+#include <boost/gil/image_processing/hough_transform.hpp>
+#include <boost/gil/image_processing/numeric.hpp>
+#include <boost/gil/image_processing/scaling.hpp>
+#include <boost/gil/image_processing/threshold.hpp>
 
 #endif
