@@ -1,6 +1,7 @@
 #include "boost/gil/image_view_factory.hpp"
 #include <boost/gil/image.hpp>
 #include <boost/gil/image_view.hpp>
+#include <cmath>
 #include <numeric>
 #include <stdexcept>
 #include <vector>
@@ -15,7 +16,6 @@ void hstack(const std::vector<View>& views, const View& output_view)
     }
 
     auto height = views.front().height();
-    auto width = views.front().width();
     for (const auto& view : views)
     {
         if (view.height() != height)
@@ -50,7 +50,6 @@ image<typename View::value_type> hstack(const std::vector<View>& views)
         throw std::invalid_argument("empty views vector is passed - cannot create stacked image");
     }
 
-    auto dimensions = views.front().dimensions();
     std::ptrdiff_t full_width =
         std::accumulate(views.begin(), views.end(), 0,
                         [](std::ptrdiff_t old, const View& view) { return old + view.width(); });

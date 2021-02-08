@@ -183,7 +183,7 @@ struct filler<1>
     template <typename Container, typename Tuple>
     void operator()(Container& hist, Tuple& lower, Tuple& upper, std::size_t bin_width = 1)
     {
-        for (auto i = std::get<0>(lower); std::get<0>(upper) - i >= bin_width; i += bin_width)
+        for (auto i = std::get<0>(lower); static_cast<std::size_t>(std::get<0>(upper) - i) >= bin_width; i += bin_width)
         {
             hist(i / bin_width) = 0;
         }

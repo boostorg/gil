@@ -63,7 +63,7 @@ double actual_clip_limit(SrcHist const& src_hist, double cliplimit = 0.03)
             if (v.second > middle)
                 excess += v.second - middle;
         });
-        if (abs(excess - (cliplimit - middle) * num_bins) < epsilon)
+        if (std::abs(excess - (cliplimit - middle) * num_bins) < epsilon)
             break;
         else if (excess > (cliplimit - middle) * num_bins)
             high = middle - 1;
@@ -161,8 +161,6 @@ void non_overlapping_interpolated_clahe(
     std::size_t const channels = num_channels<SrcView>::value;
     coord_t const width        = src_view.width();
     coord_t const height       = src_view.height();
-    std::size_t pixel_max      = std::numeric_limits<dst_channel_t>::max();
-    std::size_t pixel_min      = std::numeric_limits<dst_channel_t>::min();
 
     // Find control points
 

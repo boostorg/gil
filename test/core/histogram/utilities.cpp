@@ -12,6 +12,7 @@
 #include <boost/gil/typedefs.hpp>
 
 #include <boost/core/lightweight_test.hpp>
+#include <cmath>
 #include <iostream>
 #include <vector>
 
@@ -51,7 +52,7 @@ void check_normalize()
     bool check = true;
     for (std::size_t i = 0; i < 64; i++)
     {
-        check = check & (abs(expected[i] - h1(i)) < epsilon); 
+        check = check & (std::abs(expected[i] - h1(i)) < epsilon); 
     }
     BOOST_TEST(check);
 
@@ -73,7 +74,7 @@ void check_normalize()
     bool check2 = true;
     for (std::size_t i = 0; i < 64; i++)
     {
-        check2 = check2 & (abs(expected2[i/8][i%8] - h2(i/8,i%8)) < epsilon); 
+        check2 = check2 & (std::abs(expected2[i/8][i%8] - h2(i/8,i%8)) < epsilon); 
     }
     BOOST_TEST(check2);
 }

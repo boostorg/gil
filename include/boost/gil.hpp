@@ -57,7 +57,6 @@
 #include <boost/gil/image_processing/histogram_matching.hpp>
 #include <boost/gil/image_processing/hough_parameter.hpp>
 #include <boost/gil/image_processing/hough_transform.hpp>
-#include <boost/gil/image_processing/morphology.hpp>
 #include <boost/gil/image_processing/numeric.hpp>
 #include <boost/gil/image_processing/scaling.hpp>
 #include <boost/gil/image_processing/threshold.hpp>
