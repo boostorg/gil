@@ -15,7 +15,7 @@
 namespace boost {
 namespace gil {
 namespace detail {
-  enum class morphological_operation {
+enum class morphological_operation {
   dilation,
   erosion,
 };
@@ -50,12 +50,12 @@ void morph_impl(SrcView const &src_view, DstView const &dst_view,
              ++kernel_col) {
           flip_ker_col =
               kernel.size() - 1 - kernel_col; // column index of flipped kernel
-              
-            // We ensure that we consider only those pixels which are overlapped
-            // on a non-zero kernel_element as
-            if(kernel.at(flip_ker_row,flip_ker_col) == 0){
-              continue;
-            }
+
+          // We ensure that we consider only those pixels which are overlapped
+          // on a non-zero kernel_element as
+          if (kernel.at(flip_ker_row, flip_ker_col) == 0) {
+            continue;
+          }
           // index of input signal, used for checking boundary
           row_boundary = view_row + (kernel.center_y() - flip_ker_row);
           col_boundary = view_col + (kernel.center_x() - flip_ker_col);
@@ -63,13 +63,19 @@ void morph_impl(SrcView const &src_view, DstView const &dst_view,
           // ignore input samples which are out of bound
           if (row_boundary >= 0 && row_boundary < src_view.height() &&
               col_boundary >= 0 && col_boundary < src_view.width()) {
-            
+
             if (identifier == morphological_operation::dilation) {
-              if (src_view(col_boundary, row_boundary) > target_element)
-                target_element = src_view(col_boundary, row_boundary);
+              // if (src_view(col_boundary, row_boundary) > target_element)
+              //   target_element = src_view(col_boundary, row_boundary);
+              target_element =
+                  std::max((int)src_view(col_boundary, row_boundary),
+                           (int)target_element);
             } else if (identifier == morphological_operation::erosion) {
-              if (src_view(col_boundary, row_boundary) < target_element)
-                target_element = src_view(col_boundary, row_boundary);
+              // if (src_view(col_boundary, row_boundary) < target_element)
+              //   target_element = src_view(col_boundary, row_boundary);
+              target_element =
+                  std::min((int)src_view(col_boundary, row_boundary),
+                           (int)target_element);
             }
           }
         }
@@ -90,18 +96,19 @@ void morph_impl(SrcView const &src_view, DstView const &dst_view,
 /// \tparam DstView type of output image.
 /// \tparam Kernel type of structuring element.
 template <typename SrcView, typename DstView, typename Kernel>
-void morph(SrcView const &src_view, DstView const &dst_view, Kernel const &ker_mat,
-           morphological_operation identifier) {
+void morph(SrcView const &src_view, DstView const &dst_view,
+           Kernel const &ker_mat, morphological_operation identifier) {
   BOOST_ASSERT(ker_mat.size() != 0 &&
                src_view.dimensions() == dst_view.dimensions());
   gil_function_requires<ImageViewConcept<SrcView>>();
   gil_function_requires<MutableImageViewConcept<DstView>>();
 
-  gil_function_requires<ColorSpacesCompatibleConcept<
-                              typename color_space_type<SrcView>::type,
-                              typename color_space_type<DstView>::type>>();
+  gil_function_requires<
+      ColorSpacesCompatibleConcept<typename color_space_type<SrcView>::type,
+                                   typename color_space_type<DstView>::type>>();
 
-  gil::image<typename DstView::value_type> intermediate_img(src_view.dimensions());
+  gil::image<typename DstView::value_type> intermediate_img(
+      src_view.dimensions());
 
   for (std::size_t i = 0; i < src_view.num_channels(); i++) {
     morph_impl(nth_channel_view(src_view, i),
@@ -141,8 +148,8 @@ void difference(SrcView const &src_view1, SrcView const &src_view2,
   gil_function_requires<MutableImageViewConcept<DiffView>>();
 
   gil_function_requires<ColorSpacesCompatibleConcept<
-                              typename color_space_type<SrcView>::type,
-                              typename color_space_type<DiffView>::type>>();
+      typename color_space_type<SrcView>::type,
+      typename color_space_type<DiffView>::type>>();
 
   for (std::size_t i = 0; i < src_view1.num_channels(); i++) {
     difference_impl(nth_channel_view(src_view1, i),
@@ -170,7 +177,8 @@ void dilate(SrcView const &src_view, IntOpView const &int_op_view,
             Kernel const &ker_mat, int iterations) {
   copy_pixels(src_view, int_op_view);
   for (int i = 0; i < iterations; ++i)
-    morph(int_op_view, int_op_view, ker_mat, detail::morphological_operation::dilation);
+    morph(int_op_view, int_op_view, ker_mat,
+          detail::morphological_operation::dilation);
 }
 
 /// \brief Applies morphological erosion on the input image view using given
@@ -188,7 +196,8 @@ void erode(SrcView const &src_view, IntOpView const &int_op_view,
            Kernel const &ker_mat, int iterations) {
   copy_pixels(src_view, int_op_view);
   for (int i = 0; i < iterations; ++i)
-    morph(int_op_view, int_op_view, ker_mat, detail::morphological_operation::erosion);
+    morph(int_op_view, int_op_view, ker_mat,
+          detail::morphological_operation::erosion);
 }
 
 /// \brief Performs erosion and then dilation on the input image view . This
@@ -237,7 +246,7 @@ void morphological_gradient(SrcView const &src_view, DstView const &dst_view,
                             Kernel const &ker_mat) {
   using namespace boost::gil;
   gil::image<typename DstView::value_type> int_dilate(src_view.dimensions()),
-                  int_erode(src_view.dimensions());
+      int_erode(src_view.dimensions());
   dilate(src_view, view(int_dilate), ker_mat, 1);
   erode(src_view, view(int_erode), ker_mat, 1);
   difference(view(int_dilate), view(int_erode), dst_view);
@@ -276,7 +285,7 @@ void black_hat(SrcView const &src_view, DstView const &dst_view,
   closing(src_view, view(int_closing), ker_mat);
   difference(view(int_closing), src_view, dst_view);
 }
-} // namespace gil
 /// @}
+} // namespace gil
 } // namespace boost
 #endif // BOOST_GIL_IMAGE_PROCESSING_MORPHOLOGY_HPP
