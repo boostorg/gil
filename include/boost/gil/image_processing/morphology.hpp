@@ -65,17 +65,11 @@ void morph_impl(SrcView const &src_view, DstView const &dst_view,
               col_boundary >= 0 && col_boundary < src_view.width()) {
 
             if (identifier == morphological_operation::dilation) {
-              // if (src_view(col_boundary, row_boundary) > target_element)
-              //   target_element = src_view(col_boundary, row_boundary);
-              target_element =
-                  std::max((int)src_view(col_boundary, row_boundary),
-                           (int)target_element);
+              target_element = std::max(src_view(col_boundary, row_boundary)[0],
+                                        target_element);
             } else if (identifier == morphological_operation::erosion) {
-              // if (src_view(col_boundary, row_boundary) < target_element)
-              //   target_element = src_view(col_boundary, row_boundary);
-              target_element =
-                  std::min((int)src_view(col_boundary, row_boundary),
-                           (int)target_element);
+              target_element = std::min(src_view(col_boundary, row_boundary)[0],
+                                        target_element);
             }
           }
         }
@@ -159,18 +153,17 @@ void difference(SrcView const &src_view1, SrcView const &src_view2,
 }
 } // namespace detail
 
-// IntOpView : View utilized for performing intermediate operations which will
-// contribute in creating the resultant view .
 
 /// \brief Applies morphological dilation on the input image view using given
 /// structuring element. It gives the maximum overlapped value to the pixel
 /// overlapping with the center element of structuring element. \param src_view
-/// - Source/input image view. \param int_op_view - Output image view. \param
-/// ker_mat - Kernel matrix/structuring element containing 0's and 1's which
-/// will be used for applying dilation. \param iterations - Specifies the number
-/// of times dilation is to be applied on the input image view. \tparam SrcView
-/// type of source image, models gil::ImageViewConcept. \tparam IntOpView type
-/// of output image, models gil::MutableImageViewConcept. \tparam Kernel type of
+/// - Source/input image view. \param int_op_view - view for writing output and
+/// performing intermediate operations. \param ker_mat - Kernel
+/// matrix/structuring element containing 0's and 1's which will be used for
+/// applying dilation. \param iterations - Specifies the number of times
+/// dilation is to be applied on the input image view. \tparam SrcView type of
+/// source image, models gil::ImageViewConcept. \tparam IntOpView type of output
+/// image, models gil::MutableImageViewConcept. \tparam Kernel type of
 /// structuring element.
 template <typename SrcView, typename IntOpView, typename Kernel>
 void dilate(SrcView const &src_view, IntOpView const &int_op_view,
@@ -184,13 +177,14 @@ void dilate(SrcView const &src_view, IntOpView const &int_op_view,
 /// \brief Applies morphological erosion on the input image view using given
 /// structuring element. It gives the minimum overlapped value to the pixel
 /// overlapping with the center element of structuring element. \param src_view
-/// - Source/input image view. \param int_op_view - Output image view. \param
-/// ker_mat - Kernel matrix/structuring element containing 0's and 1's which
-/// will be used for applying erosion. \param iterations - Specifies the number
-/// of times erosion is to be applied on the input image view. \tparam SrcView
-/// type of source image, models gil::ImageViewConcept. \tparam IntOpView type
-/// of output image, models gil::MutableImageViewConcept. \tparam Kernel type of
-/// structuring element.
+/// - Source/input image view. \param int_op_view - view for writing output and
+/// performing intermediate operations. \param ker_mat - Kernel
+/// matrix/structuring element containing 0's and 1's which will be used for
+/// applying erosion. \param iterations - Specifies the number of times erosion
+/// is to be applied on the input image view. \tparam SrcView type of source
+/// image, models gil::ImageViewConcept. \tparam IntOpView type of output image,
+/// models gil::MutableImageViewConcept. \tparam Kernel type of structuring
+/// element.
 template <typename SrcView, typename IntOpView, typename Kernel>
 void erode(SrcView const &src_view, IntOpView const &int_op_view,
            Kernel const &ker_mat, int iterations) {
@@ -202,12 +196,12 @@ void erode(SrcView const &src_view, IntOpView const &int_op_view,
 
 /// \brief Performs erosion and then dilation on the input image view . This
 /// operation is utilized for removing noise from images. \param src_view -
-/// Source/input image view. \param int_op_view - Output image view. \param
-/// ker_mat - Kernel matrix/structuring element containing 0's and 1's which
-/// will be used for applying the opening operation. \tparam SrcView type of
-/// source image, models gil::ImageViewConcept. \tparam IntOpView type of output
-/// image, models gil::MutableImageViewConcept. \tparam Kernel type of
-/// structuring element.
+/// Source/input image view. \param int_op_view - view for writing output and
+/// performing intermediate operations. \param ker_mat - Kernel
+/// matrix/structuring element containing 0's and 1's which will be used for
+/// applying the opening operation. \tparam SrcView type of source image, models
+/// gil::ImageViewConcept. \tparam IntOpView type of output image, models
+/// gil::MutableImageViewConcept. \tparam Kernel type of structuring element.
 template <typename SrcView, typename IntOpView, typename Kernel>
 void opening(SrcView const &src_view, IntOpView const &int_op_view,
              Kernel const &ker_mat) {
@@ -218,12 +212,12 @@ void opening(SrcView const &src_view, IntOpView const &int_op_view,
 /// \brief Performs dilation and then erosion on the input image view which is
 /// exactly opposite to the opening operation . Closing operation can be
 /// utilized for closing small holes inside foreground objects. \param src_view
-/// - Source/input image view. \param int_op_view - Output image view. \param
-/// ker_mat - Kernel matrix/structuring element containing 0's and 1's which
-/// will be used for applying the closing operation. \tparam SrcView type of
-/// source image, models gil::ImageViewConcept. \tparam IntOpView type of output
-/// image, models gil::MutableImageViewConcept. \tparam Kernel type of
-/// structuring element.
+/// - Source/input image view. \param int_op_view - view for writing output and
+/// performing intermediate operations. \param ker_mat - Kernel
+/// matrix/structuring element containing 0's and 1's which will be used for
+/// applying the closing operation. \tparam SrcView type of source image, models
+/// gil::ImageViewConcept. \tparam IntOpView type of output image, models
+/// gil::MutableImageViewConcept. \tparam Kernel type of structuring element.
 template <typename SrcView, typename IntOpView, typename Kernel>
 void closing(SrcView const &src_view, IntOpView const &int_op_view,
              Kernel const &ker_mat) {
