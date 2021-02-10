@@ -65,10 +65,10 @@ void morph_impl(SrcView const &src_view, DstView const &dst_view,
               col_boundary >= 0 && col_boundary < src_view.width()) {
 
             if (identifier == morphological_operation::dilation) {
-              target_element = std::max(src_view(col_boundary, row_boundary)[0],
+              target_element = (std::max)(src_view(col_boundary, row_boundary)[0],
                                         target_element);
             } else if (identifier == morphological_operation::erosion) {
-              target_element = std::min(src_view(col_boundary, row_boundary)[0],
+              target_element = (std::min)(src_view(col_boundary, row_boundary)[0],
                                         target_element);
             }
           }
