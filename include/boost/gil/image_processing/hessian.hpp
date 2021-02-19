@@ -50,9 +50,9 @@ inline void compute_hessian_responses(
             auto ddxx_i = channel_t();
             auto ddyy_i = channel_t();
             auto dxdy_i = channel_t();
-            for (typename OutputView::coord_t w_y = 0; w_y < weights.size(); ++w_y)
+            for (typename OutputView::coord_t w_y = 0; w_y < static_cast<std::ptrdiff_t>(weights.size()); ++w_y)
             {
-                for (typename OutputView::coord_t w_x = 0; w_x < weights.size(); ++w_x)
+                for (typename OutputView::coord_t w_x = 0; w_x < static_cast<std::ptrdiff_t>(weights.size()); ++w_x)
                 {
                     ddxx_i += ddxx(x + w_x - center, y + w_y - center)
                         .at(std::integral_constant<int, 0>{}) * weights.at(w_x, w_y);

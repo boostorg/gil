@@ -56,15 +56,15 @@ struct test_constructor_from_other_image
             auto v2 = gil::const_view(image2);
             BOOST_TEST_ALL_EQ(v1.begin(), v1.end(), v2.begin(), v2.end());
         }
-        // {
-        //     //constructor planar from interleaved
-        //     image_t image1(dimensions, rnd_pixel); 
-        //     gil::image<pixel_t, true> image2(image1); 
-        //     BOOST_TEST_EQ(image2.dimensions(), dimensions);
-        //     auto v1 = gil::const_view(image1);
-        //     auto v2 = gil::const_view(image2);
-        //     BOOST_TEST_ALL_EQ(v1.begin(), v1.end(), v2.begin(), v2.end());
-        // }
+        {
+            // constructor planar from interleaved
+            image_t image1(dimensions, rnd_pixel);
+            gil::image<pixel_t, true> image2(image1);
+            BOOST_TEST_EQ(image2.dimensions(), dimensions);
+            auto v1 = gil::const_view(image1);
+            auto v2 = gil::const_view(image2);
+            BOOST_TEST_ALL_EQ(v1.begin(), v1.end(), v2.begin(), v2.end());
+        }
     }
     static void run()
     {
@@ -86,6 +86,15 @@ struct test_constructor_from_view
             gil::image<pixel_t, true> image1(dimensions, rnd_pixel);
             auto v1 = gil::transposed_view(gil::const_view(image1));
             image_t image2(gil::transposed_view(v1));
+            BOOST_TEST_EQ(image2.dimensions(), dimensions);
+            auto v2 = gil::const_view(image2);
+            BOOST_TEST_ALL_EQ(v1.begin(), v1.end(), v2.begin(), v2.end());
+        }
+        {
+            //constructor planar from interleaved
+            image_t image1(dimensions, rnd_pixel);
+            auto v1 = gil::transposed_view(gil::const_view(image1));
+            gil::image<pixel_t, true> image2(gil::transposed_view(v1));
             BOOST_TEST_EQ(image2.dimensions(), dimensions);
             auto v2 = gil::const_view(image2);
             BOOST_TEST_ALL_EQ(v1.begin(), v1.end(), v2.begin(), v2.end());

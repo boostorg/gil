@@ -22,3 +22,4 @@ run median_filter.cpp ;
 run anisotropic_diffusion.cpp ;
 run hough_line_transform.cpp ;
 run hough_circle_transform.cpp ;
+run morphology.cpp ;
