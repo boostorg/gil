@@ -46,15 +46,24 @@ inline detail::kernel_2d<T, Allocator> get_identity_kernel()
 // Please refer https://stackoverflow.com/a/10032882/14958679 for getting an overview of the
 // concept applied for obtaining higher order sobel kernels.
 
-/// \brief Produces higher order kernel vector by performing discrete convolution between lower  
+/// \defgroup KernelGeneration
+/// \brief Contains documentation for functions used in kernel generation.
+///
+/// Separate functions are used for generating only those kernels whose dimensions are greater than
+/// 5x5. Smaller kernels are fed directly to the algorithm.
+///
+
+/// \addtogroup KernelGeneration
+/// @{
+
+/// \brief Produces higher order kernel vector by performing discrete convolution between lower
 /// order kernel vector and a smoothing kernel vector(kernel used for suppressing noise).
-/// \ingroup ImageProcessingMath
 /// \param kernel1 - First argument for kernel vector convolution.
 /// \param kernel2 - Second argument for kernel vector convolution.
-/// \tparam T1 Type of first argument for kernel vector convolution.
-/// \tparam T2 Type of second argument for kernel vector convolution.
+/// \tparam T1 - Type of first argument for kernel vector convolution.
+/// \tparam T2 - Type of second argument for kernel vector convolution.
 template<typename T1, typename T2>
-static std::vector<std::vector<float>> kernel_convolve_impl(T1 kernel1, T2 kernel2)
+std::vector<std::vector<float>> kernel_convolve_impl(T1 kernel1, T2 kernel2)
 {
     size_t convolved_kernel_size = kernel1.size() + kernel2.size() - 1;
     std::vector<std::vector<float>> convolved_kernel(convolved_kernel_size,
@@ -109,11 +118,10 @@ static std::vector<std::vector<float>> kernel_convolve_impl(T1 kernel1, T2 kerne
     return convolved_kernel;
 }
 
-/// \brief Fills kernel vector given as argument with a second order kernel in horizontal or  
+/// \brief Fills kernel vector given as argument with a second order kernel in horizontal or
 /// vertical direction. The type of the kernel which is to be used for filling will be indicated 
 /// by the variable 'type'.
-/// \ingroup ImageProcessingMath
-/// \param kernel - kernel vector which will be filled.
+/// \param kernel - Kernel vector which will be filled.
 /// \param type - Indicates the type of second order derivative kernel which is to be filled inside
 /// first argument.
 void kernel_fill(std::vector<std::vector<float>>& kernel, kernel_type type)                                                                                  
@@ -134,8 +142,7 @@ void kernel_fill(std::vector<std::vector<float>>& kernel, kernel_type type)
 
 /// \brief Passes parameters to 'kernel_convolve_impl()' repeatedly until kernel vector of desired
 /// order is obtained.
-/// \ingroup ImageProcessingMath
-/// \param order - Indicates the order of kernel vector which is to be returned.
+/// \param order - Indicates order of derivative whose kernel vector is to be returned.
 /// \param type - Indicates the type of kernel vector which is to be returned.
 std::vector<float> kernel_convolve(unsigned int order, kernel_type type)
 {
@@ -153,7 +160,7 @@ std::vector<float> kernel_convolve(unsigned int order, kernel_type type)
             
     return convolved_kernel_flatten;
 }
-
+/// @}
 }}} // namespace boost::gil::detail
 
 #endif
