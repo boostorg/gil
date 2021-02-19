@@ -18,6 +18,9 @@
 namespace gil = boost::gil;
 
 // Following vectors are reference kernel vectors obtained from opencv squeezed in to one dimension.
+// Number written after "dx_sobel" represents the order of derivative used.
+// Ex. : "2" in "dx_sobel2" signifies that "dx_sobel2" contains refernce kernel for second order 
+// sobel derivative,"dx" signifies that the derivative is for horizontal direction.
 std::vector<float> dx_sobel2 {{
     -1,-2,0,2,1,-4,-8,0,8,4,-6,-12,0,12,6,-4,-8,0,8,4,-1,-2,0,2,1
 }};
