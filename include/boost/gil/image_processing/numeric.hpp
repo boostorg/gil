@@ -180,7 +180,7 @@ inline detail::kernel_2d<T, Allocator> generate_dx_sobel(unsigned int degree = 1
     else if(degree <= 15)
     {
         detail::kernel_2d<T, Allocator> result(2 * degree + 1, degree, degree);
-        std::vector<float> dx_sobeln = detail::kernel_convolve(degree, detail::kernel_type::sobeldx); // use enum here
+        std::vector<float> dx_sobeln = detail::kernel_convolve(degree, detail::kernel_type::sobeldx);
         std::copy(dx_sobeln.begin(), dx_sobeln.end(), result.begin());
         return result;
     }
@@ -248,7 +248,7 @@ inline detail::kernel_2d<T, Allocator> generate_dy_sobel(unsigned int degree = 1
     else if(degree <= 15)
     {
         detail::kernel_2d<T, Allocator> result(2 * degree + 1, degree, degree);
-        std::vector<float> dy_sobeln = detail::kernel_convolve(degree, detail::kernel_type::sobeldy); // use enum here
+        std::vector<float> dy_sobeln = detail::kernel_convolve(degree, detail::kernel_type::sobeldy);
         std::copy(dy_sobeln.begin(), dy_sobeln.end(), result.begin());
         return result;
     }
