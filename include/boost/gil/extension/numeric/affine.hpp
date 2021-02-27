@@ -114,6 +114,9 @@ boost::gil::matrix3x2<T> inverse(boost::gil::matrix3x2<T> m)
 
 template<typename T, typename F> boost::gil::matrix3x2<F> center_rotate(boost::gil::point<T> dims,F rads)
 {   
+    while(rads < F(-M_PI)) rads = rads + F(M_PI);
+    while(rads > F(M_PI)) rads = rads - F(M_PI);
+
     F c_theta = std::abs(std::cos(rads));
     F s_theta = std::abs(std::sin(rads));
     
@@ -123,7 +126,8 @@ template<typename T, typename F> boost::gil::matrix3x2<F> center_rotate(boost::g
 
     if(std::abs(rads) > F(M_PI/2)) { translation.a = -c_theta, translation.d = -c_theta; }
 
-    return boost::gil::matrix3x2<F>::get_translate(dims * translation) *  //re-center the image [top-left of image taken as (0,0)]
+    return boost::gil::matrix3x2<F>::get_scale(s_theta * dims.y / dims.x + c_theta, s_theta * dims.x / dims.y + c_theta) *  //to fit inside given dimensions
+           boost::gil::matrix3x2<F>::get_translate(dims * translation) *  //re-center the image [top-left of image taken as (0,0)]
            boost::gil::matrix3x2<F>::get_rotate(rads);
 }
 
