@@ -108,6 +108,26 @@ boost::gil::matrix3x2<T> inverse(boost::gil::matrix3x2<T> m)
     return res;
 }
 
+//feature
+//rotate an image from its center point for -180 deg <= theta <= 180 deg
+//using consecutive affine transformations
+
+template<typename T, typename F> boost::gil::matrix3x2<F> center_rotate(boost::gil::point<T> dims,F rads)
+{   
+    F c_theta = std::abs(std::cos(rads));
+    F s_theta = std::abs(std::sin(rads));
+    
+    boost::gil::matrix3x2<F> translation(0,0,0,0,0,0);
+    if(rads >= 0) { translation.b = -s_theta; }
+    else { translation.c = -s_theta; }
+
+    if(std::abs(rads) > F(M_PI/2)) { translation.a = -c_theta, translation.d = -c_theta; }
+
+    return boost::gil::matrix3x2<F>::get_translate(dims * translation) *  //re-center the image [top-left of image taken as (0,0)]
+           boost::gil::matrix3x2<F>::get_rotate(rads);
+}
+
+
 }} // namespace boost::gil
 
 #endif
