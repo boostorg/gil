@@ -111,7 +111,9 @@ boost::gil::matrix3x2<T> inverse(boost::gil::matrix3x2<T> m)
 //feature
 //rotate an image from its center point for -180 deg <= theta <= 180 deg
 //using consecutive affine transformations
-
+//As top-left corner of source image is taken as origin, idea is to rotate the source image about the origin and then translate the new image
+//according to the mentioned rotation angle, and to re-center and fit the image in the source dimensions 
+// preferably use type double for less precision errors
 template<typename T, typename F> boost::gil::matrix3x2<F> center_rotate(boost::gil::point<T> dims,F rads)
 {   
     while(rads < F(-M_PI)) rads = rads + F(M_PI);
@@ -131,6 +133,10 @@ template<typename T, typename F> boost::gil::matrix3x2<F> center_rotate(boost::g
            boost::gil::matrix3x2<F>::get_rotate(rads);
 }
 
+template<typename T, typename F> boost::gil::matrix3x2<F> center_rotate(T x, T y, F rads)    
+{ 
+    return center_rotate(boost::gil::point<T> {x,y}, rads); 
+}
 
 }} // namespace boost::gil
 
