@@ -180,15 +180,13 @@ inline detail::kernel_2d<T, Allocator> generate_dx_sobel(unsigned int degree = 1
     else if(degree <= 15)
     {
         detail::kernel_2d<T, Allocator> result(2 * degree + 1, degree, degree);
-        std::vector<float> dx_sobeln = detail::kernel_convolve(degree, detail::kernel_type::sobeldx);
+        std::vector<float> dx_sobeln = detail::kernel_convolve(degree, detail::kernel_type::sobel_dx);
         std::copy(dx_sobeln.begin(), dx_sobeln.end(), result.begin());
         return result;
     }
     else 
         throw std::length_error("Larger kernels than 31x31 may fail/delay other executions, hence "
                                                                        "they are not yet provided");
-    //to not upset compiler
-    throw std::runtime_error("unreachable statement");
 }
 
 /// \brief Generate Scharr operator in horizontal direction
@@ -248,15 +246,13 @@ inline detail::kernel_2d<T, Allocator> generate_dy_sobel(unsigned int degree = 1
     else if(degree <= 15)
     {
         detail::kernel_2d<T, Allocator> result(2 * degree + 1, degree, degree);
-        std::vector<float> dy_sobeln = detail::kernel_convolve(degree, detail::kernel_type::sobeldy);
+        std::vector<float> dy_sobeln = detail::kernel_convolve(degree, detail::kernel_type::sobel_dy);
         std::copy(dy_sobeln.begin(), dy_sobeln.end(), result.begin());
         return result;
     }
     else
         throw std::length_error("Larger kernels than 31x31 may fail/delay other executions, hence "
                                                                        "they are not yet provided");
-    //to not upset compiler
-    throw std::runtime_error("unreachable statement");
 }
 
 /// \brief Generate Scharr operator in vertical direction
