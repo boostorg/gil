@@ -37,7 +37,7 @@ static constexpr std::array<float, 25> dy_sobel2 = {{
 // In variable name "dy_sobel2", "2" indicates that the order of Sobel derivative in y-direction 
 // is 2.
 static constexpr std::array<float, 9> dy_scharr = {{1, 1, 1, 0, 0, 0, -1, -1, -1}};
-static std::vector<std::vector<float>> smoothing_kernel {{1,2,1},{2,4,2},{1,2,1}};
+static const std::vector<std::vector<float>> smoothing_kernel {{1,2,1},{2,4,2},{1,2,1}};
 
 template <typename T, typename Allocator>
 inline detail::kernel_2d<T, Allocator> get_identity_kernel()
@@ -67,7 +67,7 @@ inline detail::kernel_2d<T, Allocator> get_identity_kernel()
 /// \tparam T1 - Type of first argument for kernel vector convolution.
 /// \tparam T2 - Type of second argument for kernel vector convolution.
 template<typename T1, typename T2>
-auto kernel_convolve_impl(T1 kernel1, T2 kernel2) -> std::vector<std::vector<float>>
+static auto kernel_convolve_impl(T1 kernel1, T2 kernel2) -> std::vector<std::vector<float>>
 {
     size_t convolved_kernel_size = kernel1.size() + kernel2.size() - 1;
     std::vector<std::vector<float>> convolved_kernel(convolved_kernel_size,
@@ -131,19 +131,27 @@ auto kernel_convolve_impl(T1 kernel1, T2 kernel2) -> std::vector<std::vector<flo
 /// \param kernel - Kernel vector which will be filled.
 /// \param type - Indicates the type of second order derivative kernel which is to be filled inside
 /// first argument.
-void kernel_vector_fill(std::vector<std::vector<float>>& kernel, kernel_type type)                                                                                  
+static void kernel_vector_fill(std::vector<std::vector<float>>& kernel, kernel_type type)
 {
     if(type == kernel_type::sobel_dx)
     {
         for(std::ptrdiff_t row = 0;row < 5; ++row)
+        {
             for(std::ptrdiff_t col = 0;col < 5; ++col)
+            {
                 kernel[row][col] = dx_sobel2[5 * row + col];
+            }
+        }
     }
     else if(type == kernel_type::sobel_dy)
     {
         for(std::ptrdiff_t row =0;row < 5; ++row)
+        {
             for(std::ptrdiff_t col = 0;col < 5; ++col)
+            {
                 kernel[row][col] = dy_sobel2[5 * row + col];
+            }
+        }
     }
 }
 
@@ -151,7 +159,7 @@ void kernel_vector_fill(std::vector<std::vector<float>>& kernel, kernel_type typ
 /// order is obtained.
 /// \param order - Indicates order of derivative whose kernel vector is to be returned.
 /// \param type - Indicates the type of kernel vector which is to be returned.
-auto kernel_convolve(unsigned int order, kernel_type type) -> std::vector<float>
+static auto kernel_convolve(unsigned int order, kernel_type type) -> std::vector<float>
 {
     std::vector<float> convolved_kernel_flatten;
     std::vector<std::vector<float>> convolved_kernel(5, std::vector<float>(5));
@@ -159,11 +167,17 @@ auto kernel_convolve(unsigned int order, kernel_type type) -> std::vector<float>
     kernel_vector_fill(convolved_kernel, type);
     
     for(unsigned int i = 0;i < order - 2; ++i)
+    {
         convolved_kernel = kernel_convolve_impl(convolved_kernel, smoothing_kernel);
+    }
 
     for(std::ptrdiff_t row = 0;row < convolved_kernel.size(); ++row)
+    {
         for(std::ptrdiff_t col = 0;col < convolved_kernel.size(); ++col)
+        {
             convolved_kernel_flatten.push_back(convolved_kernel[row][col]);
+        }
+    }
             
     return convolved_kernel_flatten;
 }
