@@ -127,7 +127,7 @@ auto kernel_convolve_impl(T1 kernel1, T2 kernel2) -> std::vector<std::vector<flo
 /// \param kernel - Kernel vector which will be filled.
 /// \param type - Indicates the type of second order derivative kernel which is to be filled inside
 /// first argument.
-void kernel_fill(std::vector<std::vector<float>>& kernel, kernel_type type)                                                                                  
+void kernel_vector_fill(std::vector<std::vector<float>>& kernel, kernel_type type)                                                                                  
 {
     if(type == kernel_type::sobel_dx)
     {
@@ -152,7 +152,7 @@ auto kernel_convolve(unsigned int order, kernel_type type) -> std::vector<float>
     std::vector<float> convolved_kernel_flatten;
     std::vector<std::vector<float>> convolved_kernel(5, std::vector<float>(5));
     
-    kernel_fill(convolved_kernel, type);
+    kernel_vector_fill(convolved_kernel, type);
     
     for(unsigned int i = 0;i < order - 2; ++i)
         convolved_kernel = kernel_convolve_impl(convolved_kernel, smoothing_kernel);
