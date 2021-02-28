@@ -27,13 +27,15 @@ static constexpr std::array<float, 9> dx_sobel = {{-1, 0, 1, -2, 0, 2, -1, 0, 1}
 static constexpr std::array<float, 25> dx_sobel2 = {{
     -1,-2,0,2,1,-4,-8,0,8,4,-6,-12,0,12,6,-4,-8,0,8,4,-1,-2,0,2,1
 }}; 
-// In dx_sobel2, "2" indicates that the order of Sobel derivative in x-direction is 2. 
+// In variable name "dx_sobel2", "2" indicates that the order of Sobel derivative in x-direction 
+// is 2.
 static constexpr std::array<float, 9> dx_scharr = {{-1, 0, 1, -1, 0, 1, -1, 0, 1}};
 static constexpr std::array<float, 9> dy_sobel = {{1, 2, 1, 0, 0, 0, -1, -2, -1}};
 static constexpr std::array<float, 25> dy_sobel2 = {{
     -1,-4,-6,-4,-1,-2,-8,-12,-8,-2,0,0,0,0,0,2,8,12,8,2,1,4,6,4,1
 }};
-// In dy_sobel2, "2" indicates that the order of Sobel derivative in y-direction is 2. 
+// In variable name "dy_sobel2", "2" indicates that the order of Sobel derivative in y-direction 
+// is 2.
 static constexpr std::array<float, 9> dy_scharr = {{1, 1, 1, 0, 0, 0, -1, -1, -1}};
 static std::vector<std::vector<float>> smoothing_kernel {{1,2,1},{2,4,2},{1,2,1}};
 
@@ -74,9 +76,11 @@ auto kernel_convolve_impl(T1 kernel1, T2 kernel2) -> std::vector<std::vector<flo
     
     // 'dummy_kernel' will be made by padding 'kernel1' with appropriate no. of rows and columns 
     // containing zeros to match the size specified by 'convolved_kernel_size'.
+
     // 'convolved kernel' will store the result obtained after applying convolution between 
     // 'dummy_kernel' and 'kernel2'.
-    // 'padding_origin' will be used for determining indices of the blocks from where padding begins 
+    
+    // 'padding_origin' will be used for determining indices of blocks from where padding begins 
     // inside 'dummy_kernel'. It will be used for applying appropriate padding with zeros around 
     // 'kernel1' to create 'dummy_kernel'.
     
@@ -89,28 +93,28 @@ auto kernel_convolve_impl(T1 kernel1, T2 kernel2) -> std::vector<std::vector<flo
         }
     }
 
-    std::ptrdiff_t flip_ker_row, flip_ker_col, row_boundary, col_boundary;
+    std::ptrdiff_t flip_kernel_row, flip_kernel_col, row_boundary, col_boundary;
     float aux_total;
     for(std::ptrdiff_t dummy_row = 0;dummy_row < convolved_kernel_size; ++dummy_row)
     {
         for(std::ptrdiff_t dummy_col = 0;dummy_col < convolved_kernel_size; ++dummy_col)
         {
             aux_total = 0.0f;
-            for(std::ptrdiff_t ker2_row = 0;ker2_row < kernel2.size(); ++ker2_row)
+            for(std::ptrdiff_t kernel2_row = 0;kernel2_row < kernel2.size(); ++kernel2_row)
             {
-                flip_ker_row = kernel2.size() - 1 - ker2_row;
-                for(std::ptrdiff_t ker2_col = 0;ker2_col < kernel2.size(); ++ker2_col)
+                flip_kernel_row = kernel2.size() - 1 - kernel2_row;
+                for(std::ptrdiff_t kernel2_col = 0;kernel2_col < kernel2.size(); ++kernel2_col)
                 {
-                    flip_ker_col = kernel2.size() - 1 - ker2_col;
-                    row_boundary = dummy_row + kernel2.size()/2 - flip_ker_row;
-                    col_boundary = dummy_col + kernel2.size()/2 - flip_ker_col;
+                    flip_kernel_col = kernel2.size() - 1 - kernel2_col;
+                    row_boundary = dummy_row + kernel2.size()/2 - flip_kernel_row;
+                    col_boundary = dummy_col + kernel2.size()/2 - flip_kernel_col;
                     
                     // ignore input samples which are out of bound
                     if (row_boundary >= 0 && row_boundary < convolved_kernel_size &&
                         col_boundary >= 0 && col_boundary < convolved_kernel_size)
                     {
                         aux_total +=
-                            kernel2[flip_ker_row][flip_ker_col] *
+                            kernel2[flip_kernel_row][flip_kernel_col] *
                             dummy_kernel[row_boundary][col_boundary];
                     }
                 }
