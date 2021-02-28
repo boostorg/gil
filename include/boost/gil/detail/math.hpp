@@ -76,16 +76,16 @@ auto kernel_convolve_impl(T1 kernel1, T2 kernel2) -> std::vector<std::vector<flo
     // containing zeros to match the size specified by 'convolved_kernel_size'.
     // 'convolved kernel' will store the result obtained after applying convolution between 
     // 'dummy_kernel' and 'kernel2'.
-    // 'padding_reference' will be used to apply appropriate padding with zeros around 'kernel1'
-    // to create 'dummy_kernel'.
+    // 'padding_origin' will be used for determining indices of the blocks from where padding begins 
+    // inside 'dummy_kernel'. It will be used for applying appropriate padding with zeros around 
+    // 'kernel1' to create 'dummy_kernel'.
     
-    std::ptrdiff_t padding_reference = (kernel2.size() - 1) / 2;
-    for(std::ptrdiff_t row = padding_reference;row < dummy_kernel.size() - padding_reference; ++row)
+    std::ptrdiff_t padding_origin = (kernel2.size() - 1) / 2;
+    for(std::ptrdiff_t row = padding_origin;row < dummy_kernel.size() - padding_origin; ++row)
     {
-        for(std::ptrdiff_t col = padding_reference;col < dummy_kernel.size() - padding_reference;
-                                                                                            ++col)
+        for(std::ptrdiff_t col = padding_origin;col < dummy_kernel.size() - padding_origin; ++col)
         {
-            dummy_kernel[row][col] = kernel1[row - padding_reference][col - padding_reference];
+            dummy_kernel[row][col] = kernel1[row - padding_origin][col - padding_origin];
         }
     }
 
