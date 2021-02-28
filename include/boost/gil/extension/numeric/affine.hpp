@@ -116,21 +116,37 @@ boost::gil::matrix3x2<T> inverse(boost::gil::matrix3x2<T> m)
 // preferably use type double for less precision errors
 template<typename T, typename F> boost::gil::matrix3x2<F> center_rotate(boost::gil::point<T> dims,F rads)
 {   
-    while(rads < F(-M_PI)) rads = rads + F(M_PI);
-    while(rads > F(M_PI)) rads = rads - F(M_PI);
-
+    F PI = F(3.141592653589793238);
     F c_theta = std::abs(std::cos(rads));
     F s_theta = std::abs(std::sin(rads));
     
+    // Bound checks for theta
+    while(rads + PI < 0) { rads = rads + PI; }
+    while(rads > PI) { rads = rads - PI; }
+
+    boost::gil::matrix3x2<F> rotate = boost::gil::matrix3x2<F>::get_rotate(rads);
+    
+    // Find distance for translation
     boost::gil::matrix3x2<F> translation(0,0,0,0,0,0);
-    if(rads >= 0) { translation.b = -s_theta; }
-    else { translation.c = -s_theta; }
+    if(rads >= 0) { translation.b = -1 * s_theta; }
+    else { translation.c = -1 * s_theta; }
 
-    if(std::abs(rads) > F(M_PI/2)) { translation.a = -c_theta, translation.d = -c_theta; }
+    if(std::abs(rads) > PI/2) 
+    {
+        translation.a = -1 * c_theta;
+        translation.d = -1 * c_theta;
+    }
 
-    return boost::gil::matrix3x2<F>::get_scale(s_theta * dims.y / dims.x + c_theta, s_theta * dims.x / dims.y + c_theta) *  //to fit inside given dimensions
-           boost::gil::matrix3x2<F>::get_translate(dims * translation) *  //re-center the image [top-left of image taken as (0,0)]
-           boost::gil::matrix3x2<F>::get_rotate(rads);
+    boost::gil::matrix3x2<F> translate =
+        boost::gil::matrix3x2<F>::get_translate(dims * translation);
+
+    boost::gil::matrix3x2<F> scale =
+        boost::gil::matrix3x2<F>::get_scale(
+            s_theta * dims.y / dims.x + c_theta ,
+            s_theta * dims.x / dims.y + c_theta
+        );
+
+    return scale *  translate * rotate;  
 }
 
 template<typename T, typename F> boost::gil::matrix3x2<F> center_rotate(T x, T y, F rads)    
