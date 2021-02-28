@@ -1,10 +1,15 @@
 //
 // Copyright 2020 Olzhas Zhumabek <anonymous.from.applecity@gmail.com>
+// Copyright 2021 Pranam Lashkari <plashkari628@gmail.com>
 //
 // Use, modification and distribution are subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
+
+#ifndef BOOST_GIL_IMAGE_PROCESSING_DIFFUSION_HPP
+#define BOOST_GIL_IMAGE_PROCESSING_DIFFUSION_HPP
+
 #include "boost/gil/detail/math.hpp"
 #include <boost/gil/algorithm.hpp>
 #include <boost/gil/color_base_algorithm.hpp>
@@ -419,3 +424,5 @@ void anisotropic_diffusion(const InputView& input, const OutputView& output, uns
 }
 
 }} // namespace boost::gil
+
+#endif
