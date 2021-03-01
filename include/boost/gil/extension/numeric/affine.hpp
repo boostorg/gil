@@ -109,39 +109,54 @@ boost::gil::matrix3x2<T> inverse(boost::gil::matrix3x2<T> m)
 }
 
 /// \fn gil::matrix3x2 center_rotate 
-/// @tparam T     Data type for source image dimensions
-/// @tparam F     Data type for angle through which image is to be rotated
+/// \tparam T     Data type for source image dimensions
+/// \tparam F     Data type for angle through which image is to be rotated
 /// @param  dims  dimensions of source image
 /// @param  rads  angle through which image is to be rotated
 /// @return   A transformation matrix for rotating the source image about its center
-/// \brief    rotate an image from its center point
+/// \brief    rotates an image from its center point
 ///           using consecutive affine transformations.
-template<typename T, typename F> boost::gil::matrix3x2<F> center_rotate(boost::gil::point<T> dims,F rads)
+template<typename T, typename F> 
+    boost::gil::matrix3x2<F> center_rotate(boost::gil::point<T> dims,F rads)
 {   
     F PI = F(3.141592653589793238);
     F c_theta = std::abs(std::cos(rads));
     F s_theta = std::abs(std::sin(rads));
-    
-    // Bound checks for theta
-    while(rads + PI < 0) { rads = rads + PI; }
-    while(rads > PI)     { rads = rads - PI; }
 
+    // Bound checks for angle rads
+    while(rads + PI < 0) 
+    { 
+        rads = rads + PI; 
+    }
+
+    while(rads > PI)     
+    { 
+        rads = rads - PI; 
+    }
+
+    // Basic Rotation Matrix
     boost::gil::matrix3x2<F> rotate = boost::gil::matrix3x2<F>::get_rotate(rads);
     
-    // Find distance for translating the image into complete view
+    // Find distance for translating the image into view
     boost::gil::matrix3x2<F> translation(0,0,0,0,0,0);
-    if(rads >= 0) { translation.b = -1 * s_theta; }
-    else          { translation.c = -1 * s_theta; }
+    if(rads > 0) 
+    { 
+        translation.b = s_theta; 
+    }
+    else 
+    { 
+        translation.c = s_theta;
+    }
 
     if(std::abs(rads) > PI/2) 
     {
-        translation.a = -1 * c_theta;
-        translation.d = -1 * c_theta;
+        translation.a = c_theta;
+        translation.d = c_theta;
     }
 
     // To bring the complete image into view
     boost::gil::matrix3x2<F> translate =
-        boost::gil::matrix3x2<F>::get_translate(dims * translation);
+        boost::gil::matrix3x2<F>::get_translate(-1 * dims * translation);
 
     // To fit inside the source dimensions
     boost::gil::matrix3x2<F> scale =
@@ -151,20 +166,6 @@ template<typename T, typename F> boost::gil::matrix3x2<F> center_rotate(boost::g
         );
 
     return scale *  translate * rotate;  
-}
-
-/// \fn gil::matrix3x2 center_rotate
-/// @tparam T       Data type for source image dimensions
-/// @tparam F       Data type for angle through which image is to be rotated
-/// @param  width   Width of the source image
-/// @param  height  Height of the source image
-/// @param  rads    Angle through which image is to be rotated
-/// @return   A transformation matrix for rotating the source image about its center
-/// \brief    rotate an image from its center point
-///           using consecutive affine transformations.
-template<typename T, typename F> boost::gil::matrix3x2<F> center_rotate(T width, T height, F rads)  
-{ 
-    return center_rotate(boost::gil::point<T> {width,height}, rads); 
 }
 
 }} // namespace boost::gil
