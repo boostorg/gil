@@ -1,5 +1,6 @@
 //
 // Copyright 2005-2007 Adobe Systems Incorporated
+// Copyright 2021 Pranam Lashkari <plashkari628@gmail.com>
 //
 // Distributed under the Boost Software License, Version 1.0
 // See accompanying file LICENSE_1_0.txt or copy at
@@ -8,7 +9,7 @@
 #ifndef BOOST_GIL_EXTENSION_NUMERIC_PIXEL_NUMERIC_OPERATIONS_HPP
 #define BOOST_GIL_EXTENSION_NUMERIC_PIXEL_NUMERIC_OPERATIONS_HPP
 
-#include <boost/gil/extension/numeric/channel_numeric_operations.hpp>
+#include <boost/gil/channel_numeric_operations.hpp>
 
 #include <boost/gil/color_base_algorithm.hpp>
 #include <boost/gil/pixel.hpp>
