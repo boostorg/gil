@@ -1,6 +1,6 @@
 #
 # Copyright (c) 2017 Mateusz Loskot <mateusz at loskot dot net>
-# Copyright (c) 2021 Pranam Lashkari <plashkari628@gmail.com>
+# Copyright (c) 2019-2021 Pranam Lashkari <plashkari628@gmail.com>
 # All rights reserved.
 #
 # Distributed under the Boost Software License, Version 1.0.
@@ -10,10 +10,6 @@
 message(STATUS "Boost.GIL: Configuring tests in test/extension/numeric")
 
 foreach(_name
-  convolve
-  convolve_2d
-  convolve_cols
-  convolve_rows
   kernel
   kernel_fixed
   matrix3x2

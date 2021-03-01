@@ -1,6 +1,7 @@
 # Boost.GIL (Generic Image Library) - tests
 #
 # Copyright 2019 Miral Shah <miralshah2211@gmail.com>
+# Copyright 2021 Pranam Lashkari <plashkari628@gmail.com>
 #
 # Use, modification and distribution are subject to the Boost Software License,
 # Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -21,7 +22,11 @@ foreach(_name
     anisotropic_diffusion
     hough_parameter
     hough_line_transform
-    hough_circle_transform)
+    hough_circle_transform
+    convolve
+    convolve_2d
+    convolve_cols
+    convolve_rows)
     set(_test t_core_image_processing_${_name})
     set(_target test_core_image_processing_${_name})
 

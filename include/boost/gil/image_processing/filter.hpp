@@ -11,7 +11,8 @@
 #define BOOST_GIL_IMAGE_PROCESSING_FILTER_HPP
 
 #include <boost/gil/extension/numeric/kernel.hpp>
-#include <boost/gil/extension/numeric/convolve.hpp>
+
+#include <boost/gil/image_processing/convolve.hpp>
 
 #include <boost/gil/image.hpp>
 #include <boost/gil/image_view.hpp>
