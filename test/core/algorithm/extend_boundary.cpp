@@ -6,7 +6,7 @@
 // http://www.boost.org/LICENSE_1_0.txt
 //
 #include <boost/gil.hpp>
-#include <boost/gil/extension/numeric/convolve.hpp>
+#include <boost/gil/image_processing/convolve.hpp>
 
 #include <boost/gil/algorithm.hpp>
 
