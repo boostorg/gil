@@ -11,11 +11,11 @@
 #define BOOST_GIL_IMAGE_PROCESSING_CONVOLVE_HPP
 
 #include <boost/gil/extension/numeric/kernel.hpp>
-#include <boost/gil/extension/numeric/pixel_numeric_operations.hpp>
 
 #include <boost/gil/algorithm.hpp>
 #include <boost/gil/image_view_factory.hpp>
 #include <boost/gil/metafunctions.hpp>
+#include <boost/gil/pixel_numeric_operations.hpp>
 
 #include <boost/assert.hpp>
 
