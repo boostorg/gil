@@ -117,11 +117,11 @@ boost::gil::matrix3x2<T> inverse(boost::gil::matrix3x2<T> m)
 /// \brief    rotates an image from its center point
 ///           using consecutive affine transformations.
 template<typename T, typename F> 
-    boost::gil::matrix3x2<F> center_rotate(boost::gil::point<T> dims,F rads)
+boost::gil::matrix3x2<F> center_rotate(boost::gil::point<T> dims,F rads)
 {   
-    F PI = F(3.141592653589793238);
-    F c_theta = std::abs(std::cos(rads));
-    F s_theta = std::abs(std::sin(rads));
+    const F PI = F(3.141592653589793238);
+    const F c_theta = std::abs(std::cos(rads));
+    const F s_theta = std::abs(std::sin(rads));
 
     // Bound checks for angle rads
     while(rads + PI < 0) 
