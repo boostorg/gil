@@ -9,10 +9,9 @@
 #ifndef BOOST_GIL_ALGORITHM_HPP
 #define BOOST_GIL_ALGORITHM_HPP
 
-#include <boost/gil/extension/numeric/pixel_numeric_operations.hpp>
-
 #include <boost/gil/metafunctions.hpp>
 #include <boost/gil/pixel_iterator.hpp>
+#include <boost/gil/pixel_numeric_operations.hpp>
 #include <boost/gil/image.hpp>
 #include <boost/gil/bit_aligned_pixel_iterator.hpp>
 #include <boost/gil/color_base_algorithm.hpp>

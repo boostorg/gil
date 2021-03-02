@@ -1,6 +1,7 @@
 //
 // Copyright 2013 Krzysztof Czainski
 // Copyright 2020 Mateusz Loskot <mateusz at loskot dot net>
+// Copyright 2021 Pranam Lashkari <plashkari628@gmail.com>
 //
 // Distributed under the Boost Software License, Version 1.0
 // See accompanying file LICENSE_1_0.txt or copy at
@@ -10,7 +11,9 @@
 #include <boost/gil/extension/numeric/resample.hpp>
 #include <boost/gil/extension/numeric/sampler.hpp>
 
+#include <boost/gil/metafunctions.hpp>
 #include <boost/core/lightweight_test.hpp>
+#include <boost/gil/pixel_numeric_operations.hpp>
 
 #include <cmath>
 
@@ -64,7 +67,7 @@ void test_divide()
         gil::rgb8_pixel_t a(10, 20, 30);
         gil::bgr8_pixel_t b(2, 2, 2);
 
-        gil::pixel_divide_t<gil::rgb8_pixel_t, gil::bgr8_pixel_t, gil::rgb8_pixel_t> op;
+        gil::pixel_divide_t<gil::rgb8_pixel_t, gil::bgr8_pixel_t, gil::rgb32f_pixel_t> op;
         gil::rgb32f_pixel_t c = op(a, b);
 
         BOOST_TEST_EQ(get_color(c, gil::red_t()), 5);

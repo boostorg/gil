@@ -13,8 +13,6 @@ foreach(_name
   kernel
   kernel_fixed
   matrix3x2
-  pixel_numeric_operations
-  pixel_numeric_operations_float
   resample)
   set(_test t_ext_numeric_${_name})
   set(_target test_ext_numeric_${_name})
