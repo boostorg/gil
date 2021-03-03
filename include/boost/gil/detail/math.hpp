@@ -11,6 +11,7 @@
 
 #include <boost/gil/extension/numeric/kernel.hpp>
 #include <array>
+#include <cmath>
 #include <vector>
 
 namespace boost { namespace gil { namespace detail {
@@ -37,7 +38,7 @@ static constexpr std::array<float, 25> dy_sobel2 = {{
 // In variable name "dy_sobel2", "2" indicates that the order of Sobel derivative in y-direction 
 // is 2.
 static constexpr std::array<float, 9> dy_scharr = {{1, 1, 1, 0, 0, 0, -1, -1, -1}};
-static const std::vector<std::vector<float>> smoothing_kernel {{1,2,1},{2,4,2},{1,2,1}};
+std::vector<std::vector<float>> smoothing_kernel {{1,2,1},{2,4,2},{1,2,1}};
 
 template <typename T, typename Allocator>
 inline detail::kernel_2d<T, Allocator> get_identity_kernel()
@@ -165,8 +166,27 @@ static auto kernel_convolve(unsigned int order, kernel_type type) -> std::vector
     std::vector<std::vector<float>> convolved_kernel(5, std::vector<float>(5));
     
     kernel_vector_fill(convolved_kernel, type);
-    
-    for(unsigned int i = 0;i < order - 2; ++i)
+
+    // Variable 'smoothing_dummy' will be used for storing and calculating results of repeated
+    // convolution of 'smoothing_kernel' with itself.
+    std::vector<std::vector<float>>smoothing_dummy = smoothing_kernel;
+
+    // Variable 'smooth_repetition' will store the number of times we need to convolve 
+    // 'smoothing_dummy' with itself. This number when used as power of 2 in its exponentiation,
+    // will result in a number which is the largest power of 2 smaller than 'order - 2'.
+    unsigned int smooth_repetition = (unsigned int)log2(order - 2);
+
+    for(unsigned int i = 0;i < smooth_repetition; ++i)
+    {
+        smoothing_dummy = kernel_convolve_impl(smoothing_dummy, smoothing_dummy);
+    }
+
+    convolved_kernel = kernel_convolve_impl(convolved_kernel, smoothing_dummy);
+
+    // Variable 'order_decrease' will store the amount of decrease in order obtained due to the above 
+    // optimization. It stores the largest power of 2 smaller than 'order - 2'.
+    unsigned int order_decrease = pow(2, smooth_repetition);
+    for(unsigned int i = 0;i < order - 2 - order_decrease; ++i)
     {
         convolved_kernel = kernel_convolve_impl(convolved_kernel, smoothing_kernel);
     }
