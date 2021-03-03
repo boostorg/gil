@@ -167,12 +167,10 @@ static auto kernel_convolve(unsigned int order, kernel_type type) -> std::vector
     
     kernel_vector_fill(convolved_kernel, type);
 
-    // Variable 'smoothing_dummy' will be used for storing and calculating results of repeated
-    // convolution of 'smoothing_kernel' with itself.
     std::vector<std::vector<float>>smoothing_dummy = smoothing_kernel;
 
     // Variable 'smooth_repetition' will store the number of times we need to convolve 
-    // 'smoothing_dummy' with itself. This number when used as power of 2 in its exponentiation,
+    // 'smoothing_dummy' with itself. This number when used as a power of 2 in its exponentiation,
     // will result in a number which is the largest power of 2 smaller than 'order - 2'.
     unsigned int smooth_repetition = (unsigned int)log2(order - 2);
 
