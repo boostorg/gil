@@ -38,7 +38,7 @@ static constexpr std::array<float, 25> dy_sobel2 = {{
 // In variable name "dy_sobel2", "2" indicates that the order of Sobel derivative in y-direction 
 // is 2.
 static constexpr std::array<float, 9> dy_scharr = {{1, 1, 1, 0, 0, 0, -1, -1, -1}};
-std::vector<std::vector<float>> smoothing_kernel {{1,2,1},{2,4,2},{1,2,1}};
+static const std::vector<std::vector<float>> smoothing_kernel {{1,2,1},{2,4,2},{1,2,1}};
 
 template <typename T, typename Allocator>
 inline detail::kernel_2d<T, Allocator> get_identity_kernel()
