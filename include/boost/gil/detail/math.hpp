@@ -133,7 +133,7 @@ static auto kernel_convolve_impl(T1 kernel1, T2 kernel2) -> std::vector<std::vec
 /// \param kernel - Kernel vector which will be filled.
 /// \param type - Indicates the type of second order derivative kernel which is to be filled inside
 /// first argument.
-void kernel_vector_fill(std::vector<std::vector<float>>& kernel, kernel_type type)
+static void kernel_vector_fill(std::vector<std::vector<float>>& kernel, kernel_type type)
 {
     if(type == kernel_type::sobel_dx)
     {
