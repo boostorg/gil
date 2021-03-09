@@ -201,6 +201,21 @@ void test_matrix3x2_inverse()
     BOOST_TEST_WITH(p.y, p2.y, with_tolerance<double>(1e-9));
 }
 
+void test_matrix3x2_center_rotate()
+{
+    gil::point<double> dimension(100.0,100.0);
+    gil::matrix3x2<double> m1;
+
+    m1 = gil::center_rotate(dimension, HALF_PI);
+
+    BOOST_TEST_WITH(m1.a , std::cos(HALF_PI) , with_tolerance<double>(1e-9));
+    BOOST_TEST_EQ  (m1.b ,  1);
+    BOOST_TEST_EQ  (m1.c , -1);
+    BOOST_TEST_WITH(m1.d , std::cos(HALF_PI) , with_tolerance<double>(1e-9));
+    BOOST_TEST_EQ  (m1.e ,  100);
+    BOOST_TEST_WITH(m1.f , std::cos(HALF_PI) , with_tolerance<double>(1e-9));
+}
+
 int main()
 {
     test_matrix3x2_default_constructor();
@@ -215,6 +230,7 @@ int main()
     test_matrix3x2_get_translate();
     test_matrix3x2_transform();
     test_matrix3x2_inverse();
+    test_matrix3x2_center_rotate();
 
     return ::boost::report_errors();
 }
