@@ -20,6 +20,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="top" title="Boost.GIL  documentation" href="../index.html" />
@@ -69,9 +70,9 @@
 <h1>Pixel</h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p></li>
-<li><p><a class="reference internal" href="#models" id="id2">Models</a></p></li>
-<li><p><a class="reference internal" href="#algorithms" id="id3">Algorithms</a></p></li>
+<li><a class="reference internal" href="#overview" id="id1">Overview</a></li>
+<li><a class="reference internal" href="#models" id="id2">Models</a></li>
+<li><a class="reference internal" href="#algorithms" id="id3">Algorithms</a></li>
 </ul>
 </div>
 <div class="section" id="overview">
@@ -94,37 +95,37 @@ compatible pixels.</p>
 iterators, locators, views and images) must provide metafunctions to
 access their color space, channel mapping, number of channels, and
 (for homogeneous pixels) the channel type:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="nc">PixelBasedConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">PixelBasedConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
 <span class="p">{</span>
-  <span class="k">typename</span> <span class="nc">color_space_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="n">color_space_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">;</span>
       <span class="n">where</span> <span class="n">Metafunction</span><span class="o">&lt;</span><span class="n">color_space_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">;</span>
       <span class="n">where</span> <span class="n">ColorSpaceConcept</span><span class="o">&lt;</span><span class="n">color_space_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">&gt;</span><span class="p">;</span>
-  <span class="k">typename</span> <span class="nc">channel_mapping_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="n">channel_mapping_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">;</span>
       <span class="n">where</span> <span class="n">Metafunction</span><span class="o">&lt;</span><span class="n">channel_mapping_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">;</span>
       <span class="n">where</span> <span class="n">ChannelMappingConcept</span><span class="o">&lt;</span><span class="n">channel_mapping_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">&gt;</span><span class="p">;</span>
-  <span class="k">typename</span> <span class="nc">is_planar</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="n">is_planar</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">;</span>
       <span class="n">where</span> <span class="n">Metafunction</span><span class="o">&lt;</span><span class="n">is_planar</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">;</span>
       <span class="n">where</span> <span class="n">SameType</span><span class="o">&lt;</span><span class="n">is_planar</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">type</span><span class="p">,</span> <span class="kt">bool</span><span class="o">&gt;</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="k">concept</span> <span class="nc">HomogeneousPixelBasedConcept</span><span class="o">&lt;</span><span class="n">PixelBasedConcept</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="n">concept</span> <span class="n">HomogeneousPixelBasedConcept</span><span class="o">&lt;</span><span class="n">PixelBasedConcept</span> <span class="n">T</span><span class="o">&gt;</span>
 <span class="p">{</span>
-  <span class="k">typename</span> <span class="nc">channel_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="n">channel_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">;</span>
       <span class="n">where</span> <span class="n">Metafunction</span><span class="o">&lt;</span><span class="n">channel_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">;</span>
       <span class="n">where</span> <span class="n">ChannelConcept</span><span class="o">&lt;</span><span class="n">channel_type</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">&gt;</span><span class="p">;</span>
 <span class="p">};</span>
 </pre></div>
 </div>
 <p>Pixels model the following concepts:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="nc">PixelConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">P</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">ColorBaseConcept</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">PixelBasedConcept</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">PixelConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">P</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">ColorBaseConcept</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">PixelBasedConcept</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="n">where</span> <span class="n">is_pixel</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;::</span><span class="n">value</span><span class="o">==</span><span class="nb">true</span><span class="p">;</span>
   <span class="c1">// where for each K [0..size&lt;P&gt;::value-1]:</span>
   <span class="c1">//      ChannelConcept&lt;kth_element_type&lt;K&gt; &gt;;</span>
 
-  <span class="k">typename</span> <span class="nc">value_type</span><span class="p">;</span>       <span class="n">where</span> <span class="n">PixelValueConcept</span><span class="o">&lt;</span><span class="n">value_type</span><span class="o">&gt;</span><span class="p">;</span>
-  <span class="k">typename</span> <span class="nc">reference</span><span class="p">;</span>        <span class="n">where</span> <span class="n">PixelConcept</span><span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span><span class="p">;</span>
-  <span class="k">typename</span> <span class="nc">const_reference</span><span class="p">;</span>  <span class="n">where</span> <span class="n">PixelConcept</span><span class="o">&lt;</span><span class="n">const_reference</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="n">value_type</span><span class="p">;</span>       <span class="n">where</span> <span class="n">PixelValueConcept</span><span class="o">&lt;</span><span class="n">value_type</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="n">reference</span><span class="p">;</span>        <span class="n">where</span> <span class="n">PixelConcept</span><span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="k">typename</span> <span class="n">const_reference</span><span class="p">;</span>  <span class="n">where</span> <span class="n">PixelConcept</span><span class="o">&lt;</span><span class="n">const_reference</span><span class="o">&gt;</span><span class="p">;</span>
   <span class="k">static</span> <span class="k">const</span> <span class="kt">bool</span> <span class="n">P</span><span class="o">::</span><span class="n">is_mutable</span><span class="p">;</span>
 
   <span class="k">template</span> <span class="o">&lt;</span><span class="n">PixelConcept</span> <span class="n">P2</span><span class="o">&gt;</span> <span class="n">where</span> <span class="p">{</span> <span class="n">PixelConcept</span><span class="o">&lt;</span><span class="n">P</span><span class="p">,</span><span class="n">P2</span><span class="o">&gt;</span> <span class="p">}</span>
@@ -135,27 +136,27 @@ access their color space, channel mapping, number of channels, and
       <span class="kt">bool</span> <span class="k">operator</span><span class="o">!=</span><span class="p">(</span><span class="k">const</span> <span class="n">P</span><span class="o">&amp;</span><span class="p">,</span> <span class="k">const</span> <span class="n">P2</span><span class="o">&amp;</span><span class="p">);</span>
 <span class="p">};</span>
 
-<span class="k">concept</span> <span class="nc">MutablePixelConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">P</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">PixelConcept</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">MutableColorBaseConcept</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;</span>
+<span class="n">concept</span> <span class="n">MutablePixelConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">P</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">PixelConcept</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">MutableColorBaseConcept</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="n">where</span> <span class="n">is_mutable</span><span class="o">==</span><span class="nb">true</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="k">concept</span> <span class="nc">HomogeneousPixelConcept</span><span class="o">&lt;</span><span class="n">PixelConcept</span> <span class="n">P</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">HomogeneousColorBaseConcept</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">HomogeneousPixelBasedConcept</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;</span>
+<span class="n">concept</span> <span class="n">HomogeneousPixelConcept</span><span class="o">&lt;</span><span class="n">PixelConcept</span> <span class="n">P</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">HomogeneousColorBaseConcept</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">HomogeneousPixelBasedConcept</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;</span>
 <span class="p">{</span>
-  <span class="n">P</span><span class="o">::</span><span class="k">template</span> <span class="n">element_const_reference_type</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;::</span><span class="n">type</span> <span class="k">operator</span><span class="p">[](</span><span class="n">P</span> <span class="n">p</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">i</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="nf">dynamic_at_c</span><span class="p">(</span><span class="n">P</span><span class="p">,</span><span class="n">i</span><span class="p">);</span> <span class="p">}</span>
+  <span class="n">P</span><span class="o">::</span><span class="k">template</span> <span class="n">element_const_reference_type</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;::</span><span class="n">type</span> <span class="k">operator</span><span class="p">[](</span><span class="n">P</span> <span class="n">p</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">i</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">dynamic_at_c</span><span class="p">(</span><span class="n">P</span><span class="p">,</span><span class="n">i</span><span class="p">);</span> <span class="p">}</span>
 <span class="p">};</span>
 
-<span class="k">concept</span> <span class="nc">MutableHomogeneousPixelConcept</span><span class="o">&lt;</span><span class="n">MutablePixelConcept</span> <span class="n">P</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">MutableHomogeneousColorBaseConcept</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;</span>
+<span class="n">concept</span> <span class="n">MutableHomogeneousPixelConcept</span><span class="o">&lt;</span><span class="n">MutablePixelConcept</span> <span class="n">P</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">MutableHomogeneousColorBaseConcept</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;</span>
 <span class="p">{</span>
-  <span class="n">P</span><span class="o">::</span><span class="k">template</span> <span class="n">element_reference_type</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;::</span><span class="n">type</span> <span class="k">operator</span><span class="p">[](</span><span class="n">P</span> <span class="n">p</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">i</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nf">dynamic_at_c</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">i</span><span class="p">);</span> <span class="p">}</span>
+  <span class="n">P</span><span class="o">::</span><span class="k">template</span> <span class="n">element_reference_type</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;::</span><span class="n">type</span> <span class="k">operator</span><span class="p">[](</span><span class="n">P</span> <span class="n">p</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">i</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">dynamic_at_c</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">i</span><span class="p">);</span> <span class="p">}</span>
 <span class="p">};</span>
 
-<span class="k">concept</span> <span class="nc">PixelValueConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">P</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">PixelConcept</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">Regular</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;</span>
+<span class="n">concept</span> <span class="n">PixelValueConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">P</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">PixelConcept</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">Regular</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="n">where</span> <span class="n">SameType</span><span class="o">&lt;</span><span class="n">value_type</span><span class="p">,</span><span class="n">P</span><span class="o">&gt;</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="k">concept</span> <span class="nc">PixelsCompatibleConcept</span><span class="o">&lt;</span><span class="n">PixelConcept</span> <span class="n">P1</span><span class="p">,</span> <span class="n">PixelConcept</span> <span class="n">P2</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">ColorBasesCompatibleConcept</span><span class="o">&lt;</span><span class="n">P1</span><span class="p">,</span><span class="n">P2</span><span class="o">&gt;</span>
+<span class="n">concept</span> <span class="n">PixelsCompatibleConcept</span><span class="o">&lt;</span><span class="n">PixelConcept</span> <span class="n">P1</span><span class="p">,</span> <span class="n">PixelConcept</span> <span class="n">P2</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">ColorBasesCompatibleConcept</span><span class="o">&lt;</span><span class="n">P1</span><span class="p">,</span><span class="n">P2</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="c1">// where for each K [0..size&lt;P1&gt;::value):</span>
   <span class="c1">//    ChannelsCompatibleConcept&lt;kth_semantic_element_type&lt;P1,K&gt;::type, kth_semantic_element_type&lt;P2,K&gt;::type&gt;;</span>
@@ -168,9 +169,9 @@ an explicit, non-symmetric and often lossy operation (due to both
 channel and color space approximation). Convertibility requires
 modeling the following concept:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="n">PixelConcept</span> <span class="n">SrcPixel</span><span class="p">,</span> <span class="n">MutablePixelConcept</span> <span class="n">DstPixel</span><span class="o">&gt;</span>
-<span class="k">concept</span> <span class="nc">PixelConvertibleConcept</span>
+<span class="n">concept</span> <span class="n">PixelConvertibleConcept</span>
 <span class="p">{</span>
-  <span class="kt">void</span> <span class="nf">color_convert</span><span class="p">(</span><span class="k">const</span> <span class="n">SrcPixel</span><span class="o">&amp;</span><span class="p">,</span> <span class="n">DstPixel</span><span class="o">&amp;</span><span class="p">);</span>
+  <span class="kt">void</span> <span class="n">color_convert</span><span class="p">(</span><span class="k">const</span> <span class="n">SrcPixel</span><span class="o">&amp;</span><span class="p">,</span> <span class="n">DstPixel</span><span class="o">&amp;</span><span class="p">);</span>
 <span class="p">};</span>
 </pre></div>
 </div>
@@ -178,17 +179,17 @@ modeling the following concept:</p>
 analogous to that for channels and color bases - pixel reference proxies model
 both, but only pixel values model the latter.</p>
 <div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<ul class="simple">
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_pixel_based_concept.html">PixelBasedConcept&lt;P&gt;</a></p></li>
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_pixel_concept.html">PixelConcept&lt;Pixel&gt;</a></p></li>
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_mutable_pixel_concept.html">MutablePixelConcept&lt;Pixel&gt;</a></p></li>
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_pixel_value_concept.html">PixelValueConcept&lt;Pixel&gt;</a></p></li>
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_homogeneous_pixel_based_concept.html">HomogeneousPixelConcept&lt;Pixel&gt;</a></p></li>
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_mutable_homogeneous_pixel_concept.html">MutableHomogeneousPixelConcept&lt;Pixel&gt;</a></p></li>
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_homogeneous_pixel_value_concept.html">HomogeneousPixelValueConcept&lt;Pixel&gt;</a></p></li>
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_pixels_compatible_concept.html">PixelsCompatibleConcept&lt;Pixel1, Pixel2&gt;</a></p></li>
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_pixel_convertible_concept.html">PixelConvertibleConcept&lt;SrcPixel, DstPixel&gt;</a></p></li>
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li><a class="reference external" href="reference/structboost_1_1gil_1_1_pixel_based_concept.html">PixelBasedConcept&lt;P&gt;</a></li>
+<li><a class="reference external" href="reference/structboost_1_1gil_1_1_pixel_concept.html">PixelConcept&lt;Pixel&gt;</a></li>
+<li><a class="reference external" href="reference/structboost_1_1gil_1_1_mutable_pixel_concept.html">MutablePixelConcept&lt;Pixel&gt;</a></li>
+<li><a class="reference external" href="reference/structboost_1_1gil_1_1_pixel_value_concept.html">PixelValueConcept&lt;Pixel&gt;</a></li>
+<li><a class="reference external" href="reference/structboost_1_1gil_1_1_homogeneous_pixel_based_concept.html">HomogeneousPixelConcept&lt;Pixel&gt;</a></li>
+<li><a class="reference external" href="reference/structboost_1_1gil_1_1_mutable_homogeneous_pixel_concept.html">MutableHomogeneousPixelConcept&lt;Pixel&gt;</a></li>
+<li><a class="reference external" href="reference/structboost_1_1gil_1_1_homogeneous_pixel_value_concept.html">HomogeneousPixelValueConcept&lt;Pixel&gt;</a></li>
+<li><a class="reference external" href="reference/structboost_1_1gil_1_1_pixels_compatible_concept.html">PixelsCompatibleConcept&lt;Pixel1, Pixel2&gt;</a></li>
+<li><a class="reference external" href="reference/structboost_1_1gil_1_1_pixel_convertible_concept.html">PixelConvertibleConcept&lt;SrcPixel, DstPixel&gt;</a></li>
 </ul>
 </div>
 </div>
@@ -198,7 +199,7 @@ both, but only pixel values model the latter.</p>
 together in memory. For this purpose GIL provides the struct
 <code class="docutils literal notranslate"><span class="pre">pixel</span></code>, templated over the channel value and layout:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// models HomogeneousPixelValueConcept</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">ChannelValue</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">Layout</span><span class="o">&gt;</span> <span class="k">struct</span> <span class="nc">pixel</span><span class="p">;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">ChannelValue</span><span class="p">,</span> <span class="k">typename</span> <span class="n">Layout</span><span class="o">&gt;</span> <span class="k">struct</span> <span class="n">pixel</span><span class="p">;</span>
 
 <span class="c1">// Those typedefs are already provided by GIL</span>
 <span class="k">typedef</span> <span class="n">pixel</span><span class="o">&lt;</span><span class="n">bits8</span><span class="p">,</span> <span class="n">rgb_layout_t</span><span class="o">&gt;</span> <span class="n">rgb8_pixel_t</span><span class="p">;</span>
@@ -221,7 +222,7 @@ same value type (<code class="docutils literal notranslate"><span class="pre">pi
 proxy class containing references to each of the channels.
 This is implemented with the struct <code class="docutils literal notranslate"><span class="pre">planar_pixel_reference</span></code>:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// models HomogeneousPixel</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">ChannelReference</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">ColorSpace</span><span class="o">&gt;</span> <span class="k">struct</span> <span class="nc">planar_pixel_reference</span><span class="p">;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">ChannelReference</span><span class="p">,</span> <span class="k">typename</span> <span class="n">ColorSpace</span><span class="o">&gt;</span> <span class="k">struct</span> <span class="n">planar_pixel_reference</span><span class="p">;</span>
 
 <span class="c1">// Define the type of a mutable and read-only reference. (These typedefs are already provided by GIL)</span>
 <span class="k">typedef</span> <span class="n">planar_pixel_reference</span><span class="o">&lt;</span>      <span class="n">bits8</span><span class="o">&amp;</span><span class="p">,</span><span class="n">rgb_t</span><span class="o">&gt;</span> <span class="n">rgb8_planar_ref_t</span><span class="p">;</span>
@@ -347,8 +348,8 @@ different color spaces and channel types:</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2021-01-11 18:01:12.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.4.3.
+      Last updated on 2021-03-10 08:03:12.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>

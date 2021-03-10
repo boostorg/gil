@@ -20,6 +20,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="top" title="Boost.GIL  documentation" href="../index.html" />
@@ -69,9 +70,9 @@
 <h1>Channel</h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p></li>
-<li><p><a class="reference internal" href="#models" id="id2">Models</a></p></li>
-<li><p><a class="reference internal" href="#algorithms" id="id3">Algorithms</a></p></li>
+<li><a class="reference internal" href="#overview" id="id1">Overview</a></li>
+<li><a class="reference internal" href="#models" id="id2">Models</a></li>
+<li><a class="reference internal" href="#algorithms" id="id3">Algorithms</a></li>
 </ul>
 </div>
 <div class="section" id="overview">
@@ -80,30 +81,30 @@
 channel in an RGB pixel). Typical channel operations are getting, comparing
 and setting the channel values. Channels have associated minimum and maximum
 value. GIL channels model the following concept:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="nc">ChannelConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">EqualityComparable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">ChannelConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">EqualityComparable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
 <span class="p">{</span>
-    <span class="k">typename</span> <span class="nc">value_type</span>      <span class="o">=</span> <span class="n">T</span><span class="p">;</span>        <span class="c1">// use channel_traits&lt;T&gt;::value_type to access it</span>
+    <span class="k">typename</span> <span class="n">value_type</span>      <span class="o">=</span> <span class="n">T</span><span class="p">;</span>        <span class="c1">// use channel_traits&lt;T&gt;::value_type to access it</span>
     <span class="n">where</span> <span class="n">ChannelValueConcept</span><span class="o">&lt;</span><span class="n">value_type</span><span class="o">&gt;</span><span class="p">;</span>
-    <span class="k">typename</span> <span class="nc">reference</span>       <span class="o">=</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">;</span>       <span class="c1">// use channel_traits&lt;T&gt;::reference to access it</span>
-    <span class="k">typename</span> <span class="nc">pointer</span>         <span class="o">=</span> <span class="n">T</span><span class="o">*</span><span class="p">;</span>       <span class="c1">// use channel_traits&lt;T&gt;::pointer to access it</span>
-    <span class="k">typename</span> <span class="nc">const_reference</span> <span class="o">=</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">;</span> <span class="c1">// use channel_traits&lt;T&gt;::const_reference to access it</span>
-    <span class="k">typename</span> <span class="nc">const_pointer</span>   <span class="o">=</span> <span class="k">const</span> <span class="n">T</span><span class="o">*</span><span class="p">;</span> <span class="c1">// use channel_traits&lt;T&gt;::const_pointer to access it</span>
+    <span class="k">typename</span> <span class="n">reference</span>       <span class="o">=</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">;</span>       <span class="c1">// use channel_traits&lt;T&gt;::reference to access it</span>
+    <span class="k">typename</span> <span class="n">pointer</span>         <span class="o">=</span> <span class="n">T</span><span class="o">*</span><span class="p">;</span>       <span class="c1">// use channel_traits&lt;T&gt;::pointer to access it</span>
+    <span class="k">typename</span> <span class="n">const_reference</span> <span class="o">=</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span><span class="p">;</span> <span class="c1">// use channel_traits&lt;T&gt;::const_reference to access it</span>
+    <span class="k">typename</span> <span class="n">const_pointer</span>   <span class="o">=</span> <span class="k">const</span> <span class="n">T</span><span class="o">*</span><span class="p">;</span> <span class="c1">// use channel_traits&lt;T&gt;::const_pointer to access it</span>
     <span class="k">static</span> <span class="k">const</span> <span class="kt">bool</span> <span class="n">is_mutable</span><span class="p">;</span>        <span class="c1">// use channel_traits&lt;T&gt;::is_mutable to access it</span>
 
-    <span class="k">static</span> <span class="n">T</span> <span class="n">min_value</span><span class="p">();</span>                <span class="c1">// use channel_traits&lt;T&gt;::min_value to access it</span>
-    <span class="k">static</span> <span class="n">T</span> <span class="n">max_value</span><span class="p">();</span>                <span class="c1">// use channel_traits&lt;T&gt;::min_value to access it</span>
+    <span class="k">static</span> <span class="n">T</span> <span class="nf">min_value</span><span class="p">();</span>                <span class="c1">// use channel_traits&lt;T&gt;::min_value to access it</span>
+    <span class="k">static</span> <span class="n">T</span> <span class="nf">max_value</span><span class="p">();</span>                <span class="c1">// use channel_traits&lt;T&gt;::min_value to access it</span>
 <span class="p">};</span>
 
-<span class="k">concept</span> <span class="nc">MutableChannelConcept</span><span class="o">&lt;</span><span class="n">ChannelConcept</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">Swappable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">Assignable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{};</span>
+<span class="n">concept</span> <span class="n">MutableChannelConcept</span><span class="o">&lt;</span><span class="n">ChannelConcept</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">Swappable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">Assignable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{};</span>
 
-<span class="k">concept</span> <span class="nc">ChannelValueConcept</span><span class="o">&lt;</span><span class="n">ChannelConcept</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">Regular</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{};</span>
+<span class="n">concept</span> <span class="n">ChannelValueConcept</span><span class="o">&lt;</span><span class="n">ChannelConcept</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">Regular</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{};</span>
 </pre></div>
 </div>
 <p>GIL allows built-in integral and floating point types to be channels.
 Therefore the associated types and range information are defined in
 <code class="docutils literal notranslate"><span class="pre">channel_traits</span></code> with the following default implementation:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="o">&gt;</span>
-<span class="k">struct</span> <span class="nc">channel_traits</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="n">channel_traits</span>
 <span class="p">{</span>
     <span class="k">typedef</span> <span class="n">T</span>         <span class="n">value_type</span><span class="p">;</span>
     <span class="k">typedef</span> <span class="n">T</span><span class="o">&amp;</span>        <span class="n">reference</span><span class="p">;</span>
@@ -111,13 +112,13 @@ Therefore the associated types and range information are defined in
     <span class="k">typedef</span> <span class="n">T</span><span class="o">&amp;</span> <span class="k">const</span>  <span class="n">const_reference</span><span class="p">;</span>
     <span class="k">typedef</span> <span class="n">T</span><span class="o">*</span> <span class="k">const</span>  <span class="n">const_pointer</span><span class="p">;</span>
 
-    <span class="k">static</span> <span class="n">value_type</span> <span class="n">min_value</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">min</span><span class="p">();</span> <span class="p">}</span>
-    <span class="k">static</span> <span class="n">value_type</span> <span class="n">max_value</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">max</span><span class="p">();</span> <span class="p">}</span>
+    <span class="k">static</span> <span class="n">value_type</span> <span class="nf">min_value</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">min</span><span class="p">();</span> <span class="p">}</span>
+    <span class="k">static</span> <span class="n">value_type</span> <span class="nf">max_value</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">max</span><span class="p">();</span> <span class="p">}</span>
 <span class="p">};</span>
 </pre></div>
 </div>
 <p>Two channel types are <em>compatible</em> if they have the same value type:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="nc">ChannelsCompatibleConcept</span><span class="o">&lt;</span><span class="n">ChannelConcept</span> <span class="n">T1</span><span class="p">,</span> <span class="n">ChannelConcept</span> <span class="n">T2</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">ChannelsCompatibleConcept</span><span class="o">&lt;</span><span class="n">ChannelConcept</span> <span class="n">T1</span><span class="p">,</span> <span class="n">ChannelConcept</span> <span class="n">T2</span><span class="o">&gt;</span>
 <span class="p">{</span>
     <span class="n">where</span> <span class="n">SameType</span><span class="o">&lt;</span><span class="n">T1</span><span class="o">::</span><span class="n">value_type</span><span class="p">,</span> <span class="n">T2</span><span class="o">::</span><span class="n">value_type</span><span class="o">&gt;</span><span class="p">;</span>
 <span class="p">};</span>
@@ -125,9 +126,9 @@ Therefore the associated types and range information are defined in
 </div>
 <p>A channel may be <em>convertible</em> to another channel:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="n">ChannelConcept</span> <span class="n">Src</span><span class="p">,</span> <span class="n">ChannelValueConcept</span> <span class="n">Dst</span><span class="o">&gt;</span>
-<span class="k">concept</span> <span class="nc">ChannelConvertibleConcept</span>
+<span class="n">concept</span> <span class="n">ChannelConvertibleConcept</span>
 <span class="p">{</span>
-    <span class="n">Dst</span> <span class="nf">channel_convert</span><span class="p">(</span><span class="n">Src</span><span class="p">);</span>
+    <span class="n">Dst</span> <span class="n">channel_convert</span><span class="p">(</span><span class="n">Src</span><span class="p">);</span>
 <span class="p">};</span>
 </pre></div>
 </div>
@@ -143,13 +144,13 @@ to native C++ references, it may not have a default constructor.</p>
 <p>Note also that algorithms may impose additional requirements on channels,
 such as support for arithmetic operations.</p>
 <div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<ul class="simple">
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_channel_concept.html">ChannelConcept&lt;T&gt;</a></p></li>
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_channel_value_concept.html">ChannelValueConcept&lt;T&gt;</a></p></li>
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_mutable_channel_concept.html">MutableChannelConcept&lt;T&gt;</a></p></li>
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_channels_compatible_concept.html">ChannelsCompatibleConcept&lt;T1,T2&gt;</a></p></li>
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_channel_convertible_concept.html">ChannelConvertibleConcept&lt;SrcChannel,DstChannel&gt;</a></p></li>
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li><a class="reference external" href="reference/structboost_1_1gil_1_1_channel_concept.html">ChannelConcept&lt;T&gt;</a></li>
+<li><a class="reference external" href="reference/structboost_1_1gil_1_1_channel_value_concept.html">ChannelValueConcept&lt;T&gt;</a></li>
+<li><a class="reference external" href="reference/structboost_1_1gil_1_1_mutable_channel_concept.html">MutableChannelConcept&lt;T&gt;</a></li>
+<li><a class="reference external" href="reference/structboost_1_1gil_1_1_channels_compatible_concept.html">ChannelsCompatibleConcept&lt;T1,T2&gt;</a></li>
+<li><a class="reference external" href="reference/structboost_1_1gil_1_1_channel_convertible_concept.html">ChannelConvertibleConcept&lt;SrcChannel,DstChannel&gt;</a></li>
 </ul>
 </div>
 </div>
@@ -162,8 +163,8 @@ specified by its <code class="docutils literal notranslate"><span class="pre">st
 appropriate. GIL provides <code class="docutils literal notranslate"><span class="pre">scoped_channel_value</span></code>, a model for a channel
 adapter that allows for specifying a custom range.
 We use it to define a <code class="docutils literal notranslate"><span class="pre">[0..1]</span></code> floating point channel type as follows:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">float_zero</span> <span class="p">{</span> <span class="k">static</span> <span class="kt">float</span> <span class="n">apply</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="p">}</span> <span class="p">};</span>
-<span class="k">struct</span> <span class="nc">float_one</span>  <span class="p">{</span> <span class="k">static</span> <span class="kt">float</span> <span class="n">apply</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="mf">1.0f</span><span class="p">;</span> <span class="p">}</span> <span class="p">};</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">float_zero</span> <span class="p">{</span> <span class="k">static</span> <span class="kt">float</span> <span class="n">apply</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="mf">0.0f</span><span class="p">;</span> <span class="p">}</span> <span class="p">};</span>
+<span class="k">struct</span> <span class="n">float_one</span>  <span class="p">{</span> <span class="k">static</span> <span class="kt">float</span> <span class="n">apply</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="mf">1.0f</span><span class="p">;</span> <span class="p">}</span> <span class="p">};</span>
 <span class="k">typedef</span> <span class="n">scoped_channel_value</span><span class="o">&lt;</span><span class="kt">float</span><span class="p">,</span><span class="n">float_zero</span><span class="p">,</span><span class="n">float_one</span><span class="o">&gt;</span> <span class="n">bits32f</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -236,16 +237,16 @@ floating point type. Thus they support arithmetic operations. Here are the
 channel-level algorithms that GIL provides:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Converts a source channel value into a destination channel.</span>
 <span class="c1">// Linearly maps the value of the source into the range of the destination.</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">DstChannel</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">SrcChannel</span><span class="o">&gt;</span>
-<span class="k">typename</span> <span class="nc">channel_traits</span><span class="o">&lt;</span><span class="n">DstChannel</span><span class="o">&gt;::</span><span class="n">value_type</span> <span class="n">channel_convert</span><span class="p">(</span><span class="n">SrcChannel</span> <span class="n">src</span><span class="p">);</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">DstChannel</span><span class="p">,</span> <span class="k">typename</span> <span class="n">SrcChannel</span><span class="o">&gt;</span>
+<span class="k">typename</span> <span class="n">channel_traits</span><span class="o">&lt;</span><span class="n">DstChannel</span><span class="o">&gt;::</span><span class="n">value_type</span> <span class="n">channel_convert</span><span class="p">(</span><span class="n">SrcChannel</span> <span class="n">src</span><span class="p">);</span>
 
 <span class="c1">// returns max_value - x + min_value</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">Channel</span><span class="o">&gt;</span>
-<span class="k">typename</span> <span class="nc">channel_traits</span><span class="o">&lt;</span><span class="n">Channel</span><span class="o">&gt;::</span><span class="n">value_type</span> <span class="n">channel_invert</span><span class="p">(</span><span class="n">Channel</span> <span class="n">x</span><span class="p">);</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">Channel</span><span class="o">&gt;</span>
+<span class="k">typename</span> <span class="n">channel_traits</span><span class="o">&lt;</span><span class="n">Channel</span><span class="o">&gt;::</span><span class="n">value_type</span> <span class="n">channel_invert</span><span class="p">(</span><span class="n">Channel</span> <span class="n">x</span><span class="p">);</span>
 
 <span class="c1">// returns a * b / max_value</span>
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">Channel</span><span class="o">&gt;</span>
-<span class="k">typename</span> <span class="nc">channel_traits</span><span class="o">&lt;</span><span class="n">Channel</span><span class="o">&gt;::</span><span class="n">value_type</span> <span class="n">channel_multiply</span><span class="p">(</span><span class="n">Channel</span> <span class="n">a</span><span class="p">,</span> <span class="n">Channel</span> <span class="n">b</span><span class="p">);</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">Channel</span><span class="o">&gt;</span>
+<span class="k">typename</span> <span class="n">channel_traits</span><span class="o">&lt;</span><span class="n">Channel</span><span class="o">&gt;::</span><span class="n">value_type</span> <span class="n">channel_multiply</span><span class="p">(</span><span class="n">Channel</span> <span class="n">a</span><span class="p">,</span> <span class="n">Channel</span> <span class="n">b</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -262,8 +263,8 @@ channel-level algorithms that GIL provides:</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2021-01-11 18:01:12.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.4.3.
+      Last updated on 2021-03-10 08:03:12.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>

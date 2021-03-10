@@ -20,6 +20,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="top" title="Boost.GIL  documentation" href="../index.html" />
@@ -67,18 +68,18 @@
 <h1>Tutorial: Image Gradient</h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#interface-and-glue-code" id="id1">Interface and Glue Code</a></p></li>
-<li><p><a class="reference internal" href="#first-implementation" id="id2">First Implementation</a></p></li>
-<li><p><a class="reference internal" href="#using-locators" id="id3">Using Locators</a></p></li>
-<li><p><a class="reference internal" href="#creating-a-generic-version-of-gil-algorithms" id="id4">Creating a Generic Version of GIL Algorithms</a></p></li>
-<li><p><a class="reference internal" href="#image-view-transformations" id="id5">Image View Transformations</a></p></li>
-<li><p><a class="reference internal" href="#d-pixel-iterators" id="id6">1D pixel iterators</a></p></li>
-<li><p><a class="reference internal" href="#stl-equivalent-algorithms" id="id7">STL Equivalent Algorithms</a></p></li>
-<li><p><a class="reference internal" href="#color-conversion" id="id8">Color Conversion</a></p></li>
-<li><p><a class="reference internal" href="#image" id="id9">Image</a></p></li>
-<li><p><a class="reference internal" href="#virtual-image-views" id="id10">Virtual Image Views</a></p></li>
-<li><p><a class="reference internal" href="#run-time-specified-images-and-image-views" id="id11">Run-Time Specified Images and Image Views</a></p></li>
-<li><p><a class="reference internal" href="#conclusion" id="id12">Conclusion</a></p></li>
+<li><a class="reference internal" href="#interface-and-glue-code" id="id1">Interface and Glue Code</a></li>
+<li><a class="reference internal" href="#first-implementation" id="id2">First Implementation</a></li>
+<li><a class="reference internal" href="#using-locators" id="id3">Using Locators</a></li>
+<li><a class="reference internal" href="#creating-a-generic-version-of-gil-algorithms" id="id4">Creating a Generic Version of GIL Algorithms</a></li>
+<li><a class="reference internal" href="#image-view-transformations" id="id5">Image View Transformations</a></li>
+<li><a class="reference internal" href="#d-pixel-iterators" id="id6">1D pixel iterators</a></li>
+<li><a class="reference internal" href="#stl-equivalent-algorithms" id="id7">STL Equivalent Algorithms</a></li>
+<li><a class="reference internal" href="#color-conversion" id="id8">Color Conversion</a></li>
+<li><a class="reference internal" href="#image" id="id9">Image</a></li>
+<li><a class="reference internal" href="#virtual-image-views" id="id10">Virtual Image Views</a></li>
+<li><a class="reference internal" href="#run-time-specified-images-and-image-views" id="id11">Run-Time Specified Images and Image Views</a></li>
+<li><a class="reference internal" href="#conclusion" id="id12">Conclusion</a></li>
 </ul>
 </div>
 <p>This comprehensive (and long) tutorial will walk you through an example of
@@ -88,7 +89,7 @@ generic as we go along.  Let us start with a horizontal gradient and use the
 simplest possible approximation to a gradient - central difference.</p>
 <p>The gradient at pixel x can be approximated with the half-difference of its
 two neighboring pixels:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">D</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">I</span><span class="p">[</span><span class="n">x</span><span class="mi">-1</span><span class="p">]</span> <span class="o">-</span> <span class="n">I</span><span class="p">[</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">D</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">I</span><span class="p">[</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">I</span><span class="p">[</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
 </pre></div>
 </div>
 <p>For simplicity, we will also ignore the boundary cases - the pixels along the
@@ -161,7 +162,7 @@ gradient like this:</p>
 <span class="p">{</span>
   <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">src</span><span class="p">.</span><span class="n">height</span><span class="p">();</span> <span class="o">++</span><span class="n">y</span><span class="p">)</span>
       <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">src</span><span class="p">.</span><span class="n">width</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="o">++</span><span class="n">x</span><span class="p">)</span>
-          <span class="n">dst</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">src</span><span class="p">(</span><span class="n">x</span><span class="mi">-1</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">-</span> <span class="n">src</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+          <span class="n">dst</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">src</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">-</span> <span class="n">src</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -182,7 +183,7 @@ addition and multiplication. Here is a faster version of the above:</p>
       <span class="n">gray8s_view_t</span><span class="o">::</span><span class="n">x_iterator</span> <span class="n">dst_it</span> <span class="o">=</span> <span class="n">dst</span><span class="p">.</span><span class="n">row_begin</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
 
       <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">src</span><span class="p">.</span><span class="n">width</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="o">++</span><span class="n">x</span><span class="p">)</span>
-          <span class="n">dst_it</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">src_it</span><span class="p">[</span><span class="n">x</span><span class="mi">-1</span><span class="p">]</span> <span class="o">-</span> <span class="n">src_it</span><span class="p">[</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+          <span class="n">dst_it</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">src_it</span><span class="p">[</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">src_it</span><span class="p">[</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
   <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -210,7 +211,7 @@ loop:</p>
 <span class="p">{</span>
   <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">src</span><span class="p">.</span><span class="n">height</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="o">++</span><span class="n">y</span><span class="p">)</span>
   <span class="p">{</span>
-      <span class="n">gray8c_view_t</span><span class="o">::</span><span class="n">x_iterator</span> <span class="n">src1_it</span> <span class="o">=</span> <span class="n">src</span><span class="p">.</span><span class="n">row_begin</span><span class="p">(</span><span class="n">y</span><span class="mi">-1</span><span class="p">);</span>
+      <span class="n">gray8c_view_t</span><span class="o">::</span><span class="n">x_iterator</span> <span class="n">src1_it</span> <span class="o">=</span> <span class="n">src</span><span class="p">.</span><span class="n">row_begin</span><span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
       <span class="n">gray8c_view_t</span><span class="o">::</span><span class="n">x_iterator</span> <span class="n">src2_it</span> <span class="o">=</span> <span class="n">src</span><span class="p">.</span><span class="n">row_begin</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
       <span class="n">gray8s_view_t</span><span class="o">::</span><span class="n">x_iterator</span> <span class="n">dst_it</span> <span class="o">=</span> <span class="n">dst</span><span class="p">.</span><span class="n">row_begin</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
 
@@ -243,7 +244,7 @@ done with GIL locators:</p>
 
       <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">src</span><span class="p">.</span><span class="n">width</span><span class="p">();</span> <span class="o">++</span><span class="n">x</span><span class="p">)</span>
   <span class="p">{</span>
-          <span class="p">(</span><span class="o">*</span><span class="n">dst_it</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">src_loc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">-1</span><span class="p">)</span> <span class="o">-</span> <span class="n">src_loc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+          <span class="p">(</span><span class="o">*</span><span class="n">dst_it</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">src_loc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">src_loc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
           <span class="o">++</span><span class="n">dst_it</span><span class="p">;</span>
           <span class="o">++</span><span class="n">src_loc</span><span class="p">.</span><span class="n">x</span><span class="p">();</span> <span class="c1">// each dimension can be advanced separately</span>
       <span class="p">}</span>
@@ -277,7 +278,7 @@ reuse this offset:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">y_gradient</span><span class="p">(</span><span class="n">gray8c_view_t</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">,</span> <span class="n">gray8s_view_t</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="n">gray8c_view_t</span><span class="o">::</span><span class="n">xy_locator</span> <span class="n">src_loc</span> <span class="o">=</span> <span class="n">src</span><span class="p">.</span><span class="n">xy_at</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-  <span class="n">gray8c_view_t</span><span class="o">::</span><span class="n">xy_locator</span><span class="o">::</span><span class="n">cached_location_t</span> <span class="n">above</span> <span class="o">=</span> <span class="n">src_loc</span><span class="p">.</span><span class="n">cache_location</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">-1</span><span class="p">);</span>
+  <span class="n">gray8c_view_t</span><span class="o">::</span><span class="n">xy_locator</span><span class="o">::</span><span class="n">cached_location_t</span> <span class="n">above</span> <span class="o">=</span> <span class="n">src_loc</span><span class="p">.</span><span class="n">cache_location</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
   <span class="n">gray8c_view_t</span><span class="o">::</span><span class="n">xy_locator</span><span class="o">::</span><span class="n">cached_location_t</span> <span class="n">below</span> <span class="o">=</span> <span class="n">src_loc</span><span class="p">.</span><span class="n">cache_location</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 
   <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">src</span><span class="p">.</span><span class="n">height</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="o">++</span><span class="n">y</span><span class="p">)</span>
@@ -304,7 +305,7 @@ operation and the code is efficient.</p>
 views, as long as they have the same number of channels. The gradient
 operation is to be computed for each channel independently.</p>
 <p>Here is how the new interface looks like:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">SrcView</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">DstView</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">SrcView</span><span class="p">,</span> <span class="k">typename</span> <span class="n">DstView</span><span class="o">&gt;</span>
 <span class="kt">void</span> <span class="n">x_gradient</span><span class="p">(</span><span class="k">const</span> <span class="n">SrcView</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">,</span> <span class="k">const</span> <span class="n">DstView</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="n">gil_function_requires</span><span class="o">&lt;</span><span class="n">ImageViewConcept</span><span class="o">&lt;</span><span class="n">SrcView</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">();</span>
@@ -313,8 +314,8 @@ operation is to be computed for each channel independently.</p>
   <span class="o">&lt;</span>
     <span class="n">ColorSpacesCompatibleConcept</span>
     <span class="o">&lt;</span>
-      <span class="k">typename</span> <span class="nc">color_space_type</span><span class="o">&lt;</span><span class="n">SrcView</span><span class="o">&gt;::</span><span class="n">type</span><span class="p">,</span>
-      <span class="k">typename</span> <span class="nc">color_space_type</span><span class="o">&lt;</span><span class="n">DstView</span><span class="o">&gt;::</span><span class="n">type</span>
+      <span class="k">typename</span> <span class="n">color_space_type</span><span class="o">&lt;</span><span class="n">SrcView</span><span class="o">&gt;::</span><span class="n">type</span><span class="p">,</span>
+      <span class="k">typename</span> <span class="n">color_space_type</span><span class="o">&lt;</span><span class="n">DstView</span><span class="o">&gt;::</span><span class="n">type</span>
     <span class="o">&gt;</span>
   <span class="o">&gt;</span><span class="p">();</span>
 
@@ -354,45 +355,45 @@ default).</p>
 <p>The body of the generic function is very similar to that of the
 concrete one. The biggest difference is that we need to loop over the
 channels of the pixel and compute the gradient for each channel:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">SrcView</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">DstView</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">SrcView</span><span class="p">,</span> <span class="k">typename</span> <span class="n">DstView</span><span class="o">&gt;</span>
 <span class="kt">void</span> <span class="n">x_gradient</span><span class="p">(</span><span class="k">const</span> <span class="n">SrcView</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">,</span> <span class="k">const</span> <span class="n">DstView</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">src</span><span class="p">.</span><span class="n">height</span><span class="p">();</span> <span class="o">++</span><span class="n">y</span><span class="p">)</span>
   <span class="p">{</span>
-      <span class="k">typename</span> <span class="nc">SrcView</span><span class="o">::</span><span class="n">x_iterator</span> <span class="n">src_it</span> <span class="o">=</span> <span class="n">src</span><span class="p">.</span><span class="n">row_begin</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
-      <span class="k">typename</span> <span class="nc">DstView</span><span class="o">::</span><span class="n">x_iterator</span> <span class="n">dst_it</span> <span class="o">=</span> <span class="n">dst</span><span class="p">.</span><span class="n">row_begin</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
+      <span class="k">typename</span> <span class="n">SrcView</span><span class="o">::</span><span class="n">x_iterator</span> <span class="n">src_it</span> <span class="o">=</span> <span class="n">src</span><span class="p">.</span><span class="n">row_begin</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
+      <span class="k">typename</span> <span class="n">DstView</span><span class="o">::</span><span class="n">x_iterator</span> <span class="n">dst_it</span> <span class="o">=</span> <span class="n">dst</span><span class="p">.</span><span class="n">row_begin</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
 
       <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">src</span><span class="p">.</span><span class="n">width</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="o">++</span><span class="n">x</span><span class="p">)</span>
           <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">c</span> <span class="o">&lt;</span> <span class="n">num_channels</span><span class="o">&lt;</span><span class="n">SrcView</span><span class="o">&gt;::</span><span class="n">value</span><span class="p">;</span> <span class="o">++</span><span class="n">c</span><span class="p">)</span>
-              <span class="n">dst_it</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">src_it</span><span class="p">[</span><span class="n">x</span><span class="mi">-1</span><span class="p">][</span><span class="n">c</span><span class="p">]</span><span class="o">-</span> <span class="n">src_it</span><span class="p">[</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">c</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+              <span class="n">dst_it</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">src_it</span><span class="p">[</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">c</span><span class="p">]</span><span class="o">-</span> <span class="n">src_it</span><span class="p">[</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">c</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
   <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>Having an explicit loop for each channel could be a performance problem.
 GIL allows us to abstract out such per-channel operations:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">Out</span><span class="o">&gt;</span>
-<span class="k">struct</span> <span class="nc">halfdiff_cast_channels</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">Out</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="n">halfdiff_cast_channels</span>
 <span class="p">{</span>
-  <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="o">&gt;</span> <span class="n">Out</span> <span class="k">operator</span><span class="p">()(</span><span class="n">T</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">in1</span><span class="p">,</span> <span class="n">T</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">in2</span><span class="p">)</span> <span class="k">const</span>
+  <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span> <span class="n">Out</span> <span class="k">operator</span><span class="p">()(</span><span class="n">T</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">in1</span><span class="p">,</span> <span class="n">T</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">in2</span><span class="p">)</span> <span class="k">const</span>
   <span class="p">{</span>
-      <span class="k">return</span> <span class="nf">Out</span><span class="p">((</span><span class="n">in1</span> <span class="o">-</span> <span class="n">in2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
+      <span class="k">return</span> <span class="n">Out</span><span class="p">((</span><span class="n">in1</span> <span class="o">-</span> <span class="n">in2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
   <span class="p">}</span>
 <span class="p">};</span>
 
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">SrcView</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">DstView</span><span class="o">&gt;</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">SrcView</span><span class="p">,</span> <span class="k">typename</span> <span class="n">DstView</span><span class="o">&gt;</span>
 <span class="kt">void</span> <span class="n">x_gradient</span><span class="p">(</span><span class="k">const</span> <span class="n">SrcView</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">,</span> <span class="k">const</span> <span class="n">DstView</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">)</span>
 <span class="p">{</span>
-  <span class="k">typedef</span> <span class="k">typename</span> <span class="nc">channel_type</span><span class="o">&lt;</span><span class="n">DstView</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">dst_channel_t</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="k">typename</span> <span class="n">channel_type</span><span class="o">&lt;</span><span class="n">DstView</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">dst_channel_t</span><span class="p">;</span>
 
   <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">src</span><span class="p">.</span><span class="n">height</span><span class="p">();</span> <span class="o">++</span><span class="n">y</span><span class="p">)</span>
   <span class="p">{</span>
-      <span class="k">typename</span> <span class="nc">SrcView</span><span class="o">::</span><span class="n">x_iterator</span> <span class="n">src_it</span> <span class="o">=</span> <span class="n">src</span><span class="p">.</span><span class="n">row_begin</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
-      <span class="k">typename</span> <span class="nc">DstView</span><span class="o">::</span><span class="n">x_iterator</span> <span class="n">dst_it</span> <span class="o">=</span> <span class="n">dst</span><span class="p">.</span><span class="n">row_begin</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
+      <span class="k">typename</span> <span class="n">SrcView</span><span class="o">::</span><span class="n">x_iterator</span> <span class="n">src_it</span> <span class="o">=</span> <span class="n">src</span><span class="p">.</span><span class="n">row_begin</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
+      <span class="k">typename</span> <span class="n">DstView</span><span class="o">::</span><span class="n">x_iterator</span> <span class="n">dst_it</span> <span class="o">=</span> <span class="n">dst</span><span class="p">.</span><span class="n">row_begin</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
 
       <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">src</span><span class="p">.</span><span class="n">width</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="o">++</span><span class="n">x</span><span class="p">)</span>
       <span class="p">{</span>
-          <span class="n">static_transform</span><span class="p">(</span><span class="n">src_it</span><span class="p">[</span><span class="n">x</span><span class="mi">-1</span><span class="p">],</span> <span class="n">src_it</span><span class="p">[</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">dst_it</span><span class="p">[</span><span class="n">x</span><span class="p">],</span>
+          <span class="n">static_transform</span><span class="p">(</span><span class="n">src_it</span><span class="p">[</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">src_it</span><span class="p">[</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="n">dst_it</span><span class="p">[</span><span class="n">x</span><span class="p">],</span>
               <span class="n">halfdiff_cast_channels</span><span class="o">&lt;</span><span class="n">dst_channel_t</span><span class="o">&gt;</span><span class="p">());</span>
       <span class="p">}</span>
   <span class="p">}</span>
@@ -458,7 +459,7 @@ files for more on using such images.</p>
 <p>One way to compute the y-gradient is to rotate the image by 90 degrees,
 compute the x-gradient and rotate the result back.
 Here is how to do this in GIL:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">SrcView</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">DstView</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">SrcView</span><span class="p">,</span> <span class="k">typename</span> <span class="n">DstView</span><span class="o">&gt;</span>
 <span class="kt">void</span> <span class="n">y_gradient</span><span class="p">(</span><span class="k">const</span> <span class="n">SrcView</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">,</span> <span class="k">const</span> <span class="n">DstView</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="n">x_gradient</span><span class="p">(</span><span class="n">rotated90ccw_view</span><span class="p">(</span><span class="n">src</span><span class="p">),</span> <span class="n">rotated90ccw_view</span><span class="p">(</span><span class="n">dst</span><span class="p">));</span>
@@ -480,7 +481,7 @@ because of the memory access pattern; using <code class="docutils literal notran
 not make it any slower.</p>
 <p>Another example: suppose we want to compute the gradient of the N-th
 channel of a color image. Here is how to do that:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">SrcView</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">DstView</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">SrcView</span><span class="p">,</span> <span class="k">typename</span> <span class="n">DstView</span><span class="o">&gt;</span>
 <span class="kt">void</span> <span class="n">nth_channel_x_gradient</span><span class="p">(</span><span class="k">const</span> <span class="n">SrcView</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="k">const</span> <span class="n">DstView</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="n">x_gradient</span><span class="p">(</span><span class="n">nth_channel_view</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="n">dst</span><span class="p">);</span>
@@ -522,15 +523,15 @@ and last column:</p>
       <span class="n">gray8s_view_t</span><span class="o">::</span><span class="n">x_iterator</span> <span class="n">dst_it</span> <span class="o">=</span> <span class="n">dst</span><span class="p">.</span><span class="n">row_begin</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
 
       <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">src</span><span class="p">.</span><span class="n">width</span><span class="p">();</span> <span class="o">++</span><span class="n">x</span><span class="p">)</span>
-          <span class="n">dst_it</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">src_it</span><span class="p">[</span><span class="n">x</span><span class="mi">-1</span><span class="p">]</span> <span class="o">-</span> <span class="n">src_it</span><span class="p">[</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+          <span class="n">dst_it</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">src_it</span><span class="p">[</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">src_it</span><span class="p">[</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
   <span class="p">}</span>
 <span class="p">}</span>
 
 <span class="kt">void</span> <span class="nf">x_gradient</span><span class="p">(</span><span class="n">gray8c_view_t</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">,</span> <span class="n">gray8s_view_t</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="n">assert</span><span class="p">(</span><span class="n">src</span><span class="p">.</span><span class="n">width</span><span class="p">()</span><span class="o">&gt;=</span><span class="mi">2</span><span class="p">);</span>
-  <span class="n">x_gradient_unguarded</span><span class="p">(</span><span class="n">subimage_view</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">src</span><span class="p">.</span><span class="n">width</span><span class="p">()</span><span class="mi">-2</span><span class="p">,</span> <span class="n">src</span><span class="p">.</span><span class="n">height</span><span class="p">()),</span>
-                       <span class="n">subimage_view</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">src</span><span class="p">.</span><span class="n">width</span><span class="p">()</span><span class="mi">-2</span><span class="p">,</span> <span class="n">src</span><span class="p">.</span><span class="n">height</span><span class="p">()));</span>
+  <span class="n">x_gradient_unguarded</span><span class="p">(</span><span class="n">subimage_view</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">src</span><span class="p">.</span><span class="n">width</span><span class="p">()</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">src</span><span class="p">.</span><span class="n">height</span><span class="p">()),</span>
+                       <span class="n">subimage_view</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">src</span><span class="p">.</span><span class="n">width</span><span class="p">()</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">src</span><span class="p">.</span><span class="n">height</span><span class="p">()));</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -546,7 +547,7 @@ rewrite it more compactly:</p>
 <span class="p">{</span>
   <span class="n">gray8c_view_t</span><span class="o">::</span><span class="n">iterator</span> <span class="n">src_it</span> <span class="o">=</span> <span class="n">src</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
   <span class="k">for</span> <span class="p">(</span><span class="n">gray8s_view_t</span><span class="o">::</span><span class="n">iterator</span> <span class="n">dst_it</span> <span class="o">=</span> <span class="n">dst</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">dst_it</span><span class="o">!=</span><span class="n">dst</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="o">++</span><span class="n">dst_it</span><span class="p">,</span> <span class="o">++</span><span class="n">src_it</span><span class="p">)</span>
-      <span class="o">*</span><span class="n">dst_it</span> <span class="o">=</span> <span class="p">(</span><span class="n">src_it</span><span class="p">.</span><span class="n">x</span><span class="p">()[</span><span class="mi">-1</span><span class="p">]</span> <span class="o">-</span> <span class="n">src_it</span><span class="p">.</span><span class="n">x</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+      <span class="o">*</span><span class="n">dst_it</span> <span class="o">=</span> <span class="p">(</span><span class="n">src_it</span><span class="p">.</span><span class="n">x</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">src_it</span><span class="p">.</span><span class="n">x</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -575,11 +576,11 @@ assign to each destination pixel the value of the half-difference of
 the horizontal neighbors of the corresponding source pixel.  If we
 abstract that operation in a function object, we can use GIL’s
 <code class="docutils literal notranslate"><span class="pre">transform_pixel_positions</span></code> to do that:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">half_x_difference</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">half_x_difference</span>
 <span class="p">{</span>
-  <span class="kt">int</span> <span class="nf">operator</span><span class="p">()(</span><span class="k">const</span> <span class="n">gray8c_loc_t</span><span class="o">&amp;</span> <span class="n">src_loc</span><span class="p">)</span> <span class="k">const</span>
+  <span class="kt">int</span> <span class="k">operator</span><span class="p">()(</span><span class="k">const</span> <span class="n">gray8c_loc_t</span><span class="o">&amp;</span> <span class="n">src_loc</span><span class="p">)</span> <span class="k">const</span>
   <span class="p">{</span>
-      <span class="k">return</span> <span class="p">(</span><span class="n">src_loc</span><span class="p">.</span><span class="n">x</span><span class="p">()[</span><span class="mi">-1</span><span class="p">]</span> <span class="o">-</span> <span class="n">src_loc</span><span class="p">.</span><span class="n">x</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+      <span class="k">return</span> <span class="p">(</span><span class="n">src_loc</span><span class="p">.</span><span class="n">x</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">src_loc</span><span class="p">.</span><span class="n">x</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
   <span class="p">}</span>
 <span class="p">};</span>
 
@@ -624,10 +625,10 @@ performs color conversion every time its pixels are accessed.</p>
 color space to grayscale, but keep the channel depth the same. We do
 that by constructing the type of a GIL grayscale pixel with the same
 channel as the source, and color convert to that pixel type:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">SrcView</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">DstView</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">SrcView</span><span class="p">,</span> <span class="k">typename</span> <span class="n">DstView</span><span class="o">&gt;</span>
 <span class="kt">void</span> <span class="n">x_luminosity_gradient</span><span class="p">(</span><span class="n">SrcView</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">,</span> <span class="n">DstView</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">)</span>
 <span class="p">{</span>
-  <span class="k">using</span> <span class="n">gray_pixel_t</span> <span class="o">=</span> <span class="n">pixel</span><span class="o">&lt;</span><span class="k">typename</span> <span class="nc">channel_type</span><span class="o">&lt;</span><span class="n">SrcView</span><span class="o">&gt;::</span><span class="n">type</span><span class="p">,</span> <span class="n">gray_layout_t</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="k">using</span> <span class="n">gray_pixel_t</span> <span class="o">=</span> <span class="n">pixel</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">channel_type</span><span class="o">&lt;</span><span class="n">SrcView</span><span class="o">&gt;::</span><span class="n">type</span><span class="p">,</span> <span class="n">gray_layout_t</span><span class="o">&gt;</span><span class="p">;</span>
   <span class="n">x_gradient</span><span class="p">(</span><span class="n">color_converted_view</span><span class="o">&lt;</span><span class="n">gray_pixel_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">src</span><span class="p">),</span> <span class="n">dst</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
@@ -661,11 +662,11 @@ image in our <code class="docutils literal notranslate"><span class="pre">x_grad
 provides global functions <code class="docutils literal notranslate"><span class="pre">view</span></code> and <code class="docutils literal notranslate"><span class="pre">const_view</span></code> that take an
 image and return a mutable or an immutable view of its pixels.</p>
 <p>Creating a generic version of the above is a bit trickier:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">SrcView</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">DstView</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">SrcView</span><span class="p">,</span> <span class="k">typename</span> <span class="n">DstView</span><span class="o">&gt;</span>
 <span class="kt">void</span> <span class="n">x_luminosity_gradient</span><span class="p">(</span><span class="k">const</span> <span class="n">SrcView</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">,</span> <span class="k">const</span> <span class="n">DstView</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">)</span>
 <span class="p">{</span>
-  <span class="k">using</span> <span class="n">d_channel_t</span> <span class="o">=</span> <span class="k">typename</span> <span class="nc">channel_type</span><span class="o">&lt;</span><span class="n">DstView</span><span class="o">&gt;::</span><span class="n">type</span><span class="p">;</span>
-  <span class="k">using</span> <span class="n">channel_t</span> <span class="o">=</span> <span class="k">typename</span> <span class="nc">channel_convert_to_unsigned</span><span class="o">&lt;</span><span class="n">d_channel_t</span><span class="o">&gt;::</span><span class="n">type</span><span class="p">;</span>
+  <span class="k">using</span> <span class="n">d_channel_t</span> <span class="o">=</span> <span class="k">typename</span> <span class="n">channel_type</span><span class="o">&lt;</span><span class="n">DstView</span><span class="o">&gt;::</span><span class="n">type</span><span class="p">;</span>
+  <span class="k">using</span> <span class="n">channel_t</span> <span class="o">=</span> <span class="k">typename</span> <span class="n">channel_convert_to_unsigned</span><span class="o">&lt;</span><span class="n">d_channel_t</span><span class="o">&gt;::</span><span class="n">type</span><span class="p">;</span>
   <span class="k">using</span> <span class="n">gray_pixel_t</span> <span class="o">=</span> <span class="n">pixel</span><span class="o">&lt;</span><span class="n">channel_t</span><span class="p">,</span> <span class="n">gray_layout_t</span><span class="o">&gt;</span><span class="p">;</span>
   <span class="k">using</span> <span class="n">gray_image_t</span> <span class="o">=</span> <span class="n">image</span><span class="o">&lt;</span><span class="n">gray_pixel_t</span><span class="p">,</span> <span class="nb">false</span><span class="o">&gt;</span><span class="p">;</span>
 
@@ -697,13 +698,13 @@ planar or interleaved.  Single-channel (grayscale) images in GIL must
 always be interleaved. There are multiple ways of constructing types
 in GIL. Instead of instantiating the classes directly we could have
 used type factory metafunctions. The following code is equivalent:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">SrcView</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">DstView</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">SrcView</span><span class="p">,</span> <span class="k">typename</span> <span class="n">DstView</span><span class="o">&gt;</span>
 <span class="kt">void</span> <span class="n">x_luminosity_gradient</span><span class="p">(</span><span class="n">SrcView</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">,</span> <span class="n">DstView</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">)</span>
 <span class="p">{</span>
-  <span class="k">typedef</span> <span class="k">typename</span> <span class="nc">channel_type</span><span class="o">&lt;</span><span class="n">DstView</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">d_channel_t</span><span class="p">;</span>
-  <span class="k">typedef</span> <span class="k">typename</span> <span class="nc">channel_convert_to_unsigned</span><span class="o">&lt;</span><span class="n">d_channel_t</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">channel_t</span><span class="p">;</span>
-  <span class="k">typedef</span> <span class="k">typename</span> <span class="nc">image_type</span><span class="o">&lt;</span><span class="n">channel_t</span><span class="p">,</span> <span class="n">gray_layout_t</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">gray_image_t</span><span class="p">;</span>
-  <span class="k">typedef</span> <span class="k">typename</span> <span class="nc">gray_image_t</span><span class="o">::</span><span class="n">value_type</span> <span class="n">gray_pixel_t</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="k">typename</span> <span class="n">channel_type</span><span class="o">&lt;</span><span class="n">DstView</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">d_channel_t</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="k">typename</span> <span class="n">channel_convert_to_unsigned</span><span class="o">&lt;</span><span class="n">d_channel_t</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">channel_t</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="k">typename</span> <span class="n">image_type</span><span class="o">&lt;</span><span class="n">channel_t</span><span class="p">,</span> <span class="n">gray_layout_t</span><span class="o">&gt;::</span><span class="n">type</span> <span class="n">gray_image_t</span><span class="p">;</span>
+  <span class="k">typedef</span> <span class="k">typename</span> <span class="n">gray_image_t</span><span class="o">::</span><span class="n">value_type</span> <span class="n">gray_pixel_t</span><span class="p">;</span>
 
   <span class="n">gray_image_t</span> <span class="nf">ccv_image</span><span class="p">(</span><span class="n">src</span><span class="p">.</span><span class="n">dimensions</span><span class="p">());</span>
   <span class="n">copy_and_convert_pixels</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">view</span><span class="p">(</span><span class="n">ccv_image</span><span class="p">));</span>
@@ -738,7 +739,7 @@ view of the Mandelbrot set.  First, we need to create a function
 object that computes the value of the Mandelbrot set at a given
 location (x,y) in the image:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// models PixelDereferenceAdaptorConcept</span>
-<span class="k">struct</span> <span class="nc">mandelbrot_fn</span>
+<span class="k">struct</span> <span class="n">mandelbrot_fn</span>
 <span class="p">{</span>
   <span class="k">typedef</span> <span class="n">point</span><span class="o">&lt;</span><span class="kt">ptrdiff_t</span><span class="o">&gt;</span>   <span class="n">point_t</span><span class="p">;</span>
 
@@ -756,7 +757,7 @@ location (x,y) in the image:</p>
   <span class="n">result_type</span> <span class="k">operator</span><span class="p">()(</span><span class="k">const</span> <span class="n">point_t</span><span class="o">&amp;</span> <span class="n">p</span><span class="p">)</span> <span class="k">const</span>
   <span class="p">{</span>
       <span class="c1">// normalize the coords to (-2..1, -1.5..1.5)</span>
-      <span class="kt">double</span> <span class="n">t</span><span class="o">=</span><span class="n">get_num_iter</span><span class="p">(</span><span class="n">point</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">x</span><span class="o">/</span><span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">_img_size</span><span class="p">.</span><span class="n">x</span><span class="o">*</span><span class="mi">3-2</span><span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="n">y</span><span class="o">/</span><span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">_img_size</span><span class="p">.</span><span class="n">y</span><span class="o">*</span><span class="mi">3</span><span class="mf">-1.5f</span><span class="p">));</span>
+      <span class="kt">double</span> <span class="n">t</span><span class="o">=</span><span class="n">get_num_iter</span><span class="p">(</span><span class="n">point</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">x</span><span class="o">/</span><span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">_img_size</span><span class="p">.</span><span class="n">x</span><span class="o">*</span><span class="mi">3</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="n">y</span><span class="o">/</span><span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">_img_size</span><span class="p">.</span><span class="n">y</span><span class="o">*</span><span class="mi">3</span><span class="o">-</span><span class="mf">1.5f</span><span class="p">));</span>
       <span class="k">return</span> <span class="nf">value_type</span><span class="p">((</span><span class="n">bits8</span><span class="p">)(</span><span class="n">pow</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="mf">0.2</span><span class="p">)</span><span class="o">*</span><span class="mi">255</span><span class="p">));</span>   <span class="c1">// raise to power suitable for viewing</span>
   <span class="p">}</span>
 <span class="k">private</span><span class="o">:</span>
@@ -827,15 +828,15 @@ destination view and has an application operator taking a templated
 source view:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;boost/gil/extension/dynamic_image/dynamic_image_all.hpp&gt;</span><span class="cp"></span>
 
-<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">DstView</span><span class="o">&gt;</span>
-<span class="k">struct</span> <span class="nc">x_gradient_obj</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">DstView</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="n">x_gradient_obj</span>
 <span class="p">{</span>
   <span class="k">typedef</span> <span class="kt">void</span> <span class="n">result_type</span><span class="p">;</span>        <span class="c1">// required typedef</span>
 
   <span class="k">const</span> <span class="n">DstView</span><span class="o">&amp;</span> <span class="n">_dst</span><span class="p">;</span>
   <span class="n">x_gradient_obj</span><span class="p">(</span><span class="k">const</span> <span class="n">DstView</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">)</span> <span class="o">:</span> <span class="n">_dst</span><span class="p">(</span><span class="n">dst</span><span class="p">)</span> <span class="p">{}</span>
 
-  <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">SrcView</span><span class="o">&gt;</span>
+  <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">SrcView</span><span class="o">&gt;</span>
   <span class="kt">void</span> <span class="k">operator</span><span class="p">()(</span><span class="k">const</span> <span class="n">SrcView</span><span class="o">&amp;</span> <span class="n">src</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="n">x_luminosity_gradient</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">_dst</span><span class="p">);</span> <span class="p">}</span>
 <span class="p">};</span>
 </pre></div>
@@ -843,7 +844,7 @@ source view:</p>
 <p>The second step is to provide an overload of <code class="docutils literal notranslate"><span class="pre">x_luminosity_gradient</span></code> that
 takes image view variant and calls GIL’s <code class="docutils literal notranslate"><span class="pre">apply_operation</span></code> passing it the
 function object:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">SrcViews</span><span class="p">,</span> <span class="k">typename</span> <span class="nc">DstView</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">SrcViews</span><span class="p">,</span> <span class="k">typename</span> <span class="n">DstView</span><span class="o">&gt;</span>
 <span class="kt">void</span> <span class="n">x_luminosity_gradient</span><span class="p">(</span><span class="k">const</span> <span class="n">any_image_view</span><span class="o">&lt;</span><span class="n">SrcViews</span><span class="o">&gt;&amp;</span> <span class="n">src</span><span class="p">,</span> <span class="k">const</span> <span class="n">DstView</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">)</span>
 <span class="p">{</span>
   <span class="n">apply_operation</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">x_gradient_obj</span><span class="o">&lt;</span><span class="n">DstView</span><span class="o">&gt;</span><span class="p">(</span><span class="n">dst</span><span class="p">));</span>
@@ -952,8 +953,8 @@ code with different compilers.</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2021-01-11 18:01:12.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.4.3.
+      Last updated on 2021-03-10 08:03:12.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>

@@ -20,10 +20,15 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="#" />
     <link rel="top" title="Boost.GIL  documentation" href="index.html" />
-  <script src="searchindex.js" defer></script>
+  <script type="text/javascript">
+    jQuery(function() { Search.loadIndex("searchindex.js"); });
+  </script>
+  
+  <script type="text/javascript" id="searchindexloader"></script>
    
 
   </head>
@@ -55,18 +60,20 @@
       
   <h1 id="search-documentation">Search</h1>
   <div id="fallback" class="admonition warning">
-  <script>$('#fallback').hide();</script>
+  <script type="text/javascript">$('#fallback').hide();</script>
   <p>
     Please activate JavaScript to enable the search
     functionality.
   </p>
   </div>
   <p>
-    Searching for multiple words only shows matches that contain
-    all words.
+    From here you can search these documents. Enter your search
+    words into the box below and click "search". Note that the search
+    function will automatically search for all of the words. Pages
+    containing fewer words won't appear in the result list.
   </p>
   <form action="" method="get">
-    <input type="text" name="q" aria-labelledby="search-documentation" value="" />
+    <input type="text" name="q" value="" />
     <input type="submit" value="search" />
     <span id="search-progress" style="padding-left: 10px"></span>
   </form>
@@ -82,8 +89,8 @@
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2021-01-11 18:01:12.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.4.3.
+      Last updated on 2021-03-10 08:03:12.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>
