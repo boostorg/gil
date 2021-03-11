@@ -71,7 +71,11 @@ void apply_gaussian_blur(gil::gray8_view_t input_view, gil::gray8_view_t output_
     constexpr static auto filterHeight = 5ull;
     constexpr static auto filterWidth = 5ull;
     constexpr static double filter[filterHeight][filterWidth] = {
-        2, 4, 6, 4, 2, 4, 9, 12, 9, 4, 5, 12, 15, 12, 5, 4, 9, 12, 9, 4, 2, 4, 5, 4, 2,
+        { 2, 4, 6, 4, 2 },
+        { 4, 9, 12, 9, 4 },
+        { 5, 12, 15, 12, 5},
+        { 4, 9, 12, 9, 4 },
+        { 2, 4, 5, 4, 2 }
     };
     constexpr double factor = 1.0 / 159;
     constexpr double bias = 0.0;

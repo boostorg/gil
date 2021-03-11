@@ -245,8 +245,8 @@ public:
     : image_view< locator >( v )
     {}
 
-    const point_t& v_ssfactors() const { return point_t( get_deref_fn().vx_ssfactor(), get_deref_fn().vx_ssfactor() ); }
-    const point_t& u_ssfactors() const { return point_t( get_deref_fn().ux_ssfactor(), get_deref_fn().ux_ssfactor() ); }
+    point_t v_ssfactors() const { return point_t( get_deref_fn().vx_ssfactor(), get_deref_fn().vx_ssfactor() ); }
+    point_t u_ssfactors() const { return point_t( get_deref_fn().ux_ssfactor(), get_deref_fn().ux_ssfactor() ); }
 
     const point_t& y_dimension() const { return _y_dimensions; }
     const point_t& v_dimension() const { return _v_dimensions; }
@@ -256,9 +256,9 @@ public:
     const plane_locator_t& v_plane() const { return get_deref_fn().v_locator(); }
     const plane_locator_t& u_plane() const { return get_deref_fn().u_locator(); }
 
-    const plane_view_t y_plane_view() const { return plane_view_t( _y_dimensions, y_plane() ); }
-    const plane_view_t v_plane_view() const { return plane_view_t( _v_dimensions, v_plane() ); }
-    const plane_view_t u_plane_view() const { return plane_view_t( _u_dimensions, u_plane() ); }
+    plane_view_t y_plane_view() const { return plane_view_t( _y_dimensions, y_plane() ); }
+    plane_view_t v_plane_view() const { return plane_view_t( _v_dimensions, v_plane() ); }
+    plane_view_t u_plane_view() const { return plane_view_t( _u_dimensions, u_plane() ); }
 
 
 private:
