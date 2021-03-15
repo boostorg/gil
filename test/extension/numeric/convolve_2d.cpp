@@ -60,9 +60,48 @@ void test_convolve_2d_with_normalized_mean_filter()
     BOOST_TEST(gil::equal_pixels(out_view, dst_view));
 }
 
+void test_convolve_2d_with_image_using_float32_t()
+{
+gil::float32_t img[] =
+{
+    0.1, 0.2, 0.1, 0.1, 0.4, 0.1, 0.76, 0.1, 0.1,
+    0.1, 0.2, 0.1, 0.1, 0.4, 0.1, 0.5, 0.1, 0.1,
+    0.1, 0.2, 0.1, 0.1, 0.4, 0.1, 0.5, 0.1, 0.1,
+    0.1, 0.6, 0.6, 0.1, 0.54, 0.1, 0.5, 0.1, 0.1,
+    0.1, 0.2, 0.1, 0.1, 0.4, 0.1, 0.5, 0.1, 0.1,
+    0.1, 0.2, 0.1, 0.84, 0.4, 0.1, 0.5, 0.1, 0.1,
+    0.1, 0.1, 0.1, 0.1, 0.4, 0.1, 0.5, 0.1, 0.1,
+    0.1, 0.3, 0.1, 0.1, 0.4, 0.1, 0.32, 0.1, 0.1,
+    0.1, 0.2, 0.1, 0.1, 0.4, 0.1, 0.21, 0.1, 0.1
+};
+
+gil::float32_t exp_output[] =
+{
+    0.1, 0.2, 0.1, 0.1, 0.4, 0.1, 0.76, 0.1, 0.1,
+    0.1, 0.2, 0.1, 0.1, 0.4, 0.1, 0.5, 0.1, 0.1,
+    0.1, 0.2, 0.1, 0.1, 0.4, 0.1, 0.5, 0.1, 0.1,
+    0.1, 0.6, 0.6, 0.1, 0.54, 0.1, 0.5, 0.1, 0.1,
+    0.1, 0.2, 0.1, 0.1, 0.4, 0.1, 0.5, 0.1, 0.1,
+    0.1, 0.2, 0.1, 0.84, 0.4, 0.1, 0.5, 0.1, 0.1,
+    0.1, 0.1, 0.1, 0.1, 0.4, 0.1, 0.5, 0.1, 0.1,
+    0.1, 0.3, 0.1, 0.1, 0.4, 0.1, 0.32, 0.1, 0.1,
+    0.1, 0.2, 0.1, 0.1, 0.4, 0.1, 0.21, 0.1, 0.1
+};
+
+gil::gray32f_image_t img_gray_out(9, 9);
+gil::gray32fc_view_t src_view =
+        gil::interleaved_view(9, 9, reinterpret_cast<const gil::gray32f_pixel_t*>(img), 9);
+gil::gray32fc_view_t exp_out_view =
+        gil::interleaved_view(9, 9, reinterpret_cast<const gil::gray32f_pixel_t*>(exp_output), 9);
+std::vector<float> v(1, 1);
+gil::detail::kernel_2d<float> kernel(v.begin(), v.size(), 0, 0); //impulse kernel
+gil::detail::convolve_2d(src_view, kernel, view(img_gray_out));
+BOOST_TEST(gil::equal_pixels(exp_out_view, view(img_gray_out)));
+}
+
 int main()
 {
     test_convolve_2d_with_normalized_mean_filter();
-
+    test_convolve_2d_with_image_using_float32_t();
     return ::boost::report_errors();
 }
