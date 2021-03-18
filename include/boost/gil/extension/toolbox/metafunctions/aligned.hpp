@@ -60,7 +60,7 @@ struct aligned
             y = view.height() - h;
 
         view_t v3 = subimage_view(view, x, y, w, h);
-        boost::gil::copy_pixels(v2, v3);
+        copy_pixels(v2, v3);
     }
 };
 }  }

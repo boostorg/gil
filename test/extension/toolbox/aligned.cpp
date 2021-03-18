@@ -268,11 +268,11 @@ int main()
     gil::rgb8_image_t expected_left_top_img(20, 20), obtained_center_middle_img(20, 20);
     gil::rgb8_image_t obtained_left_top_img(20, 20);
 
-    gil::fill_pixels(gil::view(obtained_center_middle_img), gil::rgb8_pixel_t(255, 255, 255));
-    gil::fill_pixels(gil::view(obtained_left_top_img), gil::rgb8_pixel_t(255, 255, 255));
-
     gil::rgb8_view_t obtained_center_middle_view = gil::view(obtained_center_middle_img);
     gil::rgb8_view_t obtained_left_top_view = gil::view(obtained_left_top_img);
+
+    gil::fill_pixels(obtained_center_middle_view, gil::rgb8_pixel_t(255, 255, 255));
+    gil::fill_pixels(obtained_left_top_view, gil::rgb8_pixel_t(255, 255, 255));
 
     pixel_fill_rgb(original_img_vector, original_image);
     pixel_fill_rgb(expected_center_middle_vector, expected_center_middle_img);
