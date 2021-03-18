@@ -41,7 +41,9 @@ struct shrink
 
         double width = view.width() - left - right;
         double height = view.height() - top - bottom;
-        dstView = boost::gil::subimage_view(view, (int)left, (int)top, (int)width, (int)height);
+        dstView = boost::gil::subimage_view(view, static_cast<std::ptrdiff_t>(left),
+        static_cast<std::ptrdiff_t>(top), static_cast<std::ptrdiff_t>(width),
+        static_cast<std::ptrdiff_t>(height));
     }
 };
 }  }
