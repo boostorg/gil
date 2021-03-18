@@ -9,14 +9,14 @@
 
 namespace boost  {  namespace gil  {
 
-/// \brief Aligns the smaller image view passed through struct constructor in a specific direction
-/// inside the larger image view passed through the overloaded '()' operator. The direction of 
-/// alignment is specified thorugh the constructor parameters.
+/// \brief Aligns the image view passed through struct constructor in a specific direction
+/// inside the image view passed through the overloaded '()' operator. The direction of 
+/// alignment is specified by constructor parameters.
 template <typename view_t>
 struct aligned
 {
     // Following enum variables will be used for specifying alignment of view passed through
-    // constructor with respect to larger view passed through overloaded '()' operator.
+    // constructor with respect to the view passed through overloaded '()' operator.
     enum
     {
         left = (0x1 << 0),
