@@ -39,21 +39,24 @@ struct aligned
     {
         using namespace boost::gil;
 
-        int w = v2.width();
-        int h = v2.height();
+        std::size_t w = v2.width(), h = v2.height();
 
-        // For ensuring that view passed through '()' operator has greater dimensions than view
-        // passed through the constructor.
+        // For ensuring that view passed through '()' operator has dimensions greater than or
+        // equal to the dimensions of view passed through constructor.
         if(h > view.height() || w > view.width())
-            return;
+        {
+            throw std::length_error("Image view passed through overloaded '()' operator must have"
+            " dimensions greater than or equal to the dimensions of image view passed through"
+            " struct constructor");
+        }
 
-        int x = 0;
+        std::ptrdiff_t x = 0;
         if(align & center)
             x = (view.width() - w) / 2;
         else if(align & right)
             x = view.width() - w;
 
-        int y = 0;
+        std::ptrdiff_t y = 0;
         if(align & middle)
             y = (view.height() - h) / 2;
         else if(align & bottom)
