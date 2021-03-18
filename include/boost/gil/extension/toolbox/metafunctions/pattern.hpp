@@ -24,8 +24,7 @@ struct pattern
     {
         using namespace boost::gil;
 
-        int h = v2.height();
-        int w = v2.width();
+        std::size_t h = v2.height(), w = v2.width();
         
         // For ensuring that view passed through '()' operator has larger dimensions than view
         // passed through the constructor.
@@ -33,21 +32,21 @@ struct pattern
             return;
 
         int n = 0;
-        for(int x = 0; x < view.width(); x += w)
+        for(std::ptrdiff_t x = 0; x < view.width(); x += w)
         {
-            for(int y = 0; y < view.height(); y += h)
+            for(std::ptrdiff_t y = 0; y < view.height(); y += h)
             {
-                int aw = w;
+                std::ptrdiff_t aw = w;
                 if(x + w > view.width())
                 {
-                    int t = x + w - view.width();
+                    std::ptrdiff_t t = x + w - view.width();
                     aw = w - t;
                 }
 
-                int ah = h;
+                std::ptrdiff_t ah = h;
                 if(y + h > view.height())
                 {
-                    int t = y + h - view.height();
+                    std::ptrdiff_t t = y + h - view.height();
                     ah = h - t;
                 }
 
