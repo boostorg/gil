@@ -26,12 +26,15 @@ struct pattern
 
         std::size_t h = v2.height(), w = v2.width();
         
-        // For ensuring that view passed through '()' operator has larger dimensions than view
-        // passed through the constructor.
+        // For ensuring that view passed through '()' operator has dimensions greater than or
+        // equal to the dimensions of view passed through constructor.
         if(h > view.height() || w > view.width())
-            return;
+        {
+            throw std::length_error("Image view passed through overloaded '()' operator must have"
+            " dimensions greater than or equal to the dimensions of image view passed through"
+            " struct constructor");
+        }
 
-        int n = 0;
         for(std::ptrdiff_t x = 0; x < view.width(); x += w)
         {
             for(std::ptrdiff_t y = 0; y < view.height(); y += h)
