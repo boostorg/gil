@@ -53,7 +53,7 @@ struct pattern
 
                 view_t v3 = subimage_view(view, x, y, aw, ah);
                 view_t v4 = subimage_view(v2, 0, 0, aw, ah);
-                boost::gil::copy_pixels(v4, v3);
+                copy_pixels(v4, v3);
             }
         }
     }
