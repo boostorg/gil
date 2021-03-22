@@ -1,3 +1,10 @@
+//
+// Copyright 2019 Olzhas Zhumabek <anonymous.from.applecity@gmail.com>
+// Copyright 2021 Scramjet911 <36035352+Scramjet911@users.noreply.github.com>
+// Use, modification and distribution are subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+
 #ifndef BOOST_GIL_IMAGE_PROCESSING_HESSIAN_HPP
 #define BOOST_GIL_IMAGE_PROCESSING_HESSIAN_HPP
 
