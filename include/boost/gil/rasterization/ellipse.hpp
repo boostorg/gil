@@ -107,7 +107,8 @@ struct midpoint_elliptical_rasterizer
         std::array<unsigned int, 2> const center,
         std::vector<std::array<std::ptrdiff_t, 2>> const trajectory_points)
     {
-        for (std::size_t i = 0, colour_index = 0; i < view.num_channels(); ++i, ++colour_index)
+        for (int i = 0, colour_index = 0; i < static_cast<int>(view.num_channels()); 
+            ++i, ++colour_index)
         {
             for (std::array<std::ptrdiff_t, 2> point : trajectory_points)
             {
@@ -176,9 +177,9 @@ struct midpoint_elliptical_rasterizer
             || static_cast<int>(center[1] - semi_axes[1]) >= view.height())
         {
             std::cout << "Image can't contain whole curve.\n"
-                "However, it will contain those parts of curve which can fit inside it.\n";
-            std::cout << "Note : Image width = " << view.width() << " and Image height = "
-                << view.height() << "\n";
+                "However, it will contain those parts of curve which can fit inside it.\n"
+                "Note : Image width = " << view.width() << " and Image height = " << 
+                view.height() << "\n";
         }
         std::vector<std::array<std::ptrdiff_t, 2>> trajectory_points = 
             obtain_trajectory(semi_axes);

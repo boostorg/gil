@@ -17,25 +17,29 @@ namespace gil = boost::gil;
 // is equal to the length of major axis of the ellipse.
 // Parameters b and a represent half of lengths of vertical and horizontal axis respectively.
 void test_rasterizer_follows_equation(
-    std::vector<std::array<std::ptrdiff_t, 2>> trajectory_points, int a, int b)
+    std::vector<std::array<std::ptrdiff_t, 2>> trajectory_points, float a, float b)
 {
     float focus_x, focus_y;
     if (a > b) // For horizontal ellipse
     {
-        focus_x = a * std::sqrt(1 - static_cast<float>(b) * b / (a * a));
+        focus_x = a * std::sqrt(1 - b * b / (a * a));
         focus_y = 0;
     }
     else // For vertical ellipse
     {
         focus_x = 0;
-        focus_y = b * std::sqrt(1 - static_cast<float>(a) * a / (b * b));
+        focus_y = b * std::sqrt(1 - a * a / (b * b));
     }
     
-    for (auto point : trajectory_points)
+    for (auto trajectory_point : trajectory_points)
     {
-        float dist_sum = std::sqrt(std::pow(focus_x - point[0], 2) + 
+        // To suppress conversion warnings from compiler
+        std::array<float, 2> point {
+            static_cast<float>(trajectory_point[0]), static_cast<float>(trajectory_point[1])};
+
+        double dist_sum = std::sqrt(std::pow(focus_x - point[0], 2) + 
         std::pow(focus_y - point[1], 2)) + std::sqrt(std::pow( - focus_x - point[0], 2) + 
-                                            std::pow( - focus_y - point[1], 2));
+            std::pow( - focus_y - point[1], 2));
         if (a > b)
         {
             BOOST_TEST(std::abs(dist_sum - 2 * a) < 1);
@@ -51,7 +55,7 @@ void test_rasterizer_follows_equation(
 // successive trajectory points is less than or equal to 1. This ensures that the curve is connected.
 void test_connectivity(std::vector<std::array<std::ptrdiff_t, 2>> points)
 {
-    for (std::ptrdiff_t i = 1; i < points.size(); ++i)
+    for (std::size_t i = 1; i < points.size(); ++i)
     {
         std::ptrdiff_t diff_x = points[i][0] - points[i - 1][0];
         std::ptrdiff_t diff_y = points[i][1] - points[i - 1][1];
@@ -64,13 +68,13 @@ void test_connectivity(std::vector<std::array<std::ptrdiff_t, 2>> points)
 // can be constructed with simple reflection, they tend to be correct if first quadrant is verified.
 int main()
 {
-    for (unsigned int a = 1; a < 101; ++a)
+    for (float a = 1; a < 101; ++a)
     {
-        for (unsigned int b = 1; b < 101; ++b)
+        for (float b = 1; b < 101; ++b)
         {
             auto rasterizer = gil::midpoint_elliptical_rasterizer{};
-            std::vector<std::array<std::ptrdiff_t, 2>> points = 
-                                                      rasterizer.obtain_trajectory({a, b});
+            std::vector<std::array<std::ptrdiff_t, 2>> points = rasterizer.obtain_trajectory(
+                {static_cast<unsigned int>(a), static_cast<unsigned int>(b)});
             test_rasterizer_follows_equation(points, a, b);
             test_connectivity(points);
         }
