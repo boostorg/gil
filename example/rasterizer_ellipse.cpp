@@ -34,10 +34,10 @@ int main()
     gil::rgb8_image_t rgb_buffer_image_out_of_bound(256, 256);
     auto rgb_elliptical_rasterizer_out_of_bound = gil::midpoint_elliptical_rasterizer{};
     rgb_elliptical_rasterizer_out_of_bound(view(rgb_buffer_image_out_of_bound), {255, 0, 0},
-                                                                            {100, 100}, {125, 125});
+        {100, 100}, {125, 125});
 
     gil::write_view("rasterized_ellipse_gray.jpg", view(gray_buffer_image), gil::jpeg_tag{});
     gil::write_view("rasterized_ellipse_rgb.jpg", view(rgb_buffer_image), gil::jpeg_tag{});
     gil::write_view("rasterized_ellipse_rgb_out_of_bound.jpg", view(rgb_buffer_image_out_of_bound),
-                                                                                  gil::jpeg_tag{});
+        gil::jpeg_tag{});
 }
