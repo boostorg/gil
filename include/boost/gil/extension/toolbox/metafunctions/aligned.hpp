@@ -7,7 +7,7 @@
 
 #include <boost/gil.hpp>
 
-namespace boost  {  namespace gil  {
+namespace boost { namespace gil {
 
 /// \brief Aligns the image view passed through struct constructor in a specific direction
 /// inside the image view passed through the overloaded '()' operator. The direction of 
@@ -43,28 +43,28 @@ struct aligned
 
         // For ensuring that view passed through '()' operator has dimensions greater than or
         // equal to the dimensions of view passed through constructor.
-        if(h > view.height() || w > view.width())
+        if (h > view.height() || w > view.width())
         {
             throw std::length_error("Image view passed through overloaded '()' operator must have"
-            " dimensions greater than or equal to the dimensions of image view passed through"
-            " struct constructor");
+                " dimensions greater than or equal to the dimensions of image view passed through"
+                " struct constructor");
         }
 
         std::ptrdiff_t x = 0;
-        if(align & center)
+        if (align & center)
             x = (view.width() - w) / 2;
-        else if(align & right)
+        else if (align & right)
             x = view.width() - w;
 
         std::ptrdiff_t y = 0;
-        if(align & middle)
+        if (align & middle)
             y = (view.height() - h) / 2;
-        else if(align & bottom)
+        else if (align & bottom)
             y = view.height() - h;
 
         view_t v3 = subimage_view(view, x, y, w, h);
         copy_pixels(v2, v3);
     }
-};
-}  }
+}; // shrink
+}} // namespace boost::gil
 #endif
