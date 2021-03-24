@@ -61,7 +61,7 @@ The algorithm is applied on a few standard images. One of the transformations in
 
 **Grayscale Image**
 
-.. figure:: barbara.jpg
+.. figure:: https://github.com/boost-gil/test-images/blob/master/jpeg/suite/barbara.jpg
     :width: 512px
     :align: center
     :height: 256px
@@ -70,7 +70,7 @@ The algorithm is applied on a few standard images. One of the transformations in
 
 **RGB**
 
-.. figure:: church.jpg
+.. figure:: https://github.com/boost-gil/test-images/blob/master/jpeg/suite/church.jpg
     :width: 900px
     :align: center
     :height: 300px
