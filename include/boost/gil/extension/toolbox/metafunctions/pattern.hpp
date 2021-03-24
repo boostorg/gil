@@ -7,7 +7,7 @@
 
 #include <boost/gil.hpp>
 
-namespace boost  {  namespace gil  {
+namespace boost { namespace gil {
 
 /// \brief Repeatedly copies smaller image view passed through the struct constructor in subimage
 /// views of the larger image view passed through overloaded '()' operator.
@@ -28,26 +28,26 @@ struct pattern
         
         // For ensuring that view passed through '()' operator has dimensions greater than or
         // equal to the dimensions of view passed through constructor.
-        if(h > view.height() || w > view.width())
+        if (h > view.height() || w > view.width())
         {
             throw std::length_error("Image view passed through overloaded '()' operator must have"
             " dimensions greater than or equal to the dimensions of image view passed through"
             " struct constructor");
         }
 
-        for(std::ptrdiff_t x = 0; x < view.width(); x += w)
+        for (std::ptrdiff_t x = 0; x < view.width(); x += w)
         {
-            for(std::ptrdiff_t y = 0; y < view.height(); y += h)
+            for (std::ptrdiff_t y = 0; y < view.height(); y += h)
             {
                 std::ptrdiff_t aw = w;
-                if(x + w > view.width())
+                if (x + w > view.width())
                 {
                     std::ptrdiff_t t = x + w - view.width();
                     aw = w - t;
                 }
 
                 std::ptrdiff_t ah = h;
-                if(y + h > view.height())
+                if (y + h > view.height())
                 {
                     std::ptrdiff_t t = y + h - view.height();
                     ah = h - t;
@@ -59,7 +59,6 @@ struct pattern
             }
         }
     }
-};
-}  }
-
+}; // pattern
+}} // namespace boost::gil
 #endif
