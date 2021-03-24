@@ -7,7 +7,7 @@
 
 #include <boost/gil.hpp>
 
-namespace boost  {  namespace gil  {
+namespace boost { namespace gil {
 
 /// \brief Assigns a smaller subimage view of the view given as first parameter to the
 /// destination/resultant view given as second parameter to the overloaded '()' operator.
@@ -30,22 +30,22 @@ struct shrink
 
     void operator()(view_t& view, view_t& dstView)
     {
-        if(left < 1.0)
+        if (left < 1.0)
             left *= view.width();
-        if(right < 1.0)
+        if (right < 1.0)
             right *= view.width();
-        if(top < 1.0)
+        if (top < 1.0)
             top *= view.height();
-        if(bottom < 1.0)
+        if (bottom < 1.0)
             bottom *= view.height();
 
         double width = view.width() - left - right;
         double height = view.height() - top - bottom;
         dstView = boost::gil::subimage_view(view, static_cast<std::ptrdiff_t>(left),
-        static_cast<std::ptrdiff_t>(top), static_cast<std::ptrdiff_t>(width),
-        static_cast<std::ptrdiff_t>(height));
+            static_cast<std::ptrdiff_t>(top), static_cast<std::ptrdiff_t>(width),
+            static_cast<std::ptrdiff_t>(height));
     }
-};
-}  }
+}; // shrink
+}} // namespace boost::gil
 
 #endif
