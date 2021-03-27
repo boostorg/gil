@@ -38,7 +38,7 @@ void test_rasterizer_follows_equation(
             static_cast<float>(trajectory_point[0]), static_cast<float>(trajectory_point[1])};
 
         double dist_sum = std::sqrt(std::pow(focus_x - point[0], 2) + 
-        std::pow(focus_y - point[1], 2)) + std::sqrt(std::pow( - focus_x - point[0], 2) + 
+            std::pow(focus_y - point[1], 2)) + std::sqrt(std::pow( - focus_x - point[0], 2) + 
             std::pow( - focus_y - point[1], 2));
         if (a > b)
         {

@@ -92,9 +92,9 @@ struct midpoint_elliptical_rasterizer
         return trajectory_points;
     }
 
-    /// \brief Fills pixels returned by function 'obtain_trajectory' as well as well as pixels
+    /// \brief Fills pixels returned by function 'obtain_trajectory' as well as pixels
     /// obtained from their reflection along major axis, minor axis and line passing through
-    /// center with slope -1 with colours provided by user.
+    /// center with slope -1 using colours provided by user.
     /// \param view - Gil view of image on which the elliptical curve is to be drawn.
     /// \param colour - Constant vector specifying colour intensity values for all channels present
     ///                 in 'view'.
@@ -134,19 +134,19 @@ struct midpoint_elliptical_rasterizer
                 }
                 if (validity[0] && validity[2])
                 {
-                    nth_channel_view(view, i)(co_ords[0], co_ords[2]) = colour[colour_index];
+                    nth_channel_view(view, i)(co_ords[0], co_ords[2])[0] = colour[colour_index];
                 }
                 if (validity[1] && validity[2])
                 {
-                    nth_channel_view(view, i)(co_ords[1], co_ords[2]) = colour[colour_index];
+                    nth_channel_view(view, i)(co_ords[1], co_ords[2])[0] = colour[colour_index];
                 }
                 if (validity[1] && validity[3])
                 {
-                    nth_channel_view(view, i)(co_ords[1], co_ords[3]) = colour[colour_index];
+                    nth_channel_view(view, i)(co_ords[1], co_ords[3])[0] = colour[colour_index];
                 }
                 if (validity[0] && validity[3])
                 {
-                    nth_channel_view(view, i)(co_ords[0], co_ords[3]) = colour[colour_index];
+                    nth_channel_view(view, i)(co_ords[0], co_ords[3])[0] = colour[colour_index];
                 }
             }
         }
@@ -157,8 +157,10 @@ struct midpoint_elliptical_rasterizer
     /// \param view - Gil view of image on which the elliptical curve is to be drawn.
     /// \param colour - Constant vector specifying colour intensity values for all channels present
     ///                 in 'view'.
-    /// \param center - Array specifying co-ordinates of center of ellipse to be drawn.
-    /// \param semi_axes - Array containing lengths of semi-major axis and semi-minor axis respectively.                
+    /// \param center - Array containing positive integer x co-ordinate and y co-ordinate of the
+    /// center respectively.
+    /// \param semi_axes - Array containing positive integer lengths of horizontal semi-axis
+    /// and vertical semi-axis respectively.
     /// \tparam View - Type of input image view.
     template<typename View>
     void operator()(View view, std::vector<unsigned int> const colour,
