@@ -32,6 +32,7 @@ local sources =
     mandelbrot.cpp
     morphology.cpp
     packed_pixel.cpp
+    rasterizer_ellipse.cpp
     resize.cpp
     sobel_scharr.cpp
     threshold.cpp
