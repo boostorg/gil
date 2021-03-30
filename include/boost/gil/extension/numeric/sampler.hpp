@@ -13,7 +13,7 @@
 
 namespace boost { namespace gil {
 
-// Nearest-neighbor and bilinear image samplers.
+// Nearest-neighbor, bilinear and bicubic image samplers.
 // NOTE: The code is for example use only. It is not optimized for performance
 
 ///////////////////////////////////////////////////////////////////////////
@@ -55,10 +55,17 @@ struct cast_channel_fn {
     }
 };
 
+
+
 template <typename SrcPixel, typename DstPixel>
 void cast_pixel(const SrcPixel& src, DstPixel& dst) {
     static_for_each(src,dst,cast_channel_fn());
 }
+
+// template <typename SrcPixel, typename DstPixel>
+// void cast_pixel_bicubic(const SrcPixel& src, DstPixel& dst) {
+//     static_for_each(src, dst, cubic_interpolate_check());
+// }
 
 namespace detail {
 
@@ -86,22 +93,54 @@ struct add_dst_mul_src {
     }
 };
 
+struct cubic_interpolate_check {
+    template <typename SrcChannel, typename DstChannel>
+    void operator()(const SrcChannel& , DstChannel& dst) {
+        // using dst_value_t = typename channel_traits<DstChannel>::value_type;
+        using src_value_t = typename channel_traits<SrcChannel>::value_type;
 
-template <typename SrcView, typename SrcP, typename Weight, typename DstP>
-struct bicubic_interpolate
-{
-    void operator()(const SrcP& p0, const SrcP& p1, const SrcP& p2, const SrcP& p3, const Weight x, DstP& dst) const 
-    {
-        using add_dst_mul_src_current = add_dst_mul_src<SrcP,Weight,pixel<Weight,devicen_layout_t<num_channels<SrcView>::value> > >;
-
-        add_dst_mul_src_current()(p0, ((-0.5 * x) + (x*x) - (0.5 * x*x*x)), dst);
-        add_dst_mul_src_current()(p1, (1 - (2.5 * x*x) + (1.5 * x*x*x)), dst);
-        add_dst_mul_src_current()(p2, ((0.5 * x) + (2 * x*x) - (1.5 * x*x*x)), dst);
-        add_dst_mul_src_current()(p3, ((-0.5 * x*x) + (0.5 * x*x*x)), dst);
+        if(dst > channel_traits<SrcChannel>::max_value()){
+            dst = src_value_t(channel_traits<SrcChannel>::max_value());
+        }
+        else if(dst < channel_traits<SrcChannel>::min_value()){
+            dst = src_value_t(channel_traits<SrcChannel>::min_value());
+        }
+        else{
+            dst = src_value_t(dst);
+        }
     }
 };
 
+template <typename Weight>
+struct cubic_interpolate_channel {
+    Weight _w1;
+    Weight _w2;
+    Weight _w3;
+    Weight _w4;
+    cubic_interpolate_channel(Weight w1, Weight w2, Weight w3, Weight w4) : _w1(w1), _w2(w2), _w3(w3), _w4(w4) {}
 
+    template <typename SrcChannel, typename DstChannel>
+    void operator()(const SrcChannel& src1, const SrcChannel& src2, const SrcChannel& src3, const SrcChannel& src4, DstChannel& dst) const {
+        dst = DstChannel(src1*_w1 + src2*_w2 + src3*_w3 + src4*_w4);
+    }
+};
+
+template <typename SrcView, typename SrcP, typename Weight, typename DstP>
+struct cubic_interpolate
+{
+    void operator()(const SrcP& p0, const SrcP& p1, const SrcP& p2, const SrcP& p3, const Weight x, DstP& dst) const 
+    {
+        Weight w0 = ((-0.5 * x) + (x*x) - (0.5 * x*x*x));
+        Weight w1 = (1 - (2.5 * x*x) + (1.5 * x*x*x));
+        Weight w2 = ((0.5 * x) + (2 * x*x) - (1.5 * x*x*x));
+        Weight w3 = ((-0.5 * x*x) + (0.5 * x*x*x));
+
+        static_for_each(p0, p1, p2, p3, dst, cubic_interpolate_channel<Weight>(w0, w1, w2, w3));
+        
+        // Overflow check. Should optimally be after all cubic calculations
+        static_for_each(p0, dst, cubic_interpolate_check());
+    }
+};
 
 } // namespace detail
 
@@ -201,8 +240,9 @@ bool sample(bilinear_sampler, SrcView const& src, point<F> const& p, DstP& resul
 	return true;
 }
 
-/// \brief A sampler that sets the destination pixel as the bicubic interpolation of the four closest pixels from the source.
-/// If outside the bounds, it doesn't change the destination
+/// \brief A sampler that sets the destination pixel as the bicubic interpolation of the 16 closest pixels from the source.
+/// If outside the bounds, it doesn't change the destination. Boundary pixels are the cubic interpolation of 4 adjacent
+/// pixels.
 /// \ingroup ImageAlgorithms
 struct bicubic_sampler {};
 
@@ -210,7 +250,7 @@ template <typename DstP, typename SrcView, typename F>
 bool sample(bicubic_sampler, SrcView const& src, point<F> const& p, DstP& result)
 {
     using SrcP = typename SrcView::value_type;
-    using bicubic_interpolate_current = typename detail::bicubic_interpolate<SrcView, SrcP, F, pixel<F, devicen_layout_t<num_channels<SrcView>::value> > >;
+    using cubic_interpolate_current = typename detail::cubic_interpolate<SrcView, SrcP, F, pixel<F, devicen_layout_t<num_channels<SrcView>::value> > >;
 
     point_t p0(ifloor(p.x), ifloor(p.y)); // the closest integer coordinate top left from p
     point<F> frac(p.x-p0.x, p.y-p0.y);
@@ -223,7 +263,7 @@ bool sample(bicubic_sampler, SrcView const& src, point<F> const& p, DstP& result
 	pixel<F,devicen_layout_t<num_channels<SrcView>::value> > mp0(0), mp1(0), mp2(0), mp3(0), mpres(0); // suboptimal
     
 	typename SrcView::xy_locator loc=src.xy_at(p0.x,p0.y);
-
+    
     if(p0.y == -1)
     {
         // Topmost row pixels
@@ -236,7 +276,7 @@ bool sample(bicubic_sampler, SrcView const& src, point<F> const& p, DstP& result
         else if(p0.x == 0)
         {
             // Top left after corner pixel
-            bicubic_interpolate_current()(*loc, *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mpres);
+            cubic_interpolate_current()(*loc, *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mpres);
         }
         else if(p0.x+1 == src.width())
         {
@@ -246,12 +286,12 @@ bool sample(bicubic_sampler, SrcView const& src, point<F> const& p, DstP& result
         else if(p0.x+2 == src.width())
         {
             // Top right pixel before corner pixel
-            bicubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+1), frac.x, mpres);
+            cubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+1), frac.x, mpres);
         }
         else
         {
             // All other top row pixels
-            bicubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mpres);
+            cubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mpres);
         }
     }
     else if(p0.y == 0)
@@ -261,48 +301,48 @@ bool sample(bicubic_sampler, SrcView const& src, point<F> const& p, DstP& result
         {
             // Left corner pixel of 2nd row
             ++loc.x();
-            bicubic_interpolate_current()(*loc, *loc, *(loc.y()+1), *(loc.y()+2), frac.y, mpres);
+            cubic_interpolate_current()(*loc, *loc, *(loc.y()+1), *(loc.y()+2), frac.y, mpres);
         }
         else if(p0.x == 0)
         {
             // Pixel after left corner pixel of 2nd row
-            bicubic_interpolate_current()(*loc, *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp1);
+            cubic_interpolate_current()(*loc, *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp1);
             mp0 = mp1;
             ++loc.y();
-            bicubic_interpolate_current()(*loc, *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp2);
+            cubic_interpolate_current()(*loc, *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp2);
             ++loc.y();
-            bicubic_interpolate_current()(*loc, *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp3);
+            cubic_interpolate_current()(*loc, *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp3);
             
-            bicubic_interpolate_current()(mp0, mp1, mp2, mp3, frac.y, mpres);
+            cubic_interpolate_current()(mp0, mp1, mp2, mp3, frac.y, mpres);
         }
         else if(p0.x+1 == src.width())
         {
             // Right corner pixel of 2nd row
-            bicubic_interpolate_current()(*loc, *loc, *(loc.y()+1), *(loc.y()+2), frac.y, mpres);
+            cubic_interpolate_current()(*loc, *loc, *(loc.y()+1), *(loc.y()+2), frac.y, mpres);
         }
         else if(p0.x+2 == src.width())
         {
             // Pixel before right corner pixel of 2nd row
-            bicubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+1), frac.x, mp1);
+            cubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+1), frac.x, mp1);
             mp0 = mp1;
             ++loc.y();
-            bicubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+1), frac.x, mp2);
+            cubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+1), frac.x, mp2);
             ++loc.y();
-            bicubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+1), frac.x, mp3);
+            cubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+1), frac.x, mp3);
             
-            bicubic_interpolate_current()(mp0, mp1, mp2, mp3, frac.y, mpres);
+            cubic_interpolate_current()(mp0, mp1, mp2, mp3, frac.y, mpres);
         }
         else
         {
             // All other pixels of 2nd row
-            bicubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp1);
+            cubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp1);
             mp0 = mp1;
             ++loc.y();
-            bicubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp2);
+            cubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp2);
             ++loc.y();
-            bicubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp3);
+            cubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp3);
             
-            bicubic_interpolate_current()(mp0, mp1, mp2, mp3, frac.y, mpres);
+            cubic_interpolate_current()(mp0, mp1, mp2, mp3, frac.y, mpres);
         }
         
     }
@@ -317,7 +357,7 @@ bool sample(bicubic_sampler, SrcView const& src, point<F> const& p, DstP& result
         else if(p0.x == 0)
         {
             // Pixel after left corner of last row
-            bicubic_interpolate_current()(*loc, *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mpres);
+            cubic_interpolate_current()(*loc, *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mpres);
         }
         else if(p0.x+1 == src.width())
         {
@@ -327,12 +367,12 @@ bool sample(bicubic_sampler, SrcView const& src, point<F> const& p, DstP& result
         else if(p0.x+2 == src.width())
         {
             // Pixel before right corner of last row
-            bicubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+1), frac.x, mpres);
+            cubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+1), frac.x, mpres);
         }
         else
         {
             // All other pixels of last row
-            bicubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mpres);
+            cubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mpres);
         }
     }
     else if(p0.y+2 == src.height())
@@ -342,51 +382,51 @@ bool sample(bicubic_sampler, SrcView const& src, point<F> const& p, DstP& result
         {
             // Leftmost corner of 2nd last row
             ++loc.x();
-            bicubic_interpolate_current()(*(loc.y()-1), *loc, *(loc.y()+1), *(loc.y()+1), frac.y, mpres);
+            cubic_interpolate_current()(*(loc.y()-1), *loc, *(loc.y()+1), *(loc.y()+1), frac.y, mpres);
         }
         else if(p0.x == 0)
         {
             // Pixel after left corner of second last row
             --loc.y();
-            bicubic_interpolate_current()(*loc, *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp0);
+            cubic_interpolate_current()(*loc, *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp0);
             ++loc.y();
-            bicubic_interpolate_current()(*loc, *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp1);
+            cubic_interpolate_current()(*loc, *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp1);
             ++loc.y();
-            bicubic_interpolate_current()(*loc, *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp2);
+            cubic_interpolate_current()(*loc, *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp2);
             mp3 = mp2;
             
-            bicubic_interpolate_current()(mp0, mp1, mp2, mp3, frac.y, mpres);
+            cubic_interpolate_current()(mp0, mp1, mp2, mp3, frac.y, mpres);
         }
         else if(p0.x+1 == src.width())
         {
             // Right corner of second last row
-            bicubic_interpolate_current()(*(loc.y()-1), *loc, *(loc.y()+1), *(loc.y()+1), frac.y, mpres);
+            cubic_interpolate_current()(*(loc.y()-1), *loc, *(loc.y()+1), *(loc.y()+1), frac.y, mpres);
         }
         else if(p0.x+2 == src.width())
         {
             // Pixel before right corner of second last row
             --loc.y();
-            bicubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+1), frac.x, mp0);
+            cubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+1), frac.x, mp0);
             ++loc.y();
-            bicubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+1), frac.x, mp1);
+            cubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+1), frac.x, mp1);
             ++loc.y();
-            bicubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+1), frac.x, mp2);
+            cubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+1), frac.x, mp2);
             mp3 = mp2;
             
-            bicubic_interpolate_current()(mp0, mp1, mp2, mp3, frac.y, mpres);
+            cubic_interpolate_current()(mp0, mp1, mp2, mp3, frac.y, mpres);
         }
         else
         {
             // All other pixels in second last row
             --loc.y();
-            bicubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp0);
+            cubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp0);
             ++loc.y();
-            bicubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp1);
+            cubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp1);
             ++loc.y();
-            bicubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp2);
+            cubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp2);
             mp3 = mp2;
 
-            bicubic_interpolate_current()(mp0, mp1, mp2, mp3, frac.y, mpres);
+            cubic_interpolate_current()(mp0, mp1, mp2, mp3, frac.y, mpres);
         }
     }
     else
@@ -396,58 +436,60 @@ bool sample(bicubic_sampler, SrcView const& src, point<F> const& p, DstP& result
         {
             // First column
             ++loc.x();
-            bicubic_interpolate_current()(*(loc.y()-1), *loc, *(loc.y()+1), *(loc.y()+2), frac.y, mpres);
+            cubic_interpolate_current()(*(loc.y()-1), *loc, *(loc.y()+1), *(loc.y()+2), frac.y, mpres);
         }
         else if(p0.x == 0)
         {
             // 2nd column
             --loc.y();
-            bicubic_interpolate_current()(*loc, *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp0);
+            cubic_interpolate_current()(*loc, *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp0);
             ++loc.y();
-            bicubic_interpolate_current()(*loc, *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp1);
+            cubic_interpolate_current()(*loc, *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp1);
             ++loc.y();
-            bicubic_interpolate_current()(*loc, *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp2);
+            cubic_interpolate_current()(*loc, *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp2);
             ++loc.y();
-            bicubic_interpolate_current()(*loc, *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp3);
+            cubic_interpolate_current()(*loc, *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp3);
             
-            bicubic_interpolate_current()(mp0, mp1, mp2, mp3, frac.y, mpres);
+            cubic_interpolate_current()(mp0, mp1, mp2, mp3, frac.y, mpres);
         }
         else if(p0.x+1 == src.width())
         {
             // Last column
-            bicubic_interpolate_current()(*(loc.y()-1), *loc, *(loc.y()+1), *(loc.y()+2), frac.y, mpres);
+            cubic_interpolate_current()(*(loc.y()-1), *loc, *(loc.y()+1), *(loc.y()+2), frac.y, mpres);
         }
         else if(p0.x+2 == src.width())
         {
             // 2nd last column
             --loc.y();
-            bicubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+1), frac.x, mp0);
+            cubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+1), frac.x, mp0);
             ++loc.y();
-            bicubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+1), frac.x, mp1);
+            cubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+1), frac.x, mp1);
             ++loc.y();
-            bicubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+1), frac.x, mp2);
+            cubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+1), frac.x, mp2);
             ++loc.y();
-            bicubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+1), frac.x, mp3);
+            cubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+1), frac.x, mp3);
             
-            bicubic_interpolate_current()(mp0, mp1, mp2, mp3, frac.y, mpres);
+            cubic_interpolate_current()(mp0, mp1, mp2, mp3, frac.y, mpres);
         }
         else
         {
             // All general cases, center pixels
             --loc.y();
-            bicubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp0);
+            cubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp0);
             ++loc.y();
-            bicubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp1);
+            cubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp1);
             ++loc.y();
-            bicubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp2);
+            cubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp2);
             ++loc.y();
-            bicubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp3);
+            cubic_interpolate_current()(*(loc.x()-1), *loc, *(loc.x()+1), *(loc.x()+2), frac.x, mp3);
             
-            bicubic_interpolate_current()(mp0, mp1, mp2, mp3, frac.y, mpres);
+            cubic_interpolate_current()(mp0, mp1, mp2, mp3, frac.y, mpres);
+
         }
     }
 
     SrcP src_result;
+    
 	cast_pixel(mpres, src_result);
 
 	color_convert(src_result, result);
