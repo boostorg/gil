@@ -68,7 +68,7 @@ inline detail::kernel_2d<T, Allocator> get_identity_kernel()
 /// \tparam T1 - Type of first argument for kernel vector convolution.
 /// \tparam T2 - Type of second argument for kernel vector convolution.
 template<typename T1, typename T2>
-static auto kernel_convolve_impl(T1 kernel1, T2 kernel2) -> std::vector<std::vector<float>>
+inline auto kernel_convolve_impl(T1 kernel1, T2 kernel2) -> std::vector<std::vector<float>>
 {
     size_t convolved_kernel_size = kernel1.size() + kernel2.size() - 1;
     std::vector<std::vector<float>> convolved_kernel(convolved_kernel_size,
@@ -133,7 +133,7 @@ static auto kernel_convolve_impl(T1 kernel1, T2 kernel2) -> std::vector<std::vec
 /// \param kernel - Kernel vector which will be filled.
 /// \param type - Indicates the type of second order derivative kernel which is to be filled inside
 /// first argument.
-static void kernel_vector_fill(std::vector<std::vector<float>>& kernel, kernel_type type)
+inline void kernel_vector_fill(std::vector<std::vector<float>>& kernel, kernel_type type)
 {
     if(type == kernel_type::sobel_dx)
     {
@@ -161,7 +161,7 @@ static void kernel_vector_fill(std::vector<std::vector<float>>& kernel, kernel_t
 /// order is obtained.
 /// \param order - Indicates order of derivative whose kernel vector is to be returned.
 /// \param type - Indicates the type of kernel vector which is to be returned.
-static auto kernel_convolve(unsigned int order, kernel_type type) -> std::vector<float>
+inline auto kernel_convolve(unsigned int order, kernel_type type) -> std::vector<float>
 {
     std::vector<float> convolved_kernel_flatten;
     std::vector<std::vector<float>> convolved_kernel(5, std::vector<float>(5));
@@ -202,5 +202,5 @@ static auto kernel_convolve(unsigned int order, kernel_type type) -> std::vector
 }
 /// @}
 }}} // namespace boost::gil::detail
-
+ 
 #endif
