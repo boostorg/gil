@@ -163,7 +163,7 @@ inline detail::kernel_2d<T, Allocator> generate_gaussian_kernel(std::size_t side
 template <typename T = float, typename Allocator = std::allocator<T>>
 inline detail::kernel_2d<T, Allocator> generate_dx_sobel(unsigned int degree = 1)
 {
-    if(degree == 0)
+    if (degree == 0)
         return detail::get_identity_kernel<T, Allocator>();
     else if (degree == 1)
     {
@@ -171,13 +171,13 @@ inline detail::kernel_2d<T, Allocator> generate_dx_sobel(unsigned int degree = 1
         std::copy(detail::dx_sobel.begin(), detail::dx_sobel.end(), result.begin());
         return result;
     }
-    else if(degree == 2)
+    else if (degree == 2)
     {
         detail::kernel_2d<T, Allocator> result(5, 2, 2);
         std::copy(detail::dx_sobel2.begin(), detail::dx_sobel2.end(), result.begin());
         return result;
     }
-    else if(degree <= 15)
+    else if (degree <= 15)
     {
         detail::kernel_2d<T, Allocator> result(2 * degree + 1, degree, degree);
         std::vector<float> dx_sobeln = detail::kernel_convolve(degree, detail::kernel_type::sobel_dx);
@@ -229,7 +229,7 @@ inline detail::kernel_2d<T, Allocator> generate_dx_scharr(unsigned int degree = 
 template <typename T = float, typename Allocator = std::allocator<T>>
 inline detail::kernel_2d<T, Allocator> generate_dy_sobel(unsigned int degree = 1)
 {
-    if(degree == 0)
+    if (degree == 0)
         return detail::get_identity_kernel<T, Allocator>();
     else if (degree == 1)
     {
@@ -237,13 +237,13 @@ inline detail::kernel_2d<T, Allocator> generate_dy_sobel(unsigned int degree = 1
         std::copy(detail::dy_sobel.begin(), detail::dy_sobel.end(), result.begin());
         return result;
     }
-    else if(degree == 2)
+    else if (degree == 2)
     {
         detail::kernel_2d<T, Allocator> result(5, 2, 2);
         std::copy(detail::dy_sobel2.begin(), detail::dy_sobel2.end(), result.begin());
         return result;
     }
-    else if(degree <= 15)
+    else if (degree <= 15)
     {
         detail::kernel_2d<T, Allocator> result(2 * degree + 1, degree, degree);
         std::vector<float> dy_sobeln = detail::kernel_convolve(degree, detail::kernel_type::sobel_dy);

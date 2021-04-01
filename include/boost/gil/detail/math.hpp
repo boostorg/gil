@@ -70,7 +70,7 @@ inline detail::kernel_2d<T, Allocator> get_identity_kernel()
 template<typename T1, typename T2>
 inline auto kernel_convolve_impl(T1 kernel1, T2 kernel2) -> std::vector<std::vector<float>>
 {
-    size_t convolved_kernel_size = kernel1.size() + kernel2.size() - 1;
+    std::ptrdiff_t convolved_kernel_size = kernel1.size() + kernel2.size() - 1;
     std::vector<std::vector<float>> convolved_kernel(convolved_kernel_size,
         std::vector<float>(convolved_kernel_size));
     std::vector<std::vector<float>> dummy_kernel(convolved_kernel_size,
@@ -87,9 +87,10 @@ inline auto kernel_convolve_impl(T1 kernel1, T2 kernel2) -> std::vector<std::vec
     // 'kernel1' to create 'dummy_kernel'.
     
     std::ptrdiff_t padding_origin = (kernel2.size() - 1) / 2;
-    for(std::ptrdiff_t row = padding_origin;row < dummy_kernel.size() - padding_origin; ++row)
+    for (long unsigned int row = padding_origin; row < dummy_kernel.size() - padding_origin; ++row)
     {
-        for(std::ptrdiff_t col = padding_origin;col < dummy_kernel.size() - padding_origin; ++col)
+        for (long unsigned int col = padding_origin; col < dummy_kernel.size() - padding_origin;
+            ++col)
         {
             dummy_kernel[row][col] = kernel1[row - padding_origin][col - padding_origin];
         }
@@ -97,15 +98,16 @@ inline auto kernel_convolve_impl(T1 kernel1, T2 kernel2) -> std::vector<std::vec
 
     std::ptrdiff_t flip_kernel_row, flip_kernel_col, row_boundary, col_boundary;
     float aux_total = 0.0f;
-    for(std::ptrdiff_t dummy_row = 0;dummy_row < convolved_kernel_size; ++dummy_row)
+    for (std::ptrdiff_t dummy_row = 0; dummy_row < convolved_kernel_size; ++dummy_row)
     {
-        for(std::ptrdiff_t dummy_col = 0;dummy_col < convolved_kernel_size; ++dummy_col)
+        for (std::ptrdiff_t dummy_col = 0; dummy_col < convolved_kernel_size; ++dummy_col)
         {
             aux_total = 0.0f;
-            for(std::ptrdiff_t kernel2_row = 0;kernel2_row < kernel2.size(); ++kernel2_row)
+            for (long unsigned int kernel2_row = 0; kernel2_row < kernel2.size(); ++kernel2_row)
             {
                 flip_kernel_row = kernel2.size() - 1 - kernel2_row;
-                for(std::ptrdiff_t kernel2_col = 0;kernel2_col < kernel2.size(); ++kernel2_col)
+                for (long unsigned int kernel2_col = 0; kernel2_col < kernel2.size();
+                    ++kernel2_col)
                 {
                     flip_kernel_col = kernel2.size() - 1 - kernel2_col;
                     row_boundary = dummy_row + kernel2.size()/2 - flip_kernel_row;
@@ -135,21 +137,21 @@ inline auto kernel_convolve_impl(T1 kernel1, T2 kernel2) -> std::vector<std::vec
 /// first argument.
 inline void kernel_vector_fill(std::vector<std::vector<float>>& kernel, kernel_type type)
 {
-    if(type == kernel_type::sobel_dx)
+    if (type == kernel_type::sobel_dx)
     {
-        for(std::ptrdiff_t row = 0;row < 5; ++row)
+        for (std::ptrdiff_t row = 0; row < 5; ++row)
         {
-            for(std::ptrdiff_t col = 0;col < 5; ++col)
+            for (std::ptrdiff_t col = 0; col < 5; ++col)
             {
                 kernel[row][col] = dx_sobel2[5 * row + col];
             }
         }
     }
-    else if(type == kernel_type::sobel_dy)
+    else if (type == kernel_type::sobel_dy)
     {
-        for(std::ptrdiff_t row =0;row < 5; ++row)
+        for (std::ptrdiff_t row =0; row < 5; ++row)
         {
-            for(std::ptrdiff_t col = 0;col < 5; ++col)
+            for (std::ptrdiff_t col = 0; col < 5; ++col)
             {
                 kernel[row][col] = dy_sobel2[5 * row + col];
             }
@@ -173,9 +175,9 @@ inline auto kernel_convolve(unsigned int order, kernel_type type) -> std::vector
     // Variable 'smooth_repetition' will store the number of times we need to convolve 
     // 'smoothing_dummy' with itself. This number when used as a power of 2 in its exponentiation,
     // will result in a number which is the largest power of 2 smaller than 'order - 2'.
-    const unsigned int smooth_repetition = static_cast<unsigned int>(std::log2(order - 2));
+    const double smooth_repetition = static_cast<unsigned int>(std::log2(order - 2));
 
-    for(unsigned int i = 0;i < smooth_repetition; ++i)
+    for (unsigned int i = 0; i < smooth_repetition; ++i)
     {
         smoothing_dummy = kernel_convolve_impl(smoothing_dummy, smoothing_dummy);
     }
@@ -184,15 +186,15 @@ inline auto kernel_convolve(unsigned int order, kernel_type type) -> std::vector
 
     // Variable 'order_decrease' will store the amount of decrease in order obtained due to the above 
     // optimization. It stores the largest power of 2 smaller than 'order - 2'.
-    const unsigned int order_decrease = std::pow(2, smooth_repetition);
-    for(unsigned int i = 0;i < order - 2 - order_decrease; ++i)
+    const double order_decrease = std::pow(2, smooth_repetition);
+    for (unsigned int i = 0; i < order - 2 - order_decrease; ++i)
     {
         convolved_kernel = kernel_convolve_impl(convolved_kernel, smoothing_kernel);
     }
 
-    for(std::ptrdiff_t row = 0;row < convolved_kernel.size(); ++row)
+    for (long unsigned int row = 0; row < convolved_kernel.size(); ++row)
     {
-        for(std::ptrdiff_t col = 0;col < convolved_kernel.size(); ++col)
+        for (long unsigned int col = 0; col < convolved_kernel.size(); ++col)
         {
             convolved_kernel_flatten.push_back(convolved_kernel[row][col]);
         }
