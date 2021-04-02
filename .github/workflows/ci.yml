@@ -26,6 +26,7 @@ jobs:
             cxxstd: "11,14,17"
             os: ubuntu-18.04
           - toolset: gcc-8
+            compiler: g++-8
             cxxstd: "11,14,17,2a"
             os: ubuntu-18.04
           - toolset: gcc-9
