@@ -25,9 +25,11 @@ jobs:
           - toolset: gcc-7
             cxxstd: "11,14,17"
             os: ubuntu-18.04
-          - toolset: gcc-8
+          - toolset: gcc
+            compiler: g++-8
             cxxstd: "11,14,17,2a"
             os: ubuntu-18.04
+            install: g++-8
           - toolset: gcc-9
             cxxstd: "11,14,17,2a"
             os: ubuntu-18.04
@@ -76,6 +78,7 @@ jobs:
             compiler: clang++-6.0
             cxxstd: "11,14,17"
             os: ubuntu-18.04
+            install: clang-6.0
           - toolset: clang
             compiler: clang++-7
             cxxstd: "11,14,17"
@@ -85,6 +88,7 @@ jobs:
             compiler: clang++-8
             cxxstd: "11,14,17,2a"
             os: ubuntu-20.04
+            install: clang-8
           - toolset: clang
             compiler: clang++-9
             cxxstd: "11,14,17,2a"
@@ -123,6 +127,7 @@ jobs:
         if: matrix.compiler
         run: |
           echo "using ${{matrix.toolset}} : : ${{matrix.compiler}} ;" > ~/user-config.jam
+          cat ~/user-config.jam
 
       - name: Run tests
         if: "!matrix.define"
