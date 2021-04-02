@@ -114,19 +114,17 @@ same set of colors in the same order).</p>
 <li><code class="docutils literal notranslate"><span class="pre">argb_layout_t</span></code></li>
 </ul>
 <p>As an example, here is how GIL defines the RGBA color space:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="n">code</span><span class="o">-</span><span class="n">block</span><span class="o">::</span> <span class="n">cpp</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">red_t</span> <span class="p">{};</span>
+<span class="k">struct</span> <span class="n">green_t</span> <span class="p">{};</span>
+<span class="k">struct</span> <span class="n">blue_t</span> <span class="p">{};</span>
+<span class="k">struct</span> <span class="n">alpha_t</span> <span class="p">{};</span>
+<span class="n">rgba_t</span> <span class="o">=</span> <span class="k">using</span> <span class="n">mpl</span><span class="o">::</span><span class="n">vector4</span><span class="o">&lt;</span><span class="n">red_t</span><span class="p">,</span> <span class="n">green_t</span><span class="p">,</span> <span class="n">blue_t</span><span class="p">,</span> <span class="n">alpha_t</span><span class="o">&gt;</span><span class="p">;</span>
 </pre></div>
 </div>
-<blockquote>
-<div>struct red_t {};
-struct green_t {};
-struct blue_t {};
-struct alpha_t {};
-rgba_t = using mpl::vector4&lt;red_t, green_t, blue_t, alpha_t&gt;;</div></blockquote>
 <p>The ordering of the channels in the color space definition specifies their
 semantic order. For example, <code class="docutils literal notranslate"><span class="pre">red_t</span></code> is the first semantic channel of
 <code class="docutils literal notranslate"><span class="pre">rgba_t</span></code>. While there is a unique semantic ordering of the channels in a
-color space, channels may vary in their physical ordering in memory</p>
+color space, channels may vary in their physical ordering in memory.</p>
 <p>The mapping of channels is specified by <code class="docutils literal notranslate"><span class="pre">ChannelMappingConcept</span></code>, which is
 an MPL random access sequence of integral types.
 A color space and its associated mapping are often used together.</p>
@@ -164,7 +162,7 @@ A color space and its associated mapping are often used together.</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2021-04-02 19:04:24.
+      Last updated on 2021-04-02 23:04:51.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
