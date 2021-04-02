@@ -90,11 +90,11 @@ gil::float32_t exp_output[] =
 
 gil::gray32f_image_t img_gray_out(9, 9);
 gil::gray32fc_view_t src_view =
-        gil::interleaved_view(9, 9, reinterpret_cast<const gil::gray32f_pixel_t*>(img), 9);
+        gil::interleaved_view(9, 9, reinterpret_cast<gil::gray32f_pixel_t const*>(img), 9);
 gil::gray32fc_view_t exp_out_view =
-        gil::interleaved_view(9, 9, reinterpret_cast<const gil::gray32f_pixel_t*>(exp_output), 9);
+        gil::interleaved_view(9, 9, reinterpret_cast<gil::gray32f_pixel_t const*>(exp_output), 9);
 std::vector<float> v(1, 1);
-gil::detail::kernel_2d<float> kernel(v.begin(), v.size(), 0, 0); //impulse kernel
+gil::detail::kernel_2d<float> kernel(v.begin(), v.size(), 0, 0); // impulse kernel
 gil::detail::convolve_2d(src_view, kernel, view(img_gray_out));
 BOOST_TEST(gil::equal_pixels(exp_out_view, view(img_gray_out)));
 }
