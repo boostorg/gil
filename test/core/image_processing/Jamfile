@@ -29,3 +29,4 @@ run convolve_rows.cpp ;
 run kernel.cpp ;
 run kernel_fixed.cpp ;
 run sharpening.cpp ;
+run distance_transform.cpp ;
