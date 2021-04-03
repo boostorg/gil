@@ -14,12 +14,15 @@
 
 namespace gil = boost::gil;
 
+/// calculates distance transform based on euclidean distance measurement formulae.
+
 int main(int argc, char* argv[])
 {
     if (argc != 6)
     {
         std::cerr << "usage: " << argv[0] << " <input.png> <output.png>"
-            " <distance_from> <distance_type> <mask_size>";
+                                             " <distance_from> <distance_type> <mask_size>";
+        return -1;
     }
 
     std::string dist_from = argv[3];

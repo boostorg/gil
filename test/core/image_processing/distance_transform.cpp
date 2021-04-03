@@ -1,3 +1,10 @@
+//
+// Copyright 2021 Harsit Pant <harshitpant83@gmail.com>
+//
+// Use, modification and distribution are subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+//
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/image_processing/distance_transform.hpp>
 #include <boost/core/lightweight_test.hpp>
@@ -30,7 +37,7 @@ void check_for_negligible_varition(ImgView1 const& image_view1, ImgView2  const&
     }
 }
 
-void test_manhattan_uint8_t_output()
+void test_manhattan_uint8_t_input_uint8_t_output_distance_from_off_pixels()
 {
 
     gil::gray8_image_t img_in(7, 7);
@@ -38,23 +45,27 @@ void test_manhattan_uint8_t_output()
     gil::gray8_image_t img_out(7, 7);
 
     //test values from wikipedia, in 8 bit binary form
-    std::vector<std::vector<int>> val_in{
-                 {0,  0,  0,  0,  0,  0,0},
-                 {0,255,255,255,255,255,0},
-                 {0,255,255,255,255,255,0},
-                 {0,255,255,255,255,255,0},
-                 {0,255,255,255,255,255,0},
-                 {0,255,255,255,255,255,0},
-                 {0,  0,  0,  0,  0,  0,0} };
+    std::vector<std::vector<int>> val_in
+    {
+        {0,  0,  0,  0,  0,  0,0},
+        {0,255,255,255,255,255,0},
+        {0,255,255,255,255,255,0},
+        {0,255,255,255,255,255,0},
+        {0,255,255,255,255,255,0},
+        {0,255,255,255,255,255,0},
+        {0,  0,  0,  0,  0,  0,0}
+    };
 
-    std::vector<std::vector<int>> val_exp{
-                 {0,0,0,0,0,0,0},
-                 {0,1,1,1,1,1,0},
-                 {0,1,2,2,2,1,0},
-                 {0,1,2,3,2,1,0},
-                 {0,1,2,2,2,1,0},
-                 {0,1,1,1,1,1,0},
-                 {0,0,0,0,0,0,0} };
+    std::vector<std::vector<int>> val_exp
+    {
+        {0,0,0,0,0,0,0},
+        {0,1,1,1,1,1,0},
+        {0,1,2,2,2,1,0},
+        {0,1,2,3,2,1,0},
+        {0,1,2,2,2,1,0},
+        {0,1,1,1,1,1,0},
+        {0,0,0,0,0,0,0}
+    };
 
     fill_image_view(val_in, view(img_in));
     fill_image_view(val_exp, view(img_expected));
@@ -66,29 +77,33 @@ void test_manhattan_uint8_t_output()
 }
 
 
-void test_chessboard_uint16_t_input_uint8_t_output()
+void test_chessboard_uint16_t_input_uint8_t_output_distance_from_on_pixels()
 {
     gil::gray16_image_t img_in(7, 7);
     gil::gray8_image_t img_expected(7, 7);
     gil::gray8_image_t img_out(7, 7);
 
-    std::vector<std::vector<int>> val_in{
-                 {0, 65535,  0,      0,  0,  0, 0},
-                 {0,     0,  0,      0,  0,  0, 0},
-                 {0,     0,  0,      0,  0,  0, 0},
-                 {0,     0,  0,      0,  0,  0, 0},
-                 {0,     0,  0,  65535,  0,  0, 0},
-                 {0,     0,  0,      0,  0,  0, 0},
-                 {0,     0,  0,      0,  0,  0, 0} };
+    std::vector<std::vector<int>> val_in
+    {
+        {0, 65535,  0,      0,  0,  0, 0},
+        {0,     0,  0,      0,  0,  0, 0},
+        {0,     0,  0,      0,  0,  0, 0},
+        {0,     0,  0,      0,  0,  0, 0},
+        {0,     0,  0,  65535,  0,  0, 0},
+        {0,     0,  0,      0,  0,  0, 0},
+        {0,     0,  0,      0,  0,  0, 0}
+    };
 
-    std::vector<std::vector<int>> val_exp{
-                 {1, 0, 1, 2, 3, 4, 4},
-                 {1, 1, 1, 2, 3, 3, 3},
-                 {2, 2, 2, 2, 2, 2, 3},
-                 {3, 2, 1, 1, 1, 2, 3},
-                 {3, 2, 1, 0, 1, 2, 3},
-                 {3, 2, 1, 1, 1, 2, 3},
-                 {3, 2, 2, 2, 2, 2, 3} };
+    std::vector<std::vector<int>> val_exp
+    {
+        {1, 0, 1, 2, 3, 4, 4},
+        {1, 1, 1, 2, 3, 3, 3},
+        {2, 2, 2, 2, 2, 2, 3},
+        {3, 2, 1, 1, 1, 2, 3},
+        {3, 2, 1, 0, 1, 2, 3},
+        {3, 2, 1, 1, 1, 2, 3},
+        {3, 2, 2, 2, 2, 2, 3}
+    };
 
     fill_image_view(val_in, view(img_in));
     fill_image_view(val_exp, view(img_expected));
@@ -99,7 +114,7 @@ void test_chessboard_uint16_t_input_uint8_t_output()
     BOOST_TEST(equal_pixels(const_view(img_out), const_view(img_expected)));
 }
 
-void test_euclidean_approx_and_manhattan_with_float32_t_output()
+void test_euclidean_approx_and_manhattan_uint8_t_input_float32_t_output_distance_from_off_pixels()
 {
     gil::gray8_image_t img_in(15, 15);
     gil::gray32f_image_t img_expected(15, 15);
@@ -175,7 +190,7 @@ void test_euclidean_approx_and_manhattan_with_float32_t_output()
 
 }
 
-void test_all_float32_t_ouptut()
+void test_all_uint8_t_input_float32_t_ouptut_distance_from_off_pixels()
 {
     gil::gray8_image_t img_in(15, 15);
     gil::gray32f_image_t img_expected(15, 15);
@@ -457,9 +472,9 @@ void test_all_float32_t_ouptut()
 
 int main()
 {
-    test_manhattan_uint8_t_output();
-    test_chessboard_uint16_t_input_uint8_t_output();
-    test_euclidean_approx_and_manhattan_with_float32_t_output();
-    test_all_float32_t_ouptut();
+    test_manhattan_uint8_t_input_uint8_t_output_distance_from_off_pixels();
+    test_chessboard_uint16_t_input_uint8_t_output_distance_from_on_pixels();
+    test_euclidean_approx_and_manhattan_uint8_t_input_float32_t_output_distance_from_off_pixels();
+    test_all_uint8_t_input_float32_t_ouptut_distance_from_off_pixels();
     return ::boost::report_errors();
 }

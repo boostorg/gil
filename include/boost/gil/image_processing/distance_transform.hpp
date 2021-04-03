@@ -330,16 +330,16 @@ void distance_transform_mask_size_five_impl(SrcView const& src_view,
                       std::min({ d1, d2, d3, d4, d5, d6, d7, d8, 
                       static_cast<float>(intermediate_image_view(x + padding, y + padding)[0]) });
 
-                float const distance_transform = intermediate_image_view
-                                                (x + padding, y + padding)[0];
+                float const distance_transform =
+                                            intermediate_image_view (x + padding, y + padding)[0];
 
                 float constexpr dst_channel_max =
-                      (is_same<DstView, gray32f_view_t>::value) ? dt_infinite : static_cast<float>(
-                      (std::numeric_limits<typename channel_type<DstView>::type>::max)());
+                     (is_same<DstView, gray32f_view_t>::value) ? dt_infinite : static_cast<float>(
+                     (std::numeric_limits<typename channel_type<DstView>::type>::max)());
 
                 float constexpr dst_channel_min =
-                      (is_same<DstView, gray32f_view_t>::value) ? 0.f : static_cast<float>(
-                      (std::numeric_limits<typename channel_type<DstView>::type>::min)());
+                     (is_same<DstView, gray32f_view_t>::value) ? 0.f : static_cast<float>(
+                     (std::numeric_limits<typename channel_type<DstView>::type>::min)());
                 
                 dst_view(x, y)[0] =
                       static_cast<typename channel_type<typename DstView::value_type>::type>(
@@ -496,7 +496,7 @@ void distance_transform(SrcView const& src_view, DstView const& dst_view, distan
                                                            "Distance type not recognized.");
     static_assert(mask_size::check_mask_size<MaskSize>::value, "Mask Size not recognized.");
 
-    // Generates compile time error if invalid combination of distance_type and mask_size used.
+    // Generates compile time error if invalid combination of distance_type and mask_size is used.
     static_assert(detail::dt_parameters_are_compatible<DistanceType, MaskSize>::value,
                  "distance_transform is incompatible with combination of "
                                                        "distance_type and mask_size used.");
