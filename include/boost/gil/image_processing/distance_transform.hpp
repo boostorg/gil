@@ -123,7 +123,8 @@ void distance_transform_mask_size_three_impl(SrcView const& src_view,
         intermediate_image_view(intermediate_image_view.width() - 1, y)[0] = dt_infinite ;
     }
 
-    float constexpr src_channel_min = (std::numeric_limits<channel_type<SrcView>::type>::min)();
+    float constexpr src_channel_min =
+                      (std::numeric_limits <typename channel_type<SrcView>::type>::min)();
 
     for (std::ptrdiff_t y = 0; y < src_view.height(); ++y)
     {
@@ -197,15 +198,16 @@ void distance_transform_mask_size_three_impl(SrcView const& src_view,
                 float const distance_transform = intermediate_image_view
                                                 (x + padding, y + padding)[0];
 
-                float constexpr dst_channel_max = (is_same<DstView, gray32f_view_t>::value) ? 
-                                         dt_infinite : static_cast<float>(
-                                        (std::numeric_limits<channel_type<DstView>::type>::max)());
+                float constexpr dst_channel_max =
+                      (is_same<DstView, gray32f_view_t>::value) ? dt_infinite : static_cast<float>(
+                      (std::numeric_limits<typename channel_type<DstView>::type>::max)());
 
-                float constexpr dst_channel_min = (is_same<DstView, gray32f_view_t>::value) ?
-                                                 0.f : static_cast<float>(
-                                        (std::numeric_limits<channel_type<DstView>::type>::min)());
+                float constexpr dst_channel_min =
+                      (is_same<DstView, gray32f_view_t>::value) ? 0.f : static_cast<float>(
+                      (std::numeric_limits<typename channel_type<DstView>::type>::min)());
 
-                dst_view(x, y)[0] = static_cast<typename channel_type<DstView::value_type>::type>(
+                dst_view(x, y)[0] =
+                      static_cast<typename channel_type<typename DstView::value_type>::type>(
                                    (distance_transform > dst_channel_max) ? dst_channel_max :
                                    (distance_transform < dst_channel_min) ? dst_channel_min :
                                     distance_transform);
@@ -243,7 +245,8 @@ void distance_transform_mask_size_five_impl(SrcView const& src_view,
         intermediate_image_view(intermediate_image_view.width() - 2, y)[0] = dt_infinite;
     }
 
-    float constexpr src_channel_min = (std::numeric_limits<channel_type<SrcView>::type>::min)();
+    float constexpr src_channel_min =
+                      (std::numeric_limits<typename channel_type<SrcView>::type>::min)();
 
     for (std::ptrdiff_t y = 0; y < src_view.height(); ++y)
     {
@@ -330,18 +333,19 @@ void distance_transform_mask_size_five_impl(SrcView const& src_view,
                 float const distance_transform = intermediate_image_view
                                                 (x + padding, y + padding)[0];
 
-                float constexpr dst_channel_max = (is_same<DstView, gray32f_view_t>::value) ? 
-                                         dt_infinite : static_cast<float>(
-                                        (std::numeric_limits<channel_type<DstView>::type>::max)());
+                float constexpr dst_channel_max =
+                      (is_same<DstView, gray32f_view_t>::value) ? dt_infinite : static_cast<float>(
+                      (std::numeric_limits<typename channel_type<DstView>::type>::max)());
 
-                float constexpr dst_channel_min = (is_same<DstView, gray32f_view_t>::value) ?
-                                                 0.f : static_cast<float>(
-                                        (std::numeric_limits<channel_type<DstView>::type>::min)());
+                float constexpr dst_channel_min =
+                      (is_same<DstView, gray32f_view_t>::value) ? 0.f : static_cast<float>(
+                      (std::numeric_limits<typename channel_type<DstView>::type>::min)());
                 
-                dst_view(x, y)[0] = static_cast<typename channel_type<DstView::value_type>::type>(
-                                    (distance_transform > dst_channel_max) ? dst_channel_max :
-                                    (distance_transform < dst_channel_min) ? dst_channel_min :
-                                     distance_transform);
+                dst_view(x, y)[0] =
+                      static_cast<typename channel_type<typename DstView::value_type>::type>(
+                                   (distance_transform > dst_channel_max) ? dst_channel_max :
+                                   (distance_transform < dst_channel_min) ? dst_channel_min :
+                                    distance_transform);
             }
         }
     }
@@ -397,7 +401,8 @@ void distance_transorm_precise_impl(SrcView const& src_view,
 {
     gray32f_image_t intermediate_image(src_view.dimensions());
     gray32f_view_t  intermediate_image_view = view(intermediate_image);
-    float constexpr src_channel_min = (std::numeric_limits<channel_type<SrcView>::type>::min)();
+    float constexpr src_channel_min =
+                            (std::numeric_limits<typename channel_type<SrcView>::type>::min)();
 
     for (std::ptrdiff_t y = 0; y < src_view.height(); ++y)
     {
@@ -444,18 +449,19 @@ void distance_transorm_precise_impl(SrcView const& src_view,
             
             float const distance_transform = std::sqrt(intermediate_col_itr[y][0]);
 
-            float constexpr dst_channel_max = (is_same<DstView, gray32f_view_t>::value) ? 
-                                         dt_infinite : static_cast<float>(
-                                        (std::numeric_limits<channel_type<DstView>::type>::max)());
+            float constexpr dst_channel_max =
+                     (is_same<DstView, gray32f_view_t>::value) ? dt_infinite : static_cast<float>(
+                     (std::numeric_limits<typename channel_type<DstView>::type>::max)());
 
-                float constexpr dst_channel_min = (is_same<DstView, gray32f_view_t>::value) ?
-                                                 0.f : static_cast<float>(
-                                        (std::numeric_limits<channel_type<DstView>::type>::min)());
+            float constexpr dst_channel_min =
+                     (is_same<DstView, gray32f_view_t>::value) ? 0.f : static_cast<float>(
+                     (std::numeric_limits<typename channel_type<DstView>::type>::min)());
 
-            dst_view(x, y)[0] = static_cast<typename channel_type<DstView::value_type>::type>(
-                                (distance_transform > dst_channel_max) ? dst_channel_max :
-                                (distance_transform < dst_channel_min) ? dst_channel_min :
-                                 distance_transform);
+            dst_view(x, y)[0] =
+                     static_cast<typename channel_type<typename DstView::value_type>::type>(
+                               (distance_transform > dst_channel_max) ? dst_channel_max :
+                               (distance_transform < dst_channel_min) ? dst_channel_min :
+                                distance_transform);
         }
     }
 }
@@ -482,8 +488,8 @@ void distance_transform(SrcView const& src_view, DstView const& dst_view, distan
     gil_function_requires<ImageViewConcept<SrcView>>();
     gil_function_requires<MutableImageViewConcept<DstView>>();
 
-    static_assert(is_same<gray_t, color_space_type<SrcView>::type>::value &&
-                  is_same<gray_t, color_space_type<DstView>::type>::value,
+    static_assert(is_same<gray_t, typename color_space_type<SrcView>::type>::value &&
+                  is_same<gray_t, typename color_space_type<DstView>::type>::value,
                   "Source and destination image views must use gray color space.");
 
     static_assert(distance_type::check_distance_type<DistanceType>::value, 
