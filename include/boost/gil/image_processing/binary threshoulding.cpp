@@ -1,5 +1,3 @@
-//kindly input the file name of the image as  a command line argument.Input image type should be jpg/jpeg
-
 #include<boost/gil.hpp>
 #include<boost/gil/extension/io/jpeg.hpp>
 #include<boost/gil/extension/io/png.hpp>
@@ -28,7 +26,7 @@ float calculate_distance(struct node i,struct node2 j)
     float squared_distance=(std::max(j.x,i.x)-std::min(j.x,i.x))*(std::max(j.x,i.x)-std::min(j.x,i.x))+(std::max(j.y,i.y)-std::min(j.y,i.y))*(std::max(j.y,i.y)-std::min(j.y,i.y))+(std::max(j.z,i.z)-std::min(j.z,i.z))*(std::max(j.z,i.z)-std::min(j.z,i.z));
     return sqrt(squared_distance);
 }
-//we are trying to find out which of the given centroids is closest for each datapoint
+//trying to find out which of the given centroids is closest for each datapoint
 std::vector<int> findClosestCentroids(std::vector<struct node>&datapoints,std::vector<struct node2>&centroids)
 {
      std::vector<int>assigned_centroid;
@@ -67,10 +65,6 @@ int main(int argc,char *argv[])
 {
     namespace gil=boost::gil;
     gil::rgb8_image_t img;
-
-    //gil::gray
-    //gil::rgb8f_image_t img_v(img.dimensions());
-    //gil::rgb32f_view_t view_32;
 
     gil::read_image(argv[1],img,gil::jpeg_tag());
     gil::rgb32f_image_t img_32(img.dimensions());
@@ -128,21 +122,10 @@ int main(int argc,char *argv[])
           view_32(j,i)[0]=datapoints[counter].x;
           view_32(j,i)[1]=datapoints[counter].y;
           view_32(j,i)[2]=datapoints[counter].z;
-          //datapoints.push_back({view_32(i,j)[0],view_32(i,j)[1],view_32(i,j)[2],-1});
           counter++;
          }
      }
-//this is where I am writing the image
+
    gil::write_view("output-kmeans.tif",view_32,gil::tiff_tag());
-     //std::cout<<view_32(0,0)[0]<<" "<<view_32(0,0)[1]<<" "<<view_32(0,0)[2];
-    //gil::write_view("output-test.tif",view_32,gil::tiff_tag());
-    //img_v=view(img);
-   //view_v=view(img_v);
-    //img_v(0,0)[0]=0;
-    //img_v(0,0)[1]=0;
-    //img_v(0,0)[2]=0;
-    //gil::rgb8_pixel_t b=*const_view(img).at(0,0);
-    //std::cout<<(int)b[0]<<" "<<(int)b[1]<<" "<<(int)b[2]<<std::endl;
-    //std::cout<<(int)img_v(0,0)[0]<<" "<<(int)img_v(0,0)[1];
-    //gil::write_view("output-example.jpg",img_v,gil::jpeg_tag());
+
 }
