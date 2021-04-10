@@ -17,22 +17,24 @@ namespace gil = boost::gil;
 
 // This function helps us fill pixels of a rgb view given as 2nd argument with
 // elements of the vector given as 1st argument.
-void pixel_fill_rgb(std::vector<std::vector<std::vector<int>>>& vec,
+void pixel_fill_rgb(std::vector<std::vector<std::vector<unsigned int>>>& vec,
                 gil::rgb8_image_t& img)
 {
     for (std::ptrdiff_t view_row = 0; view_row < view(img).height(); ++view_row)
     {
         for (std::ptrdiff_t view_col = 0; view_col < view(img).width(); ++view_col)
         {
-            gil::view(img)(view_col, view_row) = gil::rgb8_pixel_t(vec[view_row][view_col][0],
-                vec[view_row][view_col][1], vec[view_row][view_col][2]);
+            gil::view(img)(view_col, view_row) = gil::rgb8_pixel_t(
+                static_cast<unsigned char>(vec[view_row][view_col][0]),
+                static_cast<unsigned char>(vec[view_row][view_col][1]),
+                static_cast<unsigned char>(vec[view_row][view_col][2]));
         }
     }
 }
 
 int main()
 {
-    std::vector<std::vector<std::vector<int>>> original_img_vector {
+    std::vector<std::vector<std::vector<unsigned int>>> original_img_vector {
     {{255, 255, 255}, {255, 255, 255}, {255, 255, 255}, {255, 255, 255}, {255, 255, 255},
     {255, 255, 255}, {255, 255, 255}, {255, 255, 255}, {255, 255, 255}, {255, 255, 255},
     {255, 255, 255}, {255, 255, 255}, {255, 255, 255}, {255, 255, 255}, {255, 255, 255},
@@ -99,7 +101,7 @@ int main()
     {255, 255, 255}}
 };
 
-    std::vector<std::vector<std::vector<int>>> expected_img_vector {
+    std::vector<std::vector<std::vector<unsigned int>>> expected_img_vector {
     {{255, 255, 255}, {255, 255, 255}, {255, 255, 255}, {255, 255, 255}, {255, 255, 255},
     {255, 255, 255}, {255, 255, 255}, {255, 255, 255}, {255, 255, 255}, {255, 255, 255},
     {255, 255, 255}, {255, 255, 255}, {255, 255, 255}, {255, 255, 255}, {255, 255, 255},

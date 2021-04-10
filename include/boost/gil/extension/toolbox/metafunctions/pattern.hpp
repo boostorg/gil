@@ -2,8 +2,8 @@
 // Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef _pattern_hpp_
-#define _pattern_hpp_
+#ifndef BOOST_GIL_EXTENSION_TOOLBOX_METAFUNCTIONS_PATTERN_HPP
+#define BOOST_GIL_EXTENSION_TOOLBOX_METAFUNCTIONS_PATTERN_HPP
 
 #include <boost/gil.hpp>
 
@@ -11,20 +11,18 @@ namespace boost { namespace gil {
 
 /// \brief Repeatedly copies smaller image view passed through the struct constructor in subimage
 /// views of the larger image view passed through overloaded '()' operator.
-template <typename view_t>
+template <typename View>
 struct pattern
 {
-    view_t v2;
-    pattern(view_t v2)
-        : v2(v2)
+    View v2;
+    pattern(View view)
+        : v2(view)
     {
     }
 
-    void operator()(view_t& view)
+    void operator()(View& view)
     {
-        using namespace boost::gil;
-
-        std::size_t h = v2.height(), w = v2.width();
+        long int const h = v2.height(), w = v2.width();
         
         // For ensuring that view passed through '()' operator has dimensions greater than or
         // equal to the dimensions of view passed through constructor.
@@ -53,8 +51,8 @@ struct pattern
                     ah = h - t;
                 }
 
-                view_t v3 = subimage_view(view, x, y, aw, ah);
-                view_t v4 = subimage_view(v2, 0, 0, aw, ah);
+                View v3 = subimage_view(view, x, y, aw, ah);
+                View v4 = subimage_view(v2, 0, 0, aw, ah);
                 copy_pixels(v4, v3);
             }
         }
