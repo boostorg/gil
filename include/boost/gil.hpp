@@ -41,6 +41,7 @@
 #include <boost/gil/premultiply.hpp>
 #include <boost/gil/promote_integral.hpp>
 #include <boost/gil/rasterization/circle.hpp>
+#include <boost/gil/rasterization/ellipse.hpp>
 #include <boost/gil/rasterization/line.hpp>
 #include <boost/gil/rgb.hpp>
 #include <boost/gil/rgba.hpp>

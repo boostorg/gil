@@ -47,7 +47,7 @@ The algorithm is applied on a few standard images. One of the transformations in
 
 **Original Image(left) & Reference Image(right)**
 
-.. figure:: matching.jpg
+.. figure:: https://github.com/boost-gil/test-images/blob/master/jpeg/suite/matching.jpg
     :width: 600px
     :align: center
     :height: 300px
@@ -56,7 +56,7 @@ The algorithm is applied on a few standard images. One of the transformations in
 
 **Histogram matched Image**
 
-.. figure:: matching_out.jpg
+.. figure:: https://github.com/boost-gil/test-images/blob/master/jpeg/suite/matching_out.jpg
     :width: 300px
     :align: center
     :height: 300px
