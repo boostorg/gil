@@ -14,45 +14,39 @@ namespace boost { namespace gil {
 template <typename View>
 struct pattern
 {
-    View v2;
+    View parent_view;
     pattern(View view)
-        : v2(view)
+        : parent_view(view)
     {
     }
 
     void operator()(View& view)
     {
-        long int const h = v2.height(), w = v2.width();
+        long int const parent_view_height = parent_view.height();
+        long int const parent_view_width = parent_view.width();
+        long int const view_height = view.height(), view_width = view.width();
         
         // For ensuring that view passed through '()' operator has dimensions greater than or
         // equal to the dimensions of view passed through constructor.
-        if (h > view.height() || w > view.width())
+        if (parent_view_height > view_height || parent_view_width > view_width)
         {
             throw std::length_error("Image view passed through overloaded '()' operator must have"
             " dimensions greater than or equal to the dimensions of image view passed through"
             " struct constructor");
         }
 
-        for (std::ptrdiff_t x = 0; x < view.width(); x += w)
+        for (std::ptrdiff_t x = 0; x < view_width; x += parent_view_width)
         {
-            for (std::ptrdiff_t y = 0; y < view.height(); y += h)
+            for (std::ptrdiff_t y = 0; y < view_height; y += parent_view_height)
             {
-                std::ptrdiff_t aw = w;
-                if (x + w > view.width())
-                {
-                    std::ptrdiff_t t = x + w - view.width();
-                    aw = w - t;
-                }
+                std::ptrdiff_t aw = x + parent_view_width > view_width ? view_width - x :
+                    parent_view_width;
 
-                std::ptrdiff_t ah = h;
-                if (y + h > view.height())
-                {
-                    std::ptrdiff_t t = y + h - view.height();
-                    ah = h - t;
-                }
+                std::ptrdiff_t ah = y + parent_view_height > view_height ? view_height - y :
+                    parent_view_height;
 
                 View v3 = subimage_view(view, x, y, aw, ah);
-                View v4 = subimage_view(v2, 0, 0, aw, ah);
+                View v4 = subimage_view(parent_view, 0, 0, aw, ah);
                 copy_pixels(v4, v3);
             }
         }
