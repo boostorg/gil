@@ -89,29 +89,15 @@ template <typename ...Images>
 class any_image : public variant2::variant<Images...>
 {
     using parent_t = variant2::variant<Images...>;
+
 public:    
     using view_t = mp11::mp_rename<detail::images_get_views_t<any_image>, any_image_view>;
     using const_view_t = mp11::mp_rename<detail::images_get_const_views_t<any_image>, any_image_view>;
     using x_coord_t = std::ptrdiff_t;
     using y_coord_t = std::ptrdiff_t;
     using point_t = point<std::ptrdiff_t>;
-
-    any_image() = default;
-    any_image(any_image const& img) : parent_t((parent_t const&)img) {}
-
-    template <typename Image>
-    explicit any_image(Image const& img) : parent_t(img) {}
     
-    template <typename Image>
-    any_image(Image&& img) : parent_t(std::move(img)) {}
-
-    template <typename Image>
-    explicit any_image(Image& img, bool do_swap) : parent_t(img, do_swap) {}
-
-    template <typename ...OtherImages>
-    any_image(any_image<OtherImages...> const& img)
-        : parent_t((variant2::variant<OtherImages...> const&)img)
-    {}
+    using parent_t::parent_t;
 
     any_image& operator=(any_image const& img)
     {
