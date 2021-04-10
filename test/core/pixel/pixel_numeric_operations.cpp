@@ -1,14 +1,16 @@
 //
 // Copyright 2019-2020 Mateusz Loskot <mateusz at loskot dot net>
+// Copyright 2021 Pranam Lashkari <plashkari628@gmail.com>
 //
 // Distributed under the Boost Software License, Version 1.0
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
 #include <boost/gil.hpp>
-#include <boost/gil/extension/numeric/pixel_numeric_operations.hpp>
 
 #include <boost/core/lightweight_test.hpp>
+
+#include <boost/gil/pixel_numeric_operations.hpp>
 
 #include <tuple>
 #include <type_traits>

@@ -1,5 +1,6 @@
 //
 // Copyright 2005-2007 Adobe Systems Incorporated
+// Copyright 2021 Pranam Lashkari <plashkari628@gmail.com>
 //
 // Distributed under the Boost Software License, Version 1.0
 // See accompanying file LICENSE_1_0.txt or copy at
@@ -37,7 +38,7 @@ namespace boost { namespace gil {
 ///
 ////////////////////////////////////////////////////////////////////////////////////////
 
-template< typename Pixel, bool IsPlanar = false, typename Alloc=std::allocator<unsigned char> >
+template< typename Pixel, bool IsPlanar, typename Alloc>
 class image
 {
 public:
@@ -348,7 +349,7 @@ public:
     }
 
     view_t       _view;      // contains pointer to the pixels, the image size and ways to navigate pixels
-    
+
     // for construction from other type
     template <typename P2, bool IP2, typename Alloc2> friend class image;
 private:
