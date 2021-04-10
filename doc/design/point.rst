@@ -39,7 +39,7 @@ in which both dimensions are of the same type:
       typename value_type = axis<0>::type;
 
       const value_type& operator[](const T&, size_t i);
-          value_type& operator[](      T&, size_t i);
+            value_type& operator[](      T&, size_t i);
 
       value_type x,y;
   };

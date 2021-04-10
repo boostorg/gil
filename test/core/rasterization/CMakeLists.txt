@@ -8,7 +8,8 @@
 #
 foreach(_name
     line
-    circle)
+    circle
+    ellipse)
     set(_test t_core_rasterization_${_name})
     set(_target test_core_rasterization_${_name})
 
