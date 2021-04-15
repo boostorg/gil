@@ -17,6 +17,7 @@ compile is_bit_aligned.cpp ;
 compile is_homogeneous.cpp ;
 compile pixel_bit_size.cpp ;
 
+run aligned.cpp ;
 run channel_view.cpp ;
 run color_convert_cmyka.cpp ;
 run color_convert_gray.cpp ;
@@ -27,7 +28,6 @@ run color_convert_lab.cpp ;
 run color_convert_luminance.cpp ;
 run color_convert_xyz.cpp ;
 run indexed_image.cpp ;
-run aligned.cpp ;
 
 # TODO: Add subchroma_image.cpp after fixing run-time failure,
 #      for details see https://github.com/boostorg/gil/pull/164
