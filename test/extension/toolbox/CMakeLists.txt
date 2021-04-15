@@ -9,6 +9,7 @@
 message(STATUS "Boost.GIL: Configuring tests in test/extension/toolbox")
 
 foreach(_name
+  aligned
   channel_type
   channel_view
   color_convert_cmyka
@@ -24,8 +25,7 @@ foreach(_name
   is_bit_aligned
   is_homogeneous
   pixel_bit_size
-  subchroma_image
-  aligned)
+  subchroma_image)
   set(_test t_ext_toolbox_${_name})
   set(_target test_ext_toolbox_${_name})
 

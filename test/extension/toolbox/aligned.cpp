@@ -23,8 +23,10 @@ void pixel_fill_rgb(std::vector<std::vector<std::vector<int>>>& vec, gil::rgb8_i
     {
         for (std::ptrdiff_t view_col = 0; view_col < view(img).width(); ++view_col)
         {
-            gil::view(img)(view_col, view_row) = gil::rgb8_pixel_t(vec[view_row][view_col][0],
-                vec[view_row][view_col][1], vec[view_row][view_col][2]);
+            gil::view(img)(view_col, view_row) = gil::rgb8_pixel_t(
+                static_cast<unsigned char>(vec[view_row][view_col][0]),
+                static_cast<unsigned char>(vec[view_row][view_col][1]),
+                static_cast<unsigned char>(vec[view_row][view_col][2]));
         }
     }
 }
