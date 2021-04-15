@@ -15,7 +15,7 @@
 #include <boost/gil/extension/toolbox/metafunctions/is_bit_aligned.hpp>
 #include <boost/gil/extension/toolbox/metafunctions/is_homogeneous.hpp>
 #include <boost/gil/extension/toolbox/metafunctions/is_similar.hpp>
-#include <boost/gil/extension/toolbox/metafunctions/pixel_bit_size.hpp>
 #include <boost/gil/extension/toolbox/metafunctions/pattern.hpp>
+#include <boost/gil/extension/toolbox/metafunctions/pixel_bit_size.hpp>
 
 #endif
