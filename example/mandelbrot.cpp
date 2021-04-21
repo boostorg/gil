@@ -40,7 +40,7 @@ struct mandelbrot_fn
         t=pow(t,0.2);
 
         value_type ret;
-        for (int k=0; k<num_channels<P>::value; ++k)
+        for (std::size_t k=0; k<num_channels<P>::value; ++k)
             ret[k]=(typename channel_type<P>::type)(_in_color[k]*t + _out_color[k]*(1-t));
         return ret;
     }

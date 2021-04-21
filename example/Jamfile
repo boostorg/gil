@@ -21,6 +21,7 @@ project
 local sources =
     adaptive_threshold.cpp
     affine.cpp
+    anisotropic_diffusion.cpp
     convolution.cpp
     convolve2d.cpp
     dynamic_image.cpp
@@ -29,10 +30,13 @@ local sources =
     histogram.cpp
     interleaved_ptr.cpp
     mandelbrot.cpp
+    morphology.cpp
     packed_pixel.cpp
+    rasterizer_ellipse.cpp
     resize.cpp
     sobel_scharr.cpp
     threshold.cpp
+    tutorial_histogram.cpp
     x_gradient.cpp
     ;
 

@@ -45,7 +45,7 @@ Besides the standard layouts, it also provides:
 - ``abgr_layout_t``
 - ``argb_layout_t``
 
-As an example, here is how GIL defines the RGBA color space::
+As an example, here is how GIL defines the RGBA color space:
 
 .. code-block:: cpp
 
@@ -58,7 +58,7 @@ As an example, here is how GIL defines the RGBA color space::
 The ordering of the channels in the color space definition specifies their
 semantic order. For example, ``red_t`` is the first semantic channel of
 ``rgba_t``. While there is a unique semantic ordering of the channels in a
-color space, channels may vary in their physical ordering in memory
+color space, channels may vary in their physical ordering in memory.
 
 The mapping of channels is specified by ``ChannelMappingConcept``, which is
 an MPL random access sequence of integral types.
