@@ -373,7 +373,7 @@ void convolve_2d_impl(SrcView const& src_view, DstView const& dst_view, Kernel c
                         col_boundary >= 0 && col_boundary < src_view.width())
                     {
                         aux_total +=
-                            src_view(col_boundary, row_boundary) *
+                            src_view(col_boundary, row_boundary)[0] *
                             kernel.at(flip_ker_row, flip_ker_col);
                     }
                 }

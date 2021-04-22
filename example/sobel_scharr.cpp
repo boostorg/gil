@@ -26,8 +26,12 @@ int main(int argc, char* argv[])
     auto dy = gil::view(dy_image);
     if (filter_type == "sobel")
     {
-        gil::detail::convolve_2d(input, gil::generate_dx_sobel(1), dx);
-        gil::detail::convolve_2d(input, gil::generate_dy_sobel(1), dy);
+        // gil::generate_sobel_kernel({x_order, y_order}, size)
+        // x_order : Order of derivative in horizontal direction.
+        // y_order : Order of derivative in vertical direction.
+        // size : Optional parameter which specifies desired size of resultant kernel.
+        gil::detail::convolve_2d(input, gil::generate_sobel_kernel({1, 0}), dx);
+        gil::detail::convolve_2d(input, gil::generate_sobel_kernel({0, 1}), dy);
     }
     else if (filter_type == "scharr")
     {
