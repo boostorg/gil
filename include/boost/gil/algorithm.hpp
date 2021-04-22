@@ -734,10 +734,33 @@ void default_construct_pixels(View const& view)
 
 namespace detail {
 
+enum class copy_planarity_condition
+{
+    planar_to_planar,
+    interleaved_to_planar,
+    mixed_to_interleaved
+};
+
+using planar_to_planar_type =
+    std::integral_constant
+    <
+        copy_planarity_condition, copy_planarity_condition::planar_to_planar
+    >;
+using interleaved_to_planar_type =
+    std::integral_constant
+    <
+        copy_planarity_condition, copy_planarity_condition::interleaved_to_planar
+    >;
+using mixed_to_interleaved_type =
+    std::integral_constant
+    <
+        copy_planarity_condition, copy_planarity_condition::mixed_to_interleaved
+    >;
+
 /// std::uninitialized_copy for pairs of planar iterators
 template <typename It1, typename It2>
 BOOST_FORCEINLINE
-void uninitialized_copy_aux(It1 first1, It1 last1, It2 first2, std::true_type)
+void uninitialized_copy_aux(It1 first1, It1 last1, It2 first2, It2 last2, planar_to_planar_type)
 {
     std::size_t channel=0;
     try {
@@ -761,12 +784,24 @@ void uninitialized_copy_aux(It1 first1, It1 last1, It2 first2, std::true_type)
     }
 }
 
-/// std::uninitialized_copy for interleaved or mixed iterators
+/// std::uninitialized_copy for interleaved or mixed(planar into interleaved) iterators
 template <typename It1, typename It2>
 BOOST_FORCEINLINE
-void uninitialized_copy_aux(It1 first1, It1 last1, It2 first2, std::false_type)
+void uninitialized_copy_aux(It1 first1, It1 last1, It2 first2, It2 last2, mixed_to_interleaved_type)
 {
     std::uninitialized_copy(first1, last1, first2);
+}
+
+/// std::uninitialized_copy for interleaved to planar iterators
+template <typename It1, typename It2>
+BOOST_FORCEINLINE
+void uninitialized_copy_aux(It1 first1, It1 last1, It2 first2, It2 last2,
+interleaved_to_planar_type)
+{
+    default_construct_aux(first2, last2, std::true_type());
+
+    typename It2::difference_type n = last2 - first2;
+    copier_n<It1,It2>()(first1, n, first2);
 }
 } // namespace detail
 
@@ -777,13 +812,24 @@ void uninitialized_copy_aux(It1 first1, It1 last1, It2 first2, std::false_type)
 template <typename View1, typename View2>
 void uninitialized_copy_pixels(View1 const& view1, View2 const& view2)
 {
-    using is_planar = std::integral_constant<bool, is_planar<View1>::value && is_planar<View2>::value>;
+    using copy_planarity_condition = detail::copy_planarity_condition;
+    using copy_planarity_condition_type =
+    std::integral_constant
+    <
+        copy_planarity_condition,
+        !is_planar<View2>::value
+        ? copy_planarity_condition::mixed_to_interleaved
+        : (is_planar<View1>::value
+            ? copy_planarity_condition::planar_to_planar
+            : copy_planarity_condition::interleaved_to_planar)
+    >;
     BOOST_ASSERT(view1.dimensions() == view2.dimensions());
 
     if (view1.is_1d_traversable() && view2.is_1d_traversable())
     {
         detail::uninitialized_copy_aux(
-            view1.begin().x(), view1.end().x(), view2.begin().x(), is_planar());
+            view1.begin().x(), view1.end().x(), view2.begin().x(), view2.end().x(),
+            copy_planarity_condition_type());
     }
     else
     {
@@ -792,12 +838,13 @@ void uninitialized_copy_pixels(View1 const& view1, View2 const& view2)
         {
             for (y = 0; y < view1.height(); ++y)
                 detail::uninitialized_copy_aux(
-                    view1.row_begin(y), view1.row_end(y), view2.row_begin(y), is_planar());
+                    view1.row_begin(y), view1.row_end(y), view2.row_begin(y), view2.row_end(y),
+                    copy_planarity_condition_type());
         }
         catch(...)
         {
             for (typename View1::y_coord_t y0 = 0; y0 < y; ++y0)
-                detail::destruct_aux(view2.row_begin(y0), view2.row_end(y0), is_planar());
+                detail::destruct_aux(view2.row_begin(y0), view2.row_end(y0), is_planar<View2>());
             throw;
         }
     }

@@ -9,7 +9,8 @@
 foreach(_name
     threshold_binary
     threshold_truncate
-    threshold_otsu)
+    threshold_otsu
+    morphology)
     set(_test t_core_image_processing_${_name})
     set(_target test_core_image_processing_${_name})
 
@@ -34,7 +35,11 @@ foreach(_name
   hessian
   box_filter
   median_filter
-  sobel_scharr)
+  sobel_scharr
+  anisotropic_diffusion
+  hough_parameter
+  hough_line_transform
+  hough_circle_transform)
   set(_test t_core_image_processing_${_name})
   set(_target test_core_image_processing_${_name})
 

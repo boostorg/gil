@@ -41,7 +41,7 @@ message(STATUS "Boost.GIL: Require C++${CMAKE_CXX_STANDARD}")
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Avoid warnings flood on Travis CI, AppVeyor, CircleCI, Azure Pipelines
+# Avoid warnings flood from CI builds
 if(DEFINED ENV{CI} OR DEFINED ENV{AGENT_JOBSTATUS} OR DEFINED ENV{GITHUB_ACTIONS})
   set(BOOST_GIL_BUILD_CI ON)
   message(STATUS "Boost.GIL: Turning off detailed compiler warnings for CI build short log")

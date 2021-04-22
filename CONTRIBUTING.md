@@ -17,7 +17,7 @@ please follow the workflow explained in this document.
   - [5. Update your pull request](#5-update-your-pull-request)
 - [Development](#development)
   - [Install dependencies](#install-dependencies)
-  - [Using Boost.Build](#using-boostbuild)
+  - [Using B2](#using-boostbuild)
   - [Using CMake](#using-cmake)
   - [Running clang-tidy](#running-clang-tidy)
 - [Guidelines](#guidelines)
@@ -35,7 +35,7 @@ please follow the workflow explained in this document.
   it may be a good idea to skim through the
   [Boost Getting Started](https://www.boost.org/more/getting_started/index.html)
   chapters, especially if you are going to use
-  [Boost.Build](https://boostorg.github.io/build/) for the first time.
+  [B2](https://www.bfgroup.xyz/b2/) for the first time.
 
 ## Pull Requests
 
@@ -61,12 +61,13 @@ please follow the workflow explained in this document.
 - **DO** ensure each commit successfully builds. The entire PR must pass all tests in
   the Continuous Integration (CI) system before it'll be merged.
 - **DO** ensure any new features or changes to existing behaviours are covered with test cases.
-- **DO** address PR feedback in an additional commit(s) rather than amending the existing
-  commits, and only rebase/squash them when necessary. This makes it easier for reviewers
-  to track changes.
+- **DO** address PR feedback in an additional commit(s) rather than amending the existing commits.
+  This makes it easier for reviewers to track changes.
+- **DO** sync your PR branch with the upstream `develop` branch frequently resolving any conflicts if necessary.
+  You can either `git merge upstream/develop` or `git rebase upstream/develop` with `git push --force` for the latter.
+  The merge may make it easier for reviewers to track changes though.
 - **DO** assume that the [Squash and Merge] will be used to merge your commit unless you
   request otherwise in the PR.
-- **DO** NOT fix merge conflicts using a merge commit. Prefer git rebase.
 - **DO** NOT submit changes to the original legacy tests, see
   [test/legacy/README.md](test/legacy/README.md).
 
@@ -123,7 +124,7 @@ The preparation involves the following steps:
     git submodule update --init --recursive --jobs 8
     ```
 
-3. Build the `b2` driver program for Boost.Build engine.
+3. Build the `b2` driver program for B2 engine.
 
     ```shell
     ./bootstrap.sh
@@ -233,10 +234,10 @@ git push <username> feature/foo
 Finally, sign in to your GitHub account and
 [create a pull request](https://help.github.com/articles/creating-a-pull-request/).
 
-Your pull request will be automatically built and tests will run on Travis CI
-and AppVeyor (see [README](README.md) for builds status). Please, keep an eye
-on those CI builds and correct any problems detected in your contribution
-by updating your pull request.
+Your pull request will be automatically built and tests will run on GitHub ACtions,
+Azure Pipelines, AppVeyor and Circle CI (see [README](README.md) for builds status).
+Please, keep an eye on those CI builds and correct any problems detected in your
+contribution by updating your pull request.
 
 ### 5. Update your pull request
 
@@ -300,7 +301,7 @@ request from reviewer, just add new commits:
 cd libs/gil
 git checkout feature/foo
 git add -A
-git commit -m "Fix build Travis CI failures"
+git commit -m "Fix CI build failure"
 git push <username> feature/foo
 ```
 
@@ -310,15 +311,15 @@ Boost.GIL is a [header-only library](https://en.wikipedia.org/wiki/Header-only)
 which does not require sources compilation. Only test runners and
 [example](example/README.md) programs have to be compiled.
 
-By default, Boost.GIL uses Boost.Build to build all the executables.
+By default, Boost.GIL uses B2 to build all the executables.
 
 We also provide configuration for two alternative build systems:
 
 - [CMake](https://cmake.org)
 
 **NOTE:** The CMake is optional and the corresponding build configurations
-for Boost.GIL do not offer equivalents for all Boost.Build features.
-Most important difference to recognise is that Boost.Build will automatically
+for Boost.GIL do not offer equivalents for all B2 features.
+Most important difference to recognise is that B2 will automatically
 build any other Boost libraries required by Boost.GIL as dependencies.
 
 ### Install dependencies
@@ -332,9 +333,9 @@ sudo apt-get install libjpeg-dev libpng-dev libtiff5-dev libraw-dev
 
 **TIP:** On Windows, use vcpkg with `user-config.jam` configuration provided in [example/b2/user-config-windows-vcpkg.jam](example/b2/).
 
-### Using Boost.Build
+### Using B2
 
-The [b2 invocation](https://boostorg.github.io/build/manual/develop/index.html#bbv2.overview.invocation)
+The [b2 invocation](https://www.bfgroup.xyz/b2/manual/release/index.html#bbv2.overview.invocation)
 explains available options like `toolset`, `variant` and others.
 
 Simply, just execute `b2` to run all tests built using default
