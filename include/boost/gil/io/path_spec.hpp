@@ -43,7 +43,7 @@ template<> struct is_supported_path_spec< std::string >         : std::true_type
 template<> struct is_supported_path_spec< const std::string >   : std::true_type {};
 template<> struct is_supported_path_spec< std::wstring >        : std::true_type {};
 template<> struct is_supported_path_spec< const std::wstring >  : std::true_type {};
-template<> struct is_supported_path_spec< const char* >         : std::true_type {};
+template<> struct is_supported_path_spec< char const* >         : std::true_type {};
 template<> struct is_supported_path_spec< char* >               : std::true_type {};
 template<> struct is_supported_path_spec< const wchar_t* >      : std::true_type {};
 template<> struct is_supported_path_spec< wchar_t* >            : std::true_type {};
@@ -77,7 +77,7 @@ inline std::string convert_to_string( std::wstring const& s )
     return std::string( c, c + len );
 }
 
-inline std::string convert_to_string( const char* str )
+inline std::string convert_to_string( char const* str )
 {
     return std::string( str );
 }
@@ -98,22 +98,22 @@ inline std::string convert_to_string( const filesystem::path& path )
 /// convert_to_native_string
 ///
 
-inline const char* convert_to_native_string( char* str )
+inline char const* convert_to_native_string( char* str )
 {
     return str;
 }
 
-inline const char* convert_to_native_string( const char* str )
+inline char const* convert_to_native_string( char const* str )
 {
     return str;
 }
 
-inline const char* convert_to_native_string( const std::string& str )
+inline char const* convert_to_native_string( const std::string& str )
 {
    return str.c_str();
 }
 
-inline const char* convert_to_native_string( const wchar_t* str )
+inline char const* convert_to_native_string( const wchar_t* str )
 {
     std::size_t len = wcslen( str ) + 1;
     char* c = new char[len];
@@ -122,7 +122,7 @@ inline const char* convert_to_native_string( const wchar_t* str )
     return c;
 }
 
-inline const char* convert_to_native_string( const std::wstring& str )
+inline char const* convert_to_native_string( std::wstring const& str )
 {
     std::size_t len = wcslen( str.c_str() ) + 1;
     char* c = new char[len];

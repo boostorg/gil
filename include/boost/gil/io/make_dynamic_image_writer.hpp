@@ -39,12 +39,8 @@ auto make_dynamic_image_writer(
 
 template< typename FormatTag >
 inline
-typename get_dynamic_image_writer< std::wstring
-                                 , FormatTag
-                                 >::type
-make_dynamic_image_writer( const std::wstring&                  file_name
-                         , const image_write_info< FormatTag >& info
-                         )
+auto make_dynamic_image_writer(std::wstring const& file_name, image_write_info<FormatTag> const& info)
+    -> typename get_dynamic_image_writer< std::wstring, FormatTag>::type
 {
     const char* str = detail::convert_to_native_string( file_name );
 
@@ -64,14 +60,10 @@ make_dynamic_image_writer( const std::wstring&                  file_name
 }
 
 #ifdef BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
-template< typename FormatTag >
+template <typename FormatTag>
 inline
-typename get_dynamic_image_writer< std::wstring
-                                 , FormatTag
-                                 >::type
-make_dynamic_image_writer( const filesystem::path&              path
-                         , const image_write_info< FormatTag >& info
-                         )
+auto make_dynamic_image_writer(filesystem::path const& path, image_write_info<FormatTag> const& info)
+    -> typename get_dynamic_image_writer<std::wstring, FormatTag>::type
 {
     return make_dynamic_image_writer( path.wstring()
                                     , info
@@ -114,14 +106,10 @@ auto make_dynamic_image_writer(String const& file_name, FormatTag const&,
     return make_dynamic_image_writer(file_name, image_write_info<FormatTag>());
 }
 
-template< typename FormatTag >
+template <typename FormatTag>
 inline
-typename get_dynamic_image_writer< std::wstring
-                                 , FormatTag
-                                 >::type
-make_dynamic_image_writer( const std::wstring& file_name
-                         , const FormatTag&
-                         )
+auto make_dynamic_image_writer(std::wstring const& file_name, FormatTag const&)
+    -> typename get_dynamic_image_writer<std::wstring, FormatTag>::type
 {
     return make_dynamic_image_writer( file_name
                                     , image_write_info< FormatTag >()
@@ -129,14 +117,10 @@ make_dynamic_image_writer( const std::wstring& file_name
 }
 
 #ifdef BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
-template< typename FormatTag >
+template <typename FormatTag>
 inline
-typename get_dynamic_image_writer< std::wstring
-                                 , FormatTag
-                                 >::type
-make_dynamic_image_writer( const filesystem::path& path
-                         , const FormatTag&
-                         )
+auto make_dynamic_image_writer(filesystem::path const& path, FormatTag const&)
+    -> typename get_dynamic_image_writer<std::wstring, FormatTag>::type
 {
     return make_dynamic_image_writer( path.wstring()
                                     , image_write_info< FormatTag >()

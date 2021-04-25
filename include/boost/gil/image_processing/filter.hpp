@@ -19,9 +19,6 @@
 #include <cstddef>
 #include <vector>
 
-
-
-
 namespace boost { namespace gil {
 
 template <typename SrcView, typename DstView>

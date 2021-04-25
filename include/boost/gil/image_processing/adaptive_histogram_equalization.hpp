@@ -116,8 +116,7 @@ void clip_and_redistribute(SrcHist const& src_hist, DstHist& dst_hist, double cl
     }
 }
 
-}  // namespace detail
-
+} // namespace detail
 
 /// \fn void non_overlapping_interpolated_clahe
 /// \ingroup AHE

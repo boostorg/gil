@@ -40,10 +40,17 @@ void resize_clobber_image(Img& img, const typename Img::x_coord_t& width, const 
     img.recreate(width,height);
 }
 
-template <typename T> typename T::x_coord_t get_width(const T& a) { return a.width(); }
-template <typename T> typename T::y_coord_t get_height(const T& a) { return a.height(); }
-template <typename T> typename T::point_t get_dimensions(const T& a) { return a.dimensions(); }
-template <typename T> std::size_t get_num_channels(const T& a) { return a.num_channels(); }
+template <typename T>
+auto get_width(T const& a) -> typename T::x_coord_t { return a.width(); }
+
+template <typename T>
+auto get_height(T const& a) -> typename T::y_coord_t { return a.height(); }
+
+template <typename T>
+auto get_dimensions(T const& a) -> typename T::point_t { return a.dimensions(); }
+
+template <typename T>
+auto get_num_channels(T const& a) -> std::size_t { return a.num_channels(); }
 
 #define GIL boost::gil
 #define ADOBE_GIL_NAMESPACE_BEGIN  namespace boost { namespace gil {
