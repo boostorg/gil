@@ -9,27 +9,30 @@
 #include <boost/assert.hpp>
 #include <boost/core/lightweight_test.hpp>
 #include <iostream>
+
 std::uint8_t null_matrix[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                               0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
 //testing an image without a feature point
 void test1()
 {
     boost::gil::gray8_view_t image1 = boost::gil::interleaved_view(
         5, 8, reinterpret_cast<boost::gil::gray8_pixel_t*>(null_matrix), 5);
     std::vector<boost::gil::point_t> keypoints;
-    std::vector<int> scores;
+    std::vector<std::size_t> scores;
     boost::gil::fast(image1, keypoints, scores, 20);
     std::vector<boost::gil::point_t> expected_keypoints;
     BOOST_ASSERT_MSG(
         expected_keypoints.size() == keypoints.size(), "dimensions do not match for keypoints");
 }
+
 //testing color image
 void test2()
 {
     boost::gil::rgb8_image_t input_color_image;
     boost::gil::read_image("box.jpg", input_color_image, boost::gil::jpeg_tag{});
     std::vector<boost::gil::point_t> keypoints;
-    std::vector<int> scores;
+    std::vector<std::size_t> scores;
     boost::gil::fast(boost::gil::view(input_color_image), keypoints, scores, 20);
     std::vector<boost::gil::point_t> expected_keypoints{
         boost::gil::point_t(218, 19),  boost::gil::point_t(44, 56),   boost::gil::point_t(280, 62),
@@ -51,13 +54,14 @@ void test2()
         expected_keypoints.size() == keypoints.size(), "dimensions do not match for keypoints");
     BOOST_ASSERT_MSG(expected_keypoints == keypoints, "keypoints do not match");
 }
+
 //testing grayscale image
 void test3()
 {
     boost::gil::rgb8_image_t input_color_image;
     boost::gil::read_image("box.jpg", input_color_image, boost::gil::jpeg_tag{});
     std::vector<boost::gil::point_t> keypoints;
-    std::vector<int> scores;
+    std::vector<std::size_t> scores;
     std::vector<boost::gil::point_t> expected_keypoints{
         boost::gil::point_t(218, 19),  boost::gil::point_t(44, 56),   boost::gil::point_t(280, 62),
         boost::gil::point_t(302, 77),  boost::gil::point_t(321, 93),  boost::gil::point_t(323, 93),
@@ -73,12 +77,14 @@ void test3()
         boost::gil::point_t(231, 285), boost::gil::point_t(216, 289), boost::gil::point_t(125, 293),
         boost::gil::point_t(205, 294), boost::gil::point_t(132, 297), boost::gil::point_t(187, 299),
         boost::gil::point_t(171, 304), boost::gil::point_t(142, 313)};
+
     boost::gil::fast(boost::gil::view(input_color_image), keypoints, scores, 10);
 
     BOOST_ASSERT_MSG(
         expected_keypoints.size() == keypoints.size(), "dimensions do not match for keypoints");
     BOOST_ASSERT_MSG(expected_keypoints == keypoints, "keypoints do not match");
 }
+
 int main()
 {
     test1();
