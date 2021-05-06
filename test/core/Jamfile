@@ -16,7 +16,7 @@ project
   ;
 
 alias headers_concepts : [ generate_self_contained_headers concepts ] ;
-alias headers : [ generate_self_contained_headers : concepts extension io ] ;
+alias headers : [ generate_self_contained_headers : concepts extension ] ;
 
 run promote_integral.cpp ;
 run test_fixture.cpp ;
