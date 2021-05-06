@@ -4,11 +4,11 @@ Language:        Cpp
 AccessModifierOffset: -4
 AlignAfterOpenBracket: AlwaysBreak
 AlignConsecutiveMacros: AcrossEmptyLinesAndComments
-AlignConsecutiveAssignments: AcrossEmptyLinesAndComments
+AlignConsecutiveAssignments: None
 AlignConsecutiveBitFields: AcrossEmptyLinesAndComments
 AlignConsecutiveDeclarations: None
 AlignEscapedNewlines: Right
-AlignOperands:   true
+AlignOperands: AlignAfterOperator
 AlignTrailingComments: true
 AllowAllArgumentsOnNextLine: true
 AllowAllConstructorInitializersOnNextLine: false
@@ -45,7 +45,7 @@ BraceWrapping:
   SplitEmptyFunction: true
   SplitEmptyRecord: true
   SplitEmptyNamespace: true
-BreakBeforeBinaryOperators: None
+BreakBeforeBinaryOperators: All
 BreakBeforeBraces: Custom
 BreakBeforeInheritanceComma: true
 BreakInheritanceList: BeforeComma
@@ -70,7 +70,7 @@ ForEachMacros:
   - foreach
   - Q_FOREACH
   - BOOST_FOREACH
-IncludeBlocks:   Preserve
+IncludeBlocks: Regroup
 IncludeCategories:
   - Regex:           '^<boost/gil'
     Priority:        1
@@ -85,7 +85,7 @@ IncludeIsMainSourceRegex: ''
 IndentCaseLabels: false
 IndentCaseBlocks: false
 IndentGotoLabels: true
-IndentPPDirectives: None
+IndentPPDirectives: AfterHash
 IndentExternBlock: AfterExternBlock
 IndentWidth:     4
 IndentWrappedFunctionNames: true
@@ -109,7 +109,7 @@ PenaltyBreakFirstLessLess: 120
 PenaltyBreakString: 10
 PenaltyBreakTemplateDeclaration: 10
 PenaltyExcessCharacter: 100
-PenaltyReturnTypeOnItsOwnLine: 100
+PenaltyReturnTypeOnItsOwnLine: 500
 PointerAlignment: Left
 ReflowComments:  false
 SortIncludes:    true
