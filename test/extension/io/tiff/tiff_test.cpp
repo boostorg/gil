@@ -267,15 +267,13 @@ void test_dynamic_image()
 {
     // FIXME: This test has been disabled for now because of compilation issues with MSVC10.
 
-    using my_img_types = mp11::mp_list
+    gil::any_image
     <
         gil::gray8_image_t,
         gil::gray16_image_t,
         gil::rgb8_image_t,
-        gil::rgba8_image_t,
-        gil::gray1_image_t
-    >;
-    gil::any_image<my_img_types> image;
+        gil::rgba8_image_t
+    > image;
 
     gil::read_image(tiff_filename.c_str(), image, gil::tiff_tag());
 
