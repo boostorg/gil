@@ -39,6 +39,8 @@ please follow the workflow explained in this document.
 
 ## Pull Requests
 
+
+- **DO** all your work in fork this repository. 
 - **DO** base your work against the `develop` branch, not the `master`.
 - **DO** submit all major changes to code via pull requests (PRs) rather than through
   a direct commit. PRs will be CI-checked first, then reviewed and potentially merged
