@@ -177,7 +177,7 @@ private:
 
 /// \brief Provides functionality for performing 1D correlation between the kernel and a buffer
 /// storing row pixels of source image. Kernel size is a template parameter and must be 
-// compulsorily specified while using.
+/// compulsorily specified while using.
 template <std::size_t Size, typename PixelAccum>
 struct correlator_k
 {
