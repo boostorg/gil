@@ -255,11 +255,12 @@ void view_multiplies_scalar(SrcView const& src_view, Scalar const& scalar, DstVi
 /// \brief Boundary options for image boundary extension
 enum class boundary_option
 {
-    output_ignore,  /// do nothing to the output
-    output_zero,    /// set the output to zero
-    extend_padded,  /// assume the source boundaries to be padded already
-    extend_zero,    /// assume the source boundaries to be zero
-    extend_constant /// assume the source boundaries to be the boundary value
+    output_ignore,    /// do nothing to the output
+    output_zero,      /// set the output to zero
+    extend_padded,    /// assume the source boundaries to be padded already
+    extend_zero,      /// assume the source boundaries to be zero
+    extend_constant,  /// assume the source boundaries to be the boundary value
+    extend_reflection /// assumes boundary values as reflection of source row pixels
 };
 
 namespace detail
