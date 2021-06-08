@@ -23,7 +23,14 @@ option(BOOST_GIL_ENABLE_EXT_NUMERIC "Enable Numeric extension, tests and example
 option(BOOST_GIL_ENABLE_EXT_TOOLBOX "Enable Toolbox extension, tests and examples" ON)
 option(BOOST_GIL_USE_CONAN "Use Conan to install dependencies" OFF)
 option(BOOST_GIL_USE_CLANG_TIDY "Set CMAKE_CXX_CLANG_TIDY property on targets to enable clang-tidy linting" OFF)
-set(CMAKE_CXX_STANDARD 11 CACHE STRING "C++ standard version to use (default is 11)")
+option(BOOST_GIL_ENABLE_EXT_BLAZE "Enable Blaze library extensions, tests and examples" OFF)
+set(BOOST_GIL_BLAS_LIBRARY "" CACHE STRING "BLAS library to use with Blaze, only queried if BOOST_GIL_ENABLE_EXT_BLAZE is on")
+
+if (BOOST_GIL_ENABLE_EXT_BLAZE)
+  set(CMAKE_CXX_STANDARD 17 CACHE STRING "C++ standard version to use (requires at least 17 for Blaze extension)")
+else()
+  set(CMAKE_CXX_STANDARD 11 CACHE STRING "C++ standard version to use (default is 11)")
+endif()
 
 #-----------------------------------------------------------------------------
 # Project
@@ -194,6 +201,31 @@ if(BOOST_GIL_ENABLE_EXT_IO)
       target_compile_definitions(gil_dependencies INTERFACE ${LibRaw_DEFINITIONS})
     endif()
   endif()
+endif()
+
+#-----------------------------------------------------------------------------
+# Optional dependency: Blaze
+#-----------------------------------------------------------------------------
+if (BOOST_GIL_ENABLE_EXT_BLAZE)
+  # Just add to the dependencies target
+  find_package(blaze REQUIRED)
+  target_link_libraries(gil_dependencies INTERFACE blaze::blaze)
+  # do nothing if BOOST_GIL_BLAS_LIBRARY is empty, hope that Blaze installation used defaults
+  # Usage notes for Intel MKL: either pass MKLROOT or have env variable MKLROOT set
+  # It is a requirement of find_package
+  if (BOOST_GIL_BLAS_LIBRARY STREQUAL MKL)
+    if (DEFINED MKLROOT)
+      set(ENV{MKLROOT} ${MKLROOT})
+    elseif(NOT DEFINED ENV{MKLROOT})
+      message(FATAL_ERROR "Please either pass MKLROOT variable or set environment variable MKLROOT")
+    endif()
+    add_library(mkl INTERFACE)
+    find_package(BLAS)
+    target_include_directories(mkl INTERFACE $ENV{MKLROOT}/include)
+    target_link_libraries(mkl INTERFACE ${BLAS_LIBRARIES})
+    target_link_libraries(gil_dependencies INTERFACE mkl)
+  endif()
+  # TODO: support for OpenBLAS and other BLAS libraries for Blaze
 endif()
 
 #-----------------------------------------------------------------------------
