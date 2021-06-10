@@ -1,5 +1,5 @@
 //
-// Copyright 2021 Harsit Pant <harshitpant83@gmail.com>
+// Copyright 2021 Harshit Pant <harshitpant83@gmail.com>
 //
 // Use, modification and distribution are subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -21,7 +21,8 @@
 
 namespace boost { namespace gil {
 
-namespace distance_type{
+namespace distance_type {
+
 struct euclidean_approximation_t {};
 struct manhattan_t {};
 struct chessboard_t {};
@@ -41,9 +42,10 @@ struct check_distance_type
                                std::is_same<DistanceType, chessboard_t>::value ||
                                std::is_same<DistanceType, precise_euclidean_t>::value;
 };
-}
+} // namespace distance_type
 
 namespace mask_size {
+
 struct three_t {};
 struct five_t {};
 struct not_applicable_t {};
@@ -60,7 +62,7 @@ struct check_mask_size
                                std::is_same<MaskSize, five_t>::value  ||
                                std::is_same<MaskSize, not_applicable_t>::value;
 };
-}
+} // namespace mask_size
 
 enum class distance_from
 {
@@ -95,7 +97,7 @@ struct dt_parameters_are_compatible<distance_type::precise_euclidean_t, mask_siz
     static const bool value = true;
 };
 
-// Value used as infinite distance for distance_transform.
+/// \breif Value used as infinite distance for distance_transform.
 float constexpr dt_infinite = 1000000000;
 
 /// \breif Calculates distance transfrom with mask size three.
@@ -352,7 +354,6 @@ void distance_transform_mask_size_five_impl(SrcView const& src_view,
 }  
 
 /// \breif Calculates one-dimensional squared euclidean distance.
-/// 
 /// Reference - http://www.theoryofcomputing.org/articles/v008a019/v008a019.pdf
 template<typename ImageIterator>
 std::vector<float> calculate_squared_euclidean_distance(ImageIterator f, std::ptrdiff_t n)
