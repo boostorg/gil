@@ -37,10 +37,10 @@ static precise_euclidean_t precise_euclidean;
 template <typename DistanceType>
 struct check_distance_type
 {
-    static const bool value =  std::is_same<DistanceType, euclidean_approximation_t>::value  ||
-                               std::is_same<DistanceType, manhattan_t>::value  ||
-                               std::is_same<DistanceType, chessboard_t>::value ||
-                               std::is_same<DistanceType, precise_euclidean_t>::value;
+    static constexpr bool value =  std::is_same<DistanceType, euclidean_approximation_t>::value ||
+                                   std::is_same<DistanceType, manhattan_t>::value  ||
+                                   std::is_same<DistanceType, chessboard_t>::value ||
+                                   std::is_same<DistanceType, precise_euclidean_t>::value;
 };
 } // namespace distance_type
 
@@ -58,9 +58,9 @@ static not_applicable_t not_applicable;
 template <typename MaskSize>
 struct check_mask_size
 {
-    static const bool value =  std::is_same<MaskSize, three_t>::value ||
-                               std::is_same<MaskSize, five_t>::value  ||
-                               std::is_same<MaskSize, not_applicable_t>::value;
+    static constexpr bool value = std::is_same<MaskSize, three_t>::value ||
+                                  std::is_same<MaskSize, five_t>::value  ||
+                                  std::is_same<MaskSize, not_applicable_t>::value;
 };
 } // namespace mask_size
 
@@ -74,28 +74,19 @@ namespace detail {
 
 /// \breif Checks compatiblity of distance_type and mask_size used together.
 template <typename DistanceType, typename MaskSize>
-struct dt_parameters_are_compatible
-{
-    static const bool value = true;
-};
+struct dt_parameters_are_compatible : std::true_type {};
 
 template <typename DistanceType>
-struct dt_parameters_are_compatible<DistanceType, mask_size::not_applicable_t>
-{
-    static const bool value = false;
-};
+struct dt_parameters_are_compatible
+    <DistanceType, mask_size::not_applicable_t> : std::false_type {};
 
 template <typename MaskSize>
-struct dt_parameters_are_compatible<distance_type::precise_euclidean_t, MaskSize>
-{
-    static const bool value = false;
-};
+struct dt_parameters_are_compatible
+    <distance_type::precise_euclidean_t, MaskSize> : std::false_type {};
 
 template <>
-struct dt_parameters_are_compatible<distance_type::precise_euclidean_t, mask_size::not_applicable_t>
-{
-    static const bool value = true;
-};
+struct dt_parameters_are_compatible
+    <distance_type::precise_euclidean_t, mask_size::not_applicable_t> : std::true_type {};
 
 /// \breif Value used as infinite distance for distance_transform.
 float constexpr dt_infinite = 1000000000;
