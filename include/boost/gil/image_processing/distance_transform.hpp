@@ -22,7 +22,6 @@
 namespace boost { namespace gil {
 
 namespace distance_type {
-
 struct euclidean_approximation_t {};
 struct manhattan_t {};
 struct chessboard_t {};
@@ -32,20 +31,9 @@ static euclidean_approximation_t euclidean_approximation;
 static manhattan_t manhattan;
 static chessboard_t chessboard;
 static precise_euclidean_t precise_euclidean;
-
-/// \breif Checks if distance_type used exists.
-template <typename DistanceType>
-struct check_distance_type
-{
-    static constexpr bool value =  std::is_same<DistanceType, euclidean_approximation_t>::value ||
-                                   std::is_same<DistanceType, manhattan_t>::value  ||
-                                   std::is_same<DistanceType, chessboard_t>::value ||
-                                   std::is_same<DistanceType, precise_euclidean_t>::value;
-};
 } // namespace distance_type
 
 namespace mask_size {
-
 struct three_t {};
 struct five_t {};
 struct not_applicable_t {};
@@ -53,15 +41,6 @@ struct not_applicable_t {};
 static three_t three;
 static five_t five;
 static not_applicable_t not_applicable;
-
-/// \breif Checks if mask_size used exists.
-template <typename MaskSize>
-struct check_mask_size
-{
-    static constexpr bool value = std::is_same<MaskSize, three_t>::value ||
-                                  std::is_same<MaskSize, five_t>::value  ||
-                                  std::is_same<MaskSize, not_applicable_t>::value;
-};
 } // namespace mask_size
 
 enum class distance_from
@@ -71,6 +50,26 @@ enum class distance_from
 };
 
 namespace detail {
+
+/// \breif Checks if mask_size used exists.
+template <typename MaskSize>
+struct dt_check_mask_size
+{
+    static constexpr bool value = std::is_same<MaskSize, mask_size::three_t>::value ||
+                                  std::is_same<MaskSize, mask_size::five_t>::value  ||
+                                  std::is_same<MaskSize, mask_size::not_applicable_t>::value;
+};
+
+/// \breif Checks if distance_type used exists.
+template <typename DistanceType>
+struct dt_check_distance_type
+{
+    static constexpr bool value = 
+        std::is_same<DistanceType, distance_type::euclidean_approximation_t>::value ||
+        std::is_same<DistanceType, distance_type::manhattan_t>::value  ||
+        std::is_same<DistanceType, distance_type::chessboard_t>::value ||
+        std::is_same<DistanceType, distance_type::precise_euclidean_t>::value;
+};
 
 /// \breif Checks compatiblity of distance_type and mask_size used together.
 template <typename DistanceType, typename MaskSize>
@@ -458,7 +457,7 @@ void distance_transorm_precise_impl(SrcView const& src_view,
     }
 }
 
-} //namespace detail
+} // namespace detail
 
 /// \addtogroup ImageProcessing
 /// @{
@@ -480,13 +479,13 @@ void distance_transform(SrcView const& src_view, DstView const& dst_view, distan
     gil_function_requires<ImageViewConcept<SrcView>>();
     gil_function_requires<MutableImageViewConcept<DstView>>();
 
-    static_assert(is_same<gray_t, typename color_space_type<SrcView>::type>::value &&
-                  is_same<gray_t, typename color_space_type<DstView>::type>::value,
+    static_assert(std::is_same<gray_t, typename color_space_type<SrcView>::type>::value &&
+                  std::is_same<gray_t, typename color_space_type<DstView>::type>::value,
                   "Source and destination image views must use gray color space.");
 
-    static_assert(distance_type::check_distance_type<DistanceType>::value, 
+    static_assert(detail::dt_check_distance_type<DistanceType>::value, 
                                                            "Distance type not recognized.");
-    static_assert(mask_size::check_mask_size<MaskSize>::value, "Mask Size not recognized.");
+    static_assert(detail::dt_check_mask_size<MaskSize>::value, "Mask Size not recognized.");
 
     // Generates compile time error if invalid combination of distance_type and mask_size is used.
     static_assert(detail::dt_parameters_are_compatible<DistanceType, MaskSize>::value,
@@ -495,7 +494,7 @@ void distance_transform(SrcView const& src_view, DstView const& dst_view, distan
 
     BOOST_ASSERT(src_view.dimensions() == dst_view.dimensions());
 
-    if(std::is_same<MaskSize, mask_size::three_t>::value)
+    if (std::is_same<MaskSize, mask_size::three_t>::value)
         distance_transform_mask_size_three_impl(src_view, dst_view, dist_from, dist_type);
 
     else if (std::is_same<MaskSize, mask_size::five_t>::value)
