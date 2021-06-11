@@ -270,7 +270,7 @@ template<>
 struct image_read_settings< tiff_tag > : public image_read_settings_base
 {
     /// Default constructor
-    image_read_settings< tiff_tag >()
+    image_read_settings()
     : image_read_settings_base()
     , _directory( tiff_directory::default_value::value )
     {}

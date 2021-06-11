@@ -141,7 +141,7 @@ template<>
 struct image_read_settings< jpeg_tag > : public image_read_settings_base
 {
     /// Default constructor
-    image_read_settings<jpeg_tag>()
+    image_read_settings()
     : image_read_settings_base()
     , _dct_method( jpeg_dct_method::default_value )
     {}
