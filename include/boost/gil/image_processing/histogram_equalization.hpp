@@ -17,7 +17,6 @@
 
 namespace boost { namespace gil {
 
-
 /////////////////////////////////////////
 /// Histogram Equalization(HE)
 /////////////////////////////////////////
@@ -42,7 +41,8 @@ namespace boost { namespace gil {
 ///        and returns the color map used for histogram equalization.
 ///
 template <typename SrcKeyType>
-std::map<SrcKeyType, SrcKeyType> histogram_equalization(histogram<SrcKeyType> const& src_hist)
+auto histogram_equalization(histogram<SrcKeyType> const& src_hist)
+    -> std::map<SrcKeyType, SrcKeyType>
 {
     histogram<SrcKeyType> dst_hist;
     return histogram_equalization(src_hist, dst_hist);
@@ -59,8 +59,8 @@ std::map<SrcKeyType, SrcKeyType> histogram_equalization(histogram<SrcKeyType> co
 ///        as well as transforming the destination histogram.
 ///
 template <typename SrcKeyType, typename DstKeyType>
-std::map<SrcKeyType, DstKeyType>
-    histogram_equalization(histogram<SrcKeyType> const& src_hist, histogram<DstKeyType>& dst_hist)
+auto histogram_equalization(histogram<SrcKeyType> const& src_hist, histogram<DstKeyType>& dst_hist)
+    -> std::map<SrcKeyType, DstKeyType>
 {
     static_assert(
         std::is_integral<SrcKeyType>::value &&

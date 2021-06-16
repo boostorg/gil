@@ -150,8 +150,8 @@ struct image_read_settings< jpeg_tag > : public image_read_settings_base
     /// \param top_left   Top left coordinate for reading partial image.
     /// \param dim        Dimensions for reading partial image.
     /// \param dct_method Specifies dct method.
-    image_read_settings( const point_t&        top_left
-                       , const point_t&        dim
+    image_read_settings( point_t const&        top_left
+                       , point_t const&        dim
                        , jpeg_dct_method::type dct_method = jpeg_dct_method::default_value
                        )
     : image_read_settings_base( top_left

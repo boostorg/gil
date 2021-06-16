@@ -12,17 +12,14 @@
 #include <boost/gil/gray.hpp>
 #include <boost/gil/image_processing/threshold.hpp>
 
-namespace boost
-{
-namespace gil
-{
-namespace detail
-{
+namespace boost { namespace gil { namespace detail {
+
 enum class morphological_operation
 {
     dilation,
     erosion,
 };
+
 /// \addtogroup ImageProcessing
 /// @{
 

@@ -34,7 +34,7 @@ auto semantic_at_c(ColorBase& p)
 
 
 template <int K, typename ColorBase>
-typename kth_semantic_element_const_reference_type<ColorBase,K>::type semantic_at_c(const ColorBase& p);
+auto semantic_at_c(const ColorBase& p) -> typename kth_semantic_element_const_reference_type<ColorBase,K>::type;
 
 // Forward declare element_reference_type
 template <typename ColorBase> struct element_reference_type;
@@ -178,7 +178,7 @@ struct homogeneous_color_base<Element, Layout, 2>
     { return v1_; }
 
     // Support for planar_pixel_reference operator[]
-    Element at_c_dynamic(std::size_t i) const
+    auto at_c_dynamic(std::size_t i) const -> Element
     {
         if (i == 0)
             return v0_;
@@ -277,7 +277,7 @@ struct homogeneous_color_base<Element, Layout, 3>
     { return v2_; }
 
     // Support for planar_pixel_reference operator[]
-    Element at_c_dynamic(std::size_t i) const
+    auto at_c_dynamic(std::size_t i) const -> Element
     {
         switch (i)
         {
@@ -392,7 +392,7 @@ struct homogeneous_color_base<Element, Layout, 4>
     { return v3_; }
 
     // Support for planar_pixel_reference operator[]
-    Element at_c_dynamic(std::size_t i) const
+    auto at_c_dynamic(std::size_t i) const -> Element
     {
         switch (i)
         {
@@ -527,7 +527,7 @@ struct homogeneous_color_base<Element, Layout, 5>
     }
 
     // Support for planar_pixel_reference operator[]
-    Element at_c_dynamic(std::size_t i) const
+    auto at_c_dynamic(std::size_t i) const -> Element
     {
         switch (i)
         {

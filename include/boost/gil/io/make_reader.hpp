@@ -39,18 +39,10 @@ auto make_reader(
     typename get_reader<String, FormatTag, ConversionPolicy>::type(device, settings);
 }
 
-template< typename FormatTag
-        , typename ConversionPolicy
-        >
+template <typename FormatTag, typename ConversionPolicy>
 inline
-typename get_reader< std::wstring
-                   , FormatTag
-                   , ConversionPolicy
-                   >::type
-make_reader( const std::wstring& file_name
-           , const image_read_settings< FormatTag >& settings
-           , const ConversionPolicy&
-           )
+auto make_reader(std::wstring const &file_name, image_read_settings<FormatTag> const& settings, ConversionPolicy const&)
+    -> typename get_reader<std::wstring, FormatTag, ConversionPolicy>::type
 {
     const char* str = detail::convert_to_native_string( file_name );
 
@@ -71,18 +63,10 @@ make_reader( const std::wstring& file_name
 }
 
 #ifdef BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
-template< typename FormatTag
-        , typename ConversionPolicy
-        >
+template <typename FormatTag, typename ConversionPolicy>
 inline
-typename get_reader< std::wstring
-                   , FormatTag
-                   , ConversionPolicy
-                   >::type
-make_reader( const filesystem::path&                 path
-           , const image_read_settings< FormatTag >& settings
-           , const ConversionPolicy&                 cc
-           )
+auto make_reader(filesystem::path const& path, image_read_settings<FormatTag> const& settings, ConversionPolicy const& cc)
+    -> typename get_reader<std::wstring, FormatTag, ConversionPolicy>::type
 {
     return make_reader( path.wstring()
                       , settings
@@ -134,18 +118,10 @@ auto make_reader(
     return make_reader(file_name, image_read_settings<FormatTag>(), cc);
 }
 
-template< typename FormatTag
-        , typename ConversionPolicy
-        >
+template <typename FormatTag, typename ConversionPolicy>
 inline
-typename get_reader< std::wstring
-                   , FormatTag
-                   , ConversionPolicy
-                   >::type
-make_reader( const std::wstring&     file_name
-           , const FormatTag&
-           , const ConversionPolicy& cc
-           )
+auto make_reader(std::wstring const &file_name, FormatTag const&, ConversionPolicy const& cc)
+    -> typename get_reader<std::wstring, FormatTag, ConversionPolicy>::type
 {
     return make_reader( file_name
                       , image_read_settings< FormatTag >()
@@ -154,18 +130,10 @@ make_reader( const std::wstring&     file_name
 }
 
 #ifdef BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
-template< typename FormatTag
-        , typename ConversionPolicy
-        >
+template <typename FormatTag, typename ConversionPolicy>
 inline
-typename get_reader< std::wstring
-                   , FormatTag
-                   , ConversionPolicy
-                   >::type
-make_reader( const filesystem::path& path
-           , const FormatTag&
-           , const ConversionPolicy& cc
-           )
+auto make_reader(filesystem::path const& path, FormatTag const&, ConversionPolicy const& cc)
+    -> typename get_reader<std::wstring, FormatTag, ConversionPolicy>::type
 {
     return make_reader( path.wstring()
                       , image_read_settings< FormatTag >()
