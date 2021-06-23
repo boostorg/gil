@@ -91,8 +91,9 @@ struct dt_parameters_are_compatible
 float constexpr dt_infinite = 1000000000;
 
 /// \breif Calculates distance transfrom with mask size three.
-///  Optimal local distances a, b for euclidean approximation from,
-///  http://www.cmm.mines-paristech.fr/~marcoteg/cv/publi_pdf/MM_refs/1986_Borgefors_distance.pdf
+/// Optimal local distances a, b for euclidean approximation from,
+/// http://www.cmm.mines-paristech.fr/~marcoteg/cv/publi_pdf/MM_refs/1986_Borgefors_distance.pdf
+/// Algorithm from - Principles of Digital Image Processing: Core Algorithms (Section 11.2.2).
 template<typename SrcView, typename DstView, typename DistanceType>
 void distance_transform_mask_size_three_impl(SrcView const& src_view, 
                                              DstView const& dst_view, 
@@ -122,7 +123,7 @@ void distance_transform_mask_size_three_impl(SrcView const& src_view,
     {
         for (std::ptrdiff_t x = 0; x < src_view.width(); ++x)
         {
-            if(dist_from == distance_from::off_pixels)
+            if (dist_from == distance_from::off_pixels)
             {
                 if (src_view(x, y)[0] == src_channel_min)
                     intermediate_image_view(x + padding, y + padding)[0] = 0;
@@ -139,9 +140,9 @@ void distance_transform_mask_size_three_impl(SrcView const& src_view,
         }
     }
 
-    float a, b;
+    float a, b; // a and b hold elements of the distance mask (see reference).
 
-    if(std::is_same<DistanceType, distance_type::euclidean_approximation_t>::value)
+    if (std::is_same<DistanceType, distance_type::euclidean_approximation_t>::value)
     {
         a = 0.95509f;
         b = 1.36930f;
@@ -161,7 +162,7 @@ void distance_transform_mask_size_three_impl(SrcView const& src_view,
     {
         for (std::ptrdiff_t x = 0; x < src_view.width(); ++x)
         {
-            if(intermediate_image_view(x + padding, y + padding)[0] > 0)
+            if (intermediate_image_view(x + padding, y + padding)[0] > 0)
             { 
                 float const d1 = a + intermediate_image_view(x - 1 + padding, y +     padding)[0];
                 float const d2 = b + intermediate_image_view(x - 1 + padding, y - 1 + padding)[0];
@@ -209,8 +210,9 @@ void distance_transform_mask_size_three_impl(SrcView const& src_view,
 }  
 
 /// \breif Calculates distance transfrom with mask size five.
-///  Optimal local distances a, b, c for euclidean approximation from,
-///  http://www.cmm.mines-paristech.fr/~marcoteg/cv/publi_pdf/MM_refs/1986_Borgefors_distance.pdf
+/// Optimal local distances a, b, c for euclidean approximation from,
+/// http://www.cmm.mines-paristech.fr/~marcoteg/cv/publi_pdf/MM_refs/1986_Borgefors_distance.pdf
+/// Algorithm from - Principles of Digital Image Processing: Core Algorithms (Section 11.2.2).
 template<typename SrcView, typename DstView, typename DistanceType>
 void distance_transform_mask_size_five_impl(SrcView const& src_view,
                                             DstView const& dst_view, 
@@ -244,7 +246,7 @@ void distance_transform_mask_size_five_impl(SrcView const& src_view,
     {
         for (std::ptrdiff_t x = 0; x < src_view.width(); ++x)
         {
-            if(dist_from == distance_from::off_pixels)
+            if (dist_from == distance_from::off_pixels)
             {
                 if (src_view(x, y)[0] == src_channel_min)
                     intermediate_image_view(x + padding, y + padding)[0] = 0;
@@ -261,15 +263,15 @@ void distance_transform_mask_size_five_impl(SrcView const& src_view,
         }
     }
 
-    float a, b, c;
+    float a, b, c; // a, b and c hold elements of the distance mask (see reference).
 
-    if(std::is_same<DistanceType, distance_type::euclidean_approximation_t>::value)
+    if (std::is_same<DistanceType, distance_type::euclidean_approximation_t>::value)
     {
         a = 1;
         b = 1.4f;
         c = 2.19691f;
     }
-    else if(std::is_same<DistanceType, distance_type::manhattan_t>::value)
+    else if (std::is_same<DistanceType, distance_type::manhattan_t>::value)
     { 
         a = 1;
         b = 2;
@@ -286,7 +288,7 @@ void distance_transform_mask_size_five_impl(SrcView const& src_view,
     {
         for (std::ptrdiff_t x = 0; x < src_view.width(); ++x)
         {
-            if(intermediate_image_view(x + padding, y + padding)[0] > 0)
+            if (intermediate_image_view(x + padding, y + padding)[0] > 0)
             { 
                 float const d1 = c + intermediate_image_view(x - 1 + padding, y - 2 + padding)[0];
                 float const d2 = c + intermediate_image_view(x + 1 + padding, y - 2 + padding)[0];
@@ -344,47 +346,47 @@ void distance_transform_mask_size_five_impl(SrcView const& src_view,
 }  
 
 /// \breif Calculates one-dimensional squared euclidean distance.
-/// Reference - http://www.theoryofcomputing.org/articles/v008a019/v008a019.pdf
-template<typename ImageIterator>
-std::vector<float> calculate_squared_euclidean_distance(ImageIterator f, std::ptrdiff_t n)
+/// Reference - http://www.theoryofcomputing.org/articles/v008a019/v008a019.pdf (Section 2.1)
+template<typename ImageViewIterator>
+std::vector<float> compute_1d_squared_euclidean_distance_transform
+                                                    (ImageViewIterator f, std::ptrdiff_t n)
 {
     std::ptrdiff_t k = 0;
-    std::vector<float> d(n);
-    std::vector<int> v(n);
-    std::vector<int> z(n + 1);
+    std::vector<std::ptrdiff_t> v(n);
+    std::vector<float> z(n + 1);
     v[0] = 0;
-    z[0] = static_cast<int>(-dt_infinite);
-    z[1] = static_cast<int>(dt_infinite);
-    for(int q = 1; q < n ; ++q)
+    z[0] = -dt_infinite;
+    z[1] = dt_infinite;
+    for (std::ptrdiff_t q = 1; q < n ; ++q)
     {
         float s = static_cast<float>(((f[q][0] + std::pow(q, 2)) - 
                                     (f[v[k]][0] + std::pow(v[k], 2))) / (2 * q - 2 * v[k]));
         while (s <= z[k])
         {
-            --k;
+            k = k - 1;
             s = static_cast<float>(((f[q][0] + std::pow(q, 2)) - 
                                   (f[v[k]][0] + std::pow(v[k], 2))) / (2 * q - 2 * v[k]));
         }
-        {
-            k = k + 1;
-            v[k]     = static_cast<int>(q);
-            z[k]     = static_cast<int>(s);
-            z[k + 1] = static_cast<int>(dt_infinite);
-        }
+        k        = k + 1;
+        v[k]     = q;
+        z[k]     = s;
+        z[k + 1] = dt_infinite;
     }
     k = 0;
-    for (int q = 0; q < n; ++q)
+    std::vector<float> d_f(n); 
+    for (std::ptrdiff_t q = 0; q < n; ++q)
     {
-        while(z[k+1] < q)
+        while (z[k+1] < q)
         { 
             ++k;
         }
-        d[q] = static_cast<float>(std::pow((q - v[k]), 2) + f[v[k]][0]);
+        d_f[q] = static_cast<float>(std::pow((q - v[k]), 2) + f[v[k]][0]);
     }
-    return d;
+    return d_f;
 }
 
-/// \breif Calculates precise euclidean distance transform.
+/// \breif Calculates two dimensionsal (precise) euclidean distance transform.
+/// Reference - http://www.theoryofcomputing.org/articles/v008a019/v008a019.pdf (Section 2.2)
 template<typename SrcView, typename DstView>
 void distance_transorm_precise_impl(SrcView const& src_view, 
                                     DstView const& dst_view,
@@ -411,34 +413,38 @@ void distance_transorm_precise_impl(SrcView const& src_view,
             }
         }
     }
-
-    for (std::ptrdiff_t y = 0; y < intermediate_image_view.height(); ++y)
-    {
-        typename gray32f_view_t::x_iterator intermediate_row_itr = 
-                                            intermediate_image_view.row_begin(y);
-
-        std::vector<float> one_dimensional_squared_distance = calculate_squared_euclidean_distance
-                                          (intermediate_row_itr, intermediate_image_view.width());
-
-        for (std::ptrdiff_t x = 0; x < intermediate_image_view.width(); ++x)
-        {
-            intermediate_row_itr[x][0] = one_dimensional_squared_distance[x];
-        }
-    }
-
+    
+    // Computes one-dimensional distance transforms along each column of the grid (image).
     for (std::ptrdiff_t x = 0; x < intermediate_image_view.width(); ++x)
     {
         typename gray32f_view_t::y_iterator intermediate_col_itr = 
                                             intermediate_image_view.col_begin(x);
 
-        std::vector<float> one_dimensional_squared_distance = calculate_squared_euclidean_distance
-                                         (intermediate_col_itr, intermediate_image_view.height());
+        std::vector<float> one_dimensional_sq_euclidean_dt_along_column = 
+            compute_1d_squared_euclidean_distance_transform
+                (intermediate_col_itr, intermediate_image_view.height());
 
         for (std::ptrdiff_t y = 0; y < intermediate_image_view.height(); ++y)
         {
-            intermediate_col_itr[y][0] = one_dimensional_squared_distance[y];
+            intermediate_col_itr[y][0] = one_dimensional_sq_euclidean_dt_along_column[y];
+        }
+    }
+
+    // Computes one-dimensional distance transforms along each row of the grid (image).
+    for (std::ptrdiff_t y = 0; y < intermediate_image_view.height(); ++y)
+    {
+        typename gray32f_view_t::x_iterator intermediate_row_itr = 
+                                            intermediate_image_view.row_begin(y);
+
+        std::vector<float> one_dimensional_sq_euclidean_dt_along_row =
+            compute_1d_squared_euclidean_distance_transform
+                (intermediate_row_itr, intermediate_image_view.width());
+
+        for (std::ptrdiff_t x = 0; x < intermediate_image_view.width(); ++x)
+        {
+            intermediate_row_itr[x][0] = one_dimensional_sq_euclidean_dt_along_row[x];
             
-            float const distance_transform = std::sqrt(intermediate_col_itr[y][0]);
+            float const distance_transform = std::sqrt(intermediate_row_itr[x][0]);
 
             float constexpr dst_channel_max =
                      (is_same<DstView, gray32f_view_t>::value) ? dt_infinite : static_cast<float>(
@@ -466,7 +472,7 @@ void distance_transorm_precise_impl(SrcView const& src_view,
 /// 
 /// \param src_view  - Source image view.
 /// \param dst_view  - Destination image view.
-/// \param dist_from - Specifies from where to find distance from, neareast, 'on' OR 'off' pixels.
+/// \param dist_from - Specifies where to find distance from, neareast, 'on' OR 'off' pixels.
 /// \param dist_type - Specifies formula/method for distance calculation.
 /// \tparam SrcView  - Source image view type.
 /// \tparam DstView  - Destination image view type.
