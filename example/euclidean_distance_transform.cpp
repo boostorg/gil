@@ -1,5 +1,5 @@
 //
-// Copyright 2021 Harsit Pant <harshitpant83@gmail.com>
+// Copyright 2021 Harshit Pant <harshitpant83@gmail.com>
 //
 // Use, modification and distribution are subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -76,6 +76,8 @@ int main(int argc, char* argv[])
     }
     else
     {
-        std::cerr << "Incorrect options used.";
+        std::cerr << "This program fails to work with the set of arguments used. Please try again.";
     }
+
+    return 0;
 }
