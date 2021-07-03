@@ -18,6 +18,7 @@
 
 #include <cstdint>
 #include <memory>
+#include <memory_resource>
 
 // B - bits size/signedness, CM - channel model, CS - colour space, LAYOUT - pixel layout
 // Example: B = '8', CM = 'uint8_t', CS = 'bgr,  LAYOUT='bgr_layout_t'
@@ -50,11 +51,16 @@
     using CS##B##c_view_t      = image_view<CS##B##c_loc_t>;                             \
     using CS##B##_step_view_t  = image_view<CS##B##_step_loc_t>;                         \
     using CS##B##c_step_view_t = image_view<CS##B##c_step_loc_t>;                        \
-    using CS##B##_image_t = image<CS##B##_pixel_t, false, std::allocator<unsigned char>>;
+    using CS##B##_image_t =                                                              \
+        image<CS##B##_pixel_t, false, std::allocator<unsigned char>>;                    \
+    namespace pmr {                                                                      \
+    using CS##B##_image_t =                                                              \
+        image<CS##B##_pixel_t, false, std::pmr::polymorphic_allocator<unsigned char>>;   \
+    }
 
 // Example: B = '8', CM = 'uint8_t', CS = 'bgr' CS_FULL = 'rgb_t' LAYOUT='bgr_layout_t'
-#define BOOST_GIL_DEFINE_ALL_TYPEDEFS_INTERNAL(B, CM, CS, CS_FULL, LAYOUT)                        \
-    BOOST_GIL_DEFINE_BASE_TYPEDEFS_INTERNAL(B, CM, CS, LAYOUT)                                    \
+#define BOOST_GIL_DEFINE_ALL_TYPEDEFS_INTERNAL(B, CM, CS, CS_FULL, LAYOUT)                  \
+    BOOST_GIL_DEFINE_BASE_TYPEDEFS_INTERNAL(B, CM, CS, LAYOUT)                              \
     using CS##B##_planar_ref_t      = planar_pixel_reference<CM&, CS_FULL>;                 \
     using CS##B##c_planar_ref_t     = planar_pixel_reference<CM const&, CS_FULL>;           \
     using CS##B##_planar_ptr_t      = planar_pixel_iterator<CM*, CS_FULL>;                  \
@@ -75,7 +81,11 @@
     using CS##B##_planar_step_view_t  = image_view<CS##B##_planar_step_loc_t>;              \
     using CS##B##c_planar_step_view_t = image_view<CS##B##c_planar_step_loc_t>;             \
     using CS##B##_planar_image_t                                                            \
-        = image<CS##B##_pixel_t, true, std::allocator<unsigned char>>;
+        = image<CS##B##_pixel_t, true, std::allocator<unsigned char>>;                      \
+    namespace pmr {                                                                         \
+        using CS##B##_planar_image_t                                                        \
+            = image<CS##B##_pixel_t, true, std::pmr::polymorphic_allocator<unsigned char>>; \
+    }
 
 #define BOOST_GIL_DEFINE_BASE_TYPEDEFS(B, CM, CS)                                                  \
     BOOST_GIL_DEFINE_BASE_TYPEDEFS_INTERNAL(B, CM, CS, CS##_layout_t)

@@ -38,6 +38,22 @@ using image_types = std::tuple
     gil::rgba32_image_t
 >;
 
+using pmr_image_types = std::tuple
+<
+    gil::pmr::gray8_image_t,
+    gil::pmr::gray16_image_t,
+    gil::pmr::gray32_image_t,
+    gil::pmr::bgr8_image_t,
+    gil::pmr::bgr16_image_t,
+    gil::pmr::bgr32_image_t,
+    gil::pmr::rgb8_image_t,
+    gil::pmr::rgb16_image_t,
+    gil::pmr::rgb32_image_t,
+    gil::pmr::rgba8_image_t,
+    gil::pmr::rgba16_image_t,
+    gil::pmr::rgba32_image_t
+>;
+
 using rgb_interleaved_image_types = std::tuple
 <
     gil::bgr8_image_t,
