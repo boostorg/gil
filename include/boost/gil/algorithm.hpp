@@ -874,7 +874,8 @@ F for_each_pixel(View const& view, F fun)
     else
     {
         for (std::ptrdiff_t y = 0; y < view.height(); ++y)
-            std::for_each(view.row_begin(y), view.row_end(y), fun);
+            for (auto begin = view.row_begin(y), end = view.row_end(y); begin != end; ++begin)
+                fun(*begin);
         return fun;
     }
 }
