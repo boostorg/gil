@@ -23,6 +23,8 @@
 #include <cmath>
 #include <stdexcept>
 
+#include <iostream>
+
 namespace boost { namespace gil {
 
 // Definitions of 1D fixed-size and variable-size kernels and related operations
@@ -167,7 +169,10 @@ public:
     explicit kernel_2d_adaptor(std::size_t center_y, std::size_t center_x)
         : center_(center_x, center_y)
     {
-        BOOST_ASSERT(center_.y < this->size() && center_.x < this->size());
+        Core c;
+        BOOST_ASSERT(center_.y < c.size() && center_.x < c.size());
+        // std::cout << this->size() << " " << center_.y << " " << center_.x << "\n";
+        // BOOST_ASSERT(center_.y < this->size() && center_.x < this->size());
     }
 
     kernel_2d_adaptor(std::size_t size, std::size_t center_y, std::size_t center_x)

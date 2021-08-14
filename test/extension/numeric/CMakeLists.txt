@@ -12,6 +12,7 @@ foreach(_name
   channel_numeric_operations
   convolve
   convolve_2d
+  convolve_2d_opencv
   convolve_cols
   convolve_rows
   extend_boundary

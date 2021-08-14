@@ -167,17 +167,17 @@ void test_kernel_1d_fixed_reverse_kernel()
 
 int main()
 {
-    test_kernel_1d_fixed_default_constructor();
-    test_kernel_2d_fixed_default_constructor();
-    test_kernel_1d_fixed_parameterized_constructor();
-    test_kernel_2d_fixed_parameterized_constructor();
+    // test_kernel_1d_fixed_default_constructor();
+    // test_kernel_2d_fixed_default_constructor();
+    // test_kernel_1d_fixed_parameterized_constructor();
+    // test_kernel_2d_fixed_parameterized_constructor();
     test_kernel_1d_fixed_parameterized_constructor_with_iterator();
     test_kernel_2d_fixed_parameterized_constructor_with_iterator();
-    test_kernel_1d_fixed_copy_constructor();
-    test_kernel_2d_fixed_copy_constructor();
-    test_kernel_1d_fixed_assignment_operator();
-    test_kernel_2d_fixed_assignment_operator();
-    test_kernel_1d_fixed_reverse_kernel();
+    // test_kernel_1d_fixed_copy_constructor();
+    // test_kernel_2d_fixed_copy_constructor();
+    // test_kernel_1d_fixed_assignment_operator();
+    // test_kernel_2d_fixed_assignment_operator();
+    // test_kernel_1d_fixed_reverse_kernel();
 
     return ::boost::report_errors();
 }

@@ -109,6 +109,12 @@ message(STATUS "Boost.GIL: Using Boost_LIBRARY_DIRS=${Boost_LIBRARY_DIRS}")
 
 target_link_libraries(gil_dependencies INTERFACE Boost::filesystem)
 
+if (BOOST_GIL_ENABLE_OPENCV)
+  find_package (OpenCV 4.0.0 REQUIRED)
+  target_include_directories(gil_dependencies INTERFACE ${OpenCV_INCLUDE_DIRS})
+  target_link_libraries(gil_dependencies INTERFACE ${OpenCV_LIBS})
+endif()
+
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
   target_link_libraries(gil_dependencies INTERFACE Boost::disable_autolinking)
 endif()
