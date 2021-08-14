@@ -9,12 +9,14 @@
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/image_processing/numeric.hpp>
 #include <boost/gil/image_processing/hessian.hpp>
+#include <boost/gil/extension/numeric/matrix.hpp>
 
 #include <boost/core/lightweight_test.hpp>
 
 namespace gil = boost::gil;
 
-bool are_equal(gil::gray32f_view_t expected, gil::gray32f_view_t actual) {
+template <typename View>
+bool are_equal(View expected, View actual) {
     if (expected.dimensions() != actual.dimensions())
         return false;
 
@@ -35,13 +37,13 @@ bool are_equal(gil::gray32f_view_t expected, gil::gray32f_view_t actual) {
 void test_blank_image()
 {
     const gil::point_t dimensions(20, 20);
-    gil::gray16s_image_t dx(dimensions, gil::gray16s_pixel_t(0), 0);
-    gil::gray16s_image_t dy(dimensions, gil::gray16s_pixel_t(0), 0);
+    gil::matrix_storage dx(dimensions);
+    gil::matrix_storage dy(dimensions);
 
-    gil::gray32f_image_t m11(dimensions);
-    gil::gray32f_image_t m12_21(dimensions);
-    gil::gray32f_image_t m22(dimensions);
-    gil::gray32f_image_t expected(dimensions, gil::gray32f_pixel_t(0), 0);
+    gil::matrix_storage m11(dimensions);
+    gil::matrix_storage m12_21(dimensions);
+    gil::matrix_storage m22(dimensions);
+    gil::matrix_storage expected(dimensions);
     gil::compute_hessian_entries(
         gil::view(dx),
         gil::view(dy),
@@ -53,7 +55,7 @@ void test_blank_image()
     BOOST_TEST(are_equal(gil::view(expected), gil::view(m12_21)));
     BOOST_TEST(are_equal(gil::view(expected), gil::view(m22)));
 
-    gil::gray32f_image_t hessian_response(dimensions, gil::gray32f_pixel_t(0), 0);
+    gil::matrix_storage hessian_response(dimensions);
     auto unnormalized_mean = gil::generate_unnormalized_mean(5);
     gil::compute_hessian_responses(
         gil::view(m11),

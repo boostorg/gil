@@ -25,8 +25,6 @@
 #include <type_traits>
 #include <vector>
 
-#include <bits/stdc++.h>
-
 namespace boost { namespace gil {
 
 // 2D spatial seperable convolutions and cross-correlations
