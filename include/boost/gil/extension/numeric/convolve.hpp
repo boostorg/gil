@@ -372,6 +372,9 @@ void convolve_1d(
     convolve_cols<PixelAccum>(dst_view, kernel, dst_view, option);
 }
 
+/// \brief Provides functionality for performing correlation between the kernel and buffer. 
+/// Kernel size is to be provided through constructor for all instances. 
+/// This correlator is specifically used in 2D correlation.
 template <typename PixelAccum>
 class correlator_n_2d
 {
@@ -393,6 +396,9 @@ private:
     std::size_t _kernel_dimension{0};
 };
 
+/// \brief Provides functionality for performing correlation between the kernel and buffer.
+/// Kernel size is a template parameter and must be compulsorily specified while using.
+/// This correlator is specifically used in 2D correlation.
 template <std::size_t kernel_dimension, typename PixelAccum>
 struct correlator_k_2d
 {
@@ -408,17 +414,33 @@ struct correlator_k_2d
     }
 };
 
+/// \brief Computes the cross-correlation of a 2D kernel with an image.
+/// \tparam PixelAccum - Specifies tha data type which will be used for creating buffer container 
+/// utilized for holding source image pixels after applying appropriate boundary manipulations.
+/// \tparam SrcView - Specifies the type of gil view of source image which is to be correlated
+/// with the kernel.
+/// \tparam Kernel - Specifies the type of 2D kernel which will be correlated with source image.
+/// \tparam DstView -  Specifies the type of gil view which will store the result of 
+/// correlation between source image and kernel.
+/// \tparam Correlator - Specifies the type of correlator which should be used for performing 
+/// correlation.
+/// \param src_view - Gil view of source image used in correlation.
+/// \param kernel - 2D kernel which will be correlated with source image.
+/// \param dst_view - Gil view which will store the result of correlation between "src_view"
+/// and "kernel".
+/// \param option - Specifies the manner in which boundary pixels of "dst_view" should be computed.
+/// \param correlator - Correlator which will be used for performing correlation.
 template <typename PixelAccum, typename SrcView, typename Kernel, typename DstView, typename Correlator>
 void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view, 
     boundary_option option, Correlator correlator)
 {
-    std::size_t const upper_extrapolation_size = kernel.upper_size();
-    std::size_t const lower_extrapolation_size = kernel.lower_size();
-    std::size_t const left_extrapolation_size = kernel.left_size();
-    std::size_t const right_extrapolation_size = kernel.right_size();
+    long unsigned int const upper_extrapolation_size = kernel.upper_size();
+    long unsigned int const lower_extrapolation_size = kernel.lower_size();
+    long unsigned int const left_extrapolation_size = kernel.left_size();
+    long unsigned int const right_extrapolation_size = kernel.right_size();
 
     bool explicit_fill = 1;
-    std::ptrdiff_t col = 0, row = 0;
+    long unsigned int col = 0, row = 0;
     PixelAccum zero_pixel;
     pixel_zeros_t<PixelAccum>()(zero_pixel);
 
@@ -492,11 +514,11 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
             std::fill_n(buffer.begin() + buffer.size() - kernel.size() * right_extrapolation_size, 
                 kernel.size() * right_extrapolation_size, zero_pixel);
         
-            for (std::ptrdiff_t index = kernel.size() * left_extrapolation_size; 
+            for (long unsigned int index = kernel.size() * left_extrapolation_size; 
                 index < buffer.size() - kernel.size() * right_extrapolation_size; 
                 index += kernel.size())
             {
-                for (std::ptrdiff_t inner_index = 0; inner_index < upper_extrapolation_size; 
+                for (long unsigned int inner_index = 0; inner_index < upper_extrapolation_size; 
                     ++inner_index)
                 {
                     buffer[index + inner_index] = zero_pixel;
@@ -515,7 +537,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
             std::fill_n(intermediate_buffer.begin(), upper_extrapolation_size, 
                 intermediate_buffer[upper_extrapolation_size]);
 
-            for (std::ptrdiff_t inner_index = 0; inner_index < kernel.size() * left_extrapolation_size; 
+            for (long unsigned int inner_index = 0; inner_index < kernel.size() * left_extrapolation_size; 
                 inner_index += kernel.size())
             {
                 std::copy(intermediate_buffer.begin(), intermediate_buffer.end(), 
@@ -529,18 +551,18 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
             std::fill_n(intermediate_buffer.begin(), upper_extrapolation_size, 
                 intermediate_buffer[upper_extrapolation_size]);
 
-            for (std::ptrdiff_t inner_index = buffer.size() - kernel.size() * right_extrapolation_size; 
+            for (long unsigned int inner_index = buffer.size() - kernel.size() * right_extrapolation_size; 
                 inner_index < buffer.size(); inner_index += kernel.size())
             {
                 std::copy(intermediate_buffer.begin(), intermediate_buffer.end(), 
                     buffer.begin() + inner_index);
             }
 
-            for (std::ptrdiff_t index = kernel.size() * left_extrapolation_size; 
+            for (long unsigned int index = kernel.size() * left_extrapolation_size; 
                 index < buffer.size() - kernel.size() * right_extrapolation_size; 
                 index += kernel.size())
             {
-                for (std::ptrdiff_t inner_index = 0; inner_index < upper_extrapolation_size; 
+                for (long unsigned int inner_index = 0; inner_index < upper_extrapolation_size; 
                     ++inner_index)
                 {
                     // check indices throughout the algorithm.
@@ -552,7 +574,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
         else if (option == boundary_option::extend_reflection)
         {
             explicit_fill = 0;
-            std::ptrdiff_t row_bound = 
+            long unsigned int row_bound = 
                 kernel.size() - upper_extrapolation_size > upper_extrapolation_size ? 
                 kernel.size() - upper_extrapolation_size : upper_extrapolation_size;
 
@@ -661,7 +683,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
         {
             if (row)
             {
-                for (std::ptrdiff_t temp_col = 0; temp_col < left_extrapolation_size; ++temp_col)
+                for (long unsigned int temp_col = 0; temp_col < left_extrapolation_size; ++temp_col)
                 {
                     std::ptrdiff_t left_bound = temp_col * kernel.size();
                     std::rotate(buffer.begin() + left_bound, buffer.begin() + left_bound + 1, 
@@ -692,7 +714,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
                     }
                 }
 
-                for (std::ptrdiff_t temp_col = 0; temp_col < right_extrapolation_size; ++temp_col)
+                for (long unsigned int temp_col = 0; temp_col < right_extrapolation_size; ++temp_col)
                 {
                     std::ptrdiff_t left_bound = (left_extrapolation_size + src_view.width() + 
                         temp_col) * kernel.size();
@@ -722,7 +744,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
                     }
                 }
 
-                for (std::ptrdiff_t temp_col = 0; temp_col < src_view.width(); ++temp_col)
+                for (long int temp_col = 0; temp_col < src_view.width(); ++temp_col)
                 {
                     std::ptrdiff_t left_bound = (left_extrapolation_size + temp_col) * kernel.size(); 
                     std::rotate(buffer.begin() + left_bound, buffer.begin() + left_bound + 1, 
@@ -737,7 +759,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
 
         for (row = src_view.height() - lower_extrapolation_size; row < src_view.height(); ++row)
         {
-            for (std::ptrdiff_t temp_col = 0; temp_col < left_extrapolation_size; ++temp_col)
+            for (long unsigned int temp_col = 0; temp_col < left_extrapolation_size; ++temp_col)
             {
                 std::ptrdiff_t left_bound = temp_col * kernel.size();
                 std::rotate(buffer.begin() + left_bound, buffer.begin() + left_bound + 1, 
@@ -765,7 +787,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
                 }
             }
 
-            for (std::ptrdiff_t temp_col = 0; temp_col < right_extrapolation_size; ++temp_col)
+            for (long unsigned int temp_col = 0; temp_col < right_extrapolation_size; ++temp_col)
             {
                 std::ptrdiff_t left_bound = (left_extrapolation_size + src_view.width() + temp_col) * 
                     kernel.size();
@@ -796,7 +818,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
                 }
             }
 
-            for (std::ptrdiff_t temp_col = 0; temp_col < src_view.width(); ++temp_col)
+            for (long int temp_col = 0; temp_col < src_view.width(); ++temp_col)
             {
                 std::ptrdiff_t left_bound = (left_extrapolation_size + temp_col) * kernel.size(); 
                 std::rotate(buffer.begin() + left_bound, buffer.begin() + left_bound + 1, 
@@ -828,18 +850,29 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
     }
 }
 
+/// \ingroup ImageAlgorithms
+/// \brief Detects whether a 2D kernel is spatial separable or not and separates it if the kernel
+/// is spatially separable. 
+/// \tparam Kernel Specifies the type of 2D kernel which will be considered for separation.
+/// \tparam Container_1d Specifies the type of 1D container which will store the separated components
+/// of input kernel if it is separable.
+/// \param kernel - Kernel which is to be considered for separation.
+/// \param sep_ker_vertical - Container which will store separated vertical component of 2D kernel 
+/// if kernel is spatially separable.
+/// \param sep_ker_horizontal - Container which will store separated horizontal component of 2D 
+/// kernel if kernel is spatially separable.
 template <typename Kernel, typename Container_1d>
 bool separate(Kernel const kernel, Container_1d& sep_ker_vertical, Container_1d& sep_ker_horizontal)
 {
     bool is_rank_1 = 1;
     sep_ker_vertical[0] = 1;
-    for (std::ptrdiff_t row = 1; row < kernel.size(); ++row)
+    for (std::size_t row = 1; row < kernel.size(); ++row)
     {
         float mul_factor = 0;
         if (kernel.at(0, 0))
             mul_factor = kernel.at(0, row) / kernel.at(0, 0);
         sep_ker_vertical[row] = mul_factor;
-        for (std::ptrdiff_t col = 0; col < kernel.size(); ++col)
+        for (std::size_t col = 0; col < kernel.size(); ++col)
         {
             auto transformed_elem = mul_factor * kernel.at(col, 0);
             if (transformed_elem != kernel.at(col, row))
@@ -853,7 +886,7 @@ bool separate(Kernel const kernel, Container_1d& sep_ker_vertical, Container_1d&
     }
     if (is_rank_1)
     {
-        for (std::ptrdiff_t col = 0; col < kernel.size(); ++col)
+        for (std::size_t col = 0; col < kernel.size(); ++col)
             sep_ker_horizontal[col] = kernel.at(col, 0);
     }
     return is_rank_1;
@@ -861,6 +894,18 @@ bool separate(Kernel const kernel, Container_1d& sep_ker_vertical, Container_1d&
 
 } // namespace detail
 
+/// \ingroup ImageAlgorithms
+/// \brief Correlate 2D variable-size kernel along an image.
+/// \tparam PixelAccum Specifies tha data type which will be used while creating buffer container 
+/// which is utilized for holding source image pixels after applying appropriate boundary
+/// manipulations.
+/// \tparam SrcView Models ImageViewConcept.
+/// \tparam Kernel Specifies the type of 2D kernel which will be correlated with source image.
+/// \tparam DstView Models MutableImageViewConcept.
+/// \param src_view - Gil view of source image.
+/// \param kernel - Variable size 2D kernel which will be correlated with src_view.
+/// \param dst_view - Gil view of destination image.
+/// \param option - Specifies the manner in which boundary pixels of dst_view will be computed.
 template <typename PixelAccum, typename SrcView, typename Kernel, typename DstView>
 void correlate_2d(SrcView src_view, Kernel kernel, DstView dst_view, 
     boundary_option option = boundary_option::extend_zero)
@@ -898,6 +943,17 @@ void correlate_2d(SrcView src_view, Kernel kernel, DstView dst_view,
         kernel.size()));
 }
 
+/// \ingroup ImageAlgorithms
+/// \brief Correlate 2D fixed-size kernel along an image.
+/// \tparam PixelAccum Specifies tha data type which will be used for creating buffer container 
+/// utilized for holding source image pixels after applying appropriate boundary manipulations.
+/// \tparam SrcView Models ImageViewConcept.
+/// \tparam Kernel Specifies the type of 2D kernel which will be correlated with source image.
+/// \tparam DstView Models MutableImageViewConcept.
+/// \param src_view - Gil view of source image.
+/// \param kernel - Fixed size 2D kernel which will be correlated with src_view.
+/// \param dst_view - Gil view of destination image.
+/// \param option - Specifies the manner in which boundary pixels of dst_view will be computed.
 template <typename PixelAccum, typename SrcView, typename Kernel, typename DstView>
 void correlate_2d_fixed(SrcView src_view, Kernel kernel, DstView dst_view, 
     boundary_option option = boundary_option::extend_zero)
@@ -933,6 +989,17 @@ void correlate_2d_fixed(SrcView src_view, Kernel kernel, DstView dst_view,
     detail::correlate_2d_impl<PixelAccum>(src_view, kernel, dst_view, option, correlator{});
 }
 
+/// \ingroup ImageAlgorithms
+/// \brief Convolves 2D variable-size kernel along an image.
+/// \tparam PixelAccum Specifies tha data type which will be used for creating buffer container 
+/// utilized for holding source image pixels after applying appropriate boundary manipulations.
+/// \tparam SrcView Models ImageViewConcept.
+/// \tparam Kernel Specifies the type of 2D kernel which will be convoluted with source image.
+/// \tparam DstView Models MutableImageViewConcept.
+/// \param src_view - Gil view of source image.
+/// \param kernel - Variable size 2D kernel which will be convolved with src_view.
+/// \param dst_view - Gil view of destination image.
+/// \param option - Specifies the manner in which boundary pixels of dst_view will be computed.
 template <typename PixelAccum, typename SrcView, typename Kernel, typename DstView>
 void convolve_2d(SrcView src_view, Kernel kernel, DstView dst_view, 
     boundary_option option = boundary_option::extend_zero)
@@ -952,6 +1019,17 @@ void convolve_2d(SrcView src_view, Kernel kernel, DstView dst_view,
     // check reverse kernel.
 }
 
+/// \ingroup ImageAlgorithms
+/// \brief Convolve 2D fixed-size kernel along an image
+/// \tparam PixelAccum Specifies tha data type which will be used for creating buffer container 
+/// utilized for holding source image pixels after applying appropriate boundary manipulations.
+/// \tparam SrcView Models ImageViewConcept.
+/// \tparam Kernel Specifies the type of 2D kernel which will be convolved with source image.
+/// \tparam DstView Models MutableImageViewConcept.
+/// \param src_view - Gil view of source image.
+/// \param kernel - Fixed size 2D kernel which will be convolved with src_view.
+/// \param dst_view - Gil view of destination image.
+/// \param option - Specifies the manner in which boundary pixels of dst_view will be computed.
 template <typename PixelAccum, typename SrcView, typename Kernel, typename DstView>
 void convolve_2d_fixed(SrcView src_view, Kernel kernel, DstView dst_view, 
     boundary_option option = boundary_option::extend_zero)

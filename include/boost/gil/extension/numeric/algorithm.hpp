@@ -218,6 +218,7 @@ auto correlate_pixels_k(
     return dst_begin;
 }
 
+/// \brief 2D cross-correlation with a variable-size kernel
 template
 <
     typename PixelAccum,
@@ -246,7 +247,7 @@ auto correlate_pixels_n_2d(
 
     PixelAccum accum_zero;
     pixel_zeros_t<PixelAccum>()(accum_zero);
-    std::ptrdiff_t index = 0;
+    long unsigned int index = 0;
     std::ptrdiff_t const kernel_size = kernel_dimension * kernel_dimension;
 
     // try eliminating "index" variable.
@@ -268,6 +269,7 @@ auto correlate_pixels_n_2d(
     return dst_begin;
 }
 
+/// \brief 2D cross-correlation with a fix-size kernel
 template
 <
     std::size_t kernel_dimension,
@@ -296,7 +298,7 @@ auto correlate_pixels_k_2d(
 
     PixelAccum accum_zero;
     pixel_zeros_t<PixelAccum>()(accum_zero);
-    std::ptrdiff_t index = 0;
+    long unsigned int index = 0;
     std::ptrdiff_t const kernel_size = kernel_dimension * kernel_dimension;
 
     while (index < src_size - kernel_size + 1)
