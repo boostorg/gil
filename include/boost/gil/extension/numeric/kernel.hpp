@@ -23,8 +23,6 @@
 #include <cmath>
 #include <stdexcept>
 
-#include <iostream>
-
 namespace boost { namespace gil {
 
 // Definitions of 1D fixed-size and variable-size kernels and related operations

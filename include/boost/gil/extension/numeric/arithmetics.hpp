@@ -1,5 +1,9 @@
 //
-// Created by shino on 14.08.21.
+// Copyright 2020 Olzhas Zhumabek <anonymous.from.applecity@gmail.com>
+//
+// Use, modification and distribution are subject to the Boost Software License,
+// Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
 //
 
 #ifndef BOOST_GIL_ARITHMETICS_HPP
