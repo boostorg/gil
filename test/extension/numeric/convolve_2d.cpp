@@ -1,6 +1,5 @@
 //
 // Copyright 2019 Miral Shah <miralshah2211@gmail.com>
-// Copyright 2021 Prathamesh Tagore <prathameshtagore@gmail.com>
 //
 // Use, modification and distribution are subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -55,6 +54,18 @@ void test_convolve_2d_with_normalized_mean_filter()
     BOOST_TEST(gil::equal_pixels(out_view, dst_view));
 }
 
+template <typename GrayImageView>
+void print_gil_gray_image(GrayImageView src_view)
+{
+    std::cout << "Gil Image = \n";
+    for (std::ptrdiff_t row = 0; row < src_view.height(); ++row)
+    {
+        for (std::ptrdiff_t col = 0; col < src_view.width(); ++col)
+            std::cout << static_cast<float>(static_cast<gil::gray8_pixel_t>(src_view(col, row))) << " ";
+        std::cout << "\n";
+    }
+}
+
 void test_boundary_option_extend_zero()
 {
     gil::gray8_image_t src_gray(15, 15), dst_gray(15, 15), dst_gray_fixed(15, 15), exp_dst_gray(15, 15);
@@ -62,8 +73,8 @@ void test_boundary_option_extend_zero()
     std::vector<float> vec(25, 1.0f);
     vec[12] = 0;
 
-    gil::read_image("Test_Images/Extend_Zero/in_extend_zero_gray.png", src_gray, gil::png_tag{});
-    gil::read_image("Test_Images/Extend_Zero/in_extend_zero_rgb.png", src_rgb, gil::png_tag{});
+    gil::read_image("Correlation_Test_Images/Extend_Zero/in_extend_zero_gray.png", src_gray, gil::png_tag{});
+    gil::read_image("Correlation_Test_Images/Extend_Zero/in_extend_zero_rgb.png", src_rgb, gil::png_tag{});
 
     for (std::ptrdiff_t x = 0; x < 5; ++x)
     {
@@ -82,13 +93,13 @@ void test_boundary_option_extend_zero()
             gil::correlate_2d_fixed<gil::rgb8_pixel_t>(gil::view(src_rgb), kernel_fixed, 
                 gil::view(dst_rgb_fixed), gil::boundary_option::extend_zero);
 
-            std::string exp_gray = "Test_Images/Extend_Zero/exp_out_extend_zero_gray_";
-            std::string exp_rgb = "Test_Images/Extend_Zero/exp_out_extend_zero_rgb_";
+            std::string exp_gray = "Correlation_Test_Images/Extend_Zero/exp_out_extend_zero_gray_";
+            std::string exp_rgb = "Correlation_Test_Images/Extend_Zero/exp_out_extend_zero_rgb_";
 
-            gil::read_image(exp_gray + static_cast<char>('0' + x) + '_' + static_cast<char>('0' + y) 
-                + ".png", exp_dst_gray, gil::png_tag{});
-            gil::read_image(exp_rgb + static_cast<char>('0' + x) + '_' + static_cast<char>('0' + y) 
-                + ".png", exp_dst_rgb, gil::png_tag{});
+            gil::read_image(exp_gray + (char)('0' + x) + '_' + (char)('0' + y) + ".png", exp_dst_gray, 
+                gil::png_tag{});
+            gil::read_image(exp_rgb + (char)('0' + x) + '_' + (char)('0' + y) + ".png", exp_dst_rgb, 
+                gil::png_tag{});
 
             BOOST_TEST(gil::equal_pixels(gil::view(dst_gray), gil::view(exp_dst_gray)));
             BOOST_TEST(gil::equal_pixels(gil::view(dst_gray_fixed), gil::view(exp_dst_gray)));
@@ -105,8 +116,8 @@ void test_boundary_option_extend_constant()
     std::vector<float> vec(25, 1.0f);
     vec[12] = 0;
 
-    gil::read_image("Test_Images/Extend_Constant/in_extend_constant_gray.png", src_gray, gil::png_tag{});
-    gil::read_image("Test_Images/Extend_Constant/in_extend_constant_rgb.png", src_rgb, gil::png_tag{});
+    gil::read_image("Correlation_Test_Images/Extend_Constant/in_extend_constant_gray.png", src_gray, gil::png_tag{});
+    gil::read_image("Correlation_Test_Images/Extend_Constant/in_extend_constant_rgb.png", src_rgb, gil::png_tag{});
 
     for (std::ptrdiff_t x = 0; x < 5; ++x)
     {
@@ -125,13 +136,13 @@ void test_boundary_option_extend_constant()
             gil::correlate_2d_fixed<gil::rgb8_pixel_t>(gil::view(src_rgb), kernel_fixed, 
                 gil::view(dst_rgb_fixed), gil::boundary_option::extend_constant);
 
-            std::string exp_gray = "Test_Images/Extend_Constant/exp_out_extend_constant_gray_";
-            std::string exp_rgb = "Test_Images/Extend_Constant/exp_out_extend_constant_rgb_";
+            std::string exp_gray = "Correlation_Test_Images/Extend_Constant/exp_out_extend_constant_gray_";
+            std::string exp_rgb = "Correlation_Test_Images/Extend_Constant/exp_out_extend_constant_rgb_";
 
-            gil::read_image(exp_gray + static_cast<char>('0' + x) + '_' + static_cast<char>('0' + y) 
-                + ".png", exp_dst_gray, gil::png_tag{});
-            gil::read_image(exp_rgb + static_cast<char>('0' + x) + '_' + static_cast<char>('0' + y) 
-                + ".png", exp_dst_rgb, gil::png_tag{});
+            gil::read_image(exp_gray + (char)('0' + x) + '_' + (char)('0' + y) + ".png", exp_dst_gray, 
+                gil::png_tag{});
+            gil::read_image(exp_rgb + (char)('0' + x) + '_' + (char)('0' + y) + ".png", exp_dst_rgb, 
+                gil::png_tag{});
 
             BOOST_TEST(gil::equal_pixels(gil::view(dst_gray), gil::view(exp_dst_gray)));
             BOOST_TEST(gil::equal_pixels(gil::view(dst_gray_fixed), gil::view(exp_dst_gray)));
@@ -148,9 +159,9 @@ void test_boundary_option_extend_reflection()
     std::vector<float> vec(25, 1.0f);
     vec[12] = 0;
 
-    gil::read_image("Test_Images/Extend_Reflection/in_extend_reflection_gray.png", src_gray, 
+    gil::read_image("Correlation_Test_Images/Extend_Reflection/in_extend_reflection_gray.png", src_gray, 
         gil::png_tag{});
-    gil::read_image("Test_Images/Extend_Reflection/in_extend_reflection_rgb.png", src_rgb, 
+    gil::read_image("Correlation_Test_Images/Extend_Reflection/in_extend_reflection_rgb.png", src_rgb, 
         gil::png_tag{});
 
     for (std::ptrdiff_t x = 0; x < 5; ++x)
@@ -170,13 +181,13 @@ void test_boundary_option_extend_reflection()
             gil::correlate_2d_fixed<gil::rgb8_pixel_t>(gil::view(src_rgb), kernel_fixed, 
                 gil::view(dst_rgb_fixed), gil::boundary_option::extend_reflection);
 
-            std::string exp_gray = "Test_Images/Extend_Reflection/exp_out_extend_reflection_gray_";
-            std::string exp_rgb = "Test_Images/Extend_Reflection/exp_out_extend_reflection_rgb_";
+            std::string exp_gray = "Correlation_Test_Images/Extend_Reflection/exp_out_extend_reflection_gray_";
+            std::string exp_rgb = "Correlation_Test_Images/Extend_Reflection/exp_out_extend_reflection_rgb_";
 
-            gil::read_image(exp_gray + static_cast<char>('0' + x) + '_' + static_cast<char>('0' + y) 
-                + ".png", exp_dst_gray, gil::png_tag{});
-            gil::read_image(exp_rgb + static_cast<char>('0' + x) + '_' + static_cast<char>('0' + y) 
-                + ".png", exp_dst_rgb, gil::png_tag{});
+            gil::read_image(exp_gray + (char)('0' + x) + '_' + (char)('0' + y) + ".png", exp_dst_gray, 
+                gil::png_tag{});
+            gil::read_image(exp_rgb + (char)('0' + x) + '_' + (char)('0' + y) + ".png", exp_dst_rgb, 
+                gil::png_tag{});
 
             BOOST_TEST(gil::equal_pixels(gil::view(dst_gray), gil::view(exp_dst_gray)));
             BOOST_TEST(gil::equal_pixels(gil::view(dst_gray_fixed), gil::view(exp_dst_gray)));
@@ -193,9 +204,9 @@ void test_boundary_option_extend_padded()
     std::vector<float> vec(9, 1.0f);
     vec[4] = 0;
 
-    gil::read_image("Test_Images/Extend_Padded/in_extend_padded_gray.png", src_gray, 
+    gil::read_image("Correlation_Test_Images/Extend_Padded/in_extend_padded_gray.png", src_gray, 
         gil::png_tag{});
-    gil::read_image("Test_Images/Extend_Padded/in_extend_padded_rgb.png", src_rgb, 
+    gil::read_image("Correlation_Test_Images/Extend_Padded/in_extend_padded_rgb.png", src_rgb, 
         gil::png_tag{});
 
     for (std::ptrdiff_t x = 0; x < 3; ++x)
@@ -219,13 +230,13 @@ void test_boundary_option_extend_padded()
                 gil::subimage_view(gil::view(src_rgb), 2, 2, 5, 5), kernel_fixed, 
                 gil::view(dst_rgb_fixed), gil::boundary_option::extend_padded);
 
-            std::string exp_gray = "Test_Images/Extend_Padded/exp_out_extend_padded_gray_";
-            std::string exp_rgb = "Test_Images/Extend_Padded/exp_out_extend_padded_rgb_";
+            std::string exp_gray = "Correlation_Test_Images/Extend_Padded/exp_out_extend_padded_gray_";
+            std::string exp_rgb = "Correlation_Test_Images/Extend_Padded/exp_out_extend_padded_rgb_";
 
-            gil::read_image(exp_gray + static_cast<char>('0' + x) + '_' + static_cast<char>('0' + y) 
-                + ".png", exp_dst_gray, gil::png_tag{});
-            gil::read_image(exp_rgb + static_cast<char>('0' + x) + '_' + static_cast<char>('0' + y) 
-                + ".png", exp_dst_rgb, gil::png_tag{});
+            gil::read_image(exp_gray + (char)('0' + x) + '_' + (char)('0' + y) + ".png", exp_dst_gray, 
+                gil::png_tag{});
+            gil::read_image(exp_rgb + (char)('0' + x) + '_' + (char)('0' + y) + ".png", exp_dst_rgb, 
+                gil::png_tag{});
 
             BOOST_TEST(gil::equal_pixels(gil::view(dst_gray), gil::view(exp_dst_gray)));
             BOOST_TEST(gil::equal_pixels(gil::view(dst_gray_fixed), gil::view(exp_dst_gray)));
@@ -242,9 +253,9 @@ void test_boundary_option_output_zero()
     std::vector<float> vec(25, 1.0f);
     vec[12] = 0;
 
-    gil::read_image("Test_Images/Output_Zero/in_output_zero_gray.png", src_gray, 
+    gil::read_image("Correlation_Test_Images/Output_Zero/in_output_zero_gray.png", src_gray, 
         gil::png_tag{});
-    gil::read_image("Test_Images/Output_Zero/in_output_zero_rgb.png", src_rgb, 
+    gil::read_image("Correlation_Test_Images/Output_Zero/in_output_zero_rgb.png", src_rgb, 
         gil::png_tag{});
 
     for (std::ptrdiff_t x = 0; x < 5; ++x)
@@ -264,13 +275,13 @@ void test_boundary_option_output_zero()
             gil::correlate_2d_fixed<gil::rgb8_pixel_t>(gil::view(src_rgb), kernel_fixed, 
                 gil::view(dst_rgb_fixed), gil::boundary_option::output_zero);
 
-            std::string exp_gray = "Test_Images/Output_Zero/exp_out_output_zero_gray_";
-            std::string exp_rgb = "Test_Images/Output_Zero/exp_out_output_zero_rgb_";
+            std::string exp_gray = "Correlation_Test_Images/Output_Zero/exp_out_output_zero_gray_";
+            std::string exp_rgb = "Correlation_Test_Images/Output_Zero/exp_out_output_zero_rgb_";
 
-            gil::read_image(exp_gray + static_cast<char>('0' + x) + '_' + static_cast<char>('0' + y) 
-                + ".png", exp_dst_gray, gil::png_tag{});
-            gil::read_image(exp_rgb + static_cast<char>('0' + x) + '_' + static_cast<char>('0' + y) 
-                + ".png", exp_dst_rgb, gil::png_tag{});
+            gil::read_image(exp_gray + (char)('0' + x) + '_' + (char)('0' + y) + ".png", exp_dst_gray, 
+                gil::png_tag{});
+            gil::read_image(exp_rgb + (char)('0' + x) + '_' + (char)('0' + y) + ".png", exp_dst_rgb, 
+                gil::png_tag{});
 
             BOOST_TEST(gil::equal_pixels(gil::view(dst_gray), gil::view(exp_dst_gray)));
             BOOST_TEST(gil::equal_pixels(gil::view(dst_gray_fixed), gil::view(exp_dst_gray)));
@@ -287,9 +298,9 @@ void test_boundary_option_output_ignore()
     std::vector<float> vec(25, 1.0f);
     vec[12] = 0;
 
-    gil::read_image("Test_Images/Output_Ignore/in_output_ignore_gray.png", src_gray, 
+    gil::read_image("Correlation_Test_Images/Output_Ignore/in_output_ignore_gray.png", src_gray, 
         gil::png_tag{});
-    gil::read_image("Test_Images/Output_Ignore/in_output_ignore_rgb.png", src_rgb, 
+    gil::read_image("Correlation_Test_Images/Output_Ignore/in_output_ignore_rgb.png", src_rgb, 
         gil::png_tag{});
 
     for (std::ptrdiff_t x = 0; x < 5; ++x)
@@ -309,13 +320,13 @@ void test_boundary_option_output_ignore()
             gil::correlate_2d_fixed<gil::rgb8_pixel_t>(gil::view(src_rgb), kernel_fixed, 
                 gil::view(dst_rgb_fixed), gil::boundary_option::output_ignore);
 
-            std::string exp_gray = "Test_Images/Output_Ignore/exp_out_output_ignore_gray_";
-            std::string exp_rgb = "Test_Images/Output_Ignore/exp_out_output_ignore_rgb_";
+            std::string exp_gray = "Correlation_Test_Images/Output_Ignore/exp_out_output_ignore_gray_";
+            std::string exp_rgb = "Correlation_Test_Images/Output_Ignore/exp_out_output_ignore_rgb_";
 
-            gil::read_image(exp_gray + static_cast<char>('0' + x) + '_' + static_cast<char>('0' + y) 
-                + ".png", exp_dst_gray, gil::png_tag{});
-            gil::read_image(exp_rgb + static_cast<char>('0' + x) + '_' + static_cast<char>('0' + y) 
-                + ".png", exp_dst_rgb, gil::png_tag{});
+            gil::read_image(exp_gray + (char)('0' + x) + '_' + (char)('0' + y) + ".png", exp_dst_gray, 
+                gil::png_tag{});
+            gil::read_image(exp_rgb + (char)('0' + x) + '_' + (char)('0' + y) + ".png", exp_dst_rgb, 
+                gil::png_tag{});
 
             BOOST_TEST(gil::equal_pixels(gil::view(dst_gray), gil::view(exp_dst_gray)));
             BOOST_TEST(gil::equal_pixels(gil::view(dst_gray_fixed), gil::view(exp_dst_gray)));
@@ -330,7 +341,7 @@ void test_separable_correlation()
     gil::gray8_image_t src_gray(15, 15), dst_gray(15, 15), dst_gray_fixed(15, 15), exp_dst_gray(15, 15);
     std::vector<float> vec(25, 1.0f);
 
-    gil::read_image("Test_Images/Separable_Correlation/in_separable_correlation_gray.png", src_gray, 
+    gil::read_image("Correlation_Test_Images/Separable_Correlation/in_separable_correlation_gray.png", src_gray, 
         gil::png_tag{});
 
     for (std::ptrdiff_t x = 0; x < 5; ++x)
@@ -345,10 +356,10 @@ void test_separable_correlation()
                 gil::view(dst_gray_fixed));
 
             std::string exp_gray = 
-                "Test_Images/Separable_Correlation/exp_out_separable_correlation_gray_";
+                "Correlation_Test_Images/Separable_Correlation/exp_out_separable_correlation_gray_";
 
-            gil::read_image(exp_gray + static_cast<char>('0' + x) + '_' + static_cast<char>('0' + y) 
-                + ".png", exp_dst_gray, gil::png_tag{});
+            gil::read_image(exp_gray + (char)('0' + x) + '_' + (char)('0' + y) + ".png", exp_dst_gray, 
+                gil::png_tag{});
 
             BOOST_TEST(gil::equal_pixels(gil::view(dst_gray), gil::view(exp_dst_gray)));
             BOOST_TEST(gil::equal_pixels(gil::view(dst_gray_fixed), gil::view(exp_dst_gray)));

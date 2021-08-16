@@ -1,7 +1,6 @@
 //
 // Copyright 2005-2007 Adobe Systems Incorporated
 // Copyright 2019 Miral Shah <miralshah2211@gmail.com>
-// Copyright 2021 Prathamesh Tagore <prathameshtagore@gmail.com>
 //
 // Distributed under the Boost Software License, Version 1.0
 // See accompanying file LICENSE_1_0.txt or copy at
@@ -519,12 +518,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
                 index < buffer.size() - kernel.size() * right_extrapolation_size; 
                 index += kernel.size())
             {
-                for (long unsigned int inner_index = 0; inner_index < upper_extrapolation_size; 
-                    ++inner_index)
-                {
-                    buffer[index + inner_index] = zero_pixel;
-                }
-                // check abstraction of this loop.
+                std::fill_n(buffer.begin() + index, upper_extrapolation_size, zero_pixel);
             }
         }
         else if (option == boundary_option::extend_constant)
@@ -566,7 +560,6 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
                 for (long unsigned int inner_index = 0; inner_index < upper_extrapolation_size; 
                     ++inner_index)
                 {
-                    // check indices throughout the algorithm.
                     buffer[index + inner_index] = 
                         src_view((index - kernel.size() * left_extrapolation_size) / kernel.size(), 0);
                 }
@@ -636,7 +629,6 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
         }
         else if (option == boundary_option::extend_padded)
         {
-            // check iterator characteristics of GIL locators.
             typename SrcView::xy_locator loc_center = src_view.xy_at(0, 0);
             for (col = 0; col < left_extrapolation_size; ++col)
             {
@@ -672,7 +664,6 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
         {
             for (col = 0; col < src_view.width(); ++col)
             {
-                // Try std::for_each and stuff like that for outside loops too.
                 assign_pixels(src_view.col_begin(col), 
                     src_view.col_begin(col) + kernel.size() - upper_extrapolation_size, 
                     buffer.begin() + (left_extrapolation_size + col) * kernel.size() + 
@@ -704,7 +695,6 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
                         buffer[left_bound + kernel.size() - 1] = 
                             src_view(left_extrapolation_size - temp_col - 1,
                             row + lower_extrapolation_size);
-                        // Try reverse and copy for here
                     }
                     else if (option == boundary_option::extend_padded)
                     {
@@ -735,7 +725,6 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
                     {
                         buffer[left_bound + kernel.size() - 1] = 
                             src_view(src_view.width() - temp_col - 1, row + lower_extrapolation_size);
-                        // Try reverse and copy for here
                     }
                     else if (option == boundary_option::extend_padded)
                     {
@@ -922,7 +911,6 @@ void correlate_2d(SrcView src_view, Kernel kernel, DstView dst_view,
         typename color_space_type<DstView>::type
     >::value, "Source and destination views must have pixels with the same color space");
 
-    // Improve this interface for less wastage of memory.
     std::vector<typename Kernel::value_type> sep_ker_vertical(kernel.size());
     std::vector<typename Kernel::value_type> sep_ker_horizontal(kernel.size());
     if (detail::separate(kernel, sep_ker_vertical, sep_ker_horizontal))
@@ -1017,7 +1005,6 @@ void convolve_2d(SrcView src_view, Kernel kernel, DstView dst_view,
     >::value, "Source and destination views must have pixels with the same color space");
 
     correlate_2d<PixelAccum>(src_view, detail::reverse_kernel_2d(kernel), dst_view, option);
-    // check reverse kernel.
 }
 
 /// \ingroup ImageAlgorithms
@@ -1047,7 +1034,6 @@ void convolve_2d_fixed(SrcView src_view, Kernel kernel, DstView dst_view,
     >::value, "Source and destination views must have pixels with the same color space");
 
     correlate_2d_fixed<PixelAccum>(src_view, detail::reverse_kernel_2d(kernel), dst_view, option);
-    // check reverse kernel.
 }
 
 }} // namespace boost::gil

@@ -251,7 +251,6 @@ auto correlate_pixels_n_2d(
     long unsigned int index = 0;
     std::ptrdiff_t const kernel_size = kernel_dimension * kernel_dimension;
 
-    // try eliminating "index" variable.
     while (index < src_size - kernel_size + 1)
     {
         pixel_assigns_t<PixelAccum, dst_pixel_ref_t>()(
