@@ -375,6 +375,8 @@ void convolve_1d(
 /// \brief Provides functionality for performing correlation between the kernel and buffer. 
 /// Kernel size is to be provided through constructor for all instances. 
 /// This correlator is specifically used in 2D correlation.
+/// \tparam PixelAccum Specifies tha data type which will be used for creating buffer container 
+/// utilized for holding source image pixels after applying appropriate boundary manipulations.
 template <typename PixelAccum>
 class correlator_n_2d
 {
@@ -399,6 +401,9 @@ private:
 /// \brief Provides functionality for performing correlation between the kernel and buffer.
 /// Kernel size is a template parameter and must be compulsorily specified while using.
 /// This correlator is specifically used in 2D correlation.
+/// \tparam kernel_dimension Stores vertical/horizontal length of kernel used for correlation.
+/// \tparam PixelAccum Specifies tha data type which will be used for creating buffer container 
+/// utilized for holding source image pixels after applying appropriate boundary manipulations.
 template <std::size_t kernel_dimension, typename PixelAccum>
 struct correlator_k_2d
 {
@@ -439,7 +444,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
     long unsigned int const left_extrapolation_size = kernel.left_size();
     long unsigned int const right_extrapolation_size = kernel.right_size();
 
-    bool explicit_fill = 1;
+    bool explicit_fill = true;
     long unsigned int col = 0, row = 0;
     PixelAccum zero_pixel;
     pixel_zeros_t<PixelAccum>()(zero_pixel);
@@ -456,7 +461,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
 
         for (row = upper_extrapolation_size; row < src_view.height() - lower_extrapolation_size; ++row)
         {
-            if (row - upper_extrapolation_size)
+            if (row - upper_extrapolation_size > 0)
             {
                 for (col = 0; col < src_view.width(); ++col)
                 {
@@ -567,7 +572,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
         }
         else if (option == boundary_option::extend_reflection)
         {
-            explicit_fill = 0;
+            explicit_fill = false;
             long unsigned int row_bound = 
                 kernel.size() - upper_extrapolation_size > upper_extrapolation_size ? 
                 kernel.size() - upper_extrapolation_size : upper_extrapolation_size;
@@ -660,7 +665,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
             }
         }
 
-        if (explicit_fill)
+        if (explicit_fill == true)
         {
             for (col = 0; col < src_view.width(); ++col)
             {
@@ -673,7 +678,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
 
         for (row = 0; row < src_view.height() - lower_extrapolation_size; ++row)
         {
-            if (row)
+            if (row > 0)
             {
                 for (long unsigned int temp_col = 0; temp_col < left_extrapolation_size; ++temp_col)
                 {
@@ -854,7 +859,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
 template <typename Kernel, typename Container_1d>
 bool separate(Kernel const kernel, Container_1d& sep_ker_vertical, Container_1d& sep_ker_horizontal)
 {
-    bool is_rank_1 = 1;
+    bool is_rank_1 = true;
     sep_ker_vertical[0] = 1;
     for (std::size_t row = 1; row < kernel.size(); ++row)
     {
@@ -867,14 +872,14 @@ bool separate(Kernel const kernel, Container_1d& sep_ker_vertical, Container_1d&
             auto transformed_elem = mul_factor * kernel.at(col, 0);
             if (transformed_elem != kernel.at(col, row))
             {
-                is_rank_1 = 0;
+                is_rank_1 = false;
                 break;
             }
         }
-        if (is_rank_1 == 0)
+        if (is_rank_1 == false)
             break;
     }
-    if (is_rank_1)
+    if (is_rank_1 == true)
     {
         for (std::size_t col = 0; col < kernel.size(); ++col)
             sep_ker_horizontal[col] = kernel.at(col, 0);
@@ -913,7 +918,7 @@ void correlate_2d(SrcView src_view, Kernel kernel, DstView dst_view,
 
     std::vector<typename Kernel::value_type> sep_ker_vertical(kernel.size());
     std::vector<typename Kernel::value_type> sep_ker_horizontal(kernel.size());
-    if (detail::separate(kernel, sep_ker_vertical, sep_ker_horizontal))
+    if (detail::separate(kernel, sep_ker_vertical, sep_ker_horizontal) == true)
     {
         kernel_1d<typename Kernel::value_type> ver_kernel(sep_ker_vertical.begin(), kernel.size(), 
             kernel.center_y());
@@ -960,7 +965,7 @@ void correlate_2d_fixed(SrcView src_view, Kernel kernel, DstView dst_view,
 
     std::vector<typename Kernel::value_type> sep_ker_vertical(kernel.size());
     std::vector<typename Kernel::value_type> sep_ker_horizontal(kernel.size());
-    if (detail::separate(kernel, sep_ker_vertical, sep_ker_horizontal))
+    if (detail::separate(kernel, sep_ker_vertical, sep_ker_horizontal) == true)
     {
         kernel_1d_fixed<typename Kernel::value_type, Kernel::static_size> ver_kernel(
             sep_ker_vertical.begin(), kernel.center_y());
