@@ -167,10 +167,7 @@ public:
     explicit kernel_2d_adaptor(std::size_t center_y, std::size_t center_x)
         : center_(center_x, center_y)
     {
-        Core c;
-        BOOST_ASSERT(center_.y < c.size() && center_.x < c.size());
-        // std::cout << this->size() << " " << center_.y << " " << center_.x << "\n";
-        // BOOST_ASSERT(center_.y < this->size() && center_.x < this->size());
+        BOOST_ASSERT(center_.y < this->size() && center_.x < this->size());
     }
 
     kernel_2d_adaptor(std::size_t size, std::size_t center_y, std::size_t center_x)
@@ -246,7 +243,7 @@ public:
 
     std::size_t size() const
     {
-        return square_size;
+        return square_size ? square_size : std::sqrt((Core ()).size());
     }
 
     typename Core::value_type at(std::size_t x, std::size_t y) const
