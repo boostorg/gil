@@ -419,6 +419,29 @@ struct correlator_k_2d
     }
 };
 
+
+// For filling buffer container and calculating correlation, the entire image is divided in to 3 
+// sections as 
+// 1. Upper section : Perform left, right as well as upper extrapolation in this section.
+// 2. Middle section : Perform left and right extrapolation in this section.
+// 3. Lower section : Perform left, right as well as lower extrapolation in this section.
+
+// Now, each of the above sections are further divided into small parts. These parts differ based 
+// on considered section. Their definitions are as follows :  
+// 1. left part : Left extrapolated part -> extrapolation in only left direction.
+// 2. right part : Right extrapolated part -> extrapolation in only right direction.
+// 3. upper part : Upper extrapolated part -> extrapolation in only upper direction.
+// 4. lower part : Lower extrapolated part -> extrapolation in only lower direction.
+// 5. Im_fill part : This part contains data from the source image(No extrapolation required to 
+// fill this part).
+
+// Upper section contains left part, right part, upper part and Im_fill part.
+// Middle section contains left part, right part and Im_fill part.
+// Lower section contains left part, right part, lower part and Im_fill part.
+
+// Note : There are no Upper and Lower sections when 
+// boundary_option == output_ignore || boundary_option == output_zero.
+
 /// \brief Computes the cross-correlation of a 2D kernel with an image.
 /// \tparam PixelAccum - Specifies tha data type which will be used for creating buffer container 
 /// utilized for holding source image pixels after applying appropriate boundary manipulations.
@@ -453,14 +476,18 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
     {
         using dst_pixel_ref_t = typename pixel_proxy<typename DstView::value_type>::type;
         std::vector<PixelAccum> buffer(kernel.size() * (src_view.width()));
+
+        // Fill left, right and Im_fill part of Middle section.
         for (col = 0; col < src_view.width(); ++col)
         {
             assign_pixels(src_view.col_begin(col), src_view.col_begin(col) + kernel.size(), 
                 buffer.begin() + col * kernel.size());
         }
 
+        // Start moving through middle section of image.
         for (row = upper_extrapolation_size; row < src_view.height() - lower_extrapolation_size; ++row)
         {
+            // Update buffer with row pixels
             if (row - upper_extrapolation_size > 0)
             {
                 for (col = 0; col < src_view.width(); ++col)
@@ -475,6 +502,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
             correlator(buffer.begin(), buffer.size(), kernel.begin(), 
                 dst_view.row_begin(row) + left_extrapolation_size);
 
+            // handle boundary pixels of destination image
             if (option == boundary_option::output_ignore)
             {
                 assign_pixels(src_view.row_begin(row), 
@@ -492,6 +520,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
             }
         }
 
+        // handle boundary pixels of destination image.
         if (option == boundary_option::output_ignore)
         {
             for (row = 0; row < upper_extrapolation_size; ++row)
@@ -515,10 +544,13 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
         std::vector<PixelAccum> buffer(kernel.size() * (src_view.width() + kernel.size() - 1));
         if (option == boundary_option::extend_zero)
         {
+            // Fill left part of upper section
             std::fill_n(buffer.begin(), kernel.size() * left_extrapolation_size, zero_pixel);
+            // Fill right part of upper section
             std::fill_n(buffer.begin() + buffer.size() - kernel.size() * right_extrapolation_size, 
                 kernel.size() * right_extrapolation_size, zero_pixel);
         
+            // Fill upper part of upper section
             for (long unsigned int index = kernel.size() * left_extrapolation_size; 
                 index < buffer.size() - kernel.size() * right_extrapolation_size; 
                 index += kernel.size())
@@ -537,6 +569,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
             std::fill_n(intermediate_buffer.begin(), upper_extrapolation_size, 
                 intermediate_buffer[upper_extrapolation_size]);
 
+            // Fill left part of upper section
             for (long unsigned int inner_index = 0; inner_index < kernel.size() * left_extrapolation_size; 
                 inner_index += kernel.size())
             {
@@ -551,6 +584,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
             std::fill_n(intermediate_buffer.begin(), upper_extrapolation_size, 
                 intermediate_buffer[upper_extrapolation_size]);
 
+            // Fill right part of upper section
             for (long unsigned int inner_index = buffer.size() - kernel.size() * right_extrapolation_size; 
                 inner_index < buffer.size(); inner_index += kernel.size())
             {
@@ -558,6 +592,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
                     buffer.begin() + inner_index);
             }
 
+            // Fill upper part of upper section
             for (long unsigned int index = kernel.size() * left_extrapolation_size; 
                 index < buffer.size() - kernel.size() * right_extrapolation_size; 
                 index += kernel.size())
@@ -577,6 +612,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
                 kernel.size() - upper_extrapolation_size > upper_extrapolation_size ? 
                 kernel.size() - upper_extrapolation_size : upper_extrapolation_size;
 
+            // Fill left part of upper section.
             for (col = 0; col < left_extrapolation_size; ++col)
             {
                 for (row = 0; row < row_bound; ++row)
@@ -594,6 +630,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
                 }
             }
 
+            // Fill upper part as well as Im_fill part of upper section.
             for (col = 0; col < src_view.width(); ++col)
             {
                 for (row = 0; row < row_bound; ++row)
@@ -611,6 +648,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
                 }
             }
 
+            // Fill right part of upper section
             for (col = src_view.width() - right_extrapolation_size; col < src_view.width(); ++col)
             {
                 for (row = 0; row < row_bound; ++row)
@@ -635,6 +673,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
         else if (option == boundary_option::extend_padded)
         {
             typename SrcView::xy_locator loc_center = src_view.xy_at(0, 0);
+            // Fill left part of upper section
             for (col = 0; col < left_extrapolation_size; ++col)
             {
                 for (row = 0; row < kernel.size(); ++row)
@@ -644,6 +683,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
                 }
             }
 
+            // Fill upper part of upper section
             for (col = 0; col < src_view.width(); ++col)
             {
                 loc_center = src_view.xy_at(col, 0);
@@ -655,6 +695,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
             }
 
             loc_center = src_view.xy_at(src_view.width() - 1, 0);
+            // Fill right part of upper section
             for (col = 1; col <= right_extrapolation_size; ++col)
             {
                 for (row = 0; row < kernel.size(); ++row)
@@ -667,6 +708,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
 
         if (explicit_fill == true)
         {
+            // Fill Im_fill part of upper section
             for (col = 0; col < src_view.width(); ++col)
             {
                 assign_pixels(src_view.col_begin(col), 
@@ -676,10 +718,12 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
             }
         }
 
+        // Start moving through middle section of image
         for (row = 0; row < src_view.height() - lower_extrapolation_size; ++row)
         {
             if (row > 0)
             {
+                // Update left part of middle section
                 for (long unsigned int temp_col = 0; temp_col < left_extrapolation_size; ++temp_col)
                 {
                     std::ptrdiff_t left_bound = temp_col * kernel.size();
@@ -710,6 +754,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
                     }
                 }
 
+                // Update right part of middle section
                 for (long unsigned int temp_col = 0; temp_col < right_extrapolation_size; ++temp_col)
                 {
                     std::ptrdiff_t left_bound = (left_extrapolation_size + src_view.width() + 
@@ -739,6 +784,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
                     }
                 }
 
+                // Update Im_fill part of middle section
                 for (long int temp_col = 0; temp_col < src_view.width(); ++temp_col)
                 {
                     std::ptrdiff_t left_bound = (left_extrapolation_size + temp_col) * kernel.size(); 
@@ -752,8 +798,10 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
             correlator(buffer.begin(), buffer.size(), kernel.begin(), dst_view.row_begin(row));
         }
 
+        // Start moving through lower section of image
         for (row = src_view.height() - lower_extrapolation_size; row < src_view.height(); ++row)
         {
+            // Update left part of lower section
             for (long unsigned int temp_col = 0; temp_col < left_extrapolation_size; ++temp_col)
             {
                 std::ptrdiff_t left_bound = temp_col * kernel.size();
@@ -782,6 +830,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
                 }
             }
 
+            // Update right part of lower section
             for (long unsigned int temp_col = 0; temp_col < right_extrapolation_size; ++temp_col)
             {
                 std::ptrdiff_t left_bound = (left_extrapolation_size + src_view.width() + temp_col) * 
@@ -813,6 +862,7 @@ void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view,
                 }
             }
 
+            // Update lower part of lower section
             for (long int temp_col = 0; temp_col < src_view.width(); ++temp_col)
             {
                 std::ptrdiff_t left_bound = (left_extrapolation_size + temp_col) * kernel.size(); 
