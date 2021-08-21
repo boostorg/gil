@@ -91,3 +91,12 @@ uses basic linear algebra for separating the kernel.
 
 
 -------------------------------------------------------
+
+
+A note regarding derivatives : 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Calculating derivatives with different boundary options may produce artifacts in some cases. Hence 
+it is advisable to compare outputs obtained with all methods of boundary extrapolation and then 
+select the one which seems most reasonable for the application.
