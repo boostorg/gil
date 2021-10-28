@@ -19,7 +19,6 @@
 #include <boost/gil/color_base_algorithm.hpp>
 #include <boost/gil/color_convert.hpp>
 #include <boost/gil/concepts.hpp>
-#include <boost/gil/deprecated.hpp>
 #include <boost/gil/device_n.hpp>
 #include <boost/gil/dynamic_step.hpp>
 #include <boost/gil/gray.hpp>
