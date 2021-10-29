@@ -11,6 +11,8 @@ import regex ;
 import testing ;
 
 using libjpeg : : : : true ; # work around bug on master
+using libpng : : : : true ;
+using libtiff : : : : true ;
 
 project
     : # requirements
@@ -19,6 +21,7 @@ project
 # TODO: Add missing examples
 
 local sources =
+    adaptive_he.cpp
     adaptive_threshold.cpp
     affine.cpp
     anisotropic_diffusion.cpp
@@ -27,12 +30,18 @@ local sources =
     dynamic_image.cpp
     harris.cpp
     hessian.cpp
+    histogram_equalization.cpp
+    histogram_matching.cpp
     histogram.cpp
+    hough_transform_circle.cpp
+    hough_transform_line.cpp
     interleaved_ptr.cpp
     mandelbrot.cpp
     morphology.cpp
     packed_pixel.cpp
+    rasterizer_circle.cpp
     rasterizer_ellipse.cpp
+    rasterizer_line.cpp
     resize.cpp
     sobel_scharr.cpp
     threshold.cpp
@@ -42,13 +51,27 @@ local sources =
 
 local targets ;
 
+# for local s in $(sources)
+# {
+#     targets +=
+#         [ compile $(s) :
+#             [ ac.check-library /libjpeg//libjpeg : <library>/libjpeg//libjpeg : <build>no ]
+#         ]
+#         ;
+# }
+
 for local s in $(sources)
 {
-    targets +=
-        [ compile $(s) :
-            [ ac.check-library /libjpeg//libjpeg : <library>/libjpeg//libjpeg : <build>no ]
-        ]
-        ;
+targets +=
+    	[ exe [ regex.replace $(s)  ".cpp" "" ] :
+	    $(s)
+	    /libjpeg//libjpeg
+    	    /libpng//libpng
+#	    :  [ ac.check-library /libjpeg//libjpeg : <library>/libjpeg//libjpeg : <build>no ]
+#	       [ ac.check-library /libpng//libpng : <library>/libpng//libpng : <build>no ]
+#	       [ ac.check-library /libtiff//libtiff : <library>/libtiff//libtiff : <build>no ]
+	]
+	;
 }
 
 alias examples : $(targets) ;

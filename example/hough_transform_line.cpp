@@ -38,11 +38,9 @@ int main()
         std::cout << '\n';
     }
 
-    double minimum_theta_step = std::atan(1.0 / size);
     // this is the expected theta
     double _45_degrees = gil::detail::pi / 4;
     double _5_degrees = gil::detail::pi / 36;
-    std::size_t step_count = 5;
     auto theta_parameter =
         gil::make_theta_parameter(_45_degrees, _5_degrees, input_view.dimensions());
     auto expected_radius = static_cast<std::ptrdiff_t>(std::round(std::cos(_45_degrees) * size));
