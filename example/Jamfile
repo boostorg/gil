@@ -12,7 +12,6 @@ import testing ;
 
 using libjpeg : : : : true ; # work around bug on master
 using libpng : : : : true ;
-using libtiff : : : : true ;
 
 project
     : # requirements
@@ -51,15 +50,6 @@ local sources =
 
 local targets ;
 
-# for local s in $(sources)
-# {
-#     targets +=
-#         [ compile $(s) :
-#             [ ac.check-library /libjpeg//libjpeg : <library>/libjpeg//libjpeg : <build>no ]
-#         ]
-#         ;
-# }
-
 for local s in $(sources)
 {
 targets +=
@@ -67,9 +57,6 @@ targets +=
 	    $(s)
 	    /libjpeg//libjpeg
     	    /libpng//libpng
-#	    :  [ ac.check-library /libjpeg//libjpeg : <library>/libjpeg//libjpeg : <build>no ]
-#	       [ ac.check-library /libpng//libpng : <library>/libpng//libpng : <build>no ]
-#	       [ ac.check-library /libtiff//libtiff : <library>/libtiff//libtiff : <build>no ]
 	]
 	;
 }

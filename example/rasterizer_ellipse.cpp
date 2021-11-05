@@ -5,10 +5,22 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
+
 #include <boost/gil/extension/io/jpeg.hpp>
 #include <boost/gil.hpp>
 
 namespace gil = boost::gil;
+
+// Demonstrates the use of a rasterizer to generate an image of an ellipse
+// The various rasterizers available are defined in include/boost/gil/rasterization/circle.hpp,
+// include/boost/gil/rasterization/ellipse.hpp and include/boost/gil/rasterization/line.hpp
+// The rasterizer used is a generalisation of the midpoint algorithm often used for drawing circle.
+// This examples also shows how to create images with various pixel depth, as well as the behaviour
+// in case of the rasterization of a curve that doesn't fit in a view.
+// See also:
+// rasterizer_circle.cpp - Demonstrates the use of a rasterizer to generate an image of a circle
+// rasterizer_line.cpp - Demonstrates the use of a rasterizer to generate an image of a line
+
 
 int main()
 {

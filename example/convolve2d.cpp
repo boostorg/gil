@@ -1,3 +1,11 @@
+// 
+// Copyright 2005-2007 Adobe Systems Incorporated 
+// 
+// Distributed under the Boost Software License, Version 1.0 
+// See accompanying file LICENSE_1_0.txt or copy at 
+// http://www.boost.org/LICENSE_1_0.txt 
+// 
+
 #include <vector>
 #include <iostream>
 #include <boost/gil/extension/numeric/kernel.hpp>
@@ -5,8 +13,21 @@
 #include <boost/gil/extension/io/png.hpp>
 
 #include <boost/gil/extension/io/jpeg.hpp>
+
 using namespace boost::gil;
 using namespace std;
+
+// Convolves the image with a 2d kernel.
+
+// Note that the kernel can be fixed or resizable:
+// kernel_2d_fixed<float, N> k(elements, centre_y, centre_x) produces a fixed kernel
+// kernel_2d<float> k(elements, size, centre_y, centre_x) produces a resizable kernel
+// The size of the kernel matrix is deduced as the square root of the number of the elements (9 elements yield a 3x3 matrix)
+
+// See also:
+// convolution.cpp - Convolution with 2d kernels
+
+
 int main()
 {
     //gray8_image_t img;

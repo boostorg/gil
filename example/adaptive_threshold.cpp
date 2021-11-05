@@ -5,11 +5,21 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
+
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/png.hpp>
 #include <iostream>
 
 using namespace boost::gil;
+
+// Demonstrates Adaptive Thresholding
+
+// threshold_adaptive works following either the mean or the gaussian method, and accepts also a direction
+// The direction indicates whether the pixels are assigned the max value when their values are greater
+// than the threshold (regular), or when they are less than the threshold (inverse)
+// threshold_adaptive is defined in include/boost/gil/image_processing/threshold.hpp
+// See also:
+// threshold.cpp - Simple thresholding
 
 int main()
 {

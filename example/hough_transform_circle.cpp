@@ -1,4 +1,3 @@
-// Boost.GIL (Generic Image Library) - tests
 //
 // Copyright 2020 Olzhas Zhumabek <anonymous.from.applecity@gmail.com>
 //
@@ -6,6 +5,7 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
+
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/png.hpp>
 
@@ -14,6 +14,16 @@
 #include <vector>
 
 namespace gil = boost::gil;
+
+// Demonstrates how to use a Hough transform to identify a circle
+
+// Note this relies on the brute force approach, which today is the only one available in GIL
+// The function hough_circle_transform_brute, defined in include/boost/gil/image_processing/hough_transform.cpp,
+// accepts a greyscale edge map, the three Hough parameters allowing to do the drawing and the voting,
+// an accumulator in the form of an iterator of views of the parameter space and a utility rasterizer to produce the points.
+// The example outputs the voting cell of the centre of a circle drawn programatically.
+// See also:
+// hough_transform_line.cpp - Hough transform to detect lines
 
 int main()
 {
