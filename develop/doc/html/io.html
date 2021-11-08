@@ -281,13 +281,11 @@ In the context of GIL.IO a user can define an <code class="docutils literal notr
 several image types. The IO extension would then pick the matching image type
 to the current image file.
 The following example shows this feature:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="n">mpl</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">gray8_image_t</span>
-                   <span class="p">,</span> <span class="n">gray16_image_t</span>
-                   <span class="p">,</span> <span class="n">rgb8_image_t</span>
-                   <span class="p">,</span> <span class="n">rgba_image_t</span>
-                   <span class="o">&gt;</span> <span class="n">my_img_types</span><span class="p">;</span>
-
-<span class="n">any_image</span><span class="o">&lt;</span> <span class="n">my_img_types</span> <span class="o">&gt;</span> <span class="n">runtime_image</span><span class="p">;</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">any_image</span><span class="o">&lt;</span> <span class="n">gray8_image_t</span>
+         <span class="p">,</span> <span class="n">gray16_image_t</span>
+         <span class="p">,</span> <span class="n">rgb8_image_t</span>
+         <span class="p">,</span> <span class="n">rgba8_image_t</span>
+         <span class="o">&gt;</span> <span class="n">my_img_types</span> <span class="o">&gt;</span> <span class="n">runtime_image</span><span class="p">;</span>
 
 <span class="n">read_image</span><span class="p">(</span> <span class="n">filename</span>
           <span class="p">,</span> <span class="n">runtime_image</span>
@@ -356,14 +354,11 @@ One example for instance is the JPEG quality.
 Refer to the format specific sections under 3.3. to have a list of all
 the possible settings.</p>
 <p>Writing an any_image&lt;…&gt; is supported. See the following example:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="n">mpl</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">gray8_image_t</span>
-                   <span class="p">,</span> <span class="n">gray16_image_t</span>
-                   <span class="p">,</span> <span class="n">rgb8_image_t</span>
-                   <span class="p">,</span> <span class="n">rgba_image_t</span>
-                   <span class="o">&gt;</span> <span class="n">my_img_types</span><span class="p">;</span>
-
-
-<span class="n">any_image</span><span class="o">&lt;</span> <span class="n">my_img_types</span> <span class="o">&gt;</span> <span class="n">runtime_image</span><span class="p">;</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">any_image</span><span class="o">&lt;</span> <span class="n">gray8_image_t</span>
+         <span class="p">,</span> <span class="n">gray16_image_t</span>
+         <span class="p">,</span> <span class="n">rgb8_image_t</span>
+         <span class="p">,</span> <span class="n">rgba8_image_t</span>
+         <span class="o">&gt;</span> <span class="n">my_img_types</span> <span class="o">&gt;</span> <span class="n">runtime_image</span><span class="p">;</span>
 
 <span class="c1">// fill any_image</span>
 
@@ -747,7 +742,7 @@ to enable the tests:</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2021-10-30 21:10:19.
+      Last updated on 2021-11-08 18:11:13.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>

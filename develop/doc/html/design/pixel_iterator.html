@@ -174,7 +174,7 @@ provide a member method to return the base iterator, a metafunction to get its
 type, and a metafunction to rebind to another base iterator:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">IteratorAdaptorConcept</span><span class="o">&lt;</span><span class="n">RandomAccessTraversalIteratorConcept</span> <span class="n">Iterator</span><span class="o">&gt;</span>
 <span class="p">{</span>
-  <span class="n">where</span> <span class="n">SameType</span><span class="o">&lt;</span><span class="n">is_iterator_adaptor</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;::</span><span class="n">type</span><span class="p">,</span> <span class="n">mpl</span><span class="o">::</span><span class="n">true_</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="n">where</span> <span class="n">SameType</span><span class="o">&lt;</span><span class="n">is_iterator_adaptor</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;::</span><span class="n">type</span><span class="p">,</span> <span class="n">mp11</span><span class="o">::</span><span class="n">mp_true</span><span class="o">&gt;</span><span class="p">;</span>
 
   <span class="k">typename</span> <span class="n">iterator_adaptor_get_base</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;</span><span class="p">;</span>
       <span class="n">where</span> <span class="n">Metafunction</span><span class="o">&lt;</span><span class="n">iterator_adaptor_get_base</span><span class="o">&lt;</span><span class="n">Iterator</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">;</span>
@@ -368,7 +368,7 @@ but not <code class="docutils literal notranslate"><span class="pre">MemoryBased
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2021-10-30 21:10:19.
+      Last updated on 2021-11-08 18:11:13.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
