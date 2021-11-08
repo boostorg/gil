@@ -240,13 +240,11 @@ several image types. The IO extension would then pick the matching image type
 to the current image file.
 The following example shows this feature::
 
-    typedef mpl::vector< gray8_image_t
-                       , gray16_image_t
-                       , rgb8_image_t
-                       , rgba_image_t
-                       > my_img_types;
-
-    any_image< my_img_types > runtime_image;
+    any_image< gray8_image_t
+             , gray16_image_t
+             , rgb8_image_t
+             , rgba8_image_t
+             > my_img_types > runtime_image;
 
     read_image( filename
               , runtime_image
@@ -319,14 +317,11 @@ the possible settings.
 
 Writing an any_image<...> is supported. See the following example::
 
-    typedef mpl::vector< gray8_image_t
-                       , gray16_image_t
-                       , rgb8_image_t
-                       , rgba_image_t
-                       > my_img_types;
-
-
-    any_image< my_img_types > runtime_image;
+    any_image< gray8_image_t
+             , gray16_image_t
+             , rgb8_image_t
+             , rgba8_image_t
+             > my_img_types > runtime_image;
 
     // fill any_image
 
