@@ -12,7 +12,7 @@
 // This example converts the input image to a greyscale view via color_converted_view,
 // and then relies on the function static_transform to apply the operation halfdiff_cast_channels.
 // The result is captured in a view, initially blacked out via a call to fill_pixels (defined in
-// include/boost/gil/algorithm.hpp
+// include/boost/gil/algorithm.hpp)
 // static_transform is defined in include/boost/gil/color_based_algorithm.hpp and applies an operation
 // to either a single source or two sources and a destination (as is the case here).
 // In this example, the gradient is calculated as half the difference between the two pixels surrounding x

@@ -18,7 +18,7 @@ namespace gil = boost::gil;
 
 // The algorithm itself is implemented in include/boost/gil/image_processing/hough_transform.hpp.
 // It follows the regular algorithm, using Hesse notation, and steps around each point using the minimal visible angle
-// defined as atan2(1, d), where d is whichever dimension in the input iimage is the longest.
+// defined as atan2(1, d), where d is whichever dimension in the input image is the longest.
 // The function make_theta_parameter, defined in include/boost/gil/image_processing/hough_parameter.hpp, allows to generate the parameter accordingly.
 // See also:
 // hough_transform_circle.cpp - Hough transform to detect circles
