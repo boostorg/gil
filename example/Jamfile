@@ -53,12 +53,12 @@ local targets ;
 for local s in $(sources)
 {
 targets +=
-    	[ exe [ regex.replace $(s)  ".cpp" "" ] :
-	    $(s)
-	    /libjpeg//libjpeg
-    	    /libpng//libpng
-	]
-	;
+    [ exe [ regex.replace $(s)  ".cpp" "" ] :
+        $(s)
+	/libjpeg//libjpeg
+	/libpng//libpng
+    ]
+    ;
 }
 
 alias examples : $(targets) ;

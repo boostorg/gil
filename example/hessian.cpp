@@ -1,5 +1,5 @@
 // 
-// Copyright 2005-2007 Adobe Systems Incorporated 
+// Copyright 2019 Olzhas Zhumabek <anonymous.from.applecity@gmail.com>
 // 
 // Distributed under the Boost Software License, Version 1.0 
 // See accompanying file LICENSE_1_0.txt or copy at 
