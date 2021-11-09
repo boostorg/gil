@@ -101,7 +101,7 @@ type, and a metafunction to rebind to another base iterator:
 
   concept IteratorAdaptorConcept<RandomAccessTraversalIteratorConcept Iterator>
   {
-    where SameType<is_iterator_adaptor<Iterator>::type, mpl::true_>;
+    where SameType<is_iterator_adaptor<Iterator>::type, mp11::mp_true>;
 
     typename iterator_adaptor_get_base<Iterator>;
         where Metafunction<iterator_adaptor_get_base<Iterator> >;
