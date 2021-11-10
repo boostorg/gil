@@ -1,4 +1,3 @@
-// Boost.GIL (Generic Image Library) - tests
 //
 // Copyright 2020 Olzhas Zhumabek <anonymous.from.applecity@gmail.com>
 //
@@ -6,6 +5,7 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
+
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/png.hpp>
 #include <cmath>
@@ -13,6 +13,15 @@
 #include <vector>
 
 namespace gil = boost::gil;
+
+// Demonstrates the use of a rasterizer to generate an image of a circle
+// The various rasterizers available are defined in include/boost/gil/rasterization/circle.hpp,
+// include/boost/gil/rasterization/ellipse.hpp and include/boost/gil/rasterization/line.hpp
+// This example uses a trigonometric rasterizer; GIL also offers the rasterizer midpoint_circle_rasterizer,
+// which implements the Midpoint algorithm.
+// See also:
+// rasterizer_ellipse.cpp - Demonstrates the use of a rasterizer to generate an image of an ellipse
+// rasterizer_line.cpp - Demonstrates the use of a rasterizer to generate an image of a line
 
 int main()
 {

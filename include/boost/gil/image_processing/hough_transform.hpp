@@ -87,8 +87,6 @@ void hough_circle_transform_brute(const ImageView& input,
                                   const hough_parameter<std::ptrdiff_t>& y_parameter,
                                   ForwardIterator d_first, Rasterizer rasterizer)
 {
-    const auto width = input.width();
-    const auto height = input.height();
     for (std::size_t radius_index = 0; radius_index < radius_parameter.step_count; ++radius_index)
     {
         const auto radius = radius_parameter.start_point +

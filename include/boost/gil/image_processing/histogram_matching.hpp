@@ -169,8 +169,6 @@ void histogram_matching(
     source_channel_t src_pixel_max = std::numeric_limits<source_channel_t>::max();
     ref_channel_t ref_pixel_min    = std::numeric_limits<ref_channel_t>::min();
     ref_channel_t ref_pixel_max    = std::numeric_limits<ref_channel_t>::max();
-    dst_channel_t dst_pixel_min    = std::numeric_limits<dst_channel_t>::min();
-    dst_channel_t dst_pixel_max    = std::numeric_limits<dst_channel_t>::max();
 
     for (std::size_t i = 0; i < channels; i++)
     {

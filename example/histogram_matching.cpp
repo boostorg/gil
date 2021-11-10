@@ -14,6 +14,13 @@
 
 using namespace boost::gil;
 
+// Demonstrates Histogram Matching
+
+// See also:
+// histogram_equalization.cpp - Regular Histogram Equalization
+// adaptive_he.cpp - Adaptive Histogram Equalization
+// histogram.cpp - General use of histograms in GIL
+
 std::vector<std::vector<bool>> get_mask(gray8_view_t const& mask)
 {
     std::vector<std::vector<bool>> mask_vec(mask.height(), std::vector<bool>(mask.width(), 0));

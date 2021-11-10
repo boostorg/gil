@@ -1,4 +1,3 @@
-// Boost.GIL (Generic Image Library) - tests
 //
 // Copyright 2020 Olzhas Zhumabek <anonymous.from.applecity@gmail.com>
 //
@@ -6,6 +5,7 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
+
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/png.hpp>
 #include <cmath>
@@ -13,6 +13,15 @@
 #include <iostream>
 
 namespace gil = boost::gil;
+
+// Demonstrates the Hough transform to detect lines
+
+// The algorithm itself is implemented in include/boost/gil/image_processing/hough_transform.hpp.
+// It follows the regular algorithm, using Hesse notation, and steps around each point using the minimal visible angle
+// defined as atan2(1, d), where d is whichever dimension in the input image is the longest.
+// The function make_theta_parameter, defined in include/boost/gil/image_processing/hough_parameter.hpp, allows to generate the parameter accordingly.
+// See also:
+// hough_transform_circle.cpp - Hough transform to detect circles
 
 int main()
 {
@@ -38,11 +47,9 @@ int main()
         std::cout << '\n';
     }
 
-    double minimum_theta_step = std::atan(1.0 / size);
     // this is the expected theta
     double _45_degrees = gil::detail::pi / 4;
     double _5_degrees = gil::detail::pi / 36;
-    std::size_t step_count = 5;
     auto theta_parameter =
         gil::make_theta_parameter(_45_degrees, _5_degrees, input_view.dimensions());
     auto expected_radius = static_cast<std::ptrdiff_t>(std::round(std::cos(_45_degrees) * size));

@@ -5,6 +5,7 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
+
 #include <boost/gil/algorithm.hpp>
 #include <boost/gil/extension/io/png.hpp>
 #include <boost/gil/image.hpp>
@@ -19,6 +20,12 @@
 #include <type_traits>
 
 namespace gil = boost::gil;
+
+// Demonstrates Anisotropic Diffusion
+
+// This example uses the Perona-Malik's diffusion algorithm, which is the default in GIL.
+// In addition, Gaussian conductivity and two wide range conductivity functions are also available.
+// see include/boost/gil/image_processing/diffusion.hpp
 
 void gray_version(std::string const& input_path, std::string const& output_path,
                   unsigned int iteration_count, float kappa)

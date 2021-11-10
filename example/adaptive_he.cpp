@@ -13,6 +13,13 @@
 
 using namespace boost::gil;
 
+// Demonstrates Adaptive Histogram Equalization (AHE)
+
+// See also:
+// histogram.cpp - General use of histograms in GIL
+// histogram_equalization.cpp - Regular Histogram Equalization
+// histogram_matching.cpp - Reference-based histogram computation
+
 int main()
 {
     gray8_image_t img;

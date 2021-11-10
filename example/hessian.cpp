@@ -1,3 +1,11 @@
+// 
+// Copyright 2019 Olzhas Zhumabek <anonymous.from.applecity@gmail.com>
+// 
+// Distributed under the Boost Software License, Version 1.0 
+// See accompanying file LICENSE_1_0.txt or copy at 
+// http://www.boost.org/LICENSE_1_0.txt 
+//
+
 #include <boost/gil/image.hpp>
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/image_processing/numeric.hpp>
@@ -10,6 +18,8 @@
 #include <fstream>
 
 namespace gil = boost::gil;
+
+// Demonstrates Hessian feature (blob) detection
 
 // some images might produce artifacts
 // when converted to grayscale,

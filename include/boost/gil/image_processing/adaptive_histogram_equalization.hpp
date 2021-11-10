@@ -166,9 +166,7 @@ void non_overlapping_interpolated_clahe(
 
     std::vector<coord_t> sample_x;
     coord_t sample_x1 = tile_width_x / 2;
-    coord_t sample_x2 = (tile_width_x + 1) / 2;
     coord_t sample_y1 = tile_width_y / 2;
-    coord_t sample_y2 = (tile_width_y + 1) / 2;
 
     auto extend_left   = tile_width_x;
     auto extend_top    = tile_width_y;
