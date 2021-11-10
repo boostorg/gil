@@ -115,55 +115,53 @@ $(function() {
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;                                  <span class="keyword">const</span> <a class="code" href="structboost_1_1gil_1_1hough__parameter.html">hough_parameter&lt;std::ptrdiff_t&gt;</a>&amp; y_parameter,</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;                                  ForwardIterator d_first, Rasterizer rasterizer)</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;{</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keyword">const</span> <span class="keyword">auto</span> width = input.width();</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keyword">const</span> <span class="keyword">auto</span> height = input.height();</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordflow">for</span> (std::size_t radius_index = 0; radius_index &lt; radius_parameter.step_count; ++radius_index)</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    {</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keyword">const</span> <span class="keyword">auto</span> radius = radius_parameter.start_point +</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;                            radius_parameter.step_size * <span class="keyword">static_cast&lt;</span>std::ptrdiff_t<span class="keyword">&gt;</span>(radius_index);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        std::vector&lt;point_t&gt; circle_points(rasterizer.point_count(radius));</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        rasterizer(radius, {0, 0}, circle_points.begin());</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="comment">// sort by scanline to improve cache coherence for row major images</span></div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        std::sort(circle_points.begin(), circle_points.end(),</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;                  [](<span class="keyword">const</span> <a class="code" href="classboost_1_1gil_1_1point.html">point_t</a>&amp; lhs, <span class="keyword">const</span> <a class="code" href="classboost_1_1gil_1_1point.html">point_t</a>&amp; rhs) { return lhs.y &lt; rhs.y; });</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keyword">const</span> <span class="keyword">auto</span> translate = [](std::vector&lt;point_t&gt;&amp; points, <a class="code" href="classboost_1_1gil_1_1point.html">point_t</a> offset) {</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            std::transform(points.begin(), points.end(), points.begin(), [offset](<a class="code" href="classboost_1_1gil_1_1point.html">point_t</a> <a class="code" href="classboost_1_1gil_1_1point.html">point</a>) {</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;                return point_t(point.x + offset.x, point.y + offset.y);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            });</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        };</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="comment">// in case somebody passes iterator to likes of std::vector&lt;bool&gt;</span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keyword">typename</span> std::iterator_traits&lt;ForwardIterator&gt;::reference current_image = *d_first;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="comment">// the algorithm has to traverse over parameter space and look at input, instead</span></div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="comment">// of vice versa, as otherwise it will call translate too many times, as input</span></div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <span class="comment">// is usually bigger than the coordinate portion of parameter space.</span></div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <span class="comment">// This might cause extensive cache misses</span></div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <span class="keywordflow">for</span> (std::size_t x_index = 0; x_index &lt; x_parameter.step_count; ++x_index)</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        {</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;            <span class="keywordflow">for</span> (std::size_t y_index = 0; y_index &lt; y_parameter.step_count; ++y_index)</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;            {</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;                <span class="keyword">const</span> std::ptrdiff_t x = x_parameter.start_point + x_index * x_parameter.step_size;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;                <span class="keyword">const</span> std::ptrdiff_t y = y_parameter.start_point + y_index * y_parameter.step_size;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;                <span class="keyword">auto</span> translated_circle = circle_points;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;                translate(translated_circle, {x, y});</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;                <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; <a class="code" href="classboost_1_1gil_1_1point.html">point</a> : translated_circle)</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;                {</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;                    <span class="keywordflow">if</span> (input(<a class="code" href="classboost_1_1gil_1_1point.html">point</a>))</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;                    {</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;                        ++current_image(x_index, y_index)[0];</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;                    }</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;                }</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;            }</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        }</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        ++d_first;</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    }</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;}</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordflow">for</span> (std::size_t radius_index = 0; radius_index &lt; radius_parameter.step_count; ++radius_index)</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    {</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <span class="keyword">const</span> <span class="keyword">auto</span> radius = radius_parameter.start_point +</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;                            radius_parameter.step_size * <span class="keyword">static_cast&lt;</span>std::ptrdiff_t<span class="keyword">&gt;</span>(radius_index);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        std::vector&lt;point_t&gt; circle_points(rasterizer.point_count(radius));</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        rasterizer(radius, {0, 0}, circle_points.begin());</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="comment">// sort by scanline to improve cache coherence for row major images</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        std::sort(circle_points.begin(), circle_points.end(),</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;                  [](<span class="keyword">const</span> <a class="code" href="classboost_1_1gil_1_1point.html">point_t</a>&amp; lhs, <span class="keyword">const</span> <a class="code" href="classboost_1_1gil_1_1point.html">point_t</a>&amp; rhs) { return lhs.y &lt; rhs.y; });</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keyword">const</span> <span class="keyword">auto</span> translate = [](std::vector&lt;point_t&gt;&amp; points, <a class="code" href="classboost_1_1gil_1_1point.html">point_t</a> offset) {</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            std::transform(points.begin(), points.end(), points.begin(), [offset](<a class="code" href="classboost_1_1gil_1_1point.html">point_t</a> <a class="code" href="classboost_1_1gil_1_1point.html">point</a>) {</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;                return point_t(point.x + offset.x, point.y + offset.y);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            });</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        };</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="comment">// in case somebody passes iterator to likes of std::vector&lt;bool&gt;</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keyword">typename</span> std::iterator_traits&lt;ForwardIterator&gt;::reference current_image = *d_first;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="comment">// the algorithm has to traverse over parameter space and look at input, instead</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="comment">// of vice versa, as otherwise it will call translate too many times, as input</span></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="comment">// is usually bigger than the coordinate portion of parameter space.</span></div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="comment">// This might cause extensive cache misses</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <span class="keywordflow">for</span> (std::size_t x_index = 0; x_index &lt; x_parameter.step_count; ++x_index)</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        {</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            <span class="keywordflow">for</span> (std::size_t y_index = 0; y_index &lt; y_parameter.step_count; ++y_index)</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            {</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;                <span class="keyword">const</span> std::ptrdiff_t x = x_parameter.start_point + x_index * x_parameter.step_size;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;                <span class="keyword">const</span> std::ptrdiff_t y = y_parameter.start_point + y_index * y_parameter.step_size;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;                <span class="keyword">auto</span> translated_circle = circle_points;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;                translate(translated_circle, {x, y});</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;                <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; <a class="code" href="classboost_1_1gil_1_1point.html">point</a> : translated_circle)</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;                {</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;                    <span class="keywordflow">if</span> (input(<a class="code" href="classboost_1_1gil_1_1point.html">point</a>))</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;                    {</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;                        ++current_image(x_index, y_index)[0];</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;                    }</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;                }</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;            }</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        }</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        ++d_first;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    }</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;}</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;}} <span class="comment">// namespace boost::gil</span></div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160; </div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;}} <span class="comment">// namespace boost::gil</span></div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="astructboost_1_1gil_1_1hough__parameter_html"><div class="ttname"><a href="structboost_1_1gil_1_1hough__parameter.html">boost::gil::hough_parameter</a></div><div class="ttdoc">A type to encapsulate Hough transform parameter range.</div><div class="ttdef"><b>Definition:</b> hough_parameter.hpp:26</div></div>
 <div class="ttc" id="agroup___hough_transform_html_ga2573aec8de0799351116129f7bc6d6a0"><div class="ttname"><a href="group___hough_transform.html#ga2573aec8de0799351116129f7bc6d6a0">boost::gil::hough_line_transform</a></div><div class="ttdeci">void hough_line_transform(const InputView &amp;input_view, const OutputView &amp;accumulator_array, const hough_parameter&lt; double &gt; &amp;theta, const hough_parameter&lt; std::ptrdiff_t &gt; &amp;radius)</div><div class="ttdoc">Vote for best fit of a line in parameter space.</div><div class="ttdef"><b>Definition:</b> hough_transform.hpp:37</div></div>
