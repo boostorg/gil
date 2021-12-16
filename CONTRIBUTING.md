@@ -17,7 +17,7 @@ please follow the workflow explained in this document.
   - [5. Update your pull request](#5-update-your-pull-request)
 - [Development](#development)
   - [Install dependencies](#install-dependencies)
-  - [Using B2](#using-boostbuild)
+  - [Using B2](#using-b2)
   - [Using CMake](#using-cmake)
   - [Running clang-tidy](#running-clang-tidy)
 - [Guidelines](#guidelines)
