@@ -7,7 +7,7 @@
 // http://www.boost.org/LICENSE_1_0.txt
 //
 #include <boost/gil.hpp>
-#include <boost/gil/extension/numeric/kernel.hpp>
+#include <boost/gil/image_processing/kernel.hpp>
 #include <boost/assert.hpp>
 
 #include <initializer_list>

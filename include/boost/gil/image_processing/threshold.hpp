@@ -20,7 +20,7 @@
 #include <boost/assert.hpp>
 
 #include <boost/gil/image.hpp>
-#include <boost/gil/extension/numeric/kernel.hpp>
+#include <boost/gil/image_processing/kernel.hpp>
 #include <boost/gil/image_processing/convolve.hpp>
 #include <boost/gil/image_processing/numeric.hpp>
 

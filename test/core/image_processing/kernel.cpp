@@ -8,7 +8,7 @@
 //
 #define BOOST_DISABLE_ASSERTS 1 // kernel_1d_adaptor assertions are too strict
 #include <boost/gil.hpp>
-#include <boost/gil/extension/numeric/kernel.hpp>
+#include <boost/gil/image_processing/kernel.hpp>
 
 #include <boost/core/lightweight_test.hpp>
 

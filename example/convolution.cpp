@@ -8,7 +8,7 @@
 
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/jpeg.hpp>
-#include <boost/gil/extension/numeric/kernel.hpp>
+#include <boost/gil/image_processing/kernel.hpp>
 #include <boost/gil/image_processing/convolve.hpp>
 
 // Convolves the image with a Gaussian kernel.
