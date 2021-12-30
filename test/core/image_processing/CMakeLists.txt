@@ -10,7 +10,18 @@ foreach(_name
     threshold_binary
     threshold_truncate
     threshold_otsu
-    morphology)
+    morphology
+    lanczos_scaling
+    simple_kernels
+    harris
+    hessian
+    box_filter
+    median_filter
+    sobel_scharr
+    anisotropic_diffusion
+    hough_parameter
+    hough_line_transform
+    hough_circle_transform)
     set(_test t_core_image_processing_${_name})
     set(_target test_core_image_processing_${_name})
 
@@ -26,33 +37,5 @@ foreach(_name
 
     unset(_name)
     unset(_target)
-endforeach()
-
-foreach(_name
-  lanczos_scaling
-  simple_kernels
-  harris
-  hessian
-  box_filter
-  median_filter
-  sobel_scharr
-  anisotropic_diffusion
-  hough_parameter
-  hough_line_transform
-  hough_circle_transform)
-  set(_test t_core_image_processing_${_name})
-  set(_target test_core_image_processing_${_name})
-
-  add_executable(${_target} "")
-  target_sources(${_target} PRIVATE ${_name}.cpp)
-  target_link_libraries(${_target}
-    PRIVATE
-      gil_compile_options
-      gil_include_directories
-      gil_dependencies)
-  add_test(NAME ${_test} COMMAND ${_target})
-
-  unset(_name)
-  unset(_target)
-  unset(_test)
+    unset(_test)
 endforeach()
