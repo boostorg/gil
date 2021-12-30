@@ -10,7 +10,7 @@
 #ifndef BOOST_GIL_IMAGE_PROCESSING_CONVOLVE_HPP
 #define BOOST_GIL_IMAGE_PROCESSING_CONVOLVE_HPP
 
-#include <boost/gil/extension/numeric/kernel.hpp>
+#include <boost/gil/image_processing/kernel.hpp>
 
 #include <boost/gil/algorithm.hpp>
 #include <boost/gil/image_view_factory.hpp>
