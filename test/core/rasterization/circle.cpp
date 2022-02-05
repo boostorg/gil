@@ -19,7 +19,7 @@ void test_rasterizer_follows_equation(std::ptrdiff_t radius, Rasterizer rasteriz
 {
 
     std::vector<gil::point_t> circle_points(rasterizer.point_count(radius));
-    std::ptrdiff_t r_squared = radius * radius;
+    std::ptrdiff_t const r_squared = radius * radius;
     rasterizer(radius, {0, 0}, circle_points.begin());
     std::vector<gil::point_t> first_octant(rasterizer.point_count(radius) / 8);
 
@@ -30,7 +30,7 @@ void test_rasterizer_follows_equation(std::ptrdiff_t radius, Rasterizer rasteriz
 
     for (const auto& point : first_octant)
     {
-        double y_exact = std::sqrt(radius * radius - point.x * point.x);
+        double y_exact = std::sqrt(r_squared - point.x * point.x);
         std::ptrdiff_t lower_result = static_cast<std::ptrdiff_t>(std::floor(y_exact));
         std::ptrdiff_t upper_result = static_cast<std::ptrdiff_t>(std::ceil(y_exact));
         BOOST_TEST(point.y >= lower_result && point.y <= upper_result);
