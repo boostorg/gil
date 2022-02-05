@@ -138,8 +138,8 @@ template <typename SrcView, typename DstView>
 void non_overlapping_interpolated_clahe(
     SrcView const& src_view,
     DstView const& dst_view,
-    std::size_t tile_width_x                = 20,
-    std::size_t tile_width_y                = 20,
+    std::ptrdiff_t tile_width_x             = 20,
+    std::ptrdiff_t tile_width_y             = 20,
     double clip_limit                       = 0.03,
     std::size_t bin_width                   = 1.0,
     bool mask                               = false,

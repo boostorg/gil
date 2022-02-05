@@ -24,9 +24,9 @@ using namespace boost::gil;
 std::vector<std::vector<bool>> get_mask(gray8_view_t const& mask)
 {
     std::vector<std::vector<bool>> mask_vec(mask.height(), std::vector<bool>(mask.width(), 0));
-    for (std::size_t i = 0; i < mask.height(); i++)
+    for (std::ptrdiff_t i = 0; i < mask.height(); i++)
     {
-        for (std::size_t j = 0; j < mask.width(); j++)
+        for (std::ptrdiff_t j = 0; j < mask.width(); j++)
         {
             mask_vec[i][j] = mask(j, i);
         }
