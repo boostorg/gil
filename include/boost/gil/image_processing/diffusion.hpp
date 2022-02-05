@@ -157,8 +157,6 @@ struct stencil_5points
     template <typename Pixel>
     Pixel reduce(const stencil_type<Pixel>& stencil)
     {
-        auto first = stencil.begin();
-        auto last = stencil.end();
         using channel_type = typename channel_type<Pixel>::type;
         auto result = []() {
             Pixel zero_pixel;
