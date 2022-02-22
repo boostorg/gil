@@ -70,7 +70,6 @@ make_reader( const std::wstring& file_name
                                      );
 }
 
-#ifdef BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
 template< typename FormatTag
         , typename ConversionPolicy
         >
@@ -79,7 +78,7 @@ typename get_reader< std::wstring
                    , FormatTag
                    , ConversionPolicy
                    >::type
-make_reader( const filesystem::path&                 path
+make_reader( detail::filesystem::path const& path
            , const image_read_settings< FormatTag >& settings
            , const ConversionPolicy&                 cc
            )
@@ -89,7 +88,6 @@ make_reader( const filesystem::path&                 path
                       , cc
                       );
 }
-#endif // BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
 
 template <typename Device, typename FormatTag, typename ConversionPolicy>
 inline
@@ -153,7 +151,6 @@ make_reader( const std::wstring&     file_name
                       );
 }
 
-#ifdef BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
 template< typename FormatTag
         , typename ConversionPolicy
         >
@@ -162,7 +159,7 @@ typename get_reader< std::wstring
                    , FormatTag
                    , ConversionPolicy
                    >::type
-make_reader( const filesystem::path& path
+make_reader( detail::filesystem::path const& path
            , const FormatTag&
            , const ConversionPolicy& cc
            )
@@ -172,7 +169,6 @@ make_reader( const filesystem::path& path
                       , cc
                       );
 }
-#endif // BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
 
 template <typename Device, typename FormatTag, typename ConversionPolicy>
 inline

@@ -5,7 +5,6 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-#define BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/targa.hpp>
 
@@ -21,7 +20,7 @@
 #include "subimage_test.hpp"
 #include "test_utility_output_stream.hpp"
 
-namespace fs = boost::filesystem;
+namespace fs  = boost::gil::detail::filesystem;
 namespace gil = boost::gil;
 namespace mp11 = boost::mp11;
 

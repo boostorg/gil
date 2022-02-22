@@ -16,8 +16,8 @@
 
 #include "paths.hpp"
 
+namespace fs  = boost::gil::detail::filesystem;
 namespace gil = boost::gil;
-namespace fs = boost::filesystem;
 
 // Test will include all format's headers and load and write some images.
 // This test is more of a compilation test.
