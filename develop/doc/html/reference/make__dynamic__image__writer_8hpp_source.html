@@ -118,8 +118,8 @@ $(function() {
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="keyword">typename</span> get_dynamic_image_writer&lt; std::wstring</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                                 , FormatTag</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                                 &gt;::type</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;make_dynamic_image_writer( <span class="keyword">const</span> filesystem::path&amp;              path</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                         , <span class="keyword">const</span> image_write_info&lt; FormatTag &gt;&amp; info</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;make_dynamic_image_writer( detail::filesystem::path <span class="keyword">const</span>&amp; path</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                         , image_write_info&lt;FormatTag&gt; <span class="keyword">const</span>&amp; info</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                         )</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;{</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordflow">return</span> make_dynamic_image_writer( path.wstring()</div>
