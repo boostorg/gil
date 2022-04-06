@@ -15,9 +15,9 @@ trigger:
   - ml/*
 
 jobs:
-  - job: 'ubuntu1604_gcc6_cxx14_cmake'
+  - job: 'ubuntu1804_gcc6_cxx14_cmake'
     pool:
-      vmImage: 'ubuntu-16.04'
+      vmImage: 'ubuntu-18.04'
     steps:
       - template: .ci/azure-pipelines/steps-install-gcc.yml
         parameters:
@@ -34,9 +34,9 @@ jobs:
         parameters:
           cxxver: '14'
 
-  - job: 'ubuntu1604_gcc8_cxx14_cmake'
+  - job: 'ubuntu1804_gcc8_cxx14_cmake'
     pool:
-      vmImage: 'ubuntu-16.04'
+      vmImage: 'ubuntu-18.04'
     steps:
       - template: .ci/azure-pipelines/steps-install-gcc.yml
         parameters:
