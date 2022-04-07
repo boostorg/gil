@@ -88,9 +88,9 @@ jobs:
           cxxver: '17'
           use_conan: 'ON'
 
-  - job: 'macos1014_xcode11_cmake'
+  - job: 'macos1015_xcode11_cmake'
     pool:
-      vmImage: 'macOS-10.14'
+      vmImage: 'macOS-10.15'
     steps:
       - script: which clang++ && clang++ --version
         displayName: 'Check clang'
