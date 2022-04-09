@@ -147,10 +147,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - toolset: msvc-14.1
-            cxxstd: "14,17,latest"
-            addrmd: 32,64
-            os: windows-2016
           - toolset: msvc-14.2
             cxxstd: "14,17,latest"
             addrmd: 32,64
@@ -159,6 +155,10 @@ jobs:
             cxxstd: "11,14,17,2a"
             addrmd: 64
             os: windows-2019
+          - toolset: msvc-14.3
+            cxxstd: "14,17,latest"
+            addrmd: 32,64
+            os: windows-2022
 
     runs-on: ${{matrix.os}}
 
