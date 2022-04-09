@@ -16,12 +16,20 @@ import regex ;
 import sequence ;
 import testing ;
 
+# The <experimental/filesystem> header providing std::experimental::filesystem
+# is deprecated by Microsoft and will be REMOVED. It is superseded by the C++17
+# <filesystem> header providing std::filesystem.
+# You can define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
+# to acknowledge that you have received this warning.
+local msvc-cxxs-with-experimental-fs = 11 14 ;
+
 project
   :
   requirements
     <include>.
     # TODO: Enable concepts check for all, not just test/core
     #<define>BOOST_GIL_USE_CONCEPT_CHECK=1
+    <toolset>msvc,<cxxstd>$(msvc-cxxs-with-experimental-fs):<define>_SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING=1
     [ requires
         cxx11_constexpr
         cxx11_defaulted_functions
