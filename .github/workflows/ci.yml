@@ -27,14 +27,14 @@ jobs:
             os: ubuntu-18.04
           - toolset: gcc
             compiler: g++-8
-            cxxstd: "11,14,17,2a"
+            cxxstd: "11,14,17"
             os: ubuntu-18.04
             install: g++-8
           - toolset: gcc-9
-            cxxstd: "11,14,17,2a"
+            cxxstd: "11,14,17"
             os: ubuntu-18.04
           - toolset: gcc-10
-            cxxstd: "11,14,17,2a"
+            cxxstd: "11,14,17"
             os: ubuntu-18.04
           - toolset: clang
             compiler: clang++-3.5
@@ -86,20 +86,20 @@ jobs:
             install: clang-7
           - toolset: clang
             compiler: clang++-8
-            cxxstd: "11,14,17,2a"
+            cxxstd: "11,14,17"
             os: ubuntu-20.04
             install: clang-8
           - toolset: clang
             compiler: clang++-9
-            cxxstd: "11,14,17,2a"
+            cxxstd: "11,14,17"
             os: ubuntu-20.04
             install: clang-9
           - toolset: clang
             compiler: clang++-10
-            cxxstd: "11,14,17,2a"
+            cxxstd: "11,14,17"
             os: ubuntu-20.04
           - toolset: clang
-            cxxstd: "11,14,17,2a"
+            cxxstd: "11,14,17"
             os: macos-10.15
 
     runs-on: ${{matrix.os}}
@@ -152,7 +152,7 @@ jobs:
             addrmd: 32,64
             os: windows-2019
           - toolset: gcc
-            cxxstd: "11,14,17,2a"
+            cxxstd: "11,14,17"
             addrmd: 64
             os: windows-2019
           - toolset: msvc-14.3
