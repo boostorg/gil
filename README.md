@@ -79,6 +79,7 @@ The official repository contains the following branches:
 
 There is number of communication channels to ask questions and discuss Boost.GIL issues:
 
+- [GitHub Discussions](https://github.com/boostorg/gil/discussions/)
 - Mailing lists ([Boost discussion policy](https://www.boost.org/more/discussion_policy.html))
     - [boost-gil](https://lists.boost.org/mailman/listinfo.cgi/boost-gil) (*recommended*) official Boost.GIL mailing list ([archive](https://lists.boost.org/boost-gil/))
     - [boost-users](https://lists.boost.org/mailman/listinfo.cgi/boost-users) for all Boost users
