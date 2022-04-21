@@ -19,7 +19,7 @@ using namespace boost::gil;
 
 // See also:
 // histogram_equalization.cpp - Regular Histogram Equalization
-// adaptive_he.cpp - Adaptive Histogram Equalization
+// adaptive_histogram_equalization.cpp - Adaptive Histogram Equalization
 // histogram_matching.cpp - Reference-based histogram computation
 
 int main()

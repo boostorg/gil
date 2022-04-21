@@ -20,7 +20,7 @@ project
 # TODO: Add missing examples
 
 local sources =
-    adaptive_he.cpp
+    adaptive_histogram_equalization.cpp
     adaptive_threshold.cpp
     affine.cpp
     anisotropic_diffusion.cpp
