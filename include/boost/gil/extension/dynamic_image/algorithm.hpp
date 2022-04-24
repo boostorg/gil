@@ -230,6 +230,35 @@ void fill_pixels(any_image_view<Types...> const& view, Value const& val)
     apply_operation(view, detail::fill_pixels_fn<Value>(val));
 }
 
+namespace detail {
+
+template <typename F>
+struct for_each_pixel_fn
+{
+    for_each_pixel_fn(F* fun) : fun_(fun) {}
+ 
+    template <typename View>
+    auto operator()(View const& view) -> F
+    {
+        return for_each_pixel(view, *fun_);
+    }
+
+    F* fun_; 
+};
+
+} // namespace detail
+
+/// \defgroup ImageViewSTLAlgorithmsForEachPixel for_each_pixel
+/// \ingroup ImageViewSTLAlgorithms
+/// \brief std::for_each for any image views
+///
+/// \ingroup ImageViewSTLAlgorithmsForEachPixel
+template <typename ...Types, typename F>
+auto for_each_pixel(any_image_view<Types...> const& view, F fun) -> F
+{
+    return variant2::visit(detail::for_each_pixel_fn<F>(&fun), view);
+}
+
 }}  // namespace boost::gil
 
 #endif
