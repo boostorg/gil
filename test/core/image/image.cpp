@@ -49,7 +49,7 @@ struct test_constructor_from_other_image
         pixel_t const rnd_pixel = fixture::pixel_generator<pixel_t>::random();
         {
             //constructor interleaved from planar
-            gil::image<pixel_t, true> image1(dimensions, rnd_pixel); 
+            gil::image<pixel_t, true> image1(dimensions, rnd_pixel);
             image_t image2(image1);
             BOOST_TEST_EQ(image2.dimensions(), dimensions);
             auto v1 = gil::const_view(image1);

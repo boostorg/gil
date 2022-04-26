@@ -17,7 +17,7 @@
 #include <iostream>
 
 const int a = 5;
-const double epsilon = 0.000001; // Decided by the value 5/255 i.e. an error of 5 px in 255 px 
+const double epsilon = 0.000001; // Decided by the value 5/255 i.e. an error of 5 px in 255 px
 boost::gil::gray8_image_t original(a, a), reference(a, a);
 boost::gil::gray8_image_t processed(a, a), processed2(a, a);
 std::vector<std::vector<int> > test1_random{
@@ -67,7 +67,7 @@ void vector_to_gray_image(boost::gil::gray8_image_t& img,
     {
         for(std::ptrdiff_t x=0; x<grid[0].size(); ++x)
         {
-            boost::gil::view(img)(x,y) = boost::gil::gray8_pixel_t(grid[y][x]);      
+            boost::gil::view(img)(x,y) = boost::gil::gray8_pixel_t(grid[y][x]);
         }
     }
 }
@@ -82,7 +82,7 @@ bool equal_histograms(SrcView const& v1, SrcView const& v2, double threshold = e
     channel_t max_p = std::numeric_limits<channel_t>::max();
     channel_t min_p = std::numeric_limits<channel_t>::min();
     long int num_pixels = v1.width() * v1.height();
-    
+
     boost::gil::fill_histogram(v1, h1, 1, false, false);
     boost::gil::fill_histogram(v2, h2, 1, false, false);
     auto ch1 = boost::gil::cumulative_histogram(h1);
@@ -110,7 +110,7 @@ void test_uniform_image()
     vector_to_gray_image(reference,test2_reference);
     histogram_matching(boost::gil::const_view(original),boost::gil::const_view(reference),boost::gil::view(processed));
     BOOST_TEST(equal_histograms(boost::gil::view(processed), boost::gil::view(reference)));
-    
+
     histogram_matching(boost::gil::const_view(processed),boost::gil::const_view(reference),boost::gil::view(processed2));
     BOOST_TEST(equal_histograms(boost::gil::view(processed), boost::gil::view(processed2)));
 }
@@ -121,7 +121,7 @@ void test_equal_image()
     vector_to_gray_image(reference,test3_reference);
     histogram_matching(boost::gil::const_view(original),boost::gil::const_view(reference),boost::gil::view(processed));
     BOOST_TEST(equal_histograms(boost::gil::view(processed), boost::gil::view(reference)));
-    
+
     histogram_matching(boost::gil::const_view(processed),boost::gil::const_view(reference),boost::gil::view(processed2));
     BOOST_TEST(equal_histograms(boost::gil::view(processed), boost::gil::view(processed2)));
 }
