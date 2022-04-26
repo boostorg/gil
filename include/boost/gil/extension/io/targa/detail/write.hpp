@@ -13,7 +13,6 @@
 
 #include <boost/gil/io/base.hpp>
 #include <boost/gil/io/device.hpp>
-#include <boost/gil/io/dynamic_io_new.hpp>
 
 #include <vector>
 
