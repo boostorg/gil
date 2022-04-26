@@ -235,15 +235,15 @@ namespace detail {
 template <typename F>
 struct for_each_pixel_fn
 {
-    for_each_pixel_fn(F* fun) : fun_(fun) {}
+    for_each_pixel_fn(F&& fun) : fun_(std::move(fun)) {}
  
     template <typename View>
     auto operator()(View const& view) -> F
     {
-        return for_each_pixel(view, *fun_);
+        return for_each_pixel(view, fun_);
     }
 
-    F* fun_; 
+    F fun_;
 };
 
 } // namespace detail
@@ -256,7 +256,7 @@ struct for_each_pixel_fn
 template <typename ...Types, typename F>
 auto for_each_pixel(any_image_view<Types...> const& view, F fun) -> F
 {
-    return variant2::visit(detail::for_each_pixel_fn<F>(&fun), view);
+    return variant2::visit(detail::for_each_pixel_fn<F>(std::move(fun)), view);
 }
 
 }}  // namespace boost::gil
