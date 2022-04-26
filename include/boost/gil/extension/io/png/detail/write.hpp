@@ -171,10 +171,24 @@ private:
     {};
 
     template<typename Info>
-    struct is_equal_to_sixteen : mp11::mp_less
+    struct is_equal_to_sixteen : mp11::mp_and
         <
-            std::integral_constant<int, Info::_bit_depth>,
-            std::integral_constant<int, 16>
+            mp11::mp_not
+            <
+                mp11::mp_less
+                <
+                    std::integral_constant<int, Info::_bit_depth>,
+                    std::integral_constant<int, 16>
+                >
+            >,
+            mp11::mp_not
+            <
+                mp11::mp_less
+                <
+                    std::integral_constant<int, 16>,
+                    std::integral_constant<int, Info::_bit_depth>
+                >
+            >
         >
     {};
 
