@@ -53,41 +53,6 @@ jobs:
         parameters:
           cxxver: '14'
 
-  - job: 'win2016_vs2017_cxx14_cmake'
-    pool:
-      vmImage: 'vs2017-win2016'
-    steps:
-      - task: UsePythonVersion@0
-        displayName: 'Setup Python'
-        inputs:
-          versionSpec: '3.6'
-          addToPath: true
-          architecture: 'x64'
-      - template: .ci/azure-pipelines/steps-check-cmake.yml
-      - template: .ci/azure-pipelines/steps-install-conan.yml
-      - template: .ci/azure-pipelines/steps-install-boost.yml
-      - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
-        parameters:
-          use_conan: 'ON'
-
-  - job: 'win2016_vs2017_cxx17_cmake'
-    pool:
-      vmImage: 'vs2017-win2016'
-    steps:
-      - task: UsePythonVersion@0
-        displayName: 'Setup Python'
-        inputs:
-          versionSpec: '3.6'
-          addToPath: true
-          architecture: 'x64'
-      - template: .ci/azure-pipelines/steps-check-cmake.yml
-      - template: .ci/azure-pipelines/steps-install-conan.yml
-      - template: .ci/azure-pipelines/steps-install-boost.yml
-      - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
-        parameters:
-          cxxver: '17'
-          use_conan: 'ON'
-
   - job: 'macos1015_xcode11_cmake'
     pool:
       vmImage: 'macOS-10.15'
