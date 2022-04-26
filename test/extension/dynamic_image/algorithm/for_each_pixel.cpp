@@ -10,13 +10,15 @@
 
 #include <boost/core/lightweight_test.hpp>
 
-#include <vector>
+#include "../test_fixture.hpp"
+#include "core/image/test_fixture.hpp"
 
 namespace gil = boost::gil;
+namespace fixture = boost::gil::test::fixture;
 
 struct accumulator
 {
-    template <typename Pixel> 
+    template <typename Pixel>
     void operator()(Pixel const& p)
     {
         sum += gil::at_c<0>(p);
@@ -25,27 +27,26 @@ struct accumulator
     int sum{};
 };
 
-void test_accumulate()
+struct test_for_each_pixel
 {
-    using any_image_t = typename gil::any_image<gil::rgb16_image_t, gil::gray8_image_t>;
- 
-    gil::gray8_pixel_t const gray128(128);
-    gil::rgb16_pixel_t const rgb16(128);
-
-    std::vector<any_image_t> images;
-    images.emplace_back(gil::gray8_image_t(2, 2, gray128));
-    images.emplace_back(gil::rgb16_image_t(2, 2, rgb16));
-
-    for (any_image_t const& image : images)
+    template <typename Image>
+    void operator()(Image const&)
     {
+        using image_t = Image;
+        fixture::dynamic_image image(fixture::create_image<image_t>(2, 2, 128));
         accumulator acc = gil::for_each_pixel(gil::const_view(image), accumulator());
         BOOST_TEST_EQ(acc.sum, 2 * 2 * 128);
     }
-}
+
+    static void run()
+    {
+        boost::mp11::mp_for_each<fixture::image_types>(test_for_each_pixel{});
+    }
+};
 
 int main()
 {
-    test_accumulate();
+    test_for_each_pixel::run();
 
     return ::boost::report_errors();
 }
