@@ -45,7 +45,7 @@ int main()
         true     // Use specified limits if this is true (default is false)
     );
 
-    // Normalize the histogram 
+    // Normalize the histogram
     h.normalize();
 
     // Get a cumulative histogram from the histogram

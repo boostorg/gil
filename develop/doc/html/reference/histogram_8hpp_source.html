@@ -239,7 +239,7 @@ $(function() {
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;        });</div>
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;        <span class="keywordflow">return</span> check;</div>
 <div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    }</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    </div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160; </div>
 <div class="line"><a name="l00264"></a><span class="lineno"><a class="line" href="classboost_1_1gil_1_1histogram.html#a0dae242b2c1bf16bde24c124d3097c8a">  264</a></span>&#160;    <span class="keyword">static</span> constexpr <span class="keywordtype">bool</span> <a class="code" href="classboost_1_1gil_1_1histogram.html#a0dae242b2c1bf16bde24c124d3097c8a">is_pixel_compatible</a>()</div>
 <div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    {</div>
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;        <span class="keyword">using</span> bin_types = boost::mp11::mp_list&lt;T...&gt;;</div>
@@ -572,11 +572,11 @@ $(function() {
 <div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;{</div>
 <div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;    <span class="keywordflow">if</span> (!accumulate)</div>
 <div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;        hist.clear();</div>
-<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;    </div>
+<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160; </div>
 <div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;    detail::filler&lt;histogram&lt;T...&gt;::dimension()&gt; f;</div>
 <div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;    <span class="keywordflow">if</span> (!sparsefill)</div>
 <div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;        f(hist, lower, upper, bin_width);</div>
-<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;    </div>
+<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160; </div>
 <div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;    hist.template <a class="code" href="group___s_t_l_optimizations.html#gaab999be608ae006f1127b8bb5145a227">fill</a>&lt;Dimensions...&gt;(srcview, bin_width, applymask, mask, lower, upper, setlimits);</div>
 <div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;}</div>
 <div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160; </div>
@@ -590,7 +590,7 @@ $(function() {
 <div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;    static_assert(</div>
 <div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;        boost::mp11::mp_all_of&lt;check_list, boost::mp11::mp_to_bool&gt;::value,</div>
 <div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;        <span class="stringliteral">&quot;Cumulative histogram not possible of this type&quot;</span>);</div>
-<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;    </div>
+<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160; </div>
 <div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;    <span class="keyword">using</span> histogram_t = histogram&lt;T...&gt;;</div>
 <div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;    <span class="keyword">using</span> pair_t  = std::pair&lt;typename histogram_t::key_type, typename histogram_t::mapped_type&gt;;</div>
 <div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;    <span class="keyword">using</span> value_t = <span class="keyword">typename</span> histogram_t::value_type;</div>
