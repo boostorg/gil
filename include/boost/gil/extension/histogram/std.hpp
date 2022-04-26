@@ -25,7 +25,7 @@ namespace boost { namespace gil {
 //////////////////////////////////////////////////////////
 /// Histogram extension for STL container
 //////////////////////////////////////////////////////////
-/// \defgroup Histogram - STL Containers 
+/// \defgroup Histogram - STL Containers
 /// \brief Collection of functions to provide histogram support in GIL using Standard
 ///        Template Library Containers
 /// The conversion from Boost.GIL images to compatible histograms are provided. The supported

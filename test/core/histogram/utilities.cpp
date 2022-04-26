@@ -19,7 +19,7 @@
 namespace gil = boost::gil;
 namespace mp11 = boost::mp11;
 
-std::uint8_t big_matrix[] = 
+std::uint8_t big_matrix[] =
 {
     1, 2, 3, 4, 5, 6, 7, 8,
     1, 2, 1, 2, 1, 2, 1, 2,
@@ -52,7 +52,7 @@ void check_normalize()
     bool check = true;
     for (std::size_t i = 0; i < 64; i++)
     {
-        check = check & (std::abs(expected[i] - h1(i)) < epsilon); 
+        check = check & (std::abs(expected[i] - h1(i)) < epsilon);
     }
     BOOST_TEST(check);
 
@@ -74,7 +74,7 @@ void check_normalize()
     bool check2 = true;
     for (std::size_t i = 0; i < 64; i++)
     {
-        check2 = check2 & (std::abs(expected2[i/8][i%8] - h2(i/8,i%8)) < epsilon); 
+        check2 = check2 & (std::abs(expected2[i/8][i%8] - h2(i/8,i%8)) < epsilon);
     }
     BOOST_TEST(check2);
 }
@@ -212,4 +212,4 @@ int main() {
     check_sorted_keys();
 
     return boost::report_errors();
-}   
+}

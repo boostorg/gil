@@ -21,7 +21,7 @@ using namespace boost::gil;
 //     - threshold and regular: truncates the pixels whose values are greater than the threshold
 //     - threshold and inverse: truncates the pixels whose values are less than the threshold
 //     - zero and regular: zeroes the pixels whose values are less than the threshold
-//     - zero and inverse: zeroes the pixels whose values are greater than the threshold 
+//     - zero and inverse: zeroes the pixels whose values are greater than the threshold
 // See also:
 // adaptive_threshold.cpp - Adaptive thresholding
 

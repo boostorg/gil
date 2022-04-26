@@ -58,7 +58,7 @@ std::map<SrcKeyType, SrcKeyType>
 /// @param src_hist INPUT source histogram
 /// @param ref_hist INPUT reference histogram
 /// @param dst_hist OUTPUT Output histogram
-/// \brief Overload for histogram matching algorithm, takes in source histogram, reference 
+/// \brief Overload for histogram matching algorithm, takes in source histogram, reference
 ///        histogram & destination histogram and returns the color map used for histogram
 ///        matching as well as transforming the destination histogram.
 ///
@@ -81,7 +81,7 @@ std::map<SrcKeyType, DstKeyType> histogram_matching(
     auto cumltv_srchist = cumulative_histogram(src_hist);
     auto cumltv_refhist = cumulative_histogram(ref_hist);
     std::map<SrcKeyType, RefKeyType> inverse_mapping;
-    
+
     std::vector<typename histogram<RefKeyType>::key_type> src_keys, ref_keys;
     src_keys             = src_hist.sorted_keys();
     ref_keys             = ref_hist.sorted_keys();
@@ -89,7 +89,7 @@ std::map<SrcKeyType, DstKeyType> histogram_matching(
     RefKeyType ref_max;
     if (start >= 0)
         ref_max = std::get<0>(ref_keys[start]);
-    
+
     for (std::ptrdiff_t j = src_keys.size() - 1; j >= 0; --j)
     {
         double src_val = (cumltv_srchist[src_keys[j]] * ref_sum) / src_sum;
@@ -101,7 +101,7 @@ std::map<SrcKeyType, DstKeyType> histogram_matching(
             std::abs(cumltv_refhist(std::min<RefKeyType>(ref_max, std::get<0>(ref_keys[start + 1]))) -
                 src_val))
         {
-            inverse_mapping[std::get<0>(src_keys[j])] = 
+            inverse_mapping[std::get<0>(src_keys[j])] =
                 std::min<RefKeyType>(ref_max, std::get<0>(ref_keys[start + 1]));
         }
         else
@@ -126,8 +126,8 @@ std::map<SrcKeyType, DstKeyType> histogram_matching(
 /// @param mask      INPUT Specify is mask is to be used
 /// @param src_mask  INPUT Mask vector over input image
 /// @param ref_mask  INPUT Mask vector over reference image
-/// \brief Overload for histogram matching algorithm, takes in both source, reference & 
-///        destination image views and histogram matches the input image using the 
+/// \brief Overload for histogram matching algorithm, takes in both source, reference &
+///        destination image views and histogram matches the input image using the
 ///        reference image.
 ///
 template <typename SrcView, typename ReferenceView, typename DstView>
@@ -155,7 +155,7 @@ void histogram_matching(
             typename color_space_type<SrcView>::type,
             typename color_space_type<DstView>::type>::value,
         "Source and destination view must have same color space");
-    
+
     // Defining channel type
     using source_channel_t = typename channel_type<SrcView>::type;
     using ref_channel_t    = typename channel_type<ReferenceView>::type;

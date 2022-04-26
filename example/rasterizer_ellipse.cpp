@@ -24,12 +24,12 @@ namespace gil = boost::gil;
 
 int main()
 {
-    // Syntax for usage :- 
+    // Syntax for usage :-
     // auto rasterizer = gil::midpoint_elliptical_rasterizer{};
     // rasterizer(img_view, colour, center, semi-axes_length);
     // Where
     // img_view : gil view of the image on which ellipse is to be drawn.
-    // colour : Vector containing channel intensity values for img_view. Number of colours 
+    // colour : Vector containing channel intensity values for img_view. Number of colours
     // provided must be equal to the number of channels present in img_view.
     // center : Array containing positive integer x co-ordinate and y co-ordinate of the center
     // respectively.

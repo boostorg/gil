@@ -25,7 +25,7 @@ void check_cumulative()
     {
         if(h2(i) != i+1)
             check1 = false;
-    }    
+    }
     BOOST_TEST(check1);
 
     gil::histogram<int , int> h3;

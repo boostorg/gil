@@ -11,7 +11,7 @@
 namespace gil = boost::gil;
 namespace mp11 = boost::mp11;
 
-void check_histogram_constructors() 
+void check_histogram_constructors()
 {
     gil::histogram<int> h1;
     gil::histogram<int> h2 = h1;

@@ -161,11 +161,11 @@ int main(int argc, char* argv[])
 
     gil::rgb8_image_t input_image;
 
-    gil::read_image(argv[1], input_image, gil::png_tag{}); 
+    gil::read_image(argv[1], input_image, gil::png_tag{});
     auto original_image = input_image;
     auto original_view = gil::view(original_image);
     auto input_view = gil::view(input_image);
-    auto grayscaled = to_grayscale(input_view); 
+    auto grayscaled = to_grayscale(input_view);
     gil::gray8_image_t smoothed_image(grayscaled.dimensions());
     auto smoothed = gil::view(smoothed_image);
     apply_gaussian_blur(gil::view(grayscaled), smoothed);
