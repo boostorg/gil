@@ -49,7 +49,7 @@ void test_multiply()
     gil::rgb32f_pixel_t a(1.f, 2.f, 3.f);
     gil::bgr32f_pixel_t b(2.f, 2.f, 2.f);
 
-    gil::pixel_multiply_t<
+    gil::pixel_multiplies_t<
         gil::rgb32f_pixel_t, gil::bgr32f_pixel_t, gil::rgb32f_pixel_t>
         op;
     gil::rgb32f_pixel_t c = op(a, b);
@@ -67,7 +67,7 @@ void test_divide()
         gil::rgb8_pixel_t a(10, 20, 30);
         gil::bgr8_pixel_t b(2, 2, 2);
 
-        gil::pixel_divide_t<gil::rgb8_pixel_t, gil::bgr8_pixel_t, gil::rgb32f_pixel_t> op;
+        gil::pixel_divides_t<gil::rgb8_pixel_t, gil::bgr8_pixel_t, gil::rgb32f_pixel_t> op;
         gil::rgb32f_pixel_t c = op(a, b);
 
         BOOST_TEST_EQ(get_color(c, gil::red_t()), 5);
@@ -80,7 +80,7 @@ void test_divide()
         gil::rgb32f_pixel_t a(1.f, 2.f, 3.f);
         gil::bgr32f_pixel_t b(2.f, 2.f, 2.f);
 
-        gil::pixel_divide_t<gil::rgb32f_pixel_t, gil::bgr32f_pixel_t, gil::rgb32f_pixel_t> op;
+        gil::pixel_divides_t<gil::rgb32f_pixel_t, gil::bgr32f_pixel_t, gil::rgb32f_pixel_t> op;
         gil::rgb32f_pixel_t c = op(a, b);
 
         float epsilon = 1e-6f;
