@@ -136,7 +136,7 @@ struct test_pixel_multiply_integer_same_types
     {
         using pixel_t = Pixel;
         using channel_t = typename gil::channel_type<pixel_t>::type;
-        gil::pixel_multiply_t<pixel_t, pixel_t, pixel_t> f;
+        gil::pixel_multiplies_t<pixel_t, pixel_t, pixel_t> f;
 
         pixel_t p0;
         gil::static_fill(p0, static_cast<channel_t>(0));
@@ -190,7 +190,7 @@ struct test_pixel_divide_integer_same_types
     {
         using pixel_t = Pixel;
         using channel_t = typename gil::channel_type<pixel_t>::type;
-        gil::pixel_divide_t<pixel_t, pixel_t, pixel_t> f;
+        gil::pixel_divides_t<pixel_t, pixel_t, pixel_t> f;
 
         pixel_t p0;
         gil::static_fill(p0, static_cast<channel_t>(0));

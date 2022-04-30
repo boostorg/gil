@@ -20,8 +20,10 @@ namespace boost { namespace gil {
 // List of currently defined functors:
 //   pixel_plus_t (+)
 //   pixel_minus_t (-)
-//   pixel_multiplies_scalar_t (*)
-//   pixel_divides_scalar_t (/)
+//   pixel_multiplies_scalar_t (*s)
+//   pixel_multiplies_t (*)
+//   pixel_divides_scalar_t (/s)
+//   pixel_divides_t (/)
 //   pixel_halves_t (/=2),
 //   pixel_zeros_t (=0)
 //   pixel_assigns_t (=)
@@ -97,7 +99,7 @@ struct pixel_multiplies_scalar_t
 /// \tparam PixelRef1 - models PixelConcept
 /// \tparam PixelResult - models PixelValueConcept
 template <typename PixelRef1, typename PixelRef2, typename PixelResult>
-struct pixel_multiply_t
+struct pixel_multiplies_t
 {
     auto operator()(PixelRef1 const& p1, PixelRef2 const& p2) const -> PixelResult
     {
@@ -112,6 +114,9 @@ struct pixel_multiply_t
         return result;
     }
 };
+
+template <typename PixelRef1, typename PixelRef2, typename PixelResult>
+using pixel_multiply_t [[deprecated]] = pixel_multiplies_t<PixelRef1, PixelRef2, PixelResult>;
 
 /// \ingroup PixelNumericOperations
 /// \brief Performs channel-wise division of pixel elements by scalar.
@@ -139,7 +144,7 @@ struct pixel_divides_scalar_t
 /// \tparam PixelRef2 - models PixelConcept
 /// \tparam PixelResult - models PixelValueConcept
 template <typename PixelRef1, typename PixelRef2, typename PixelResult>
-struct pixel_divide_t
+struct pixel_divides_t
 {
     auto operator()(PixelRef1 const& p1, PixelRef2 const& p2) const -> PixelResult
     {
@@ -154,6 +159,9 @@ struct pixel_divide_t
         return result;
     }
 };
+
+template <typename PixelRef1, typename PixelRef2, typename PixelResult>
+using pixel_divide_t [[deprecated]] = pixel_divides_t<PixelRef1, PixelRef2, PixelResult>;
 
 /// \ingroup PixelNumericOperations
 /// \brief Performs channel-wise division by 2
