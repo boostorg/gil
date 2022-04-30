@@ -229,9 +229,33 @@ $(function() {
 <div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    <a class="code" href="group___variant.html#gaff5fb0c5e88a687e06ab52a955264059">apply_operation</a>(<a class="code" href="group___image_model.html#ga633557dbbff2d21c784b73412b47bb38">view</a>, detail::fill_pixels_fn&lt;Value&gt;(val));</div>
 <div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;}</div>
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160; </div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;}}  <span class="comment">// namespace boost::gil</span></div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;<span class="keyword">namespace </span>detail {</div>
 <div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160; </div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> F&gt;</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<span class="keyword">struct </span>for_each_pixel_fn</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;{</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    for_each_pixel_fn(F&amp;&amp; fun) : fun_(std::move(fun)) {}</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160; </div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> View&gt;</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    <span class="keyword">auto</span> operator()(View <span class="keyword">const</span>&amp; <a class="code" href="group___image_model.html#ga633557dbbff2d21c784b73412b47bb38">view</a>) -&gt; F</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    {</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;        <span class="keywordflow">return</span> for_each_pixel(<a class="code" href="group___image_model.html#ga633557dbbff2d21c784b73412b47bb38">view</a>, fun_);</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    }</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160; </div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    F fun_;</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;};</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160; </div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;} <span class="comment">// namespace detail</span></div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160; </div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> ...Types, <span class="keyword">typename</span> F&gt;</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;<span class="keyword">auto</span> <a class="code" href="group___image_view_s_t_l_algorithms_for_each_pixel.html#ga08d866bdd4ba29356aa441fc6aedd7e6">for_each_pixel</a>(any_image_view&lt;Types...&gt; <span class="keyword">const</span>&amp; <a class="code" href="group___image_model.html#ga633557dbbff2d21c784b73412b47bb38">view</a>, F fun) -&gt; F</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;{</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    <span class="keywordflow">return</span> variant2::visit(detail::for_each_pixel_fn&lt;F&gt;(std::move(fun)), <a class="code" href="group___image_model.html#ga633557dbbff2d21c784b73412b47bb38">view</a>);</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;}</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160; </div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;}}  <span class="comment">// namespace boost::gil</span></div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160; </div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="agroup___image_view_s_t_l_algorithms_copy_pixels_html_gab210c8fcd52dda2439a07fd834b21a38"><div class="ttname"><a href="group___image_view_s_t_l_algorithms_copy_pixels.html#gab210c8fcd52dda2439a07fd834b21a38">boost::gil::copy_pixels</a></div><div class="ttdeci">void copy_pixels(any_image_view&lt; Types1... &gt; const &amp;src, any_image_view&lt; Types2... &gt; const &amp;dst)</div><div class="ttdef"><b>Definition:</b> extension/dynamic_image/algorithm.hpp:109</div></div>
 <div class="ttc" id="agroup___variant_html_gaff5fb0c5e88a687e06ab52a955264059"><div class="ttname"><a href="group___variant.html#gaff5fb0c5e88a687e06ab52a955264059">boost::gil::apply_operation</a></div><div class="ttdeci">BOOST_FORCEINLINE auto apply_operation(Variant1 &amp;&amp;arg1, Visitor &amp;&amp;op)</div><div class="ttdoc">Applies the visitor op to the variants.</div><div class="ttdef"><b>Definition:</b> apply_operation.hpp:19</div></div>
@@ -240,6 +264,7 @@ $(function() {
 <div class="ttc" id="agroup___image_model_html_ga633557dbbff2d21c784b73412b47bb38"><div class="ttname"><a href="group___image_model.html#ga633557dbbff2d21c784b73412b47bb38">boost::gil::view</a></div><div class="ttdeci">const image&lt; Pixel, IsPlanar, Alloc &gt;::view_t &amp; view(image&lt; Pixel, IsPlanar, Alloc &gt; &amp;img)</div><div class="ttdoc">Returns the non-constant-pixel view of an image.</div><div class="ttdef"><b>Definition:</b> image.hpp:549</div></div>
 <div class="ttc" id="agroup___image_view_s_t_l_algorithms_copy_and_convert_pixels_html_ga88b560aea4d009b146b53a01214f0bc1"><div class="ttname"><a href="group___image_view_s_t_l_algorithms_copy_and_convert_pixels.html#ga88b560aea4d009b146b53a01214f0bc1">boost::gil::copy_and_convert_pixels</a></div><div class="ttdeci">void copy_and_convert_pixels(any_image_view&lt; Types1... &gt; const &amp;src, any_image_view&lt; Types2... &gt; const &amp;dst)</div><div class="ttdef"><b>Definition:</b> extension/dynamic_image/algorithm.hpp:175</div></div>
 <div class="ttc" id="aclassboost_1_1gil_1_1any__image__view_html"><div class="ttname"><a href="classboost_1_1gil_1_1any__image__view.html">boost::gil::any_image_view</a></div><div class="ttdoc">Represents a run-time specified image view. Models HasDynamicXStepTypeConcept, HasDynamicYStepTypeCon...</div><div class="ttdef"><b>Definition:</b> any_image_view.hpp:75</div></div>
+<div class="ttc" id="agroup___image_view_s_t_l_algorithms_for_each_pixel_html_ga08d866bdd4ba29356aa441fc6aedd7e6"><div class="ttname"><a href="group___image_view_s_t_l_algorithms_for_each_pixel.html#ga08d866bdd4ba29356aa441fc6aedd7e6">boost::gil::for_each_pixel</a></div><div class="ttdeci">F for_each_pixel(View const &amp;view, F fun)</div><div class="ttdef"><b>Definition:</b> algorithm.hpp:874</div></div>
      <!-- HTML footer for doxygen 1.8.13-->
      <!-- start footer part -->
      <hr class="footer"/>
