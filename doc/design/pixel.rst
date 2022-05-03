@@ -119,15 +119,15 @@ both, but only pixel values model the latter.
 
 .. seealso::
 
-  - `PixelBasedConcept<P> <reference/structboost_1_1gil_1_1_pixel_based_concept.html>`_
-  - `PixelConcept<Pixel> <reference/structboost_1_1gil_1_1_pixel_concept.html>`_
-  - `MutablePixelConcept<Pixel> <reference/structboost_1_1gil_1_1_mutable_pixel_concept.html>`_
-  - `PixelValueConcept<Pixel> <reference/structboost_1_1gil_1_1_pixel_value_concept.html>`_
-  - `HomogeneousPixelConcept<Pixel> <reference/structboost_1_1gil_1_1_homogeneous_pixel_based_concept.html>`_
-  - `MutableHomogeneousPixelConcept<Pixel> <reference/structboost_1_1gil_1_1_mutable_homogeneous_pixel_concept.html>`_
-  - `HomogeneousPixelValueConcept<Pixel> <reference/structboost_1_1gil_1_1_homogeneous_pixel_value_concept.html>`_
-  - `PixelsCompatibleConcept<Pixel1, Pixel2> <reference/structboost_1_1gil_1_1_pixels_compatible_concept.html>`_
-  - `PixelConvertibleConcept<SrcPixel, DstPixel> <reference/structboost_1_1gil_1_1_pixel_convertible_concept.html>`_
+  - `PixelBasedConcept<P> <../reference/structboost_1_1gil_1_1_pixel_based_concept.html>`_
+  - `PixelConcept<Pixel> <../reference/structboost_1_1gil_1_1_pixel_concept.html>`_
+  - `MutablePixelConcept<Pixel> <../reference/structboost_1_1gil_1_1_mutable_pixel_concept.html>`_
+  - `PixelValueConcept<Pixel> <../reference/structboost_1_1gil_1_1_pixel_value_concept.html>`_
+  - `HomogeneousPixelConcept<Pixel> <../reference/structboost_1_1gil_1_1_homogeneous_pixel_based_concept.html>`_
+  - `MutableHomogeneousPixelConcept<Pixel> <../reference/structboost_1_1gil_1_1_mutable_homogeneous_pixel_concept.html>`_
+  - `HomogeneousPixelValueConcept<Pixel> <../reference/structboost_1_1gil_1_1_homogeneous_pixel_value_concept.html>`_
+  - `PixelsCompatibleConcept<Pixel1, Pixel2> <../reference/structboost_1_1gil_1_1_pixels_compatible_concept.html>`_
+  - `PixelConvertibleConcept<SrcPixel, DstPixel> <../reference/structboost_1_1gil_1_1_pixel_convertible_concept.html>`_
 
 Models
 ------
