@@ -17,9 +17,9 @@ same set of colors in the same order).
 
 .. seealso::
 
-  - `ColorSpaceConcept<ColorSpace> <reference/structboost_1_1gil_1_1_color_space_concept.html>`_
-  - `ColorSpacesCompatibleConcept<ColorSpace1,ColorSpace2> <reference/structboost_1_1gil_1_1_color_spaces_compatible_concept.html>`_
-  - `ChannelMappingConcept<Mapping> <reference/structboost_1_1gil_1_1_channel_mapping_concept.html>`_
+  - `ColorSpaceConcept<ColorSpace> <../reference/structboost_1_1gil_1_1_color_space_concept.html>`_
+  - `ColorSpacesCompatibleConcept<ColorSpace1,ColorSpace2> <../reference/structboost_1_1gil_1_1_color_spaces_compatible_concept.html>`_
+  - `ChannelMappingConcept<Mapping> <../reference/structboost_1_1gil_1_1_channel_mapping_concept.html>`_
 
 Models
 ------
