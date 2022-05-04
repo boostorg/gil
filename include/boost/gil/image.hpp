@@ -238,7 +238,10 @@ public:
         swap(_align_in_bytes,  img._align_in_bytes);
         swap(_memory,          img._memory);
         swap(_view,            img._view);
-        swap(_alloc,           img._alloc);
+        if constexpr (std::allocator_traits<Alloc>::propagate_on_container_swap::value)
+            swap(_alloc, img._alloc);
+        else
+            BOOST_ASSERT(_alloc == img._alloc);
         swap(_allocated_bytes, img._allocated_bytes );
     }
 
