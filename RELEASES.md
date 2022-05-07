@@ -3,6 +3,10 @@
 All notable changes to [Boost.GIL](https://github.com/boostorg/gil/) project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.75.0] - 2020-12-09
+
+BREAKING: In next release, we are going to drop support for GCC 5. We may also change the required minimum C++ version from C++11 to C++14.
+
 ## [1.74.0] - 2020-08-12
 
 ### Added
