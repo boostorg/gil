@@ -233,10 +233,10 @@ git push <username> feature/foo
 Finally, sign in to your GitHub account and
 [create a pull request](https://help.github.com/articles/creating-a-pull-request/).
 
-Your pull request will be automatically built and tests will run on Travis CI
-and AppVeyor (see [README](README.md) for builds status). Please, keep an eye
-on those CI builds and correct any problems detected in your contribution
-by updating your pull request.
+Your pull request will be automatically built and tests will run on GitHub ACtions,
+Azure Pipelines, AppVeyor and Circle CI (see [README](README.md) for builds status).
+Please, keep an eye on those CI builds and correct any problems detected in your
+contribution by updating your pull request.
 
 ### 5. Update your pull request
 
@@ -300,7 +300,7 @@ request from reviewer, just add new commits:
 cd libs/gil
 git checkout feature/foo
 git add -A
-git commit -m "Fix build Travis CI failures"
+git commit -m "Fix CI build failure"
 git push <username> feature/foo
 ```
 
