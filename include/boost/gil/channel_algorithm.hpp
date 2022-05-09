@@ -79,7 +79,7 @@ struct unsigned_integral_max_value<packed_channel_value<K>>
 
 template <typename UnsignedIntegralChannel>
 struct unsigned_integral_num_bits
-    : std::integral_constant<int, sizeof(UnsignedIntegralChannel) * 8>
+    : std::integral_constant<int, static_cast<int>(sizeof(UnsignedIntegralChannel) * 8)>
 {};
 
 template <int K>

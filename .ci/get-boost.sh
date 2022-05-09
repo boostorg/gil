@@ -44,12 +44,12 @@ git submodule --quiet update --init $GIT_SUBMODULE_OPTS \
     libs/iterator \
     libs/mp11 \
     libs/mpl \
-    libs/numeric/conversion \
     libs/preprocessor \
     libs/type_traits \
     libs/variant2
 # Transitive (of GIL tests too)
 git submodule --quiet update --init $GIT_SUBMODULE_OPTS \
+    libs/align \
     libs/atomic \
     libs/bind \
     libs/chrono \

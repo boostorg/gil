@@ -69,8 +69,8 @@ inline
 typename get_dynamic_image_writer< std::wstring
                                  , FormatTag
                                  >::type
-make_dynamic_image_writer( const filesystem::path&              path
-                         , const image_write_info< FormatTag >& info
+make_dynamic_image_writer( detail::filesystem::path const& path
+                         , image_write_info<FormatTag> const& info
                          )
 {
     return make_dynamic_image_writer( path.wstring()

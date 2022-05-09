@@ -10,10 +10,10 @@
 [![Conan](https://img.shields.io/badge/on-conan-blue.svg)](https://bintray.com/bincrafters/public-conan/boost_gil%3Abincrafters)
 [![Vcpkg](https://img.shields.io/badge/on-vcpkg-blue.svg)](https://github.com/Microsoft/vcpkg/tree/master/ports/boost-gil)
 
-Documentation | GitHub Actions | Azure Pipelines | CircleCI        | Regression
---------------|----------------|-----------------|-----------------|------------
-[![develop](https://img.shields.io/badge/doc-develop-blue.svg)](https://boostorg.github.io/gil/develop/) | [![GitHub Actions](https://github.com/boostorg/gil/workflows/CI/badge.svg?branch=develop)](https://github.com/boostorg/gil/actions?query=branch:develop) | [![AppVeyor](https://ci.appveyor.com/api/projects/status/w4k19d8io2af168h/branch/develop?svg=true)](https://ci.appveyor.com/project/stefanseefeld/gil/branch/develop) | [![Azure](https://dev.azure.com/boostorg/gil/_apis/build/status/boostorg.gil?branchName=develop)](https://dev.azure.com/boostorg/gil/_build/latest?definitionId=7&branchName=develop) | [![CircleCI](https://circleci.com/gh/boostorg/gil/tree/develop.svg?style=shield)](https://circleci.com/gh/boostorg/workflows/gil/tree/develop) | [![gil](https://img.shields.io/badge/gil-develop-blue.svg)](http://www.boost.org/development/tests/develop/developer/gil.html)
-[![master](https://img.shields.io/badge/doc-master-blue.svg)](https://boostorg.github.io/gil/) | [![GitHub Actions](https://github.com/boostorg/gil/workflows/CI/badge.svg?branch=master)](https://github.com/boostorg/gil/actions?query=branch:master) | [![AppVeyor](https://ci.appveyor.com/api/projects/status/w4k19d8io2af168h?svg=true)](https://ci.appveyor.com/project/stefanseefeld/gil/branch/master) | [![Azure](https://dev.azure.com/boostorg/gil/_apis/build/status/boostorg.gil?branchName=master)](https://dev.azure.com/boostorg/gil/_build/latest?definitionId=7&branchName=master) | [![CircleCI](https://circleci.com/gh/boostorg/gil/tree/master.svg?style=shield)](https://circleci.com/gh/boostorg/workflows/gil/tree/master) | [![gil](https://img.shields.io/badge/gil-master-blue.svg)](http://www.boost.org/development/tests/master/developer/gil.html)
+Documentation | GitHub Actions | AppVeyor | Azure Pipelines | Regression | Codecov
+--------------|----------------|----------|-----------------|------------|----------
+[![develop](https://img.shields.io/badge/doc-develop-blue.svg)](https://boostorg.github.io/gil/develop/) | [![GitHub Actions](https://github.com/boostorg/gil/workflows/CI/badge.svg?branch=develop)](https://github.com/boostorg/gil/actions?query=branch:develop) | [![AppVeyor](https://ci.appveyor.com/api/projects/status/w4k19d8io2af168h/branch/develop?svg=true)](https://ci.appveyor.com/project/stefanseefeld/gil/branch/develop) | [![Azure](https://dev.azure.com/boostorg/gil/_apis/build/status/boostorg.gil?branchName=develop)](https://dev.azure.com/boostorg/gil/_build/latest?definitionId=7&branchName=develop) | [![gil](https://img.shields.io/badge/gil-develop-blue.svg)](http://www.boost.org/development/tests/develop/developer/gil.html) | [![codecov](https://codecov.io/gh/boostorg/gil/branch/develop/graphs/badge.svg)](https://app.codecov.io/gh/boostorg/gil/branch/develop)
+[![master](https://img.shields.io/badge/doc-master-blue.svg)](https://boostorg.github.io/gil/) | [![GitHub Actions](https://github.com/boostorg/gil/workflows/CI/badge.svg?branch=master)](https://github.com/boostorg/gil/actions?query=branch:master) | [![AppVeyor](https://ci.appveyor.com/api/projects/status/w4k19d8io2af168h?svg=true)](https://ci.appveyor.com/project/stefanseefeld/gil/branch/master) | [![Azure](https://dev.azure.com/boostorg/gil/_apis/build/status/boostorg.gil?branchName=master)](https://dev.azure.com/boostorg/gil/_build/latest?definitionId=7&branchName=master) | [![gil](https://img.shields.io/badge/gil-master-blue.svg)](http://www.boost.org/development/tests/master/developer/gil.html) | [![codecov](https://codecov.io/gh/boostorg/gil/branch/master/graphs/badge.svg)](https://app.codecov.io/gh/boostorg/gil/branch/master)
  
 # Boost.GIL
 
@@ -29,7 +29,7 @@ Documentation | GitHub Actions | Azure Pipelines | CircleCI        | Regression
 
 Boost.GIL is a part of the [Boost C++ Libraries](http://github.com/boostorg).
 
-The Boost Generic Image Library (GIL) is a **C++11** library that abstracts image
+The Boost Generic Image Library (GIL) is a **C++11** header-only library that abstracts image
 representations from algorithms and allows writing code that can work on a
 variety of images with performance similar to hand-writing for a specific image type.
 
@@ -79,6 +79,7 @@ The official repository contains the following branches:
 
 There is number of communication channels to ask questions and discuss Boost.GIL issues:
 
+- [GitHub Discussions](https://github.com/boostorg/gil/discussions/)
 - Mailing lists ([Boost discussion policy](https://www.boost.org/more/discussion_policy.html))
     - [boost-gil](https://lists.boost.org/mailman/listinfo.cgi/boost-gil) (*recommended*) official Boost.GIL mailing list ([archive](https://lists.boost.org/boost-gil/))
     - [boost-users](https://lists.boost.org/mailman/listinfo.cgi/boost-users) for all Boost users
