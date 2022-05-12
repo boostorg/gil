@@ -388,60 +388,59 @@ $(function() {
 <div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;    <span class="keyword">using</span> computation_image = image&lt;pixel_type&gt;;</div>
 <div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    <span class="keyword">const</span> <span class="keyword">auto</span> width = input.width();</div>
 <div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    <span class="keyword">const</span> <span class="keyword">auto</span> height = input.height();</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    <span class="keyword">const</span> point_t dims(width, height);</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;    <span class="keyword">const</span> <span class="keyword">auto</span> zero_pixel = []() {</div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;        pixel_type pixel;</div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;        static_fill(pixel, <span class="keyword">static_cast&lt;</span>channel_type<span class="keyword">&gt;</span>(0));</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160; </div>
-<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;        <span class="keywordflow">return</span> pixel;</div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;    }();</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;    computation_image result_image(width + 2, height + 2, zero_pixel);</div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;    <span class="keyword">auto</span> result = <a class="code" href="group___image_model.html#ga633557dbbff2d21c784b73412b47bb38">view</a>(result_image);</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;    computation_image scratch_result_image(width + 2, height + 2, zero_pixel);</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;    <span class="keyword">auto</span> scratch_result = <a class="code" href="group___image_model.html#ga633557dbbff2d21c784b73412b47bb38">view</a>(scratch_result_image);</div>
-<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;    <a class="code" href="group___image_view_s_t_l_algorithms_transform_pixels.html#ga13302ec07014cc5731eac12af31dcbf2">transform_pixels</a>(input, <a class="code" href="group___image_view_transformations_subimage.html#ga0984936cff639dbc5644305b6c632487">subimage_view</a>(result, 1, 1, width, height),</div>
-<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;                     [](<span class="keyword">const</span> input_pixel_type&amp; pixel) {</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;                         pixel_type converted;</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;                         <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; num_channels&lt;pixel_type&gt;{}; ++i)</div>
-<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;                         {</div>
-<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;                             converted[i] = pixel[i];</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;                         }</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;                         <span class="keywordflow">return</span> converted;</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;                     });</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160; </div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> iteration = 0; iteration &lt; num_iter; ++iteration)</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;    {</div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;        <span class="keywordflow">for</span> (std::ptrdiff_t relative_y = 0; relative_y &lt; height; ++relative_y)</div>
-<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;        {</div>
-<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;            <span class="keywordflow">for</span> (std::ptrdiff_t relative_x = 0; relative_x &lt; width; ++relative_x)</div>
-<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;            {</div>
-<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;                <span class="keyword">auto</span> x = relative_x + 1;</div>
-<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;                <span class="keyword">auto</span> y = relative_y + 1;</div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;                <span class="keyword">auto</span> stencil = laplace.compute_laplace(result, point_t(x, y));</div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;                <span class="keyword">auto</span> brightness_stencil = brightness(stencil);</div>
-<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;                laplace_function::stencil_type&lt;pixel_type&gt; diffusivity_stencil;</div>
-<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;                std::transform(brightness_stencil.begin(), brightness_stencil.end(),</div>
-<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;                               diffusivity_stencil.begin(), diffusivity);</div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;                laplace_function::stencil_type&lt;pixel_type&gt; product_stencil;</div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;                std::transform(stencil.begin(), stencil.end(), diffusivity_stencil.begin(),</div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;                               product_stencil.begin(), [](pixel_type lhs, pixel_type rhs) {</div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;                                   static_transform(lhs, rhs, lhs, std::multiplies&lt;channel_type&gt;{});</div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;                                   <span class="keywordflow">return</span> lhs;</div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;                               });</div>
-<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;                static_transform(result(x, y), laplace.reduce(product_stencil),</div>
-<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;                                 scratch_result(x, y), std::plus&lt;channel_type&gt;{});</div>
-<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;            }</div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;        }</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;        <span class="keyword">using</span> <a class="code" href="group___packed_channel_reference_model.html#ga70de3c85964650c16afcc42c02bd5df9">std::swap</a>;</div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;        <a class="code" href="group___packed_channel_reference_model.html#ga70de3c85964650c16afcc42c02bd5df9">swap</a>(result, scratch_result);</div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;    }</div>
-<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160; </div>
-<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;    <a class="code" href="group___image_view_s_t_l_algorithms_copy_pixels.html#ga15f144a6ff49ab684f8cbf58d9b7ced4">copy_pixels</a>(<a class="code" href="group___image_view_transformations_subimage.html#ga0984936cff639dbc5644305b6c632487">subimage_view</a>(result, 1, 1, width, height), output);</div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;}</div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160; </div>
-<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;}} <span class="comment">// namespace boost::gil</span></div>
-<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160; </div>
-<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    <span class="keyword">const</span> <span class="keyword">auto</span> zero_pixel = []() {</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;        pixel_type pixel;</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;        static_fill(pixel, <span class="keyword">static_cast&lt;</span>channel_type<span class="keyword">&gt;</span>(0));</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160; </div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;        <span class="keywordflow">return</span> pixel;</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    }();</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;    computation_image result_image(width + 2, height + 2, zero_pixel);</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;    <span class="keyword">auto</span> result = <a class="code" href="group___image_model.html#ga633557dbbff2d21c784b73412b47bb38">view</a>(result_image);</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;    computation_image scratch_result_image(width + 2, height + 2, zero_pixel);</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;    <span class="keyword">auto</span> scratch_result = <a class="code" href="group___image_model.html#ga633557dbbff2d21c784b73412b47bb38">view</a>(scratch_result_image);</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;    <a class="code" href="group___image_view_s_t_l_algorithms_transform_pixels.html#ga13302ec07014cc5731eac12af31dcbf2">transform_pixels</a>(input, <a class="code" href="group___image_view_transformations_subimage.html#ga0984936cff639dbc5644305b6c632487">subimage_view</a>(result, 1, 1, width, height),</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;                     [](<span class="keyword">const</span> input_pixel_type&amp; pixel) {</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;                         pixel_type converted;</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;                         <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; num_channels&lt;pixel_type&gt;{}; ++i)</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;                         {</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;                             converted[i] = pixel[i];</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;                         }</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;                         <span class="keywordflow">return</span> converted;</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;                     });</div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160; </div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> iteration = 0; iteration &lt; num_iter; ++iteration)</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;    {</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;        <span class="keywordflow">for</span> (std::ptrdiff_t relative_y = 0; relative_y &lt; height; ++relative_y)</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;        {</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;            <span class="keywordflow">for</span> (std::ptrdiff_t relative_x = 0; relative_x &lt; width; ++relative_x)</div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;            {</div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;                <span class="keyword">auto</span> x = relative_x + 1;</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;                <span class="keyword">auto</span> y = relative_y + 1;</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;                <span class="keyword">auto</span> stencil = laplace.compute_laplace(result, point_t(x, y));</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;                <span class="keyword">auto</span> brightness_stencil = brightness(stencil);</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;                laplace_function::stencil_type&lt;pixel_type&gt; diffusivity_stencil;</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;                std::transform(brightness_stencil.begin(), brightness_stencil.end(),</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;                               diffusivity_stencil.begin(), diffusivity);</div>
+<div class="line"><a name="l00406"></a><span class="lineno">  406</span>&#160;                laplace_function::stencil_type&lt;pixel_type&gt; product_stencil;</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;                std::transform(stencil.begin(), stencil.end(), diffusivity_stencil.begin(),</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;                               product_stencil.begin(), [](pixel_type lhs, pixel_type rhs) {</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;                                   static_transform(lhs, rhs, lhs, std::multiplies&lt;channel_type&gt;{});</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;                                   <span class="keywordflow">return</span> lhs;</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;                               });</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;                static_transform(result(x, y), laplace.reduce(product_stencil),</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;                                 scratch_result(x, y), std::plus&lt;channel_type&gt;{});</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;            }</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;        }</div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;        <span class="keyword">using</span> <a class="code" href="group___packed_channel_reference_model.html#ga70de3c85964650c16afcc42c02bd5df9">std::swap</a>;</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;        <a class="code" href="group___packed_channel_reference_model.html#ga70de3c85964650c16afcc42c02bd5df9">swap</a>(result, scratch_result);</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;    }</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160; </div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;    <a class="code" href="group___image_view_s_t_l_algorithms_copy_pixels.html#ga15f144a6ff49ab684f8cbf58d9b7ced4">copy_pixels</a>(<a class="code" href="group___image_view_transformations_subimage.html#ga0984936cff639dbc5644305b6c632487">subimage_view</a>(result, 1, 1, width, height), output);</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;}</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160; </div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;}} <span class="comment">// namespace boost::gil</span></div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160; </div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="astructboost_1_1gil_1_1laplace__function_1_1stencil__9points__standard_html"><div class="ttname"><a href="structboost_1_1gil_1_1laplace__function_1_1stencil__9points__standard.html">boost::gil::laplace_function::stencil_9points_standard</a></div><div class="ttdoc">9 point stencil approximation of Laplacian</div><div class="ttdef"><b>Definition:</b> diffusion.hpp:185</div></div>
 <div class="ttc" id="astructboost_1_1gil_1_1laplace__function_1_1stencil__5points_html"><div class="ttname"><a href="structboost_1_1gil_1_1laplace__function_1_1stencil__5points.html">boost::gil::laplace_function::stencil_5points</a></div><div class="ttdoc">5 point stencil approximation of Laplacian</div><div class="ttdef"><b>Definition:</b> diffusion.hpp:128</div></div>
