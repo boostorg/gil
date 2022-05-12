@@ -66,18 +66,33 @@
       
   <div class="section" id="installation">
 <h1>Installation</h1>
-<p>The latest version of GIL can be downloaded from <a class="reference external" href="https://github.com/boostorg/gil">https://github.com/boostorg/gil</a>.</p>
-<p>The GIL is a header-only library. Meaning, it consists of header files only,
+<p>The latest version of Boost.GIL can be downloaded from <a class="reference external" href="https://github.com/boostorg/gil">https://github.com/boostorg/gil</a>.</p>
+<p>The Boost.GIL is a header-only library. Meaning, it consists of header files only,
 it does not require Boost to be built and it does not require any libraries
 to link against.</p>
 <div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The exception to dependencies-free rule of GIL is the I/O extension
+<p class="first admonition-title">Note</p>
+<p class="last">The exception to dependencies-free rule of GIL is the I/O extension
 which requires client libraries implementing popular image formats
 like libpng, libjpeg, etc.</p>
 </div>
-<p>In order to use GIL, including <code class="docutils literal notranslate"><span class="pre">boost/gil.hpp</span></code> and telling your compiler
+<p>In order to use Boost.GIL, including <code class="docutils literal notranslate"><span class="pre">boost/gil.hpp</span></code> and telling your compiler
 where to find Boost and GIL headers should be sufficient for most projects.</p>
+<div class="section" id="compiling">
+<h2>Compiling</h2>
+<p>The Boost.GIL library source code should successfully compile with any
+compiler with complete C++11 support.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">We are planning to drop support for require C++14 support in Boost 1.76 or later,
+or selectively drop support for GCC 5 due to its issues with inheriting constructors,
+see <a class="reference external" href="https://github.com/boostorg/gil/pull/526">discussion for PR #526</a>.</p>
+</div>
+<p>For the actual list of currently tested compilers, check results of the library CI
+builds linked from the <a class="reference external" href="https://github.com/boostorg/gil/blob/develop/README.md">README.md</a>
+or inspect the CI services configuration files in the <a class="reference external" href="https://github.com/boostorg/gil/tree/develop">develop branch</a>
+of the library repository.</p>
+</div>
 </div>
 
 
@@ -90,8 +105,8 @@ where to find Boost and GIL headers should be sufficient for most projects.</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2020-07-28 12:07:08.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.1.2.
+      Last updated on 2022-05-12 07:05:31.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>

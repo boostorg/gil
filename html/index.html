@@ -64,7 +64,7 @@
       
   <div class="section" id="boost-generic-image-library">
 <h1>Boost Generic Image Library</h1>
-<p>The Generic Image Library (GIL) is a C++11 library that abstracts image
+<p>The Generic Image Library (GIL) is a C++11 header-only library that abstracts image
 representations from algorithms and allows writing code that can work on
 a variety of images with performance similar to hand-writing for a specific
 image type.</p>
@@ -108,6 +108,20 @@ image type.</p>
 <li class="toctree-l2"><a class="reference internal" href="image_processing/overview.html">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="image_processing/basics.html">Basics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="image_processing/affine-region-detectors.html">Affine region detectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="image_processing/contrast_enhancement/index.html">Contrast Enhancement</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="histogram/index.html">Histogram</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="histogram/overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="histogram/create.html">Create a histogram</a></li>
+<li class="toctree-l2"><a class="reference internal" href="histogram/fill.html">Fill histogram</a></li>
+<li class="toctree-l2"><a class="reference internal" href="histogram/subhistogram.html">Making a sub-histogram</a></li>
+<li class="toctree-l2"><a class="reference internal" href="histogram/cumulative.html">Making a cumulative histogram</a></li>
+<li class="toctree-l2"><a class="reference internal" href="histogram/stl_compatibility.html">STL compatibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="histogram/utilities.html">Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="histogram/extend.html">Extending the class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="histogram/limitations.html">Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="histogram/extension/index.html">Extensions</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference external" href="./reference/index.html#://">API Reference</a></li>
@@ -137,34 +151,39 @@ image type.</p>
 <li class="toctree-l2"><a class="reference internal" href="numeric.html#overview">Overview</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="histogram/extension/index.html">Extensions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="histogram/extension/overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="histogram/extension/std.html">STD extension</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 <div class="section" id="examples">
 <h2>Examples</h2>
 <ul class="simple">
-<li><p><a class="reference download internal" download="" href="_downloads/616376c46b838d872b7904380511497a/x_gradient.cpp"><code class="xref download docutils literal notranslate"><span class="pre">x_gradient.cpp</span></code></a>:
-Writing an algorithm that operates on generic images</p></li>
-<li><p><a class="reference download internal" download="" href="_downloads/86f1b8e9b08838cff5344407372254d5/dynamic_image.cpp"><code class="xref download docutils literal notranslate"><span class="pre">dynamic_image.cpp</span></code></a>:
+<li><a class="reference download internal" download="" href="_downloads/616376c46b838d872b7904380511497a/x_gradient.cpp"><code class="xref download docutils literal notranslate"><span class="pre">x_gradient.cpp</span></code></a>:
+Writing an algorithm that operates on generic images</li>
+<li><a class="reference download internal" download="" href="_downloads/86f1b8e9b08838cff5344407372254d5/dynamic_image.cpp"><code class="xref download docutils literal notranslate"><span class="pre">dynamic_image.cpp</span></code></a>:
 Using images whose properties (color space, channel type) are specified
-at run time</p></li>
-<li><p><a class="reference download internal" download="" href="_downloads/a17e372b9fcd3d6d9436c0013af6cf2d/histogram.cpp"><code class="xref download docutils literal notranslate"><span class="pre">histogram.cpp</span></code></a>: Creating a histogram</p></li>
-<li><p><a class="reference download internal" download="" href="_downloads/65c1749946f416eafea12816c3b48bb3/interleaved_ptr.cpp"><code class="xref download docutils literal notranslate"><span class="pre">interleaved_ptr.cpp</span></code></a>,
+at run time</li>
+<li><a class="reference download internal" download="" href="_downloads/a17e372b9fcd3d6d9436c0013af6cf2d/histogram.cpp"><code class="xref download docutils literal notranslate"><span class="pre">histogram.cpp</span></code></a>: Creating a histogram</li>
+<li><a class="reference download internal" download="" href="_downloads/65c1749946f416eafea12816c3b48bb3/interleaved_ptr.cpp"><code class="xref download docutils literal notranslate"><span class="pre">interleaved_ptr.cpp</span></code></a>,
 <a class="reference download internal" download="" href="_downloads/f95b413acffa7d2810b20eade62d96e1/interleaved_ptr.hpp"><code class="xref download docutils literal notranslate"><span class="pre">interleaved_ptr.hpp</span></code></a>,
 <a class="reference download internal" download="" href="_downloads/28d309347788ce07e2fdcefc93d075d8/interleaved_ref.hpp"><code class="xref download docutils literal notranslate"><span class="pre">interleaved_ref.hpp</span></code></a>:
-Creating your own pixel reference and pixel iterator</p></li>
-<li><p><a class="reference download internal" download="" href="_downloads/f4c32f08ec375899f01a3efd07a22e4b/mandelbrot.cpp"><code class="xref download docutils literal notranslate"><span class="pre">mandelbrot.cpp</span></code></a>:
-Creating a synthetic image defined by a function</p></li>
-<li><p><a class="reference download internal" download="" href="_downloads/7091060bbcab0bd172d9fa706158bc7f/packed_pixel.cpp"><code class="xref download docutils literal notranslate"><span class="pre">packed_pixel.cpp</span></code></a>:
-Defining bitmasks and images whose channels or pixels are not byte-aligned</p></li>
-<li><p><a class="reference download internal" download="" href="_downloads/ba63289b75f676482437f0ac38e964ca/resize.cpp"><code class="xref download docutils literal notranslate"><span class="pre">resize.cpp</span></code></a>:
+Creating your own pixel reference and pixel iterator</li>
+<li><a class="reference download internal" download="" href="_downloads/f4c32f08ec375899f01a3efd07a22e4b/mandelbrot.cpp"><code class="xref download docutils literal notranslate"><span class="pre">mandelbrot.cpp</span></code></a>:
+Creating a synthetic image defined by a function</li>
+<li><a class="reference download internal" download="" href="_downloads/7091060bbcab0bd172d9fa706158bc7f/packed_pixel.cpp"><code class="xref download docutils literal notranslate"><span class="pre">packed_pixel.cpp</span></code></a>:
+Defining bitmasks and images whose channels or pixels are not byte-aligned</li>
+<li><a class="reference download internal" download="" href="_downloads/ba63289b75f676482437f0ac38e964ca/resize.cpp"><code class="xref download docutils literal notranslate"><span class="pre">resize.cpp</span></code></a>:
 Rescaling an image using bilinear sampling (requires the optional
-Numeric extension)</p></li>
-<li><p><a class="reference download internal" download="" href="_downloads/22415bc21655eea6105744ecdce0536e/affine.cpp"><code class="xref download docutils literal notranslate"><span class="pre">affine.cpp</span></code></a>:
+Numeric extension)</li>
+<li><a class="reference download internal" download="" href="_downloads/22415bc21655eea6105744ecdce0536e/affine.cpp"><code class="xref download docutils literal notranslate"><span class="pre">affine.cpp</span></code></a>:
 Applying an affine transformation to an image (requires the optional
-Numeric extension)</p></li>
-<li><p><a class="reference download internal" download="" href="_downloads/975e2af95a20efe1ab7b36bc39833e6a/convolution.cpp"><code class="xref download docutils literal notranslate"><span class="pre">convolution.cpp</span></code></a>:
-Blurring images (requires the optional Numeric extension)</p></li>
+Numeric extension)</li>
+<li><a class="reference download internal" download="" href="_downloads/975e2af95a20efe1ab7b36bc39833e6a/convolution.cpp"><code class="xref download docutils literal notranslate"><span class="pre">convolution.cpp</span></code></a>:
+Blurring images (requires the optional Numeric extension)</li>
 </ul>
 </div>
 </div>
@@ -178,8 +197,8 @@ Blurring images (requires the optional Numeric extension)</p></li>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2020-07-28 12:07:08.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.1.2.
+      Last updated on 2022-05-12 07:05:31.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>

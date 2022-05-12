@@ -68,8 +68,8 @@
 <h1>Tutorial: Histogram</h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#original-implementation" id="id1">Original implementation</a></p></li>
-<li><p><a class="reference internal" href="#gil-implementation" id="id2">GIL implementation</a></p></li>
+<li><a class="reference internal" href="#original-implementation" id="id1">Original implementation</a></li>
+<li><a class="reference internal" href="#gil-implementation" id="id2">GIL implementation</a></li>
 </ul>
 </div>
 <p>This is a short tutorial presenting an example of a very simple sample of code
@@ -99,9 +99,9 @@ histogram (variable names have been changed and unrelated parts removed):</p>
 </div>
 <p>Let’s consider the following issues of the implementation above:</p>
 <ul class="simple">
-<li><p>Works only for RGB (duplicate versions exist for other color spaces)</p></li>
-<li><p>Works only for 8-bit images (duplicate versions exist)</p></li>
-<li><p>Works only for planar images</p></li>
+<li>Works only for RGB (duplicate versions exist for other color spaces)</li>
+<li>Works only for 8-bit images (duplicate versions exist)</li>
+<li>Works only for planar images</li>
 </ul>
 </div>
 <div class="section" id="gil-implementation">
@@ -133,12 +133,12 @@ even simpler:</p>
 </div>
 <p>Let’s consider the following advantages of the GIL version:</p>
 <ul class="simple">
-<li><p>Works with any supported channel depth, color space, channel ordering
-(RGB vs BGR), and row alignment policy.</p></li>
-<li><p>Works for both planar and interleaved images.</p></li>
-<li><p>Works with new color spaces, channel depths and image types that can be
-provided in future extensions of GIL</p></li>
-<li><p>The second version is as efficient as the hand-coded version</p></li>
+<li>Works with any supported channel depth, color space, channel ordering
+(RGB vs BGR), and row alignment policy.</li>
+<li>Works for both planar and interleaved images.</li>
+<li>Works with new color spaces, channel depths and image types that can be
+provided in future extensions of GIL</li>
+<li>The second version is as efficient as the hand-coded version</li>
 </ul>
 <p>Shortly, it is also very flexible.</p>
 <p>For example, to compute the histogram of the second channel of the top left
@@ -171,8 +171,8 @@ memory is allocated and no images are copied.</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2020-07-28 12:07:08.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.1.2.
+      Last updated on 2022-05-12 07:05:31.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>

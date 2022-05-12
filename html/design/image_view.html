@@ -70,13 +70,12 @@
 <h1>Image View</h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p></li>
-<li><p><a class="reference internal" href="#models" id="id2">Models</a></p></li>
-<li><p><a class="reference internal" href="#algorithms" id="id3">Algorithms</a></p>
-<ul>
-<li><p><a class="reference internal" href="#creating-views-from-raw-pixels" id="id4">Creating Views from Raw Pixels</a></p></li>
-<li><p><a class="reference internal" href="#creating-image-views-from-other-image-views" id="id5">Creating Image Views from Other Image Views</a></p></li>
-<li><p><a class="reference internal" href="#stl-style-algorithms-on-image-views" id="id6">STL-Style Algorithms on Image Views</a></p></li>
+<li><a class="reference internal" href="#overview" id="id1">Overview</a></li>
+<li><a class="reference internal" href="#models" id="id2">Models</a></li>
+<li><a class="reference internal" href="#algorithms" id="id3">Algorithms</a><ul>
+<li><a class="reference internal" href="#creating-views-from-raw-pixels" id="id4">Creating Views from Raw Pixels</a></li>
+<li><a class="reference internal" href="#creating-image-views-from-other-image-views" id="id5">Creating Image Views from Other Image Views</a></li>
+<li><a class="reference internal" href="#stl-style-algorithms-on-image-views" id="id6">STL-Style Algorithms on Image Views</a></li>
 </ul>
 </li>
 </ul>
@@ -90,7 +89,7 @@ For example, a constant image view cannot be resized, but may allow modifying
 the pixels. For pixel-immutable operations, use constant-value image view
 (also called non-mutable image view). Most general N-dimensional views satisfy
 the following concept:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">RandomAccessNDImageViewConcept</span><span class="o">&lt;</span><span class="n">Regular</span> <span class="n">View</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">RandomAccessNDImageViewConcept</span><span class="o">&lt;</span><span class="n">Regular</span> <span class="n">View</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="k">typename</span> <span class="n">value_type</span><span class="p">;</span>      <span class="c1">// for pixel-based views, the pixel type</span>
   <span class="k">typename</span> <span class="n">reference</span><span class="p">;</span>       <span class="c1">// result of dereferencing</span>
@@ -137,14 +136,14 @@ the following concept:</p>
   <span class="n">reference</span> <span class="nf">operator</span><span class="p">()(</span><span class="n">View</span><span class="p">,</span><span class="k">const</span> <span class="n">point_t</span><span class="o">&amp;</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="k">concept</span> <span class="n">MutableRandomAccessNDImageViewConcept</span><span class="o">&lt;</span><span class="n">RandomAccessNDImageViewConcept</span> <span class="n">View</span><span class="o">&gt;</span>
+<span class="n">concept</span> <span class="n">MutableRandomAccessNDImageViewConcept</span><span class="o">&lt;</span><span class="n">RandomAccessNDImageViewConcept</span> <span class="n">View</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="n">where</span> <span class="n">Mutable</span><span class="o">&lt;</span><span class="n">reference</span><span class="o">&gt;</span><span class="p">;</span>
 <span class="p">};</span>
 </pre></div>
 </div>
 <p>Two-dimensional image views have the following extra requirements:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">RandomAccess2DImageViewConcept</span><span class="o">&lt;</span><span class="n">RandomAccessNDImageViewConcept</span> <span class="n">View</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">RandomAccess2DImageViewConcept</span><span class="o">&lt;</span><span class="n">RandomAccessNDImageViewConcept</span> <span class="n">View</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="n">where</span> <span class="n">num_dimensions</span><span class="o">==</span><span class="mi">2</span><span class="p">;</span>
 
@@ -179,13 +178,13 @@ the following concept:</p>
   <span class="n">y_iterator</span> <span class="n">View</span><span class="o">::</span><span class="n">y_at</span><span class="p">(</span><span class="n">x_coord_t</span><span class="p">,</span><span class="n">y_coord_t</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="k">concept</span> <span class="n">MutableRandomAccess2DImageViewConcept</span><span class="o">&lt;</span><span class="n">RandomAccess2DImageViewConcept</span> <span class="n">View</span><span class="o">&gt;</span>
+<span class="n">concept</span> <span class="n">MutableRandomAccess2DImageViewConcept</span><span class="o">&lt;</span><span class="n">RandomAccess2DImageViewConcept</span> <span class="n">View</span><span class="o">&gt;</span>
   <span class="o">:</span> <span class="n">MutableRandomAccessNDImageViewConcept</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;</span> <span class="p">{};</span>
 </pre></div>
 </div>
 <p>Image views that GIL typically uses operate on value types that model
 <code class="docutils literal notranslate"><span class="pre">PixelValueConcept</span></code> and have some additional requirements:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">ImageViewConcept</span><span class="o">&lt;</span><span class="n">RandomAccess2DImageViewConcept</span> <span class="n">View</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">ImageViewConcept</span><span class="o">&lt;</span><span class="n">RandomAccess2DImageViewConcept</span> <span class="n">View</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="n">where</span> <span class="n">PixelValueConcept</span><span class="o">&lt;</span><span class="n">value_type</span><span class="o">&gt;</span><span class="p">;</span>
   <span class="n">where</span> <span class="n">PixelIteratorConcept</span><span class="o">&lt;</span><span class="n">x_iterator</span><span class="o">&gt;</span><span class="p">;</span>
@@ -198,14 +197,14 @@ the following concept:</p>
 <span class="p">};</span>
 
 
-<span class="k">concept</span> <span class="n">MutableImageViewConcept</span><span class="o">&lt;</span><span class="n">ImageViewConcept</span> <span class="n">View</span><span class="o">&gt;</span>
+<span class="n">concept</span> <span class="n">MutableImageViewConcept</span><span class="o">&lt;</span><span class="n">ImageViewConcept</span> <span class="n">View</span><span class="o">&gt;</span>
   <span class="o">:</span> <span class="n">MutableRandomAccess2DImageViewConcept</span><span class="o">&lt;</span><span class="n">View</span><span class="o">&gt;</span>
 <span class="p">{};</span>
 </pre></div>
 </div>
 <p>Two image views are compatible if they have compatible pixels and the same
 number of dimensions:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">ViewsCompatibleConcept</span><span class="o">&lt;</span><span class="n">ImageViewConcept</span> <span class="n">V1</span><span class="p">,</span> <span class="n">ImageViewConcept</span> <span class="n">V2</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">ViewsCompatibleConcept</span><span class="o">&lt;</span><span class="n">ImageViewConcept</span> <span class="n">V1</span><span class="p">,</span> <span class="n">ImageViewConcept</span> <span class="n">V2</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="n">where</span> <span class="n">PixelsCompatibleConcept</span><span class="o">&lt;</span><span class="n">V1</span><span class="o">::</span><span class="n">value_type</span><span class="p">,</span> <span class="n">V2</span><span class="o">::</span><span class="n">value_type</span><span class="o">&gt;</span><span class="p">;</span>
   <span class="n">where</span> <span class="n">V1</span><span class="o">::</span><span class="n">num_dimensions</span> <span class="o">==</span> <span class="n">V2</span><span class="o">::</span><span class="n">num_dimensions</span><span class="p">;</span>
@@ -216,15 +215,15 @@ number of dimensions:</p>
 height). Many algorithms taking multiple views require that they be pairwise
 compatible.</p>
 <div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<ul class="simple">
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_random_access_n_d_image_view_concept.html">RandomAccessNDImageViewConcept&lt;View&gt;</a></p></li>
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_mutable_random_access_n_d_image_view_concept.html">MutableRandomAccessNDImageViewConcept&lt;View&gt;</a></p></li>
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_random_access2_d_image_view_concept.html">RandomAccess2DImageViewConcept&lt;View&gt;</a></p></li>
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_mutable_random_access2_d_image_view_concept.html">MutableRandomAccess2DImageViewConcept&lt;View&gt;</a></p></li>
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_image_view_concept.html">ImageViewConcept&lt;View&gt;</a></p></li>
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_mutable_image_view_concept.html">MutableImageViewConcept&lt;View&gt;</a></p></li>
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_views_compatible_concept.html">ViewsCompatibleConcept&lt;View1,View2&gt;</a></p></li>
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li><a class="reference external" href="../reference/structboost_1_1gil_1_1_random_access_n_d_image_view_concept.html">RandomAccessNDImageViewConcept&lt;View&gt;</a></li>
+<li><a class="reference external" href="../reference/structboost_1_1gil_1_1_mutable_random_access_n_d_image_view_concept.html">MutableRandomAccessNDImageViewConcept&lt;View&gt;</a></li>
+<li><a class="reference external" href="../reference/structboost_1_1gil_1_1_random_access2_d_image_view_concept.html">RandomAccess2DImageViewConcept&lt;View&gt;</a></li>
+<li><a class="reference external" href="../reference/structboost_1_1gil_1_1_mutable_random_access2_d_image_view_concept.html">MutableRandomAccess2DImageViewConcept&lt;View&gt;</a></li>
+<li><a class="reference external" href="../reference/structboost_1_1gil_1_1_image_view_concept.html">ImageViewConcept&lt;View&gt;</a></li>
+<li><a class="reference external" href="../reference/structboost_1_1gil_1_1_mutable_image_view_concept.html">MutableImageViewConcept&lt;View&gt;</a></li>
+<li><a class="reference external" href="../reference/structboost_1_1gil_1_1_views_compatible_concept.html">ViewsCompatibleConcept&lt;View1,View2&gt;</a></li>
 </ul>
 </div>
 </div>
@@ -487,8 +486,8 @@ development and is not optimized for speed</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2020-07-28 12:07:08.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.1.2.
+      Last updated on 2022-05-12 07:05:31.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>

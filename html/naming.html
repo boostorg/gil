@@ -76,23 +76,23 @@ tests and examples.</p>
 </div>
 <p>where:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">ColorSpace</span></code> indicates layout and ordering of components.
-For example, <code class="docutils literal notranslate"><span class="pre">rgb</span></code>, <code class="docutils literal notranslate"><span class="pre">bgr</span></code>, <code class="docutils literal notranslate"><span class="pre">cmyk</span></code>, <code class="docutils literal notranslate"><span class="pre">rgba</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">BitDepth</span></code> indicates the bit depth of the color channel.
-For example, <code class="docutils literal notranslate"><span class="pre">8</span></code>,``16``,``32``.</p></li>
-<li><p>By default, type of channel is unsigned integral.
+<li><code class="docutils literal notranslate"><span class="pre">ColorSpace</span></code> indicates layout and ordering of components.
+For example, <code class="docutils literal notranslate"><span class="pre">rgb</span></code>, <code class="docutils literal notranslate"><span class="pre">bgr</span></code>, <code class="docutils literal notranslate"><span class="pre">cmyk</span></code>, <code class="docutils literal notranslate"><span class="pre">rgba</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">BitDepth</span></code> indicates the bit depth of the color channel.
+For example, <code class="docutils literal notranslate"><span class="pre">8</span></code>,``16``,``32``.</li>
+<li>By default, type of channel is unsigned integral.
 The <code class="docutils literal notranslate"><span class="pre">s</span></code> tag indicates signed integral.
-The <code class="docutils literal notranslate"><span class="pre">f</span></code> tag indicates a floating point type, which is always signed.</p></li>
-<li><p>By default, objects operate on mutable pixels.
-The <code class="docutils literal notranslate"><span class="pre">c</span></code> tag indicates object operating over immutable pixels.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">_planar</span></code> indicates planar organization (as opposed to interleaved).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">_step</span></code> indicates special image views, locators and iterators which
+The <code class="docutils literal notranslate"><span class="pre">f</span></code> tag indicates a floating point type, which is always signed.</li>
+<li>By default, objects operate on mutable pixels.
+The <code class="docutils literal notranslate"><span class="pre">c</span></code> tag indicates object operating over immutable pixels.</li>
+<li><code class="docutils literal notranslate"><span class="pre">_planar</span></code> indicates planar organization (as opposed to interleaved).</li>
+<li><code class="docutils literal notranslate"><span class="pre">_step</span></code> indicates special image views, locators and iterators which
 traverse the data in non-trivial way. For example, backwards or every other
-pixel.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">ClassType</span></code> is <code class="docutils literal notranslate"><span class="pre">_image</span></code> (image), <code class="docutils literal notranslate"><span class="pre">_view</span></code> (image view), <code class="docutils literal notranslate"><span class="pre">_loc</span></code> (pixel
+pixel.</li>
+<li><code class="docutils literal notranslate"><span class="pre">ClassType</span></code> is <code class="docutils literal notranslate"><span class="pre">_image</span></code> (image), <code class="docutils literal notranslate"><span class="pre">_view</span></code> (image view), <code class="docutils literal notranslate"><span class="pre">_loc</span></code> (pixel
 2D locator) <code class="docutils literal notranslate"><span class="pre">_ptr</span></code> (pixel iterator), <code class="docutils literal notranslate"><span class="pre">_ref</span></code> (pixel reference),
-<code class="docutils literal notranslate"><span class="pre">_pixel</span></code> (pixel value).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">_t</span></code> suffix indicaes it is a name of a type.</p></li>
+<code class="docutils literal notranslate"><span class="pre">_pixel</span></code> (pixel value).</li>
+<li><code class="docutils literal notranslate"><span class="pre">_t</span></code> suffix indicaes it is a name of a type.</li>
 </ul>
 <p>For example:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">bgr8_image_t</span>             <span class="n">a</span><span class="p">;</span>    <span class="c1">// 8-bit interleaved BGR image</span>
@@ -114,8 +114,8 @@ pixel.</p></li>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2020-07-28 12:07:08.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.1.2.
+      Last updated on 2022-05-12 07:05:31.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>

@@ -70,8 +70,8 @@
 <h1>Image</h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p></li>
-<li><p><a class="reference internal" href="#models" id="id2">Models</a></p></li>
+<li><a class="reference internal" href="#overview" id="id1">Overview</a></li>
+<li><a class="reference internal" href="#models" id="id2">Models</a></li>
 </ul>
 </div>
 <div class="section" id="overview">
@@ -84,7 +84,7 @@ ranges, not containers. Similarly most GIL algorithms operate on image views
 (which images provide).</p>
 <p>In the most general form images are N-dimensional and satisfy the following
 concept:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">RandomAccessNDImageConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">Img</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">Regular</span><span class="o">&lt;</span><span class="n">Img</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">RandomAccessNDImageConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">Img</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">Regular</span><span class="o">&lt;</span><span class="n">Img</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="k">typename</span> <span class="n">view_t</span><span class="p">;</span> <span class="n">where</span> <span class="n">MutableRandomAccessNDImageViewConcept</span><span class="o">&lt;</span><span class="n">view_t</span><span class="o">&gt;</span><span class="p">;</span>
   <span class="k">typename</span> <span class="n">const_view_t</span> <span class="o">=</span> <span class="n">view_t</span><span class="o">::</span><span class="n">const_t</span><span class="p">;</span>
@@ -105,7 +105,7 @@ concept:</p>
 </pre></div>
 </div>
 <p>Two-dimensional images have additional requirements:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">RandomAccess2DImageConcept</span><span class="o">&lt;</span><span class="n">RandomAccessNDImageConcept</span> <span class="n">Img</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">RandomAccess2DImageConcept</span><span class="o">&lt;</span><span class="n">RandomAccessNDImageConcept</span> <span class="n">Img</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="k">typename</span> <span class="n">x_coord_t</span> <span class="o">=</span> <span class="n">const_view_t</span><span class="o">::</span><span class="n">x_coord_t</span><span class="p">;</span>
   <span class="k">typename</span> <span class="n">y_coord_t</span> <span class="o">=</span> <span class="n">const_view_t</span><span class="o">::</span><span class="n">y_coord_t</span><span class="p">;</span>
@@ -122,7 +122,7 @@ concept:</p>
 </pre></div>
 </div>
 <p>GIL images have views that model <code class="docutils literal notranslate"><span class="pre">ImageViewConcept</span></code> and operate on pixels.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">ImageConcept</span><span class="o">&lt;</span><span class="n">RandomAccess2DImageConcept</span> <span class="n">Img</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">ImageConcept</span><span class="o">&lt;</span><span class="n">RandomAccess2DImageConcept</span> <span class="n">Img</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="n">where</span> <span class="n">MutableImageViewConcept</span><span class="o">&lt;</span><span class="n">view_t</span><span class="o">&gt;</span><span class="p">;</span>
   <span class="k">typename</span> <span class="n">coord_t</span>  <span class="o">=</span> <span class="n">view_t</span><span class="o">::</span><span class="n">coord_t</span><span class="p">;</span>
@@ -132,11 +132,11 @@ concept:</p>
 <p>Images, unlike locators and image views, don’t have ‘mutable’ set of concepts
 because immutable images are not very useful.</p>
 <div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<ul class="simple">
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_random_access_n_d_image_concept.html">RandomAccessNDImageConcept&lt;Image&gt;</a></p></li>
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_random_access2_d_image_concept.html">RandomAccess2DImageConcept&lt;Image&gt;</a></p></li>
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_image_concept.html">ImageConcept&lt;Image&gt;</a></p></li>
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li><a class="reference external" href="../reference/structboost_1_1gil_1_1_random_access_n_d_image_concept.html">RandomAccessNDImageConcept&lt;Image&gt;</a></li>
+<li><a class="reference external" href="../reference/structboost_1_1gil_1_1_random_access2_d_image_concept.html">RandomAccess2DImageConcept&lt;Image&gt;</a></li>
+<li><a class="reference external" href="../reference/structboost_1_1gil_1_1_image_concept.html">ImageConcept&lt;Image&gt;</a></li>
 </ul>
 </div>
 </div>
@@ -175,8 +175,8 @@ there are no padding bits at the end of rows of packed images.</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2020-07-28 12:07:08.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.1.2.
+      Last updated on 2022-05-12 07:05:31.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>

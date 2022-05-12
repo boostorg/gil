@@ -70,9 +70,9 @@
 <h1>Channel</h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p></li>
-<li><p><a class="reference internal" href="#models" id="id2">Models</a></p></li>
-<li><p><a class="reference internal" href="#algorithms" id="id3">Algorithms</a></p></li>
+<li><a class="reference internal" href="#overview" id="id1">Overview</a></li>
+<li><a class="reference internal" href="#models" id="id2">Models</a></li>
+<li><a class="reference internal" href="#algorithms" id="id3">Algorithms</a></li>
 </ul>
 </div>
 <div class="section" id="overview">
@@ -81,7 +81,7 @@
 channel in an RGB pixel). Typical channel operations are getting, comparing
 and setting the channel values. Channels have associated minimum and maximum
 value. GIL channels model the following concept:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">ChannelConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">EqualityComparable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">ChannelConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">EqualityComparable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
 <span class="p">{</span>
     <span class="k">typename</span> <span class="n">value_type</span>      <span class="o">=</span> <span class="n">T</span><span class="p">;</span>        <span class="c1">// use channel_traits&lt;T&gt;::value_type to access it</span>
     <span class="n">where</span> <span class="n">ChannelValueConcept</span><span class="o">&lt;</span><span class="n">value_type</span><span class="o">&gt;</span><span class="p">;</span>
@@ -95,9 +95,9 @@ value. GIL channels model the following concept:</p>
     <span class="k">static</span> <span class="n">T</span> <span class="nf">max_value</span><span class="p">();</span>                <span class="c1">// use channel_traits&lt;T&gt;::min_value to access it</span>
 <span class="p">};</span>
 
-<span class="k">concept</span> <span class="n">MutableChannelConcept</span><span class="o">&lt;</span><span class="n">ChannelConcept</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">Swappable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">Assignable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{};</span>
+<span class="n">concept</span> <span class="n">MutableChannelConcept</span><span class="o">&lt;</span><span class="n">ChannelConcept</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">Swappable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">Assignable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{};</span>
 
-<span class="k">concept</span> <span class="n">ChannelValueConcept</span><span class="o">&lt;</span><span class="n">ChannelConcept</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">Regular</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{};</span>
+<span class="n">concept</span> <span class="n">ChannelValueConcept</span><span class="o">&lt;</span><span class="n">ChannelConcept</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">Regular</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{};</span>
 </pre></div>
 </div>
 <p>GIL allows built-in integral and floating point types to be channels.
@@ -118,7 +118,7 @@ Therefore the associated types and range information are defined in
 </pre></div>
 </div>
 <p>Two channel types are <em>compatible</em> if they have the same value type:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span> <span class="n">ChannelsCompatibleConcept</span><span class="o">&lt;</span><span class="n">ChannelConcept</span> <span class="n">T1</span><span class="p">,</span> <span class="n">ChannelConcept</span> <span class="n">T2</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">ChannelsCompatibleConcept</span><span class="o">&lt;</span><span class="n">ChannelConcept</span> <span class="n">T1</span><span class="p">,</span> <span class="n">ChannelConcept</span> <span class="n">T2</span><span class="o">&gt;</span>
 <span class="p">{</span>
     <span class="n">where</span> <span class="n">SameType</span><span class="o">&lt;</span><span class="n">T1</span><span class="o">::</span><span class="n">value_type</span><span class="p">,</span> <span class="n">T2</span><span class="o">::</span><span class="n">value_type</span><span class="o">&gt;</span><span class="p">;</span>
 <span class="p">};</span>
@@ -126,7 +126,7 @@ Therefore the associated types and range information are defined in
 </div>
 <p>A channel may be <em>convertible</em> to another channel:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="n">ChannelConcept</span> <span class="n">Src</span><span class="p">,</span> <span class="n">ChannelValueConcept</span> <span class="n">Dst</span><span class="o">&gt;</span>
-<span class="k">concept</span> <span class="n">ChannelConvertibleConcept</span>
+<span class="n">concept</span> <span class="n">ChannelConvertibleConcept</span>
 <span class="p">{</span>
     <span class="n">Dst</span> <span class="n">channel_convert</span><span class="p">(</span><span class="n">Src</span><span class="p">);</span>
 <span class="p">};</span>
@@ -144,13 +144,13 @@ to native C++ references, it may not have a default constructor.</p>
 <p>Note also that algorithms may impose additional requirements on channels,
 such as support for arithmetic operations.</p>
 <div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<ul class="simple">
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_channel_concept.html">ChannelConcept&lt;T&gt;</a></p></li>
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_channel_value_concept.html">ChannelValueConcept&lt;T&gt;</a></p></li>
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_mutable_channel_concept.html">MutableChannelConcept&lt;T&gt;</a></p></li>
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_channels_compatible_concept.html">ChannelsCompatibleConcept&lt;T1,T2&gt;</a></p></li>
-<li><p><a class="reference external" href="reference/structboost_1_1gil_1_1_channel_convertible_concept.html">ChannelConvertibleConcept&lt;SrcChannel,DstChannel&gt;</a></p></li>
+<p class="first admonition-title">See also</p>
+<ul class="last simple">
+<li><a class="reference external" href="../reference/structboost_1_1gil_1_1_channel_concept.html">ChannelConcept&lt;T&gt;</a></li>
+<li><a class="reference external" href="../reference/structboost_1_1gil_1_1_channel_value_concept.html">ChannelValueConcept&lt;T&gt;</a></li>
+<li><a class="reference external" href="../reference/structboost_1_1gil_1_1_mutable_channel_concept.html">MutableChannelConcept&lt;T&gt;</a></li>
+<li><a class="reference external" href="../reference/structboost_1_1gil_1_1_channels_compatible_concept.html">ChannelsCompatibleConcept&lt;T1,T2&gt;</a></li>
+<li><a class="reference external" href="../reference/structboost_1_1gil_1_1_channel_convertible_concept.html">ChannelConvertibleConcept&lt;SrcChannel,DstChannel&gt;</a></li>
 </ul>
 </div>
 </div>
@@ -263,8 +263,8 @@ channel-level algorithms that GIL provides:</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2020-07-28 12:07:08.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.1.2.
+      Last updated on 2022-05-12 07:05:31.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>

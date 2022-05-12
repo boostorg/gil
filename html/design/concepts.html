@@ -75,7 +75,7 @@ algorithmic guarantees. For example, GIL class <code class="docutils literal not
 <code class="docutils literal notranslate"><span class="pre">PixelConcept</span></code>. The user may substitute the pixel class with one of their
 own, and, as long as it satisfies the requirements of <code class="docutils literal notranslate"><span class="pre">PixelConcept</span></code>,
 all other GIL classes and algorithms can be used with it.
-See more about concepts is avaialble at
+See more about concepts at
 <a class="reference external" href="https://web.archive.org/web/20160324115943/http://www.generic-programming.org/languages/conceptcpp/">Generic Programming in ConceptC++</a></p>
 <p>In this document we will use a syntax for defining concepts that is described
 in the C++ standard proposal paper
@@ -83,40 +83,40 @@ in the C++ standard proposal paper
 <p>Here are some common concepts that will be used in GIL.
 Most of them are defined at the
 <a class="reference external" href="https://web.archive.org/web/20160326060858/http://www.generic-programming.org/languages/conceptcpp/concept_web.php">ConceptC++ Concept Web</a>:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="k">concept</span> <span class="n">DefaultConstructible</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="n">concept</span> <span class="n">DefaultConstructible</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
 <span class="p">{</span>
     <span class="n">T</span><span class="o">::</span><span class="n">T</span><span class="p">();</span>
 <span class="p">};</span>
 
-<span class="k">auto</span> <span class="k">concept</span> <span class="n">CopyConstructible</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">auto</span> <span class="n">concept</span> <span class="n">CopyConstructible</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
 <span class="p">{</span>
     <span class="n">T</span><span class="o">::</span><span class="n">T</span><span class="p">(</span><span class="n">T</span><span class="p">);</span>
     <span class="n">T</span><span class="o">::~</span><span class="n">T</span><span class="p">();</span>
 <span class="p">};</span>
 
-<span class="k">auto</span> <span class="k">concept</span> <span class="n">Assignable</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span> <span class="o">=</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">auto</span> <span class="n">concept</span> <span class="n">Assignable</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span> <span class="o">=</span> <span class="n">T</span><span class="o">&gt;</span>
 <span class="p">{</span>
     <span class="k">typename</span> <span class="n">result_type</span><span class="p">;</span>
     <span class="n">result_type</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="n">T</span><span class="o">&amp;</span><span class="p">,</span> <span class="n">U</span><span class="p">);</span>
 <span class="p">};</span>
 
-<span class="k">auto</span> <span class="k">concept</span> <span class="n">EqualityComparable</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span> <span class="o">=</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">auto</span> <span class="n">concept</span> <span class="n">EqualityComparable</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span> <span class="o">=</span> <span class="n">T</span><span class="o">&gt;</span>
 <span class="p">{</span>
     <span class="kt">bool</span> <span class="k">operator</span><span class="o">==</span><span class="p">(</span><span class="n">T</span> <span class="n">x</span><span class="p">,</span> <span class="n">U</span> <span class="n">y</span><span class="p">);</span>
     <span class="kt">bool</span> <span class="k">operator</span><span class="o">!=</span><span class="p">(</span><span class="n">T</span> <span class="n">x</span><span class="p">,</span> <span class="n">U</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="o">!</span><span class="p">(</span><span class="n">x</span><span class="o">==</span><span class="n">y</span><span class="p">);</span> <span class="p">}</span>
 <span class="p">};</span>
 
-<span class="k">concept</span> <span class="n">SameType</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span><span class="o">&gt;</span> <span class="p">{</span> <span class="cm">/* unspecified */</span> <span class="p">};</span>
+<span class="n">concept</span> <span class="n">SameType</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="p">,</span> <span class="k">typename</span> <span class="n">U</span><span class="o">&gt;</span> <span class="p">{</span> <span class="cm">/* unspecified */</span> <span class="p">};</span>
 <span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span> <span class="n">concept_map</span> <span class="n">SameType</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span> <span class="cm">/* unspecified */</span> <span class="p">};</span>
 
-<span class="k">auto</span> <span class="k">concept</span> <span class="n">Swappable</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">auto</span> <span class="n">concept</span> <span class="n">Swappable</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
 <span class="p">{</span>
     <span class="kt">void</span> <span class="n">swap</span><span class="p">(</span><span class="n">T</span><span class="o">&amp;</span> <span class="n">t</span><span class="p">,</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">u</span><span class="p">);</span>
 <span class="p">};</span>
 </pre></div>
 </div>
 <p>Here are some additional basic concepts that GIL needs:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="k">concept</span> <span class="n">Regular</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="n">concept</span> <span class="n">Regular</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span> <span class="o">:</span>
     <span class="n">DefaultConstructible</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">CopyConstructible</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="n">EqualityComparable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span>
@@ -124,7 +124,7 @@ Most of them are defined at the
     <span class="n">Swappable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
 <span class="p">{};</span>
 
-<span class="k">auto</span> <span class="k">concept</span> <span class="n">Metafunction</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">auto</span> <span class="n">concept</span> <span class="n">Metafunction</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
 <span class="p">{</span>
     <span class="k">typename</span> <span class="n">type</span><span class="p">;</span>
 <span class="p">};</span>
@@ -143,8 +143,8 @@ Most of them are defined at the
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2020-07-28 12:07:08.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.1.2.
+      Last updated on 2022-05-12 07:05:31.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>

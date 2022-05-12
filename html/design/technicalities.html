@@ -70,7 +70,7 @@
 <h1>Technicalities</h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#creating-a-reference-proxy" id="id1">Creating a reference proxy</a></p></li>
+<li><a class="reference internal" href="#creating-a-reference-proxy" id="id1">Creating a reference proxy</a></li>
 </ul>
 </div>
 <div class="section" id="creating-a-reference-proxy">
@@ -100,7 +100,7 @@ function that takes a mutable pixel:</p>
 <p>C++ does not allow for matching a temporary object against a non-constant
 reference. The solution is to:</p>
 <ul class="simple">
-<li><p>Use const qualifier on all members of the reference proxy object:</p></li>
+<li>Use const qualifier on all members of the reference proxy object:</li>
 </ul>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
 <span class="k">struct</span> <span class="n">my_reference_proxy</span>
@@ -112,9 +112,9 @@ reference. The solution is to:</p>
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>Use different classes to denote mutable and constant reference
-(maybe based on the constness of the template parameter)</p></li>
-<li><p>Define the reference type of your iterator with const qualifier:</p></li>
+<li>Use different classes to denote mutable and constant reference
+(maybe based on the constness of the template parameter)</li>
+<li>Define the reference type of your iterator with const qualifier:</li>
 </ul>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">iterator_traits</span><span class="o">&lt;</span><span class="n">rgb_planar_pixel_iterator</span><span class="o">&gt;</span>
 <span class="p">{</span>
@@ -159,8 +159,8 @@ suggesting the above solution.</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2020-07-28 12:07:08.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.1.2.
+      Last updated on 2022-05-12 07:05:31.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
 </html>
