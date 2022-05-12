@@ -370,7 +370,6 @@ void anisotropic_diffusion(const InputView& input, const OutputView& output, uns
     using computation_image = image<pixel_type>;
     const auto width = input.width();
     const auto height = input.height();
-    const point_t dims(width, height);
     const auto zero_pixel = []() {
         pixel_type pixel;
         static_fill(pixel, static_cast<channel_type>(0));
