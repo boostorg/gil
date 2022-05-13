@@ -7,8 +7,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - Added `image` constructor from compatible view ([PR #520](https://github.com/boostorg/gil/pull/520))
-- Added `cxxstd` field to meta/libraries.json ([PR #531](https://github.com/boostorg/gil/pull/531))
-- Added coverage with Codecov ([PR #532](https://github.com/boostorg/gil/pull/532))
 - Added inverse function for affine `matrix3x2` ([PR #527](https://github.com/boostorg/gil/pull/527))
 - Added Perona-Malik anisotropic diffusion algorithm [[PR #500](https://github.com/boostorg/gil/pull/500))
 - GSoC 2020: Add histogram class and related functionality ([PR #499](https://github.com/boostorg/gil/pull/499))
@@ -16,25 +14,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - GSoC 2020: Add histogram matching algorithm ([PR #515](https://github.com/boostorg/gil/pull/515))
 - Added ability to stack images either horizontally (`hstack`) or vertically (`vstack`) ([PR #506](https://github.com/boostorg/gil/pull/506))
 - Added adaptive histogram equalization algorithm ([PR #516](https://github.com/boostorg/gil/pull/516))
-- ci: Add configuration for GitHub Actions ([PR #544](https://github.com/boostorg/gil/pull/544))
 - Added implementation of Hough transformations ([PR #512](https://github.com/boostorg/gil/pull/512))
 
 ### Changed
 - documentation: Display that GIL is a header-only library
 
 ### Fixed
-- Fixed typo in copyright headers ([PR #521](https://github.com/boostorg/gil/pull/521) and [PR #524](https://github.com/boostorg/gil/pull/524))
 - Fixed conversion from RGB to signed CMYK ([PR #522](https://github.com/boostorg/gil/pull/522))
 - Removed unnecessary numeric cast in hsv.hpp ([PR #530](https://github.com/boostorg/gil/pull/530))
-- build: Switched Conan packages from bincrafters to conan.io ([PR #537](https://github.com/boostorg/gil/pull/537))
 - Fixed default constructor for `homogeneous_color_base` for reference pixel elements ([PR #542](https://github.com/boostorg/gil/pull/542))
-
-### Removed
-- ci: Removed Travis CI configuration
 
 ### Acknowledgements
 
-Samuel Debionne, Edward Diener, Mateusz Łoskot, Debabrata Mandal, Giovanni Mascellani, Harshit Pant, Olzhas Zhumabek
+Samuel Debionne, Mateusz Łoskot, Debabrata Mandal, Harshit Pant, Olzhas Zhumabek
 
 ## [1.75.0] - 2020-12-09
 
