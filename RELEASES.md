@@ -3,6 +3,31 @@
 All notable changes to [Boost.GIL](https://github.com/boostorg/gil/) project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [1.80.0] - 2022-08-10
+
+### Added
+- Added `image` constructor from compatible view ([PR #520](https://github.com/boostorg/gil/pull/520))
+- Added inverse function for affine `matrix3x2` ([PR #527](https://github.com/boostorg/gil/pull/527))
+- Added Perona-Malik anisotropic diffusion algorithm [[PR #500](https://github.com/boostorg/gil/pull/500))
+- GSoC 2020: Add histogram class and related functionality ([PR #499](https://github.com/boostorg/gil/pull/499))
+- GSoC 2020: Add histogram equalization feature ([PR #514](https://github.com/boostorg/gil/pull/514))
+- GSoC 2020: Add histogram matching algorithm ([PR #515](https://github.com/boostorg/gil/pull/515))
+- Added ability to stack images either horizontally (`hstack`) or vertically (`vstack`) ([PR #506](https://github.com/boostorg/gil/pull/506))
+- Added adaptive histogram equalization algorithm ([PR #516](https://github.com/boostorg/gil/pull/516))
+- Added implementation of Hough transformations ([PR #512](https://github.com/boostorg/gil/pull/512))
+
+### Changed
+- documentation: Display that GIL is a header-only library
+
+### Fixed
+- Fixed conversion from RGB to signed CMYK ([PR #522](https://github.com/boostorg/gil/pull/522))
+- Removed unnecessary numeric cast in hsv.hpp ([PR #530](https://github.com/boostorg/gil/pull/530))
+- Fixed default constructor for `homogeneous_color_base` for reference pixel elements ([PR #542](https://github.com/boostorg/gil/pull/542))
+
+### Acknowledgements
+
+Samuel Debionne, Mateusz Łoskot, Debabrata Mandal, Harshit Pant, Olzhas Zhumabek
+
 ## [1.75.0] - 2020-12-09
 
 BREAKING: In next release, we are going to drop support for GCC 5. We may also change the required minimum C++ version from C++11 to C++14.
