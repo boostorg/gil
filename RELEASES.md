@@ -15,18 +15,40 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Added ability to stack images either horizontally (`hstack`) or vertically (`vstack`) ([PR #506](https://github.com/boostorg/gil/pull/506))
 - Added adaptive histogram equalization algorithm ([PR #516](https://github.com/boostorg/gil/pull/516))
 - Added implementation of Hough transformations ([PR #512](https://github.com/boostorg/gil/pull/512))
+- Added standard morphological transformations ([PR #541](https://github.com/boostorg/gil/pull/541))
+- Added rotation of image by arbitrary angle around its center ([PR #565](https://github.com/boostorg/gil/pull/565))
+- Added rasterization support for ellipse ([PR #585](https://github.com/boostorg/gil/pull/585))
+- Added `for_each_pixel` overload for `any_image` ([PR #648](https://github.com/boostorg/gil/pull/648))
 
 ### Changed
 - documentation: Display that GIL is a header-only library
+- Moved numeric extension to core ([PR #573](https://github.com/boostorg/gil/pull/573))
+- Added support for C++17's `<filesystem>` ([PR #636](https://github.com/boostorg/gil/pull/636)).
+  The availability of the ``std::filesystem`` is detected automatically,
+  unless the `BOOST_GIL_IO_USE_BOOST_FILESYSTEM` macro is defined that forces
+  the preference of the Boost.Filesystem.
+- Renamed `pixel_multiply_t` to `pixel_multiplies_t` and `pixel_divide_t` to `pixel_divides_t`([PR #655](https://github.com/boostorg/gil/pull/655))
+
+### Removed
+- BREAKING: Removed support for GCC 5 ([PR #572](https://github.com/boostorg/gil/pull/572))
+- Removed deprecated.hpp ([PR #627](https://github.com/boostorg/gil/pull/627))
 
 ### Fixed
 - Fixed conversion from RGB to signed CMYK ([PR #522](https://github.com/boostorg/gil/pull/522))
 - Removed unnecessary numeric cast in hsv.hpp ([PR #530](https://github.com/boostorg/gil/pull/530))
 - Fixed default constructor for `homogeneous_color_base` for reference pixel elements ([PR #542](https://github.com/boostorg/gil/pull/542))
+- Fixed returning reference to local temporary object in `subchroma_image_view` ([PR #556](https://github.com/boostorg/gil/pull/556))
+- Added missing header guards in diffusion.hpp ([PR #568](https://github.com/boostorg/gil/pull/568))
+- Fixed `any_image_view<>::const_t` ([PR #526](https://github.com/boostorg/gil/pull/526))
+- Fixed C++20 incompatibilities in I/O extensions ([PR #617](https://github.com/boostorg/gil/pull/617))
+- Ensured all examples build without errors ([PR #628](https://github.com/boostorg/gil/pull/628))
+- Fixed `convolve_2d` for images with `float32_t` channel model ([PR #577](https://github.com/boostorg/gil/pull/577))
+- Fixed `for_each_pixel` for non-1d iterable views ([PR #621](https://github.com/boostorg/gil/pull/621))
+- Fixed: `is_equal_to_sixteen` in PNG I/O was less-than test ([PR #650](https://github.com/boostorg/gil/pull/650))
 
 ### Acknowledgements
 
-Samuel Debionne, Mateusz Łoskot, Debabrata Mandal, Harshit Pant, Olzhas Zhumabek
+Samuel Debionne, Nicolas Herry, Gaurav Kumar, Marco Langer, Pranam Lashkari, Mateusz Łoskot, Debabrata Mandal, Felix Morgner, Harshit Pant, Dirk Stolle, Prathamesh Tagore, Olzhas Zhumabek
 
 ## [1.75.0] - 2020-12-09
 
