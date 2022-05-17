@@ -14,10 +14,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - GSoC 2020: Add histogram matching algorithm ([PR #515](https://github.com/boostorg/gil/pull/515))
 - Added ability to stack images either horizontally (`hstack`) or vertically (`vstack`) ([PR #506](https://github.com/boostorg/gil/pull/506))
 - Added adaptive histogram equalization algorithm ([PR #516](https://github.com/boostorg/gil/pull/516))
-- Added implementation of Hough transformations ([PR #512](https://github.com/boostorg/gil/pull/512))
+- Added Standard Hough Transform and circle rasterization ([PR #512](https://github.com/boostorg/gil/pull/512))
+- Added Bresenham's algorithm for line rasterization ([PR #512](https://github.com/boostorg/gil/pull/512))
 - Added standard morphological transformations ([PR #541](https://github.com/boostorg/gil/pull/541))
 - Added rotation of image by arbitrary angle around its center ([PR #565](https://github.com/boostorg/gil/pull/565))
-- Added rasterization support for ellipse ([PR #585](https://github.com/boostorg/gil/pull/585))
+- Added rasterization support for ellipse based on "An Efficient Ellipse-Drawing Algorithm" by Jerry Van Aken ([PR #585](https://github.com/boostorg/gil/pull/585))
 - Added `for_each_pixel` overload for `any_image` ([PR #648](https://github.com/boostorg/gil/pull/648))
 
 ### Changed
