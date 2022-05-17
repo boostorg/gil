@@ -25,7 +25,7 @@ namespace gil = boost::gil;
 
 int main()
 {
-    std::ptrdiff_t size = 32;
+    const std::ptrdiff_t size = 32;
     gil::gray16_image_t input_image(size, size);
     auto input_view = gil::view(input_image);
 
