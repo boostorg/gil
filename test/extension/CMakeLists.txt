@@ -5,6 +5,10 @@
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 #
+if(BOOST_GIL_ENABLE_EXT_RASTERIZATION)
+  add_subdirectory(rasterization)
+endif()
+
 if(BOOST_GIL_ENABLE_EXT_DYNAMIC_IMAGE)
   add_subdirectory(dynamic_image)
 endif()

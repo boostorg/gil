@@ -9,8 +9,8 @@
 #ifndef BOOST_GIL_RASTERIZATION_CIRCLE_HPP
 #define BOOST_GIL_RASTERIZATION_CIRCLE_HPP
 
-#include <boost/gil/detail/math.hpp>
-#include <boost/gil/point.hpp>
+#include "boost/gil/detail/math.hpp"
+#include "boost/gil/point.hpp"
 #include <cmath>
 #include <cstddef>
 

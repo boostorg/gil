@@ -56,6 +56,7 @@ option(BOOST_GIL_ENABLE_EXT_DYNAMIC_IMAGE "Enable Dynamic Image extension, tests
 option(BOOST_GIL_ENABLE_EXT_IO "Enable IO extension, tests and examples (require libjpeg, libpng, libtiff)" ON)
 option(BOOST_GIL_ENABLE_EXT_NUMERIC "Enable Numeric extension, tests and examples" ON)
 option(BOOST_GIL_ENABLE_EXT_TOOLBOX "Enable Toolbox extension, tests and examples" ON)
+option(BOOST_GIL_ENABLE_EXT_RASTERIZATION "Enable Rasterization extension and tests" ON)
 option(BOOST_GIL_USE_CONAN "Use Conan to install dependencies" OFF)
 option(BOOST_GIL_USE_CLANG_TIDY "Set CMAKE_CXX_CLANG_TIDY property on targets to enable clang-tidy linting" OFF)
 set(CMAKE_CXX_STANDARD 11 CACHE STRING "C++ standard version to use (default is 11)")

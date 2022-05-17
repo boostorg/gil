@@ -11,7 +11,7 @@
 
 #include <algorithm>
 #include <boost/gil/image_processing/hough_parameter.hpp>
-#include <boost/gil/rasterization/circle.hpp>
+#include <boost/gil/extension/rasterization/circle.hpp>
 #include <cmath>
 #include <cstddef>
 #include <iterator>

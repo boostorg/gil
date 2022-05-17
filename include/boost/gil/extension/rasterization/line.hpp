@@ -7,7 +7,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#include <boost/gil/point.hpp>
+#include "boost/gil/point.hpp"
 #include <cmath>
 #include <cstddef>
 
