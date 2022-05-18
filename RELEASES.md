@@ -46,6 +46,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Fixed `convolve_2d` for images with `float32_t` channel model ([PR #577](https://github.com/boostorg/gil/pull/577))
 - Fixed `for_each_pixel` for non-1d iterable views ([PR #621](https://github.com/boostorg/gil/pull/621))
 - Fixed: `is_equal_to_sixteen` in PNG I/O was less-than test ([PR #650](https://github.com/boostorg/gil/pull/650))
+- Re-allow `devicen_t` with two components ([PR #654](https://github.com/boostorg/gil/pull/654)).
+  It was unintentionally removed in Boost 1.72.
 
 ### Acknowledgements
 
