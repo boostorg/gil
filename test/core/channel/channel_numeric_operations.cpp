@@ -7,7 +7,7 @@
 // http://www.boost.org/LICENSE_1_0.txt
 //
 #include <boost/gil.hpp>
-#include <boost/gil/extension/numeric/channel_numeric_operations.hpp>
+#include <boost/gil/channel_numeric_operations.hpp>
 
 #include <boost/core/lightweight_test.hpp>
 

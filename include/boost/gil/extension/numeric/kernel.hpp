@@ -13,6 +13,6 @@
 
 #include <boost/config/header_deprecated.hpp>
 
-BOOST_HEADER_DEPRECATED("<boost/gil/image_processing/convolve.hpp>")
+BOOST_HEADER_DEPRECATED("<boost/gil/image_processing/kernel.hpp>")
 
 #endif
