@@ -7,7 +7,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 #include <boost/core/lightweight_test.hpp>
-#include <boost/gil/image_processing/hough_parameter.hpp>
+#include <boost/gil/extension/image_processing/hough_parameter.hpp>
 
 namespace gil = boost::gil;
 

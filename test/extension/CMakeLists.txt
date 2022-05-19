@@ -9,6 +9,10 @@ if(BOOST_GIL_ENABLE_EXT_RASTERIZATION)
   add_subdirectory(rasterization)
 endif()
 
+if(BOOST_GIL_ENABLE_EXT_IMAGE_PROCESSING)
+  add_subdirectory(image_processing)
+endif()
+
 if(BOOST_GIL_ENABLE_EXT_DYNAMIC_IMAGE)
   add_subdirectory(dynamic_image)
 endif()

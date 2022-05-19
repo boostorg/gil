@@ -49,14 +49,14 @@
 #include <boost/gil/utilities.hpp>
 #include <boost/gil/virtual_locator.hpp>
 #include <boost/gil/image_processing/adaptive_histogram_equalization.hpp>
-#include <boost/gil/image_processing/diffusion.hpp>
+#include "boost/gil/extension/image_processing/diffusion.hpp"
 #include <boost/gil/image_processing/filter.hpp>
 #include <boost/gil/image_processing/harris.hpp>
 #include <boost/gil/image_processing/hessian.hpp>
 #include <boost/gil/image_processing/histogram_equalization.hpp>
 #include <boost/gil/image_processing/histogram_matching.hpp>
-#include <boost/gil/image_processing/hough_parameter.hpp>
-#include <boost/gil/image_processing/hough_transform.hpp>
+#include "boost/gil/extension/image_processing/hough_parameter.hpp"
+#include "boost/gil/extension/image_processing/hough_transform.hpp"
 #include <boost/gil/image_processing/morphology.hpp>
 #include <boost/gil/image_processing/numeric.hpp>
 #include <boost/gil/image_processing/scaling.hpp>
