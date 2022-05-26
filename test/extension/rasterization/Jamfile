@@ -8,6 +8,10 @@
 #
 import testing ;
 
+compile line.cpp ;
+compile circle.cpp ;
+compile ellipse.cpp ;
+
 run line.cpp ;
 run circle.cpp ;
 run ellipse.cpp ;

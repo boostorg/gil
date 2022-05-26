@@ -8,6 +8,11 @@
 #
 import testing ;
 
+compile anisotropic_diffusion.cpp ;
+compile hough_circle_transform.cpp ;
+compile hough_line_transform.cpp ;
+compile hough_parameter.cpp ;
+
 run anisotropic_diffusion.cpp ;
 run hough_circle_transform.cpp ;
 run hough_line_transform.cpp ;
