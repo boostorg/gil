@@ -379,6 +379,7 @@ auto color_converted_view(any_image_view<Views...> const& src)
 ///        These are workarounds for GCC 3.4, which thinks color_converted_view is ambiguous with the same method for templated views (in gil/image_view_factory.hpp)
 /// \tparam Views Models Boost.MP11-compatible list of models of ImageViewConcept
 template <typename DstP, typename ...Views, typename CC>
+[[deprecated("Use color_converted_view(const any_image_view<Views...>& src, CC) instead.")]]
 inline
 auto any_color_converted_view(const any_image_view<Views...>& src, CC)
     -> typename color_converted_view_type<any_image_view<Views...>, DstP, CC>::type
@@ -392,6 +393,7 @@ auto any_color_converted_view(const any_image_view<Views...>& src, CC)
 ///        These are workarounds for GCC 3.4, which thinks color_converted_view is ambiguous with the same method for templated views (in gil/image_view_factory.hpp)
 /// \tparam Views Models Boost.MP11-compatible list of models of ImageViewConcept
 template <typename DstP, typename ...Views>
+[[deprecated("Use color_converted_view(any_image_view<Views...> const& src) instead.")]]
 inline
 auto any_color_converted_view(const any_image_view<Views...>& src)
     -> typename color_converted_view_type<any_image_view<Views...>, DstP>::type
