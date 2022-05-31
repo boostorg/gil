@@ -14,6 +14,7 @@
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/metafunctions.hpp>
 #include <boost/gil/point.hpp>
+#include <boost/gil/typedefs.hpp>
 #include <boost/gil/detail/mp11.hpp>
 
 #include <boost/assert.hpp>
@@ -338,7 +339,7 @@ namespace detail {
     struct __nth_channel_view_basic<View,false> {
         using type = typename view_type<typename channel_type<View>::type, gray_layout_t, false, true, view_is_mutable<View>::value>::type;
 
-        static type make(View const& src, std::size_t n) {
+        static type make(View const& src, index_t n) {
             using locator_t = typename type::xy_locator;
             using x_iterator_t = typename type::x_iterator;
             using x_iterator_base_t = typename iterator_adaptor_get_base<x_iterator_t>::type;
@@ -351,7 +352,7 @@ namespace detail {
     template <typename View>
     struct __nth_channel_view_basic<View,true> {
         using type = typename view_type<typename channel_type<View>::type, gray_layout_t, false, false, view_is_mutable<View>::value>::type;
-        static type make(View const& src, std::size_t n) {
+        static type make(View const& src, index_t n) {
             using x_iterator_t = typename type::x_iterator;
             return interleaved_view(src.width(),src.height(),(x_iterator_t)&(src(0,0)[n]), src.pixels().row_size());
         }
@@ -375,7 +376,7 @@ namespace detail {
     public:
         using type = typename __nth_channel_view_basic<View,adjacent>::type;
 
-        static type make(View const& src, std::size_t n) {
+        static type make(View const& src, index_t n) {
             return __nth_channel_view_basic<View,adjacent>::make(src,n);
         }
     };
@@ -403,11 +404,11 @@ namespace detail {
         using reference = mp11::mp_if_c<is_mutable, ref_t, value_type>;
         using result_type = reference;
 
-        nth_channel_deref_fn(std::size_t n=0) : _n(n) {}
+        nth_channel_deref_fn(index_t n=0) : _n(n) {}
         template <typename P>
         nth_channel_deref_fn(const nth_channel_deref_fn<P>& d) : _n(d._n) {}
 
-        std::size_t _n;        // the channel to use
+        index_t _n;        // the channel to use
 
         auto operator()(argument_type srcP) const -> result_type
         {
@@ -421,7 +422,7 @@ namespace detail {
         using AD = typename View::template add_deref<deref_t>;
     public:
         using type = typename AD::type;
-        static type make(View const& src, std::size_t n) {
+        static type make(View const& src, index_t n) {
             return AD::make(src, deref_t(n));
         }
     };
@@ -440,12 +441,12 @@ private:
     using VB = detail::__nth_channel_view<View,view_is_basic<View>::value>;
 public:
     using type = typename VB::type;
-    static type make(View const& src, std::size_t n) { return VB::make(src,n); }
+    static type make(View const& src, index_t n) { return VB::make(src,n); }
 };
 
 /// \ingroup ImageViewTransformationsNthChannel
 template <typename View>
-typename nth_channel_view_type<View>::type nth_channel_view(View const& src, std::size_t n) {
+typename nth_channel_view_type<View>::type nth_channel_view(View const& src, index_t n) {
     return nth_channel_view_type<View>::make(src,n);
 }
 
@@ -454,11 +455,11 @@ typename nth_channel_view_type<View>::type nth_channel_view(View const& src, std
 /// \brief single-channel (grayscale) view of the K-th channel of a given image_view. The channel index is a template parameter
 
 namespace detail {
-    template <std::size_t K, typename View, bool AreChannelsTogether> struct __kth_channel_view_basic;
+    template <index_t K, typename View, bool AreChannelsTogether> struct __kth_channel_view_basic;
 
     // kth_channel_view when the channels are not adjacent in memory. This can happen for multi-channel interleaved images
     // or images with a step
-    template <std::size_t K, typename View>
+    template <index_t K, typename View>
     struct __kth_channel_view_basic<K,View,false> {
     private:
         using channel_t = typename kth_element_type<typename View::value_type,K>::type;
@@ -475,7 +476,7 @@ namespace detail {
     };
 
     // kth_channel_view when the channels are together in memory (true for simple grayscale or planar images)
-    template <std::size_t K, typename View>
+    template <index_t K, typename View>
     struct __kth_channel_view_basic<K,View,true> {
     private:
         using channel_t = typename kth_element_type<typename View::value_type, K>::type;
@@ -487,10 +488,10 @@ namespace detail {
         }
     };
 
-    template <std::size_t K, typename View, bool IsBasic> struct __kth_channel_view;
+    template <index_t K, typename View, bool IsBasic> struct __kth_channel_view;
 
     // For basic (memory-based) views dispatch to __kth_channel_view_basic
-    template <std::size_t K, typename View> struct __kth_channel_view<K,View,true>
+    template <index_t K, typename View> struct __kth_channel_view<K,View,true>
     {
     private:
         using src_x_iterator = typename View::x_iterator;
@@ -515,7 +516,7 @@ namespace detail {
     /// If the input is a pixel value or constant reference, the function object is immutable. Otherwise it is mutable (and returns non-const reference to the k-th channel)
     /// \tparam SrcP reference to PixelConcept (could be pixel value or const/non-const reference)
     /// Examples: pixel<T,L>, pixel<T,L>&, const pixel<T,L>&, planar_pixel_reference<T&,L>, planar_pixel_reference<const T&,L>
-    template <std::size_t K, typename SrcP>
+    template <index_t K, typename SrcP>
     struct kth_channel_deref_fn
     {
         static constexpr bool is_mutable =
@@ -544,7 +545,7 @@ namespace detail {
         }
     };
 
-    template <std::size_t K, typename View> struct __kth_channel_view<K,View,false> {
+    template <index_t K, typename View> struct __kth_channel_view<K,View,false> {
     private:
         using deref_t = kth_channel_deref_fn<K,typename View::reference>;
         using AD = typename View::template add_deref<deref_t>;
@@ -562,7 +563,7 @@ namespace detail {
 /// If the channels in the source view are adjacent in memory (such as planar non-step view or single-channel view) then the
 /// return view is a single-channel non-step view.
 /// If the channels are non-adjacent (interleaved and/or step view) then the return view is a single-channel step view.
-template <std::size_t K, typename View>
+template <index_t K, typename View>
 struct kth_channel_view_type {
 private:
     BOOST_GIL_CLASS_REQUIRE(View, boost::gil, ImageViewConcept)
@@ -573,7 +574,7 @@ public:
 };
 
 /// \ingroup ImageViewTransformationsKthChannel
-template <std::size_t K, typename View>
+template <index_t K, typename View>
 auto kth_channel_view(View const& src)
     -> typename kth_channel_view_type<K,View>::type
 {

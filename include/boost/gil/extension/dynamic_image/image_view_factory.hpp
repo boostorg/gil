@@ -13,6 +13,7 @@
 #include <boost/gil/dynamic_step.hpp>
 #include <boost/gil/image_view_factory.hpp>
 #include <boost/gil/point.hpp>
+#include <boost/gil/typedefs.hpp>
 #include <boost/gil/detail/mp11.hpp>
 
 #include <cstddef>
@@ -137,7 +138,7 @@ struct nth_channel_view_fn
 {
     using result_type = ResultView;
 
-    nth_channel_view_fn(std::size_t n) : _n(n) {}
+    nth_channel_view_fn(index_t n) : _n(n) {}
 
     template <typename View>
     auto operator()(View const& src) const -> result_type
@@ -145,7 +146,7 @@ struct nth_channel_view_fn
         return result_type(nth_channel_view(src,_n));
     }
 
-    std::size_t _n;
+    index_t _n;
 };
 
 template <typename DstP, typename ResultView, typename CC = default_color_converter>
@@ -306,7 +307,7 @@ struct nth_channel_view_type<any_image_view<Views...>>
 /// \tparam Views Models Boost.MP11-compatible list of models of ImageViewConcept
 template <typename ...Views>
 inline
-auto nth_channel_view(any_image_view<Views...> const& src, std::size_t n)
+auto nth_channel_view(any_image_view<Views...> const& src, index_t n)
     -> typename nth_channel_view_type<any_image_view<Views...>>::type
 {
     using result_view_t = typename nth_channel_view_type<any_image_view<Views...>>::type;
