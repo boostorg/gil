@@ -9,7 +9,7 @@
 #include <boost/gil/algorithm.hpp>
 #include <boost/gil/extension/io/png.hpp>
 #include <boost/gil/image.hpp>
-#include <boost/gil/image_processing/diffusion.hpp>
+#include "boost/gil/extension/image_processing/diffusion.hpp"
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/io/typedefs.hpp>
 #include <boost/gil/typedefs.hpp>

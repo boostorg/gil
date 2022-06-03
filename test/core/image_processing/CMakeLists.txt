@@ -19,10 +19,6 @@ foreach(_name
     box_filter
     median_filter
     sobel_scharr
-    anisotropic_diffusion
-    hough_parameter
-    hough_line_transform
-    hough_circle_transform
     convolve
     convolve_2d
     convolve_cols

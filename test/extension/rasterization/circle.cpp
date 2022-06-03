@@ -8,7 +8,7 @@
 //
 
 #include <boost/core/lightweight_test.hpp>
-#include <boost/gil/rasterization/circle.hpp>
+#include "boost/gil/extension/rasterization/circle.hpp"
 #include <cstddef>
 #include <vector>
 

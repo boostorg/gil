@@ -10,7 +10,7 @@
 #ifndef BOOST_GIL_IMAGE_PROCESSING_DIFFUSION_HPP
 #define BOOST_GIL_IMAGE_PROCESSING_DIFFUSION_HPP
 
-#include "boost/gil/detail/math.hpp"
+#include <boost/gil/detail/math.hpp>
 #include <boost/gil/algorithm.hpp>
 #include <boost/gil/color_base_algorithm.hpp>
 #include <boost/gil/image.hpp>

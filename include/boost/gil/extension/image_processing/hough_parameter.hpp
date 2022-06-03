@@ -9,7 +9,7 @@
 #ifndef BOOST_GIL_IMAGE_PROCESSING_HOUGH_PARAMETER_HPP
 #define BOOST_GIL_IMAGE_PROCESSING_HOUGH_PARAMETER_HPP
 
-#include <boost/gil/point.hpp>
+#include "boost/gil/point.hpp"
 #include <cmath>
 #include <cstddef>
 

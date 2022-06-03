@@ -10,8 +10,8 @@
 #define BOOST_GIL_IMAGE_PROCESSING_HOUGH_TRANSFORM_HPP
 
 #include <algorithm>
-#include <boost/gil/image_processing/hough_parameter.hpp>
-#include <boost/gil/rasterization/circle.hpp>
+#include <boost/gil/extension/image_processing/hough_parameter.hpp>
+#include <boost/gil/extension/rasterization/circle.hpp>
 #include <cmath>
 #include <cstddef>
 #include <iterator>

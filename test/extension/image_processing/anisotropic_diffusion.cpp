@@ -5,11 +5,11 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#include "../test_fixture.hpp"
-#include "boost/gil/algorithm.hpp"
+#include <core/test_fixture.hpp>
+#include <boost/gil/algorithm.hpp>
 #include <boost/gil/color_base_algorithm.hpp>
 #include <boost/gil/image.hpp>
-#include <boost/gil/image_processing/diffusion.hpp>
+#include <boost/gil/extension/image_processing/diffusion.hpp>
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/pixel.hpp>
 #include <boost/gil/typedefs.hpp>
