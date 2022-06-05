@@ -244,7 +244,7 @@ public:
 
     std::size_t size() const
     {
-        return square_size;
+        return square_size ? square_size : std::sqrt((Core ()).size());
     }
 
     typename Core::value_type at(std::size_t x, std::size_t y) const

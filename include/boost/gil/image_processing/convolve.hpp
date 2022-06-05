@@ -2,6 +2,7 @@
 // Copyright 2005-2007 Adobe Systems Incorporated
 // Copyright 2019 Miral Shah <miralshah2211@gmail.com>
 // Copyright 2019-2021 Pranam Lashkari <plashkari628@gmail.com>
+// Copyright 2021 Prathamesh Tagore <prathameshtagore@gmail.com>
 //
 // Distributed under the Boost Software License, Version 1.0
 // See accompanying file LICENSE_1_0.txt or copy at
@@ -32,14 +33,14 @@ namespace boost { namespace gil {
 namespace detail {
 
 /// \brief Computes the cross-correlation of 1D kernel with rows of an image.
-/// \tparam PixelAccum - Specifies tha data type which will be used for creating buffer container
+/// \tparam PixelAccum - Specifies tha data type which will be used for creating buffer container 
 /// utilized for holding source image pixels after applying appropriate boundary manipulations.
 /// \tparam SrcView - Specifies the type of gil view of source image which is to be row correlated
 /// with the kernel.
 /// \tparam Kernel - Specifies the type of 1D kernel which will be row correlated with source image.
 /// \tparam DstView -  Specifies the type of gil view which will store the result of row
 /// correlation between source image and kernel.
-/// \tparam Correlator - Specifies the type of correlator which should be used for performing
+/// \tparam Correlator - Specifies the type of correlator which should be used for performing 
 /// correlation.
 /// \param src_view - Gil view of source image used in correlation.
 /// \param kernel - 1D kernel which will be correlated with source image.
@@ -176,7 +177,7 @@ private:
 };
 
 /// \brief Provides functionality for performing 1D correlation between the kernel and a buffer
-/// storing row pixels of source image. Kernel size is a template parameter and must be
+/// storing row pixels of source image. Kernel size is a template parameter and must be 
 /// compulsorily specified while using.
 template <std::size_t Size, typename PixelAccum>
 struct correlator_k
@@ -196,7 +197,7 @@ struct correlator_k
 
 /// \ingroup ImageAlgorithms
 /// \brief Correlate 1D variable-size kernel along the rows of image.
-/// \tparam PixelAccum Specifies tha data type which will be used while creating buffer container
+/// \tparam PixelAccum Specifies tha data type which will be used while creating buffer container 
 /// which is utilized for holding source image pixels after applying appropriate boundary
 /// manipulations.
 /// \tparam SrcView Models ImageViewConcept
@@ -216,7 +217,7 @@ void correlate_rows(
 
 /// \ingroup ImageAlgorithms
 /// \brief Correlates 1D variable-size kernel along the columns of image.
-/// \tparam PixelAccum Specifies tha data type which will be used for creating buffer container
+/// \tparam PixelAccum Specifies tha data type which will be used for creating buffer container 
 /// utilized for holding source image pixels after applying appropriate boundary manipulations.
 /// \tparam SrcView Models ImageViewConcept
 /// \tparam Kernel Specifies the type of 1D kernel which will be column correlated with source
@@ -236,7 +237,7 @@ void correlate_cols(
 
 /// \ingroup ImageAlgorithms
 /// \brief Convolves 1D variable-size kernel along the rows of image.
-/// \tparam PixelAccum Specifies tha data type which will be used for creating buffer container
+/// \tparam PixelAccum Specifies tha data type which will be used for creating buffer container 
 /// utilized for holding source image pixels after applying appropriate boundary manipulations.
 /// \tparam SrcView Models ImageViewConcept
 /// \tparam Kernel Specifies the type of 1D kernel which will be row convoluted with source image.
@@ -254,7 +255,7 @@ void convolve_rows(
 
 /// \ingroup ImageAlgorithms
 /// \brief Convolves 1D variable-size kernel along the columns of image.
-/// \tparam PixelAccum Specifies tha data type which will be used for creating buffer container
+/// \tparam PixelAccum Specifies tha data type which will be used for creating buffer container 
 /// utilized for holding source image pixels after applying appropriate boundary manipulations.
 /// \tparam SrcView Models ImageViewConcept
 /// \tparam Kernel Specifies the type of 1D kernel which will be column convoluted with source
@@ -274,7 +275,7 @@ void convolve_cols(
 
 /// \ingroup ImageAlgorithms
 /// \brief Correlate 1D fixed-size kernel along the rows of image.
-/// \tparam PixelAccum Specifies tha data type which will be used for creating buffer container
+/// \tparam PixelAccum Specifies tha data type which will be used for creating buffer container 
 /// utilized for holding source image pixels after applying appropriate boundary manipulations.
 /// \tparam SrcView Models ImageViewConcept
 /// \tparam Kernel Specifies the type of 1D kernel which will be row correlated with source image.
@@ -293,7 +294,7 @@ void correlate_rows_fixed(
 
 /// \ingroup ImageAlgorithms
 /// \brief Correlate 1D fixed-size kernel along the columns of image
-/// \tparam PixelAccum Specifies tha data type which will be used for creating buffer container
+/// \tparam PixelAccum Specifies tha data type which will be used for creating buffer container 
 /// utilized for holding source image pixels after applying appropriate boundary manipulations.
 /// \tparam SrcView Models ImageViewConcept
 /// \tparam Kernel Specifies the type of 1D kernel which will be column correlated with source
@@ -313,7 +314,7 @@ void correlate_cols_fixed(
 
 /// \ingroup ImageAlgorithms
 /// \brief Convolve 1D fixed-size kernel along the rows of image
-/// \tparam PixelAccum Specifies tha data type which will be used for creating buffer container
+/// \tparam PixelAccum Specifies tha data type which will be used for creating buffer container 
 /// utilized for holding source image pixels after applying appropriate boundary manipulations.
 /// \tparam SrcView Models ImageViewConcept
 /// \tparam Kernel Specifies the type of 1D kernel which will be row convolved with source image.
@@ -331,7 +332,7 @@ void convolve_rows_fixed(
 
 /// \ingroup ImageAlgorithms
 /// \brief Convolve 1D fixed-size kernel along the columns of image
-/// \tparam PixelAccum Specifies tha data type which will be used for creating buffer container
+/// \tparam PixelAccum Specifies tha data type which will be used for creating buffer container 
 /// utilized for holding source image pixels after applying appropriate boundary manipulations.
 /// \tparam SrcView Models ImageViewConcept
 /// \tparam Kernel Specifies the type of 1D kernel which will be column convolved with source
@@ -354,7 +355,7 @@ namespace detail
 
 /// \ingroup ImageAlgorithms
 /// \brief Convolve 1D variable-size kernel along both rows and columns of image
-/// \tparam PixelAccum Specifies tha data type which will be used for creating buffer container
+/// \tparam PixelAccum Specifies tha data type which will be used for creating buffer container 
 /// utilized for holding source image pixels after applying appropriate boundary manipulations.
 /// \tparam SrcView Models ImageViewConcept
 /// \tparam Kernel Specifies the type of 1D kernel which will be used for 1D row and column
@@ -372,52 +373,588 @@ void convolve_1d(
     convolve_cols<PixelAccum>(dst_view, kernel, dst_view, option);
 }
 
-template <typename SrcView, typename DstView, typename Kernel>
-void convolve_2d_impl(SrcView const& src_view, DstView const& dst_view, Kernel const& kernel)
+/// \brief Provides functionality for performing correlation between the kernel and buffer. 
+/// Kernel size is to be provided through constructor for all instances. 
+/// This correlator is specifically used in 2D correlation.
+/// \tparam PixelAccum Specifies tha data type which will be used for creating buffer container 
+/// utilized for holding source image pixels after applying appropriate boundary manipulations.
+template <typename PixelAccum>
+class correlator_n_2d
 {
-    int flip_ker_row, flip_ker_col, row_boundary, col_boundary;
-    float aux_total;
-    for (std::ptrdiff_t view_row = 0; view_row < src_view.height(); ++view_row)
+public:
+    correlator_n_2d(std::size_t kernel_dimension) : _kernel_dimension(kernel_dimension) {}
+
+    template <typename SrcIterator, typename KernelIterator, typename DstIterator>
+    void operator()(
+        SrcIterator src_begin,
+        std::size_t src_size,
+        KernelIterator kernel_begin,
+        DstIterator dst_begin)
     {
-        for (std::ptrdiff_t view_col = 0; view_col < src_view.width(); ++view_col)
+        correlate_pixels_n_2d<PixelAccum>(src_begin, src_size, kernel_begin, _kernel_dimension, 
+            dst_begin);
+    }
+
+private:
+    std::size_t _kernel_dimension{0};
+};
+
+/// \brief Provides functionality for performing correlation between the kernel and buffer.
+/// Kernel size is a template parameter and must be compulsorily specified while using.
+/// This correlator is specifically used in 2D correlation.
+/// \tparam kernel_dimension Stores vertical/horizontal length of kernel used for correlation.
+/// \tparam PixelAccum Specifies tha data type which will be used for creating buffer container 
+/// utilized for holding source image pixels after applying appropriate boundary manipulations.
+template <std::size_t kernel_dimension, typename PixelAccum>
+struct correlator_k_2d
+{
+    template <typename SrcIterator, typename KernelIterator, typename DstIterator>
+    void operator()(
+        SrcIterator src_begin,
+        std::size_t src_size,
+        KernelIterator kernel_begin,
+        DstIterator dst_begin)
+    {
+        correlate_pixels_k_2d<kernel_dimension, PixelAccum>(src_begin, src_size, kernel_begin, 
+            dst_begin);
+    }
+};
+
+
+// For filling buffer container and calculating correlation, the entire image is divided in to 3 
+// sections as 
+// 1. Upper section : Perform left, right as well as upper extrapolation in this section.
+// 2. Middle section : Perform left and right extrapolation in this section.
+// 3. Lower section : Perform left, right as well as lower extrapolation in this section.
+
+// Now, each of the above sections are further divided into small parts. These parts differ based 
+// on considered section. Their definitions are as follows :  
+// 1. left part : Left extrapolated part -> extrapolation in only left direction.
+// 2. right part : Right extrapolated part -> extrapolation in only right direction.
+// 3. upper part : Upper extrapolated part -> extrapolation in only upper direction.
+// 4. lower part : Lower extrapolated part -> extrapolation in only lower direction.
+// 5. Im_fill part : This part contains data from the source image(No extrapolation required to 
+// fill this part).
+
+// Upper section contains left part, right part, upper part and Im_fill part.
+// Middle section contains left part, right part and Im_fill part.
+// Lower section contains left part, right part, lower part and Im_fill part.
+
+// Note : There are no Upper and Lower sections when 
+// boundary_option == output_ignore || boundary_option == output_zero.
+
+/// \brief Computes the cross-correlation of a 2D kernel with an image.
+/// \tparam PixelAccum - Specifies tha data type which will be used for creating buffer container 
+/// utilized for holding source image pixels after applying appropriate boundary manipulations.
+/// \tparam SrcView - Specifies the type of gil view of source image which is to be correlated
+/// with the kernel.
+/// \tparam Kernel - Specifies the type of 2D kernel which will be correlated with source image.
+/// \tparam DstView -  Specifies the type of gil view which will store the result of 
+/// correlation between source image and kernel.
+/// \tparam Correlator - Specifies the type of correlator which should be used for performing 
+/// correlation.
+/// \param src_view - Gil view of source image used in correlation.
+/// \param kernel - 2D kernel which will be correlated with source image.
+/// \param dst_view - Gil view which will store the result of correlation between "src_view"
+/// and "kernel".
+/// \param option - Specifies the manner in which boundary pixels of "dst_view" should be computed.
+/// \param correlator - Correlator which will be used for performing correlation.
+template <typename PixelAccum, typename SrcView, typename Kernel, typename DstView, typename Correlator>
+void correlate_2d_impl(SrcView src_view, Kernel kernel, DstView dst_view, 
+    boundary_option option, Correlator correlator)
+{
+    long unsigned int const upper_extrapolation_size = kernel.upper_size();
+    long unsigned int const lower_extrapolation_size = kernel.lower_size();
+    long unsigned int const left_extrapolation_size = kernel.left_size();
+    long unsigned int const right_extrapolation_size = kernel.right_size();
+
+    bool explicit_fill = true;
+    long unsigned int col = 0, row = 0;
+    PixelAccum zero_pixel;
+    pixel_zeros_t<PixelAccum>()(zero_pixel);
+
+    if (option == boundary_option::output_ignore || option == boundary_option::output_zero)
+    {
+        using dst_pixel_ref_t = typename pixel_proxy<typename DstView::value_type>::type;
+        std::vector<PixelAccum> buffer(kernel.size() * (src_view.width()));
+
+        // Fill left, right and Im_fill part of Middle section.
+        for (col = 0; col < src_view.width(); ++col)
         {
-            aux_total = 0.0f;
-            for (std::size_t kernel_row = 0; kernel_row < kernel.size(); ++kernel_row)
+            assign_pixels(src_view.col_begin(col), src_view.col_begin(col) + kernel.size(), 
+                buffer.begin() + col * kernel.size());
+        }
+
+        // Start moving through middle section of image.
+        for (row = upper_extrapolation_size; row < src_view.height() - lower_extrapolation_size; ++row)
+        {
+            // Update buffer with row pixels
+            if (row - upper_extrapolation_size > 0)
             {
-                flip_ker_row = kernel.size() - 1 - kernel_row;      // row index of flipped kernel
-
-                for (std::size_t kernel_col = 0; kernel_col < kernel.size(); ++kernel_col)
+                for (col = 0; col < src_view.width(); ++col)
                 {
-                    flip_ker_col = kernel.size() - 1 - kernel_col; // column index of flipped kernel
+                    std::ptrdiff_t left_bound = col * kernel.size(); 
+                    std::rotate(buffer.begin() + left_bound, buffer.begin() + left_bound + 1, 
+                        buffer.begin() + left_bound + kernel.size());
+                    buffer[left_bound + kernel.size() - 1] = 
+                        src_view(col, row + lower_extrapolation_size);
+                }
+            }
+            correlator(buffer.begin(), buffer.size(), kernel.begin(), 
+                dst_view.row_begin(row) + left_extrapolation_size);
 
-                    // index of input signal, used for checking boundary
-                    row_boundary = view_row + (kernel.center_y() - flip_ker_row);
-                    col_boundary = view_col + (kernel.center_x() - flip_ker_col);
+            // handle boundary pixels of destination image
+            if (option == boundary_option::output_ignore)
+            {
+                assign_pixels(src_view.row_begin(row), 
+                    src_view.row_begin(row) + left_extrapolation_size, dst_view.row_begin(row));
+                assign_pixels(src_view.row_end(row) - right_extrapolation_size, src_view.row_end(row), 
+                    dst_view.row_end(row) - right_extrapolation_size);
+            }
+            else 
+            {
+                typename DstView::value_type dst_zero;
+                pixel_assigns_t<PixelAccum, dst_pixel_ref_t>()(zero_pixel, dst_zero);
+                std::fill_n(dst_view.row_begin(row), left_extrapolation_size, dst_zero);
+                std::fill_n(dst_view.row_end(row) - right_extrapolation_size, 
+                    right_extrapolation_size, dst_zero);
+            }
+        }
 
-                    // ignore input samples which are out of bound
-                    if (row_boundary >= 0 && row_boundary < src_view.height() &&
-                        col_boundary >= 0 && col_boundary < src_view.width())
+        // handle boundary pixels of destination image.
+        if (option == boundary_option::output_ignore)
+        {
+            for (row = 0; row < upper_extrapolation_size; ++row)
+                assign_pixels(src_view.row_begin(row), src_view.row_end(row), dst_view.row_begin(row));
+
+            for (row = src_view.height() - lower_extrapolation_size; row < src_view.height(); ++row)
+                assign_pixels(src_view.row_begin(row), src_view.row_end(row), dst_view.row_begin(row));
+        }
+        else
+        {
+            typename DstView::value_type dst_zero;
+            pixel_assigns_t<PixelAccum, dst_pixel_ref_t>()(zero_pixel, dst_zero);
+            for (row = 0; row < upper_extrapolation_size; ++row)
+                std::fill_n(dst_view.row_begin(row), src_view.width(), dst_zero);
+            for (row = src_view.height() - lower_extrapolation_size; row < src_view.height(); ++row)
+                std::fill_n(dst_view.row_begin(row), src_view.width(), dst_zero);
+        }
+    }
+    else 
+    {
+        std::vector<PixelAccum> buffer(kernel.size() * (src_view.width() + kernel.size() - 1));
+        if (option == boundary_option::extend_zero)
+        {
+            // Fill left part of upper section
+            std::fill_n(buffer.begin(), kernel.size() * left_extrapolation_size, zero_pixel);
+            // Fill right part of upper section
+            std::fill_n(buffer.begin() + buffer.size() - kernel.size() * right_extrapolation_size, 
+                kernel.size() * right_extrapolation_size, zero_pixel);
+        
+            // Fill upper part of upper section
+            for (long unsigned int index = kernel.size() * left_extrapolation_size; 
+                index < buffer.size() - kernel.size() * right_extrapolation_size; 
+                index += kernel.size())
+            {
+                std::fill_n(buffer.begin() + index, upper_extrapolation_size, zero_pixel);
+            }
+        }
+        else if (option == boundary_option::extend_constant)
+        {
+            std::vector<PixelAccum> intermediate_buffer(kernel.size());
+
+            assign_pixels(src_view.col_begin(0), 
+                src_view.col_begin(0) + kernel.size() - upper_extrapolation_size, 
+                intermediate_buffer.begin() + upper_extrapolation_size);
+
+            std::fill_n(intermediate_buffer.begin(), upper_extrapolation_size, 
+                intermediate_buffer[upper_extrapolation_size]);
+
+            // Fill left part of upper section
+            for (long unsigned int inner_index = 0; inner_index < kernel.size() * left_extrapolation_size; 
+                inner_index += kernel.size())
+            {
+                std::copy(intermediate_buffer.begin(), intermediate_buffer.end(), 
+                    buffer.begin() + inner_index);
+            }
+
+            assign_pixels(src_view.col_begin(src_view.width() - 1), 
+                src_view.col_begin(src_view.width() - 1) + kernel.size() - upper_extrapolation_size, 
+                intermediate_buffer.begin() + upper_extrapolation_size);
+
+            std::fill_n(intermediate_buffer.begin(), upper_extrapolation_size, 
+                intermediate_buffer[upper_extrapolation_size]);
+
+            // Fill right part of upper section
+            for (long unsigned int inner_index = buffer.size() - kernel.size() * right_extrapolation_size; 
+                inner_index < buffer.size(); inner_index += kernel.size())
+            {
+                std::copy(intermediate_buffer.begin(), intermediate_buffer.end(), 
+                    buffer.begin() + inner_index);
+            }
+
+            // Fill upper part of upper section
+            for (long unsigned int index = kernel.size() * left_extrapolation_size; 
+                index < buffer.size() - kernel.size() * right_extrapolation_size; 
+                index += kernel.size())
+            {
+                for (long unsigned int inner_index = 0; inner_index < upper_extrapolation_size; 
+                    ++inner_index)
+                {
+                    buffer[index + inner_index] = 
+                        src_view((index - kernel.size() * left_extrapolation_size) / kernel.size(), 0);
+                }
+            }
+        }
+        else if (option == boundary_option::extend_reflection)
+        {
+            explicit_fill = false;
+            long unsigned int row_bound = 
+                kernel.size() - upper_extrapolation_size > upper_extrapolation_size ? 
+                kernel.size() - upper_extrapolation_size : upper_extrapolation_size;
+
+            // Fill left part of upper section.
+            for (col = 0; col < left_extrapolation_size; ++col)
+            {
+                for (row = 0; row < row_bound; ++row)
+                {
+                    if (row < kernel.size() - upper_extrapolation_size)
                     {
-                        aux_total +=
-                            src_view(col_boundary, row_boundary)[0] *
-                            kernel.at(flip_ker_row, flip_ker_col);
+                        buffer[col * kernel.size() + upper_extrapolation_size + row] = 
+                            src_view(left_extrapolation_size - col - 1, row);
+                    }
+                    if (row < upper_extrapolation_size)
+                    {
+                        buffer[col * kernel.size() + upper_extrapolation_size - row - 1] = 
+                            src_view(left_extrapolation_size - col - 1, row);
                     }
                 }
             }
-            dst_view(view_col, view_row) = aux_total;
+
+            // Fill upper part as well as Im_fill part of upper section.
+            for (col = 0; col < src_view.width(); ++col)
+            {
+                for (row = 0; row < row_bound; ++row)
+                {
+                    if (row < kernel.size() - upper_extrapolation_size)
+                    {
+                        buffer[(col + left_extrapolation_size) * kernel.size() 
+                            + upper_extrapolation_size + row] = src_view(col, row);
+                    }
+                    if (row < upper_extrapolation_size)
+                    {
+                        buffer[(col + left_extrapolation_size) * kernel.size() 
+                            + upper_extrapolation_size - row - 1] = src_view(col, row);
+                    }
+                }
+            }
+
+            // Fill right part of upper section
+            for (col = src_view.width() - right_extrapolation_size; col < src_view.width(); ++col)
+            {
+                for (row = 0; row < row_bound; ++row)
+                {
+                    if (row < kernel.size() - upper_extrapolation_size)
+                    {
+                        buffer[(col + right_extrapolation_size + left_extrapolation_size) 
+                            * kernel.size() + upper_extrapolation_size + row] = 
+                            src_view(src_view.width() - col + src_view.width() - right_extrapolation_size 
+                            - 1, row);
+                    }
+                    if (row < upper_extrapolation_size)
+                    {
+                        buffer[(col + right_extrapolation_size + left_extrapolation_size) 
+                            * kernel.size() + upper_extrapolation_size - row - 1] = 
+                            src_view(src_view.width() - col + src_view.width() - right_extrapolation_size 
+                            - 1, row);
+                    }
+                }
+            }
+        }
+        else if (option == boundary_option::extend_padded)
+        {
+            typename SrcView::xy_locator loc_center = src_view.xy_at(0, 0);
+            // Fill left part of upper section
+            for (col = 0; col < left_extrapolation_size; ++col)
+            {
+                for (row = 0; row < kernel.size(); ++row)
+                {
+                    buffer[col * kernel.size() + row] = 
+                        loc_center(col - left_extrapolation_size, row - upper_extrapolation_size);
+                }
+            }
+
+            // Fill upper part of upper section
+            for (col = 0; col < src_view.width(); ++col)
+            {
+                loc_center = src_view.xy_at(col, 0);
+                for (row = 0; row < upper_extrapolation_size; ++row)
+                {
+                    buffer[(left_extrapolation_size + col) * kernel.size() + row] = 
+                        loc_center(0, row - upper_extrapolation_size);
+                }
+            }
+
+            loc_center = src_view.xy_at(src_view.width() - 1, 0);
+            // Fill right part of upper section
+            for (col = 1; col <= right_extrapolation_size; ++col)
+            {
+                for (row = 0; row < kernel.size(); ++row)
+                {
+                    buffer[(col - 1 + left_extrapolation_size + src_view.width()) * kernel.size() + 
+                        row] = loc_center(col, row - upper_extrapolation_size);
+                }
+            }
+        }
+
+        if (explicit_fill == true)
+        {
+            // Fill Im_fill part of upper section
+            for (col = 0; col < src_view.width(); ++col)
+            {
+                assign_pixels(src_view.col_begin(col), 
+                    src_view.col_begin(col) + kernel.size() - upper_extrapolation_size, 
+                    buffer.begin() + (left_extrapolation_size + col) * kernel.size() + 
+                    upper_extrapolation_size);
+            }
+        }
+
+        // Start moving through middle section of image
+        for (row = 0; row < src_view.height() - lower_extrapolation_size; ++row)
+        {
+            if (row > 0)
+            {
+                // Update left part of middle section
+                for (long unsigned int temp_col = 0; temp_col < left_extrapolation_size; ++temp_col)
+                {
+                    std::ptrdiff_t left_bound = temp_col * kernel.size();
+                    std::rotate(buffer.begin() + left_bound, buffer.begin() + left_bound + 1, 
+                        buffer.begin() + left_bound + kernel.size());
+                
+                    if (option == boundary_option::extend_zero)
+                    {
+                        buffer[left_bound + kernel.size() - 1] = zero_pixel;
+                    }
+                    else if (option == boundary_option::extend_constant)
+                    {
+                        buffer[left_bound + kernel.size() - 1] = 
+                            src_view(0, row + lower_extrapolation_size);
+                    }
+                    else if (option == boundary_option::extend_reflection)
+                    {
+                        buffer[left_bound + kernel.size() - 1] = 
+                            src_view(left_extrapolation_size - temp_col - 1,
+                            row + lower_extrapolation_size);
+                    }
+                    else if (option == boundary_option::extend_padded)
+                    {
+                        typename SrcView::xy_locator loc_center = 
+                            src_view.xy_at(0, row + lower_extrapolation_size);
+                        buffer[left_bound + kernel.size() - 1] = 
+                            loc_center(temp_col - left_extrapolation_size, 0);
+                    }
+                }
+
+                // Update right part of middle section
+                for (long unsigned int temp_col = 0; temp_col < right_extrapolation_size; ++temp_col)
+                {
+                    std::ptrdiff_t left_bound = (left_extrapolation_size + src_view.width() + 
+                        temp_col) * kernel.size();
+                    std::rotate(buffer.begin() + left_bound, buffer.begin() + left_bound + 1, 
+                        buffer.begin() + left_bound + kernel.size());
+
+                    if (option == boundary_option::extend_zero)
+                    {
+                        buffer[left_bound + kernel.size() - 1] = zero_pixel;
+                    }
+                    else if (option == boundary_option::extend_constant)
+                    {
+                        buffer[left_bound + kernel.size() - 1] = 
+                            src_view(src_view.width() - 1, row + lower_extrapolation_size);
+                    }
+                    else if (option == boundary_option::extend_reflection)
+                    {
+                        buffer[left_bound + kernel.size() - 1] = 
+                            src_view(src_view.width() - temp_col - 1, row + lower_extrapolation_size);
+                    }
+                    else if (option == boundary_option::extend_padded)
+                    {
+                        typename SrcView::xy_locator loc_center = 
+                            src_view.xy_at(src_view.width() - 1, row + lower_extrapolation_size);
+                        buffer[left_bound + kernel.size() - 1] = loc_center(temp_col + 1, 0);
+                    }
+                }
+
+                // Update Im_fill part of middle section
+                for (long int temp_col = 0; temp_col < src_view.width(); ++temp_col)
+                {
+                    std::ptrdiff_t left_bound = (left_extrapolation_size + temp_col) * kernel.size(); 
+                    std::rotate(buffer.begin() + left_bound, buffer.begin() + left_bound + 1, 
+                        buffer.begin() + left_bound + kernel.size());
+                    buffer[left_bound + kernel.size() - 1] = 
+                        src_view(temp_col, row + lower_extrapolation_size);
+                }
+            }
+
+            correlator(buffer.begin(), buffer.size(), kernel.begin(), dst_view.row_begin(row));
+        }
+
+        // Start moving through lower section of image
+        for (row = src_view.height() - lower_extrapolation_size; row < src_view.height(); ++row)
+        {
+            // Update left part of lower section
+            for (long unsigned int temp_col = 0; temp_col < left_extrapolation_size; ++temp_col)
+            {
+                std::ptrdiff_t left_bound = temp_col * kernel.size();
+                std::rotate(buffer.begin() + left_bound, buffer.begin() + left_bound + 1, 
+                    buffer.begin() + left_bound + kernel.size());
+
+                if (option == boundary_option::extend_zero)
+                {
+                    buffer[left_bound + kernel.size() - 1] = zero_pixel;
+                }
+                else if (option == boundary_option::extend_constant)
+                {
+                    buffer[left_bound + kernel.size() - 1] = src_view(0, src_view.height() - 1);
+                }
+                else if (option == boundary_option::extend_reflection)
+                {
+                    buffer[left_bound + kernel.size() - 1] = src_view(
+                        left_extrapolation_size - temp_col - 1, 
+                        src_view.height() - row + src_view.height() - lower_extrapolation_size - 1);
+                }
+                else if (option == boundary_option::extend_padded)
+                {
+                    typename SrcView::xy_locator loc_center = src_view.xy_at(0, row);
+                    buffer[left_bound + kernel.size() - 1] = 
+                        loc_center(temp_col - left_extrapolation_size, lower_extrapolation_size);
+                }
+            }
+
+            // Update right part of lower section
+            for (long unsigned int temp_col = 0; temp_col < right_extrapolation_size; ++temp_col)
+            {
+                std::ptrdiff_t left_bound = (left_extrapolation_size + src_view.width() + temp_col) * 
+                    kernel.size();
+               std::rotate(buffer.begin() + left_bound, buffer.begin() + left_bound + 1, 
+                    buffer.begin() + left_bound + kernel.size());
+
+               if (option == boundary_option::extend_zero)
+                {
+                    buffer[left_bound + kernel.size() - 1] = zero_pixel;
+                }
+                else if (option == boundary_option::extend_constant)
+                {
+                    buffer[left_bound + kernel.size() - 1] = 
+                        src_view(src_view.width() - 1, src_view.height() - 1);
+                }
+                else if (option == boundary_option::extend_reflection)
+                {
+                    buffer[left_bound + kernel.size() - 1] = 
+                        src_view(src_view.width() - temp_col - 1, 
+                        src_view.height() - row + src_view.height() - lower_extrapolation_size - 1);
+                }
+                else if (option == boundary_option::extend_padded)
+                {
+                    typename SrcView::xy_locator loc_center = 
+                        src_view.xy_at(src_view.width() - 1, row);
+                    buffer[left_bound + kernel.size() - 1] = 
+                        loc_center(temp_col + 1, lower_extrapolation_size);
+                }
+            }
+
+            // Update lower part of lower section
+            for (long int temp_col = 0; temp_col < src_view.width(); ++temp_col)
+            {
+                std::ptrdiff_t left_bound = (left_extrapolation_size + temp_col) * kernel.size(); 
+                std::rotate(buffer.begin() + left_bound, buffer.begin() + left_bound + 1, 
+                    buffer.begin() + left_bound + kernel.size());
+
+                if (option == boundary_option::extend_zero)
+                {
+                    buffer[left_bound + kernel.size() - 1] = zero_pixel;
+                }
+                else if (option == boundary_option::extend_constant)
+                {
+                    buffer[left_bound + kernel.size() - 1] = src_view(temp_col, src_view.height() - 1);
+                }
+                else if (option == boundary_option::extend_reflection)
+                {
+                    buffer[left_bound + kernel.size() - 1] = 
+                        src_view(temp_col, 
+                        src_view.height() - row + src_view.height() - lower_extrapolation_size - 1);
+                }
+                else if (option == boundary_option::extend_padded)
+                {
+                    typename SrcView::xy_locator loc_center = src_view.xy_at(temp_col, row);
+                    buffer[left_bound + kernel.size() - 1] = loc_center(0, lower_extrapolation_size);
+                }
+            }
+
+            correlator(buffer.begin(), buffer.size(), kernel.begin(), dst_view.row_begin(row));
         }
     }
 }
 
 /// \ingroup ImageAlgorithms
-/// \brief convolve_2d can only use convolve_option_extend_zero as convolve_boundary_option
-///  this is the default option and cannot be changed for now
-///  (In future there are plans to improve the algorithm and allow user to use other options as well)
-/// \tparam SrcView Models ImageViewConcept
-/// \tparam Kernel Specifies the type of 2D kernel which will be used while convolution.
-/// \tparam DstView Models MutableImageViewConcept
-template <typename SrcView, typename DstView, typename Kernel>
-void convolve_2d(SrcView const& src_view, Kernel const& kernel, DstView const& dst_view)
+/// \brief Detects whether a 2D kernel is spatial separable or not and separates it if the kernel
+/// is spatially separable. 
+/// \tparam Kernel Specifies the type of 2D kernel which will be considered for separation.
+/// \tparam Container_1d Specifies the type of 1D container which will store the separated components
+/// of input kernel if it is separable.
+/// \param kernel - Kernel which is to be considered for separation.
+/// \param sep_ker_vertical - Container which will store separated vertical component of 2D kernel 
+/// if kernel is spatially separable.
+/// \param sep_ker_horizontal - Container which will store separated horizontal component of 2D 
+/// kernel if kernel is spatially separable.
+template <typename Kernel, typename Container_1d>
+bool separate(Kernel const kernel, Container_1d& sep_ker_vertical, Container_1d& sep_ker_horizontal)
+{
+    bool is_rank_1 = true;
+    sep_ker_vertical[0] = 1;
+    for (std::size_t row = 1; row < kernel.size(); ++row)
+    {
+        float mul_factor = 0;
+        if (kernel.at(0, 0))
+            mul_factor = kernel.at(0, row) / kernel.at(0, 0);
+        sep_ker_vertical[row] = mul_factor;
+        for (std::size_t col = 0; col < kernel.size(); ++col)
+        {
+            auto transformed_elem = mul_factor * kernel.at(col, 0);
+            if (transformed_elem != kernel.at(col, row))
+            {
+                is_rank_1 = false;
+                break;
+            }
+        }
+        if (is_rank_1 == false)
+            break;
+    }
+    if (is_rank_1 == true)
+    {
+        for (std::size_t col = 0; col < kernel.size(); ++col)
+            sep_ker_horizontal[col] = kernel.at(col, 0);
+    }
+    return is_rank_1;
+}
+
+} // namespace detail
+
+/// \ingroup ImageAlgorithms
+/// \brief Correlate 2D variable-size kernel along an image.
+/// \tparam PixelAccum Specifies tha data type which will be used while creating buffer container 
+/// which is utilized for holding source image pixels after applying appropriate boundary
+/// manipulations.
+/// \tparam SrcView Models ImageViewConcept.
+/// \tparam Kernel Specifies the type of 2D kernel which will be correlated with source image.
+/// \tparam DstView Models MutableImageViewConcept.
+/// \param src_view - Gil view of source image.
+/// \param kernel - Variable size 2D kernel which will be correlated with src_view.
+/// \param dst_view - Gil view of destination image.
+/// \param option - Specifies the manner in which boundary pixels of dst_view will be computed.
+template <typename PixelAccum, typename SrcView, typename Kernel, typename DstView>
+void correlate_2d(SrcView src_view, Kernel kernel, DstView dst_view, 
+    boundary_option option = boundary_option::extend_zero)
 {
     BOOST_ASSERT(src_view.dimensions() == dst_view.dimensions());
     BOOST_ASSERT(kernel.size() != 0);
@@ -430,16 +967,131 @@ void convolve_2d(SrcView const& src_view, Kernel const& kernel, DstView const& d
         typename color_space_type<DstView>::type
     >::value, "Source and destination views must have pixels with the same color space");
 
-    for (std::size_t i = 0; i < src_view.num_channels(); i++)
+    std::vector<typename Kernel::value_type> sep_ker_vertical(kernel.size());
+    std::vector<typename Kernel::value_type> sep_ker_horizontal(kernel.size());
+    if (detail::separate(kernel, sep_ker_vertical, sep_ker_horizontal) == true)
     {
-        detail::convolve_2d_impl(
-            nth_channel_view(src_view, i),
-            nth_channel_view(dst_view, i),
-            kernel
-        );
+        kernel_1d<typename Kernel::value_type> ver_kernel(sep_ker_vertical.begin(), kernel.size(), 
+            kernel.center_y());
+        kernel_1d<typename Kernel::value_type> hor_kernel(sep_ker_horizontal.begin(), kernel.size(), 
+            kernel.center_x());
+
+        gil::image<PixelAccum> dummy_img(dst_view.dimensions());
+        auto dummy_view = gil::view(dummy_img);
+
+        correlate_rows<PixelAccum>(src_view, hor_kernel, dummy_view, option);
+        correlate_cols<PixelAccum>(dummy_view, ver_kernel, dst_view, option);
+        return;
     }
+
+    detail::correlate_2d_impl<PixelAccum>(src_view, kernel, dst_view, option, detail::correlator_n_2d<PixelAccum>(
+        kernel.size()));
 }
 
-}}} // namespace boost::gil::detail
+/// \ingroup ImageAlgorithms
+/// \brief Correlate 2D fixed-size kernel along an image.
+/// \tparam PixelAccum Specifies tha data type which will be used for creating buffer container 
+/// utilized for holding source image pixels after applying appropriate boundary manipulations.
+/// \tparam SrcView Models ImageViewConcept.
+/// \tparam Kernel Specifies the type of 2D kernel which will be correlated with source image.
+/// \tparam DstView Models MutableImageViewConcept.
+/// \param src_view - Gil view of source image.
+/// \param kernel - Fixed size 2D kernel which will be correlated with src_view.
+/// \param dst_view - Gil view of destination image.
+/// \param option - Specifies the manner in which boundary pixels of dst_view will be computed.
+template <typename PixelAccum, typename SrcView, typename Kernel, typename DstView>
+void correlate_2d_fixed(SrcView src_view, Kernel kernel, DstView dst_view, 
+    boundary_option option = boundary_option::extend_zero)
+{
+    BOOST_ASSERT(src_view.dimensions() == dst_view.dimensions());
+    BOOST_ASSERT(kernel.size() != 0);
+
+    gil_function_requires<ImageViewConcept<SrcView>>();
+    gil_function_requires<MutableImageViewConcept<DstView>>();
+    static_assert(color_spaces_are_compatible
+    <
+        typename color_space_type<SrcView>::type,
+        typename color_space_type<DstView>::type
+    >::value, "Source and destination views must have pixels with the same color space");
+
+    std::vector<typename Kernel::value_type> sep_ker_vertical(kernel.size());
+    std::vector<typename Kernel::value_type> sep_ker_horizontal(kernel.size());
+    if (detail::separate(kernel, sep_ker_vertical, sep_ker_horizontal) == true)
+    {
+        kernel_1d_fixed<typename Kernel::value_type, Kernel::static_size> ver_kernel(
+            sep_ker_vertical.begin(), kernel.center_y());
+        kernel_1d_fixed<typename Kernel::value_type, Kernel::static_size> hor_kernel(
+            sep_ker_horizontal.begin(), kernel.center_x());
+
+        gil::image<PixelAccum> dummy_img(dst_view.dimensions());
+        auto dummy_view = gil::view(dummy_img);
+        correlate_rows_fixed<PixelAccum>(src_view, hor_kernel, dummy_view, option);
+        correlate_cols_fixed<PixelAccum>(dummy_view, ver_kernel, dst_view, option);
+        return;
+    }
+    
+    using correlator = detail::correlator_k_2d<Kernel::static_size, PixelAccum>;
+    detail::correlate_2d_impl<PixelAccum>(src_view, kernel, dst_view, option, correlator{});
+}
+
+/// \ingroup ImageAlgorithms
+/// \brief Convolves 2D variable-size kernel along an image.
+/// \tparam PixelAccum Specifies tha data type which will be used for creating buffer container 
+/// utilized for holding source image pixels after applying appropriate boundary manipulations.
+/// \tparam SrcView Models ImageViewConcept.
+/// \tparam Kernel Specifies the type of 2D kernel which will be convoluted with source image.
+/// \tparam DstView Models MutableImageViewConcept.
+/// \param src_view - Gil view of source image.
+/// \param kernel - Variable size 2D kernel which will be convolved with src_view.
+/// \param dst_view - Gil view of destination image.
+/// \param option - Specifies the manner in which boundary pixels of dst_view will be computed.
+template <typename PixelAccum, typename SrcView, typename Kernel, typename DstView>
+void convolve_2d(SrcView src_view, Kernel kernel, DstView dst_view, 
+    boundary_option option = boundary_option::extend_zero)
+{
+    BOOST_ASSERT(src_view.dimensions() == dst_view.dimensions());
+    BOOST_ASSERT(kernel.size() != 0);
+
+    gil_function_requires<ImageViewConcept<SrcView>>();
+    gil_function_requires<MutableImageViewConcept<DstView>>();
+    static_assert(color_spaces_are_compatible
+    <
+        typename color_space_type<SrcView>::type,
+        typename color_space_type<DstView>::type
+    >::value, "Source and destination views must have pixels with the same color space");
+
+    correlate_2d<PixelAccum>(src_view, detail::reverse_kernel_2d(kernel), dst_view, option);
+}
+
+/// \ingroup ImageAlgorithms
+/// \brief Convolve 2D fixed-size kernel along an image
+/// \tparam PixelAccum Specifies tha data type which will be used for creating buffer container 
+/// utilized for holding source image pixels after applying appropriate boundary manipulations.
+/// \tparam SrcView Models ImageViewConcept.
+/// \tparam Kernel Specifies the type of 2D kernel which will be convolved with source image.
+/// \tparam DstView Models MutableImageViewConcept.
+/// \param src_view - Gil view of source image.
+/// \param kernel - Fixed size 2D kernel which will be convolved with src_view.
+/// \param dst_view - Gil view of destination image.
+/// \param option - Specifies the manner in which boundary pixels of dst_view will be computed.
+template <typename PixelAccum, typename SrcView, typename Kernel, typename DstView>
+void convolve_2d_fixed(SrcView src_view, Kernel kernel, DstView dst_view, 
+    boundary_option option = boundary_option::extend_zero)
+{
+    BOOST_ASSERT(src_view.dimensions() == dst_view.dimensions());
+    BOOST_ASSERT(kernel.size() != 0);
+
+    gil_function_requires<ImageViewConcept<SrcView>>();
+    gil_function_requires<MutableImageViewConcept<DstView>>();
+    static_assert(color_spaces_are_compatible
+    <
+        typename color_space_type<SrcView>::type,
+        typename color_space_type<DstView>::type
+    >::value, "Source and destination views must have pixels with the same color space");
+
+    correlate_2d_fixed<PixelAccum>(src_view, detail::reverse_kernel_2d(kernel), dst_view, option);
+}
+
+}} // namespace boost::gil
 
 #endif
