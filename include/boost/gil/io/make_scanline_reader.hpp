@@ -63,13 +63,12 @@ make_scanline_reader( const std::wstring& file_name
                                               );
 }
 
-#ifdef BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
 template< typename FormatTag >
 inline
 typename get_scanline_reader< std::wstring
                             , FormatTag
                             >::type
-make_scanline_reader( const filesystem::path& path
+make_scanline_reader( detail::filesystem::path const& path
                     , FormatTag const&
                     )
 {
@@ -77,7 +76,6 @@ make_scanline_reader( const filesystem::path& path
                                , image_read_settings< FormatTag >()
                                );
 }
-#endif // BOOST_GIL_IO_ADD_FS_PATH_SUPPORT
 
 template <typename Device, typename FormatTag>
 inline

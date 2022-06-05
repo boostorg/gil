@@ -60,12 +60,12 @@ inline typename std::enable_if<Index != sizeof...(T), void>::type
 }
 
 /// \ingroup Histogram-Helpers
-/// \brief Functor provided for the hashing of tuples. 
-///        The following approach makes use hash_combine from 
-///        boost::container_hash. Although there is a direct hashing 
+/// \brief Functor provided for the hashing of tuples.
+///        The following approach makes use hash_combine from
+///        boost::container_hash. Although there is a direct hashing
 ///        available for tuples, this approach will ease adopting in
 ///        future to a std::hash_combine. In case std::hash extends
-///        support to tuples this functor as well as the helper 
+///        support to tuples this functor as well as the helper
 ///        implementation hash_tuple_impl can be removed.
 ///
 template <typename... T>
@@ -115,7 +115,7 @@ bool tuple_compare(Tuple const& t1, Tuple const& t2, boost::mp11::index_sequence
 }
 
 /// \ingroup Histogram-Helpers
-/// \brief Compares 2 tuples and outputs t1 <= t2 
+/// \brief Compares 2 tuples and outputs t1 <= t2
 ///        Comparison is not in a lexicographic manner but on every element of the tuple hence
 ///        (2, 2) > (1, 3) evaluates to false
 ///
@@ -199,13 +199,13 @@ struct filler<1>
 /// \brief Default histogram class provided by boost::gil.
 ///
 /// The class inherits over the std::unordered_map provided by STL. A complete example/tutorial
-/// of how to use the class resides in the docs. 
+/// of how to use the class resides in the docs.
 /// Simple calling syntax for a 3D dimensional histogram :
 /// \code
 /// histogram<int, int , int> h;
 /// h(1, 1, 1) = 0;
 /// \endcode
-/// This is just a starter to what all can be achieved with it, refer to the docs for the 
+/// This is just a starter to what all can be achieved with it, refer to the docs for the
 /// full demo.
 ///
 template <typename... T>
@@ -237,7 +237,7 @@ public:
         return base_t::operator[](key);
     }
 
-    /// \brief Checks if 2 histograms are equal. Ignores type, and checks if 
+    /// \brief Checks if 2 histograms are equal. Ignores type, and checks if
     ///        the keys (after type casting) match.
     template <typename OtherType>
     bool equals(OtherType const& otherhist) const
@@ -258,7 +258,7 @@ public:
         });
         return check;
     }
-    
+
     /// \brief Checks if the histogram class is compatible to be used with
     ///        a GIL image type
     static constexpr bool is_pixel_compatible()
@@ -502,7 +502,7 @@ public:
         return sub_h;
     }
 
-    /// \brief Normalize this histogram class 
+    /// \brief Normalize this histogram class
     void normalize()
     {
         double sum = 0.0;
@@ -593,7 +593,7 @@ private:
 /// \ingroup Histogram Algorithms
 /// \tparam SrcView Input image view
 /// \tparam Container Input histogram container
-/// \brief Overload this function to provide support for boost::gil::histogram or 
+/// \brief Overload this function to provide support for boost::gil::histogram or
 /// any other external histogram
 ///
 /// Example :
@@ -618,7 +618,7 @@ void fill_histogram(SrcView const&, Container&);
 /// @param lower       Input  Lower limit on the values in histogram (default numeric_limit::min() on axes)
 /// @param upper       Input  Upper limit on the values in histogram (default numeric_limit::max() on axes)
 /// @param setlimits   Input  Use specified limits if this is true (default is false)
-/// \brief Overload version of fill_histogram 
+/// \brief Overload version of fill_histogram
 ///
 /// Takes a third argument to determine whether to clear container before filling.
 /// For eg, when there is a need to accumulate the histograms do
@@ -643,11 +643,11 @@ void fill_histogram(
 {
     if (!accumulate)
         hist.clear();
-    
+
     detail::filler<histogram<T...>::dimension()> f;
     if (!sparsefill)
         f(hist, lower, upper, bin_width);
-    
+
     hist.template fill<Dimensions...>(srcview, bin_width, applymask, mask, lower, upper, setlimits);
 }
 
@@ -673,7 +673,7 @@ histogram<T...> cumulative_histogram(histogram<T...> const& hist)
     static_assert(
         boost::mp11::mp_all_of<check_list, boost::mp11::mp_to_bool>::value,
         "Cumulative histogram not possible of this type");
-    
+
     using histogram_t = histogram<T...>;
     using pair_t  = std::pair<typename histogram_t::key_type, typename histogram_t::mapped_type>;
     using value_t = typename histogram_t::value_type;

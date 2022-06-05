@@ -49,6 +49,7 @@ git submodule --quiet update --init $GIT_SUBMODULE_OPTS \
     libs/variant2
 # Transitive (of GIL tests too)
 git submodule --quiet update --init $GIT_SUBMODULE_OPTS \
+    libs/align \
     libs/atomic \
     libs/bind \
     libs/chrono \

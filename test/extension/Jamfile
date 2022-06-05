@@ -11,3 +11,5 @@ build-project histogram ;
 build-project numeric ;
 build-project toolbox ;
 build-project io ;
+build-project image_processing ;
+build-project rasterization ;

@@ -38,7 +38,7 @@ namespace boost { namespace gil {
 /// \ingroup HE
 /// \tparam SrcKeyType Key Type of input histogram
 /// @param src_hist INPUT Input source histogram
-/// \brief Overload for histogram equalization algorithm, takes in a single source histogram 
+/// \brief Overload for histogram equalization algorithm, takes in a single source histogram
 ///        and returns the color map used for histogram equalization.
 ///
 template <typename SrcKeyType>
@@ -111,7 +111,7 @@ void histogram_equalization(
             typename color_space_type<SrcView>::type,
             typename color_space_type<DstView>::type>::value,
         "Source and destination views must have same color space");
-    
+
     // Defining channel type
     using source_channel_t = typename channel_type<SrcView>::type;
     using dst_channel_t    = typename channel_type<DstView>::type;

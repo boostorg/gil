@@ -5,6 +5,7 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
+
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/png.hpp>
 #include <iostream>
@@ -12,12 +13,26 @@
 #include <string>
 #include <vector>
 
+
+// Demonstrates a number of morphological operations
+// The structuring element is defined as an instance of a kernel_2d<float>:
 // Default structuring element is SE = [1,1,1]
 //                                     |1,1,1|
 //                                     [1,1,1]
 // SE(1,1)(center pixel) is the one which coincides with the currently
 // considered pixel of the image to be convolved. The structuring element can be
 // easily changed by the user.
+// The example demonstrates the following morphological operations:
+//     - black_hat
+//     - top_hat
+//     - morphological_gradient
+//     - dilation
+//     - erosion
+//     - opening
+//     - closing
+//     - binary
+// These operations are defined in include/boost/gil/image_processing/morphology.hpp
+
 namespace gil = boost::gil;
 int main(int argc, char** argv)
 {
@@ -33,7 +48,7 @@ int main(int argc, char** argv)
         // User has to enter atleast one operation and they can enter maximum 8
         // operations considering binary conversion to be an
         // operation.Output_image_template argument is the common component which
-        // will be added in names of all output images followed by a hyphen and 
+        // will be added in names of all output images followed by a hyphen and
         // the operation name.
         // Example :
         // ./example_morphology morphology_original.png out black_hat top_hat

@@ -1,4 +1,3 @@
-// Boost.GIL (Generic Image Library) - tests
 //
 // Copyright 2020 Olzhas Zhumabek <anonymous.from.applecity@gmail.com>
 //
@@ -6,6 +5,7 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
+
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/png.hpp>
 
@@ -13,6 +13,16 @@
 #include <vector>
 
 namespace gil = boost::gil;
+
+// Demonstrates the use of a rasterizer to generate an image of a line
+// The various rasterizers available are defined in include/boost/gil/rasterization/circle.hpp,
+// include/boost/gil/rasterization/ellipse.hpp and include/boost/gil/rasterization/line.hpp
+// The rasterizer used implements the Bresenham's line algorithm.
+// Multiple images are created, all of the same size, but with areas of different sizes passed to the rasterizer, resulting in different lines.
+// See also:
+// rasterizer_circle.cpp - Demonstrates the use of a rasterizer to generate an image of a circle
+// rasterizer_ellipse.cpp - Demonstrates the use of a rasterizer to generate an image of an ellipse
+
 
 const std::ptrdiff_t size = 256;
 
