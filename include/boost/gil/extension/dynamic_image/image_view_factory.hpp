@@ -381,11 +381,10 @@ auto color_converted_view(any_image_view<Views...> const& src)
 template <typename DstP, typename ...Views, typename CC>
 [[deprecated("Use color_converted_view(const any_image_view<Views...>& src, CC) instead.")]]
 inline
-auto any_color_converted_view(const any_image_view<Views...>& src, CC)
+auto any_color_converted_view(const any_image_view<Views...>& src, CC cc)
     -> typename color_converted_view_type<any_image_view<Views...>, DstP, CC>::type
 {
-    using cc_view_t = typename color_converted_view_type<any_image_view<Views...>, DstP, CC>::type;
-    return apply_operation(src, detail::color_converted_view_fn<DstP, cc_view_t>());
+    return color_converted_view(src, cc);
 }
 
 /// \ingroup ImageViewTransformationsColorConvert
@@ -398,8 +397,7 @@ inline
 auto any_color_converted_view(const any_image_view<Views...>& src)
     -> typename color_converted_view_type<any_image_view<Views...>, DstP>::type
 {
-    using cc_view_t = typename color_converted_view_type<any_image_view<Views...>, DstP>::type;
-    return apply_operation(src, detail::color_converted_view_fn<DstP, cc_view_t>());
+    return color_converted_view(src);
 }
 
 /// \}
