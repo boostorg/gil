@@ -870,22 +870,22 @@ source view:
   };
 
 The second step is to provide an overload of ``x_luminosity_gradient`` that
-takes image view variant and calls GIL's ``apply_operation`` passing it the
+takes image view variant and calls ``variant2::visit`` passing it the
 function object:
 
 .. code-block:: cpp
 
-  template <typename SrcViews, typename DstView>
-  void x_luminosity_gradient(const any_image_view<SrcViews>& src, const DstView& dst)
+  template <typename ...SrcViews, typename DstView>
+  void x_luminosity_gradient(const any_image_view<SrcViews...>& src, const DstView& dst)
   {
-    apply_operation(src, x_gradient_obj<DstView>(dst));
+    variant2::visit(x_gradient_obj<DstView>(dst), src);
   }
 
-``any_image_view<SrcViews>`` is the image view variant. It is
-templated over ``SrcViews``, an enumeration of all possible view types
+``any_image_view<SrcViews...>`` is the image view variant. It is
+templated over ``SrcViews...``, an enumeration of all possible view types
 the variant can take.  ``src`` contains inside an index of the
 currently instantiated type, as well as a block of memory containing
-the instance.  ``apply_operation`` goes through a switch statement
+the instance.  ``variant2::visit`` goes through a switch statement
 over the index, each case of which casts the memory to the correct
 view type and invokes the function object with it. Invoking an
 algorithm on a variant has the overhead of one switch
