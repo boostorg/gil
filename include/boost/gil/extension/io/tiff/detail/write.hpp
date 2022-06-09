@@ -18,6 +18,7 @@
 #include <boost/gil/io/detail/dynamic.hpp>
 
 #include <algorithm>
+#include <cstdint>
 #include <string>
 #include <type_traits>
 #include <vector>
@@ -393,8 +394,8 @@ private:
                 }
 
                 this->_io_dev.write_tile( row
-                                        , static_cast< uint32 >( j )
-                                        , static_cast< uint32 >( i )
+                                        , static_cast< std::uint32_t >( j )
+                                        , static_cast< std::uint32_t >( i )
                                         , 0
                                         , 0
                                         );
