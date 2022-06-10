@@ -193,7 +193,7 @@ public:
     {
         io_error_if( TIFFReadScanline( _tiff_file.get()
                                      , reinterpret_cast< tdata_t >( &buffer.front() )
-                                     , (uint32) row
+                                     , static_cast<std::uint32_t>( row )
                                      , plane           ) == -1
                    , "Read error."
                    );
@@ -206,7 +206,7 @@ public:
     {
         io_error_if( TIFFReadScanline( _tiff_file.get()
                                      , reinterpret_cast< tdata_t >( buffer )
-                                     , (uint32) row
+                                     , static_cast<std::uint32_t>( row )
                                      , plane           ) == -1
                    , "Read error."
                    );

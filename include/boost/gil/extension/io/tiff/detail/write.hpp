@@ -184,7 +184,7 @@ private:
 
 
             this->_io_dev.write_scaline( row
-                                       , (uint32) y
+                                       , static_cast<std::uint32_t>( y )
                                        , 0
                                        );
 
@@ -212,7 +212,7 @@ private:
 
 
             this->_io_dev.write_scaline( row
-                                       , (uint32) y
+                                       , static_cast<std::uint32_t>( y )
                                        , 0
                                        );
 
@@ -274,7 +274,7 @@ private:
 						);
 
             this->_io_dev.write_scaline( row_addr
-                                       , (uint32) y
+                                       , static_cast<std::uint32_t>( y )
                                        , 0
                                        );
 
