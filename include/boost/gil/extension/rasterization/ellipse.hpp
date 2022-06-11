@@ -5,8 +5,8 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#ifndef BOOST_GIL_RASTERIZATION_ELLIPSE_HPP
-#define BOOST_GIL_RASTERIZATION_ELLIPSE_HPP
+#ifndef BOOST_GIL_EXTENSION_RASTERIZATION_ELLIPSE_HPP
+#define BOOST_GIL_EXTENSION_RASTERIZATION_ELLIPSE_HPP
 
 #include <array>
 #include <vector>
@@ -187,6 +187,8 @@ struct midpoint_elliptical_rasterizer
             obtain_trajectory(semi_axes);
         draw_curve(view, colour, center, trajectory_points);
     }
-}; // midpoint elliptical rasterizer
+};
+
 }} // namespace boost::gil
+
 #endif
