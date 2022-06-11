@@ -11,7 +11,6 @@
 #ifndef BOOST_GIL_IMAGE_PROCESSING_KERNEL_HPP
 #define BOOST_GIL_IMAGE_PROCESSING_KERNEL_HPP
 
-#include <boost/gil/utilities.hpp>
 #include <boost/gil/point.hpp>
 
 #include <boost/assert.hpp>
@@ -110,7 +109,7 @@ public:
     kernel_1d(FwdIterator elements, std::size_t size, std::size_t center)
         : parent_t(size, center)
     {
-        detail::copy_n(elements, size, this->begin());
+        std::copy_n(elements, size, this->begin());
     }
 
     kernel_1d(kernel_1d const& other) : parent_t(other) {}
@@ -134,7 +133,7 @@ public:
     explicit kernel_1d_fixed(FwdIterator elements, std::size_t center)
         : parent_t(center)
     {
-        detail::copy_n(elements, Size, this->begin());
+        std::copy_n(elements, Size, this->begin());
     }
 
     kernel_1d_fixed(kernel_1d_fixed const& other) : parent_t(other) {}
@@ -284,7 +283,7 @@ public:
     kernel_2d(FwdIterator elements, std::size_t size, std::size_t center_y, std::size_t center_x)
         : parent_t(static_cast<int>(std::sqrt(size)), center_y, center_x)
     {
-        detail::copy_n(elements, size, this->begin());
+        std::copy_n(elements, size, this->begin());
     }
 
     kernel_2d(kernel_2d const& other) : parent_t(other) {}
@@ -318,7 +317,7 @@ public:
         : parent_t(center_y, center_x)
     {
         this->square_size = Size;
-        detail::copy_n(elements, Size * Size, this->begin());
+        std::copy_n(elements, Size * Size, this->begin());
     }
 
     kernel_2d_fixed(kernel_2d_fixed const& other) : parent_t(other) {}

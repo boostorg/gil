@@ -200,7 +200,7 @@ struct copier_n<iterator_from_2d<IL>,O> {
         while (n>0) {
             diff_t l=src.width()-src.x_pos();
             diff_t numToCopy=(n<l ? n:l);
-            detail::copy_n(src.x(), numToCopy, dst);
+            std::copy_n(src.x(), numToCopy, dst);
             dst+=numToCopy;
             src+=numToCopy;
             n-=numToCopy;
@@ -218,7 +218,7 @@ struct copier_n<I,iterator_from_2d<OL>> {
         while (n>0) {
             diff_t l=dst.width()-dst.x_pos();
             diff_t numToCopy=(n<l ? n:l);
-            detail::copy_n(src, numToCopy, dst.x());
+            std::copy_n(src, numToCopy, dst.x());
             dst+=numToCopy;
             src+=numToCopy;
             n-=numToCopy;
@@ -241,7 +241,7 @@ struct copier_n<iterator_from_2d<IL>,iterator_from_2d<OL>> {
         while (n>0) {
             diff_t l=dst.width()-dst.x_pos();
             diff_t numToCopy=(n<l ? n : l);
-            detail::copy_n(src.x(), numToCopy, dst.x());
+            std::copy_n(src.x(), numToCopy, dst.x());
             dst+=numToCopy;
             src+=numToCopy;
             n-=numToCopy;
