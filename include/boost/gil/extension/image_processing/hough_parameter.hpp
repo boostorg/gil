@@ -6,10 +6,11 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#ifndef BOOST_GIL_IMAGE_PROCESSING_HOUGH_PARAMETER_HPP
-#define BOOST_GIL_IMAGE_PROCESSING_HOUGH_PARAMETER_HPP
+#ifndef BOOST_GIL_EXTENSION_IMAGE_PROCESSING_HOUGH_PARAMETER_HPP
+#define BOOST_GIL_EXTENSION_IMAGE_PROCESSING_HOUGH_PARAMETER_HPP
 
 #include "boost/gil/point.hpp"
+
 #include <cmath>
 #include <cstddef>
 

@@ -6,12 +6,13 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
-#ifndef BOOST_GIL_IMAGE_PROCESSING_HOUGH_TRANSFORM_HPP
-#define BOOST_GIL_IMAGE_PROCESSING_HOUGH_TRANSFORM_HPP
+#ifndef BOOST_GIL_EXTENSION_IMAGE_PROCESSING_HOUGH_TRANSFORM_HPP
+#define BOOST_GIL_EXTENSION_IMAGE_PROCESSING_HOUGH_TRANSFORM_HPP
 
-#include <algorithm>
 #include <boost/gil/extension/image_processing/hough_parameter.hpp>
 #include <boost/gil/extension/rasterization/circle.hpp>
+
+#include <algorithm>
 #include <cmath>
 #include <cstddef>
 #include <iterator>
