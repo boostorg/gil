@@ -121,9 +121,8 @@ public:
        allocate_and_copy(view.dimensions(),view);
     }
 
-    // TODO Optimization: use noexcept (requires _view to be nothrow copy constructible)
-    image(image&& img) :
-      _view(img._view),
+    image(image&& img) noexcept :
+      _view(std::move(img._view)),
       _memory(img._memory),
       _align_in_bytes(img._align_in_bytes),
       _alloc(std::move(img._alloc)),
