@@ -211,7 +211,7 @@ private:
     void assign(Channel const& channel, std::false_type)
     {
         check_gray();
-        gil::at_c<0>(*this) = channel;
+        gil::at_c<0>(*this) = static_cast<channel_t::base_channel_t>( channel );
     }
 
     template <typename Channel>
