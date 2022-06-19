@@ -19,7 +19,7 @@
 
 // Work can be done row by row and column by column, as in this example,
 // using the functions convolve_rows and convolve_cols (or their _fixed counterpart)
-// but the header boost/gil/extension/numeric/convolve.hpp also offers the function convolve_1d which combines the two.
+// but the header boost/gil/image_processing/convolve.hpp also offers the function convolve_1d which combines the two.
 
 // See also:
 // convolve2d.cpp - Convolution with 2d kernels

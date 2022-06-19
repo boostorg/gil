@@ -11,6 +11,7 @@
 #include <boost/gil/extension/io/png/detail/writer_backend.hpp>
 
 #include <boost/gil/io/device.hpp>
+#include <boost/gil/io/detail/dynamic.hpp>
 #include <boost/gil/io/row_buffer_helper.hpp>
 #include <boost/gil/detail/mp11.hpp>
 
