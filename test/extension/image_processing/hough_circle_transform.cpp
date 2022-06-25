@@ -9,7 +9,7 @@
 #include <boost/core/lightweight_test.hpp>
 
 #include <boost/gil/image.hpp>
-#include <boost/gil/image_processing/hough_transform.hpp>
+#include <boost/gil/extension/image_processing/hough_transform.hpp>
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/typedefs.hpp>
 

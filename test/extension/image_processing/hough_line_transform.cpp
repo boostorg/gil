@@ -10,10 +10,10 @@
 #include <boost/core/lightweight_test.hpp>
 #include <boost/gil/detail/math.hpp>
 #include <boost/gil/image.hpp>
-#include <boost/gil/image_processing/hough_transform.hpp>
+#include <boost/gil/extension/image_processing/hough_transform.hpp>
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/point.hpp>
-#include <boost/gil/rasterization/line.hpp>
+#include <boost/gil/extension/rasterization/line.hpp>
 #include <boost/gil/typedefs.hpp>
 #include <cmath>
 #include <cstddef>

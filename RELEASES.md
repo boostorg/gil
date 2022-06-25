@@ -22,6 +22,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Added `for_each_pixel` overload for `any_image` ([PR #648](https://github.com/boostorg/gil/pull/648))
 
 ### Changed
+- BREAKING: The required minimum C++ version is changed from from C++11 to C++14.
+  Currently, large parts of GIL still compile with a C++11 compiler. However,
+  there is no guarantee that it stays that way, and any compilers that do not
+  support at least C++14 are considered unsupported as of now.
+- BREAKING: `any_color_converted_view()` is deprecated and will be removed in the next release.
+  Use `color_converted_view()` instead, which provides the same feature.
 - documentation: Display that GIL is a header-only library
 - Moved numeric extension to core ([PR #573](https://github.com/boostorg/gil/pull/573))
 - Added support for C++17's `<filesystem>` ([PR #636](https://github.com/boostorg/gil/pull/636)).

@@ -6,7 +6,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 #include <boost/core/lightweight_test.hpp>
-#include <boost/gil.hpp>
+#include "boost/gil.hpp"
 #include <array>
 #include <cmath>
 #include <vector>
