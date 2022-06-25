@@ -10,8 +10,8 @@
 
 #include <boost/config.hpp>
 
-#if !defined(BOOST_GIL_IO_USE_BOOST_FILESYSTEM)
-#if !defined(BOOST_NO_CXX17_HDR_FILESYSTEM) || defined(__cpp_lib_filesystem)
+#if !defined(BOOST_GIL_IO_USE_BOOST_FILESYSTEM) && !defined(BOOST_NO_CXX17_HDR_FILESYSTEM)
+#if defined(__cpp_lib_filesystem)
 #include <filesystem>
 #define BOOST_GIL_IO_USE_STD_FILESYSTEM
 #elif defined(__cpp_lib_experimental_filesystem)
@@ -19,7 +19,7 @@
 #define BOOST_GIL_IO_USE_STD_FILESYSTEM
 #define BOOST_GIL_IO_USE_STD_EXPERIMENTAL_FILESYSTEM
 #endif
-#endif // !BOOST_GIL_IO_USE_BOOST_FILESYSTEM
+#endif // !BOOST_GIL_IO_USE_BOOST_FILESYSTEM && !BOOST_NO_CXX17_HDR_FILESYSTEM
 
 #if !defined(BOOST_GIL_IO_USE_STD_FILESYSTEM)
 // Disable warning: conversion to 'std::atomic<int>::__integral_type {aka int}' from 'long int' may alter its value
