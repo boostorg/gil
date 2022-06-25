@@ -1,4 +1,3 @@
-// Boost.GIL (Generic Image Library) - tests
 //
 // Copyright 2020 Olzhas Zhumabek <anonymous.from.applecity@gmail.com>
 //
@@ -6,15 +5,16 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 //
+#ifndef BOOST_GIL_EXTENSION_RASTERIZATION_LINE_HPP
+#define BOOST_GIL_EXTENSION_RASTERIZATION_LINE_HPP
 
 #include <boost/gil/point.hpp>
+
 #include <cmath>
 #include <cstddef>
 
-namespace boost
-{
-namespace gil
-{
+namespace boost { namespace gil {
+
 /// \defgroup Rasterization
 /// \brief A set of functions to rasterize shapes
 ///
@@ -95,3 +95,5 @@ struct bresenham_line_rasterizer
 };
 
 }} // namespace boost::gil
+
+#endif

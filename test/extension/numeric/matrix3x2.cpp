@@ -12,23 +12,11 @@
 
 #include <boost/core/lightweight_test.hpp>
 
+#include "test_utility_with_tolerance.hpp"
+
 #include <cmath>
 
 namespace gil = boost::gil;
-
-// Tolerance predicate for floating point comparison to use with BOOST_TEST_WITH
-template <typename T>
-struct with_tolerance
-{
-    with_tolerance(T tolerance) : tolerance(tolerance) {}
-    bool operator()(T lhs, T rhs)
-    {
-        return (std::abs(lhs - rhs) <= tolerance);
-    }
-
-private:
-    T tolerance;
-};
 
 namespace {
 constexpr double HALF_PI = 1.57079632679489661923;
@@ -134,10 +122,10 @@ void test_matrix3x2_vector_multiplication()
 void test_matrix3x2_get_rotate()
 {
     auto m1 = gil::matrix3x2<double>::get_rotate(HALF_PI);
-    BOOST_TEST_WITH(m1.a, std::cos(HALF_PI), with_tolerance<double>(0.03));
+    BOOST_TEST_WITH(m1.a, std::cos(HALF_PI), gil::test::utility::with_tolerance<double>(0.03));
     BOOST_TEST_EQ(m1.b, 1);
     BOOST_TEST_EQ(m1.c, -1);
-    BOOST_TEST_WITH(m1.d, std::cos(HALF_PI), with_tolerance<double>(0.03));
+    BOOST_TEST_WITH(m1.d, std::cos(HALF_PI), gil::test::utility::with_tolerance<double>(0.03));
     BOOST_TEST_EQ(m1.e, 0);
     BOOST_TEST_EQ(m1.f, 0);
 }
@@ -197,8 +185,8 @@ void test_matrix3x2_inverse()
     point_t q = gil::transform(inverse(m), p);
     point_t p2 = gil::transform(m, q);
 
-    BOOST_TEST_WITH(p.x, p2.x, with_tolerance<double>(1e-9));
-    BOOST_TEST_WITH(p.y, p2.y, with_tolerance<double>(1e-9));
+    BOOST_TEST_WITH(p.x, p2.x, gil::test::utility::with_tolerance<double>(1e-9));
+    BOOST_TEST_WITH(p.y, p2.y, gil::test::utility::with_tolerance<double>(1e-9));
 }
 
 void test_matrix3x2_center_rotate()
@@ -208,12 +196,12 @@ void test_matrix3x2_center_rotate()
 
     m1 = gil::center_rotate(dimension, HALF_PI);
 
-    BOOST_TEST_WITH(m1.a , std::cos(HALF_PI) , with_tolerance<double>(1e-9));
+    BOOST_TEST_WITH(m1.a , std::cos(HALF_PI) , gil::test::utility::with_tolerance<double>(1e-9));
     BOOST_TEST_EQ  (m1.b ,  1);
     BOOST_TEST_EQ  (m1.c , -1);
-    BOOST_TEST_WITH(m1.d , std::cos(HALF_PI) , with_tolerance<double>(1e-9));
+    BOOST_TEST_WITH(m1.d , std::cos(HALF_PI) , gil::test::utility::with_tolerance<double>(1e-9));
     BOOST_TEST_EQ  (m1.e ,  100);
-    BOOST_TEST_WITH(m1.f , std::cos(HALF_PI) , with_tolerance<double>(1e-9));
+    BOOST_TEST_WITH(m1.f , std::cos(HALF_PI) , gil::test::utility::with_tolerance<double>(1e-9));
 }
 
 int main()
