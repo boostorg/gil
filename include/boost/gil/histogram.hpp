@@ -17,6 +17,7 @@
 #include <boost/type_traits.hpp>
 #include <boost/functional/hash.hpp>
 
+#include <array>
 #include <iostream>
 #include <tuple>
 #include <utility>

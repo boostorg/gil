@@ -25,6 +25,7 @@ run color_convert_hsl.cpp ;
 run color_convert_hsv.cpp ;
 run color_convert_lab.cpp ;
 run color_convert_luminance.cpp ;
+run color_convert_rgb.cpp ;
 run color_convert_xyz.cpp ;
 run indexed_image.cpp ;
 
