@@ -5,8 +5,8 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-#ifndef BOOST_GIL_TEST_TEST_UTILITY_HPP
-#define BOOST_GIL_TEST_TEST_UTILITY_HPP
+#ifndef BOOST_GIL_TEST_TEST_UTILITY_OUTPUT_STREAM_HPP
+#define BOOST_GIL_TEST_TEST_UTILITY_OUTPUT_STREAM_HPP
 
 #include <boost/gil/color_base_algorithm.hpp> // static_for_each
 #include <boost/gil/packed_pixel.hpp>

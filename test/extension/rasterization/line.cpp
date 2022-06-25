@@ -9,8 +9,8 @@
 
 #include <algorithm>
 #include <boost/core/lightweight_test.hpp>
-#include <boost/gil/point.hpp>
-#include <boost/gil/rasterization/line.hpp>
+#include "boost/gil/point.hpp"
+#include "boost/gil/extension/rasterization/line.hpp"
 
 #include <cmath>
 #include <cstddef>

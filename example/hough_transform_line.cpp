@@ -25,7 +25,7 @@ namespace gil = boost::gil;
 
 int main()
 {
-    std::ptrdiff_t size = 32;
+    const std::ptrdiff_t size = 32;
     gil::gray16_image_t input_image(size, size);
     auto input_view = gil::view(input_image);
 
@@ -52,7 +52,7 @@ int main()
     double _5_degrees = gil::detail::pi / 36;
     auto theta_parameter =
         gil::make_theta_parameter(_45_degrees, _5_degrees, input_view.dimensions());
-    auto expected_radius = static_cast<std::ptrdiff_t>(std::round(std::cos(_45_degrees) * size));
+    auto expected_radius = static_cast<std::ptrdiff_t>(std::floor(std::cos(_45_degrees) * size));
     auto radius_parameter =
         gil::hough_parameter<std::ptrdiff_t>::from_step_size(expected_radius, 7, 1);
     gil::gray32_image_t accumulator_array_image(theta_parameter.step_count,
@@ -70,6 +70,9 @@ int main()
                 theta_parameter.start_point + theta_index * theta_parameter.step_size;
             std::ptrdiff_t current_radius =
                 radius_parameter.start_point + radius_parameter.step_size * radius_index;
+            if (current_theta == _45_degrees && current_radius == expected_radius) {
+                std::cout << "* ";
+            }
             std::cout << "theta: " << current_theta << " radius: " << current_radius
                       << " accumulated value: " << accumulator_array(theta_index, radius_index)[0]
                       << '\n';

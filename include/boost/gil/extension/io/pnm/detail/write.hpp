@@ -14,6 +14,7 @@
 #include <boost/gil/io/base.hpp>
 #include <boost/gil/io/bit_operations.hpp>
 #include <boost/gil/io/device.hpp>
+#include <boost/gil/io/detail/dynamic.hpp>
 #include <boost/gil/detail/mp11.hpp>
 
 #include <cstdlib>
