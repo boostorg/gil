@@ -33,7 +33,6 @@
 #pragma GCC diagnostic pop
 #endif
 
-#include <algorithm>
 #include <cmath>
 #include <cstddef>
 #include <functional>
@@ -165,45 +164,6 @@ const OutPtr gil_reinterpret_cast_c(const In* p)
 
 namespace detail {
 
-////////////////////////////////////////////////////////////////////////////////
-///  \brief copy_n taken from SGI STL.
-////////////////////////////////////////////////////////////////////////////////
-
-template <class InputIter, class Size, class OutputIter>
-std::pair<InputIter, OutputIter> _copy_n(InputIter first, Size count,
-    OutputIter result, std::input_iterator_tag)
-{
-   for ( ; count > 0; --count)
-   {
-      *result = *first;
-      ++first;
-      ++result;
-   }
-   return std::pair<InputIter, OutputIter>(first, result);
-}
-
-template <class RAIter, class Size, class OutputIter>
-inline std::pair<RAIter, OutputIter>
-_copy_n(RAIter first, Size count, OutputIter result, std::random_access_iterator_tag)
-{
-   RAIter last = first + count;
-   return std::pair<RAIter, OutputIter>(last, std::copy(first, last, result));
-}
-
-template <class InputIter, class Size, class OutputIter>
-inline std::pair<InputIter, OutputIter>
-_copy_n(InputIter first, Size count, OutputIter result)
-{
-   return _copy_n(first, count, result, typename std::iterator_traits<InputIter>::iterator_category());
-}
-
-template <class InputIter, class Size, class OutputIter>
-inline std::pair<InputIter, OutputIter>
-copy_n(InputIter first, Size count, OutputIter result)
-{
-    return detail::_copy_n(first, count, result);
-}
-
 /// \brief identity taken from SGI STL.
 template <typename T>
 struct identity
@@ -213,6 +173,7 @@ struct identity
     const T& operator()(const T& val) const { return val; }
 };
 
+// TODO replace with transparent std::plus in C++14
 /// \brief plus function object whose arguments may be of different type.
 template <typename T1, typename T2>
 struct plus_asymmetric {
