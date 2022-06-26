@@ -26,10 +26,6 @@ local msvc-cxxs-with-experimental-fs = 11 14 ;
 project
   :
   requirements
-    <include>.
-    # TODO: Enable concepts check for all, not just test/core
-    #<define>BOOST_GIL_USE_CONCEPT_CHECK=1
-    <toolset>msvc,<cxxstd>$(msvc-cxxs-with-experimental-fs):<define>_SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING=1
     [ requires
         cxx11_constexpr
         cxx11_defaulted_functions
@@ -37,6 +33,11 @@ project
         cxx11_trailing_result_types  # implies decltype and auto
         cxx11_variadic_templates
     ]
+    <include>.
+    # TODO: Enable concepts check for all, not just test/core
+    #<define>BOOST_GIL_USE_CONCEPT_CHECK=1
+    <toolset>msvc,<cxxstd>$(msvc-cxxs-with-experimental-fs):<define>_SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING=1
+    <toolset>msvc:<cxxflags>/bigobj
   ;
 
 variant gil_ubsan_integer
