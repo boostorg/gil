@@ -201,8 +201,8 @@ public:
                                 , parent_t
                                 > op( this );
 
-        apply_operation( views
-                       , op
+        variant2::visit( op
+                       ,views
                        );
     }
 };

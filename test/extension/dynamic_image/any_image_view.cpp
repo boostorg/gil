@@ -34,18 +34,22 @@ struct test_any_image_view_init_ctor
         using view_t = typename Image::view_t;
         using any_view_t = gil::any_image_view<view_t>;
         using any_const_view_t = typename any_view_t::const_t;
-        Image i0(fixture::create_image<image_t>(4, 4, 128));
+        Image i0(fixture::create_image<image_t>(4, 5, 128));
 
         view_t v0 = gil::view(i0);
         any_view_t v1 = v0;
 
         BOOST_TEST_EQ(v1.dimensions().x, 4);
-        BOOST_TEST_EQ(v1.dimensions().y, 4);
+        BOOST_TEST_EQ(v1.dimensions().y, 5);
+        BOOST_TEST_EQ(v1.width(), 4);
+        BOOST_TEST_EQ(v1.height(), 5);
+        BOOST_TEST_EQ(v1.size(), 4 * 5);
+        BOOST_TEST_EQ(v1.num_channels(), gil::num_channels<image_t>::value);
 
         any_const_view_t v2 = v0;
 
         BOOST_TEST_EQ(v2.dimensions().x, 4);
-        BOOST_TEST_EQ(v2.dimensions().y, 4);
+        BOOST_TEST_EQ(v2.dimensions().y, 5);
 
         //any_const_view_t v3 = v1;
     }
