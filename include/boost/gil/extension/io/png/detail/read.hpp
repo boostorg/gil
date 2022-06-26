@@ -432,8 +432,8 @@ public:
                                     , parent_t
                                     > op( this );
 
-            apply_operation( view( images )
-                           , op
+            variant2::visit( op
+                           , view( images )
                            );
         }
     }

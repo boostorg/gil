@@ -41,7 +41,7 @@ struct construct_matched_t<0>
     static bool apply(any_image<Images...>&, Pred) { return false; }
 };
 
-// A function object that can be passed to apply_operation.
+// A function object that can be passed to variant2::visit.
 // Given a predicate IsSupported taking a view type and returning an boolean integral coonstant,
 // calls the apply method of OpClass with the view if the given view IsSupported, or throws an exception otherwise
 template <typename IsSupported, typename OpClass>
