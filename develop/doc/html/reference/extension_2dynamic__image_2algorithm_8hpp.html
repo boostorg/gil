@@ -54,21 +54,23 @@ $(function() {
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;boost/gil/extension/dynamic_image/any_image.hpp&gt;</code><br />
 <code>#include &lt;boost/gil/algorithm.hpp&gt;</code><br />
+<code>#include &lt;boost/variant2/variant.hpp&gt;</code><br />
 <code>#include &lt;functional&gt;</code><br />
+<code>#include &lt;utility&gt;</code><br />
 </div>
 <p><a href="extension_2dynamic__image_2algorithm_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga1012eaed87b0d3a15879f295567926ab"><td class="memTemplParams" colspan="2">template&lt;typename ... Types, typename View &gt; </td></tr>
-<tr class="memitem:ga1012eaed87b0d3a15879f295567926ab"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_s_t_l_algorithms_equal_pixels.html#ga1012eaed87b0d3a15879f295567926ab">equal_pixels</a> (any_image_view&lt; Types... &gt; const &amp;src, View const &amp;dst)</td></tr>
-<tr class="separator:ga1012eaed87b0d3a15879f295567926ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4bb8421d1fd022322240cb0d11ecbdf4"><td class="memTemplParams" colspan="2">template&lt;typename View , typename ... Types&gt; </td></tr>
-<tr class="memitem:ga4bb8421d1fd022322240cb0d11ecbdf4"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_s_t_l_algorithms_equal_pixels.html#ga4bb8421d1fd022322240cb0d11ecbdf4">equal_pixels</a> (View const &amp;src, any_image_view&lt; Types... &gt; const &amp;dst)</td></tr>
-<tr class="separator:ga4bb8421d1fd022322240cb0d11ecbdf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafbe9418eaff97a6a08add93a786feb7c"><td class="memTemplParams" colspan="2">template&lt;typename ... Types1, typename ... Types2&gt; </td></tr>
-<tr class="memitem:gafbe9418eaff97a6a08add93a786feb7c"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_s_t_l_algorithms_equal_pixels.html#gafbe9418eaff97a6a08add93a786feb7c">equal_pixels</a> (any_image_view&lt; Types1... &gt; const &amp;src, any_image_view&lt; Types2... &gt; const &amp;dst)</td></tr>
-<tr class="separator:gafbe9418eaff97a6a08add93a786feb7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga71a33f99aad04a18e874ecb4f8d9a2c1"><td class="memTemplParams" colspan="2">template&lt;typename ... Types, typename View &gt; </td></tr>
+<tr class="memitem:ga71a33f99aad04a18e874ecb4f8d9a2c1"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_s_t_l_algorithms_equal_pixels.html#ga71a33f99aad04a18e874ecb4f8d9a2c1">equal_pixels</a> (any_image_view&lt; Types... &gt; const &amp;src, View const &amp;dst) -&gt; bool</td></tr>
+<tr class="separator:ga71a33f99aad04a18e874ecb4f8d9a2c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4128106d655eca5c41820f1ff9342af6"><td class="memTemplParams" colspan="2">template&lt;typename View , typename ... Types&gt; </td></tr>
+<tr class="memitem:ga4128106d655eca5c41820f1ff9342af6"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_s_t_l_algorithms_equal_pixels.html#ga4128106d655eca5c41820f1ff9342af6">equal_pixels</a> (View const &amp;src, any_image_view&lt; Types... &gt; const &amp;dst) -&gt; bool</td></tr>
+<tr class="separator:ga4128106d655eca5c41820f1ff9342af6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad8323f1bc508d5eb552b04b7bfbff1b6"><td class="memTemplParams" colspan="2">template&lt;typename ... Types1, typename ... Types2&gt; </td></tr>
+<tr class="memitem:gad8323f1bc508d5eb552b04b7bfbff1b6"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_s_t_l_algorithms_equal_pixels.html#gad8323f1bc508d5eb552b04b7bfbff1b6">equal_pixels</a> (any_image_view&lt; Types1... &gt; const &amp;src, any_image_view&lt; Types2... &gt; const &amp;dst) -&gt; bool</td></tr>
+<tr class="separator:gad8323f1bc508d5eb552b04b7bfbff1b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gada4a0756a8f7d559adde9ee6cd057638"><td class="memTemplParams" colspan="2">template&lt;typename ... Types, typename View &gt; </td></tr>
 <tr class="memitem:gada4a0756a8f7d559adde9ee6cd057638"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_s_t_l_algorithms_copy_pixels.html#gada4a0756a8f7d559adde9ee6cd057638">copy_pixels</a> (any_image_view&lt; Types... &gt; const &amp;src, View const &amp;dst)</td></tr>
 <tr class="separator:gada4a0756a8f7d559adde9ee6cd057638"><td class="memSeparator" colspan="2">&#160;</td></tr>
