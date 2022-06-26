@@ -15,8 +15,8 @@
 namespace gil = boost::gil;
 
 // Demonstrates the use of a rasterizer to generate an image of a line
-// The various rasterizers available are defined in include/boost/gil/rasterization/circle.hpp,
-// include/boost/gil/rasterization/ellipse.hpp and include/boost/gil/rasterization/line.hpp
+// The various rasterizers available are defined in include/boost/gil/extension/rasterization/circle.hpp,
+// include/boost/gil/extension/rasterization/ellipse.hpp and include/boost/gil/extension/rasterization/line.hpp
 // The rasterizer used implements the Bresenham's line algorithm.
 // Multiple images are created, all of the same size, but with areas of different sizes passed to the rasterizer, resulting in different lines.
 // See also:
