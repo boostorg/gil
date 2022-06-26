@@ -49,9 +49,9 @@ endpoints create_endpoints(std::mt19937& twister,
 
 line_type create_line(endpoints points)
 {
-    gil::bresenham_line_rasterizer rasterizer;
-    line_type forward_line(rasterizer.point_count(points.start, points.end));
-    rasterizer(points.start, points.end, forward_line.begin());
+    gil::bresenham_line_rasterizer rasterizer(points.start, points.end);
+    line_type forward_line(rasterizer.point_count());
+    rasterizer(forward_line.begin());
     return forward_line;
 }
 

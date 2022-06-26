@@ -8,10 +8,7 @@
 
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/png.hpp>
-
-#include <cmath>
-#include <limits>
-#include <vector>
+#include <boost/gil/extension/rasterization/circle.hpp>
 
 namespace gil = boost::gil;
 
@@ -30,14 +27,10 @@ int main()
     gil::gray8_image_t buffer_image(size, size);
     auto buffer = gil::view(buffer_image);
 
+    const gil::point_t center = {128, 128};
     const std::ptrdiff_t radius = 64;
-    const auto rasterizer = gil::trigonometric_circle_rasterizer{};
-    std::vector<gil::point_t> circle_points(rasterizer.point_count(radius));
-    rasterizer(radius, {128, 128}, circle_points.begin());
-    for (const auto& point : circle_points)
-    {
-        buffer(point) = std::numeric_limits<gil::uint8_t>::max();
-    }
+    const auto rasterizer = gil::trigonometric_circle_rasterizer{center, radius};
+    gil::apply_rasterizer(buffer, rasterizer, gil::gray8_pixel_t{255});
 
     gil::write_view("circle.png", buffer, gil::png_tag{});
 }

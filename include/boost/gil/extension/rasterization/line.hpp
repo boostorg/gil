@@ -8,12 +8,17 @@
 #ifndef BOOST_GIL_EXTENSION_RASTERIZATION_LINE_HPP
 #define BOOST_GIL_EXTENSION_RASTERIZATION_LINE_HPP
 
+#include <boost/gil/extension/rasterization/apply_rasterizer.hpp>
 #include <boost/gil/point.hpp>
 
 #include <cmath>
 #include <cstddef>
+#include <iterator>
+#include <vector>
 
 namespace boost { namespace gil {
+
+struct line_rasterizer_t{};
 
 /// \defgroup Rasterization
 /// \brief A set of functions to rasterize shapes
@@ -40,21 +45,26 @@ namespace boost { namespace gil {
 /// https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm#:~:text=Bresenham's%20line%20algorithm%20is%20a,straight%20line%20between%20two%20points.
 struct bresenham_line_rasterizer
 {
-    constexpr std::ptrdiff_t point_count(std::ptrdiff_t width, std::ptrdiff_t height) const noexcept
+    using type = line_rasterizer_t;
+
+    bresenham_line_rasterizer(point_t start, point_t end)
+        : start_point(start), end_point(end)
+    {}
+
+    std::ptrdiff_t point_count() const noexcept
     {
-        return width > height ? width : height;
+        const auto abs_width = std::abs(end_point.x - start_point.x) + 1;
+        const auto abs_height = std::abs(end_point.y - start_point.y) + 1;
+        return abs_width > abs_height ? abs_width : abs_height;
     }
 
-    std::ptrdiff_t point_count(point_t start, point_t end) const noexcept
+    template <typename OutputIterator>
+    void operator()(OutputIterator d_first) const
     {
-        const auto abs_width = std::abs(end.x - start.x) + 1;
-        const auto abs_height = std::abs(end.y - start.y) + 1;
-        return point_count(abs_width, abs_height);
-    }
+        // mutable stack copies
+        point_t start = start_point;
+        point_t end = end_point;
 
-    template <typename RandomAccessIterator>
-    void operator()(point_t start, point_t end, RandomAccessIterator d_first) const
-    {
         if (start == end)
         {
             // put the point and immediately exit, as later on division by zero will
@@ -92,7 +102,30 @@ struct bresenham_line_rasterizer
         }
         *d_first++ = needs_flip ? point_t{end.y, end.x} : end;
     }
+
+    point_t start_point;
+    point_t end_point;
 };
+
+namespace detail {
+
+template <typename View, typename Rasterizer, typename Pixel>
+struct apply_rasterizer_op<View, Rasterizer, Pixel, line_rasterizer_t>
+{
+    void operator()(
+        View const& view, Rasterizer const& rasterizer, Pixel const& pixel)
+    {
+        std::vector<point_t> trajectory(rasterizer.point_count());
+        rasterizer(std::begin(trajectory));
+
+        for (auto const& point : trajectory)
+        {
+            view(point) = pixel;
+        }
+    }
+};
+
+} //namespace detail
 
 }} // namespace boost::gil
 

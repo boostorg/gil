@@ -37,17 +37,16 @@ int main()
     // and vertical semi-axis respectively.
 
     gil::gray8_image_t gray_buffer_image(256, 256);
-    auto gray_ellipse_rasterizer = gil::midpoint_ellipse_rasterizer{};
-    gray_ellipse_rasterizer(view(gray_buffer_image), gil::gray8_pixel_t{128}, {128, 128}, {100, 50});
+    auto gray_ellipse_rasterizer = gil::midpoint_ellipse_rasterizer{{128, 128}, {100, 50}};
+    gil::apply_rasterizer(view(gray_buffer_image), gray_ellipse_rasterizer, gil::gray8_pixel_t{128});
 
     gil::rgb8_image_t rgb_buffer_image(256, 256);
-    auto rgb_ellipse_rasterizer = gil::midpoint_ellipse_rasterizer{};
-    rgb_ellipse_rasterizer(view(rgb_buffer_image), gil::rgb8_pixel_t{0, 0, 255}, {128, 128}, {50, 100});
+    auto rgb_ellipse_rasterizer = gil::midpoint_ellipse_rasterizer{{128, 128}, {50, 100}};
+    gil::apply_rasterizer(view(rgb_buffer_image), rgb_ellipse_rasterizer, gil::rgb8_pixel_t{0, 0, 255});
 
     gil::rgb8_image_t rgb_buffer_image_out_of_bound(256, 256);
-    auto rgb_ellipse_rasterizer_out_of_bound = gil::midpoint_ellipse_rasterizer{};
-    rgb_ellipse_rasterizer_out_of_bound(view(rgb_buffer_image_out_of_bound), gil::rgb8_pixel_t{255, 0, 0},
-        {100, 100}, {160, 160});
+    auto rgb_ellipse_rasterizer_out_of_bound = gil::midpoint_ellipse_rasterizer{{100, 100}, {160, 160}};
+    apply_rasterizer(view(rgb_buffer_image_out_of_bound), rgb_ellipse_rasterizer_out_of_bound, gil::rgb8_pixel_t{255, 0, 0});
 
     gil::write_view("rasterized_ellipse_gray.jpg", view(gray_buffer_image), gil::jpeg_tag{});
     gil::write_view("rasterized_ellipse_rgb.jpg", view(rgb_buffer_image), gil::jpeg_tag{});
