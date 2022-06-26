@@ -8,9 +8,12 @@
 #ifndef BOOST_GIL_EXTENSION_RASTERIZATION_ELLIPSE_HPP
 #define BOOST_GIL_EXTENSION_RASTERIZATION_ELLIPSE_HPP
 
+#include <boost/gil/concepts/pixel.hpp>
+#include <boost/gil/point.hpp>
+
 #include <array>
+#include <stdexcept>
 #include <vector>
-#include <iostream>
 
 namespace boost { namespace gil {
 
@@ -22,21 +25,21 @@ namespace boost { namespace gil {
 /// \brief Performs ellipse rasterization using midpoint algorithm. Initially, program considers
 /// origin as center of ellipse and obtains first quadrant trajectory points. After that,
 /// it shifts origin to provided co-ordinates of center and then draws the curve.
-struct midpoint_elliptical_rasterizer
+struct midpoint_ellipse_rasterizer
 {
     /// \brief Returns a vector containing co-ordinates of first quadrant points which lie on
     /// rasterizer trajectory of the ellipse.
-    /// \param semi_axes - Array containing half of lengths of horizontal and vertical axis
+    /// \param semi_axes - Point containing half of lengths of horizontal and vertical axis
     /// respectively.
-    auto obtain_trajectory(std::array<unsigned int, 2> const semi_axes)
-        -> std::vector<std::array<std::ptrdiff_t, 2>>
+    auto obtain_trajectory(point<unsigned int> semi_axes)
+        -> std::vector<point_t>
     {
         // Citation : J. Van Aken, "An Efficient Ellipse-Drawing Algorithm" in IEEE Computer
         // Graphics and Applications, vol. 4, no. 09, pp. 24-35, 1984.
         // doi: 10.1109/MCG.1984.275994
         // keywords: {null}
         // url: https://doi.ieeecomputersociety.org/10.1109/MCG.1984.275994
-        std::vector<std::array<std::ptrdiff_t, 2>> trajectory_points;
+        std::vector<point_t> trajectory_points;
         std::ptrdiff_t x = semi_axes[0], y = 0;
 
         // Variables declared on following lines are temporary variables used for improving
@@ -96,58 +99,63 @@ struct midpoint_elliptical_rasterizer
     /// obtained from their reflection along major axis, minor axis and line passing through
     /// center with slope -1 using colours provided by user.
     /// \param view - Gil view of image on which the elliptical curve is to be drawn.
-    /// \param colour - Constant vector specifying colour intensity values for all channels present
-    ///                 in 'view'.
-    /// \param center - Constant array specifying co-ordinates of center of ellipse to be drawn.
+    /// \param pixel - Pixel value for the elliptical curve to be drawn.
+    /// \param center - Point specifying co-ordinates of center of ellipse to be drawn.
     /// \param trajectory_points - Constant vector specifying pixel co-ordinates of points lying
     ///                            on rasterizer trajectory.
     /// \tparam View - Type of input image view.
-    template<typename View>
-    void draw_curve(View view, std::vector<unsigned int> const colour,
-        std::array<unsigned int, 2> const center,
-        std::vector<std::array<std::ptrdiff_t, 2>> const trajectory_points)
+    /// \tparam Pixel - Type of pixel. Must be compatible to the pixel type of the image view
+    template<typename View, typename Pixel>
+    void draw_curve(View& view, Pixel const& pixel,
+        point<unsigned int> center,
+        std::vector<point_t> const& trajectory_points)
     {
-        for (int i = 0, colour_index = 0; i < static_cast<int>(view.num_channels());
-            ++i, ++colour_index)
+        using pixel_t = typename View::value_type;
+        if (!pixels_are_compatible<pixel_t, Pixel>())
         {
-            for (std::array<std::ptrdiff_t, 2> point : trajectory_points)
+            throw std::runtime_error("Pixel type of the given image is not compatible to the "
+                "type of the provided pixel.");
+        }
+
+        --center[0], --center[1]; // For converting center co-ordinate values to zero based indexing.
+        for (point_t pnt : trajectory_points)
+        {
+            std::array<std::ptrdiff_t, 4> co_ords = {center[0] + pnt[0],
+            center[0] - pnt[0], center[1] + pnt[1], center[1] - pnt[1]
+            };
+            bool validity[4]{};
+            if (co_ords[0] < view.width())
             {
-                std::array<std::ptrdiff_t, 4> co_ords = {center[0] + point[0],
-                center[0] - point[0], center[1] + point[1], center[1] - point[1]
-                };
-                bool validity[4] = {0};
-                if (co_ords[0] < view.width())
-                {
-                    validity[0] = 1;
-                }
-                if (co_ords[1] >= 0 && co_ords[1] < view.width())
-                {
-                    validity[1] = 1;
-                }
-                if (co_ords[2] < view.height())
-                {
-                    validity[2] = 1;
-                }
-                if (co_ords[3] >= 0 && co_ords[3] < view.height())
-                {
-                    validity[3] = 1;
-                }
-                if (validity[0] && validity[2])
-                {
-                    nth_channel_view(view, i)(co_ords[0], co_ords[2])[0] = colour[colour_index];
-                }
-                if (validity[1] && validity[2])
-                {
-                    nth_channel_view(view, i)(co_ords[1], co_ords[2])[0] = colour[colour_index];
-                }
-                if (validity[1] && validity[3])
-                {
-                    nth_channel_view(view, i)(co_ords[1], co_ords[3])[0] = colour[colour_index];
-                }
-                if (validity[0] && validity[3])
-                {
-                    nth_channel_view(view, i)(co_ords[0], co_ords[3])[0] = colour[colour_index];
-                }
+                validity[0] = true;
+            }
+            if (co_ords[1] >= 0 && co_ords[1] < view.width())
+            {
+                validity[1] = true;
+            }
+            if (co_ords[2] < view.height())
+            {
+                validity[2] = true;
+            }
+            if (co_ords[3] >= 0 && co_ords[3] < view.height())
+            {
+                validity[3] = true;
+            }
+
+            if (validity[0] && validity[2])
+            {
+                view(co_ords[0], co_ords[2]) = pixel;
+            }
+            if (validity[1] && validity[2])
+            {
+                view(co_ords[1], co_ords[2]) = pixel;
+            }
+            if (validity[1] && validity[3])
+            {
+                view(co_ords[1], co_ords[3]) = pixel;
+            }
+            if (validity[0] && validity[3])
+            {
+                view(co_ords[0], co_ords[3]) = pixel;
             }
         }
     }
@@ -155,37 +163,18 @@ struct midpoint_elliptical_rasterizer
     /// \brief Calls the function 'obtain_trajectory' and then passes obtained trajectory points
     ///        in the function 'draw_curve' for drawing the desired ellipse.
     /// \param view - Gil view of image on which the elliptical curve is to be drawn.
-    /// \param colour - Constant vector specifying colour intensity values for all channels present
-    ///                 in 'view'.
-    /// \param center - Array containing positive integer x co-ordinate and y co-ordinate of the
+    /// \param pixel - Pixel value for the elliptical curve to be drawn.
+    /// \param center - Point containing positive integer x co-ordinate and y co-ordinate of the
     /// center respectively.
-    /// \param semi_axes - Array containing positive integer lengths of horizontal semi-axis
+    /// \param semi_axes - Point containing positive integer lengths of horizontal semi-axis
     /// and vertical semi-axis respectively.
     /// \tparam View - Type of input image view.
-    template<typename View>
-    void operator()(View view, std::vector<unsigned int> const colour,
-        std::array<unsigned int, 2> center, std::array<unsigned int, 2> const semi_axes)
+    /// \tparam Pixel - Type of pixel. Must be compatible to the pixel type of the image view
+    template<typename View, typename Pixel>
+    void operator()(View& view, Pixel const& pixel,
+        point<unsigned int> center, point<unsigned int> semi_axes)
     {
-        --center[0], --center[1]; // For converting center co-ordinate values to zero based indexing.
-        if (colour.size() != view.num_channels())
-        {
-            throw std::length_error("Number of channels in given image is not equal to the "
-                "number of colours provided.");
-        }
-        if (center[0] + semi_axes[0] >= view.width() || center[1] + semi_axes[1] >= view.height()
-            || static_cast<int>(center[0] - semi_axes[0]) < 0
-            || static_cast<int>(center[0] - semi_axes[0]) >= view.width()
-            || static_cast<int>(center[1] - semi_axes[1]) < 0
-            || static_cast<int>(center[1] - semi_axes[1]) >= view.height())
-        {
-            std::cout << "Image can't contain whole curve.\n"
-                "However, it will contain those parts of curve which can fit inside it.\n"
-                "Note : Image width = " << view.width() << " and Image height = " <<
-                view.height() << "\n";
-        }
-        std::vector<std::array<std::ptrdiff_t, 2>> trajectory_points =
-            obtain_trajectory(semi_axes);
-        draw_curve(view, colour, center, trajectory_points);
+        draw_curve(view, pixel, center, obtain_trajectory(semi_axes));
     }
 };
 

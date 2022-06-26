@@ -8,6 +8,7 @@
 
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/png.hpp>
+
 #include <cmath>
 #include <limits>
 #include <vector>
@@ -15,8 +16,8 @@
 namespace gil = boost::gil;
 
 // Demonstrates the use of a rasterizer to generate an image of a circle
-// The various rasterizers available are defined in include/boost/gil/rasterization/circle.hpp,
-// include/boost/gil/rasterization/ellipse.hpp and include/boost/gil/rasterization/line.hpp
+// The various rasterizers available are defined in include/boost/gil/extension/rasterization/circle.hpp,
+// include/boost/gil/extension/rasterization/ellipse.hpp and include/boost/gil/extension/rasterization/line.hpp
 // This example uses a trigonometric rasterizer; GIL also offers the rasterizer midpoint_circle_rasterizer,
 // which implements the Midpoint algorithm.
 // See also:
