@@ -7,7 +7,7 @@
 //
 #include <boost/core/lightweight_test.hpp>
 #include <boost/gil.hpp>
-#include <array>
+
 #include <cmath>
 #include <vector>
 
@@ -17,7 +17,7 @@ namespace gil = boost::gil;
 // is equal to the length of major axis of the ellipse.
 // Parameters b and a represent half of lengths of vertical and horizontal axis respectively.
 void test_rasterizer_follows_equation(
-    std::vector<std::array<std::ptrdiff_t, 2>> trajectory_points, float a, float b)
+    std::vector<gil::point_t> const& trajectory_points, float a, float b)
 {
     float focus_x, focus_y;
     if (a > b) // For horizontal ellipse
@@ -34,7 +34,7 @@ void test_rasterizer_follows_equation(
     for (auto trajectory_point : trajectory_points)
     {
         // To suppress conversion warnings from compiler
-        std::array<float, 2> point {
+        gil::point<float> point {
             static_cast<float>(trajectory_point[0]), static_cast<float>(trajectory_point[1])};
 
         double dist_sum = std::sqrt(std::pow(focus_x - point[0], 2) +
@@ -53,7 +53,7 @@ void test_rasterizer_follows_equation(
 
 // This function verifies that the difference between x co-ordinates and y co-ordinates for two
 // successive trajectory points is less than or equal to 1. This ensures that the curve is connected.
-void test_connectivity(std::vector<std::array<std::ptrdiff_t, 2>> points)
+void test_connectivity(std::vector<gil::point_t> const& points)
 {
     for (std::size_t i = 1; i < points.size(); ++i)
     {
@@ -72,8 +72,8 @@ int main()
     {
         for (float b = 1; b < 101; ++b)
         {
-            auto rasterizer = gil::midpoint_elliptical_rasterizer{};
-            std::vector<std::array<std::ptrdiff_t, 2>> points = rasterizer.obtain_trajectory(
+            auto rasterizer = gil::midpoint_ellipse_rasterizer{};
+            std::vector<gil::point_t> points = rasterizer.obtain_trajectory(
                 {static_cast<unsigned int>(a), static_cast<unsigned int>(b)});
             test_rasterizer_follows_equation(points, a, b);
             test_connectivity(points);

@@ -7,10 +7,10 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef BOOST_GIL_IMAGE_PROCESSING_DIFFUSION_HPP
-#define BOOST_GIL_IMAGE_PROCESSING_DIFFUSION_HPP
+#ifndef BOOST_GIL_EXTENSION_IMAGE_PROCESSING_DIFFUSION_HPP
+#define BOOST_GIL_EXTENSION_IMAGE_PROCESSING_DIFFUSION_HPP
 
-#include "boost/gil/detail/math.hpp"
+#include <boost/gil/detail/math.hpp>
 #include <boost/gil/algorithm.hpp>
 #include <boost/gil/color_base_algorithm.hpp>
 #include <boost/gil/image.hpp>
@@ -19,6 +19,7 @@
 #include <boost/gil/pixel.hpp>
 #include <boost/gil/point.hpp>
 #include <boost/gil/typedefs.hpp>
+
 #include <functional>
 #include <numeric>
 #include <vector>
