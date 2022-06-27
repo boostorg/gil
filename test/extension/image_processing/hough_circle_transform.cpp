@@ -23,8 +23,8 @@ namespace gil = boost::gil;
 template <typename Rasterizer>
 void exact_fit_test(std::ptrdiff_t radius, gil::point_t offset, Rasterizer rasterizer)
 {
-    std::vector<gil::point_t> circle_points(rasterizer.point_count(radius));
-    rasterizer(radius, offset, circle_points.begin());
+    std::vector<gil::point_t> circle_points(rasterizer.point_count());
+    rasterizer(circle_points.begin());
     // const std::ptrdiff_t diameter = radius * 2 - 1;
     const std::ptrdiff_t width = offset.x + radius + 1;
     const std::ptrdiff_t height = offset.y + radius + 1;
@@ -54,12 +54,12 @@ void exact_fit_test(std::ptrdiff_t radius, gil::point_t offset, Rasterizer raste
                    });
     gil::hough_circle_transform_brute(input, radius_parameter, x_parameter, y_parameter,
                                       output_views.begin(), rasterizer);
-    if (output_views[0](0, 0) != rasterizer.point_count(radius))
+    if (output_views[0](0, 0) != rasterizer.point_count())
     {
         std::cout << "accumulated value: " << static_cast<int>(output_views[0](0, 0))
-                  << " expected value: " << rasterizer.point_count(radius) << "\n\n";
+                  << " expected value: " << rasterizer.point_count() << "\n\n";
     }
-    BOOST_TEST(output_views[0](0, 0) == rasterizer.point_count(radius));
+    BOOST_TEST(output_views[0](0, 0) == rasterizer.point_count());
 }
 
 int main()
@@ -72,9 +72,10 @@ int main()
             for (std::ptrdiff_t y_offset = radius; y_offset < radius + test_dim_length; ++y_offset)
             {
 
-                exact_fit_test(radius, {x_offset, y_offset}, gil::midpoint_circle_rasterizer{});
                 exact_fit_test(radius, {x_offset, y_offset},
-                               gil::trigonometric_circle_rasterizer{});
+                                gil::midpoint_circle_rasterizer{{x_offset, y_offset}, radius});
+                exact_fit_test(radius, {x_offset, y_offset},
+                               gil::trigonometric_circle_rasterizer{{x_offset, y_offset}, radius});
             }
         }
     }

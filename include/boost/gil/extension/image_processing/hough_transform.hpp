@@ -86,14 +86,15 @@ void hough_circle_transform_brute(const ImageView& input,
                                   const hough_parameter<std::ptrdiff_t> radius_parameter,
                                   const hough_parameter<std::ptrdiff_t> x_parameter,
                                   const hough_parameter<std::ptrdiff_t>& y_parameter,
-                                  ForwardIterator d_first, Rasterizer rasterizer)
+                                  ForwardIterator d_first, Rasterizer)
 {
     for (std::size_t radius_index = 0; radius_index < radius_parameter.step_count; ++radius_index)
     {
         const auto radius = radius_parameter.start_point +
                             radius_parameter.step_size * static_cast<std::ptrdiff_t>(radius_index);
-        std::vector<point_t> circle_points(rasterizer.point_count(radius));
-        rasterizer(radius, {0, 0}, circle_points.begin());
+        Rasterizer rasterizer{point_t{}, radius};
+        std::vector<point_t> circle_points(rasterizer.point_count());
+        rasterizer(circle_points.begin());
         // sort by scanline to improve cache coherence for row major images
         std::sort(circle_points.begin(), circle_points.end(),
                   [](const point_t& lhs, const point_t& rhs) { return lhs.y < rhs.y; });
