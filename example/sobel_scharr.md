@@ -3,6 +3,7 @@
 Edge detection via Sobel and Scharr filters capabilities in GIL are demonstrated by the program `sobel_scharr`, compiled from the sources `example/sobel_scharr.cpp`.
 
 ## Synopsis
+
 `sobel_scharr input.png sobel|scharr output-x.png output-y.png`
 
 - The first argument must be the full path to an existing image in PNG format
@@ -13,8 +14,10 @@ Edge detection via Sobel and Scharr filters capabilities in GIL are demonstrated
 ## Specific requirements
 
 ### Build requirements
-- A C++ compiler compliant with C++11 or above
+
+- A C++ compiler compliant with C++14 or above
 - The PNG library installed and configured.
 
 ### Execution requirements
+
 `sobek_scharr` doesn't have any specific execution requirements.

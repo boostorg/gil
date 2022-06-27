@@ -3,6 +3,7 @@
 Morphological operations capabilities in GIL are demonstrated by the program `morphology`, compiled from the sources `example/morphology.cpp`.
 
 ## Synopsis
+
 `morphology input.png output-image-template operation1 [operation2 ... operationN]`
 
 - The first parameter must be the full path to an existing image in the PNG format for `morphology` to process
@@ -24,8 +25,10 @@ The operations can be provided in any order, only note that if `binary` is suppl
 ## Specific requirements
 
 ### Build requirements
-- A C++ compiler compliant with C++11 or above
+
+- A C++ compiler compliant with C++14 or above
 - The PNG library installed and configured.
 
 ### Execution requirements
+
 `morphology` has no specific execution requirements.

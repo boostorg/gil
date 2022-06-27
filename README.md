@@ -29,7 +29,7 @@ Documentation | GitHub Actions | AppVeyor | Azure Pipelines | Regression | Codec
 
 Boost.GIL is a part of the [Boost C++ Libraries](http://github.com/boostorg).
 
-The Boost Generic Image Library (GIL) is a **C++11** header-only library that abstracts image
+The Boost Generic Image Library (GIL) is a **C++14** header-only library that abstracts image
 representations from algorithms and allows writing code that can work on a
 variety of images with performance similar to hand-writing for a specific image type.
 
@@ -52,11 +52,9 @@ See [example/cmake/README.md](example/cmake/README.md) for CMake configuration e
 
 ## Requirements
 
-**NOTE:** The library source code is currently being modernized for C++11.
-
 The Boost Generic Image Library (GIL) requires:
 
-- C++11 compiler (GCC 4.9, clang 3.3, MSVC++ 14.0 (1900) or any later version)
+- C++14 compiler (GCC 6, clang 3.9, MSVC++ 14.1 (1910) or any later version)
 - Boost header-only libraries
 
 Optionally, in order to build and run tests and examples:
