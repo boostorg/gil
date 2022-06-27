@@ -7,7 +7,8 @@
 #
 foreach(_name
   concepts
-  image)
+  image
+  empty_dimensions)
   set(_test t_core_image_${_name})
   set(_target test_core_image_${_name})
 
