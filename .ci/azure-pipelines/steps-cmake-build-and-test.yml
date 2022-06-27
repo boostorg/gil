@@ -7,7 +7,7 @@
 parameters:
   # defaults, if not specified
   configuration: 'Release'
-  cxxver: '11'
+  cxxver: '14'
   enable_ext_io: 'OFF'
   enable_ext_numeric: 'ON'
   enable_ext_toolbox: 'ON'
