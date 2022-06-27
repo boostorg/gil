@@ -24,7 +24,7 @@ please follow the workflow explained in this document.
 
 ## Prerequisites
 
-- C++11 compiler
+- C++14 compiler
 - Build and run-time dependencies for tests and examples:
   - Boost.Filesystem
   - Boost.Test
@@ -359,25 +359,25 @@ Run core tests only specifying location of directory with tests:
 
 ```shell
 cd libs/gil
-b2 cxxstd=11 test/core
+b2 cxxstd=14 test/core
 ```
 
 Run all tests for selected extension (from Boost root directory, as alternative):
 
 ```shell
-b2 cxxstd=11 libs/gil/test/extension/dynamic_image
-b2 cxxstd=11 libs/gil/test/extension/io
-b2 cxxstd=11 libs/gil/test/extension/numeric
-b2 cxxstd=11 libs/gil/test/extension/toolbox
+b2 cxxstd=14 libs/gil/test/extension/dynamic_image
+b2 cxxstd=14 libs/gil/test/extension/io
+b2 cxxstd=14 libs/gil/test/extension/numeric
+b2 cxxstd=14 libs/gil/test/extension/toolbox
 ```
 
 Run I/O extension tests bundled in target called `simple`:
 
 ```shell
-b2 cxxstd=11 libs/gil/test/io//simple
+b2 cxxstd=14 libs/gil/test/io//simple
 ```
 
-**TIP:** Pass `b2` feature `cxxstd=11,14,17,2a` to request compilation for
+**TIP:** Pass `b2` feature `cxxstd=14,17,2a` to request compilation for
 multiple C++ standard versions in single build run.
 
 ### Using CMake
@@ -405,17 +405,17 @@ The provided CMake configuration allows a couple of ways to develop Boost.GIL:
 
 For CMake, you only need to build Boost libraries required by Boost.Test library
 which is used to run GIL tests. Since the `CMAKE_CXX_STANDARD` option in the current
-[CMakeLists.txt](CMakeLists.txt) defaults to C++11, pass the default `cxxstd=11` to `b2`:
+[CMakeLists.txt](CMakeLists.txt) defaults to C++14, pass the default `cxxstd=14` to `b2`:
 
   ```shell
   ./b2 headers
-  ./b2 variant=debug,release cxxstd=11 --with-filesystem stage
+  ./b2 variant=debug,release cxxstd=14 --with-filesystem stage
   ```
 
   or, depending on specific requirements, more complete build:
 
   ```shell
-  ./b2 variant=debug,release address-model=32,64 cxxstd=11 --layout=versioned --with-filesystem stage
+  ./b2 variant=debug,release address-model=32,64 cxxstd=14 --layout=versioned --with-filesystem stage
   ```
 
 If you wish to build tests using different C++ standard version, then adjust the `cxxstd` accordingly.
@@ -447,50 +447,52 @@ Here is an example of such lightweight workflow in Linux environment (Debian-bas
 - Configure build with CMake
 
     ```shell
-    mkdir _build
-    cd _build/
-    cmake ..
+    cmake -S . -B _build -DBoost_ADDITIONAL_VERSIONS=1.80 -DBoost_COMPILER=-gcc11 -DBoost_ARCHITECTURE=-x64
     ```
 
-    **TIP:** By default, tests and [examples](example/README.md) are compiled using
-    the minimum required C++11.
-    Specify `-DCMAKE_CXX_STANDARD=14|17|20` to use newer version.
+    By default, tests and [examples](example/README.md) are compiled using
+    the minimum required C++14.
+    Specify `-DCMAKE_CXX_STANDARD=17|20` to use newer version.
     For more CMake options available for GIL, check `option`-s defined
     in the top-level `CMakeLists.txt`.
 
-    **TIP:** If CMake is failing to find Boost libraries, especially built
-    with `--layout=versioned`, you can try a few hacks:
-      - option `-DBoost_ARCHITECTURE=-x64` to help CMake find Boost 1.66 and above
-        add an architecture tag to the library file names in versioned build
-        The option added in CMake 3.13.0.
+    CMake is failing to find Boost libraries, especially built with `--layout=versioned`,
+    you can try a few hacks as displayed in the command above:
       - option `-DBoost_COMPILER=-gcc5` or `-DBoost_COMPILER=-vc141` to help CMake earlier
         than 3.13 match your compiler with toolset used in the Boost library file names
         (i.e. `libboost_filesystem-gcc5-mt-x64-1_69` and not `-gcc55-`).
         Fixed in CMake 3.13.0.
+      - option `-DBoost_ARCHITECTURE=-x64` to help CMake find Boost 1.66 and above
+        add an architecture tag to the library file names in versioned build
+        The option added in CMake 3.13.0.
+      - option `-DDBoost_ADDITIONAL_VERSIONS=<unreleased Boost version>` is especially usefull
+        when testing GIL with staged build of Boost from its `develop` branch.
       - if CMake is still failing to find Boost, you may try `-DBoost_DEBUG=ON` to
         get detailed diagnostics output from `FindBoost.cmake` module.
 
 - List available CMake targets
 
     ```shell
-    cmake --build . --target help
+    cmake --build _build --target help
     ```
 
 - Build selected target with CMake
 
     ```shell
-    cmake --build . --target gil_test_pixel
+    cmake --build _build --target gil_test_pixel
     ```
 
 - List available CTest targets
 
     ```shell
+    cd __build
     ctest --show-only | grep Test
     ```
 
 - Run selected test with CTest
 
     ```shell
+    cd __build
     ctest -R gil.tests.core.pixel
     ```
 
@@ -567,10 +569,10 @@ Thus, below a few basic guidelines are listed.
 First and foremost, make sure you are familiar with the official
 [Boost Library Requirements and Guidelines](https://www.boost.org/development/requirements.html).
 
-Second, strive for writing idiomatic C++11, clean and elegant code.
+Second, strive for writing idiomatic C++14, clean and elegant code.
 
 **NOTE:** *The Boost.GIL source code does not necessary represent clean and elegant
-code to look up to. The library has recently entered the transition to C++11.
+code to look up to. The library has recently entered the transition to C++14.
 Major refactoring overhaul is ongoing.*
 
 Maintain structure your source code files according to the following guidelines:
