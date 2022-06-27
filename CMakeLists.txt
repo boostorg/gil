@@ -36,7 +36,7 @@ target_link_libraries(boost_gil
     Boost::variant2
 )
 
-target_compile_features(boost_gil INTERFACE cxx_std_11)
+target_compile_features(boost_gil INTERFACE cxx_std_14)
 
 else()
 
@@ -60,14 +60,14 @@ option(BOOST_GIL_ENABLE_EXT_RASTERIZATION "Enable Rasterization extension and te
 option(BOOST_GIL_ENABLE_EXT_IMAGE_PROCESSING "Enable Image Processing extension (!) and tests" ON)
 option(BOOST_GIL_USE_CONAN "Use Conan to install dependencies" OFF)
 option(BOOST_GIL_USE_CLANG_TIDY "Set CMAKE_CXX_CLANG_TIDY property on targets to enable clang-tidy linting" OFF)
-set(CMAKE_CXX_STANDARD 11 CACHE STRING "C++ standard version to use (default is 11)")
+set(CMAKE_CXX_STANDARD 14 CACHE STRING "C++ standard version to use (default is 14)")
 
 #-----------------------------------------------------------------------------
 # Project
 #-----------------------------------------------------------------------------
 project(Boost.GIL
   LANGUAGES CXX
-  DESCRIPTION "Boost.GIL - Generic Image Library | Requires C++11 since Boost 1.68")
+  DESCRIPTION "Boost.GIL - Generic Image Library | Requires C++14 since Boost 1.80")
 
 list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_BINARY_DIR}/cmake)
 
