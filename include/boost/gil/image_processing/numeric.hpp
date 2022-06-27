@@ -89,7 +89,8 @@ inline void compute_tensor_entries(
 /// in which all entries will be equal to
 /// \code 1 / (dst.size()) \endcode
 template <typename T = float, typename Allocator = std::allocator<T>>
-inline detail::kernel_2d<T, Allocator> generate_normalized_mean(std::size_t side_length)
+inline auto generate_normalized_mean(std::size_t side_length)
+    -> detail::kernel_2d<T, Allocator>
 {
     if (side_length % 2 != 1)
         throw std::invalid_argument("kernel dimensions should be odd and equal");
@@ -108,7 +109,8 @@ inline detail::kernel_2d<T, Allocator> generate_normalized_mean(std::size_t side
 ///
 /// Fills supplied view with 1s (ones)
 template <typename T = float, typename Allocator = std::allocator<T>>
-inline detail::kernel_2d<T, Allocator> generate_unnormalized_mean(std::size_t side_length)
+inline auto generate_unnormalized_mean(std::size_t side_length)
+    -> detail::kernel_2d<T, Allocator>
 {
     if (side_length % 2 != 1)
         throw std::invalid_argument("kernel dimensions should be odd and equal");
@@ -127,11 +129,11 @@ inline detail::kernel_2d<T, Allocator> generate_unnormalized_mean(std::size_t si
 /// Fills supplied view with values taken from Gaussian distribution. See
 /// https://en.wikipedia.org/wiki/Gaussian_blur
 template <typename T = float, typename Allocator = std::allocator<T>>
-inline detail::kernel_2d<T, Allocator> generate_gaussian_kernel(std::size_t side_length, double sigma)
+inline auto generate_gaussian_kernel(std::size_t side_length, double sigma)
+    -> detail::kernel_2d<T, Allocator>
 {
     if (side_length % 2 != 1)
         throw std::invalid_argument("kernel dimensions should be odd and equal");
-
 
     const double denominator = 2 * boost::gil::detail::pi * sigma * sigma;
     auto middle = side_length / 2;
@@ -160,7 +162,8 @@ inline detail::kernel_2d<T, Allocator> generate_gaussian_kernel(std::size_t side
 /// to obtain the desired degree).
 /// https://www.researchgate.net/publication/239398674_An_Isotropic_3_3_Image_Gradient_Operator
 template <typename T = float, typename Allocator = std::allocator<T>>
-inline detail::kernel_2d<T, Allocator> generate_dx_sobel(unsigned int degree = 1)
+inline auto generate_dx_sobel(unsigned int degree = 1)
+    -> detail::kernel_2d<T, Allocator>
 {
     switch (degree)
     {
@@ -190,7 +193,8 @@ inline detail::kernel_2d<T, Allocator> generate_dx_sobel(unsigned int degree = 1
 /// to obtain the desired degree).
 /// https://www.researchgate.net/profile/Hanno_Scharr/publication/220955743_Optimal_Filters_for_Extended_Optical_Flow/links/004635151972eda98f000000/Optimal-Filters-for-Extended-Optical-Flow.pdf
 template <typename T = float, typename Allocator = std::allocator<T>>
-inline detail::kernel_2d<T, Allocator> generate_dx_scharr(unsigned int degree = 1)
+inline auto generate_dx_scharr(unsigned int degree = 1)
+    -> detail::kernel_2d<T, Allocator>
 {
     switch (degree)
     {
@@ -220,7 +224,8 @@ inline detail::kernel_2d<T, Allocator> generate_dx_scharr(unsigned int degree = 
 /// to obtain the desired degree).
 /// https://www.researchgate.net/publication/239398674_An_Isotropic_3_3_Image_Gradient_Operator
 template <typename T = float, typename Allocator = std::allocator<T>>
-inline detail::kernel_2d<T, Allocator> generate_dy_sobel(unsigned int degree = 1)
+inline auto generate_dy_sobel(unsigned int degree = 1)
+    -> detail::kernel_2d<T, Allocator>
 {
     switch (degree)
     {
@@ -250,7 +255,8 @@ inline detail::kernel_2d<T, Allocator> generate_dy_sobel(unsigned int degree = 1
 /// to obtain the desired degree).
 /// https://www.researchgate.net/profile/Hanno_Scharr/publication/220955743_Optimal_Filters_for_Extended_Optical_Flow/links/004635151972eda98f000000/Optimal-Filters-for-Extended-Optical-Flow.pdf
 template <typename T = float, typename Allocator = std::allocator<T>>
-inline detail::kernel_2d<T, Allocator> generate_dy_scharr(unsigned int degree = 1)
+inline auto generate_dy_scharr(unsigned int degree = 1)
+    -> detail::kernel_2d<T, Allocator> 
 {
     switch (degree)
     {

@@ -35,9 +35,9 @@ namespace boost { namespace gil {
 /// accumulator array. The theta parameter is best computed through factory function
 /// provided in hough_parameter.hpp
 template <typename InputView, typename OutputView>
-void hough_line_transform(const InputView& input_view, const OutputView& accumulator_array,
-                          const hough_parameter<double>& theta,
-                          const hough_parameter<std::ptrdiff_t>& radius)
+void hough_line_transform(InputView const& input_view, OutputView const& accumulator_array,
+                          hough_parameter<double> const& theta,
+                          hough_parameter<std::ptrdiff_t> const& radius)
 {
     std::ptrdiff_t r_lower_bound = radius.start_point;
     std::ptrdiff_t r_upper_bound = r_lower_bound + radius.step_size * (radius.step_count - 1);
@@ -82,11 +82,11 @@ void hough_line_transform(const InputView& input_view, const OutputView& accumul
 /// then is translated for every origin (x, y) in x y parameter space. For available
 /// circle rasterizers, please look at rasterization/circle.hpp
 template <typename ImageView, typename ForwardIterator, typename Rasterizer>
-void hough_circle_transform_brute(const ImageView& input,
-                                  const hough_parameter<std::ptrdiff_t> radius_parameter,
-                                  const hough_parameter<std::ptrdiff_t> x_parameter,
-                                  const hough_parameter<std::ptrdiff_t>& y_parameter,
-                                  ForwardIterator d_first, Rasterizer)
+void hough_circle_transform_brute(ImageView const& input,
+                                  hough_parameter<std::ptrdiff_t> const& radius_parameter,
+                                  hough_parameter<std::ptrdiff_t> const& x_parameter,
+                                  hough_parameter<std::ptrdiff_t> const& y_parameter,
+                                  ForwardIterator d_first, Rasterizer rasterizer)
 {
     for (std::size_t radius_index = 0; radius_index < radius_parameter.step_count; ++radius_index)
     {
@@ -97,7 +97,7 @@ void hough_circle_transform_brute(const ImageView& input,
         rasterizer(circle_points.begin());
         // sort by scanline to improve cache coherence for row major images
         std::sort(circle_points.begin(), circle_points.end(),
-                  [](const point_t& lhs, const point_t& rhs) { return lhs.y < rhs.y; });
+                  [](point_t const& lhs, point_t const& rhs) { return lhs.y < rhs.y; });
         const auto translate = [](std::vector<point_t>& points, point_t offset) {
             std::transform(points.begin(), points.end(), points.begin(), [offset](point_t point) {
                 return point_t(point.x + offset.x, point.y + offset.y);
