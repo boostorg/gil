@@ -16,7 +16,7 @@ namespace gil = boost::gil;
 namespace mp11 = boost::mp11;
 
 
-void check_is_pixel_compatible() 
+void check_is_pixel_compatible()
 {
     gil::histogram<int> h1;
     gil::histogram<int, double> h2;
@@ -29,7 +29,7 @@ void check_is_pixel_compatible()
     BOOST_TEST(!h4.is_pixel_compatible());
 }
 
-void check_is_tuple_compatible() 
+void check_is_tuple_compatible()
 {
     gil::histogram<int> h1;
     gil::histogram<double> h2;

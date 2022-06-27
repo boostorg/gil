@@ -108,7 +108,7 @@ boost::gil::matrix3x2<T> inverse(boost::gil::matrix3x2<T> m)
     return res;
 }
 
-/// \fn gil::matrix3x2 center_rotate 
+/// \fn gil::matrix3x2 center_rotate
 /// \tparam T     Data type for source image dimensions
 /// \tparam F     Data type for angle through which image is to be rotated
 /// @param  dims  dimensions of source image
@@ -116,39 +116,39 @@ boost::gil::matrix3x2<T> inverse(boost::gil::matrix3x2<T> m)
 /// @return   A transformation matrix for rotating the source image about its center
 /// \brief    rotates an image from its center point
 ///           using consecutive affine transformations.
-template<typename T, typename F> 
+template<typename T, typename F>
 boost::gil::matrix3x2<F> center_rotate(boost::gil::point<T> dims,F rads)
-{   
+{
     const F PI = F(3.141592653589793238);
     const F c_theta = std::abs(std::cos(rads));
     const F s_theta = std::abs(std::sin(rads));
 
     // Bound checks for angle rads
-    while(rads + PI < 0) 
-    { 
-        rads = rads + PI; 
+    while(rads + PI < 0)
+    {
+        rads = rads + PI;
     }
 
-    while(rads > PI)     
-    { 
-        rads = rads - PI; 
+    while(rads > PI)
+    {
+        rads = rads - PI;
     }
 
     // Basic Rotation Matrix
     boost::gil::matrix3x2<F> rotate = boost::gil::matrix3x2<F>::get_rotate(rads);
-    
+
     // Find distance for translating the image into view
     boost::gil::matrix3x2<F> translation(0,0,0,0,0,0);
-    if(rads > 0) 
-    { 
-        translation.b = s_theta; 
+    if(rads > 0)
+    {
+        translation.b = s_theta;
     }
-    else 
-    { 
+    else
+    {
         translation.c = s_theta;
     }
 
-    if(std::abs(rads) > PI/2) 
+    if(std::abs(rads) > PI/2)
     {
         translation.a = c_theta;
         translation.d = c_theta;
@@ -165,7 +165,7 @@ boost::gil::matrix3x2<F> center_rotate(boost::gil::point<T> dims,F rads)
             s_theta * dims.x / dims.y + c_theta
         );
 
-    return scale *  translate * rotate;  
+    return scale *  translate * rotate;
 }
 
 }} // namespace boost::gil

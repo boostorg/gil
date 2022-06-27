@@ -5,13 +5,15 @@
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
+
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/jpeg.hpp>
 
 #include <algorithm>
 #include <fstream>
 
-// Example file to demonstrate a way to compute histogram
+// Demonstrates a way to compute a histogram
+// This example relies on a colour-converting view to work with a greyscale view
 
 using namespace boost::gil;
 

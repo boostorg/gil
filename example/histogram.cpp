@@ -14,10 +14,13 @@
 
 using namespace boost::gil;
 
-/*
-This file explains how to use the histogram class and some of its features
-that can be applied for a variety of tasks.
-*/
+// Explains how to use the histogram class and some of its features
+// that can be applied for a variety of tasks.
+
+// See also:
+// histogram_equalization.cpp - Regular Histogram Equalization
+// adaptive_histogram_equalization.cpp - Adaptive Histogram Equalization
+// histogram_matching.cpp - Reference-based histogram computation
 
 int main()
 {
@@ -34,7 +37,7 @@ int main()
         h,       // Histogram to be filled
         1,       // Histogram bin widths
         false,   // Specify whether to accumulate over the values already present in h (default = false)
-        true,    // Specify whether to have a sparse or continuous histogram (default = true)
+        true,    // Specify whether to have a sparse (true) or continuous histogram (false) (default = true)
         false,   // Specify if image mask is to be specified
         {{}},    // Mask as a 2D vector. Used only if prev argument specified
         {0},     // Lower limit on the values in histogram (default numeric_limit::min() on axes)
@@ -42,7 +45,7 @@ int main()
         true     // Use specified limits if this is true (default is false)
     );
 
-    // Normalize the histogram 
+    // Normalize the histogram
     h.normalize();
 
     // Get a cumulative histogram from the histogram

@@ -65,7 +65,7 @@ template<>
 struct image_read_settings< pnm_tag > : public image_read_settings_base
 {
     /// Default constructor
-    image_read_settings< pnm_tag >()
+    image_read_settings()
     : image_read_settings_base()
     {}
 

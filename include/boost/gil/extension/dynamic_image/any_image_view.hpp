@@ -68,7 +68,7 @@ struct any_type_get_size
 /// Other requirements, such as access to the pixels, would be inefficient to provide. Thus \p any_image_view does not fully model ImageViewConcept.
 /// However, many algorithms provide overloads taking runtime specified views and thus in many cases \p any_image_view can be used in places taking a view.
 ///
-/// To perform an algorithm on any_image_view, put the algorithm in a function object and invoke it by calling \p apply_operation(runtime_view, algorithm_fn);
+/// To perform an algorithm on any_image_view, put the algorithm in a function object and invoke it by calling \p variant2::visit(algorithm_fn, runtime_view);
 ////////////////////////////////////////////////////////////////////////////////////////
 
 template <typename ...Views>
@@ -76,7 +76,7 @@ class any_image_view : public variant2::variant<Views...>
 {
     using parent_t = variant2::variant<Views...>;
 
-public:    
+public:
     using const_t = detail::views_get_const_t<any_image_view>;
     using x_coord_t = std::ptrdiff_t;
     using y_coord_t = std::ptrdiff_t;
@@ -105,9 +105,9 @@ public:
         return *this;
     }
 
-    std::size_t num_channels()  const { return apply_operation(*this, detail::any_type_get_num_channels()); }
-    point_t     dimensions()    const { return apply_operation(*this, detail::any_type_get_dimensions()); }
-    size_type   size()          const { return apply_operation(*this, detail::any_type_get_size()); }
+    std::size_t num_channels()  const { return variant2::visit(detail::any_type_get_num_channels(), *this); }
+    point_t     dimensions()    const { return variant2::visit(detail::any_type_get_dimensions(), *this); }
+    size_type   size()          const { return variant2::visit(detail::any_type_get_size(), *this); }
     x_coord_t   width()         const { return dimensions().x; }
     y_coord_t   height()        const { return dimensions().y; }
 };

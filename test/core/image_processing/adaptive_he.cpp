@@ -20,10 +20,10 @@ namespace gil = boost::gil;
 
 double epsilon = 1.0;
 
-std::uint8_t image_matrix[] = 
+std::uint8_t image_matrix[] =
 {
-    1, 1, 1, 1, 
-    3, 3, 3, 3, 
+    1, 1, 1, 1,
+    3, 3, 3, 3,
     5, 5, 5, 5,
     7, 7, 7, 7
 };
@@ -72,7 +72,7 @@ void check_clip_and_redistribute()
         }
     }
     bool check = true;
-    double limit = 0.001; 
+    double limit = 0.001;
     gil::detail::clip_and_redistribute(h, h2, limit);
     for(std::size_t i = 0; i < 100; i++)
     {

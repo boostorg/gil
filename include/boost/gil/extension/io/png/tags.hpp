@@ -573,7 +573,7 @@ template<>
 struct image_read_info< png_tag > : public png_info_base
 {
     /// Default constructor.
-    image_read_info< png_tag >()
+    image_read_info()
     : png_info_base()
     {}
 };
@@ -669,7 +669,7 @@ struct image_read_settings< png_tag > : public image_read_settings_base
                                       , public png_read_settings_base
 {
     /// Default Constructor
-    image_read_settings< png_tag >()
+    image_read_settings()
     : image_read_settings_base()
     , png_read_settings_base()
     , _screen_gamma( 1.0 )
@@ -708,7 +708,7 @@ struct image_read_settings< png_tag > : public image_read_settings_base
                                       , public png_read_settings_base
 {
     /// Default Constructor.
-    image_read_settings< png_tag >()
+    image_read_settings()
     : image_read_settings_base()
     , png_read_settings_base()
     , _apply_screen_gamma( false )

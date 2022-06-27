@@ -15,9 +15,9 @@ trigger:
   - ml/*
 
 jobs:
-  - job: 'ubuntu1604_gcc6_cxx14_cmake'
+  - job: 'ubuntu1804_gcc6_cxx14_cmake'
     pool:
-      vmImage: 'ubuntu-16.04'
+      vmImage: 'ubuntu-18.04'
     steps:
       - template: .ci/azure-pipelines/steps-install-gcc.yml
         parameters:
@@ -34,9 +34,9 @@ jobs:
         parameters:
           cxxver: '14'
 
-  - job: 'ubuntu1604_gcc8_cxx14_cmake'
+  - job: 'ubuntu1804_gcc8_cxx14_cmake'
     pool:
-      vmImage: 'ubuntu-16.04'
+      vmImage: 'ubuntu-18.04'
     steps:
       - template: .ci/azure-pipelines/steps-install-gcc.yml
         parameters:
@@ -53,44 +53,9 @@ jobs:
         parameters:
           cxxver: '14'
 
-  - job: 'win2016_vs2017_cxx14_cmake'
+  - job: 'macos1015_xcode11_cmake'
     pool:
-      vmImage: 'vs2017-win2016'
-    steps:
-      - task: UsePythonVersion@0
-        displayName: 'Setup Python'
-        inputs:
-          versionSpec: '3.6'
-          addToPath: true
-          architecture: 'x64'
-      - template: .ci/azure-pipelines/steps-check-cmake.yml
-      - template: .ci/azure-pipelines/steps-install-conan.yml
-      - template: .ci/azure-pipelines/steps-install-boost.yml
-      - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
-        parameters:
-          use_conan: 'ON'
-
-  - job: 'win2016_vs2017_cxx17_cmake'
-    pool:
-      vmImage: 'vs2017-win2016'
-    steps:
-      - task: UsePythonVersion@0
-        displayName: 'Setup Python'
-        inputs:
-          versionSpec: '3.6'
-          addToPath: true
-          architecture: 'x64'
-      - template: .ci/azure-pipelines/steps-check-cmake.yml
-      - template: .ci/azure-pipelines/steps-install-conan.yml
-      - template: .ci/azure-pipelines/steps-install-boost.yml
-      - template: .ci/azure-pipelines/steps-cmake-build-and-test.yml
-        parameters:
-          cxxver: '17'
-          use_conan: 'ON'
-
-  - job: 'macos1014_xcode11_cmake'
-    pool:
-      vmImage: 'macOS-10.14'
+      vmImage: 'macOS-10.15'
     steps:
       - script: which clang++ && clang++ --version
         displayName: 'Check clang'

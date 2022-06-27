@@ -309,7 +309,7 @@ struct homogeneous_color_base<Element, Layout, 4>
     homogeneous_color_base() : v0_{}, v1_{}, v2_{}, v3_{} {}
 
     explicit homogeneous_color_base(Element v) : v0_(v), v1_(v), v2_(v), v3_(v) {}
-    
+
     homogeneous_color_base(Element v0, Element v1, Element v2, Element v3)
         : v0_(v0), v1_(v1), v2_(v2), v3_(v3)
     {}

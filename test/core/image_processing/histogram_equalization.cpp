@@ -18,7 +18,7 @@
 #include <vector>
 
 const int a = 5;
-const double epsilon = 0.005; // Decided by the value 1/255 i.e. an error of 1 px in 255 px 
+const double epsilon = 0.005; // Decided by the value 1/255 i.e. an error of 1 px in 255 px
 boost::gil::gray8_image_t original(a, a);
 boost::gil::gray8_image_t processed_1(a, a), processed_2(a, a), expected(a, a);
 std::vector<std::vector<int> > test1_random{
@@ -115,7 +115,7 @@ void vector_to_gray_image(boost::gil::gray8_image_t& img,
     {
         for(std::ptrdiff_t x=0; x<grid[0].size(); ++x)
         {
-            boost::gil::view(img)(x,y) = boost::gil::gray8_pixel_t(grid[y][x]);      
+            boost::gil::view(img)(x,y) = boost::gil::gray8_pixel_t(grid[y][x]);
         }
     }
 }
@@ -149,7 +149,7 @@ void test_random_image()
 {
     vector_to_gray_image(original,test1_random);
     vector_to_gray_image(expected,expected_test1);
-    
+
     histogram_equalization(boost::gil::const_view(original),boost::gil::view(processed_1));
     BOOST_TEST(equal_pixels(boost::gil::view(processed_1), boost::gil::view(expected), epsilon));
 

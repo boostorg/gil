@@ -17,7 +17,7 @@
 #include <array>
 #include <unordered_map>
 
-// Basic tests to make sure compatible container types produce 
+// Basic tests to make sure compatible container types produce
 // expected output histogram.
 
 namespace gil = boost::gil;
@@ -167,7 +167,7 @@ int main()
     check_fill_histogram_vector();
     check_fill_histogram_array();
     check_fill_histogram_map();
-    
+
     check_cumulative_histogram_vector();
     check_cumulative_histogram_array();
     check_cumulative_histogram_map();

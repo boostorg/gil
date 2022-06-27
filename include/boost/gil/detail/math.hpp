@@ -9,7 +9,7 @@
 #define BOOST_GIL_IMAGE_PROCESSING_DETAIL_MATH_HPP
 
 #include <array>
-#include <boost/gil/extension/numeric/kernel.hpp>
+#include <boost/gil/image_processing/kernel.hpp>
 
 namespace boost { namespace gil { namespace detail {
 

@@ -10,7 +10,7 @@
 
 #include <boost/gil/image_view.hpp>
 #include <boost/gil/typedefs.hpp>
-#include <boost/gil/extension/numeric/kernel.hpp>
+#include <boost/gil/image_processing/kernel.hpp>
 #include <stdexcept>
 
 namespace boost { namespace gil {
