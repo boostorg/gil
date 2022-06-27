@@ -449,6 +449,11 @@ private:
     {
         // if it throws and _memory!=0 the client must deallocate _memory
         _allocated_bytes = total_allocated_size_in_bytes(dimensions);
+        if (_allocated_bytes == 0)
+        {
+            return;
+        }
+
         _memory=_alloc.allocate( _allocated_bytes );
 
         unsigned char* tmp=(_align_in_bytes>0) ? (unsigned char*)align((std::size_t)_memory,_align_in_bytes) : _memory;
@@ -465,6 +470,10 @@ private:
         std::size_t plane_size=row_size*dimensions.y;
 
         _allocated_bytes = total_allocated_size_in_bytes( dimensions );
+        if (_allocated_bytes == 0)
+        {
+            return;
+        }
 
         _memory = _alloc.allocate( _allocated_bytes );
 
