@@ -81,17 +81,17 @@ Public Member Functions</h2></td></tr>
 template&lt;typename I2 &gt; </td></tr>
 <tr class="memitem:a4ef5f75f4ab577d869b8affa7efbe1fd"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>memory_based_step_iterator</b> (const <a class="el" href="classboost_1_1gil_1_1memory__based__step__iterator.html">memory_based_step_iterator</a>&lt; I2 &gt; &amp;it)</td></tr>
 <tr class="separator:a4ef5f75f4ab577d869b8affa7efbe1fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16d8e6857dd561244ca73764f2b94801"><td class="memItemLeft" align="right" valign="top">reference&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1gil_1_1memory__based__step__iterator.html#a16d8e6857dd561244ca73764f2b94801">operator[]</a> (difference_type d) const</td></tr>
-<tr class="separator:a16d8e6857dd561244ca73764f2b94801"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3832fa78e567d765df5630ec4555a659"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1gil_1_1memory__based__step__iterator.html#a3832fa78e567d765df5630ec4555a659">operator[]</a> (difference_type d) const -&gt; reference</td></tr>
+<tr class="separator:a3832fa78e567d765df5630ec4555a659"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2db2a1eeeaff81d48e6c3ae3fb21cdd9"><td class="memItemLeft" align="right" valign="top"><a id="a2db2a1eeeaff81d48e6c3ae3fb21cdd9"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_step</b> (std::ptrdiff_t memunit_step)</td></tr>
 <tr class="separator:a2db2a1eeeaff81d48e6c3ae3fb21cdd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d6722b54419923ecb1282a142fcd494"><td class="memItemLeft" align="right" valign="top"><a id="a2d6722b54419923ecb1282a142fcd494"></a>
-x_iterator &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>base</b> ()</td></tr>
-<tr class="separator:a2d6722b54419923ecb1282a142fcd494"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afea9dbea334f4bcf01d459a8bc0ac647"><td class="memItemLeft" align="right" valign="top"><a id="afea9dbea334f4bcf01d459a8bc0ac647"></a>
-x_iterator const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>base</b> () const</td></tr>
-<tr class="separator:afea9dbea334f4bcf01d459a8bc0ac647"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e1bf986d543e0e09544b730da91e846"><td class="memItemLeft" align="right" valign="top"><a id="a6e1bf986d543e0e09544b730da91e846"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>base</b> () -&gt; x_iterator &amp;</td></tr>
+<tr class="separator:a6e1bf986d543e0e09544b730da91e846"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1ffb64223e0b2d98ce1f098473121aa"><td class="memItemLeft" align="right" valign="top"><a id="af1ffb64223e0b2d98ce1f098473121aa"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>base</b> () const -&gt; x_iterator const &amp;</td></tr>
+<tr class="separator:af1ffb64223e0b2d98ce1f098473121aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>MEMORY-BASED STEP ITERATOR. </p>
@@ -100,8 +100,8 @@ x_iterator const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>ba
 <p>Pixel step iterators are used to provide iteration over non-adjacent pixels. Common use is a vertical traversal, where the step is the row stride.</p>
 <p>Another application is as a sub-channel view. For example, a red intensity image over interleaved RGB data would use a step iterator adaptor with step sizeof(channel_t)*3 In the latter example the step size could be fixed at compile time for efficiency. Compile-time fixed step can be implemented by providing a step function object that takes the step as a template </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a16d8e6857dd561244ca73764f2b94801"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a16d8e6857dd561244ca73764f2b94801">&#9670;&nbsp;</a></span>operator[]()</h2>
+<a id="a3832fa78e567d765df5630ec4555a659"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3832fa78e567d765df5630ec4555a659">&#9670;&nbsp;</a></span>operator[]()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -110,11 +110,11 @@ x_iterator const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>ba
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">reference operator[] </td>
+          <td class="memname">auto operator[] </td>
           <td>(</td>
           <td class="paramtype">difference_type&#160;</td>
           <td class="paramname"><em>d</em></td><td>)</td>
-          <td> const</td>
+          <td> const -&gt; reference </td>
         </tr>
       </table>
   </td>

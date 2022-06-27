@@ -87,17 +87,17 @@ struct boost::gil::RandomAccess2DImageViewConcept&lt; View &gt;</h3>
 <div class="line">    y_coord_t View::height() <span class="keyword">const</span>;</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// X-navigation</span></div>
-<div class="line">    x_iterator View::x_at(<span class="keyword">const</span> point_t&amp;) <span class="keyword">const</span>;</div>
+<div class="line">    x_iterator View::x_at(point_t <span class="keyword">const</span>&amp;) <span class="keyword">const</span>;</div>
 <div class="line">    x_iterator View::row_begin(y_coord_t) <span class="keyword">const</span>;</div>
 <div class="line">    x_iterator View::row_end  (y_coord_t) <span class="keyword">const</span>;</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// Y-navigation</span></div>
-<div class="line">    y_iterator View::y_at(<span class="keyword">const</span> point_t&amp;) <span class="keyword">const</span>;</div>
+<div class="line">    y_iterator View::y_at(point_t <span class="keyword">const</span>&amp;) <span class="keyword">const</span>;</div>
 <div class="line">    y_iterator View::col_begin(x_coord_t) <span class="keyword">const</span>;</div>
 <div class="line">    y_iterator View::col_end  (x_coord_t) <span class="keyword">const</span>;</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// navigating in 2D</span></div>
-<div class="line">    xy_locator View::xy_at(<span class="keyword">const</span> point_t&amp;) <span class="keyword">const</span>;</div>
+<div class="line">    xy_locator View::xy_at(point_t <span class="keyword">const</span>&amp;) <span class="keyword">const</span>;</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// (x,y) versions of all methods taking point_t</span></div>
 <div class="line">    View::View(x_coord_t,y_coord_t,<span class="keyword">const</span> locator&amp;);</div>

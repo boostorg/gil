@@ -88,16 +88,16 @@ struct boost::gil::RandomAccessNDImageConcept&lt; Image &gt;</h3>
 <div class="line">    <span class="keywordtype">void</span> Image::recreate(point_t new_dims, std::size_t alignment=1);</div>
 <div class="line">    <span class="keywordtype">void</span> Image::recreate(point_t new_dims, value_type fill_value, std::size_t alignment);</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">const</span> point_t&amp;        Image::dimensions() <span class="keyword">const</span>;</div>
-<div class="line">    <span class="keyword">const</span> const_view_t&amp;   <a class="code" href="group___image_model.html#ga0505866ffb317dcd320e74be9874f950">const_view</a>(<span class="keyword">const</span> Image&amp;);</div>
-<div class="line">    <span class="keyword">const</span> view_t&amp;         <a class="code" href="group___image_model.html#ga633557dbbff2d21c784b73412b47bb38">view</a>(Image&amp;);</div>
+<div class="line">    point_t <span class="keyword">const</span>&amp;        Image::dimensions() <span class="keyword">const</span>;</div>
+<div class="line">    <span class="keyword">const</span> const_view_t&amp;   <a class="code" href="group___image_model.html#ga6936fd4b5f86ec9942743affd0989f12">const_view</a>(<span class="keyword">const</span> Image&amp;);</div>
+<div class="line">    <span class="keyword">const</span> view_t&amp;         <a class="code" href="group___image_model.html#gae885a4a33370b2c78aa5584ad0290371">view</a>(Image&amp;);</div>
 <div class="line">};</div>
 </div><!-- fragment --> </div><hr/>The documentation for this struct was generated from the following file:<ul>
 <li><a class="el" href="concepts_2image_8hpp_source.html">concepts/image.hpp</a></li>
 </ul>
 </div><!-- contents -->
-<div class="ttc" id="agroup___image_model_html_ga633557dbbff2d21c784b73412b47bb38"><div class="ttname"><a href="group___image_model.html#ga633557dbbff2d21c784b73412b47bb38">boost::gil::view</a></div><div class="ttdeci">const image&lt; Pixel, IsPlanar, Alloc &gt;::view_t &amp; view(image&lt; Pixel, IsPlanar, Alloc &gt; &amp;img)</div><div class="ttdoc">Returns the non-constant-pixel view of an image.</div><div class="ttdef"><b>Definition:</b> image.hpp:549</div></div>
-<div class="ttc" id="agroup___image_model_html_ga0505866ffb317dcd320e74be9874f950"><div class="ttname"><a href="group___image_model.html#ga0505866ffb317dcd320e74be9874f950">boost::gil::const_view</a></div><div class="ttdeci">const image&lt; Pixel, IsPlanar, Alloc &gt;::const_view_t const_view(const image&lt; Pixel, IsPlanar, Alloc &gt; &amp;img)</div><div class="ttdoc">Returns the constant-pixel view of an image.</div><div class="ttdef"><b>Definition:</b> image.hpp:553</div></div>
+<div class="ttc" id="agroup___image_model_html_ga6936fd4b5f86ec9942743affd0989f12"><div class="ttname"><a href="group___image_model.html#ga6936fd4b5f86ec9942743affd0989f12">boost::gil::const_view</a></div><div class="ttdeci">auto const_view(const image&lt; Pixel, IsPlanar, Alloc &gt; &amp;img) -&gt; typename image&lt; Pixel, IsPlanar, Alloc &gt;::const_view_t const</div><div class="ttdoc">Returns the constant-pixel view of an image.</div><div class="ttdef"><b>Definition:</b> image.hpp:557</div></div>
+<div class="ttc" id="agroup___image_model_html_gae885a4a33370b2c78aa5584ad0290371"><div class="ttname"><a href="group___image_model.html#gae885a4a33370b2c78aa5584ad0290371">boost::gil::view</a></div><div class="ttdeci">auto view(image&lt; Pixel, IsPlanar, Alloc &gt; &amp;img) -&gt; typename image&lt; Pixel, IsPlanar, Alloc &gt;::view_t const &amp;</div><div class="ttdoc">Returns the non-constant-pixel view of an image.</div><div class="ttdef"><b>Definition:</b> image.hpp:549</div></div>
      <!-- HTML footer for doxygen 1.8.13-->
      <!-- start footer part -->
      <hr class="footer"/>
