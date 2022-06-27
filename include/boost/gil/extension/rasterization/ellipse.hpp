@@ -9,6 +9,7 @@
 #define BOOST_GIL_EXTENSION_RASTERIZATION_ELLIPSE_HPP
 
 #include <boost/gil/concepts/pixel.hpp>
+#include <boost/gil/extension/rasterization/apply_rasterizer.hpp>
 #include <boost/gil/point.hpp>
 
 #include <array>
@@ -16,6 +17,8 @@
 #include <vector>
 
 namespace boost { namespace gil {
+
+struct ellipse_rasterizer_t{};
 
 /// \defgroup EllipseRasterization
 /// \ingroup Rasterization
@@ -27,11 +30,22 @@ namespace boost { namespace gil {
 /// it shifts origin to provided co-ordinates of center and then draws the curve.
 struct midpoint_ellipse_rasterizer
 {
+    using type = ellipse_rasterizer_t;
+
+    /// \brief Creates a midpoint ellipse rasterizer
+    /// \param center - Point containing positive integer x co-ordinate and y co-ordinate of the
+    /// center respectively.
+    /// \param semi_axes - Point containing positive integer lengths of horizontal semi-axis
+    /// and vertical semi-axis respectively.
+    midpoint_ellipse_rasterizer(point<unsigned int> center_point,
+        point<unsigned int> semi_axes_values)
+        : center(center_point)
+        , semi_axes(semi_axes_values)
+    {}
+
     /// \brief Returns a vector containing co-ordinates of first quadrant points which lie on
     /// rasterizer trajectory of the ellipse.
-    /// \param semi_axes - Point containing half of lengths of horizontal and vertical axis
-    /// respectively.
-    auto obtain_trajectory(point<unsigned int> semi_axes)
+    auto obtain_trajectory() const
         -> std::vector<point_t>
     {
         // Citation : J. Van Aken, "An Efficient Ellipse-Drawing Algorithm" in IEEE Computer
@@ -100,15 +114,13 @@ struct midpoint_ellipse_rasterizer
     /// center with slope -1 using colours provided by user.
     /// \param view - Gil view of image on which the elliptical curve is to be drawn.
     /// \param pixel - Pixel value for the elliptical curve to be drawn.
-    /// \param center - Point specifying co-ordinates of center of ellipse to be drawn.
     /// \param trajectory_points - Constant vector specifying pixel co-ordinates of points lying
     ///                            on rasterizer trajectory.
     /// \tparam View - Type of input image view.
     /// \tparam Pixel - Type of pixel. Must be compatible to the pixel type of the image view
     template<typename View, typename Pixel>
     void draw_curve(View& view, Pixel const& pixel,
-        point<unsigned int> center,
-        std::vector<point_t> const& trajectory_points)
+        std::vector<point_t> const& trajectory_points) const
     {
         using pixel_t = typename View::value_type;
         if (!pixels_are_compatible<pixel_t, Pixel>())
@@ -117,11 +129,13 @@ struct midpoint_ellipse_rasterizer
                 "type of the provided pixel.");
         }
 
-        --center[0], --center[1]; // For converting center co-ordinate values to zero based indexing.
+        // mutable center copy
+        point<unsigned int> center2(center);
+        --center2[0], --center2[1]; // For converting center co-ordinate values to zero based indexing.
         for (point_t pnt : trajectory_points)
         {
-            std::array<std::ptrdiff_t, 4> co_ords = {center[0] + pnt[0],
-            center[0] - pnt[0], center[1] + pnt[1], center[1] - pnt[1]
+            std::array<std::ptrdiff_t, 4> co_ords = {center2[0] + pnt[0],
+            center2[0] - pnt[0], center2[1] + pnt[1], center2[1] - pnt[1]
             };
             bool validity[4]{};
             if (co_ords[0] < view.width())
@@ -164,19 +178,31 @@ struct midpoint_ellipse_rasterizer
     ///        in the function 'draw_curve' for drawing the desired ellipse.
     /// \param view - Gil view of image on which the elliptical curve is to be drawn.
     /// \param pixel - Pixel value for the elliptical curve to be drawn.
-    /// \param center - Point containing positive integer x co-ordinate and y co-ordinate of the
-    /// center respectively.
-    /// \param semi_axes - Point containing positive integer lengths of horizontal semi-axis
-    /// and vertical semi-axis respectively.
     /// \tparam View - Type of input image view.
     /// \tparam Pixel - Type of pixel. Must be compatible to the pixel type of the image view
     template<typename View, typename Pixel>
-    void operator()(View& view, Pixel const& pixel,
-        point<unsigned int> center, point<unsigned int> semi_axes)
+    void operator()(View& view, Pixel const& pixel) const
     {
-        draw_curve(view, pixel, center, obtain_trajectory(semi_axes));
+        draw_curve(view, obtain_trajectory());
+    }
+
+    point<unsigned int> center;
+    point<unsigned int> semi_axes;
+};
+
+namespace detail {
+
+template <typename View, typename Rasterizer, typename Pixel>
+struct apply_rasterizer_op<View, Rasterizer, Pixel, ellipse_rasterizer_t>
+{
+    void operator()(
+        View const& view, Rasterizer const& rasterizer, Pixel const& pixel)
+    {
+        rasterizer(view, pixel);
     }
 };
+
+} //namespace detail
 
 }} // namespace boost::gil
 

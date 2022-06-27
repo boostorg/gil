@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [1.80.0] - 2022-08-10
 
+NOTICE: We are planning BREAKING switch to C++17 as minimum required C++ language version in one or two releases after Boost 1.80 ([Discussion #676](https://github.com/boostorg/gil/discussions/676))
+
 ### Added
 - Added `image` constructor from compatible view ([PR #520](https://github.com/boostorg/gil/pull/520))
 - Added inverse function for affine `matrix3x2` ([PR #527](https://github.com/boostorg/gil/pull/527))

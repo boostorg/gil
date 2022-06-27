@@ -63,7 +63,8 @@ namespace detail {
 // The default implementation of to_luminance uses float0..1 as the intermediate channel type
 template <typename RedChannel, typename GreenChannel, typename BlueChannel, typename GrayChannelValue>
 struct rgb_to_luminance_fn {
-    GrayChannelValue operator()(const RedChannel& red, const GreenChannel& green, const BlueChannel& blue) const {
+    auto operator()(const RedChannel& red, const GreenChannel& green, const BlueChannel& blue) const -> GrayChannelValue
+    {
         return channel_convert<GrayChannelValue>(float32_t(
             channel_convert<float32_t>(red  )*0.30f +
             channel_convert<float32_t>(green)*0.59f +
@@ -74,14 +75,16 @@ struct rgb_to_luminance_fn {
 // performance specialization for unsigned char
 template <typename GrayChannelValue>
 struct rgb_to_luminance_fn<uint8_t,uint8_t,uint8_t, GrayChannelValue> {
-    GrayChannelValue operator()(uint8_t red, uint8_t green, uint8_t blue) const {
+    auto operator()(uint8_t red, uint8_t green, uint8_t blue) const -> GrayChannelValue
+    {
         return channel_convert<GrayChannelValue>(uint8_t(
             ((uint32_t(red  )*4915 + uint32_t(green)*9667 + uint32_t(blue )*1802) + 8192) >> 14));
     }
 };
 
 template <typename GrayChannel, typename RedChannel, typename GreenChannel, typename BlueChannel>
-typename channel_traits<GrayChannel>::value_type rgb_to_luminance(const RedChannel& red, const GreenChannel& green, const BlueChannel& blue) {
+auto rgb_to_luminance(const RedChannel& red, const GreenChannel& green, const BlueChannel& blue) -> typename channel_traits<GrayChannel>::value_type
+{
     return rgb_to_luminance_fn<RedChannel,GreenChannel,BlueChannel,
                                typename channel_traits<GrayChannel>::value_type>()(red,green,blue);
 }

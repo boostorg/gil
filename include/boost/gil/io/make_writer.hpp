@@ -34,14 +34,10 @@ auto make_writer(String const& file_name, image_write_info<FormatTag> const& inf
     return typename get_writer<String, FormatTag>::type(device, info);
 }
 
-template< typename FormatTag >
+template <typename FormatTag>
 inline
-typename get_writer< std::wstring
-                   , FormatTag
-                   >::type
-make_writer( const std::wstring&                  file_name
-           , const image_write_info< FormatTag >& info
-           )
+auto make_writer(std::wstring const& file_name, image_write_info<FormatTag> const& info)
+    -> typename get_writer<std::wstring, FormatTag>::type
 {
     const char* str = detail::convert_to_native_string( file_name );
 
@@ -60,18 +56,12 @@ make_writer( const std::wstring&                  file_name
                                      );
 }
 
-template< typename FormatTag >
+template <typename FormatTag>
 inline
-typename get_writer< std::wstring
-                   , FormatTag
-                   >::type
-make_writer( detail::filesystem::path const& path
-           , const image_write_info< FormatTag >& info
-           )
+auto make_writer(detail::filesystem::path const& path, image_write_info<FormatTag> const& info)
+    -> typename get_writer<std::wstring, FormatTag>::type
 {
-    return make_writer( path.wstring()
-                      , info
-                      );
+    return make_writer(path.wstring(), info);
 }
 
 template <typename Device, typename FormatTag>
@@ -109,32 +99,22 @@ auto make_writer(String const& file_name, FormatTag const&,
     return make_writer(file_name, image_write_info<FormatTag>());
 }
 
-template< typename FormatTag >
+template <typename FormatTag>
 inline
-typename get_writer< std::wstring
-                   , FormatTag
-                   >::type
-make_writer( const std::wstring& file_name
-           , const FormatTag&
-           )
+auto make_writer(std::wstring const &file_name, FormatTag const&)
+    -> typename get_writer<std::wstring, FormatTag>::type
 {
     return make_writer( file_name
                       , image_write_info< FormatTag >()
                       );
 }
 
-template< typename FormatTag >
+template <typename FormatTag>
 inline
-typename get_writer< std::wstring
-                   , FormatTag
-                   >::type
-make_writer( detail::filesystem::path const& path
-           , const FormatTag&        tag
-           )
+auto make_writer(detail::filesystem::path const& path, FormatTag const& tag)
+    -> typename get_writer<std::wstring, FormatTag>::type
 {
-    return make_writer( path.wstring()
-                      , tag
-                      );
+    return make_writer(path.wstring(), tag);
 }
 
 template <typename Device, typename FormatTag>

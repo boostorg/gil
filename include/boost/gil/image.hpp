@@ -55,7 +55,7 @@ public:
     using x_coord_t = coord_t;
     using y_coord_t = coord_t;
 
-    const point_t&          dimensions()            const { return _view.dimensions(); }
+    point_t const&          dimensions()            const { return _view.dimensions(); }
     x_coord_t               width()                 const { return _view.width(); }
     y_coord_t               height()                const { return _view.height(); }
 
@@ -64,7 +64,7 @@ public:
         _memory(nullptr), _align_in_bytes(alignment), _alloc(alloc_in), _allocated_bytes( 0 ) {}
 
     // Create with dimensions and optional initial value and alignment
-    image(const point_t& dimensions,
+    image(point_t const& dimensions,
           std::size_t alignment=0,
           const Alloc alloc_in = Alloc()) : _memory(nullptr), _align_in_bytes(alignment), _alloc(alloc_in)
                                           , _allocated_bytes( 0 )
@@ -80,7 +80,7 @@ public:
         allocate_and_default_construct(point_t(width,height));
     }
 
-    image(const point_t& dimensions,
+    image(point_t const& dimensions,
           const Pixel& p_in,
           std::size_t alignment = 0,
           const Alloc alloc_in = Alloc())  : _memory(nullptr), _align_in_bytes(alignment), _alloc(alloc_in)
@@ -250,7 +250,7 @@ public:
     /////////////////////
 
     // without Allocator
-    void recreate(const point_t& dims, std::size_t alignment = 0)
+    void recreate(point_t const& dims, std::size_t alignment = 0)
     {
         if (dims == _view.dimensions() && _align_in_bytes == alignment)
             return;
@@ -275,7 +275,7 @@ public:
         recreate(point_t(width, height), alignment);
     }
 
-    void recreate(const point_t& dims, const Pixel& p_in, std::size_t alignment = 0)
+    void recreate(point_t const& dims, const Pixel& p_in, std::size_t alignment = 0)
     {
         if (dims == _view.dimensions() && _align_in_bytes == alignment)
             return;
@@ -301,7 +301,7 @@ public:
     }
 
     // with Allocator
-    void recreate(const point_t& dims, std::size_t alignment, const Alloc alloc_in)
+    void recreate(point_t const& dims, std::size_t alignment, const Alloc alloc_in)
     {
         if (dims == _view.dimensions() && _align_in_bytes == alignment && alloc_in == _alloc)
             return;
@@ -326,7 +326,7 @@ public:
         recreate(point_t(width, height), alignment, alloc_in);
     }
 
-    void recreate(const point_t& dims, const Pixel& p_in, std::size_t alignment, const Alloc alloc_in)
+    void recreate(point_t const& dims, const Pixel& p_in, std::size_t alignment, const Alloc alloc_in)
     {
         if (dims == _view.dimensions() && _align_in_bytes == alignment && alloc_in == _alloc)
             return;
@@ -372,7 +372,7 @@ private:
         catch (...) { deallocate(); throw; }
     }
 
-    void allocate_and_fill(const point_t& dimensions, Pixel const& p_in)
+    void allocate_and_fill(point_t const& dimensions, Pixel const& p_in)
     {
         try
         {
@@ -383,7 +383,7 @@ private:
     }
 
     template <typename View>
-    void allocate_and_copy(const point_t& dimensions, View const& v)
+    void allocate_and_copy(point_t const& dimensions, View const& v)
     {
         try
         {
@@ -452,6 +452,11 @@ private:
     {
         // if it throws and _memory!=0 the client must deallocate _memory
         _allocated_bytes = total_allocated_size_in_bytes(dimensions);
+        if (_allocated_bytes == 0)
+        {
+            return;
+        }
+
         _memory=_alloc.allocate( _allocated_bytes );
 
         unsigned char* tmp=(_align_in_bytes>0) ? (unsigned char*)align((std::size_t)_memory,_align_in_bytes) : _memory;
@@ -468,6 +473,10 @@ private:
         std::size_t plane_size=row_size*dimensions.y;
 
         _allocated_bytes = total_allocated_size_in_bytes( dimensions );
+        if (_allocated_bytes == 0)
+        {
+            return;
+        }
 
         _memory = _alloc.allocate( _allocated_bytes );
 
@@ -548,12 +557,17 @@ bool operator!=(const image<Pixel1,IsPlanar1,Alloc1>& im1,const image<Pixel2,IsP
 /// \ingroup ImageModel
 
 /// \brief Returns the non-constant-pixel view of an image
-template <typename Pixel, bool IsPlanar, typename Alloc> inline
-const typename image<Pixel,IsPlanar,Alloc>::view_t& view(image<Pixel,IsPlanar,Alloc>& img) { return img._view; }
+template <typename Pixel, bool IsPlanar, typename Alloc>
+inline auto view(image<Pixel,IsPlanar,Alloc>& img)
+    -> typename image<Pixel,IsPlanar,Alloc>::view_t const&
+{
+    return img._view;
+}
 
 /// \brief Returns the constant-pixel view of an image
-template <typename Pixel, bool IsPlanar, typename Alloc> inline
-const typename image<Pixel,IsPlanar,Alloc>::const_view_t const_view(const image<Pixel,IsPlanar,Alloc>& img)
+template <typename Pixel, bool IsPlanar, typename Alloc>
+inline auto const_view(const image<Pixel,IsPlanar,Alloc>& img)
+    -> typename image<Pixel,IsPlanar,Alloc>::const_view_t const
 {
     return static_cast<const typename image<Pixel,IsPlanar,Alloc>::const_view_t>(img._view);
 }

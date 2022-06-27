@@ -72,9 +72,9 @@ int main()
     {
         for (float b = 1; b < 101; ++b)
         {
-            auto rasterizer = gil::midpoint_ellipse_rasterizer{};
-            std::vector<gil::point_t> points = rasterizer.obtain_trajectory(
-                {static_cast<unsigned int>(a), static_cast<unsigned int>(b)});
+            auto rasterizer = gil::midpoint_ellipse_rasterizer{{},
+                {static_cast<unsigned int>(a), static_cast<unsigned int>(b)}};
+            std::vector<gil::point_t> points = rasterizer.obtain_trajectory();
             test_rasterizer_follows_equation(points, a, b);
             test_connectivity(points);
         }

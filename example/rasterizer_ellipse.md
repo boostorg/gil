@@ -3,6 +3,7 @@
 Ellipse rasterization capabilities in GIL are demonstrated by the program `rasterizer_ellipse`, compiled from the sources `example/rasterizer_ellipse.cpp`.
 
 ## Synopsis
+
 `rasterizer_ellipse`
 
 The program doesn't take any argument on the command line.
@@ -15,8 +16,10 @@ The program doesn't take any argument on the command line.
 ## Specific requirements
 
 ### Build requirements
-- A C++ compiler compliant with C++11 or above
+
+- A C++ compiler compliant with C++14 or above
 - The JPEG library installed and configured.
 
 ### Execution requirements
+
 `rasterizer_ellipse` doesn't have any specific execution requirements.

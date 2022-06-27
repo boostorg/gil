@@ -99,8 +99,8 @@ inline double minimum_angle_step(point_t dimensions)
 /// WARNING: do keep in mind IEEE 754 quirks, e.g. no-associativity,
 /// no-commutativity and precision. Do not expect expressions that are
 /// mathematically the same to produce the same values
-inline hough_parameter<double> make_theta_parameter(double approx_angle, double neighborhood,
-                                                    point_t dimensions)
+inline auto make_theta_parameter(double approx_angle, double neighborhood, point_t dimensions)
+    -> hough_parameter<double>
 {
     auto angle_step = minimum_angle_step(dimensions);
 

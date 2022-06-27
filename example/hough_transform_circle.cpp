@@ -8,6 +8,7 @@
 
 #include <boost/gil.hpp>
 #include <boost/gil/extension/io/png.hpp>
+#include <boost/gil/extension/rasterization/circle.hpp>
 
 #include <iostream>
 #include <limits>
@@ -33,13 +34,8 @@ int main()
 
     const std::ptrdiff_t circle_radius = 16;
     const gil::point_t circle_center = {64, 64};
-    const auto rasterizer = gil::midpoint_circle_rasterizer{};
-    std::vector<gil::point_t> circle_points(rasterizer.point_count(circle_radius));
-    rasterizer(circle_radius, circle_center, circle_points.begin());
-    for (const auto& point : circle_points)
-    {
-        input(point) = std::numeric_limits<gil::uint8_t>::max();
-    }
+    const auto rasterizer = gil::midpoint_circle_rasterizer{circle_center, circle_radius};
+    gil::apply_rasterizer(input, rasterizer, gil::gray8_pixel_t{255});
 
     const auto radius_parameter =
         gil::hough_parameter<std::ptrdiff_t>::from_step_count(circle_radius, 3, 3);

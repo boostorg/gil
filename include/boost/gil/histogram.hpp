@@ -45,16 +45,17 @@ namespace detail {
 /// \ingroup Histogram-Helpers
 ///
 template <std::size_t Index, typename... T>
-inline typename std::enable_if<Index == sizeof...(T), void>::type
-    hash_tuple_impl(std::size_t&, std::tuple<T...> const&)
+inline auto hash_tuple_impl(std::size_t&, std::tuple<T...> const&)
+    ->  typename std::enable_if<Index == sizeof...(T), void>::type
 {
+    // terminating case
 }
 
 /// \ingroup Histogram-Helpers
 ///
 template <std::size_t Index, typename... T>
-inline typename std::enable_if<Index != sizeof...(T), void>::type
-    hash_tuple_impl(std::size_t& seed, std::tuple<T...> const& t)
+inline auto hash_tuple_impl(std::size_t& seed, std::tuple<T...> const& t)
+    -> typename std::enable_if<Index != sizeof...(T), void>::type
 {
     boost::hash_combine(seed, std::get<Index>(t));
     hash_tuple_impl<Index + 1>(seed, t);
@@ -72,7 +73,7 @@ inline typename std::enable_if<Index != sizeof...(T), void>::type
 template <typename... T>
 struct hash_tuple
 {
-    std::size_t operator()(std::tuple<T...> const& t) const
+    auto operator()(std::tuple<T...> const& t) const -> std::size_t
     {
         std::size_t seed = 0;
         hash_tuple_impl<0>(seed, t);
@@ -665,10 +666,10 @@ void fill_histogram(
 /// #bins * log( #bins ) by sorting the keys and then calculating the cumulative version.
 ///
 template <typename Container>
-Container cumulative_histogram(Container const&);
+auto cumulative_histogram(Container const&) -> Container;
 
 template <typename... T>
-histogram<T...> cumulative_histogram(histogram<T...> const& hist)
+auto cumulative_histogram(histogram<T...> const& hist) -> histogram<T...>
 {
     using check_list = boost::mp11::mp_list<boost::has_less<T>...>;
     static_assert(
