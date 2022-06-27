@@ -1,17 +1,17 @@
 //
-// Copyright 2022 Marco Langer
+// Copyright 2022 Marco Langer <langer.m86 at gmail dot com>
 //
 // Distributed under the Boost Software License, Version 1.0
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 //
-#include <boost/gil/extension/dynamic_image/any_image.hpp>
 #include <boost/gil/extension/dynamic_image/algorithm.hpp>
+#include <boost/gil/extension/dynamic_image/any_image.hpp>
 
 #include <boost/core/lightweight_test.hpp>
 
-#include "../test_fixture.hpp"
 #include "core/image/test_fixture.hpp"
+#include "extension/dynamic_image/test_fixture.hpp"
 
 namespace gil = boost::gil;
 namespace fixture = boost::gil::test::fixture;

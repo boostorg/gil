@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [1.80.0] - 2022-08-10
 
+NOTICE: We are planning BREAKING switch to C++17 as minimum required C++ language version in one or two releases after Boost 1.80 ([Discussion #676](https://github.com/boostorg/gil/discussions/676))
+
 ### Added
 - Added `image` constructor from compatible view ([PR #520](https://github.com/boostorg/gil/pull/520))
 - Added inverse function for affine `matrix3x2` ([PR #527](https://github.com/boostorg/gil/pull/527))
@@ -28,6 +30,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   support at least C++14 are considered unsupported as of now.
 - BREAKING: `any_color_converted_view()` is deprecated and will be removed in the next release.
   Use `color_converted_view()` instead, which provides the same feature.
+- BREAKING: `apply_operation` for `any_image` is deprecated and will be removed in the next release.
+  Use `variant2::visit` instead, which provides the same feature.
 - documentation: Display that GIL is a header-only library
 - Moved numeric extension to core ([PR #573](https://github.com/boostorg/gil/pull/573))
 - Added support for C++17's `<filesystem>` ([PR #636](https://github.com/boostorg/gil/pull/636)).
@@ -327,10 +331,10 @@ linked PDF documents with detailed changes.
 
 ### Changed
 - Updated the design guide and tutorial, updated syntax of concepts to the latest concepts proposal.
-- In `image`, `image_view`, `any_image`, `any_image_view`:  
+- In `image`, `image_view`, `any_image`, `any_image_view`:
   There are no longer global functions `get_width()`, `get_height()`, `get_dimensions()`, `num_channels()`.
   Use  methods `width()`, `height()`, `dimensions()` instead.
-- In models of pixel, pixel iterator, pixel locator, image view and image:  
+- In models of pixel, pixel iterator, pixel locator, image view and image:
   There used to be different ways of getting to a pixel, channel, color space, etc. of an image view,
   pixel, locator, iterator and image (e.g. traits, member typedefs).
   Now all pixel-based GIL constructs (pixels, pixel iterators, locators, image views and images) model
@@ -338,7 +342,7 @@ linked PDF documents with detailed changes.
   and for homogeneous constructs we also have: `channel_type`.
   To get the pixel type or pixel reference/const reference type of an image, image view, locator
   and pixel, use member typedefs `value_type`, `reference` and `const_reference`.
-- In `locator`, `image`, `image_view`, `any_image` and `any_image_view`:  
+- In `locator`, `image`, `image_view`, `any_image` and `any_image_view`:
   Removed `dynamic_x_step_t`, `dynamic_y_step_t`, `dynamic_xy_step_t` and `dynamic_xy_step_transposed_t`
   as member typedefs of locators and image views.
   Instead, there are separate concepts `HasDynamicXStepTypeConcept`, `HasDynamicYStepTypeConcept`,
