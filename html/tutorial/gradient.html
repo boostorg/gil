@@ -842,20 +842,20 @@ source view:</p>
 </pre></div>
 </div>
 <p>The second step is to provide an overload of <code class="docutils literal notranslate"><span class="pre">x_luminosity_gradient</span></code> that
-takes image view variant and calls GIL’s <code class="docutils literal notranslate"><span class="pre">apply_operation</span></code> passing it the
+takes image view variant and calls <code class="docutils literal notranslate"><span class="pre">variant2::visit</span></code> passing it the
 function object:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">SrcViews</span><span class="p">,</span> <span class="k">typename</span> <span class="n">DstView</span><span class="o">&gt;</span>
-<span class="kt">void</span> <span class="n">x_luminosity_gradient</span><span class="p">(</span><span class="k">const</span> <span class="n">any_image_view</span><span class="o">&lt;</span><span class="n">SrcViews</span><span class="o">&gt;&amp;</span> <span class="n">src</span><span class="p">,</span> <span class="k">const</span> <span class="n">DstView</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="p">...</span><span class="n">SrcViews</span><span class="p">,</span> <span class="k">typename</span> <span class="n">DstView</span><span class="o">&gt;</span>
+<span class="kt">void</span> <span class="n">x_luminosity_gradient</span><span class="p">(</span><span class="k">const</span> <span class="n">any_image_view</span><span class="o">&lt;</span><span class="n">SrcViews</span><span class="p">...</span><span class="o">&gt;&amp;</span> <span class="n">src</span><span class="p">,</span> <span class="k">const</span> <span class="n">DstView</span><span class="o">&amp;</span> <span class="n">dst</span><span class="p">)</span>
 <span class="p">{</span>
-  <span class="n">apply_operation</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">x_gradient_obj</span><span class="o">&lt;</span><span class="n">DstView</span><span class="o">&gt;</span><span class="p">(</span><span class="n">dst</span><span class="p">));</span>
+  <span class="n">variant2</span><span class="o">::</span><span class="n">visit</span><span class="p">(</span><span class="n">x_gradient_obj</span><span class="o">&lt;</span><span class="n">DstView</span><span class="o">&gt;</span><span class="p">(</span><span class="n">dst</span><span class="p">),</span> <span class="n">src</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">any_image_view&lt;SrcViews&gt;</span></code> is the image view variant. It is
-templated over <code class="docutils literal notranslate"><span class="pre">SrcViews</span></code>, an enumeration of all possible view types
+<p><code class="docutils literal notranslate"><span class="pre">any_image_view&lt;SrcViews...&gt;</span></code> is the image view variant. It is
+templated over <code class="docutils literal notranslate"><span class="pre">SrcViews...</span></code>, an enumeration of all possible view types
 the variant can take.  <code class="docutils literal notranslate"><span class="pre">src</span></code> contains inside an index of the
 currently instantiated type, as well as a block of memory containing
-the instance.  <code class="docutils literal notranslate"><span class="pre">apply_operation</span></code> goes through a switch statement
+the instance.  <code class="docutils literal notranslate"><span class="pre">variant2::visit</span></code> goes through a switch statement
 over the index, each case of which casts the memory to the correct
 view type and invokes the function object with it. Invoking an
 algorithm on a variant has the overhead of one switch
@@ -953,7 +953,7 @@ code with different compilers.</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2022-06-19 10:06:52.
+      Last updated on 2022-06-27 10:06:11.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
