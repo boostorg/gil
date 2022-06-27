@@ -152,6 +152,7 @@ int main()
 {
     test_constructor_with_dimensions_pixel::run();
     test_constructor_from_other_image::run();
+    test_constructor_from_view::run();
 
     test_move_constructor::run();
     test_move_assignement::run();
