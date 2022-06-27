@@ -7,7 +7,7 @@
 #
 version: 1.0.{build}-{branch}
 
-# Current Boost.GIL develop branch (future Boost 1.68) requires C++11
+# Current Boost.GIL develop branch requires C++14
 # Since VS2017, MSVC default is /std:c++14, so no explicit switch is required.
 image: Visual Studio 2017
 
@@ -17,18 +17,6 @@ shallow_clone: true
 
 environment:
   matrix:
-    - TOOLSET: msvc-14.0
-      ARCH: x86_64
-      VARIANT: debug
-      CXXSTD: 11
-      TEST_HEADERS: 1
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-    - TOOLSET: msvc-14.0
-      ARCH: x86_64
-      VARIANT: release
-      CXXSTD: 11
-      TEST_HEADERS: 1
-      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     - TOOLSET: msvc-14.1
       ARCH: x86_64
       VARIANT: debug
