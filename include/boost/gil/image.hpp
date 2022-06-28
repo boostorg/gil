@@ -238,7 +238,14 @@ public:
         swap(_align_in_bytes,  img._align_in_bytes);
         swap(_memory,          img._memory);
         swap(_view,            img._view);
+#ifdef BOOST_NO_CXX17_HDR_MEMORY_RESOURCE
         swap(_alloc,           img._alloc);
+#else
+        if constexpr (std::allocator_traits<Alloc>::propagate_on_container_swap::value)
+            swap(_alloc, img._alloc);
+        else
+            BOOST_ASSERT(_alloc == img._alloc);
+#endif
         swap(_allocated_bytes, img._allocated_bytes );
     }
 
