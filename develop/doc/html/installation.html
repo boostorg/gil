@@ -81,12 +81,10 @@ where to find Boost and GIL headers should be sufficient for most projects.</p>
 <div class="section" id="compiling">
 <h2>Compiling</h2>
 <p>The Boost.GIL library source code should successfully compile with any
-compiler with complete C++11 support.</p>
+compiler with complete C++14 support.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">We are planning to drop support for require C++14 support in Boost 1.76 or later,
-or selectively drop support for GCC 5 due to its issues with inheriting constructors,
-see <a class="reference external" href="https://github.com/boostorg/gil/pull/526">discussion for PR #526</a>.</p>
+<p class="last">Boost.GIL requires C++14 compiler since ince Boost 1.80.</p>
 </div>
 <p>For the actual list of currently tested compilers, check results of the library CI
 builds linked from the <a class="reference external" href="https://github.com/boostorg/gil/blob/develop/README.md">README.md</a>
@@ -105,7 +103,7 @@ of the library repository.</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2022-06-28 01:06:51.
+      Last updated on 2022-06-28 01:06:19.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
     </div>
   </body>
