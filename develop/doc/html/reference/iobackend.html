@@ -94,12 +94,13 @@ Concept of IO Device</h1>
 <div class="line">    <span class="keywordtype">void</span> IODevice::seek(<span class="keywordtype">long</span> count, <span class="keywordtype">int</span> whence);</div>
 <div class="line">    <span class="keywordtype">void</span> IODevice::flush();</div>
 <div class="line">};</div>
-</div><!-- fragment --><p>For the time being a boolean meta function must be specialized: </p><div class="fragment"><div class="line"><span class="keyword">namespace </span>boost{<span class="keyword">namespace </span>gil{<span class="keyword">namespace </span>detail{</div>
+</div><!-- fragment --><p>For the time being a boolean meta function must be specialized: </p><div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code" href="namespaceboost.html">boost</a>{<span class="keyword">namespace </span>gil{<span class="keyword">namespace </span>detail{</div>
 <div class="line"> <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Device&gt;</div>
 <div class="line"> <span class="keyword">struct </span>detail::is_input_device;</div>
 <div class="line">}}}</div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
+<div class="ttc" id="anamespaceboost_html"><div class="ttname"><a href="namespaceboost.html">boost</a></div><div class="ttdoc">defined(BOOST_NO_CXX17_HDR_MEMORY_RESOURCE)</div><div class="ttdef"><b>Definition:</b> algorithm.hpp:36</div></div>
 <div class="ttc" id="agroup___i_o_html_ga9b5ae3d12c73aa1d81245fd5f8772847"><div class="ttname"><a href="group___i_o.html#ga9b5ae3d12c73aa1d81245fd5f8772847">boost::gil::read_view</a></div><div class="ttdeci">void read_view(Reader reader, View const &amp;view, typename std::enable_if&lt; mp11::mp_and&lt; detail::is_reader&lt; Reader &gt;, typename is_format_tag&lt; typename Reader::format_tag_t &gt;::type, typename is_read_supported&lt; typename get_pixel_type&lt; View &gt;::type, typename Reader::format_tag_t &gt;::type &gt;::value &gt;::type *=nullptr)</div><div class="ttdoc">Reads an image view without conversion. No memory is allocated.</div><div class="ttdef"><b>Definition:</b> read_view.hpp:31</div></div>
 <div class="ttc" id="agroup___i_o_html_gac1e65b2ad8cd28fe8d694f1663df0d78"><div class="ttname"><a href="group___i_o.html#gac1e65b2ad8cd28fe8d694f1663df0d78">boost::gil::read_image</a></div><div class="ttdeci">void read_image(Reader reader, Image &amp;img, typename std::enable_if&lt; mp11::mp_and&lt; detail::is_reader&lt; Reader &gt;, is_format_tag&lt; typename Reader::format_tag_t &gt;, is_read_supported&lt; typename get_pixel_type&lt; typename Image::view_t &gt;::type, typename Reader::format_tag_t &gt; &gt;::value &gt;::type *=nullptr)</div><div class="ttdoc">Reads an image without conversion. Image memory is allocated.</div><div class="ttdef"><b>Definition:</b> read_image.hpp:32</div></div>
      <!-- HTML footer for doxygen 1.8.13-->
