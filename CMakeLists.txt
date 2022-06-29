@@ -36,7 +36,7 @@ target_link_libraries(boost_gil
     Boost::variant2
 )
 
-target_compile_features(boost_gil INTERFACE cxx_std_11)
+target_compile_features(boost_gil INTERFACE cxx_std_14)
 
 else()
 
@@ -60,14 +60,14 @@ option(BOOST_GIL_ENABLE_EXT_RASTERIZATION "Enable Rasterization extension and te
 option(BOOST_GIL_ENABLE_EXT_IMAGE_PROCESSING "Enable Image Processing extension (!) and tests" ON)
 option(BOOST_GIL_USE_CONAN "Use Conan to install dependencies" OFF)
 option(BOOST_GIL_USE_CLANG_TIDY "Set CMAKE_CXX_CLANG_TIDY property on targets to enable clang-tidy linting" OFF)
-set(CMAKE_CXX_STANDARD 11 CACHE STRING "C++ standard version to use (default is 11)")
+set(CMAKE_CXX_STANDARD 14 CACHE STRING "C++ standard version to use (default is 14)")
 
 #-----------------------------------------------------------------------------
 # Project
 #-----------------------------------------------------------------------------
 project(Boost.GIL
   LANGUAGES CXX
-  DESCRIPTION "Boost.GIL - Generic Image Library | Requires C++11 since Boost 1.68")
+  DESCRIPTION "Boost.GIL - Generic Image Library | Requires C++14 since Boost 1.80")
 
 list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_BINARY_DIR}/cmake)
 
@@ -140,7 +140,7 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
   set(Boost_USE_STATIC_RUNTIME OFF)
 endif()
 
-find_package(Boost 1.72.0 REQUIRED COMPONENTS filesystem)
+find_package(Boost 1.80.0 REQUIRED COMPONENTS filesystem)
 message(STATUS "Boost.GIL: Using Boost_INCLUDE_DIRS=${Boost_INCLUDE_DIRS}")
 message(STATUS "Boost.GIL: Using Boost_LIBRARY_DIRS=${Boost_LIBRARY_DIRS}")
 
@@ -161,7 +161,7 @@ if(BOOST_GIL_USE_CONAN)
   # Download automatically, you can also just copy the conan.cmake file
   if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
     message(STATUS "Boost.GIL: Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
-    file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/v0.15/conan.cmake"
+    file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/0.18.1/conan.cmake"
       "${CMAKE_BINARY_DIR}/conan.cmake")
   endif()
 

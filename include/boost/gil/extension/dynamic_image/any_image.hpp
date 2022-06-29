@@ -118,7 +118,7 @@ public:
             return *this;
     }
 
-    void recreate(const point_t& dims, unsigned alignment=1)
+    void recreate(point_t const& dims, unsigned alignment=1)
     {
         variant2::visit(detail::recreate_image_fnobj(dims, alignment), *this);
     }

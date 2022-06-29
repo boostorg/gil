@@ -43,8 +43,8 @@ namespace boost { namespace gil {
 ///        reference histogram and returns the color map used for histogram matching.
 ///
 template <typename SrcKeyType, typename RefKeyType>
-std::map<SrcKeyType, SrcKeyType>
-    histogram_matching(histogram<SrcKeyType> const& src_hist, histogram<RefKeyType> const& ref_hist)
+auto histogram_matching(histogram<SrcKeyType> const& src_hist, histogram<RefKeyType> const& ref_hist)
+    -> std::map<SrcKeyType, SrcKeyType>
 {
     histogram<SrcKeyType> dst_hist;
     return histogram_matching(src_hist, ref_hist, dst_hist);
@@ -63,10 +63,11 @@ std::map<SrcKeyType, SrcKeyType>
 ///        matching as well as transforming the destination histogram.
 ///
 template <typename SrcKeyType, typename RefKeyType, typename DstKeyType>
-std::map<SrcKeyType, DstKeyType> histogram_matching(
+auto histogram_matching(
     histogram<SrcKeyType> const& src_hist,
     histogram<RefKeyType> const& ref_hist,
     histogram<DstKeyType>& dst_hist)
+    -> std::map<SrcKeyType, DstKeyType>
 {
     static_assert(
         std::is_integral<SrcKeyType>::value &&

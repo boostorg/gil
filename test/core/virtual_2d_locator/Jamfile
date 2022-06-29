@@ -1,6 +1,6 @@
 # Boost.GIL (Generic Image Library) - tests
 #
-# Copyright (c) 2019 Mateusz Loskot <mateusz@loskot.net>
+# Copyright (c) 2022 Mateusz Loskot <mateusz@loskot.net>
 #
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or
@@ -8,8 +8,4 @@
 
 import testing ;
 
-compile concepts.cpp ;
-
-run alignment.cpp ;
-run empty_dimensions.cpp ;
-run image.cpp ;
+run is_2d_traversable.cpp ;

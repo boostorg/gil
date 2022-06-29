@@ -96,7 +96,7 @@ struct subchroma_image_deref_fn
     {}
 
     /// operator()
-    result_type operator()( const point_t& p ) const
+    result_type operator()( point_t const& p ) const
     {
         using scaling_factors_t = detail::scaling_factors
             <
@@ -228,9 +228,9 @@ public:
     {}
 
     /// constructor
-    subchroma_image_view( const point_t& y_dimensions
-                        , const point_t& v_dimensions
-                        , const point_t& u_dimensions
+    subchroma_image_view( point_t const& y_dimensions
+                        , point_t const& v_dimensions
+                        , point_t const& u_dimensions
                         , const Locator& locator
                         )
     : image_view< Locator >( y_dimensions, locator )
@@ -248,9 +248,9 @@ public:
     point_t v_ssfactors() const { return point_t( get_deref_fn().vx_ssfactor(), get_deref_fn().vx_ssfactor() ); }
     point_t u_ssfactors() const { return point_t( get_deref_fn().ux_ssfactor(), get_deref_fn().ux_ssfactor() ); }
 
-    const point_t& y_dimension() const { return _y_dimensions; }
-    const point_t& v_dimension() const { return _v_dimensions; }
-    const point_t& u_dimension() const { return _u_dimensions; }
+    point_t const& y_dimension() const { return _y_dimensions; }
+    point_t const& v_dimension() const { return _v_dimensions; }
+    point_t const& u_dimension() const { return _u_dimensions; }
 
     const plane_locator_t& y_plane() const { return get_deref_fn().y_locator(); }
     const plane_locator_t& v_plane() const { return get_deref_fn().v_locator(); }

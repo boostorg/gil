@@ -13,7 +13,7 @@ Hessian feature detection capabilities in GIL are demonstrated by the program `h
 ## Specific requirements
 
 ### Build requirements
-- A C++ compiler compliant with C++11 or above
+- A C++ compiler compliant with C++14 or above
 - The PNG library installed and configured
 
 ### Execution requirements

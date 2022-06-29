@@ -20,13 +20,11 @@ Compiling
 ---------
 
 The Boost.GIL library source code should successfully compile with any
-compiler with complete C++11 support.
+compiler with complete C++14 support.
 
 .. note::
 
-   We are planning to drop support for require C++14 support in Boost 1.76 or later,
-   or selectively drop support for GCC 5 due to its issues with inheriting constructors,
-   see `discussion for PR #526 <https://github.com/boostorg/gil/pull/526>`_.
+    Boost.GIL requires C++14 compiler since ince Boost 1.80.
 
 For the actual list of currently tested compilers, check results of the library CI
 builds linked from the `README.md <https://github.com/boostorg/gil/blob/develop/README.md>`_

@@ -89,22 +89,22 @@ struct binary_operation_obj
     using result_type = Result;
 
     template <typename V1, typename V2> BOOST_FORCEINLINE
-    result_type operator()(const std::pair<const V1*,const V2*>& p) const {
+    auto operator()(const std::pair<const V1*,const V2*>& p) const -> result_type {
         return apply(*p.first, *p.second, typename views_are_compatible<V1,V2>::type());
     }
 
     template <typename V1, typename V2> BOOST_FORCEINLINE
-    result_type operator()(const V1& v1, const V2& v2) const {
+    auto operator()(const V1& v1, const V2& v2) const -> result_type {
         return apply(v1, v2, typename views_are_compatible<V1,V2>::type());
     }
 
-    result_type operator()(const error_t&) const { throw std::bad_cast(); }
+    auto operator()(const error_t&) const -> result_type { throw std::bad_cast(); }
 private:
 
     // dispatch from apply overload to a function with distinct name
     template <typename V1, typename V2>
     BOOST_FORCEINLINE
-    result_type apply(V1 const& v1, V2 const& v2, std::false_type) const
+    auto apply(V1 const& v1, V2 const& v2, std::false_type) const -> result_type
     {
         return ((const Derived*)this)->apply_incompatible(v1, v2);
     }
@@ -112,7 +112,7 @@ private:
     // dispatch from apply overload to a function with distinct name
     template <typename V1, typename V2>
     BOOST_FORCEINLINE
-    result_type apply(V1 const& v1, V2 const& v2, std::true_type) const
+    auto apply(V1 const& v1, V2 const& v2, std::true_type) const -> result_type
     {
         return ((const Derived*)this)->apply_compatible(v1, v2);
     }
@@ -120,7 +120,7 @@ private:
     // function with distinct name - it can be overloaded by subclasses
     template <typename V1, typename V2>
     BOOST_FORCEINLINE
-    result_type apply_incompatible(V1 const& /*v1*/, V2 const& /*v2*/) const
+    auto apply_incompatible(V1 const& /*v1*/, V2 const& /*v2*/) const -> result_type
     {
         throw std::bad_cast();
     }
@@ -155,9 +155,10 @@ auto copy(
 /// \ingroup STLOptimizations
 /// \brief Copy when both src and dst are interleaved and of the same type can be just memmove
 template<typename T, typename CS>
-BOOST_FORCEINLINE boost::gil::pixel<T,CS>*
-copy(const boost::gil::pixel<T,CS>* first, const boost::gil::pixel<T,CS>* last,
-     boost::gil::pixel<T,CS>* dst) {
+BOOST_FORCEINLINE 
+auto copy(const boost::gil::pixel<T,CS>* first, const boost::gil::pixel<T,CS>* last,
+     boost::gil::pixel<T,CS>* dst) -> boost::gil::pixel<T,CS>*
+{
     return (boost::gil::pixel<T,CS>*)std::copy((unsigned char*)first,(unsigned char*)last, (unsigned char*)dst);
 }
 } // namespace std
@@ -174,7 +175,8 @@ namespace std {
 /// \ingroup STLOptimizations
 /// \brief Copy when both src and dst are planar pointers is copy for each channel
 template<typename CS, typename IC1, typename IC2> BOOST_FORCEINLINE
-boost::gil::planar_pixel_iterator<IC2,CS> copy(boost::gil::planar_pixel_iterator<IC1,CS> first, boost::gil::planar_pixel_iterator<IC1,CS> last, boost::gil::planar_pixel_iterator<IC2,CS> dst) {
+auto copy(boost::gil::planar_pixel_iterator<IC1,CS> first, boost::gil::planar_pixel_iterator<IC1,CS> last, boost::gil::planar_pixel_iterator<IC2,CS> dst) -> boost::gil::planar_pixel_iterator<IC2,CS>
+{
     boost::gil::gil_function_requires<boost::gil::ChannelsCompatibleConcept<typename std::iterator_traits<IC1>::value_type,typename std::iterator_traits<IC2>::value_type>>();
     static_for_each(first,last,dst,boost::gil::detail::copy_fn<IC1,IC2>());
     return dst+(last-first);
@@ -250,7 +252,7 @@ struct copier_n<iterator_from_2d<IL>,iterator_from_2d<OL>> {
 };
 
 template <typename SrcIterator, typename DstIterator>
-BOOST_FORCEINLINE DstIterator copy_with_2d_iterators(SrcIterator first, SrcIterator last, DstIterator dst) {
+BOOST_FORCEINLINE auto copy_with_2d_iterators(SrcIterator first, SrcIterator last, DstIterator dst) -> DstIterator {
     using src_x_iterator = typename SrcIterator::x_iterator;
     using dst_x_iterator = typename DstIterator::x_iterator;
 
@@ -276,9 +278,11 @@ namespace std {
 /// \ingroup STLOptimizations
 /// \brief  std::copy(I1,I1,I2) with I1 and I2 being a iterator_from_2d
 template <typename IL, typename OL>
-BOOST_FORCEINLINE boost::gil::iterator_from_2d<OL> copy1(boost::gil::iterator_from_2d<IL> first, boost::gil::iterator_from_2d<IL> last, boost::gil::iterator_from_2d<OL> dst) {
+BOOST_FORCEINLINE auto copy1(boost::gil::iterator_from_2d<IL> first, boost::gil::iterator_from_2d<IL> last, boost::gil::iterator_from_2d<OL> dst) -> boost::gil::iterator_from_2d<OL>
+{
     return boost::gil::detail::copy_with_2d_iterators(first,last,dst);
 }
+
 } // namespace std
 
 namespace boost { namespace gil {
@@ -313,13 +317,13 @@ public:
     copy_and_convert_pixels_fn(CC cc_in) : _cc(cc_in) {}
    // when the two color spaces are incompatible, a color conversion is performed
     template <typename V1, typename V2> BOOST_FORCEINLINE
-    result_type apply_incompatible(const V1& src, const V2& dst) const {
+    auto apply_incompatible(const V1& src, const V2& dst) const -> result_type {
         copy_pixels(color_converted_view<typename V2::value_type>(src,_cc),dst);
     }
 
     // If the two color spaces are compatible, copy_and_convert is just copy
     template <typename V1, typename V2> BOOST_FORCEINLINE
-    result_type apply_compatible(const V1& src, const V2& dst) const {
+    auto apply_compatible(const V1& src, const V2& dst) const -> result_type {
          copy_pixels(src,dst);
     }
 };

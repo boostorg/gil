@@ -1,17 +1,14 @@
 #
-# Copyright (c) 2019 Mateusz Loskot <mateusz at loskot dot net>
+# Copyright (c) 2022 Mateusz Loskot <mateusz at loskot dot net>
 #
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 #
 foreach(_name
-  concepts
-  alignment
-  empty_dimensions
-  image)
-  set(_test t_core_image_${_name})
-  set(_target test_core_image_${_name})
+  is_2d_traversable)
+  set(_test t_core_virtual_2d_locator_${_name})
+  set(_target test_core_virtual_2d_locator_${_name})
 
   add_executable(${_target} "")
   target_sources(${_target} PRIVATE ${_name}.cpp)
