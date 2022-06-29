@@ -67,14 +67,14 @@ $(function() {
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;type_traits&gt;</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">namespace </span>boost { <span class="keyword">namespace </span>gil {</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceboost.html">boost</a> { <span class="keyword">namespace </span>gil {</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">// Forward-declare</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> P&gt; P* memunit_advanced(<span class="keyword">const</span> P* p, std::ptrdiff_t diff);</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">// Forward-declare semantic_at_c</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K, <span class="keyword">typename</span> ColorBase&gt;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">auto</span> <a class="code" href="group___color_base_algorithm_semantic_at_c.html#ga5aa277c761861eb6c540da0ba2e22d4e">semantic_at_c</a>(ColorBase&amp; p)</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">auto</span> <a class="code" href="group___color_base_algorithm_semantic_at_c.html#ga2c1a39c87886b4f533e13e459cfe6170">semantic_at_c</a>(ColorBase&amp; p)</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    -&gt; <span class="keyword">typename</span> std::enable_if</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    &lt;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        !std::is_const&lt;ColorBase&gt;::value,</div>
@@ -83,7 +83,7 @@ $(function() {
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">template</span> &lt;<span class="keywordtype">int</span> K, <span class="keyword">typename</span> ColorBase&gt;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">typename</span> kth_semantic_element_const_reference_type&lt;ColorBase,K&gt;::type <a class="code" href="group___color_base_algorithm_semantic_at_c.html#ga5aa277c761861eb6c540da0ba2e22d4e">semantic_at_c</a>(<span class="keyword">const</span> ColorBase&amp; p);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">auto</span> <a class="code" href="group___color_base_algorithm_semantic_at_c.html#ga2c1a39c87886b4f533e13e459cfe6170">semantic_at_c</a>(<span class="keyword">const</span> ColorBase&amp; p) -&gt; <span class="keyword">typename</span> kth_semantic_element_const_reference_type&lt;ColorBase,K&gt;::type;</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment">// Forward declare element_reference_type</span></div>
 <div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="structboost_1_1gil_1_1element__reference__type.html">   40</a></span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> ColorBase&gt; <span class="keyword">struct </span><a class="code" href="structboost_1_1gil_1_1element__reference__type.html">element_reference_type</a>;</div>
@@ -216,8 +216,8 @@ $(function() {
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    { <span class="keywordflow">return</span> v1_; }</div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160; </div>
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <span class="comment">// Support for planar_pixel_reference operator[]</span></div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    Element at_c_dynamic(std::size_t i)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    <span class="keyword">auto</span> at_c_dynamic(std::size_t i) <span class="keyword">const</span> -&gt; Element</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    {</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;        <span class="keywordflow">if</span> (i == 0)</div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;            <span class="keywordflow">return</span> v0_;</div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;        <span class="keywordflow">else</span></div>
@@ -312,8 +312,8 @@ $(function() {
 <div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    { <span class="keywordflow">return</span> v2_; }</div>
 <div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160; </div>
 <div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    <span class="comment">// Support for planar_pixel_reference operator[]</span></div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    Element at_c_dynamic(std::size_t i)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    <span class="keyword">auto</span> at_c_dynamic(std::size_t i) <span class="keyword">const</span> -&gt; Element</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    {</div>
 <div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;        <span class="keywordflow">switch</span> (i)</div>
 <div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;        {</div>
 <div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;        <span class="keywordflow">case</span> 0: <span class="keywordflow">return</span> v0_;</div>
@@ -424,8 +424,8 @@ $(function() {
 <div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    { <span class="keywordflow">return</span> v3_; }</div>
 <div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160; </div>
 <div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;    <span class="comment">// Support for planar_pixel_reference operator[]</span></div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;    Element at_c_dynamic(std::size_t i)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;    <span class="keyword">auto</span> at_c_dynamic(std::size_t i) <span class="keyword">const</span> -&gt; Element</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;    {</div>
 <div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;        <span class="keywordflow">switch</span> (i)</div>
 <div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;        {</div>
 <div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;        <span class="keywordflow">case</span> 0: <span class="keywordflow">return</span> v0_;</div>
@@ -556,8 +556,8 @@ $(function() {
 <div class="line"><a name="l00527"></a><span class="lineno">  527</span>&#160;    }</div>
 <div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160; </div>
 <div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;    <span class="comment">// Support for planar_pixel_reference operator[]</span></div>
-<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;    Element at_c_dynamic(std::size_t i)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;    <span class="keyword">auto</span> at_c_dynamic(std::size_t i) <span class="keyword">const</span> -&gt; Element</div>
+<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;    {</div>
 <div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;        <span class="keywordflow">switch</span> (i)</div>
 <div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;        {</div>
 <div class="line"><a name="l00534"></a><span class="lineno">  534</span>&#160;        <span class="keywordflow">case</span> 0: <span class="keywordflow">return</span> v0_;</div>
@@ -698,11 +698,12 @@ $(function() {
 <div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160; </div>
 <div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="agroup___packed_channel_reference_model_html_ga70de3c85964650c16afcc42c02bd5df9"><div class="ttname"><a href="group___packed_channel_reference_model.html#ga70de3c85964650c16afcc42c02bd5df9">std::swap</a></div><div class="ttdeci">void swap(boost::gil::packed_channel_reference&lt; BF, FB, NB, M &gt; const x, R &amp;y)</div><div class="ttdoc">swap for packed_channel_reference</div><div class="ttdef"><b>Definition:</b> channel.hpp:529</div></div>
+<div class="ttc" id="agroup___packed_channel_reference_model_html_ga70de3c85964650c16afcc42c02bd5df9"><div class="ttname"><a href="group___packed_channel_reference_model.html#ga70de3c85964650c16afcc42c02bd5df9">std::swap</a></div><div class="ttdeci">void swap(boost::gil::packed_channel_reference&lt; BF, FB, NB, M &gt; const x, R &amp;y)</div><div class="ttdoc">swap for packed_channel_reference</div><div class="ttdef"><b>Definition:</b> channel.hpp:583</div></div>
+<div class="ttc" id="anamespaceboost_html"><div class="ttname"><a href="namespaceboost.html">boost</a></div><div class="ttdoc">defined(BOOST_NO_CXX17_HDR_MEMORY_RESOURCE)</div><div class="ttdef"><b>Definition:</b> algorithm.hpp:36</div></div>
+<div class="ttc" id="agroup___color_base_algorithm_semantic_at_c_html_ga2c1a39c87886b4f533e13e459cfe6170"><div class="ttname"><a href="group___color_base_algorithm_semantic_at_c.html#ga2c1a39c87886b4f533e13e459cfe6170">boost::gil::semantic_at_c</a></div><div class="ttdeci">auto semantic_at_c(const ColorBase &amp;p) -&gt; typename kth_semantic_element_const_reference_type&lt; ColorBase, K &gt;::type</div><div class="ttdoc">A constant accessor to the K-th semantic element of a color base.</div><div class="ttdef"><b>Definition:</b> color_base_algorithm.hpp:133</div></div>
 <div class="ttc" id="astructboost_1_1gil_1_1element__const__reference__type_html"><div class="ttname"><a href="structboost_1_1gil_1_1element__const__reference__type.html">boost::gil::element_const_reference_type</a></div><div class="ttdoc">Specifies the return type of the constant element accessor at_c of a homogeneous color base.</div><div class="ttdef"><b>Definition:</b> color_base.hpp:41</div></div>
 <div class="ttc" id="agroup___color_base_model_homogeneous_html_gaa6cde48827fe3e9997683c68cad7ac62"><div class="ttname"><a href="group___color_base_model_homogeneous.html#gaa6cde48827fe3e9997683c68cad7ac62">boost::gil::at_c</a></div><div class="ttdeci">auto at_c(const detail::homogeneous_color_base&lt; E, L, N &gt; &amp;p) -&gt; typename std::add_lvalue_reference&lt; typename std::add_const&lt; E &gt;::type &gt;::type</div><div class="ttdoc">Provides constant access to the K-th element, in physical order.</div><div class="ttdef"><b>Definition:</b> color_base.hpp:642</div></div>
 <div class="ttc" id="astructboost_1_1gil_1_1element__reference__type_html"><div class="ttname"><a href="structboost_1_1gil_1_1element__reference__type.html">boost::gil::element_reference_type</a></div><div class="ttdoc">Specifies the return type of the mutable element accessor at_c of a homogeneous color base.</div><div class="ttdef"><b>Definition:</b> color_base.hpp:40</div></div>
-<div class="ttc" id="agroup___color_base_algorithm_semantic_at_c_html_ga5aa277c761861eb6c540da0ba2e22d4e"><div class="ttname"><a href="group___color_base_algorithm_semantic_at_c.html#ga5aa277c761861eb6c540da0ba2e22d4e">boost::gil::semantic_at_c</a></div><div class="ttdeci">kth_semantic_element_const_reference_type&lt; ColorBase, K &gt;::type semantic_at_c(const ColorBase &amp;p)</div><div class="ttdoc">A constant accessor to the K-th semantic element of a color base.</div><div class="ttdef"><b>Definition:</b> color_base_algorithm.hpp:133</div></div>
      <!-- HTML footer for doxygen 1.8.13-->
      <!-- start footer part -->
      <hr class="footer"/>

@@ -66,7 +66,7 @@ $(function() {
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;type_traits&gt;</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">namespace </span>boost{ <span class="keyword">namespace </span>gil {</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceboost.html">boost</a>{ <span class="keyword">namespace </span>gil {</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Reader, <span class="keyword">typename</span> Image&gt;</div>
@@ -82,7 +82,7 @@ $(function() {
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    &gt;::type* <span class="comment">/*dummy*/</span> = <span class="keyword">nullptr</span>)</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;{</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    reader.init_image(img, reader._settings);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    reader.apply(<a class="code" href="group___image_model.html#ga633557dbbff2d21c784b73412b47bb38">view</a>(img));</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    reader.apply(<a class="code" href="group___image_model.html#gae885a4a33370b2c78aa5584ad0290371">view</a>(img));</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> Device, <span class="keyword">typename</span> Image, <span class="keyword">typename</span> ColorConverter, <span class="keyword">typename</span> FormatTag&gt;</div>
@@ -266,8 +266,9 @@ $(function() {
 <div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160; </div>
 <div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="anamespaceboost_html"><div class="ttname"><a href="namespaceboost.html">boost</a></div><div class="ttdoc">defined(BOOST_NO_CXX17_HDR_MEMORY_RESOURCE)</div><div class="ttdef"><b>Definition:</b> algorithm.hpp:36</div></div>
 <div class="ttc" id="agroup___i_o_html_ga48e4b8fecad8dd6a535eb8ff3f426a4c"><div class="ttname"><a href="group___i_o.html#ga48e4b8fecad8dd6a535eb8ff3f426a4c">boost::gil::read_and_convert_image</a></div><div class="ttdeci">void read_and_convert_image(Reader &amp;reader, Image &amp;img, typename std::enable_if&lt; mp11::mp_and&lt; detail::is_reader&lt; Reader &gt;, is_format_tag&lt; typename Reader::format_tag_t &gt; &gt;::value &gt;::type *=nullptr)</div><div class="ttdoc">Reads and color-converts an image. Image memory is allocated.</div><div class="ttdef"><b>Definition:</b> read_and_convert_image.hpp:32</div></div>
-<div class="ttc" id="agroup___image_model_html_ga633557dbbff2d21c784b73412b47bb38"><div class="ttname"><a href="group___image_model.html#ga633557dbbff2d21c784b73412b47bb38">boost::gil::view</a></div><div class="ttdeci">const image&lt; Pixel, IsPlanar, Alloc &gt;::view_t &amp; view(image&lt; Pixel, IsPlanar, Alloc &gt; &amp;img)</div><div class="ttdoc">Returns the non-constant-pixel view of an image.</div><div class="ttdef"><b>Definition:</b> image.hpp:549</div></div>
+<div class="ttc" id="agroup___image_model_html_gae885a4a33370b2c78aa5584ad0290371"><div class="ttname"><a href="group___image_model.html#gae885a4a33370b2c78aa5584ad0290371">boost::gil::view</a></div><div class="ttdeci">auto view(image&lt; Pixel, IsPlanar, Alloc &gt; &amp;img) -&gt; typename image&lt; Pixel, IsPlanar, Alloc &gt;::view_t const &amp;</div><div class="ttdoc">Returns the non-constant-pixel view of an image.</div><div class="ttdef"><b>Definition:</b> image.hpp:565</div></div>
      <!-- HTML footer for doxygen 1.8.13-->
      <!-- start footer part -->
      <hr class="footer"/>

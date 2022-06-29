@@ -64,20 +64,20 @@ $(function() {
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">namespace </span>boost { <span class="keyword">namespace </span>gil {</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceboost.html">boost</a> { <span class="keyword">namespace </span>gil {</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> SrcKeyType&gt;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;std::map&lt;SrcKeyType, SrcKeyType&gt; histogram_equalization(histogram&lt;SrcKeyType&gt; <span class="keyword">const</span>&amp; src_hist)</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> SrcKeyType&gt;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">auto</span> histogram_equalization(histogram&lt;SrcKeyType&gt; <span class="keyword">const</span>&amp; src_hist)</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    -&gt; std::map&lt;SrcKeyType, SrcKeyType&gt;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;{</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    histogram&lt;SrcKeyType&gt; dst_hist;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordflow">return</span> histogram_equalization(src_hist, dst_hist);</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> SrcKeyType, <span class="keyword">typename</span> DstKeyType&gt;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;std::map&lt;SrcKeyType, DstKeyType&gt;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    histogram_equalization(histogram&lt;SrcKeyType&gt; <span class="keyword">const</span>&amp; src_hist, histogram&lt;DstKeyType&gt;&amp; dst_hist)</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keyword">auto</span> histogram_equalization(histogram&lt;SrcKeyType&gt; <span class="keyword">const</span>&amp; src_hist, histogram&lt;DstKeyType&gt;&amp; dst_hist)</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    -&gt; std::map&lt;SrcKeyType, DstKeyType&gt;</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;{</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    static_assert(</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        std::is_integral&lt;SrcKeyType&gt;::value &amp;&amp;</div>
@@ -133,13 +133,13 @@ $(function() {
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; channels; i++)</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    {</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        histogram&lt;source_channel_t&gt; h;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        fill_histogram(<a class="code" href="group___image_view_transformations_nth_channel.html#gad976e8c51016d9cdbb47d57ab2ce8717">nth_channel_view</a>(src_view, i), h, bin_width, <span class="keyword">false</span>, <span class="keyword">false</span>, mask, src_mask);</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        fill_histogram(<a class="code" href="group___image_view_transformations_nth_channel.html#ga6942a8b6604332ef077d463c5c34b41e">nth_channel_view</a>(src_view, i), h, bin_width, <span class="keyword">false</span>, <span class="keyword">false</span>, mask, src_mask);</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        h.normalize();</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        <span class="keyword">auto</span> h2 = cumulative_histogram(h);</div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        <span class="keywordflow">for</span> (std::ptrdiff_t src_y = 0; src_y &lt; height; ++src_y)</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        {</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;            <span class="keyword">auto</span> src_it = <a class="code" href="group___image_view_transformations_nth_channel.html#gad976e8c51016d9cdbb47d57ab2ce8717">nth_channel_view</a>(src_view, i).row_begin(src_y);</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;            <span class="keyword">auto</span> dst_it = <a class="code" href="group___image_view_transformations_nth_channel.html#gad976e8c51016d9cdbb47d57ab2ce8717">nth_channel_view</a>(dst_view, i).row_begin(src_y);</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;            <span class="keyword">auto</span> src_it = <a class="code" href="group___image_view_transformations_nth_channel.html#ga6942a8b6604332ef077d463c5c34b41e">nth_channel_view</a>(src_view, i).row_begin(src_y);</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;            <span class="keyword">auto</span> dst_it = <a class="code" href="group___image_view_transformations_nth_channel.html#ga6942a8b6604332ef077d463c5c34b41e">nth_channel_view</a>(dst_view, i).row_begin(src_y);</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;            <span class="keywordflow">for</span> (std::ptrdiff_t src_x = 0; src_x &lt; width; ++src_x)</div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;            {</div>
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;                <span class="keywordflow">if</span> (mask &amp;&amp; !src_mask[src_y][src_x])</div>
@@ -156,7 +156,8 @@ $(function() {
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160; </div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="agroup___image_view_transformations_nth_channel_html_gad976e8c51016d9cdbb47d57ab2ce8717"><div class="ttname"><a href="group___image_view_transformations_nth_channel.html#gad976e8c51016d9cdbb47d57ab2ce8717">boost::gil::nth_channel_view</a></div><div class="ttdeci">nth_channel_view_type&lt; View &gt;::type nth_channel_view(const View &amp;src, int n)</div><div class="ttdef"><b>Definition:</b> image_view_factory.hpp:418</div></div>
+<div class="ttc" id="anamespaceboost_html"><div class="ttname"><a href="namespaceboost.html">boost</a></div><div class="ttdoc">defined(BOOST_NO_CXX17_HDR_MEMORY_RESOURCE)</div><div class="ttdef"><b>Definition:</b> algorithm.hpp:36</div></div>
+<div class="ttc" id="agroup___image_view_transformations_nth_channel_html_ga6942a8b6604332ef077d463c5c34b41e"><div class="ttname"><a href="group___image_view_transformations_nth_channel.html#ga6942a8b6604332ef077d463c5c34b41e">boost::gil::nth_channel_view</a></div><div class="ttdeci">nth_channel_view_type&lt; View &gt;::type nth_channel_view(View const &amp;src, int n)</div><div class="ttdef"><b>Definition:</b> image_view_factory.hpp:448</div></div>
      <!-- HTML footer for doxygen 1.8.13-->
      <!-- start footer part -->
      <hr class="footer"/>

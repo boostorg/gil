@@ -64,7 +64,7 @@ $(function() {
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;type_traits&gt;</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">namespace </span>boost { <span class="keyword">namespace </span>gil {</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceboost.html">boost</a> { <span class="keyword">namespace </span>gil {</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> SrcP, <span class="keyword">typename</span> DstP&gt;</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">struct </span>channel_premultiply</div>
@@ -79,7 +79,7 @@ $(function() {
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="comment">// TODO: Explain why &#39;channel&#39; input paramater is not used, or used as tag only.</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="comment">// @todo: need to do a &quot;channel_convert&quot; too, in case the channel types aren&#39;t the same?</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <a class="code" href="group___color_base_algorithm_color.html#gab2d1dda637cb2b7c32cc87f199ea1dc0">get_color</a>(dst_, Channel()) = <a class="code" href="group___channel_multiply_algorithm.html#ga0af81efbbb77846afe2570f242d2b974">channel_multiply</a>(<a class="code" href="group___color_base_algorithm_color.html#gab2d1dda637cb2b7c32cc87f199ea1dc0">get_color</a>(src_,Channel()), alpha_or_max(src_));</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <a class="code" href="group___color_base_algorithm_color.html#ga48e39ea584738c68b71b20c2c79281ae">get_color</a>(dst_, Channel()) = <a class="code" href="group___channel_multiply_algorithm.html#ga42b36d9931aba011f853bb6104751a1c">channel_multiply</a>(<a class="code" href="group___color_base_algorithm_color.html#ga48e39ea584738c68b71b20c2c79281ae">get_color</a>(src_,Channel()), alpha_or_max(src_));</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    }</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    SrcP <span class="keyword">const</span> &amp; src_;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    DstP &amp; dst_;</div>
@@ -90,7 +90,7 @@ $(function() {
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> SrcP, <span class="keyword">typename</span> DstP&gt;</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordtype">void</span> assign_alpha_if(std::true_type, SrcP <span class="keyword">const</span> &amp;src, DstP &amp;dst)</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <a class="code" href="group___color_base_algorithm_color.html#gab2d1dda637cb2b7c32cc87f199ea1dc0">get_color</a>(dst,alpha_t()) = alpha_or_max(src);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <a class="code" href="group___color_base_algorithm_color.html#ga48e39ea584738c68b71b20c2c79281ae">get_color</a>(dst,alpha_t()) = alpha_or_max(src);</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    }</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> SrcP, <span class="keyword">typename</span> DstP&gt;</div>
@@ -147,21 +147,23 @@ $(function() {
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keyword">using</span> add_ref_t = <span class="keyword">typename</span> SrcView::template add_deref&lt;deref_t&gt;;</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keyword">using</span> type = <span class="keyword">typename</span> add_ref_t::type; <span class="comment">// the color converted view type</span></div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keyword">static</span> type make(<span class="keyword">const</span> SrcView&amp; sv) { <span class="keywordflow">return</span> add_ref_t::make(sv, deref_t()); }</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keyword">static</span> type make(SrcView <span class="keyword">const</span>&amp; sv) { <span class="keywordflow">return</span> add_ref_t::make(sv, deref_t()); }</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;};</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> DstP, <span class="keyword">typename</span> View&gt; <span class="keyword">inline</span></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="keyword">typename</span> premultiplied_view_type&lt;View,DstP&gt;::type premultiply_view(<span class="keyword">const</span> View&amp; src)</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;{</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keywordflow">return</span> premultiplied_view_type&lt;View,DstP&gt;::make(src);</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;}</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;}} <span class="comment">// namespace boost::gil</span></div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> DstP, <span class="keyword">typename</span> View&gt;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="keyword">inline</span> <span class="keyword">auto</span> premultiply_view(View <span class="keyword">const</span>&amp; src)</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    -&gt; <span class="keyword">typename</span> premultiplied_view_type&lt;View,DstP&gt;::type</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;{</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keywordflow">return</span> premultiplied_view_type&lt;View,DstP&gt;::make(src);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;}</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;}} <span class="comment">// namespace boost::gil</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="agroup___color_base_algorithm_color_html_gab2d1dda637cb2b7c32cc87f199ea1dc0"><div class="ttname"><a href="group___color_base_algorithm_color.html#gab2d1dda637cb2b7c32cc87f199ea1dc0">boost::gil::get_color</a></div><div class="ttdeci">color_element_reference_type&lt; ColorBase, Color &gt;::type get_color(ColorBase &amp;cb, Color=Color())</div><div class="ttdoc">Mutable accessor to the element associated with a given color name.</div><div class="ttdef"><b>Definition:</b> color_base_algorithm.hpp:190</div></div>
-<div class="ttc" id="agroup___channel_multiply_algorithm_html_ga0af81efbbb77846afe2570f242d2b974"><div class="ttname"><a href="group___channel_multiply_algorithm.html#ga0af81efbbb77846afe2570f242d2b974">boost::gil::channel_multiply</a></div><div class="ttdeci">channel_traits&lt; Channel &gt;::value_type channel_multiply(Channel a, Channel b)</div><div class="ttdoc">A function multiplying two channels. result = a * b / max_value.</div><div class="ttdef"><b>Definition:</b> channel_algorithm.hpp:539</div></div>
+<div class="ttc" id="agroup___color_base_algorithm_color_html_ga48e39ea584738c68b71b20c2c79281ae"><div class="ttname"><a href="group___color_base_algorithm_color.html#ga48e39ea584738c68b71b20c2c79281ae">boost::gil::get_color</a></div><div class="ttdeci">auto get_color(ColorBase &amp;cb, Color=Color()) -&gt; typename color_element_reference_type&lt; ColorBase, Color &gt;::type</div><div class="ttdoc">Mutable accessor to the element associated with a given color name.</div><div class="ttdef"><b>Definition:</b> color_base_algorithm.hpp:190</div></div>
+<div class="ttc" id="anamespaceboost_html"><div class="ttname"><a href="namespaceboost.html">boost</a></div><div class="ttdoc">defined(BOOST_NO_CXX17_HDR_MEMORY_RESOURCE)</div><div class="ttdef"><b>Definition:</b> algorithm.hpp:36</div></div>
+<div class="ttc" id="agroup___channel_multiply_algorithm_html_ga42b36d9931aba011f853bb6104751a1c"><div class="ttname"><a href="group___channel_multiply_algorithm.html#ga42b36d9931aba011f853bb6104751a1c">boost::gil::channel_multiply</a></div><div class="ttdeci">auto channel_multiply(Channel a, Channel b) -&gt; typename channel_traits&lt; Channel &gt;::value_type</div><div class="ttdoc">A function multiplying two channels. result = a * b / max_value.</div><div class="ttdef"><b>Definition:</b> channel_algorithm.hpp:561</div></div>
      <!-- HTML footer for doxygen 1.8.13-->
      <!-- start footer part -->
      <hr class="footer"/>
