@@ -160,7 +160,7 @@ $(function() {
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;}</div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160; </div>
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> CS&gt;</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;BOOST_FORCEINLINE </div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;BOOST_FORCEINLINE</div>
 <div class="line"><a name="l00159"></a><span class="lineno"><a class="line" href="group___s_t_l_optimizations.html#gadbec04ab24b421c4eb9bb94ba8ab0121">  159</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="group___s_t_l_optimizations.html#gafd0498b6df319f2a9dc7668c723336f6">copy</a>(<span class="keyword">const</span> <a class="code" href="structboost_1_1gil_1_1pixel.html">boost::gil::pixel&lt;T,CS&gt;</a>* first, <span class="keyword">const</span> <a class="code" href="structboost_1_1gil_1_1pixel.html">boost::gil::pixel&lt;T,CS&gt;</a>* last,</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;     <a class="code" href="structboost_1_1gil_1_1pixel.html">boost::gil::pixel&lt;T,CS&gt;</a>* dst) -&gt; <a class="code" href="structboost_1_1gil_1_1pixel.html">boost::gil::pixel&lt;T,CS&gt;</a>*</div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;{</div>
@@ -724,14 +724,14 @@ $(function() {
 <div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160; </div>
 <div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> It1, <span class="keyword">typename</span> It2&gt;</div>
 <div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;BOOST_FORCEINLINE</div>
-<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;<span class="keywordtype">void</span> uninitialized_copy_aux(It1 first1, It1 last1, It2 first2, It2 last2, mixed_to_interleaved_type)</div>
+<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;<span class="keywordtype">void</span> uninitialized_copy_aux(It1 first1, It1 last1, It2 first2, It2, mixed_to_interleaved_type)</div>
 <div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;{</div>
 <div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;    std::uninitialized_copy(first1, last1, first2);</div>
 <div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;}</div>
 <div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160; </div>
 <div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> It1, <span class="keyword">typename</span> It2&gt;</div>
 <div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160;BOOST_FORCEINLINE</div>
-<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;<span class="keywordtype">void</span> uninitialized_copy_aux(It1 first1, It1 last1, It2 first2, It2 last2,</div>
+<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;<span class="keywordtype">void</span> uninitialized_copy_aux(It1 first1, It1, It2 first2, It2 last2,</div>
 <div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;interleaved_to_planar_type)</div>
 <div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160;{</div>
 <div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;    default_construct_aux(first2, last2, std::true_type());</div>
