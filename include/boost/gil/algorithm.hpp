@@ -155,7 +155,7 @@ auto copy(
 /// \ingroup STLOptimizations
 /// \brief Copy when both src and dst are interleaved and of the same type can be just memmove
 template<typename T, typename CS>
-BOOST_FORCEINLINE 
+BOOST_FORCEINLINE
 auto copy(const boost::gil::pixel<T,CS>* first, const boost::gil::pixel<T,CS>* last,
      boost::gil::pixel<T,CS>* dst) -> boost::gil::pixel<T,CS>*
 {
@@ -797,7 +797,7 @@ void uninitialized_copy_aux(It1 first1, It1 last1, It2 first2, It2 last2, planar
 /// std::uninitialized_copy for interleaved or mixed(planar into interleaved) iterators
 template <typename It1, typename It2>
 BOOST_FORCEINLINE
-void uninitialized_copy_aux(It1 first1, It1 last1, It2 first2, It2 last2, mixed_to_interleaved_type)
+void uninitialized_copy_aux(It1 first1, It1 last1, It2 first2, It2, mixed_to_interleaved_type)
 {
     std::uninitialized_copy(first1, last1, first2);
 }
@@ -805,7 +805,7 @@ void uninitialized_copy_aux(It1 first1, It1 last1, It2 first2, It2 last2, mixed_
 /// std::uninitialized_copy for interleaved to planar iterators
 template <typename It1, typename It2>
 BOOST_FORCEINLINE
-void uninitialized_copy_aux(It1 first1, It1 last1, It2 first2, It2 last2,
+void uninitialized_copy_aux(It1 first1, It1, It2 first2, It2 last2,
 interleaved_to_planar_type)
 {
     default_construct_aux(first2, last2, std::true_type());
