@@ -6,6 +6,8 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 
+#include "core/point/test_fixture.hpp"
+
 #include <boost/gil/point.hpp>
 #include <boost/gil/extension/rasterization/line.hpp>
 
@@ -19,16 +21,6 @@
 #include <vector>
 
 namespace gil = boost::gil;
-
-// TODO move into separate file to make it accessible also for other tests
-// operator<< overload is needed to use points directly with boost test macros
-namespace boost { namespace gil {
-std::ostream& operator<<(std::ostream& os, point_t const& p)
-{
-    os << "{x=" << p.x << ", y=" << p.y << "}";
-    return os;
-}
-}} // namespace boost::gil
 
 using line_type = std::vector<gil::point_t>;
 
