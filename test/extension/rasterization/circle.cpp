@@ -1,4 +1,3 @@
-// Boost.GIL (Generic Image Library) - tests
 //
 // Copyright 2020 Olzhas Zhumabek <anonymous.from.applecity@gmail.com>
 //
@@ -7,9 +6,13 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 
+#include <boost/gil/point.hpp>
+#include <boost/gil/extension/rasterization/circle.hpp>
+
 #include <boost/core/lightweight_test.hpp>
-#include "boost/gil/extension/rasterization/circle.hpp"
-#include <cstddef>
+
+#include <cmath>
+#include <cstdint>
 #include <vector>
 
 namespace gil = boost::gil;
@@ -17,7 +20,7 @@ namespace gil = boost::gil;
 template <typename Rasterizer>
 void test_rasterizer_follows_equation(Rasterizer rasterizer)
 {
-    const std::ptrdiff_t radius = rasterizer.radius;
+    std::ptrdiff_t const radius = rasterizer.radius;
     std::vector<gil::point_t> circle_points(rasterizer.point_count());
     std::ptrdiff_t const r_squared = radius * radius;
     rasterizer(circle_points.begin());
@@ -28,9 +31,9 @@ void test_rasterizer_follows_equation(Rasterizer rasterizer)
         first_octant[octant_index] = circle_points[i];
     }
 
-    for (const auto& point : first_octant)
+    for (auto const& point : first_octant)
     {
-        double y_exact = std::sqrt(r_squared - point.x * point.x);
+        double const y_exact = std::sqrt(r_squared - point.x * point.x);
         std::ptrdiff_t lower_result = static_cast<std::ptrdiff_t>(std::floor(y_exact));
         std::ptrdiff_t upper_result = static_cast<std::ptrdiff_t>(std::ceil(y_exact));
         BOOST_TEST(point.y >= lower_result && point.y <= upper_result);

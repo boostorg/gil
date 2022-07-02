@@ -8,6 +8,7 @@
 #
 import testing ;
 
+run apply_rasterizer.cpp ;
 run line.cpp ;
 run circle.cpp ;
 run ellipse.cpp ;

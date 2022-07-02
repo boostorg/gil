@@ -1,4 +1,3 @@
-// Boost.GIL (Generic Image Library) - tests
 //
 // Copyright 2020 Olzhas Zhumabek <anonymous.from.applecity@gmail.com>
 //
@@ -7,24 +6,24 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#include <algorithm>
-#include <boost/core/lightweight_test.hpp>
-#include "boost/gil/point.hpp"
-#include "boost/gil/extension/rasterization/line.hpp"
+#include <boost/gil/point.hpp>
+#include <boost/gil/extension/rasterization/line.hpp>
 
+#include <boost/core/lightweight_test.hpp>
+
+#include <algorithm>
 #include <cmath>
-#include <cstddef>
+#include <cstdint>
 #include <iterator>
 #include <random>
 #include <vector>
 
 namespace gil = boost::gil;
 
-namespace boost
-{
-namespace gil
-{
-std::ostream& operator<<(std::ostream& os, const point_t p)
+// TODO move into separate file to make it accessible also for other tests
+// operator<< overload is needed to use points directly with boost test macros
+namespace boost { namespace gil {
+std::ostream& operator<<(std::ostream& os, point_t const& p)
 {
     os << "{x=" << p.x << ", y=" << p.y << "}";
     return os;
@@ -55,7 +54,7 @@ line_type create_line(endpoints points)
     return forward_line;
 }
 
-void test_start_end(const line_type& line_points, endpoints points)
+void test_start_end(line_type const& line_points, endpoints points)
 {
     BOOST_TEST_EQ(line_points.front(), points.start);
     BOOST_TEST_EQ(line_points.back(), points.end);
