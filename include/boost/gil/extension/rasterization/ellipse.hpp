@@ -183,7 +183,7 @@ struct midpoint_ellipse_rasterizer
     template<typename View, typename Pixel>
     void operator()(View& view, Pixel const& pixel) const
     {
-        draw_curve(view, obtain_trajectory());
+        draw_curve(view, pixel, obtain_trajectory());
     }
 
     point<unsigned int> center;
