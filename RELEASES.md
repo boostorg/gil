@@ -8,20 +8,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 NOTICE: We are planning BREAKING switch to C++17 as minimum required C++ language version in one or two releases after Boost 1.80 ([Discussion #676](https://github.com/boostorg/gil/discussions/676))
 
 ### Added
+- GSoC 2020: Added Perona-Malik anisotropic diffusion algorithm [[PR #500](https://github.com/boostorg/gil/pull/500))
+- GSoC 2020: Added histogram class and related functionality ([PR #499](https://github.com/boostorg/gil/pull/499))
+- GSoC 2020: Added histogram equalization feature ([PR #514](https://github.com/boostorg/gil/pull/514))
+- GSoC 2020: Added histogram matching algorithm ([PR #515](https://github.com/boostorg/gil/pull/515))
+- GSoC 2020: Added ability to stack images either horizontally (`hstack`) or vertically (`vstack`) ([PR #506](https://github.com/boostorg/gil/pull/506))
+- GSoC 2020: Added adaptive histogram equalization algorithm ([PR #516](https://github.com/boostorg/gil/pull/516))
+- GSoC 2020: Added Standard Hough Transform and circle rasterization ([PR #512](https://github.com/boostorg/gil/pull/512))
+- GSoC 2020: Added Bresenham's algorithm for line rasterization ([PR #512](https://github.com/boostorg/gil/pull/512))
+- GSoC 2021: Added rotation of image by arbitrary angle around its center ([PR #565](https://github.com/boostorg/gil/pull/565))
+- GSoC 2021: Added rasterization support for ellipse based on "An Efficient Ellipse-Drawing Algorithm" by Jerry Van Aken ([PR #585](https://github.com/boostorg/gil/pull/585))
 - Added `image` constructor from compatible view ([PR #520](https://github.com/boostorg/gil/pull/520))
 - Added inverse function for affine `matrix3x2` ([PR #527](https://github.com/boostorg/gil/pull/527))
-- Added Perona-Malik anisotropic diffusion algorithm [[PR #500](https://github.com/boostorg/gil/pull/500))
-- GSoC 2020: Add histogram class and related functionality ([PR #499](https://github.com/boostorg/gil/pull/499))
-- GSoC 2020: Add histogram equalization feature ([PR #514](https://github.com/boostorg/gil/pull/514))
-- GSoC 2020: Add histogram matching algorithm ([PR #515](https://github.com/boostorg/gil/pull/515))
-- Added ability to stack images either horizontally (`hstack`) or vertically (`vstack`) ([PR #506](https://github.com/boostorg/gil/pull/506))
-- Added adaptive histogram equalization algorithm ([PR #516](https://github.com/boostorg/gil/pull/516))
-- Added Standard Hough Transform and circle rasterization ([PR #512](https://github.com/boostorg/gil/pull/512))
-- Added Bresenham's algorithm for line rasterization ([PR #512](https://github.com/boostorg/gil/pull/512))
 - Added standard morphological transformations ([PR #541](https://github.com/boostorg/gil/pull/541))
-- Added rotation of image by arbitrary angle around its center ([PR #565](https://github.com/boostorg/gil/pull/565))
-- Added rasterization support for ellipse based on "An Efficient Ellipse-Drawing Algorithm" by Jerry Van Aken ([PR #585](https://github.com/boostorg/gil/pull/585))
 - Added `for_each_pixel` overload for `any_image` ([PR #648](https://github.com/boostorg/gil/pull/648))
+- Added C++17 polymorphic memory resource typedefs for `image` class ([PR #529](https://github.com/boostorg/gil/pull/529))
 
 ### Changed
 - BREAKING: The required minimum C++ version is changed from from C++11 to C++14.
@@ -31,20 +32,25 @@ NOTICE: We are planning BREAKING switch to C++17 as minimum required C++ languag
 - BREAKING: `any_color_converted_view()` is deprecated and will be removed in the next release.
   Use `color_converted_view()` instead, which provides the same feature.
 - BREAKING: `apply_operation` for `any_image` is deprecated and will be removed in the next release.
-  Use `variant2::visit` instead, which provides the same feature.
+  Use `variant2::visit` instead, which provides the same feature. ([PR #656](https://github.com/boostorg/gil/pull/656))
 - documentation: Display that GIL is a header-only library
 - Moved numeric extension to core ([PR #573](https://github.com/boostorg/gil/pull/573))
-- Added support for C++17's `<filesystem>` ([PR #636](https://github.com/boostorg/gil/pull/636)).
+- Added support for C++17's `<filesystem>` ([PR #636](https://github.com/boostorg/gil/pull/636))
   The availability of the ``std::filesystem`` is detected automatically,
   unless the `BOOST_GIL_IO_USE_BOOST_FILESYSTEM` macro is defined that forces
   the preference of the Boost.Filesystem.
 - Renamed `pixel_multiply_t` to `pixel_multiplies_t` and `pixel_divide_t` to `pixel_divides_t`([PR #655](https://github.com/boostorg/gil/pull/655))
+- Renamed `io/dynamic_io_new.hpp` to `io/detail/dynamic.hpp` ([PR #653](https://github.com/boostorg/gil/pull/653))
+- Moved function `construct_method` into `boost::gil::detail` namespace as it was only used by other implementation details ([PR #653](https://github.com/boostorg/gil/pull/653))
+- Made `packed_pixel` trivially copyable and assignable ([PR #679](https://github.com/boostorg/gil/pull/679))
+- Replace deprecated libtiff v4.3 typedefs with C99 fixed-size integers ([#685](https://github.com/boostorg/gil/pull/685))
 
 ### Removed
 - BREAKING: Removed support for GCC 5 ([PR #572](https://github.com/boostorg/gil/pull/572))
 - Removed deprecated.hpp ([PR #627](https://github.com/boostorg/gil/pull/627))
 
 ### Fixed
+- Fixed conversion from RGB to HSL ([PR #505](https://github.com/boostorg/gil/pull/505))
 - Fixed conversion from RGB to signed CMYK ([PR #522](https://github.com/boostorg/gil/pull/522))
 - Removed unnecessary numeric cast in hsv.hpp ([PR #530](https://github.com/boostorg/gil/pull/530))
 - Fixed default constructor for `homogeneous_color_base` for reference pixel elements ([PR #542](https://github.com/boostorg/gil/pull/542))
@@ -56,12 +62,13 @@ NOTICE: We are planning BREAKING switch to C++17 as minimum required C++ languag
 - Fixed `convolve_2d` for images with `float32_t` channel model ([PR #577](https://github.com/boostorg/gil/pull/577))
 - Fixed `for_each_pixel` for non-1d iterable views ([PR #621](https://github.com/boostorg/gil/pull/621))
 - Fixed: `is_equal_to_sixteen` in PNG I/O was less-than test ([PR #650](https://github.com/boostorg/gil/pull/650))
-- Re-allow `devicen_t` with two components ([PR #654](https://github.com/boostorg/gil/pull/654)).
-  It was unintentionally removed in Boost 1.72.
+- Re-allow `devicen_t` with two components ([PR #654](https://github.com/boostorg/gil/pull/654))
+  It was unintentionally removed in Boost 1.72
+- Fixed memory leak in `image` class for empty dimensions ([PR #649](https://github.com/boostorg/gil/pull/649))
 
 ### Acknowledgements
 
-Samuel Debionne, Nicolas Herry, Gaurav Kumar, Marco Langer, Pranam Lashkari, Mateusz Łoskot, Debabrata Mandal, Felix Morgner, Harshit Pant, Dirk Stolle, Prathamesh Tagore, Olzhas Zhumabek
+Cypre55, Samuel Debionne, Mike-Devel, Edward Diener, Peter Dimov, Omar Emara, Dhruva Gole, Nicolas Herry, Eugene K, Avinal Kumar, Gaurav Kumar, Marco Langer, Pranam Lashkari, Mateusz Łoskot, Giovanni Mascellani, Debabrata Mandal, Gopi Krishna Menon, René Ferdinand Rivera Morell, Felix Morgner, Harshit Pant, Paul92, André Schröder, Scramjet911, Siddharth, Dirk Stolle, Prathamesh Tagore, theroyn, Olzhas Zhumabek
 
 ## [1.75.0] - 2020-12-09
 
