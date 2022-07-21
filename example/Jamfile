@@ -15,7 +15,6 @@ project
     : # requirements
     ;
 
-# TODO: Add missing examples
 
 local sources =
     adaptive_histogram_equalization.cpp
