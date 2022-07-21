@@ -6,9 +6,7 @@
 # Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
 
-import ac ;
 import regex ;
-import testing ;
 
 using libjpeg : : : : true ; # work around bug on master
 using libpng : : : : true ;
