@@ -35,22 +35,22 @@ void test_colors_rgb_to_hsl()
 {
     using color_t = std::tuple<std::uint8_t, std::uint8_t, std::uint8_t, float, float, float>;
     std::vector<color_t> colors = {
-        {0, 0, 0, 0, 0, 0},               // black
-        {255, 255, 255, 0, 0, 1},         // white
-        {255, 0, 0, 0, 1, 0.5},           // red
-        {0, 255, 0, 2 / 6.f, 1, 0.5},     // lime
-        {0, 0, 255, 4 / 6.f, 1, 0.5},     // blue
-        {255, 255, 0, 1 / 6.f, 1, 0.5},   // yellow
-        {0, 255, 255, 3 / 6.f, 1, 0.5},   // cyan
-        {255, 0, 255, 5 / 6.f, 1, 0.5},   // magenta
-        {191, 191, 191, 0, 0, 0.75},      // silver
-        {128, 128, 128, 0, 0, 0.5},       // gray
-        {128, 0, 0, 0, 1, 0.25},          // maroon
-        {128, 128, 0, 1 / 6.f, 1, 0.25},  // olive
-        {0, 128, 0, 2 / 6.f, 1, 0.25},    // green
-        {128, 0, 128, 5 / 6.f, 1, 0.25},  // purple
-        {0, 128, 128, 3 / 6.f, 1, 0.25},  // teal
-        {0, 0, 128, 4 / 6.f, 1, 0.25},    // navy
+        color_t{0, 0, 0, 0, 0, 0},               // black
+        color_t{255, 255, 255, 0, 0, 1},         // white
+        color_t{255, 0, 0, 0, 1, 0.5},           // red
+        color_t{0, 255, 0, 2 / 6.f, 1, 0.5},     // lime
+        color_t{0, 0, 255, 4 / 6.f, 1, 0.5},     // blue
+        color_t{255, 255, 0, 1 / 6.f, 1, 0.5},   // yellow
+        color_t{0, 255, 255, 3 / 6.f, 1, 0.5},   // cyan
+        color_t{255, 0, 255, 5 / 6.f, 1, 0.5},   // magenta
+        color_t{191, 191, 191, 0, 0, 0.75},      // silver
+        color_t{128, 128, 128, 0, 0, 0.5},       // gray
+        color_t{128, 0, 0, 0, 1, 0.25},          // maroon
+        color_t{128, 128, 0, 1 / 6.f, 1, 0.25},  // olive
+        color_t{0, 128, 0, 2 / 6.f, 1, 0.25},    // green
+        color_t{128, 0, 128, 5 / 6.f, 1, 0.25},  // purple
+        color_t{0, 128, 128, 3 / 6.f, 1, 0.25},  // teal
+        color_t{0, 0, 128, 4 / 6.f, 1, 0.25},    // navy
     };
 
     for (auto&& color : colors)
