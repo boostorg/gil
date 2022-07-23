@@ -35,14 +35,14 @@ void test_colors_hsl_to_rgb()
 {
     using color_t = std::tuple<float, float, float, std::uint8_t, std::uint8_t, std::uint8_t>;
     std::vector<color_t> colors = {
-        {0, 0, 0, 0, 0, 0},               // black
-        {0, 0, 1, 255, 255, 255},         // white
-        {0, 1, 0.5, 255, 0, 0},           // red
-        {2 / 6.f, 1, 0.5, 0, 255, 0},     // lime
-        {4 / 6.f, 1, 0.5, 0, 0, 255},     // blue
-        {5 / 6.f, 1, 0.25, 128, 0, 128},  // purple
-        {3 / 6.f, 1, 0.25, 0, 128, 128},  // teal
-        {4 / 6.f, 1, 0.25, 0, 0, 128},    // navy
+        color_t{0, 0, 0, 0, 0, 0},               // black
+        color_t{0, 0, 1, 255, 255, 255},         // white
+        color_t{0, 1, 0.5, 255, 0, 0},           // red
+        color_t{2 / 6.f, 1, 0.5, 0, 255, 0},     // lime
+        color_t{4 / 6.f, 1, 0.5, 0, 0, 255},     // blue
+        color_t{5 / 6.f, 1, 0.25, 128, 0, 128},  // purple
+        color_t{3 / 6.f, 1, 0.25, 0, 128, 128},  // teal
+        color_t{4 / 6.f, 1, 0.25, 0, 0, 128},    // navy
     };
 
     for (auto&& color : colors)
