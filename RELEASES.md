@@ -41,7 +41,7 @@ NOTICE: We are planning BREAKING switch to C++17 as minimum required C++ languag
   the preference of the Boost.Filesystem.
 - Renamed `pixel_multiply_t` to `pixel_multiplies_t` and `pixel_divide_t` to `pixel_divides_t`([PR #655](https://github.com/boostorg/gil/pull/655))
 - Renamed `io/dynamic_io_new.hpp` to `io/detail/dynamic.hpp` ([PR #653](https://github.com/boostorg/gil/pull/653))
-- Moved function `construct_method` into `boost::gil::detail` namespace as it was only used by other implementation details ([PR #653](https://github.com/boostorg/gil/pull/653))
+- Moved function `construct_matched` into `boost::gil::detail` namespace as it was only used by other implementation details ([PR #653](https://github.com/boostorg/gil/pull/653))
 - Made `packed_pixel` trivially copyable and assignable ([PR #679](https://github.com/boostorg/gil/pull/679))
 - Replace deprecated libtiff v4.3 typedefs with C99 fixed-size integers ([#685](https://github.com/boostorg/gil/pull/685))
 
