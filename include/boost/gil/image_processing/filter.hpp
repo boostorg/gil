@@ -124,7 +124,7 @@ void median_filter(SrcView const& src_view, DstView const& dst_view, std::size_t
             src_view.height()
         );
 
-    for (std::size_t channel = 0; channel < extended_view.num_channels(); channel++)
+    for (index_t channel = 0; channel < extended_view.num_channels(); channel++)
     {
         detail::filter_median_impl(
             nth_channel_view(extended_view, channel),
