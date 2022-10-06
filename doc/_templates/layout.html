@@ -51,7 +51,7 @@
     {%- endfor %}
     <script data-url_root="{{ pathto('', 1) }}" id="documentation_options" src="{{ pathto('', 1) }}_static/documentation_options.js"></script>
     <script src="{{ pathto('', 1) }}_static/searchtools.js"></script>
-    <script src={{ pathto('', 1) }}"_static/language_data.js"></script>
+    <script src="{{ pathto('', 1) }}_static/language_data.js"></script>
     {%- if use_opensearch %}
     <link rel="search" type="application/opensearchdescription+xml"
           title="{% trans docstitle=docstitle|e %}Search within {{ docstitle }}{% endtrans %}"
