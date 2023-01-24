@@ -297,9 +297,9 @@ inline void compute_hessian_entries(
 {
     auto sobel_x = generate_dx_sobel();
     auto sobel_y = generate_dy_sobel();
-    detail::convolve_2d(dx, sobel_x, ddxx);
-    detail::convolve_2d(dx, sobel_y, dxdy);
-    detail::convolve_2d(dy, sobel_y, ddyy);
+    convolve_2d<typename OutputView::value_type>(dx, sobel_x, ddxx);
+    convolve_2d<typename OutputView::value_type>(dx, sobel_y, dxdy);
+    convolve_2d<typename OutputView::value_type>(dy, sobel_y, ddyy);
 }
 
 }} // namespace boost::gil

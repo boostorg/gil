@@ -37,7 +37,7 @@ int main()
 
     std::vector<float> v(9, 1.0f / 9.0f);
     detail::kernel_2d<float> kernel(v.begin(), v.size(), 1, 1);
-    detail::convolve_2d(view(img), kernel, view(img_out1));
+    convolve_2d<gray8_pixel_t>(view(img), kernel, view(img_out1));
 
     write_view("out-convolve2d.png", view(img_out1), png_tag{});
 

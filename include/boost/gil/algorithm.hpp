@@ -1,6 +1,7 @@
 //
 // Copyright 2005-2007 Adobe Systems Incorporated
 // Copyright 2021 Pranam Lashkari <plashkari628@gmail.com>
+// Copyright 2021 Prathamesh Tagore <prathameshtagore@gmail.com>
 //
 // Distributed under the Boost Software License, Version 1.0
 // See accompanying file LICENSE_1_0.txt or copy at
@@ -1383,6 +1384,105 @@ auto correlate_pixels_k(
     return dst_begin;
 }
 
+/// \brief 2D cross-correlation with a variable-size kernel
+template
+<
+    typename PixelAccum,
+    typename SrcIterator,
+    typename KernelIterator,
+    typename DstIterator
+>
+inline
+auto correlate_pixels_n_2d(
+    SrcIterator src_begin,
+    std::size_t src_size,
+    KernelIterator kernel_begin,
+    std::size_t kernel_dimension,
+    DstIterator dst_begin)
+    -> DstIterator
+{
+    using src_pixel_ref_t = typename pixel_proxy
+        <
+            typename std::iterator_traits<SrcIterator>::value_type
+        >::type;
+    using dst_pixel_ref_t = typename pixel_proxy
+        <
+            typename std::iterator_traits<DstIterator>::value_type
+        >::type;
+    using kernel_value_t = typename std::iterator_traits<KernelIterator>::value_type;
+
+    PixelAccum accum_zero;
+    pixel_zeros_t<PixelAccum>()(accum_zero);
+    long unsigned int index = 0;
+    std::ptrdiff_t const kernel_size = kernel_dimension * kernel_dimension;
+
+    while (index < src_size - kernel_size + 1)
+    {
+        pixel_assigns_t<PixelAccum, dst_pixel_ref_t>()(
+            std::inner_product(
+                src_begin + index,
+                src_begin + kernel_size + index,
+                kernel_begin,
+                accum_zero,
+                pixel_plus_t<PixelAccum, PixelAccum, PixelAccum>(),
+                pixel_multiplies_scalar_t<src_pixel_ref_t, kernel_value_t, PixelAccum>()),
+            *dst_begin);
+
+        index += kernel_dimension;
+        ++dst_begin;
+    }
+    return dst_begin;
+}
+
+/// \brief 2D cross-correlation with a fix-size kernel
+template
+<
+    std::size_t kernel_dimension,
+    typename PixelAccum,
+    typename SrcIterator,
+    typename KernelIterator,
+    typename DstIterator
+>
+inline
+auto correlate_pixels_k_2d(
+    SrcIterator src_begin,
+    std::size_t src_size,
+    KernelIterator kernel_begin,
+    DstIterator dst_begin)
+    -> DstIterator
+{
+    using src_pixel_ref_t = typename pixel_proxy
+        <
+            typename std::iterator_traits<SrcIterator>::value_type
+        >::type;
+    using dst_pixel_ref_t = typename pixel_proxy
+        <
+            typename std::iterator_traits<DstIterator>::value_type
+        >::type;
+    using kernel_type = typename std::iterator_traits<KernelIterator>::value_type;
+
+    PixelAccum accum_zero;
+    pixel_zeros_t<PixelAccum>()(accum_zero);
+    long unsigned int index = 0;
+    std::ptrdiff_t const kernel_size = kernel_dimension * kernel_dimension;
+
+    while (index < src_size - kernel_size + 1)
+    {
+        pixel_assigns_t<PixelAccum, dst_pixel_ref_t>()(
+            inner_product_k<kernel_size>(
+                src_begin + index,
+                kernel_begin,
+                accum_zero,
+                pixel_plus_t<PixelAccum, PixelAccum, PixelAccum>(),
+                pixel_multiplies_scalar_t<src_pixel_ref_t, kernel_type, PixelAccum>()),
+            *dst_begin);
+
+        index += kernel_dimension;
+        ++dst_begin;
+    }
+    return dst_begin;
+}
+
 /// \brief destination is set to be product of the source and a scalar
 /// \tparam PixelAccum - TODO
 /// \tparam SrcView Models ImageViewConcept
@@ -1424,7 +1524,8 @@ enum class boundary_option
     output_zero,    /// set the output to zero
     extend_padded,  /// assume the source boundaries to be padded already
     extend_zero,    /// assume the source boundaries to be zero
-    extend_constant /// assume the source boundaries to be the boundary value
+    extend_constant, /// assume the source boundaries to be the boundary value
+    extend_reflection /// assumes boundary values as reflection of source row/column pixels
 };
 
 namespace detail

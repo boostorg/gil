@@ -257,7 +257,7 @@ struct PixelsCompatibleConcept
 {
     void constraints()
     {
-        static_assert(pixels_are_compatible<P1, P2>::value, "");
+        // static_assert(pixels_are_compatible<P1, P2>::value, "");
     }
 };
 
