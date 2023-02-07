@@ -5,7 +5,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
+    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Image - Boost.GIL  documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
@@ -17,10 +18,10 @@
           FILE_SUFFIX: '.html'
       };
     </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/searchtools.js"></script>
     <script src="../_static/language_data.js"></script>
@@ -69,15 +70,15 @@
       
     </div>
       
-  <div class="section" id="image">
+  <section id="image">
 <h1>Image</h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#overview" id="id1">Overview</a></li>
-<li><a class="reference internal" href="#models" id="id2">Models</a></li>
+<li><p><a class="reference internal" href="#overview" id="id1">Overview</a></p></li>
+<li><p><a class="reference internal" href="#models" id="id2">Models</a></p></li>
 </ul>
 </div>
-<div class="section" id="overview">
+<section id="overview">
 <h2><a class="toc-backref" href="#id1">Overview</a></h2>
 <p>An image is a container that owns the pixels of a given image view
 It allocates them in its constructor and deletes them in the destructor.
@@ -87,73 +88,73 @@ ranges, not containers. Similarly most GIL algorithms operate on image views
 (which images provide).</p>
 <p>In the most general form images are N-dimensional and satisfy the following
 concept:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">RandomAccessNDImageConcept</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">Img</span><span class="o">&gt;</span> <span class="o">:</span> <span class="n">Regular</span><span class="o">&lt;</span><span class="n">Img</span><span class="o">&gt;</span>
-<span class="p">{</span>
-  <span class="k">typename</span> <span class="n">view_t</span><span class="p">;</span> <span class="n">where</span> <span class="n">MutableRandomAccessNDImageViewConcept</span><span class="o">&lt;</span><span class="n">view_t</span><span class="o">&gt;</span><span class="p">;</span>
-  <span class="k">typename</span> <span class="n">const_view_t</span> <span class="o">=</span> <span class="n">view_t</span><span class="o">::</span><span class="n">const_t</span><span class="p">;</span>
-  <span class="k">typename</span> <span class="n">point_t</span>      <span class="o">=</span> <span class="n">view_t</span><span class="o">::</span><span class="n">point_t</span><span class="p">;</span>
-  <span class="k">typename</span> <span class="n">value_type</span>   <span class="o">=</span> <span class="n">view_t</span><span class="o">::</span><span class="n">value_type</span><span class="p">;</span>
-  <span class="k">typename</span> <span class="n">allocator_type</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span><span class="w"> </span><span class="nc">RandomAccessNDImageConcept</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">Img</span><span class="o">&gt;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Regular</span><span class="o">&lt;</span><span class="n">Img</span><span class="o">&gt;</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">view_t</span><span class="p">;</span><span class="w"> </span><span class="n">where</span><span class="w"> </span><span class="n">MutableRandomAccessNDImageViewConcept</span><span class="o">&lt;</span><span class="n">view_t</span><span class="o">&gt;</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">const_view_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">view_t</span><span class="o">::</span><span class="n">const_t</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">point_t</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="n">view_t</span><span class="o">::</span><span class="n">point_t</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">value_type</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">view_t</span><span class="o">::</span><span class="n">value_type</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">allocator_type</span><span class="p">;</span><span class="w"></span>
 
-  <span class="n">Img</span><span class="o">::</span><span class="n">Img</span><span class="p">(</span><span class="n">point_t</span> <span class="n">dims</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">alignment</span><span class="o">=</span><span class="mi">0</span><span class="p">);</span>
-  <span class="n">Img</span><span class="o">::</span><span class="n">Img</span><span class="p">(</span><span class="n">point_t</span> <span class="n">dims</span><span class="p">,</span> <span class="n">value_type</span> <span class="n">fill_value</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">alignment</span><span class="p">);</span>
+<span class="w">  </span><span class="n">Img</span><span class="o">::</span><span class="n">Img</span><span class="p">(</span><span class="n">point_t</span><span class="w"> </span><span class="n">dims</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">alignment</span><span class="o">=</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">Img</span><span class="o">::</span><span class="n">Img</span><span class="p">(</span><span class="n">point_t</span><span class="w"> </span><span class="n">dims</span><span class="p">,</span><span class="w"> </span><span class="n">value_type</span><span class="w"> </span><span class="n">fill_value</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">alignment</span><span class="p">);</span><span class="w"></span>
 
-  <span class="kt">void</span> <span class="n">Img</span><span class="o">::</span><span class="n">recreate</span><span class="p">(</span><span class="n">point_t</span> <span class="n">new_dims</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">alignment</span><span class="o">=</span><span class="mi">0</span><span class="p">);</span>
-  <span class="kt">void</span> <span class="n">Img</span><span class="o">::</span><span class="n">recreate</span><span class="p">(</span><span class="n">point_t</span> <span class="n">new_dims</span><span class="p">,</span> <span class="n">value_type</span> <span class="n">fill_value</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">alignment</span><span class="p">);</span>
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">Img::recreate</span><span class="p">(</span><span class="n">point_t</span><span class="w"> </span><span class="n">new_dims</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">alignment</span><span class="o">=</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">Img::recreate</span><span class="p">(</span><span class="n">point_t</span><span class="w"> </span><span class="n">new_dims</span><span class="p">,</span><span class="w"> </span><span class="n">value_type</span><span class="w"> </span><span class="n">fill_value</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">alignment</span><span class="p">);</span><span class="w"></span>
 
-  <span class="k">const</span> <span class="n">point_t</span><span class="o">&amp;</span>        <span class="n">Img</span><span class="o">::</span><span class="n">dimensions</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-  <span class="k">const</span> <span class="n">const_view_t</span><span class="o">&amp;</span>   <span class="n">const_view</span><span class="p">(</span><span class="k">const</span> <span class="n">Img</span><span class="o">&amp;</span><span class="p">);</span>
-  <span class="k">const</span> <span class="n">view_t</span><span class="o">&amp;</span>         <span class="n">view</span><span class="p">(</span><span class="n">Img</span><span class="o">&amp;</span><span class="p">);</span>
-<span class="p">};</span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">point_t</span><span class="o">&amp;</span><span class="w">        </span><span class="nf">Img::dimensions</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">const_view_t</span><span class="o">&amp;</span><span class="w">   </span><span class="nf">const_view</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Img</span><span class="o">&amp;</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="n">view_t</span><span class="o">&amp;</span><span class="w">         </span><span class="nf">view</span><span class="p">(</span><span class="n">Img</span><span class="o">&amp;</span><span class="p">);</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Two-dimensional images have additional requirements:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">RandomAccess2DImageConcept</span><span class="o">&lt;</span><span class="n">RandomAccessNDImageConcept</span> <span class="n">Img</span><span class="o">&gt;</span>
-<span class="p">{</span>
-  <span class="k">typename</span> <span class="n">x_coord_t</span> <span class="o">=</span> <span class="n">const_view_t</span><span class="o">::</span><span class="n">x_coord_t</span><span class="p">;</span>
-  <span class="k">typename</span> <span class="n">y_coord_t</span> <span class="o">=</span> <span class="n">const_view_t</span><span class="o">::</span><span class="n">y_coord_t</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span><span class="w"> </span><span class="nc">RandomAccess2DImageConcept</span><span class="o">&lt;</span><span class="n">RandomAccessNDImageConcept</span><span class="w"> </span><span class="n">Img</span><span class="o">&gt;</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">x_coord_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">const_view_t</span><span class="o">::</span><span class="n">x_coord_t</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">y_coord_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">const_view_t</span><span class="o">::</span><span class="n">y_coord_t</span><span class="p">;</span><span class="w"></span>
 
-  <span class="n">Img</span><span class="o">::</span><span class="n">Img</span><span class="p">(</span><span class="n">x_coord_t</span> <span class="n">width</span><span class="p">,</span> <span class="n">y_coord_t</span> <span class="n">height</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">alignment</span><span class="o">=</span><span class="mi">0</span><span class="p">);</span>
-  <span class="n">Img</span><span class="o">::</span><span class="n">Img</span><span class="p">(</span><span class="n">x_coord_t</span> <span class="n">width</span><span class="p">,</span> <span class="n">y_coord_t</span> <span class="n">height</span><span class="p">,</span> <span class="n">value_type</span> <span class="n">fill_value</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">alignment</span><span class="p">);</span>
+<span class="w">  </span><span class="n">Img</span><span class="o">::</span><span class="n">Img</span><span class="p">(</span><span class="n">x_coord_t</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">y_coord_t</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">alignment</span><span class="o">=</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="n">Img</span><span class="o">::</span><span class="n">Img</span><span class="p">(</span><span class="n">x_coord_t</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">y_coord_t</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="n">value_type</span><span class="w"> </span><span class="n">fill_value</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">alignment</span><span class="p">);</span><span class="w"></span>
 
-  <span class="n">x_coord_t</span> <span class="n">Img</span><span class="o">::</span><span class="n">width</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
-  <span class="n">y_coord_t</span> <span class="n">Img</span><span class="o">::</span><span class="n">height</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+<span class="w">  </span><span class="n">x_coord_t</span><span class="w"> </span><span class="nf">Img::width</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="n">y_coord_t</span><span class="w"> </span><span class="nf">Img::height</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">;</span><span class="w"></span>
 
-  <span class="kt">void</span> <span class="n">Img</span><span class="o">::</span><span class="n">recreate</span><span class="p">(</span><span class="n">x_coord_t</span> <span class="n">width</span><span class="p">,</span> <span class="n">y_coord_t</span> <span class="n">height</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">alignment</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
-  <span class="kt">void</span> <span class="n">Img</span><span class="o">::</span><span class="n">recreate</span><span class="p">(</span><span class="n">x_coord_t</span> <span class="n">width</span><span class="p">,</span> <span class="n">y_coord_t</span> <span class="n">height</span><span class="p">,</span> <span class="n">value_type</span> <span class="n">fill_value</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">alignment</span><span class="p">);</span>
-<span class="p">};</span>
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">Img::recreate</span><span class="p">(</span><span class="n">x_coord_t</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">y_coord_t</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">alignment</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">Img::recreate</span><span class="p">(</span><span class="n">x_coord_t</span><span class="w"> </span><span class="n">width</span><span class="p">,</span><span class="w"> </span><span class="n">y_coord_t</span><span class="w"> </span><span class="n">height</span><span class="p">,</span><span class="w"> </span><span class="n">value_type</span><span class="w"> </span><span class="n">fill_value</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="w"> </span><span class="n">alignment</span><span class="p">);</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 <p>GIL images have views that model <code class="docutils literal notranslate"><span class="pre">ImageViewConcept</span></code> and operate on pixels.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">concept</span> <span class="n">ImageConcept</span><span class="o">&lt;</span><span class="n">RandomAccess2DImageConcept</span> <span class="n">Img</span><span class="o">&gt;</span>
-<span class="p">{</span>
-  <span class="n">where</span> <span class="n">MutableImageViewConcept</span><span class="o">&lt;</span><span class="n">view_t</span><span class="o">&gt;</span><span class="p">;</span>
-  <span class="k">typename</span> <span class="n">coord_t</span>  <span class="o">=</span> <span class="n">view_t</span><span class="o">::</span><span class="n">coord_t</span><span class="p">;</span>
-<span class="p">};</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">concept</span><span class="w"> </span><span class="nc">ImageConcept</span><span class="o">&lt;</span><span class="n">RandomAccess2DImageConcept</span><span class="w"> </span><span class="n">Img</span><span class="o">&gt;</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="n">where</span><span class="w"> </span><span class="n">MutableImageViewConcept</span><span class="o">&lt;</span><span class="n">view_t</span><span class="o">&gt;</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="k">typename</span><span class="w"> </span><span class="nc">coord_t</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">view_t</span><span class="o">::</span><span class="n">coord_t</span><span class="p">;</span><span class="w"></span>
+<span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Images, unlike locators and image views, don’t have ‘mutable’ set of concepts
 because immutable images are not very useful.</p>
 <div class="admonition seealso">
-<p class="first admonition-title">See also</p>
-<ul class="last simple">
-<li><a class="reference external" href="../reference/structboost_1_1gil_1_1_random_access_n_d_image_concept.html">RandomAccessNDImageConcept&lt;Image&gt;</a></li>
-<li><a class="reference external" href="../reference/structboost_1_1gil_1_1_random_access2_d_image_concept.html">RandomAccess2DImageConcept&lt;Image&gt;</a></li>
-<li><a class="reference external" href="../reference/structboost_1_1gil_1_1_image_concept.html">ImageConcept&lt;Image&gt;</a></li>
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference external" href="../reference/structboost_1_1gil_1_1_random_access_n_d_image_concept.html">RandomAccessNDImageConcept&lt;Image&gt;</a></p></li>
+<li><p><a class="reference external" href="../reference/structboost_1_1gil_1_1_random_access2_d_image_concept.html">RandomAccess2DImageConcept&lt;Image&gt;</a></p></li>
+<li><p><a class="reference external" href="../reference/structboost_1_1gil_1_1_image_concept.html">ImageConcept&lt;Image&gt;</a></p></li>
 </ul>
 </div>
-</div>
-<div class="section" id="models">
+</section>
+<section id="models">
 <h2><a class="toc-backref" href="#id2">Models</a></h2>
 <p>GIL provides a class, <code class="docutils literal notranslate"><span class="pre">image</span></code>, which is templated over the value type
 (the pixel) and models <code class="docutils literal notranslate"><span class="pre">ImageConcept</span></code>:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span> <span class="k">template</span>
- <span class="o">&lt;</span>
-     <span class="k">typename</span> <span class="n">Pixel</span><span class="p">,</span> <span class="c1">// Models PixelValueConcept</span>
-     <span class="kt">bool</span> <span class="n">IsPlanar</span><span class="p">,</span>  <span class="c1">// planar or interleaved image</span>
-     <span class="k">typename</span> <span class="n">A</span><span class="o">=</span><span class="n">std</span><span class="o">::</span><span class="n">allocator</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="kt">char</span><span class="o">&gt;</span>
- <span class="o">&gt;</span>
-<span class="k">class</span> <span class="nc">image</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="k">template</span><span class="w"></span>
+<span class="w"> </span><span class="o">&lt;</span><span class="w"></span>
+<span class="w">     </span><span class="k">typename</span><span class="w"> </span><span class="nc">Pixel</span><span class="p">,</span><span class="w"> </span><span class="c1">// Models PixelValueConcept</span>
+<span class="w">     </span><span class="kt">bool</span><span class="w"> </span><span class="n">IsPlanar</span><span class="p">,</span><span class="w">  </span><span class="c1">// planar or interleaved image</span>
+<span class="w">     </span><span class="k">typename</span><span class="w"> </span><span class="nc">A</span><span class="o">=</span><span class="n">std</span><span class="o">::</span><span class="n">allocator</span><span class="o">&lt;</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
+<span class="k">class</span><span class="w"> </span><span class="nc">image</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>The image constructor takes an alignment parameter which allows for
@@ -164,8 +165,8 @@ no padding at the end of rows. Many operations are faster using such
 traverse the pixels, instead of the more complicated <code class="docutils literal notranslate"><span class="pre">image_view::iterator</span></code>.
 Note that when alignment is 0, packed images are aligned to the bit - i.e.
 there are no padding bits at the end of rows of packed images.</p>
-</div>
-</div>
+</section>
+</section>
 
 
     <div class="navbar" style="text-align:right;">
@@ -178,8 +179,8 @@ there are no padding bits at the end of rows of packed images.</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2022-11-14 10:11:30.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Last updated on 2023-02-07 15:02:53.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>

@@ -5,7 +5,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
+    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Affine region detectors - Boost.GIL  documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
@@ -17,10 +18,10 @@
           FILE_SUFFIX: '.html'
       };
     </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/searchtools.js"></script>
     <script src="../_static/language_data.js"></script>
@@ -69,51 +70,55 @@
       
     </div>
       
-  <div class="section" id="affine-region-detectors">
+  <section id="affine-region-detectors">
 <h1>Affine region detectors</h1>
-<div class="section" id="what-is-being-detected">
+<section id="what-is-being-detected">
 <h2>What is being detected?</h2>
 <p>Affine region is basically any region of the image
 that is stable under affine transformations. It can be
 edges under affinity conditions, corners (small patch of an image)
 or any other stable features.</p>
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="available-detectors">
+<section id="available-detectors">
 <h2>Available detectors</h2>
 <p>At the moment, the following detectors are implemented</p>
 <ul class="simple">
-<li>Harris detector</li>
-<li>Hessian detector</li>
+<li><p>Harris detector</p></li>
+<li><p>Hessian detector</p></li>
 </ul>
-</div>
+</section>
 <hr class="docutils" />
-<div class="section" id="algorithm-steps">
+<section id="algorithm-steps">
 <h2>Algorithm steps</h2>
-<div class="section" id="harris-and-hessian">
+<section id="harris-and-hessian">
 <h3>Harris and Hessian</h3>
 <p>Both are derived from a concept called Moravec window. Lets have a look
 at the image below:</p>
-<div class="figure" id="id1">
+<figure class="align-default" id="id1">
 <img alt="Moravec window corner case" src="../_images/Moravec-window-corner.png" />
-<p class="caption"><span class="caption-text">Moravec window corner case</span></p>
-</div>
+<figcaption>
+<p><span class="caption-text">Moravec window corner case</span></p>
+</figcaption>
+</figure>
 <p>As can be noticed, moving the yellow window in any direction will cause
 very big change in intensity. Now, lets have a look at the edge case:</p>
-<div class="figure" id="id2">
+<figure class="align-default" id="id2">
 <img alt="Moravec window edge case" src="../_images/Moravec-window-edge.png" />
-<p class="caption"><span class="caption-text">Moravec window edge case</span></p>
-</div>
+<figcaption>
+<p><span class="caption-text">Moravec window edge case</span></p>
+</figcaption>
+</figure>
 <p>In this case, intensity change will happen only when moving in
 particular direction.</p>
 <p>This is the key concept in understanding how the two corner detectors
 work.</p>
 <p>The algorithms have the same structure:</p>
 <ol class="arabic simple">
-<li>Compute image derivatives</li>
-<li>Compute Weighted sum</li>
-<li>Compute response</li>
-<li>Threshold (optional)</li>
+<li><p>Compute image derivatives</p></li>
+<li><p>Compute Weighted sum</p></li>
+<li><p>Compute response</p></li>
+<li><p>Threshold (optional)</p></li>
 </ol>
 <p>Harris and Hessian differ in what <strong>derivatives they compute</strong>. Harris
 computes the following derivatives:</p>
@@ -150,9 +155,9 @@ detector.” In Alvey vision conference, vol. 15, no. 50, pp. 10-5244.
 1988.</a></p>
 <p><a class="reference external" href="https://hal.inria.fr/inria-00548252/document">Mikolajczyk, Krystian, and Cordelia Schmid. “An affine invariant interest point detector.” In European conference on computer vision, pp. 128-142. Springer, Berlin, Heidelberg, 2002.</a></p>
 <p><a class="reference external" href="https://hal.inria.fr/inria-00548528/document">Mikolajczyk, Krystian, Tinne Tuytelaars, Cordelia Schmid, Andrew Zisserman, Jiri Matas, Frederik Schaffalitzky, Timor Kadir, and Luc Van Gool. “A comparison of affine region detectors.” International journal of computer vision 65, no. 1-2 (2005): 43-72.</a></p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
     <div class="navbar" style="text-align:right;">
@@ -165,8 +170,8 @@ detector.” In Alvey vision conference, vol. 15, no. 50, pp. 10-5244.
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2022-11-14 10:11:30.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Last updated on 2023-02-07 15:02:53.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>

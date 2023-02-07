@@ -5,7 +5,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
+    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Conclusions - Boost.GIL  documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
@@ -17,10 +18,10 @@
           FILE_SUFFIX: '.html'
       };
     </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/searchtools.js"></script>
     <script src="../_static/language_data.js"></script>
@@ -69,49 +70,49 @@
       
     </div>
       
-  <div class="section" id="conclusions">
+  <section id="conclusions">
 <h1>Conclusions</h1>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#generality" id="id1">Generality</a></li>
-<li><a class="reference internal" href="#performance" id="id2">Performance</a></li>
-<li><a class="reference internal" href="#flexibility" id="id3">Flexibility</a></li>
-<li><a class="reference internal" href="#extensibility" id="id4">Extensibility</a></li>
-<li><a class="reference internal" href="#compatibility" id="id5">Compatibility</a></li>
+<li><p><a class="reference internal" href="#generality" id="id1">Generality</a></p></li>
+<li><p><a class="reference internal" href="#performance" id="id2">Performance</a></p></li>
+<li><p><a class="reference internal" href="#flexibility" id="id3">Flexibility</a></p></li>
+<li><p><a class="reference internal" href="#extensibility" id="id4">Extensibility</a></p></li>
+<li><p><a class="reference internal" href="#compatibility" id="id5">Compatibility</a></p></li>
 </ul>
 </div>
 <p>The Generic Image Library is designed with the following five goals in mind:</p>
-<div class="section" id="generality">
+<section id="generality">
 <h2><a class="toc-backref" href="#id1">Generality</a></h2>
 <p>Abstracts image representations from algorithms on images.
 It allows for writing code once and have it work for any image type.</p>
-</div>
-<div class="section" id="performance">
+</section>
+<section id="performance">
 <h2><a class="toc-backref" href="#id2">Performance</a></h2>
 <p>Speed has been instrumental to the design of the library.
 The generic algorithms provided in the library are in many cases comparable
 in speed to hand-coding the algorithm for a specific image type.</p>
-</div>
-<div class="section" id="flexibility">
+</section>
+<section id="flexibility">
 <h2><a class="toc-backref" href="#id3">Flexibility</a></h2>
 <p>Compile-type parameter resolution results in faster code, but severely limits
 code flexibility. The library allows for any image parameter to be specified
 at run time, at a minor performance cost.</p>
-</div>
-<div class="section" id="extensibility">
+</section>
+<section id="extensibility">
 <h2><a class="toc-backref" href="#id4">Extensibility</a></h2>
 <p>Virtually every construct in GIL can be extended - new channel types,
 color spaces, layouts, iterators, locators, image views and images
 can be provided by modeling the corresponding GIL concepts.</p>
-</div>
-<div class="section" id="compatibility">
+</section>
+<section id="compatibility">
 <h2><a class="toc-backref" href="#id5">Compatibility</a></h2>
 <p>The library is designed as an STL complement.
 Generic STL algorithms can be used for pixel manipulation, and they are
 specifically targeted for optimization. The library works with existing
 raw pixel data from another image library.</p>
-</div>
-</div>
+</section>
+</section>
 
 
     <div class="navbar" style="text-align:right;">
@@ -124,8 +125,8 @@ raw pixel data from another image library.</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2022-11-14 10:11:30.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Last updated on 2023-02-07 15:02:53.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>

@@ -5,7 +5,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
+    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Making a sub-histogram - Boost.GIL  documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
@@ -17,10 +18,10 @@
           FILE_SUFFIX: '.html'
       };
     </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/searchtools.js"></script>
     <script src="../_static/language_data.js"></script>
@@ -69,65 +70,65 @@
       
     </div>
       
-  <div class="section" id="making-a-sub-histogram">
+  <section id="making-a-sub-histogram">
 <span id="sub-histogram"></span><h1>Making a sub-histogram</h1>
-<div class="section" id="overview">
+<section id="overview">
 <h2>Overview</h2>
 <p>Sub-histogram is a subset of a histogram or one that is formed by masking out a
 few axis of the parent histogram.</p>
 <p>GIL class histogram provides these functions as members and returns an instance of
 the desired sub-class.</p>
 <ol class="arabic">
-<li><p class="first">Histogram over fewer axes</p>
+<li><p>Histogram over fewer axes</p>
 <blockquote>
 <div><p><strong>Task</strong> - Get a 2D histogram from a 3D RGB histogram over red and green axes</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">histogram</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">h</span><span class="p">;</span>
-<span class="n">gil</span><span class="o">::</span><span class="n">rgb8_image_t</span> <span class="n">img</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">histogram</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">h</span><span class="p">;</span><span class="w"></span>
+<span class="n">gil</span><span class="o">::</span><span class="n">rgb8_image_t</span><span class="w"> </span><span class="n">img</span><span class="p">;</span><span class="w"></span>
 <span class="cm">/*</span>
 <span class="cm">Fill img ...</span>
-<span class="cm">*/</span>
-<span class="n">fill_histogram</span><span class="p">(</span><span class="n">view</span><span class="p">(</span><span class="n">img</span><span class="p">),</span> <span class="n">h</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
-<span class="k">auto</span> <span class="n">sub_h</span> <span class="o">=</span> <span class="n">h</span><span class="p">.</span><span class="n">sub_histogram</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="o">&gt;</span><span class="p">();</span> <span class="c1">// sub_h is a 2D histogram</span>
+<span class="cm">*/</span><span class="w"></span>
+<span class="n">fill_histogram</span><span class="p">(</span><span class="n">view</span><span class="p">(</span><span class="n">img</span><span class="p">),</span><span class="w"> </span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
+<span class="k">auto</span><span class="w"> </span><span class="n">sub_h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h</span><span class="p">.</span><span class="n">sub_histogram</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="p">();</span><span class="w"> </span><span class="c1">// sub_h is a 2D histogram</span>
 </pre></div>
 </div>
 <p>Demo output:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">h</span> <span class="n">is</span> <span class="p">{{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span> <span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
-      <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span> <span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
-      <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">}</span> <span class="o">:</span> <span class="mi">3</span><span class="p">}</span>
-<span class="n">sub_h</span> <span class="n">would</span> <span class="n">be</span> <span class="p">{{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}</span> <span class="o">:</span> <span class="mi">4</span><span class="p">,</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">}</span> <span class="o">:</span> <span class="mi">2</span><span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">h</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="p">{{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">}</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"></span>
+<span class="n">sub_h</span><span class="w"> </span><span class="n">would</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="p">{{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">}</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">}</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">2</span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
 </li>
-<li><p class="first">Histogram using a particular key range</p>
+<li><p>Histogram using a particular key range</p>
 <blockquote>
 <div><p><strong>Task</strong> - Get a 2D histogram from a 3D RGB histogram for bins whose red color lie between 10 - 20
 and blue color lie between 2 - 10</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">histogram</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">h</span><span class="p">;</span>
-<span class="n">gil</span><span class="o">::</span><span class="n">rgb8_image_t</span> <span class="n">img</span><span class="p">;</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">histogram</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">h</span><span class="p">;</span><span class="w"></span>
+<span class="n">gil</span><span class="o">::</span><span class="n">rgb8_image_t</span><span class="w"> </span><span class="n">img</span><span class="p">;</span><span class="w"></span>
 <span class="cm">/*</span>
 <span class="cm">Fill img ...</span>
-<span class="cm">*/</span>
-<span class="n">fill_histogram</span><span class="p">(</span><span class="n">view</span><span class="p">(</span><span class="n">img</span><span class="p">),</span> <span class="n">h</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
-<span class="n">std</span><span class="o">::</span><span class="n">tuple</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">;</span>
-<span class="n">low</span> <span class="o">=</span> <span class="p">{</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">}</span> <span class="c1">// Since no check over blue channel pass any dummy value</span>
-<span class="n">high</span> <span class="o">=</span> <span class="p">{</span><span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">}</span> <span class="c1">// Since no check over blue channel pass any dummy value</span>
-<span class="k">auto</span> <span class="n">sub_h</span> <span class="o">=</span> <span class="n">h</span><span class="p">.</span><span class="n">sub_histogram</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">&gt;</span><span class="p">(</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">);</span> <span class="c1">// In angle brackets pass the relevant dimensions in order</span>
+<span class="cm">*/</span><span class="w"></span>
+<span class="n">fill_histogram</span><span class="p">(</span><span class="n">view</span><span class="p">(</span><span class="n">img</span><span class="p">),</span><span class="w"> </span><span class="n">h</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">tuple</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">low</span><span class="p">,</span><span class="w"> </span><span class="n">high</span><span class="p">;</span><span class="w"></span>
+<span class="n">low</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">}</span><span class="w"> </span><span class="c1">// Since no check over blue channel pass any dummy value</span>
+<span class="n">high</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">}</span><span class="w"> </span><span class="c1">// Since no check over blue channel pass any dummy value</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">sub_h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h</span><span class="p">.</span><span class="n">sub_histogram</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="o">&gt;</span><span class="p">(</span><span class="n">low</span><span class="p">,</span><span class="w"> </span><span class="n">high</span><span class="p">);</span><span class="w"> </span><span class="c1">// In angle brackets pass the relevant dimensions in order</span>
 </pre></div>
 </div>
 <p>Demo Output:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">h</span> <span class="n">is</span> <span class="p">{{</span><span class="mi">11</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span> <span class="p">}</span> <span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
-      <span class="p">{</span><span class="mi">1</span> <span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">11</span><span class="p">}</span> <span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
-      <span class="p">{</span><span class="mi">1</span> <span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span> <span class="p">}</span> <span class="o">:</span> <span class="mi">3</span><span class="p">,</span>
-      <span class="p">{</span><span class="mi">11</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span> <span class="p">}</span> <span class="o">:</span> <span class="mi">4</span><span class="p">}</span>
-<span class="n">sub_h</span> <span class="n">would</span> <span class="n">be</span> <span class="p">{{</span><span class="mi">11</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span> <span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="p">{</span><span class="mi">11</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span> <span class="o">:</span> <span class="mi">4</span><span class="p">}</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">h</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="p">{{</span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">11</span><span class="p">}</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">4</span><span class="p">}</span><span class="w"></span>
+<span class="n">sub_h</span><span class="w"> </span><span class="n">would</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="p">{{</span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">}</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">4</span><span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 </div></blockquote>
 </li>
 </ol>
-</div>
-</div>
+</section>
+</section>
 
 
     <div class="navbar" style="text-align:right;">
@@ -140,8 +141,8 @@ and blue color lie between 2 - 10</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2022-11-14 10:11:30.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Last updated on 2023-02-07 15:02:53.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>
