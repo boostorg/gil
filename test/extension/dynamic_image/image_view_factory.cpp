@@ -86,10 +86,10 @@ struct test_flipped_up_down_view
 template<typename V1, typename V2>
 bool equal_pixels_values(V1&& v1, 
     V2&& v2,
-    float threshold = 1e-3f)
+    float threshold = 1e-6f)
 {
 // convert both images to rgba32f and compare with threshold
-   return boost::variant2::visit([=](auto const& v1, auto const& v2) {
+   return boost::variant2::visit([=](auto const& v1, auto const& v2) -> bool {
         auto it1 = v1.begin();
         auto it2 = v2.begin();
         while(it1 != v1.end() && it2 != v2.end()) {
@@ -128,8 +128,8 @@ struct test_color_converted_view
             6, 7, 8
         };
         std::array<int, 9> expected_pixel_data;
-        std::transform(std::begin(expected_pixel_data), 
-            std::end(expected_pixel_data), 
+        std::transform(std::begin(pixel_data), 
+            std::end(pixel_data), 
             std::begin(expected_pixel_data), 
             [](auto v) { return 2 * v; });
 
@@ -145,7 +145,7 @@ struct test_color_converted_view
              
         BOOST_TEST(equal_pixels_values(result_view, 
             gil::const_view(expected_image), 
-            1e-3f)); 
+            1e-6f)); 
     }
 };
 
