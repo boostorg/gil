@@ -216,14 +216,14 @@ a base upon which it is possible to write algorithms that can work
 with either compile-time or runtime images or views. The following
 code, for example, uses the GIL I/O extension to turn an image on disk
 upside down:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;boost\gil\extension\io\jpeg_dynamic_io.hpp&gt;</span><span class="cp"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;boost\gil\extension\io\jpeg.hpp&gt;</span><span class="cp"></span>
 
 <span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">Image</span><span class="o">&gt;</span><span class="w">    </span><span class="c1">// Could be rgb8_image_t or any_image&lt;...&gt;</span>
 <span class="kt">void</span><span class="w"> </span><span class="n">save_180rot</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="w"> </span><span class="n">file_name</span><span class="p">)</span><span class="w"></span>
 <span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="n">Image</span><span class="w"> </span><span class="n">img</span><span class="p">;</span><span class="w"></span>
-<span class="w">  </span><span class="n">jpeg_read_image</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span><span class="w"> </span><span class="n">img</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">jpeg_write_view</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span><span class="w"> </span><span class="n">rotated180_view</span><span class="p">(</span><span class="n">view</span><span class="p">(</span><span class="n">img</span><span class="p">)));</span><span class="w"></span>
+<span class="w">  </span><span class="n">read_image</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span><span class="w"> </span><span class="n">img</span><span class="p">,</span><span class="w"> </span><span class="n">jpeg_tag</span><span class="p">());</span><span class="w"></span>
+<span class="w">  </span><span class="n">write_view</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span><span class="w"> </span><span class="n">rotated180_view</span><span class="p">(</span><span class="n">view</span><span class="p">(</span><span class="n">img</span><span class="p">)),</span><span class="w"> </span><span class="n">jpeg_tag</span><span class="p">());</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
@@ -278,7 +278,7 @@ uniformly as a collection and store them in the same container.</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2023-02-22 11:02:57.
+      Last updated on 2023-03-16 20:03:27.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>

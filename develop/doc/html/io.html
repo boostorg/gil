@@ -221,7 +221,9 @@ interface is rather small and hopefully easy to understand.</p>
 directly with the underlying image format. For that each reader or writer
 provides access to the so-called backend.</p>
 <p>For instance:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="n">get_reader_backend</span><span class="o">&lt;</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="n">bmp_tag</span><span class="w"> </span><span class="n">tag_t</span><span class="p">;</span><span class="w"></span>
+
+<span class="k">typedef</span><span class="w"> </span><span class="n">get_reader_backend</span><span class="o">&lt;</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"></span>
 <span class="w">                          </span><span class="p">,</span><span class="w"> </span><span class="n">tag_t</span><span class="w"></span>
 <span class="w">                          </span><span class="o">&gt;::</span><span class="n">type</span><span class="w"> </span><span class="n">backend_t</span><span class="p">;</span><span class="w"></span>
 
@@ -290,7 +292,7 @@ The following example shows this feature:</p>
 <span class="w">         </span><span class="p">,</span><span class="w"> </span><span class="n">gray16_image_t</span><span class="w"></span>
 <span class="w">         </span><span class="p">,</span><span class="w"> </span><span class="n">rgb8_image_t</span><span class="w"></span>
 <span class="w">         </span><span class="p">,</span><span class="w"> </span><span class="n">rgba8_image_t</span><span class="w"></span>
-<span class="w">         </span><span class="o">&gt;</span><span class="w"> </span><span class="n">my_img_types</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">runtime_image</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="o">&gt;</span><span class="w"> </span><span class="n">runtime_image</span><span class="p">;</span><span class="w"></span>
 
 <span class="n">read_image</span><span class="p">(</span><span class="w"> </span><span class="n">filename</span><span class="w"></span>
 <span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">runtime_image</span><span class="w"></span>
@@ -364,7 +366,7 @@ the possible settings.</p>
 <span class="w">         </span><span class="p">,</span><span class="w"> </span><span class="n">gray16_image_t</span><span class="w"></span>
 <span class="w">         </span><span class="p">,</span><span class="w"> </span><span class="n">rgb8_image_t</span><span class="w"></span>
 <span class="w">         </span><span class="p">,</span><span class="w"> </span><span class="n">rgba8_image_t</span><span class="w"></span>
-<span class="w">         </span><span class="o">&gt;</span><span class="w"> </span><span class="n">my_img_types</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">runtime_image</span><span class="p">;</span><span class="w"></span>
+<span class="w">         </span><span class="o">&gt;</span><span class="w"> </span><span class="n">runtime_image</span><span class="p">;</span><span class="w"></span>
 
 <span class="c1">// fill any_image</span>
 
@@ -734,7 +736,7 @@ to enable the tests:</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2023-02-22 11:02:57.
+      Last updated on 2023-03-16 20:03:27.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
