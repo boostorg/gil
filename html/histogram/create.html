@@ -5,7 +5,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
+    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Create a histogram - Boost.GIL  documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
@@ -17,10 +18,10 @@
           FILE_SUFFIX: '.html'
       };
     </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="top" title="Boost.GIL  documentation" href="../index.html" />
@@ -66,17 +67,17 @@
       
     </div>
       
-  <div class="section" id="create-a-histogram">
+  <section id="create-a-histogram">
 <span id="create-histogram"></span><h1>Create a histogram</h1>
 <p><strong>Method 1</strong> - Using the histogram constructor</p>
 <p>Syntax:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">histogram</span><span class="o">&lt;</span><span class="n">Type1</span><span class="p">,</span> <span class="n">Type2</span><span class="p">,</span> <span class="n">Type3</span><span class="p">,...</span> <span class="n">TypeN</span><span class="o">&gt;</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">histogram</span><span class="o">&lt;</span><span class="n">Type1</span><span class="p">,</span><span class="w"> </span><span class="n">Type2</span><span class="p">,</span><span class="w"> </span><span class="n">Type3</span><span class="p">,...</span><span class="w"> </span><span class="n">TypeN</span><span class="o">&gt;</span><span class="w"></span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">Type1</span></code> .. <code class="docutils literal notranslate"><span class="pre">TypeN</span></code> correspond to the axis type of the N axes in the histogram</p>
 <p>Example: If we want a 3D histogram of Axis1 of type <code class="docutils literal notranslate"><span class="pre">int</span></code>, Axis2 of type <code class="docutils literal notranslate"><span class="pre">float</span></code> and Axis3 of type <code class="docutils literal notranslate"><span class="pre">std::string</span></code>
 we would do it this way:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">histogram</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">float</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">h</span><span class="p">;</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">histogram</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">h</span><span class="p">;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>And done.</p>
@@ -88,11 +89,11 @@ histogram with GIL images, since it creates a histogram with axes configured
 to match the GIL image.</p>
 <p>Also it is easier than method-1.</p>
 <p>Syntax:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="n">h</span> <span class="o">=</span> <span class="n">make_histogram</span><span class="p">(</span><span class="n">view</span><span class="p">(</span><span class="n">image</span><span class="p">));</span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">make_histogram</span><span class="p">(</span><span class="n">view</span><span class="p">(</span><span class="n">image</span><span class="p">));</span><span class="w"></span>
 </pre></div>
 </div>
 <p>where <code class="docutils literal notranslate"><span class="pre">image</span></code> could be a <code class="docutils literal notranslate"><span class="pre">gray8_image_t</span></code>/<code class="docutils literal notranslate"><span class="pre">rgb8_image_t</span></code> object read from source.</p>
-</div>
+</section>
 
 
     <div class="navbar" style="text-align:right;">
@@ -105,8 +106,8 @@ to match the GIL image.</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2022-08-02 07:08:39.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Last updated on 2023-03-22 08:03:07.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>

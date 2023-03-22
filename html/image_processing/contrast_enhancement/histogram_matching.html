@@ -5,7 +5,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
+    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Histogram Matching - Boost.GIL  documentation</title>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
@@ -17,10 +18,10 @@
           FILE_SUFFIX: '.html'
       };
     </script>
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="top" title="Boost.GIL  documentation" href="../../index.html" /> 
@@ -60,9 +61,9 @@
       
     </div>
       
-  <div class="section" id="histogram-matching">
+  <section id="histogram-matching">
 <span id="hm"></span><h1>Histogram Matching</h1>
-<div class="section" id="description">
+<section id="description">
 <h2>Description</h2>
 <p>Histogram Matching is a technique to match the histograms of two images.</p>
 <p>One use case of this would be when two images of the same location have been taken
@@ -70,19 +71,19 @@ under the same local illumination but with different sensors, bringing out diffe
 features in either image.</p>
 <p>The famous histogram equalization is a special case of this algorithm when the reference image
 is expected to have a uniform histogram.</p>
-</div>
-<div class="section" id="algorithm">
+</section>
+<section id="algorithm">
 <h2>Algorithm</h2>
 <ol class="arabic simple">
-<li>Calculate the histogram corresponding to input image and reference image.</li>
-<li>If it is a multi channeled image (e.g. RGB), convert both to an independent color space
-(like YCbCr, HSV etc.).</li>
-<li>Then calculate the cumulative histogram over the input image and reference image.</li>
-<li>Normalize both the histogram to bring bin values between 0-1. For multi-channeled images
-normalize each channel independently (by the number of pixels in image).</li>
-<li>If the cumulative histogram of input image is H(p<sub>x</sub>) and of reference image is R(p<sub>x’</sub>)
+<li><p>Calculate the histogram corresponding to input image and reference image.</p></li>
+<li><p>If it is a multi channeled image (e.g. RGB), convert both to an independent color space
+(like YCbCr, HSV etc.).</p></li>
+<li><p>Then calculate the cumulative histogram over the input image and reference image.</p></li>
+<li><p>Normalize both the histogram to bring bin values between 0-1. For multi-channeled images
+normalize each channel independently (by the number of pixels in image).</p></li>
+<li><p>If the cumulative histogram of input image is H(p<sub>x</sub>) and of reference image is R(p<sub>x’</sub>)
 p<sub>x</sub> &amp;  p<sub>x’</sub> in  [0, 255], then apply the transformation
-p<sub>x’</sub> =  R<sup>-1</sup>(H(p<sub>x</sub>))</li>
+p<sub>x’</sub> =  R<sup>-1</sup>(H(p<sub>x</sub>))</p></li>
 </ol>
 <p><strong>Explanation</strong></p>
 <p>Since we will be transforming the image to match a reference image, we match
@@ -92,43 +93,43 @@ the cumulative histogram of the image to the cumulative histogram of the referen
 <div><p>=&gt;  R(p<sub>x’</sub>)  =  H(p<sub>x</sub>)</p>
 <p>=&gt;  p<sub>x’</sub>    =  R<sup>-1</sup>(H(p<sub>x</sub>))</p>
 </div></blockquote>
-</div>
-<div class="section" id="results">
+</section>
+<section id="results">
 <h2>Results</h2>
 <p>The algorithm is applied on a few standard images. One of the transformations in shown below:</p>
 <p><strong>Original Image(left) &amp; Reference Image(right)</strong></p>
-<div class="align-center figure">
+<figure class="align-center">
 <a class="reference internal image-reference" href="https://github.com/boost-gil/test-images/blob/master/jpeg/suite/matching.jpg"><img alt="Could not load image." src="https://github.com/boost-gil/test-images/blob/master/jpeg/suite/matching.jpg" style="width: 600px; height: 300px;" /></a>
-</div>
+</figure>
 <p><strong>Histogram matched Image</strong></p>
-<div class="align-center figure">
+<figure class="align-center">
 <a class="reference internal image-reference" href="https://github.com/boost-gil/test-images/blob/master/jpeg/suite/matching_out.jpg"><img alt="Could not load image." src="https://github.com/boost-gil/test-images/blob/master/jpeg/suite/matching_out.jpg" style="width: 300px; height: 300px;" /></a>
-</div>
-</div>
-<div class="section" id="demo">
+</figure>
+</section>
+<section id="demo">
 <h2>Demo</h2>
 <p>Usage Syntax:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">gray8_image_t</span> <span class="n">inp_img</span><span class="p">,</span> <span class="n">ref_img</span><span class="p">;</span>
-<span class="n">read_image</span><span class="p">(</span><span class="s">&quot;your_image.png&quot;</span><span class="p">,</span> <span class="n">inp_img</span><span class="p">,</span> <span class="n">png_tag</span><span class="p">{});</span>
-<span class="n">read_image</span><span class="p">(</span><span class="s">&quot;your_ref_image.png&quot;</span><span class="p">,</span> <span class="n">ref_img</span><span class="p">,</span> <span class="n">png_tag</span><span class="p">{});</span>
-<span class="n">gray8_image_t</span> <span class="nf">dst_img</span><span class="p">(</span><span class="n">inp_img</span><span class="p">.</span><span class="n">dimensions</span><span class="p">());</span>
-<span class="n">histogram_matching</span><span class="p">(</span><span class="n">view</span><span class="p">(</span><span class="n">inp_img</span><span class="p">),</span> <span class="n">view</span><span class="p">(</span><span class="n">ref_image</span><span class="p">),</span> <span class="n">view</span><span class="p">(</span><span class="n">dst_img</span><span class="p">));</span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">gray8_image_t</span><span class="w"> </span><span class="n">inp_img</span><span class="p">,</span><span class="w"> </span><span class="n">ref_img</span><span class="p">;</span><span class="w"></span>
+<span class="n">read_image</span><span class="p">(</span><span class="s">&quot;your_image.png&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">inp_img</span><span class="p">,</span><span class="w"> </span><span class="n">png_tag</span><span class="p">{});</span><span class="w"></span>
+<span class="n">read_image</span><span class="p">(</span><span class="s">&quot;your_ref_image.png&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ref_img</span><span class="p">,</span><span class="w"> </span><span class="n">png_tag</span><span class="p">{});</span><span class="w"></span>
+<span class="n">gray8_image_t</span><span class="w"> </span><span class="nf">dst_img</span><span class="p">(</span><span class="n">inp_img</span><span class="p">.</span><span class="n">dimensions</span><span class="p">());</span><span class="w"></span>
+<span class="n">histogram_matching</span><span class="p">(</span><span class="n">view</span><span class="p">(</span><span class="n">inp_img</span><span class="p">),</span><span class="w"> </span><span class="n">view</span><span class="p">(</span><span class="n">ref_image</span><span class="p">),</span><span class="w"> </span><span class="n">view</span><span class="p">(</span><span class="n">dst_img</span><span class="p">));</span><span class="w"></span>
 
 <span class="c1">// To specify mask over input image</span>
 
-<span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;&gt;</span> <span class="n">mask</span><span class="p">(</span><span class="n">inp_img</span><span class="p">.</span><span class="n">height</span><span class="p">(),</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="n">inp_img</span><span class="p">.</span><span class="n">width</span><span class="p">(),</span> <span class="nb">true</span><span class="p">));</span>
-<span class="n">histogram_matching</span><span class="p">(</span><span class="n">view</span><span class="p">(</span><span class="n">inp_img</span><span class="p">),</span> <span class="n">view</span><span class="p">(</span><span class="n">ref_image</span><span class="p">),</span> <span class="n">view</span><span class="p">(</span><span class="n">dst_img</span><span class="p">),</span> <span class="nb">true</span><span class="p">,</span> <span class="n">mask</span><span class="p">);</span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">mask</span><span class="p">(</span><span class="n">inp_img</span><span class="p">.</span><span class="n">height</span><span class="p">(),</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="n">inp_img</span><span class="p">.</span><span class="n">width</span><span class="p">(),</span><span class="w"> </span><span class="nb">true</span><span class="p">));</span><span class="w"></span>
+<span class="n">histogram_matching</span><span class="p">(</span><span class="n">view</span><span class="p">(</span><span class="n">inp_img</span><span class="p">),</span><span class="w"> </span><span class="n">view</span><span class="p">(</span><span class="n">ref_image</span><span class="p">),</span><span class="w"> </span><span class="n">view</span><span class="p">(</span><span class="n">dst_img</span><span class="p">),</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="n">mask</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
 <div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">Convert an RGB image to a channel independent color space
+<p class="admonition-title">Tip</p>
+<p>Convert an RGB image to a channel independent color space
 before trying the histogram matching algorithm.</p>
 </div>
 </div></blockquote>
-</div>
-</div>
+</section>
+</section>
 
 
     <div class="navbar" style="text-align:right;">
@@ -138,8 +139,8 @@ before trying the histogram matching algorithm.</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2022-08-02 07:08:39.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+      Last updated on 2023-03-22 08:03:07.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.2.
     </div>
   </body>
 </html>
