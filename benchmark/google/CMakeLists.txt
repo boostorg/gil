@@ -65,6 +65,14 @@ endforeach()
 unset(_benchmarks)
 unset(_benchmark)
 
+
+#-----------------------------------------------------------------------------
+# Options
+#-----------------------------------------------------------------------------
+option(BOOST_GIL_BUILD_BENCHMARKS_OPENCV "Builds all OpenCV benchmarks" OFF)
+option(BOOST_GIL_BUILD_BENCHMARKS_BLAZE "Builds all BLAZE benchmarks" OFF)
+option(BOOST_GIL_BUILD_BENCHMARKS_IPP "Builds all IPP benchmarks" OFF)
+
 if(BOOST_GIL_BUILD_BENCHMARKS_OPENCV)
     add_subdirectory(opencv)
 endif()
