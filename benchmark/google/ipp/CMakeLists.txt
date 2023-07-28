@@ -18,6 +18,15 @@ add_library(ipp::ipp INTERFACE IMPORTED)
 target_include_directories(ipp::ipp INTERFACE ${IPP_INCLUDE_DIR})
 target_link_libraries(ipp::ipp INTERFACE ${IPP_LIB_CORE} ${IPP_LIB_I})
 
+#-----------------------------------------------------------------------------
+# Build benchmarks
+#-----------------------------------------------------------------------------
+if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.12.0)
+  file(GLOB _benchmarks ${CMAKE_CURRENT_LIST_DIR}/*.cpp CONFIGURE_DEPEND)
+else()
+  file(GLOB _benchmarks ${CMAKE_CURRENT_LIST_DIR}/*.cpp)
+endif()
+
 foreach(_benchmark ${_benchmarks})
   get_filename_component(_name ${_benchmark} NAME_WE)
   set(_target benchmark_google_ipp_${_name})
@@ -31,3 +40,6 @@ foreach(_benchmark ${_benchmarks})
       gil_googlebenchmark
       ipp::ipp)
 endforeach()
+
+unset(_benchmarks)
+unset(_benchmark)

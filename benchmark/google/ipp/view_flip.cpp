@@ -10,6 +10,8 @@
 
 #include <boost/gil.hpp>
 
+inline bool is_odd(benchmark::IterationCount cnt) { return (cnt % 2); }
+
 static void ipp_flip_left_right(benchmark::State& state)
 {
     using namespace boost::gil;
@@ -24,11 +26,14 @@ static void ipp_flip_left_right(benchmark::State& state)
 
     for (auto _ : state) {
         // The code to benchmark
-        ippiMirror_8u_C1R(
-            boost::gil::interleaved_view_get_raw_data(const_view(in)), (int) in.width(),
-            boost::gil::interleaved_view_get_raw_data(view(out)), (int) out.width(),
+        auto res = ippiMirror_8u_C1R(
+            boost::gil::interleaved_view_get_raw_data(const_view(in)), (int)const_view(in).pixels().row_size(),
+            boost::gil::interleaved_view_get_raw_data(view(out)), (int)view(in).pixels().row_size(),
             srcRoi,
             ippAxsVertical);
+
+        if (res != ippStsNoErr)
+            state.SkipWithError("ipp_flip_left_right failed");
     }
     
     if (!equal_pixels(flipped_left_right_view(const_view(in)), const_view(out)))
@@ -50,14 +55,23 @@ static void ipp_flip_left_right_inplace(benchmark::State& state)
 
     for (auto _ : state) {
         // The code to benchmark
-        ippiMirror_8u_C1IR(
-            boost::gil::interleaved_view_get_raw_data(view(in)), (int) in.width(),
+        auto res = ippiMirror_8u_C1IR(
+            boost::gil::interleaved_view_get_raw_data(view(in)), (int)view(in).pixels().row_size(),
             srcRoi,
             ippAxsVertical);
+
+        if (res != ippStsNoErr)
+            state.SkipWithError("ipp_flip_left_right_inplace failed");
     }
-    
-    if (!equal_pixels(flipped_left_right_view(const_view(in)), const_view(in_ref)))
-        state.SkipWithError("ipp_flip_left_right_inplace wrong result");
+
+    if (is_odd(state.iterations())) { 
+        if (!equal_pixels(flipped_left_right_view(const_view(in_ref)), const_view(in)))
+            state.SkipWithError("ipp_flip_left_right_inplace wrong result");
+    }
+    else {
+        if (!equal_pixels(const_view(in_ref), const_view(in)))
+            state.SkipWithError("ipp_flip_left_right_inplace wrong result");
+    }
 }
 BENCHMARK(ipp_flip_left_right_inplace)->RangeMultiplier(2)->Range(256, 8 << 10);
 
@@ -75,15 +89,24 @@ static void ipp_flip_up_down(benchmark::State& state)
 
     for (auto _ : state) {
         // The code to benchmark
-        ippiMirror_8u_C1R(
-            boost::gil::interleaved_view_get_raw_data(const_view(in)), (int) in.width(),
-            boost::gil::interleaved_view_get_raw_data(view(out)), (int) out.width(),
+        auto res = ippiMirror_8u_C1R(
+            boost::gil::interleaved_view_get_raw_data(const_view(in)), (int)const_view(in).pixels().row_size(),
+            boost::gil::interleaved_view_get_raw_data(view(out)), (int)view(out).pixels().row_size(),
             srcRoi,
             ippAxsHorizontal);
+
+        if (res != ippStsNoErr)
+            state.SkipWithError("ipp_flip_up_down failed");
     }
-    
-    if (!equal_pixels(flipped_left_right_view(const_view(in)), const_view(out)))
-        state.SkipWithError("ipp_flip_up_down wrong result");
+
+    if (is_odd(state.iterations())) {
+        if (!equal_pixels(flipped_up_down_view(const_view(in)), const_view(out)))
+            state.SkipWithError("ipp_flip_up_down wrong result");
+    }
+    else {
+        if (!equal_pixels(const_view(in), const_view(out)))
+            state.SkipWithError("ipp_flip_up_down wrong result");
+    }
 }
 BENCHMARK(ipp_flip_up_down)->RangeMultiplier(2)->Range(256, 8 << 10);
 
@@ -101,13 +124,16 @@ static void ipp_flip_up_down_inplace(benchmark::State& state)
 
     for (auto _ : state) {
         // The code to benchmark
-        ippiMirror_8u_C1IR(
-            boost::gil::interleaved_view_get_raw_data(view(in)), (int) in.width(),
+        auto res = ippiMirror_8u_C1IR(
+            boost::gil::interleaved_view_get_raw_data(view(in)), (int)view(in).pixels().row_size(),
             srcRoi,
             ippAxsHorizontal);
+
+        if (res != ippStsNoErr)
+            state.SkipWithError("ipp_flip_up_down_inplace failed");
     }
     
-    if (!equal_pixels(flipped_left_right_view(const_view(in)), const_view(in_ref)))
+    if (!equal_pixels(flipped_up_down_view(const_view(in_ref)), const_view(in)))
         state.SkipWithError("ipp_flip_up_down_inplace wrong result");
 }
 BENCHMARK(ipp_flip_up_down_inplace)->RangeMultiplier(2)->Range(256, 8 << 10);
