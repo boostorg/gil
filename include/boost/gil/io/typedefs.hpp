@@ -34,7 +34,7 @@ namespace std {
 template<> struct is_floating_point<::boost::gil::float32_t> : std::true_type {};
 template<> struct is_floating_point<::boost::gil::float64_t> : std::true_type {};
 
-} // namespace boost
+} // namespace std
 
 namespace boost { namespace gil {
 
