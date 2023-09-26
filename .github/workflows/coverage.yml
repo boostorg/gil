@@ -21,7 +21,7 @@ jobs:
       - name: install packages
         run: |
           sudo apt update
-          sudo apt install g++ libpng-dev libjpeg-dev libtiff5-dev libraw-dev lcov python -y
+          sudo apt install g++ libpng-dev libjpeg-dev libtiff5-dev libraw-dev lcov python-is-python3 -y
 
       - name: Setup Boost
         run: |
