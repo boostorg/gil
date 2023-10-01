@@ -95,12 +95,12 @@ jobs:
       - name: Setup container environment
         if: matrix.container
         run: |
-          apt-get update
+          apt-get -y update
           apt-get -y install sudo python3 git g++
 
       - name: Install packages
         if: matrix.install
-        run: sudo apt install ${{matrix.install}}
+        run: sudo apt-get -y install ${{matrix.install}}
 
       - name: Setup Boost
         run: |
