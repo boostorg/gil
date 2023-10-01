@@ -87,7 +87,7 @@ jobs:
             os: macos-11
 
     runs-on: ${{matrix.os}}
-    container: ${{matrix.container}
+    container: ${{matrix.container}}
 
     steps:
       - uses: actions/checkout@v3
