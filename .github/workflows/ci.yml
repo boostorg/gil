@@ -28,7 +28,6 @@ jobs:
             install: g++-7
             os: ubuntu-20.04
           - toolset: gcc-8
-            compiler: g++-8
             cxxstd: "14"
             os: ubuntu-20.04
             install: g++-8
