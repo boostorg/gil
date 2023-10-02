@@ -189,7 +189,11 @@ namespace detail {
 /// \ingroup CopyPixels
 template <typename I, typename O>
 struct copier_n {
-    BOOST_FORCEINLINE void operator()(I src, typename std::iterator_traits<I>::difference_type n, O dst) const { std::copy(src,src+n, dst); }
+    BOOST_FORCEINLINE void operator()(I src, typename std::iterator_traits<I>::difference_type n, O dst) const {
+        if (n < 0)
+            return;
+        std::copy(src, src + n, dst);
+    }
 };
 
 /// Source range is delimited by image iterators
