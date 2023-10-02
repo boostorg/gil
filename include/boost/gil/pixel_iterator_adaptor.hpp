@@ -11,7 +11,7 @@
 #include <boost/gil/concepts.hpp>
 #include <boost/gil/pixel_iterator.hpp>
 
-#include <boost/iterator/iterator_facade.hpp>
+#include <boost/stl_interfaces/iterator_interface.hpp>
 
 #include <iterator>
 
@@ -26,50 +26,50 @@ namespace boost { namespace gil {
 
 template <typename Iterator,    // Models Iterator
           typename DFn>  // Models Returns the result of dereferencing a given iterator of type Iterator
-class dereference_iterator_adaptor : public iterator_adaptor<dereference_iterator_adaptor<Iterator,DFn>,
-                                                             Iterator,
-                                                             typename DFn::value_type,
-                                                             typename std::iterator_traits<Iterator>::iterator_category,
-                                                             typename DFn::reference,
-                                                             use_default> {
-    DFn _deref_fn;
+class dereference_iterator_adaptor : public stl_interfaces::iterator_interface<
+#if !BOOST_STL_INTERFACES_USE_DEDUCED_THIS
+    dereference_iterator_adaptor<Iterator,DFn>,
+#endif
+    typename std::iterator_traits<Iterator>::iterator_category,
+    typename DFn::value_type,
+    typename DFn::reference>
+{
 public:
-    using parent_t = iterator_adaptor<dereference_iterator_adaptor<Iterator,DFn>,
-                                    Iterator,
-                                    typename DFn::value_type,
-                                    typename std::iterator_traits<Iterator>::iterator_category,
-                                    typename DFn::reference,
-                                    use_default>;
+    using parent_t = stl_interfaces::iterator_interface<
+#if !BOOST_STL_INTERFACES_USE_DEDUCED_THIS
+        dereference_iterator_adaptor<Iterator, DFn>,
+#endif
+        typename std::iterator_traits<Iterator>::iterator_category,
+        typename DFn::value_type,
+        typename DFn::reference>;
     using reference = typename DFn::result_type;
     using difference_type = typename std::iterator_traits<Iterator>::difference_type;
     using dereference_fn = DFn;
 
     dereference_iterator_adaptor() {}
     template <typename Iterator1>
-    dereference_iterator_adaptor(const dereference_iterator_adaptor<Iterator1,DFn>& dit) : parent_t(dit.base()), _deref_fn(dit._deref_fn) {}
-    dereference_iterator_adaptor(Iterator it, DFn deref_fn=DFn()) : parent_t(it), _deref_fn(deref_fn) {}
+    dereference_iterator_adaptor(const dereference_iterator_adaptor<Iterator1,DFn>& dit) : it_(dit.base()), _deref_fn(dit._deref_fn) {}
+    dereference_iterator_adaptor(Iterator it, DFn deref_fn=DFn()) : it_(it), _deref_fn(deref_fn) {}
     template <typename Iterator1, typename DFn1>
-    dereference_iterator_adaptor(const dereference_iterator_adaptor<Iterator1,DFn1>& it) : parent_t(it.base()), _deref_fn(it._deref_fn) {}
-    /// For some reason operator[] provided by iterator_facade returns a custom class that is convertible to reference
-    /// We require our own reference because it is registered in iterator_traits
-    reference operator[](difference_type d) const { return *(*this+d);}
+    dereference_iterator_adaptor(const dereference_iterator_adaptor<Iterator1,DFn1>& it) : it_(it.base()), _deref_fn(it._deref_fn) {}
 
-    // although iterator_adaptor defines these, the default implementation computes distance and compares for zero.
-    // it is often faster to just apply the relation operator to the base
-    bool    operator> (const dereference_iterator_adaptor& p) const { return this->base_reference()> p.base_reference(); }
-    bool    operator< (const dereference_iterator_adaptor& p) const { return this->base_reference()< p.base_reference(); }
-    bool    operator>=(const dereference_iterator_adaptor& p) const { return this->base_reference()>=p.base_reference(); }
-    bool    operator<=(const dereference_iterator_adaptor& p) const { return this->base_reference()<=p.base_reference(); }
-    bool    operator==(const dereference_iterator_adaptor& p) const { return this->base_reference()==p.base_reference(); }
-    bool    operator!=(const dereference_iterator_adaptor& p) const { return this->base_reference()!=p.base_reference(); }
+    constexpr auto operator*() const noexcept -> reference { return dereference(); }
 
     Iterator& base()              { return this->base_reference(); }
     const Iterator& base() const  { return this->base_reference(); }
     const DFn& deref_fn() const { return _deref_fn; }
+
+protected:
+    Iterator it_;
+    DFn _deref_fn;
+
+    constexpr auto base_reference() noexcept -> Iterator& { return it_; }
+    constexpr auto base_reference() const noexcept -> Iterator const& { return it_; }
+
 private:
     template <typename Iterator1, typename DFn1>
     friend class dereference_iterator_adaptor;
-    friend class boost::iterator_core_access;
+    friend struct boost::stl_interfaces::access;
 
     reference dereference() const { return _deref_fn(*(this->base_reference())); }
 };

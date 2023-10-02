@@ -91,6 +91,7 @@ public:
         return *this;
     }
 
+    // TODO: Enable only for ConstChannelReference
     template <typename Pixel>
     planar_pixel_reference(Pixel const& p) : parent_t(p)
     {
