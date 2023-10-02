@@ -12,7 +12,6 @@
 #include <boost/gil/position_iterator.hpp>
 
 #include <boost/assert.hpp>
-#include <boost/iterator/iterator_facade.hpp>
 
 namespace boost { namespace gil {
 

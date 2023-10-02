@@ -9,6 +9,8 @@
 #ifndef BOOST_GIL_METAFUNCTIONS_HPP
 #define BOOST_GIL_METAFUNCTIONS_HPP
 
+#include <boost/core/use_default.hpp>
+
 #include <boost/gil/channel.hpp>
 #include <boost/gil/dynamic_step.hpp>
 #include <boost/gil/concepts.hpp>
