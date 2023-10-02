@@ -10,7 +10,7 @@
 
 #include <boost/gil/locator.hpp>
 
-#include <boost/iterator/iterator_facade.hpp>
+#include <boost/stl_interfaces/iterator_interface.hpp>
 
 #include <type_traits>
 
@@ -28,18 +28,33 @@ namespace boost { namespace gil {
 /// \tparam Deref A function object that given a point returns a pixel reference. Models PixelDereferenceAdaptorConcept
 /// \tparam Dim Dimension to advance along
 template <typename Deref, int Dim>
-struct position_iterator : public iterator_facade<position_iterator<Deref,Dim>,
-                                                  typename Deref::value_type,
-                                                  std::random_access_iterator_tag,
-                                                  typename Deref::reference,
-                                                  typename Deref::argument_type::template axis<Dim>::coord_t> {
-    using parent_t = iterator_facade<position_iterator<Deref,Dim>,
-                            typename Deref::value_type,
-                            std::random_access_iterator_tag,
-                            typename Deref::reference,
-                            typename Deref::argument_type::template axis<Dim>::coord_t>;
+class position_iterator : public stl_interfaces::iterator_interface<
+#if !BOOST_STL_INTERFACES_USE_DEDUCED_THIS
+    position_iterator<Deref,Dim>,
+#endif
+    std::random_access_iterator_tag,
+    typename Deref::value_type,    
+    typename Deref::reference,
+    typename Deref::value_type*,
+    typename Deref::argument_type::template axis<Dim>::coord_t>
+{
+public:
+    using parent_t = stl_interfaces::iterator_interface<
+#if !BOOST_STL_INTERFACES_USE_DEDUCED_THIS
+        position_iterator<Deref, Dim>,
+#endif
+        std::random_access_iterator_tag,
+        typename Deref::value_type,
+        typename Deref::reference,
+        typename Deref::value_type*,
+        typename Deref::argument_type::template axis<Dim>::coord_t>;
+
     using difference_type = typename parent_t::difference_type;
     using reference = typename parent_t::reference;
+
+    using parent_t::operator++;
+    using parent_t::operator--;
+
     using point_t = typename Deref::argument_type;
 
     position_iterator() {}
@@ -63,21 +78,24 @@ struct position_iterator : public iterator_facade<position_iterator<Deref,Dim>,
     auto deref_fn() const -> Deref const& { return _d; }
 
     void set_step(difference_type s) { _step[Dim]=s; }
-    /// For some reason operator[] provided by iterator_adaptor returns a custom class that is convertible to reference
-    /// We require our own reference because it is registered in iterator_traits
-    auto operator[](difference_type d) const -> reference
-    {
-        point_t p=_p;
-        p[Dim]+=d*_step[Dim];
-        return _d(p);
-    }
+
+    constexpr auto operator*() const noexcept -> reference { return dereference(); }
+
+    constexpr auto operator+=(difference_type d) noexcept -> position_iterator& { advance(d); return *this; }
+
+    constexpr auto operator++() noexcept -> position_iterator& { increment(); return *this; }
+    constexpr auto operator--() noexcept -> position_iterator& { decrement(); return *this; }
+
+    constexpr auto operator-(position_iterator other) const noexcept { return -distance_to(other); }
+
+    constexpr bool operator==(position_iterator other) const noexcept { return equal(other); }
 
 private:
     point_t _p, _step;
     Deref   _d;
 
-    template <typename DE, int DI> friend struct position_iterator;
-    friend class boost::iterator_core_access;
+    template <typename DE, int DI> friend class position_iterator;
+    friend struct boost::stl_interfaces::access;
     reference dereference()     const { return _d(_p); }
     void increment()                  { _p[Dim]+=_step[Dim]; }
     void decrement()                  { _p[Dim]-=_step[Dim]; }

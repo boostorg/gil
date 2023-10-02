@@ -14,7 +14,7 @@
 #include <boost/gil/point.hpp>
 
 #include <boost/assert.hpp>
-#include <boost/iterator/iterator_facade.hpp>
+#include <boost/stl_interfaces/iterator_interface.hpp>
 
 namespace boost { namespace gil {
 
@@ -39,30 +39,37 @@ namespace boost { namespace gil {
 /// within each row
 
 template <typename Loc2>    // Models PixelLocatorConcept
-class iterator_from_2d : public iterator_facade<iterator_from_2d<Loc2>,
-                                                typename Loc2::value_type,
-                                                std::random_access_iterator_tag,
-                                                typename Loc2::reference,
-                                                typename Loc2::coord_t> {
+class iterator_from_2d : public stl_interfaces::iterator_interface<
+#if !BOOST_STL_INTERFACES_USE_DEDUCED_THIS
+    iterator_from_2d<Loc2>,
+#endif
+    std::random_access_iterator_tag,
+    typename Loc2::value_type,                                                
+    typename Loc2::reference>
+{
     BOOST_GIL_CLASS_REQUIRE(Loc2, boost::gil, PixelLocatorConcept)
+
+    using parent_t = stl_interfaces::iterator_interface<
+#if !BOOST_STL_INTERFACES_USE_DEDUCED_THIS
+        iterator_from_2d<Loc2>,
+#endif
+        std::random_access_iterator_tag,
+        typename Loc2::value_type,
+        typename Loc2::reference>;
+
 public:
-    using parent_t = iterator_facade<iterator_from_2d<Loc2>,
-                            typename Loc2::value_type,
-                            std::random_access_iterator_tag,
-                            typename Loc2::reference,
-                            typename Loc2::coord_t>;
-    using reference = typename parent_t::reference;
     using difference_type = typename parent_t::difference_type;
+    using reference = typename parent_t::reference;
+
+    using parent_t::operator++;
+    using parent_t::operator--;
+
     using x_iterator = typename Loc2::x_iterator;
     using point_t = typename Loc2::point_t;
 
     std::ptrdiff_t width()         const { return _width; }            // number of pixels per image row
     std::ptrdiff_t x_pos()         const { return _coords.x; }         // current x position
     std::ptrdiff_t y_pos()         const { return _coords.y; }         // current y position
-
-    /// For some reason operator[] provided by iterator_adaptor returns a custom class that is convertible to reference
-    /// We require our own reference because it is registered in iterator_traits
-    reference operator[](difference_type d) const { return *(*this+d); }
 
     bool            is_1d_traversable() const { return _p.is_1d_traversable(width()); }   // is there no gap at the end of each row?
     x_iterator&     x()                   { return _p.x(); }
@@ -73,9 +80,22 @@ public:
     template <typename Loc> iterator_from_2d(const iterator_from_2d<Loc>& pit) : _coords(pit._coords), _width(pit._width), _p(pit._p) {}
     iterator_from_2d& operator=(iterator_from_2d const& other) = default;
 
+    constexpr auto operator*() const noexcept -> reference { return dereference(); }
+
+    constexpr auto operator+=(difference_type d) -> iterator_from_2d& { advance(d); return *this; }
+
+    constexpr auto operator++() noexcept -> iterator_from_2d& { increment(); return *this; }
+    constexpr auto operator--() noexcept -> iterator_from_2d& { decrement(); return *this; }
+
+    constexpr auto operator-(iterator_from_2d other) const noexcept { return -distance_to(other); }
+
+    constexpr bool operator==(iterator_from_2d other) const noexcept { return equal(other); }
+
 private:
     template <typename Loc> friend class iterator_from_2d;
-    friend class boost::iterator_core_access;
+
+    friend struct boost::stl_interfaces::access;
+
     reference dereference() const { return *_p; }
     void increment() {
         ++_coords.x;

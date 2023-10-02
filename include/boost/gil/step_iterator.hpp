@@ -13,7 +13,7 @@
 #include <boost/gil/pixel_iterator_adaptor.hpp>
 #include <boost/gil/utilities.hpp>
 
-#include <boost/iterator/iterator_facade.hpp>
+#include <boost/stl_interfaces/iterator_interface.hpp>
 
 #include <cstddef>
 #include <iterator>
@@ -38,65 +38,70 @@ template <typename Derived,  // type of the derived class
           typename Iterator, // Models Iterator
           typename SFn>      // A policy object that can compute the distance between two iterators of type Iterator
                              // and can advance an iterator of type Iterator a given number of Iterator's units
-class step_iterator_adaptor : public iterator_adaptor<Derived, Iterator, use_default, use_default, use_default, typename SFn::difference_type>
+class step_iterator_adaptor
+    : public stl_interfaces::iterator_interface<
+#if !BOOST_STL_INTERFACES_USE_DEDUCED_THIS
+          Derived,
+#endif
+          std::random_access_iterator_tag,
+          typename std::iterator_traits<Iterator>::value_type,
+          typename std::iterator_traits<Iterator>::reference,
+          typename std::iterator_traits<Iterator>::pointer,
+          typename SFn::difference_type>
 {
+private:
+    constexpr Derived& derived() noexcept
+    {
+        return static_cast<Derived&>(*this);
+    }
+    constexpr Derived const& derived() const noexcept
+    {
+        return static_cast<Derived const&>(*this);
+    }
+
 public:
-    using parent_t = iterator_adaptor<Derived, Iterator, use_default, use_default, use_default, typename SFn::difference_type>;
+    using parent_t = stl_interfaces::iterator_interface<
+#if !BOOST_STL_INTERFACES_USE_DEDUCED_THIS
+        Derived,
+#endif
+        std::random_access_iterator_tag,
+        typename std::iterator_traits<Iterator>::value_type,
+        typename std::iterator_traits<Iterator>::reference,
+        typename std::iterator_traits<Iterator>::pointer,
+        typename SFn::difference_type>;
+
     using base_difference_type = typename std::iterator_traits<Iterator>::difference_type;
     using difference_type = typename SFn::difference_type;
     using reference = typename std::iterator_traits<Iterator>::reference;
 
     step_iterator_adaptor() {}
-    step_iterator_adaptor(Iterator const& it, SFn step_fn=SFn()) : parent_t(it), _step_fn(step_fn) {}
+    step_iterator_adaptor(Iterator const& it, SFn step_fn=SFn()) : it_(it), _step_fn(step_fn) {}
 
     auto step() const -> difference_type { return _step_fn.step(); }
 
+    constexpr Derived& operator+=(base_difference_type d) { advance(d); return derived(); }
+
+    constexpr auto operator-(step_iterator_adaptor other) const noexcept { return -distance_to(other); }
+
+    // It is really common for iterator adaptors to have a base() member
+    // function that returns the adapted iterator.
+    constexpr auto base() noexcept { return base_reference(); }
+    constexpr auto base() const noexcept { return base_reference(); }
+
 protected:
+    Iterator it_;
     SFn _step_fn;
+
+    constexpr auto base_reference() noexcept -> Iterator& { return it_; }
+    constexpr auto base_reference() const noexcept -> Iterator const& { return it_; }
+
 private:
-    friend class boost::iterator_core_access;
+    // Provide access to these private members.
+    friend boost::stl_interfaces::access;
 
-    void increment() { _step_fn.advance(this->base_reference(),1); }
-    void decrement() { _step_fn.advance(this->base_reference(),-1); }
-    void advance(base_difference_type d) { _step_fn.advance(this->base_reference(),d); }
-    
-    auto distance_to(step_iterator_adaptor const& it) const -> difference_type
-    {
-        return _step_fn.difference(this->base_reference(),it.base_reference());
-    }
+    constexpr void advance(base_difference_type d) { _step_fn.advance(this->base_reference(),d); }
+    constexpr auto distance_to(step_iterator_adaptor const& it) const -> difference_type { return _step_fn.difference(this->base_reference(),it.base_reference()); }
 };
-
-// although iterator_adaptor defines these, the default implementation computes distance and compares for zero.
-// it is often faster to just apply the relation operator to the base
-template <typename D,typename Iterator,typename SFn> inline
-bool operator>(const step_iterator_adaptor<D,Iterator,SFn>& p1, const step_iterator_adaptor<D,Iterator,SFn>& p2) {
-    return p1.step()>0 ? p1.base()> p2.base() : p1.base()< p2.base();
-}
-
-template <typename D,typename Iterator,typename SFn> inline
-bool operator<(const step_iterator_adaptor<D,Iterator,SFn>& p1, const step_iterator_adaptor<D,Iterator,SFn>& p2) {
-    return p1.step()>0 ? p1.base()< p2.base() : p1.base()> p2.base();
-}
-
-template <typename D,typename Iterator,typename SFn> inline
-bool operator>=(const step_iterator_adaptor<D,Iterator,SFn>& p1, const step_iterator_adaptor<D,Iterator,SFn>& p2) {
-    return p1.step()>0 ? p1.base()>=p2.base() : p1.base()<=p2.base();
-}
-
-template <typename D,typename Iterator,typename SFn> inline
-bool operator<=(const step_iterator_adaptor<D,Iterator,SFn>& p1, const step_iterator_adaptor<D,Iterator,SFn>& p2) {
-    return p1.step()>0 ? p1.base()<=p2.base() : p1.base()>=p2.base();
-}
-
-template <typename D,typename Iterator,typename SFn> inline
-bool operator==(const step_iterator_adaptor<D,Iterator,SFn>& p1, const step_iterator_adaptor<D,Iterator,SFn>& p2) {
-    return p1.base()==p2.base();
-}
-
-template <typename D,typename Iterator,typename SFn> inline
-bool operator!=(const step_iterator_adaptor<D,Iterator,SFn>& p1, const step_iterator_adaptor<D,Iterator,SFn>& p2) {
-    return p1.base()!=p2.base();
-}
 
 } // namespace detail
 
@@ -144,8 +149,8 @@ private:
 
 template <typename Iterator>
 class memory_based_step_iterator : public detail::step_iterator_adaptor<memory_based_step_iterator<Iterator>,
-                                                                            Iterator,
-                                                                            memunit_step_fn<Iterator>>
+                                                                        Iterator,
+                                                                        memunit_step_fn<Iterator>>
 {
     BOOST_GIL_CLASS_REQUIRE(Iterator, boost::gil, MemoryBasedIteratorConcept)
 public:
@@ -161,10 +166,6 @@ public:
     template <typename I2>
     memory_based_step_iterator(const memory_based_step_iterator<I2>& it)
         : parent_t(it.base(), memunit_step_fn<Iterator>(it.step())) {}
-
-    /// For some reason operator[] provided by iterator_adaptor returns a custom class that is convertible to reference
-    /// We require our own reference because it is registered in iterator_traits
-    auto operator[](difference_type d) const -> reference { return *(*this+d); }
 
     void set_step(std::ptrdiff_t memunit_step) { this->_step_fn.set_step(memunit_step); }
 
