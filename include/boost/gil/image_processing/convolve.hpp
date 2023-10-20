@@ -2,6 +2,7 @@
 // Copyright 2005-2007 Adobe Systems Incorporated
 // Copyright 2019 Miral Shah <miralshah2211@gmail.com>
 // Copyright 2019-2021 Pranam Lashkari <plashkari628@gmail.com>
+// Copyright 2021 Prathamesh Tagore <prathameshtagore@gmail.com>
 //
 // Distributed under the Boost Software License, Version 1.0
 // See accompanying file LICENSE_1_0.txt or copy at
@@ -142,6 +143,18 @@ void correlate_rows_impl(
                 it_buffer += width;
                 pixel_assigns_t<src_pixel_ref_t, PixelAccum>()(src_view.row_end(y)[-1], filler);
                 std::fill_n(it_buffer, kernel.right_size(), filler);
+            }
+            else if (option == boundary_option::extend_reflection)
+            {
+                assign_pixels(src_view.row_begin(y), src_view.row_begin(y) + kernel.left_size(),
+                    it_buffer);
+                std::reverse(buffer.begin(), buffer.begin() + kernel.left_size());
+                it_buffer += kernel.left_size();
+                assign_pixels(src_view.row_begin(y), src_view.row_end(y), it_buffer);
+                it_buffer += width;
+                assign_pixels(src_view.row_end(y) - kernel.right_size(), src_view.row_end(y),
+                    it_buffer);
+                std::reverse(buffer.end() - kernel.right_size(), buffer.end());
             }
 
             correlator(
