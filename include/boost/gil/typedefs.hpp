@@ -1,6 +1,7 @@
 //
 // Copyright 2005-2007 Adobe Systems Incorporated
 // Copyright 2018 Mateusz Loskot <mateusz@loskot.net>
+// Copyright 2022 Dirk Stolle
 //
 // Use, modification and distribution are subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -16,6 +17,7 @@
 #include <boost/gil/rgb.hpp>
 #include <boost/gil/rgba.hpp>
 
+#include <cstddef>
 #include <cstdint>
 #include <memory>
 #if !defined(BOOST_NO_CXX17_HDR_MEMORY_RESOURCE)
@@ -119,6 +121,9 @@ namespace boost { namespace gil {
 template <typename B, typename Mn, typename Mx> struct scoped_channel_value;
 template <typename T> struct float_point_zero;
 template <typename T> struct float_point_one;
+
+// general-purpose index type
+using index_t = std::ptrdiff_t;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 ///  Built-in channel models
