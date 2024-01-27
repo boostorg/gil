@@ -12,7 +12,7 @@
 #include <boost/gil/step_iterator.hpp>
 #include <boost/gil/detail/mp11.hpp>
 
-#include <boost/iterator/iterator_facade.hpp>
+#include <boost/stl_interfaces/iterator_interface.hpp>
 
 #include <iterator>
 #include <type_traits>
@@ -42,11 +42,12 @@ struct planar_pixel_reference;
 template <typename ChannelPtr, typename ColorSpace>
 struct planar_pixel_iterator
     :
-    iterator_facade
-    <
+    stl_interfaces::iterator_interface<
+#if !BOOST_STL_INTERFACES_USE_DEDUCED_THIS
         planar_pixel_iterator<ChannelPtr, ColorSpace>,
-        pixel<typename std::iterator_traits<ChannelPtr>::value_type,layout<ColorSpace>>,
+#endif
         std::random_access_iterator_tag,
+        pixel<typename std::iterator_traits<ChannelPtr>::value_type,layout<ColorSpace>>,
         planar_pixel_reference<typename std::iterator_traits<ChannelPtr>::reference, ColorSpace> const
     >,
     detail::homogeneous_color_base
@@ -57,11 +58,12 @@ struct planar_pixel_iterator
     >
 {
 private:
-    using parent_t = iterator_facade
-        <
+    using parent_t = stl_interfaces::iterator_interface<
+#if !BOOST_STL_INTERFACES_USE_DEDUCED_THIS
             planar_pixel_iterator<ChannelPtr, ColorSpace>,
-            pixel<typename std::iterator_traits<ChannelPtr>::value_type,layout<ColorSpace>>,
+#endif
             std::random_access_iterator_tag,
+            pixel<typename std::iterator_traits<ChannelPtr>::value_type,layout<ColorSpace>>,
             planar_pixel_reference<typename std::iterator_traits<ChannelPtr>::reference, ColorSpace> const
         >;
 
@@ -78,6 +80,9 @@ public:
     using value_type = typename parent_t::value_type;
     using reference = typename parent_t::reference;
     using difference_type = typename parent_t::difference_type;
+
+    using parent_t::operator++;
+    using parent_t::operator--;
 
     planar_pixel_iterator() : color_base_parent_t(0) {}
     planar_pixel_iterator(bool) {}        // constructor that does not fill with zero (for performance)
@@ -111,17 +116,19 @@ public:
         return *this;
     }
 
-    /// For some reason operator[] provided by iterator_facade returns a custom class that is convertible to reference
-    /// We require our own reference because it is registered in iterator_traits
-    reference operator[](difference_type d)       const { return memunit_advanced_ref(*this,d*sizeof(channel_t));}
+    constexpr auto operator*() const noexcept -> reference { return dereference(); }
 
-    reference operator->()                        const { return **this; }
+    constexpr auto operator+=(difference_type d) -> planar_pixel_iterator& { advance(d); return *this; }
 
-    // PERFORMANCE_CHECK: Remove?
-    bool operator< (const planar_pixel_iterator& ptr)   const { return gil::at_c<0>(*this)< gil::at_c<0>(ptr); }
-    bool operator!=(const planar_pixel_iterator& ptr)   const { return gil::at_c<0>(*this)!=gil::at_c<0>(ptr); }
+    constexpr auto operator++() noexcept -> planar_pixel_iterator& { increment(); return *this; }
+    constexpr auto operator--() noexcept -> planar_pixel_iterator& { decrement(); return *this; }
+
+    constexpr auto operator-(const planar_pixel_iterator& other) const noexcept { return -distance_to(other); }
+
+    constexpr bool operator==(const planar_pixel_iterator& other) const noexcept { return equal(other); }
+
 private:
-    friend class boost::iterator_core_access;
+    friend struct boost::stl_interfaces::access;
 
     void increment()            { static_transform(*this,*this,detail::inc<ChannelPtr>()); }
     void decrement()            { static_transform(*this,*this,detail::dec<ChannelPtr>()); }

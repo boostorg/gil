@@ -12,7 +12,7 @@
 #include <boost/gil/pixel_iterator.hpp>
 
 #include <boost/config.hpp>
-#include <boost/iterator/iterator_facade.hpp>
+#include <boost/stl_interfaces/iterator_interface.hpp>
 
 #include <functional>
 #include <type_traits>
@@ -34,20 +34,31 @@ namespace boost { namespace gil {
 /// \ingroup PixelIteratorNonAlignedPixelIterator PixelBasedModel
 
 template <typename NonAlignedPixelReference>
-struct bit_aligned_pixel_iterator : public iterator_facade<bit_aligned_pixel_iterator<NonAlignedPixelReference>,
-                                                  typename NonAlignedPixelReference::value_type,
-                                                  std::random_access_iterator_tag,
-                                                  const NonAlignedPixelReference,
-                                                  typename NonAlignedPixelReference::bit_range_t::difference_type> {
+class bit_aligned_pixel_iterator : public stl_interfaces::iterator_interface<
+#if !BOOST_STL_INTERFACES_USE_DEDUCED_THIS
+    bit_aligned_pixel_iterator<NonAlignedPixelReference>,
+#endif
+    std::random_access_iterator_tag,
+    typename NonAlignedPixelReference::value_type,
+    const NonAlignedPixelReference,
+    typename NonAlignedPixelReference::value_type*,
+    typename NonAlignedPixelReference::bit_range_t::difference_type>
+{
 private:
-    using parent_t = iterator_facade<bit_aligned_pixel_iterator<NonAlignedPixelReference>,
-                            typename NonAlignedPixelReference::value_type,
-                            std::random_access_iterator_tag,
-                            const NonAlignedPixelReference,
-                            typename NonAlignedPixelReference::bit_range_t::difference_type>;
-    template <typename Ref> friend struct bit_aligned_pixel_iterator;
+    using parent_t = stl_interfaces::iterator_interface<
+#if !BOOST_STL_INTERFACES_USE_DEDUCED_THIS
+        bit_aligned_pixel_iterator<NonAlignedPixelReference>,
+#endif
+        std::random_access_iterator_tag,
+        typename NonAlignedPixelReference::value_type,
+        const NonAlignedPixelReference,
+        typename NonAlignedPixelReference::value_type*,
+        typename NonAlignedPixelReference::bit_range_t::difference_type>;
+
+    template <typename Ref> friend class bit_aligned_pixel_iterator;
 
     using bit_range_t = typename NonAlignedPixelReference::bit_range_t;
+
 public:
     using difference_type = typename parent_t::difference_type;
     using reference = typename parent_t::reference;
@@ -61,21 +72,20 @@ public:
     bit_aligned_pixel_iterator(reference* ref) : _bit_range(ref->bit_range()) {}
     explicit bit_aligned_pixel_iterator(typename bit_range_t::byte_t* data, int bit_offset=0) : _bit_range(data,bit_offset) {}
 
-    /// For some reason operator[] provided by iterator_adaptor returns a custom class that is convertible to reference
-    /// We require our own reference because it is registered in iterator_traits
-    auto operator[](difference_type d) const -> reference { bit_aligned_pixel_iterator it=*this; it.advance(d); return *it; }
+    constexpr auto operator*() const noexcept -> reference { return dereference(); }
 
-    auto operator->() const -> reference { return **this; }
+    constexpr auto operator+=(difference_type i) noexcept -> bit_aligned_pixel_iterator& { advance(i); return *this; }
+
+    constexpr auto operator-(bit_aligned_pixel_iterator other) const noexcept { return -distance_to(other); }
+
     auto bit_range() const -> bit_range_t const& { return _bit_range; }
-    auto bit_range() -> bit_range_t& { return _bit_range; }
+    auto bit_range() -> bit_range_t&      { return _bit_range; }
+
 private:
     bit_range_t _bit_range;
     static constexpr int bit_size = NonAlignedPixelReference::bit_size;
 
-    friend class boost::iterator_core_access;
     auto dereference() const -> reference { return NonAlignedPixelReference(_bit_range); }
-    void increment()                  { ++_bit_range; }
-    void decrement()                  { --_bit_range; }
     void advance(difference_type d)   { _bit_range.bit_advance(d*bit_size); }
 
     auto distance_to(bit_aligned_pixel_iterator const& it) const -> difference_type { return _bit_range.bit_distance_to(it._bit_range) / bit_size; }

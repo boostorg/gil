@@ -11,7 +11,7 @@
 #include <boost/gil/io/error.hpp>
 #include <boost/gil/io/typedefs.hpp>
 
-#include <boost/iterator/iterator_facade.hpp>
+#include <boost/stl_interfaces/iterator_interface.hpp>
 
 #include <iterator>
 #include <memory>
@@ -27,10 +27,10 @@ namespace boost { namespace gil {
 /// Input iterator to read images.
 template <typename Reader>
 class scanline_read_iterator
-    : public boost::iterator_facade<scanline_read_iterator<Reader>, byte_t*, std::input_iterator_tag>
+    : public boost::stl_interfaces::iterator_interface<scanline_read_iterator<Reader>, byte_t*, std::input_iterator_tag>
 {
 private:
-    using base_t = boost::iterator_facade
+    using base_t = boost::stl_interfaces::iterator_interface
         <
             scanline_read_iterator<Reader>,
             byte_t*,
@@ -44,8 +44,12 @@ public:
         buffer_start_ = &buffer_->front();
     }
 
+    constexpr auto operator*() const noexcept { return dereference(); }
+    constexpr auto operator++() noexcept -> scanline_read_iterator& { increment(); return *this; }
+    constexpr bool operator==(scanline_read_iterator other) const noexcept { return equal(other); }
+
 private:
-    friend class boost::iterator_core_access;
+    friend struct boost::stl_interfaces::access;
 
     void increment()
     {
