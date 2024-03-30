@@ -7,18 +7,18 @@ import project ;
 
 project /boost/gil
     : common-requirements
-        <source>/boost/assert//boost_assert
-        <source>/boost/concept_check//boost_concept_check
-        <source>/boost/config//boost_config
-        <source>/boost/container_hash//boost_container_hash
-        <source>/boost/core//boost_core
-        <source>/boost/filesystem//boost_filesystem
-        <source>/boost/integer//boost_integer
-        <source>/boost/iterator//boost_iterator
-        <source>/boost/mp11//boost_mp11
-        <source>/boost/preprocessor//boost_preprocessor
-        <source>/boost/type_traits//boost_type_traits
-        <source>/boost/variant2//boost_variant2
+        <library>/boost/assert//boost_assert
+        <library>/boost/concept_check//boost_concept_check
+        <library>/boost/config//boost_config
+        <library>/boost/container_hash//boost_container_hash
+        <library>/boost/core//boost_core
+        <library>/boost/filesystem//boost_filesystem
+        <library>/boost/integer//boost_integer
+        <library>/boost/iterator//boost_iterator
+        <library>/boost/mp11//boost_mp11
+        <library>/boost/preprocessor//boost_preprocessor
+        <library>/boost/type_traits//boost_type_traits
+        <library>/boost/variant2//boost_variant2
         <include>include
     ;
 
