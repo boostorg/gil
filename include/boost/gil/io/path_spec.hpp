@@ -45,10 +45,10 @@ inline std::string convert_to_string( std::wstring const& s )
     std::mbstate_t state = std::mbstate_t();
     const wchar_t* str = s.c_str();
     const std::size_t len = std::wcsrtombs(nullptr, &str, 0, &state);
-    char* c = reinterpret_cast<char*>( alloca( len + 1));
-    wcstombs( c, s.c_str(), len + 1 );
+    std::string result(len, '\0');
+    wcstombs( &result[0], s.c_str(), len );
 
-    return std::string( c, c + len );
+    return result;
 }
 
 inline std::string convert_to_string( char const* str )
