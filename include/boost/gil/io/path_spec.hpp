@@ -1,6 +1,6 @@
 //
 // Copyright 2007-2008 Andreas Pokorny, Christian Henning
-// Copyright 2024 Dirk Stolle (minor fixes)
+// Copyright 2024 Dirk Stolle
 //
 // Distributed under the Boost Software License, Version 1.0
 // See accompanying file LICENSE_1_0.txt or copy at
@@ -12,6 +12,7 @@
 #include <boost/gil/io/detail/filesystem.hpp>
 
 #include <cstdlib>
+#include <cwchar>
 #include <string>
 #include <type_traits>
 
@@ -46,7 +47,7 @@ inline std::string convert_to_string( std::wstring const& s )
     const wchar_t* str = s.c_str();
     const std::size_t len = std::wcsrtombs(nullptr, &str, 0, &state);
     std::string result(len, '\0');
-    wcstombs( &result[0], s.c_str(), len );
+    std::wcstombs( &result[0], s.c_str(), len );
 
     return result;
 }
@@ -86,7 +87,7 @@ inline char const* convert_to_native_string( const wchar_t* str )
     std::mbstate_t state = std::mbstate_t();
     const std::size_t len = std::wcsrtombs(nullptr, &str, 0, &state) + 1;
     char* c = new char[len];
-    wcstombs( c, str, len );
+    std::wcstombs( c, str, len );
 
     return c;
 }
@@ -97,7 +98,7 @@ inline char const* convert_to_native_string( std::wstring const& str )
     const wchar_t* wstr = str.c_str();
     const std::size_t len = std::wcsrtombs(nullptr, &wstr, 0, &state) + 1;
     char* c = new char[len];
-    wcstombs( c, str.c_str(), len );
+    std::wcstombs( c, str.c_str(), len );
 
     return c;
 }
