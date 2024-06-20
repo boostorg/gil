@@ -60,6 +60,7 @@ local sources =
     threshold.cpp
     tutorial_histogram.cpp
     x_gradient.cpp
+		kuwahara.cpp
     ;
 
 local targets ;
