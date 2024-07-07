@@ -77,10 +77,10 @@ template&lt;typename DstP , typename View &gt; </td></tr>
 <tr class="memitem:ga34581d78bede470f674c78838e1fe1db"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_transformations_color_convert.html#ga34581d78bede470f674c78838e1fe1db">color_converted_view</a> (View const &amp;src) -&gt; typename <a class="el" href="structboost_1_1gil_1_1color__converted__view__type.html">color_converted_view_type</a>&lt; View, DstP &gt;::type</td></tr>
 <tr class="memdesc:ga34581d78bede470f674c78838e1fe1db"><td class="mdescLeft">&#160;</td><td class="mdescRight">overload of generic color_converted_view with the default color-converter <br /></td></tr>
 <tr class="separator:ga34581d78bede470f674c78838e1fe1db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa201aad1e0ea9f5937e5eb8e11c0ee16"><td class="memTemplParams" colspan="2">template&lt;typename DstP , typename ... Views, typename CC &gt; </td></tr>
-<tr class="memitem:gaa201aad1e0ea9f5937e5eb8e11c0ee16"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_transformations_color_convert.html#gaa201aad1e0ea9f5937e5eb8e11c0ee16">color_converted_view</a> (<a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; Views... &gt; const &amp;src, CC) -&gt; typename <a class="el" href="structboost_1_1gil_1_1color__converted__view__type.html">color_converted_view_type</a>&lt; <a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; Views... &gt;, DstP, CC &gt;::type</td></tr>
-<tr class="memdesc:gaa201aad1e0ea9f5937e5eb8e11c0ee16"><td class="mdescLeft">&#160;</td><td class="mdescRight">overload of generic color_converted_view with user defined color-converter  <a href="group___image_view_transformations_color_convert.html#gaa201aad1e0ea9f5937e5eb8e11c0ee16">More...</a><br /></td></tr>
-<tr class="separator:gaa201aad1e0ea9f5937e5eb8e11c0ee16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga68ed842a4701d56526292ed0bd0c9b1a"><td class="memTemplParams" colspan="2">template&lt;typename DstP , typename ... Views, typename CC &gt; </td></tr>
+<tr class="memitem:ga68ed842a4701d56526292ed0bd0c9b1a"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_transformations_color_convert.html#ga68ed842a4701d56526292ed0bd0c9b1a">color_converted_view</a> (<a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; Views... &gt; const &amp;src, CC cc) -&gt; typename <a class="el" href="structboost_1_1gil_1_1color__converted__view__type.html">color_converted_view_type</a>&lt; <a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; Views... &gt;, DstP, CC &gt;::type</td></tr>
+<tr class="memdesc:ga68ed842a4701d56526292ed0bd0c9b1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">overload of generic color_converted_view with user defined color-converter  <a href="group___image_view_transformations_color_convert.html#ga68ed842a4701d56526292ed0bd0c9b1a">More...</a><br /></td></tr>
+<tr class="separator:ga68ed842a4701d56526292ed0bd0c9b1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaeab08bca35b493a92bd497b7291a0382"><td class="memTemplParams" colspan="2">template&lt;typename DstP , typename ... Views&gt; </td></tr>
 <tr class="memitem:gaeab08bca35b493a92bd497b7291a0382"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___image_view_transformations_color_convert.html#gaeab08bca35b493a92bd497b7291a0382">color_converted_view</a> (<a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; Views... &gt; const &amp;src) -&gt; typename <a class="el" href="structboost_1_1gil_1_1color__converted__view__type.html">color_converted_view_type</a>&lt; <a class="el" href="classboost_1_1gil_1_1any__image__view.html">any_image_view</a>&lt; Views... &gt;, DstP &gt;::type</td></tr>
 <tr class="memdesc:gaeab08bca35b493a92bd497b7291a0382"><td class="mdescLeft">&#160;</td><td class="mdescRight">overload of generic color_converted_view with the default color-converter  <a href="group___image_view_transformations_color_convert.html#gaeab08bca35b493a92bd497b7291a0382">More...</a><br /></td></tr>
@@ -212,8 +212,8 @@ template&lt;typename DstP , typename View &gt; </td></tr>
 
 </div>
 </div>
-<a id="gaa201aad1e0ea9f5937e5eb8e11c0ee16"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa201aad1e0ea9f5937e5eb8e11c0ee16">&#9670;&nbsp;</a></span>color_converted_view() <span class="overload">[2/2]</span></h2>
+<a id="ga68ed842a4701d56526292ed0bd0c9b1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga68ed842a4701d56526292ed0bd0c9b1a">&#9670;&nbsp;</a></span>color_converted_view() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -231,7 +231,7 @@ template&lt;typename DstP , typename View &gt; </td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">CC&#160;</td>
-          <td class="paramname">&#160;</td>
+          <td class="paramname"><em>cc</em>&#160;</td>
         </tr>
         <tr>
           <td></td>

@@ -87,8 +87,8 @@ $(function() {
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keyword">using</span> value_t = <span class="keyword">typename</span> histogram&lt;SrcKeyType&gt;::value_type;</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    dst_hist.clear();</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">double</span> sum          = src_hist.sum();</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    SrcKeyType min_key  = std::numeric_limits&lt;DstKeyType&gt;::min();</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    SrcKeyType max_key  = std::numeric_limits&lt;DstKeyType&gt;::max();</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    SrcKeyType min_key  = (std::numeric_limits&lt;DstKeyType&gt;::min)();</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    SrcKeyType max_key  = (std::numeric_limits&lt;DstKeyType&gt;::max)();</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keyword">auto</span> cumltv_srchist = cumulative_histogram(src_hist);</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    std::map&lt;SrcKeyType, DstKeyType&gt; color_map;</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    std::for_each(cumltv_srchist.begin(), cumltv_srchist.end(), [&amp;](value_t <span class="keyword">const</span>&amp; v) {</div>
@@ -127,8 +127,8 @@ $(function() {
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    std::size_t <span class="keyword">const</span> channels = num_channels&lt;SrcView&gt;::value;</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    coord_t <span class="keyword">const</span> width        = src_view.width();</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    coord_t <span class="keyword">const</span> height       = src_view.height();</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    std::size_t pixel_max      = std::numeric_limits&lt;dst_channel_t&gt;::max();</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    std::size_t pixel_min      = std::numeric_limits&lt;dst_channel_t&gt;::min();</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    std::size_t pixel_max      = (std::numeric_limits&lt;dst_channel_t&gt;::max)();</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    std::size_t pixel_min      = (std::numeric_limits&lt;dst_channel_t&gt;::min)();</div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; channels; i++)</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    {</div>

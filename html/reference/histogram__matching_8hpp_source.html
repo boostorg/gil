@@ -169,10 +169,10 @@ $(function() {
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    std::size_t <span class="keyword">const</span> channels     = num_channels&lt;SrcView&gt;::value;</div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    coord_t <span class="keyword">const</span> width            = src_view.width();</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    coord_t <span class="keyword">const</span> height           = src_view.height();</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    source_channel_t src_pixel_min = std::numeric_limits&lt;source_channel_t&gt;::min();</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    source_channel_t src_pixel_max = std::numeric_limits&lt;source_channel_t&gt;::max();</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    ref_channel_t ref_pixel_min    = std::numeric_limits&lt;ref_channel_t&gt;::min();</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    ref_channel_t ref_pixel_max    = std::numeric_limits&lt;ref_channel_t&gt;::max();</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    source_channel_t src_pixel_min = (std::numeric_limits&lt;source_channel_t&gt;::min)();</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    source_channel_t src_pixel_max = (std::numeric_limits&lt;source_channel_t&gt;::max)();</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    ref_channel_t ref_pixel_min    = (std::numeric_limits&lt;ref_channel_t&gt;::min)();</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    ref_channel_t ref_pixel_max    = (std::numeric_limits&lt;ref_channel_t&gt;::max)();</div>
 <div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160; </div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; channels; i++)</div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    {</div>
