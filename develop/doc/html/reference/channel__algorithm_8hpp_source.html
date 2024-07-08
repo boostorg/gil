@@ -470,7 +470,7 @@ $(function() {
 <div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;        <span class="keywordflow">return</span> (tmp + (tmp &gt;&gt; 8)) &gt;&gt; 8;</div>
 <div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;    }</div>
 <div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160; </div>
-<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;    <span class="comment">// fast integer divison by 32768</span></div>
+<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;    <span class="comment">// fast integer division by 32768</span></div>
 <div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;    <span class="keyword">inline</span> <span class="keyword">auto</span> div32768(uint32_t in) -&gt; uint32_t</div>
 <div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;    {</div>
 <div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160;        <span class="keywordflow">return</span> (in + 16384) &gt;&gt; 15;</div>
