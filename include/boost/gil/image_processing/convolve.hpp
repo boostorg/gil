@@ -27,7 +27,7 @@
 
 namespace boost { namespace gil {
 
-// 2D spatial seperable convolutions and cross-correlations
+// 2D spatial separable convolutions and cross-correlations
 
 namespace detail {
 
