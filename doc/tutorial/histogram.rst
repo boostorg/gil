@@ -7,7 +7,7 @@ Tutorial: Histogram
 
 This is a short tutorial presenting an example of a very simple sample of code
 from an existing code base that calculates histogram of an image.
-Next, the program is rewritten using GIL featres.
+Next, the program is rewritten using GIL features.
 
 Original implementation
 -----------------------
