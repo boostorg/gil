@@ -27,6 +27,7 @@ local msvc-cxxs-with-experimental-fs = 14 ;
 project
   :
   requirements
+    <library>/boost/gil//boost_gil
     [ requires
         cxx11_constexpr
         cxx11_defaulted_functions

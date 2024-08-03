@@ -23,6 +23,7 @@ local msvc-cxxs-with-experimental-fs = 14 ;
 project
   :
   requirements
+    <library>/boost/gil//boost_gil
     [ requires
         cxx14_constexpr
         cxx14_return_type_deduction
