@@ -86,7 +86,7 @@ jobs:
             os: ubuntu-20.04
           - toolset: clang
             cxxstd: "14,17"
-            os: macos-12
+            os: macos-13
 
     runs-on: ${{matrix.os}}
     container:
