@@ -14,6 +14,8 @@
 
 #include <type_traits>
 
+#include <boost/stl_interfaces/iterator_interface.hpp>
+
 #include "interleaved_ref.hpp"
 
 // Example on how to create a pixel iterator
@@ -34,25 +36,25 @@ namespace boost { namespace gil {
 
 template <typename ChannelPtr,  // Models Channel Iterator (examples: unsigned char* or const unsigned char*)
           typename Layout>      // A layout (includes the color space and channel ordering)
-struct interleaved_ptr : boost::iterator_facade
+struct interleaved_ptr : stl_interfaces::iterator_interface
     <
+#if !BOOST_STL_INTERFACES_USE_DEDUCED_THIS
         interleaved_ptr<ChannelPtr, Layout>,
-        pixel<typename std::iterator_traits<ChannelPtr>::value_type, Layout>,
-        boost::random_access_traversal_tag,
+#endif
+        std::random_access_iterator_tag,
+        pixel<typename std::iterator_traits<ChannelPtr>::value_type, Layout>,        
         interleaved_ref<typename std::iterator_traits<ChannelPtr>::reference, Layout> const
     >
 {
 private:
-    using parent_t = boost::iterator_facade
+    using parent_t = stl_interfaces::iterator_interface
         <
+#if !BOOST_STL_INTERFACES_USE_DEDUCED_THIS
             interleaved_ptr<ChannelPtr, Layout>,
+#endif
+            std::random_access_iterator_tag,
             pixel<typename std::iterator_traits<ChannelPtr>::value_type, Layout>,
-            boost::random_access_traversal_tag,
-            interleaved_ref
-            <
-                typename std::iterator_traits<ChannelPtr>::reference,
-                Layout
-            > const
+            interleaved_ref<typename std::iterator_traits<ChannelPtr>::reference, Layout> const
         >;
 
     using channel_t = typename std::iterator_traits<ChannelPtr>::value_type;
@@ -60,6 +62,9 @@ private:
 public:
     using reference = typename parent_t::reference;
     using difference_type = typename parent_t::difference_type;
+
+    using parent_t::operator++;
+    using parent_t::operator--;
 
     interleaved_ptr() {}
     interleaved_ptr(const interleaved_ptr& ptr) : _channels(ptr._channels) {}
@@ -71,24 +76,29 @@ public:
     interleaved_ptr(reference* pix) : _channels(&((*pix)[0])) {}
     interleaved_ptr& operator=(reference* pix) { _channels=&((*pix)[0]); return *this; }
 
-    /// For some reason operator[] provided by boost::iterator_facade returns a custom class that is convertible to reference
-    /// We require our own reference because it is registered in iterator_traits
-    reference operator[](difference_type d) const { return memunit_advanced_ref(*this,d*sizeof(channel_t));}
-
-    // Put this for every iterator whose reference is a proxy type
-    reference operator->()                  const { return **this; }
-
     // Channels accessor (not required by any concept)
     const ChannelPtr& channels()            const { return _channels; }
           ChannelPtr& channels()                  { return _channels; }
 
     // Not required by concepts but useful
     static const std::size_t num_channels = mp11::mp_size<typename Layout::color_space_t>::value;
+
+    constexpr auto operator*() const noexcept { return dereference(); }
+
+    constexpr auto operator+=(difference_type d) -> interleaved_ptr& { advance(d); return *this; }
+
+    constexpr auto operator++() noexcept -> interleaved_ptr& { increment(); return *this; }
+    constexpr auto operator--() noexcept -> interleaved_ptr& { decrement(); return *this; }
+
+    constexpr auto operator-(interleaved_ptr other) const noexcept { return -distance_to(other); }
+
+    constexpr bool operator==(interleaved_ptr other) const noexcept { return equal(other); }
+
 private:
     ChannelPtr _channels;
-    friend class boost::iterator_core_access;
     template <typename CP, typename L> friend struct interleaved_ptr;
 
+    friend struct boost::stl_interfaces::access;
     void increment()            { _channels+=num_channels; }
     void decrement()            { _channels-=num_channels; }
     void advance(std::ptrdiff_t d)   { _channels+=num_channels*d; }
