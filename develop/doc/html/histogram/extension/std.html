@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>STD extension - Boost.GIL  documentation</title>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -19,9 +19,8 @@
       };
     </script>
     <script type="text/javascript" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sphinx_highlight.js"></script>
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/searchtools.js"></script>
     <script src="../../_static/language_data.js"></script>
@@ -71,9 +70,9 @@
     </div>
       
   <section id="std-extension">
-<span id="std"></span><h1>STD extension</h1>
+<span id="std"></span><h1>STD extension<a class="headerlink" href="#std-extension" title="Link to this heading">¶</a></h1>
 <section id="supported-types">
-<h2>Supported Types:</h2>
+<h2>Supported Types:<a class="headerlink" href="#supported-types" title="Link to this heading">¶</a></h2>
 <ol class="arabic simple">
 <li><p>std::vector (1D)</p></li>
 <li><p>std::map (1D)</p></li>
@@ -82,17 +81,17 @@
 </ol>
 </section>
 <section id="usage">
-<h2>Usage</h2>
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h2>
 <ol class="arabic">
 <li><p><strong>fill_histogram()</strong></p>
 <blockquote>
 <div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Demo for std::vector</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"></span>
-<span class="n">gil</span><span class="o">::</span><span class="n">gray8_image_t</span><span class="w"> </span><span class="n">img</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">v</span><span class="p">;</span>
+<span class="n">gil</span><span class="o">::</span><span class="n">gray8_image_t</span><span class="w"> </span><span class="n">img</span><span class="p">;</span>
 <span class="cm">/*</span>
 <span class="cm">Fill image ...</span>
-<span class="cm">*/</span><span class="w"></span>
-<span class="n">gil</span><span class="o">::</span><span class="n">fill_histogram</span><span class="p">(</span><span class="n">view</span><span class="p">(</span><span class="n">img</span><span class="p">),</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
+<span class="cm">*/</span>
+<span class="n">gil</span><span class="o">::</span><span class="n">fill_histogram</span><span class="p">(</span><span class="n">view</span><span class="p">(</span><span class="n">img</span><span class="p">),</span><span class="w"> </span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -100,11 +99,11 @@
 <li><p><strong>cumulative_histogram()</strong></p>
 <blockquote>
 <div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Demo for std::vector</span>
-<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"></span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="w"> </span><span class="n">v</span><span class="p">;</span>
 <span class="cm">/*</span>
 <span class="cm">Fill vector...</span>
-<span class="cm">*/</span><span class="w"></span>
-<span class="n">gil</span><span class="o">::</span><span class="n">cumulative_histogram</span><span class="p">(</span><span class="n">v</span><span class="p">);</span><span class="w"></span>
+<span class="cm">*/</span>
+<span class="n">gil</span><span class="o">::</span><span class="n">cumulative_histogram</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -124,8 +123,8 @@
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2024-12-08 19:12:25.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.2.
+      Last updated on 2025-04-04 16:04:45.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

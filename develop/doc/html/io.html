@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>IO extensions - Boost.GIL  documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -19,9 +19,8 @@
       };
     </script>
     <script type="text/javascript" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/sphinx_highlight.js"></script>
     <script data-url_root="./" id="documentation_options" src="./_static/documentation_options.js"></script>
     <script src="./_static/searchtools.js"></script>
     <script src="./_static/language_data.js"></script>
@@ -69,9 +68,9 @@
     </div>
       
   <section id="io-extensions">
-<h1>IO extensions</h1>
+<h1>IO extensions<a class="headerlink" href="#io-extensions" title="Link to this heading">¶</a></h1>
 <section id="overview">
-<h2>Overview</h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
 <p>This extension to boost::gil provides an easy to use interface for reading and
 writing various image formats. It also includes a framework for adding
 new formats.</p>
@@ -83,7 +82,7 @@ Furthermore the GIL extension Toolbox is used.</p>
 [link gil.io.using_io.extending_gil__io_with_new_formats Extending GIL::IO with new Formats].</p>
 </section>
 <section id="supported-platforms">
-<h2>Supported Platforms</h2>
+<h2>Supported Platforms<a class="headerlink" href="#supported-platforms" title="Link to this heading">¶</a></h2>
 <p>All platforms supported by Boost which have a decent C++ compiler.
 Depending on the image format one or more of the following image
 libraries might be needed:</p>
@@ -102,7 +101,7 @@ dependencies. Please see section
 [link gil.io.using_io.supported_image_formats Supported Image Formats].</p>
 </section>
 <section id="tutorial">
-<h2>Tutorial</h2>
+<h2>Tutorial<a class="headerlink" href="#tutorial" title="Link to this heading">¶</a></h2>
 <p>Thanks to modern C++ programming techniques the interface for this library
 is rather small and easy to use. In this tutorial I’ll give you a short
 walk-around on how to use this boost::gil extension.
@@ -111,11 +110,11 @@ For more details please refer to section 3.</p>
 For instance, include <cite>boost/gil/extension/io/tiff.hpp</cite> to be able
 to read or write TIFF files.</p>
 <section id="reading-an-image">
-<h3>Reading An Image</h3>
+<h3>Reading An Image<a class="headerlink" href="#reading-an-image" title="Link to this heading">¶</a></h3>
 <p>Probably the most common case to read a tiff image can be done as follows:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">filename</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;image.tif&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
-<span class="n">rgb8_image_t</span><span class="w"> </span><span class="n">img</span><span class="p">;</span><span class="w"></span>
-<span class="n">read_image</span><span class="p">(</span><span class="w"> </span><span class="n">filename</span><span class="p">,</span><span class="w"> </span><span class="n">img</span><span class="p">,</span><span class="w"> </span><span class="n">tiff_tag</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">filename</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;image.tif&quot;</span><span class="w"> </span><span class="p">);</span>
+<span class="n">rgb8_image_t</span><span class="w"> </span><span class="n">img</span><span class="p">;</span>
+<span class="n">read_image</span><span class="p">(</span><span class="w"> </span><span class="n">filename</span><span class="p">,</span><span class="w"> </span><span class="n">img</span><span class="p">,</span><span class="w"> </span><span class="n">tiff_tag</span><span class="p">()</span><span class="w"> </span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The code would be same for all other image formats. The only thing that needs
@@ -128,10 +127,10 @@ memory needed for the read operation. There are <code class="docutils literal no
 <code class="docutils literal notranslate"><span class="pre">read_and_convert_view</span></code> counterparts, if the memory is already allocated.</p>
 <p>Sometimes the user only wants to read a sub-part of an image,
 then the above call would look as follows:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">read_image</span><span class="p">(</span><span class="w"> </span><span class="n">filename</span><span class="w"></span>
-<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">img</span><span class="w"></span>
-<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">image_read_settings</span><span class="o">&lt;</span><span class="w"> </span><span class="n">tiff_tag</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">point_t</span><span class="p">(</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">point_t</span><span class="p">(</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">          </span><span class="p">);</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">read_image</span><span class="p">(</span><span class="w"> </span><span class="n">filename</span>
+<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">img</span>
+<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">image_read_settings</span><span class="o">&lt;</span><span class="w"> </span><span class="n">tiff_tag</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">point_t</span><span class="p">(</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">point_t</span><span class="p">(</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="w">          </span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The image_read_settings class will provide the user with image format
@@ -142,66 +141,66 @@ Please see the specific image format sections
 for more details.</p>
 </section>
 <section id="writing-an-image">
-<h3>Writing An Image</h3>
+<h3>Writing An Image<a class="headerlink" href="#writing-an-image" title="Link to this heading">¶</a></h3>
 <p>Besides reading the information also writing is the second part of this
 Boost.GIL extension. Writing is a lot simpler than reading since an existing
 image view contains all the information.</p>
 <p>For instance writing an image can be done as follows:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">filename</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;image.tif&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
-<span class="n">rgb8_image_t</span><span class="w"> </span><span class="nf">img</span><span class="p">(</span><span class="w"> </span><span class="mi">640</span><span class="p">,</span><span class="w"> </span><span class="mi">480</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">filename</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;image.tif&quot;</span><span class="w"> </span><span class="p">);</span>
+<span class="n">rgb8_image_t</span><span class="w"> </span><span class="nf">img</span><span class="p">(</span><span class="w"> </span><span class="mi">640</span><span class="p">,</span><span class="w"> </span><span class="mi">480</span><span class="w"> </span><span class="p">);</span>
 
 <span class="c1">// write data into image</span>
 
-<span class="n">write_view</span><span class="p">(</span><span class="w"> </span><span class="n">filename</span><span class="w"></span>
-<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">view</span><span class="p">(</span><span class="w"> </span><span class="n">img</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">tiff_tag</span><span class="p">()</span><span class="w"></span>
-<span class="w">          </span><span class="p">);</span><span class="w"></span>
+<span class="n">write_view</span><span class="p">(</span><span class="w"> </span><span class="n">filename</span>
+<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">view</span><span class="p">(</span><span class="w"> </span><span class="n">img</span><span class="w"> </span><span class="p">)</span>
+<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">tiff_tag</span><span class="p">()</span>
+<span class="w">          </span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The interface is similar to reading an image. To add image format specific
 parameter the user can use <code class="docutils literal notranslate"><span class="pre">image_write_info</span></code> class.
 For instance, a user can specify the JPEG quality when writing like this:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">filename</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;image.jpg&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
-<span class="n">rgb8_image_t</span><span class="w"> </span><span class="nf">img</span><span class="p">(</span><span class="w"> </span><span class="mi">640</span><span class="p">,</span><span class="w"> </span><span class="mi">480</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">filename</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;image.jpg&quot;</span><span class="w"> </span><span class="p">);</span>
+<span class="n">rgb8_image_t</span><span class="w"> </span><span class="nf">img</span><span class="p">(</span><span class="w"> </span><span class="mi">640</span><span class="p">,</span><span class="w"> </span><span class="mi">480</span><span class="w"> </span><span class="p">);</span>
 
 <span class="c1">// write data into image</span>
 
-<span class="n">write_view</span><span class="p">(</span><span class="w"> </span><span class="n">filename</span><span class="w"></span>
-<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">view</span><span class="p">(</span><span class="w"> </span><span class="n">img</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">image_write_info</span><span class="o">&lt;</span><span class="w"> </span><span class="n">jpeg_tag</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="mi">95</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">          </span><span class="p">);</span><span class="w"></span>
+<span class="n">write_view</span><span class="p">(</span><span class="w"> </span><span class="n">filename</span>
+<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">view</span><span class="p">(</span><span class="w"> </span><span class="n">img</span><span class="w"> </span><span class="p">)</span>
+<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">image_write_info</span><span class="o">&lt;</span><span class="w"> </span><span class="n">jpeg_tag</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="mi">95</span><span class="w"> </span><span class="p">)</span>
+<span class="w">          </span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The above example will write an image where the jpeg quality is
 set to 95 percent.</p>
 </section>
 <section id="reading-and-writing-in-memory-buffers">
-<h3>Reading And Writing In-Memory Buffers</h3>
+<h3>Reading And Writing In-Memory Buffers<a class="headerlink" href="#reading-and-writing-in-memory-buffers" title="Link to this heading">¶</a></h3>
 <p>Reading and writing in-memory buffers are supported as well. See as follows:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// 1. Read an image.</span>
-<span class="n">ifstream</span><span class="w"> </span><span class="nf">in</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;test.tif&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ios</span><span class="o">::</span><span class="n">binary</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">ifstream</span><span class="w"> </span><span class="n">in</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;test.tif&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ios</span><span class="o">::</span><span class="n">binary</span><span class="w"> </span><span class="p">);</span>
 
-<span class="n">rgb8_image_t</span><span class="w"> </span><span class="n">img</span><span class="p">;</span><span class="w"></span>
-<span class="n">read_image</span><span class="p">(</span><span class="w"> </span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="n">img</span><span class="p">,</span><span class="w"> </span><span class="n">tiff_tag</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">rgb8_image_t</span><span class="w"> </span><span class="n">img</span><span class="p">;</span>
+<span class="n">read_image</span><span class="p">(</span><span class="w"> </span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="n">img</span><span class="p">,</span><span class="w"> </span><span class="n">tiff_tag</span><span class="p">()</span><span class="w"> </span><span class="p">);</span>
 
 <span class="c1">// 2. Write image to in-memory buffer.</span>
-<span class="n">stringstream</span><span class="w"> </span><span class="nf">out_buffer</span><span class="p">(</span><span class="w"> </span><span class="n">ios_base</span><span class="o">::</span><span class="n">out</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">ios_base</span><span class="o">::</span><span class="n">binary</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">stringstream</span><span class="w"> </span><span class="nf">out_buffer</span><span class="p">(</span><span class="w"> </span><span class="n">ios_base</span><span class="o">::</span><span class="n">out</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">ios_base</span><span class="o">::</span><span class="n">binary</span><span class="w"> </span><span class="p">);</span>
 
-<span class="n">rgb8_image_t</span><span class="w"> </span><span class="n">src</span><span class="p">;</span><span class="w"></span>
-<span class="n">write_view</span><span class="p">(</span><span class="w"> </span><span class="n">out_buffer</span><span class="p">,</span><span class="w"> </span><span class="n">view</span><span class="p">(</span><span class="w"> </span><span class="n">src</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">tiff_tag</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">rgb8_image_t</span><span class="w"> </span><span class="n">src</span><span class="p">;</span>
+<span class="n">write_view</span><span class="p">(</span><span class="w"> </span><span class="n">out_buffer</span><span class="p">,</span><span class="w"> </span><span class="n">view</span><span class="p">(</span><span class="w"> </span><span class="n">src</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">tiff_tag</span><span class="p">()</span><span class="w"> </span><span class="p">);</span>
 
 <span class="c1">// 3. Copy in-memory buffer to another.</span>
-<span class="n">stringstream</span><span class="w"> </span><span class="nf">in_buffer</span><span class="p">(</span><span class="w"> </span><span class="n">ios_base</span><span class="o">::</span><span class="n">in</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">ios_base</span><span class="o">::</span><span class="n">binary</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
-<span class="n">in_buffer</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">out_buffer</span><span class="p">.</span><span class="n">rdbuf</span><span class="p">();</span><span class="w"></span>
+<span class="n">stringstream</span><span class="w"> </span><span class="nf">in_buffer</span><span class="p">(</span><span class="w"> </span><span class="n">ios_base</span><span class="o">::</span><span class="n">in</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">ios_base</span><span class="o">::</span><span class="n">binary</span><span class="w"> </span><span class="p">);</span>
+<span class="n">in_buffer</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">out_buffer</span><span class="p">.</span><span class="n">rdbuf</span><span class="p">();</span>
 
 <span class="c1">// 4. Read in-memory buffer to gil image</span>
-<span class="n">rgb8_image_t</span><span class="w"> </span><span class="n">dst</span><span class="p">;</span><span class="w"></span>
-<span class="n">read_image</span><span class="p">(</span><span class="w"> </span><span class="n">in_buffer</span><span class="p">,</span><span class="w"> </span><span class="n">dst</span><span class="p">,</span><span class="w"> </span><span class="n">tag_t</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">rgb8_image_t</span><span class="w"> </span><span class="n">dst</span><span class="p">;</span>
+<span class="n">read_image</span><span class="p">(</span><span class="w"> </span><span class="n">in_buffer</span><span class="p">,</span><span class="w"> </span><span class="n">dst</span><span class="p">,</span><span class="w"> </span><span class="n">tag_t</span><span class="p">()</span><span class="w"> </span><span class="p">);</span>
 
 <span class="c1">// 5. Write out image.</span>
-<span class="n">string</span><span class="w"> </span><span class="nf">filename</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;out.tif&quot;</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
-<span class="n">ofstream</span><span class="w"> </span><span class="nf">out</span><span class="p">(</span><span class="w"> </span><span class="n">filename</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span><span class="w"> </span><span class="n">ios_base</span><span class="o">::</span><span class="n">binary</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
-<span class="n">write_view</span><span class="p">(</span><span class="w"> </span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">view</span><span class="p">(</span><span class="w"> </span><span class="n">dst</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">tiff_tag</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">string</span><span class="w"> </span><span class="n">filename</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;out.tif&quot;</span><span class="w"> </span><span class="p">);</span>
+<span class="n">ofstream</span><span class="w"> </span><span class="nf">out</span><span class="p">(</span><span class="w"> </span><span class="n">filename</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span><span class="w"> </span><span class="n">ios_base</span><span class="o">::</span><span class="n">binary</span><span class="w"> </span><span class="p">);</span>
+<span class="n">write_view</span><span class="p">(</span><span class="w"> </span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">view</span><span class="p">(</span><span class="w"> </span><span class="n">dst</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">tiff_tag</span><span class="p">()</span><span class="w"> </span><span class="p">);</span>
 </pre></div>
 </div>
 <p>In case the user is using his own stream classes he has to make sure it
@@ -209,9 +208,9 @@ has the common interface read, write, seek, close, etc. Interface.</p>
 </section>
 </section>
 <section id="using-io">
-<h2>Using IO</h2>
+<h2>Using IO<a class="headerlink" href="#using-io" title="Link to this heading">¶</a></h2>
 <section id="general-overview">
-<h3>General Overview</h3>
+<h3>General Overview<a class="headerlink" href="#general-overview" title="Link to this heading">¶</a></h3>
 <p>The tutorial pointed out some use cases for reading and writing images in
 various image formats. This section will provide a more thorough overview.</p>
 <p>The next sections will introduce the Read and Write interface. But it might be
@@ -221,24 +220,24 @@ interface is rather small and hopefully easy to understand.</p>
 directly with the underlying image format. For that each reader or writer
 provides access to the so-called backend.</p>
 <p>For instance:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="n">bmp_tag</span><span class="w"> </span><span class="n">tag_t</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="n">bmp_tag</span><span class="w"> </span><span class="n">tag_t</span><span class="p">;</span>
 
-<span class="k">typedef</span><span class="w"> </span><span class="n">get_reader_backend</span><span class="o">&lt;</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"></span>
-<span class="w">                          </span><span class="p">,</span><span class="w"> </span><span class="n">tag_t</span><span class="w"></span>
-<span class="w">                          </span><span class="o">&gt;::</span><span class="n">type</span><span class="w"> </span><span class="n">backend_t</span><span class="p">;</span><span class="w"></span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">get_reader_backend</span><span class="o">&lt;</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span>
+<span class="w">                          </span><span class="p">,</span><span class="w"> </span><span class="n">tag_t</span>
+<span class="w">                          </span><span class="o">&gt;::</span><span class="n">type</span><span class="w"> </span><span class="n">backend_t</span><span class="p">;</span>
 
-<span class="n">backend_t</span><span class="w"> </span><span class="n">backend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read_image_info</span><span class="p">(</span><span class="w"> </span><span class="n">bmp_filename</span><span class="w"></span>
-<span class="w">                                   </span><span class="p">,</span><span class="w"> </span><span class="n">tag_t</span><span class="p">()</span><span class="w"></span>
-<span class="w">                                   </span><span class="p">);</span><span class="w"></span>
+<span class="n">backend_t</span><span class="w"> </span><span class="n">backend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read_image_info</span><span class="p">(</span><span class="w"> </span><span class="n">bmp_filename</span>
+<span class="w">                                   </span><span class="p">,</span><span class="w"> </span><span class="n">tag_t</span><span class="p">()</span>
+<span class="w">                                   </span><span class="p">);</span>
 
-<span class="n">BOOST_CHECK_EQUAL</span><span class="p">(</span><span class="w"> </span><span class="n">backend</span><span class="p">.</span><span class="n">_info</span><span class="p">.</span><span class="n">_width</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mi">127</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
-<span class="n">BOOST_CHECK_EQUAL</span><span class="p">(</span><span class="w"> </span><span class="n">backend</span><span class="p">.</span><span class="n">_info</span><span class="p">.</span><span class="n">_height</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">BOOST_CHECK_EQUAL</span><span class="p">(</span><span class="w"> </span><span class="n">backend</span><span class="p">.</span><span class="n">_info</span><span class="p">.</span><span class="n">_width</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="mi">127</span><span class="w"> </span><span class="p">);</span>
+<span class="n">BOOST_CHECK_EQUAL</span><span class="p">(</span><span class="w"> </span><span class="n">backend</span><span class="p">.</span><span class="n">_info</span><span class="p">.</span><span class="n">_height</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="w"> </span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Of course, the typedef can be removed when using c++11’s auto feature.</p>
 </section>
 <section id="read-interface">
-<h3>Read Interface</h3>
+<h3>Read Interface<a class="headerlink" href="#read-interface" title="Link to this heading">¶</a></h3>
 <p>As the Tutorial demonstrated there are a few ways to read images.
 Here is an enumeration of all read functions with a short description:</p>
 <ul class="simple">
@@ -269,18 +268,18 @@ But the all share settings for reading a partial image area.
 The first point describes the top left image coordinate whereas the second
 are the dimensions in x and y directions.</p>
 <p>Here an example of setting up partial read:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">read_image</span><span class="p">(</span><span class="w"> </span><span class="n">filename</span><span class="w"></span>
-<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">img</span><span class="w"></span>
-<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">image_read_settings</span><span class="o">&lt;</span><span class="w"> </span><span class="n">tiff_tag</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">point_t</span><span class="p">(</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">point_t</span><span class="p">(</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">          </span><span class="p">);</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">read_image</span><span class="p">(</span><span class="w"> </span><span class="n">filename</span>
+<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">img</span>
+<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">image_read_settings</span><span class="o">&lt;</span><span class="w"> </span><span class="n">tiff_tag</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">point_t</span><span class="p">(</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">point_t</span><span class="p">(</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
+<span class="w">          </span><span class="p">);</span>
 </pre></div>
 </div>
 <p>Each format supports reading just the header information,
 using <code class="docutils literal notranslate"><span class="pre">read_image_info</span></code>. Please refer to the format specific sections
 under 3.3. A basic example follows:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">image_read_info</span><span class="o">&lt;</span><span class="w"> </span><span class="n">tiff_t</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read_image_info</span><span class="p">(</span><span class="w"> </span><span class="n">filename</span><span class="w"></span>
-<span class="w">                                                </span><span class="p">,</span><span class="w"> </span><span class="n">tiff_t</span><span class="p">()</span><span class="w"></span>
-<span class="w">                                                </span><span class="p">);</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">image_read_info</span><span class="o">&lt;</span><span class="w"> </span><span class="n">tiff_t</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">read_image_info</span><span class="p">(</span><span class="w"> </span><span class="n">filename</span>
+<span class="w">                                                </span><span class="p">,</span><span class="w"> </span><span class="n">tiff_t</span><span class="p">()</span>
+<span class="w">                                                </span><span class="p">);</span>
 </pre></div>
 </div>
 <p>GIL also comes with a dynamic image extension.
@@ -288,16 +287,16 @@ In the context of GIL.IO a user can define an <code class="docutils literal notr
 several image types. The IO extension would then pick the matching image type
 to the current image file.
 The following example shows this feature:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">any_image</span><span class="o">&lt;</span><span class="w"> </span><span class="n">gray8_image_t</span><span class="w"></span>
-<span class="w">         </span><span class="p">,</span><span class="w"> </span><span class="n">gray16_image_t</span><span class="w"></span>
-<span class="w">         </span><span class="p">,</span><span class="w"> </span><span class="n">rgb8_image_t</span><span class="w"></span>
-<span class="w">         </span><span class="p">,</span><span class="w"> </span><span class="n">rgba8_image_t</span><span class="w"></span>
-<span class="w">         </span><span class="o">&gt;</span><span class="w"> </span><span class="n">runtime_image</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">any_image</span><span class="o">&lt;</span><span class="w"> </span><span class="n">gray8_image_t</span>
+<span class="w">         </span><span class="p">,</span><span class="w"> </span><span class="n">gray16_image_t</span>
+<span class="w">         </span><span class="p">,</span><span class="w"> </span><span class="n">rgb8_image_t</span>
+<span class="w">         </span><span class="p">,</span><span class="w"> </span><span class="n">rgba8_image_t</span>
+<span class="w">         </span><span class="o">&gt;</span><span class="w"> </span><span class="n">runtime_image</span><span class="p">;</span>
 
-<span class="n">read_image</span><span class="p">(</span><span class="w"> </span><span class="n">filename</span><span class="w"></span>
-<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">runtime_image</span><span class="w"></span>
-<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">tiff_tag</span><span class="p">()</span><span class="w"></span>
-<span class="w">          </span><span class="p">);</span><span class="w"></span>
+<span class="n">read_image</span><span class="p">(</span><span class="w"> </span><span class="n">filename</span>
+<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">runtime_image</span>
+<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">tiff_tag</span><span class="p">()</span>
+<span class="w">          </span><span class="p">);</span>
 </pre></div>
 </div>
 <p>During the review it became clear that there is a need to read big images
@@ -305,48 +304,48 @@ scanline by scanline. To support such use case a <code class="docutils literal n
 implemented for all supported image formats.
 The <code class="docutils literal notranslate"><span class="pre">scanline_read_iterators</span></code> will then allow to traverse through the image.
 The following code sample shows the usage:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="n">tiff_tag</span><span class="w"> </span><span class="n">tag_t</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="n">tiff_tag</span><span class="w"> </span><span class="n">tag_t</span><span class="p">;</span>
 
-<span class="k">typedef</span><span class="w"> </span><span class="n">scanline_reader</span><span class="o">&lt;</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">get_read_device</span><span class="o">&lt;</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"></span>
-<span class="w">                                                 </span><span class="p">,</span><span class="w"> </span><span class="n">tag_t</span><span class="w"></span>
-<span class="w">                                                 </span><span class="o">&gt;::</span><span class="n">type</span><span class="w"></span>
-<span class="w">                        </span><span class="p">,</span><span class="w"> </span><span class="n">tag_t</span><span class="w"></span>
-<span class="w">                        </span><span class="o">&gt;</span><span class="w"> </span><span class="n">reader_t</span><span class="p">;</span><span class="w"></span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">scanline_reader</span><span class="o">&lt;</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">get_read_device</span><span class="o">&lt;</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span>
+<span class="w">                                                 </span><span class="p">,</span><span class="w"> </span><span class="n">tag_t</span>
+<span class="w">                                                 </span><span class="o">&gt;::</span><span class="n">type</span>
+<span class="w">                        </span><span class="p">,</span><span class="w"> </span><span class="n">tag_t</span>
+<span class="w">                        </span><span class="o">&gt;</span><span class="w"> </span><span class="n">reader_t</span><span class="p">;</span>
 
-<span class="n">reader_t</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">make_scanline_reader</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;C:/boost/libs/gil/test/extension/io/images/tiff/test.tif&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">tag_t</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">reader_t</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">make_scanline_reader</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;C:/boost/libs/gil/test/extension/io/images/tiff/test.tif&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">tag_t</span><span class="p">()</span><span class="w"> </span><span class="p">);</span>
 
-<span class="k">typedef</span><span class="w"> </span><span class="n">rgba8_image_t</span><span class="w"> </span><span class="n">image_t</span><span class="p">;</span><span class="w"></span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">rgba8_image_t</span><span class="w"> </span><span class="n">image_t</span><span class="p">;</span>
 
-<span class="n">image_t</span><span class="w"> </span><span class="nf">dst</span><span class="p">(</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="n">_info</span><span class="p">.</span><span class="n">_width</span><span class="p">,</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="n">_info</span><span class="p">.</span><span class="n">_height</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
-<span class="n">fill_pixels</span><span class="p">(</span><span class="w"> </span><span class="n">view</span><span class="p">(</span><span class="n">dst</span><span class="p">),</span><span class="w"> </span><span class="n">image_t</span><span class="o">::</span><span class="n">value_type</span><span class="p">()</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<span class="n">image_t</span><span class="w"> </span><span class="nf">dst</span><span class="p">(</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="n">_info</span><span class="p">.</span><span class="n">_width</span><span class="p">,</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="n">_info</span><span class="p">.</span><span class="n">_height</span><span class="w"> </span><span class="p">);</span>
+<span class="n">fill_pixels</span><span class="p">(</span><span class="w"> </span><span class="n">view</span><span class="p">(</span><span class="n">dst</span><span class="p">),</span><span class="w"> </span><span class="n">image_t</span><span class="o">::</span><span class="n">value_type</span><span class="p">()</span><span class="w"> </span><span class="p">);</span>
 
-<span class="k">typedef</span><span class="w"> </span><span class="n">reader_t</span><span class="o">::</span><span class="n">iterator_t</span><span class="w"> </span><span class="n">iterator_t</span><span class="p">;</span><span class="w"></span>
+<span class="k">typedef</span><span class="w"> </span><span class="n">reader_t</span><span class="o">::</span><span class="n">iterator_t</span><span class="w"> </span><span class="n">iterator_t</span><span class="p">;</span>
 
-<span class="n">iterator_t</span><span class="w"> </span><span class="n">it</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"></span>
-<span class="n">iterator_t</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="n">end</span><span class="p">();</span><span class="w"></span>
+<span class="n">iterator_t</span><span class="w"> </span><span class="n">it</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+<span class="n">iterator_t</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="n">end</span><span class="p">();</span>
 
-<span class="k">for</span><span class="p">(</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">end</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">it</span><span class="p">,</span><span class="w"> </span><span class="o">++</span><span class="n">row</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">copy_pixels</span><span class="p">(</span><span class="w"> </span><span class="n">interleaved_view</span><span class="p">(</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="n">_info</span><span class="p">.</span><span class="n">_width</span><span class="w"></span>
-<span class="w">                                    </span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">                                    </span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">image_t</span><span class="o">::</span><span class="n">view_t</span><span class="o">::</span><span class="n">x_iterator</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="n">it</span><span class="w"></span>
-<span class="w">                                    </span><span class="p">,</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="n">_scanline_length</span><span class="w"></span>
-<span class="w">                                    </span><span class="p">)</span><span class="w"></span>
-<span class="w">                </span><span class="p">,</span><span class="w"> </span><span class="n">subimage_view</span><span class="p">(</span><span class="w"> </span><span class="n">view</span><span class="p">(</span><span class="w"> </span><span class="n">dst</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">                                </span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
-<span class="w">                                </span><span class="p">,</span><span class="w"> </span><span class="n">row</span><span class="w"></span>
-<span class="w">                                </span><span class="p">,</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="n">_info</span><span class="p">.</span><span class="n">_width</span><span class="w"></span>
-<span class="w">                                </span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
-<span class="w">                                </span><span class="p">)</span><span class="w"></span>
-<span class="w">                </span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="k">for</span><span class="p">(</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">end</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">it</span><span class="p">,</span><span class="w"> </span><span class="o">++</span><span class="n">row</span><span class="w"> </span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">copy_pixels</span><span class="p">(</span><span class="w"> </span><span class="n">interleaved_view</span><span class="p">(</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="n">_info</span><span class="p">.</span><span class="n">_width</span>
+<span class="w">                                    </span><span class="p">,</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">                                    </span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">image_t</span><span class="o">::</span><span class="n">view_t</span><span class="o">::</span><span class="n">x_iterator</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="n">it</span>
+<span class="w">                                    </span><span class="p">,</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="n">_scanline_length</span>
+<span class="w">                                    </span><span class="p">)</span>
+<span class="w">                </span><span class="p">,</span><span class="w"> </span><span class="n">subimage_view</span><span class="p">(</span><span class="w"> </span><span class="n">view</span><span class="p">(</span><span class="w"> </span><span class="n">dst</span><span class="w"> </span><span class="p">)</span>
+<span class="w">                                </span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">                                </span><span class="p">,</span><span class="w"> </span><span class="n">row</span>
+<span class="w">                                </span><span class="p">,</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="n">_info</span><span class="p">.</span><span class="n">_width</span>
+<span class="w">                                </span><span class="p">,</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">                                </span><span class="p">)</span>
+<span class="w">                </span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>There are many ways to traverse an image but for as of now only by
 scanline is supported.</p>
 </section>
 <section id="write-interface">
-<h3>Write Interface</h3>
+<h3>Write Interface<a class="headerlink" href="#write-interface" title="Link to this heading">¶</a></h3>
 <p>There is only one function for writing out images, write_view.
 Similar to reading the first parameter is either a filename or a device.
 The filename can be anything from a C-string, <code class="docutils literal notranslate"><span class="pre">std::string</span></code>,
@@ -362,30 +361,26 @@ One example for instance is the JPEG quality.
 Refer to the format specific sections under 3.3. to have a list of all
 the possible settings.</p>
 <p>Writing an any_image&lt;…&gt; is supported. See the following example:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">any_image</span><span class="o">&lt;</span><span class="w"> </span><span class="n">gray8_image_t</span><span class="w"></span>
-<span class="w">         </span><span class="p">,</span><span class="w"> </span><span class="n">gray16_image_t</span><span class="w"></span>
-<span class="w">         </span><span class="p">,</span><span class="w"> </span><span class="n">rgb8_image_t</span><span class="w"></span>
-<span class="w">         </span><span class="p">,</span><span class="w"> </span><span class="n">rgba8_image_t</span><span class="w"></span>
-<span class="w">         </span><span class="o">&gt;</span><span class="w"> </span><span class="n">runtime_image</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">any_image</span><span class="o">&lt;</span><span class="w"> </span><span class="n">gray8_image_t</span>
+<span class="w">         </span><span class="p">,</span><span class="w"> </span><span class="n">gray16_image_t</span>
+<span class="w">         </span><span class="p">,</span><span class="w"> </span><span class="n">rgb8_image_t</span>
+<span class="w">         </span><span class="p">,</span><span class="w"> </span><span class="n">rgba8_image_t</span>
+<span class="w">         </span><span class="o">&gt;</span><span class="w"> </span><span class="n">runtime_image</span><span class="p">;</span>
 
 <span class="c1">// fill any_image</span>
 
-<span class="n">write_view</span><span class="p">(</span><span class="w"> </span><span class="n">filename</span><span class="w"></span>
-<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">view</span><span class="p">(</span><span class="w"> </span><span class="n">runtime_image</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">tiff_tag</span><span class="p">()</span><span class="w"></span>
-<span class="w">          </span><span class="p">);</span><span class="w"></span>
+<span class="n">write_view</span><span class="p">(</span><span class="w"> </span><span class="n">filename</span>
+<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">view</span><span class="p">(</span><span class="w"> </span><span class="n">runtime_image</span><span class="w"> </span><span class="p">)</span>
+<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">tiff_tag</span><span class="p">()</span>
+<span class="w">          </span><span class="p">);</span>
 </pre></div>
 </div>
 </section>
 <section id="compiler-symbols">
-<h3>Compiler Symbols</h3>
+<h3>Compiler Symbols<a class="headerlink" href="#compiler-symbols" title="Link to this heading">¶</a></h3>
 <p>The following table gives an overview of all supported compiler symbols
 that can be set by the user:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 34%" />
-<col style="width: 66%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Symbol</p></th>
 <th class="head"><p>Description</p></th>
@@ -444,9 +439,9 @@ that can be set by the user:</p>
 </table>
 </section>
 <section id="supported-image-formats">
-<h3>Supported Image Formats</h3>
+<h3>Supported Image Formats<a class="headerlink" href="#supported-image-formats" title="Link to this heading">¶</a></h3>
 <section id="bmp">
-<h4>BMP</h4>
+<h4>BMP<a class="headerlink" href="#bmp" title="Link to this heading">¶</a></h4>
 <p>For a general overview of the BMP image file format go to the
 following <a class="reference external" href="http://en.wikipedia.org/wiki/BMP_file_format">BMP_Wiki</a>.</p>
 <p>Please note, the code has not been tested on X Windows System variations
@@ -454,10 +449,10 @@ of the BMP format which are usually referred to XBM and XPM formats.</p>
 <p>Here, only the MS Windows and OS/2 format is relevant.</p>
 <p>Currently the code is able to read and write the following image types:</p>
 <dl class="field-list simple">
-<dt class="field-odd">Read</dt>
+<dt class="field-odd">Read<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">gray1_image_t</span></code>, <code class="docutils literal notranslate"><span class="pre">gray4_image_t</span></code>, <code class="docutils literal notranslate"><span class="pre">gray8_image_t</span></code>, <code class="docutils literal notranslate"><span class="pre">rgb8_image_t</span></code> and, <code class="docutils literal notranslate"><span class="pre">rgba8_image_t</span></code></p>
 </dd>
-<dt class="field-even">Write</dt>
+<dt class="field-even">Write<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">rgb8_image_t</span></code> and, <code class="docutils literal notranslate"><span class="pre">rgba8_image_t</span></code></p>
 </dd>
 </dl>
@@ -466,7 +461,7 @@ interface to only write out non-indexed images.
 This is subject to change soon.</p>
 </section>
 <section id="jpeg">
-<h4>JPEG</h4>
+<h4>JPEG<a class="headerlink" href="#jpeg" title="Link to this heading">¶</a></h4>
 <p>For a general overview of the JPEG image file format go to the
 following <a class="reference external" href="http://en.wikipedia.org/wiki/JPEG">JPEG_Wiki</a>.</p>
 <p>This jpeg extension is based on the libjpeg library which can be
@@ -477,10 +472,10 @@ I strongly recommend the user to build the library yourself.
 It could potentially save you a lot of trouble.</p>
 <p>Currently the code is able to read and write the following image types:</p>
 <dl class="field-list simple">
-<dt class="field-odd">Read</dt>
+<dt class="field-odd">Read<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">gray8_image_t</span></code>, <code class="docutils literal notranslate"><span class="pre">rgb8_image_t</span></code>, <code class="docutils literal notranslate"><span class="pre">cmyk8_image_t</span></code></p>
 </dd>
-<dt class="field-even">Write</dt>
+<dt class="field-even">Write<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">gray8_image_t</span></code>, <code class="docutils literal notranslate"><span class="pre">rgb8_image_t</span></code>, <code class="docutils literal notranslate"><span class="pre">cmyk8_image_t</span></code></p>
 </dd>
 </dl>
@@ -490,7 +485,7 @@ For now these color space are read as rgb images.
 This is subject to change soon.</p>
 </section>
 <section id="png">
-<h4>PNG</h4>
+<h4>PNG<a class="headerlink" href="#png" title="Link to this heading">¶</a></h4>
 <p>For a general overview of the PNG image file format go to the
 following <a class="reference external" href="http://en.wikipedia.org/wiki/Portable_Network_Graphics">PNG_Wiki</a>.</p>
 <p>This png extension is based on the libpng, which can be found
@@ -501,10 +496,10 @@ I strongly recommend the user to build the library yourself.
 It could potentially save you a lot of trouble.</p>
 <p>Currently the code is able to read and write the following image types:</p>
 <dl class="field-list simple">
-<dt class="field-odd">Read</dt>
+<dt class="field-odd">Read<span class="colon">:</span></dt>
 <dd class="field-odd"><p>gray1, gray2, gray4, gray8, gray16, gray_alpha_8, gray_alpha_16, rgb8, rgb16, rgba8, rgba16</p>
 </dd>
-<dt class="field-even">Write</dt>
+<dt class="field-even">Write<span class="colon">:</span></dt>
 <dd class="field-even"><p>gray1, gray2, gray4, gray8, gray16, gray_alpha_8, gray_alpha_16, rgb8, rgb16, rgba8, rgba16</p>
 </dd>
 </dl>
@@ -512,37 +507,37 @@ It could potentially save you a lot of trouble.</p>
 macro  defined. This color space is defined in the toolbox by using <code class="docutils literal notranslate"><span class="pre">gray_alpha.hpp</span></code>.</p>
 </section>
 <section id="pnm">
-<h4>PNM</h4>
+<h4>PNM<a class="headerlink" href="#pnm" title="Link to this heading">¶</a></h4>
 <p>For a general overview of the PNM image file format go to the
 following <a class="reference external" href="http://en.wikipedia.org/wiki/Portable_anymap">PNM_Wiki</a>. No external library is needed for the pnm format.</p>
 <p>The extension can read images in both flavours of the formats, ASCII and binary,
 that is types from P1 through P6; can write only binary formats.</p>
 <p>Currently the code is able to read and write the following image types:</p>
 <dl class="field-list simple">
-<dt class="field-odd">Read</dt>
+<dt class="field-odd">Read<span class="colon">:</span></dt>
 <dd class="field-odd"><p>gray1, gray8, rgb8</p>
 </dd>
-<dt class="field-even">Write</dt>
+<dt class="field-even">Write<span class="colon">:</span></dt>
 <dd class="field-even"><p>gray1, gray8, rgb8</p>
 </dd>
 </dl>
 <p>When reading a mono text image the data is read as a gray8 image.</p>
 </section>
 <section id="raw">
-<h4>RAW</h4>
+<h4>RAW<a class="headerlink" href="#raw" title="Link to this heading">¶</a></h4>
 <p>For a general overview see <a class="reference external" href="http://en.wikipedia.org/wiki/Raw_image_format">RAW_Wiki</a>.</p>
 <p>Currently the extension is only able to read rgb8 images.</p>
 </section>
 <section id="targa">
-<h4>TARGA</h4>
+<h4>TARGA<a class="headerlink" href="#targa" title="Link to this heading">¶</a></h4>
 <p>For a general overview of the BMP image file format go to the
 following <a class="reference external" href="http://en.wikipedia.org/wiki/Truevision_TGA">TARGA_Wiki</a>.</p>
 <p>Currently the code is able to read and write the following image types:</p>
 <dl class="field-list simple">
-<dt class="field-odd">Read</dt>
+<dt class="field-odd">Read<span class="colon">:</span></dt>
 <dd class="field-odd"><p>rgb8_image_t and rgba8_image_t</p>
 </dd>
-<dt class="field-even">Write</dt>
+<dt class="field-even">Write<span class="colon">:</span></dt>
 <dd class="field-even"><p>rgb8_image_t and rgba8_image_t</p>
 </dd>
 </dl>
@@ -551,7 +546,7 @@ interface to only write out non-indexed images.
 This is subject to change soon.</p>
 </section>
 <section id="tiff">
-<h4>TIFF</h4>
+<h4>TIFF<a class="headerlink" href="#tiff" title="Link to this heading">¶</a></h4>
 <p>For a general overview of the TIFF image file format go to the
 following <a class="reference external" href="http://en.wikipedia.org/wiki/Tagged_Image_File_Format">TIFF_Wiki</a>.</p>
 <p>This tiff extension is based on the libtiff, which can be found, <a class="reference external" href="http://www.remotesensing.org/libtiff/">TIFF_Lib</a>.</p>
@@ -586,7 +581,7 @@ It’s advisable to use ImageMagick test viewer to display images.</p>
 </section>
 </section>
 <section id="extending-gil-io-with-new-formats">
-<h3>Extending GIL::IO with new Formats</h3>
+<h3>Extending GIL::IO with new Formats<a class="headerlink" href="#extending-gil-io-with-new-formats" title="Link to this heading">¶</a></h3>
 <p>Extending the gil::io with new formats is meant to be simple and
 straightforward. Before adding I would recommend to have a look at existing
 implementations and then trying to follow a couple of guidelines:</p>
@@ -602,93 +597,93 @@ implementations and then trying to follow a couple of guidelines:</p>
 </li>
 <li><p>Add the code to the <code class="docutils literal notranslate"><span class="pre">boost::gil::detail</span></code> namespace</p></li>
 <li><p>Create a tag type for the new format. Like this:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">xxx_tag</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">format_tag</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">xxx_tag</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">format_tag</span><span class="w"> </span><span class="p">{};</span>
 </pre></div>
 </div>
 </li>
 <li><p>Create the image_read_info for the new format. It contains all the
 information that are necessary to read an image. It should be filled
 and returned by the <code class="docutils literal notranslate"><span class="pre">get_info</span></code> member of the reader class. See below:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">image_read_info</span><span class="o">&lt;</span><span class="w"> </span><span class="n">xxx_tag</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">image_read_info</span><span class="o">&lt;</span><span class="w"> </span><span class="n">xxx_tag</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">{};</span>
 </pre></div>
 </div>
 </li>
 <li><p>Create the image_write_info for the new format. It contains all the
 information that are necessary to write an image:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">image_write_info</span><span class="o">&lt;</span><span class="w"> </span><span class="n">xxx_tag</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">{};</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">image_write_info</span><span class="o">&lt;</span><span class="w"> </span><span class="n">xxx_tag</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">{};</span>
 </pre></div>
 </div>
 </li>
 <li><p>Use the following reader skeleton as a start:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">Device</span><span class="w"></span>
-<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">ConversionPolicy</span><span class="w"></span>
-<span class="w">        </span><span class="o">&gt;</span><span class="w"></span>
-<span class="k">class</span><span class="w"> </span><span class="nc">reader</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Device</span><span class="w"></span>
-<span class="w">            </span><span class="p">,</span><span class="w"> </span><span class="n">xxx_tag</span><span class="w"></span>
-<span class="w">            </span><span class="p">,</span><span class="w"> </span><span class="n">ConversionPolicy</span><span class="w"></span>
-<span class="w">            </span><span class="o">&gt;</span><span class="w"></span>
-<span class="w">            </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">reader_base</span><span class="o">&lt;</span><span class="w"> </span><span class="n">xxx_tag</span><span class="w"></span>
-<span class="w">                                </span><span class="p">,</span><span class="w"> </span><span class="n">ConversionPolicy</span><span class="w"></span>
-<span class="w">                                </span><span class="o">&gt;</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="k">private</span><span class="o">:</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">Device</span>
+<span class="w">        </span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">ConversionPolicy</span>
+<span class="w">        </span><span class="o">&gt;</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">reader</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Device</span>
+<span class="w">            </span><span class="p">,</span><span class="w"> </span><span class="n">xxx_tag</span>
+<span class="w">            </span><span class="p">,</span><span class="w"> </span><span class="n">ConversionPolicy</span>
+<span class="w">            </span><span class="o">&gt;</span>
+<span class="w">            </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">reader_base</span><span class="o">&lt;</span><span class="w"> </span><span class="n">xxx_tag</span>
+<span class="w">                                </span><span class="p">,</span><span class="w"> </span><span class="n">ConversionPolicy</span>
+<span class="w">                                </span><span class="o">&gt;</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
 
-<span class="w">    </span><span class="k">typedef</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">ConversionPolicy</span><span class="o">::</span><span class="n">color_converter_type</span><span class="w"> </span><span class="n">cc_t</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">typedef</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">ConversionPolicy</span><span class="o">::</span><span class="n">color_converter_type</span><span class="w"> </span><span class="n">cc_t</span><span class="p">;</span>
 
-<span class="k">public</span><span class="o">:</span><span class="w"></span>
+<span class="k">public</span><span class="o">:</span>
 
-<span class="w">    </span><span class="n">reader</span><span class="p">(</span><span class="w"> </span><span class="n">Device</span><span class="o">&amp;</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="n">_io_dev</span><span class="p">(</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="p">{}</span><span class="w"></span>
+<span class="w">    </span><span class="n">reader</span><span class="p">(</span><span class="w"> </span><span class="n">Device</span><span class="o">&amp;</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="n">_io_dev</span><span class="p">(</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="p">{}</span>
 
-<span class="w">    </span><span class="n">reader</span><span class="p">(</span><span class="w"> </span><span class="n">Device</span><span class="o">&amp;</span><span class="w">     </span><span class="n">device</span><span class="w"></span>
-<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">cc_t</span><span class="o">&amp;</span><span class="w"> </span><span class="n">cc</span><span class="w"></span>
-<span class="w">          </span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="n">_io_dev</span><span class="p">(</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="p">,</span><span class="w"> </span><span class="n">reader_base</span><span class="o">&lt;</span><span class="w"> </span><span class="n">xxx_tag</span><span class="w"></span>
-<span class="w">                 </span><span class="p">,</span><span class="w"> </span><span class="n">ConversionPolicy</span><span class="w"></span>
-<span class="w">                 </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">cc</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="p">{}</span><span class="w"></span>
+<span class="w">    </span><span class="n">reader</span><span class="p">(</span><span class="w"> </span><span class="n">Device</span><span class="o">&amp;</span><span class="w">     </span><span class="n">device</span>
+<span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">cc_t</span><span class="o">&amp;</span><span class="w"> </span><span class="n">cc</span>
+<span class="w">          </span><span class="p">)</span>
+<span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="n">_io_dev</span><span class="p">(</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="p">,</span><span class="w"> </span><span class="n">reader_base</span><span class="o">&lt;</span><span class="w"> </span><span class="n">xxx_tag</span>
+<span class="w">                 </span><span class="p">,</span><span class="w"> </span><span class="n">ConversionPolicy</span>
+<span class="w">                 </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">cc</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="p">{}</span>
 
-<span class="w">    </span><span class="n">image_read_info</span><span class="o">&lt;</span><span class="w"> </span><span class="n">xxx_tag</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">get_info</span><span class="p">()</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">image_read_info</span><span class="o">&lt;</span><span class="w"> </span><span class="n">xxx_tag</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">get_info</span><span class="p">()</span>
+<span class="w">    </span><span class="p">{</span>
 <span class="w">        </span><span class="c1">// your implementation here</span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="k">template</span><span class="o">&lt;</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">View</span><span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">apply</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">View</span><span class="o">&amp;</span><span class="w"> </span><span class="n">dst_view</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">template</span><span class="o">&lt;</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">View</span><span class="w"> </span><span class="o">&gt;</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">apply</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">View</span><span class="o">&amp;</span><span class="w"> </span><span class="n">dst_view</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
 <span class="w">        </span><span class="c1">// your implementation here</span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
 </pre></div>
 </div>
 </li>
 <li><p>The writer skeleton:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">Device</span><span class="w"> </span><span class="o">&gt;</span><span class="w"></span>
-<span class="k">class</span><span class="w"> </span><span class="nc">writer</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Device</span><span class="w"></span>
-<span class="w">            </span><span class="p">,</span><span class="w"> </span><span class="n">xxx_tag</span><span class="w"></span>
-<span class="w">            </span><span class="o">&gt;</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="k">public</span><span class="o">:</span><span class="w"></span>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">Device</span><span class="w"> </span><span class="o">&gt;</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">writer</span><span class="o">&lt;</span><span class="w"> </span><span class="n">Device</span>
+<span class="w">            </span><span class="p">,</span><span class="w"> </span><span class="n">xxx_tag</span>
+<span class="w">            </span><span class="o">&gt;</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
 
-<span class="w">    </span><span class="n">writer</span><span class="p">(</span><span class="w"> </span><span class="n">Device</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="n">out</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="p">{}</span><span class="w"></span>
+<span class="w">    </span><span class="n">writer</span><span class="p">(</span><span class="w"> </span><span class="n">Device</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="n">out</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{}</span>
 
-<span class="w">    </span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">View</span><span class="o">&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">apply</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">View</span><span class="o">&amp;</span><span class="w"> </span><span class="n">view</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">View</span><span class="o">&gt;</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">apply</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">View</span><span class="o">&amp;</span><span class="w"> </span><span class="n">view</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
 <span class="w">        </span><span class="c1">// your implementation here</span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">View</span><span class="o">&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">apply</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">View</span><span class="o">&amp;</span><span class="w">                        </span><span class="n">view</span><span class="w"></span>
-<span class="w">              </span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">image_write_info</span><span class="o">&lt;</span><span class="w"> </span><span class="n">xxx_tag</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">info</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">View</span><span class="o">&gt;</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">apply</span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">View</span><span class="o">&amp;</span><span class="w">                        </span><span class="n">view</span>
+<span class="w">              </span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">image_write_info</span><span class="o">&lt;</span><span class="w"> </span><span class="n">xxx_tag</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">info</span><span class="w"> </span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
 <span class="w">        </span><span class="c1">// your implementation here</span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">};</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
 </pre></div>
 </div>
 </li>
@@ -696,7 +691,7 @@ information that are necessary to write an image:</p>
 </section>
 </section>
 <section id="running-gil-io-tests">
-<h2>Running gil::io tests</h2>
+<h2>Running gil::io tests<a class="headerlink" href="#running-gil-io-tests" title="Link to this heading">¶</a></h2>
 <p>gil::io comes with a large suite of test cases which reads and writes various
 file formats. It uses some test image suites which can be found online or
 which can be demanded from me by sending me an email.</p>
@@ -707,19 +702,19 @@ To enable unit tests which make use of them set the following compiler options
 <p>The following list provides all links to the image suites the compiler symbol
 to enable the tests:</p>
 <dl class="field-list simple">
-<dt class="field-odd">BMP</dt>
+<dt class="field-odd">BMP<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="http://entropymine.com/jason/bmpsuite/">BMP_TEST_FILES</a>                 – BOOST_GIL_IO_USE_BMP_TEST_SUITE_IMAGES</p>
 </dd>
-<dt class="field-even">PNG</dt>
+<dt class="field-even">PNG<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="http://www.schaik.com/pngsuite/pngsuite.html">PNG_TEST_FILES</a>                 – BOOST_GIL_IO_USE_PNG_TEST_SUITE_IMAGES</p>
 </dd>
-<dt class="field-odd">PNM</dt>
+<dt class="field-odd">PNM<span class="colon">:</span></dt>
 <dd class="field-odd"><p>request files from me           – BOOST_GIL_IO_USE_PNM_TEST_SUITE_IMAGES</p>
 </dd>
-<dt class="field-even">TIFF</dt>
+<dt class="field-even">TIFF<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="http://www.remotesensing.org/libtiff/images.html">TIFF_LIB_TIFF_TEST_FILES</a>       – BOOST_GIL_IO_USE_TIFF_LIBTIFF_TEST_SUITE_IMAGES</p>
 </dd>
-<dt class="field-odd">TIFF</dt>
+<dt class="field-odd">TIFF<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="ftp://ftp.graphicsmagick.org/pub/tiff-samples/tiff-sample-images-be.tar.gz">TIFF_GRAPHICSMAGICK_TEST_FILES</a> – BOOST_GIL_IO_USE_TIFF_GRAPHICSMAGICK_TEST_SUITE_IMAGES</p>
 </dd>
 </dl>
@@ -736,8 +731,8 @@ to enable the tests:</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2024-12-08 19:12:25.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.2.
+      Last updated on 2025-04-04 16:04:45.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>

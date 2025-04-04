@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Tutorial: Histogram - Boost.GIL  documentation</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -19,9 +19,8 @@
       };
     </script>
     <script type="text/javascript" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/searchtools.js"></script>
     <script src="../_static/language_data.js"></script>
@@ -69,36 +68,36 @@
     </div>
       
   <section id="tutorial-histogram">
-<h1>Tutorial: Histogram</h1>
-<div class="contents local topic" id="contents">
+<h1>Tutorial: Histogram<a class="headerlink" href="#tutorial-histogram" title="Link to this heading">¶</a></h1>
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#original-implementation" id="id1">Original implementation</a></p></li>
 <li><p><a class="reference internal" href="#gil-implementation" id="id2">GIL implementation</a></p></li>
 </ul>
-</div>
+</nav>
 <p>This is a short tutorial presenting an example of a very simple sample of code
 from an existing code base that calculates histogram of an image.
 Next, the program is rewritten using GIL features.</p>
 <section id="original-implementation">
-<h2><a class="toc-backref" href="#id1">Original implementation</a></h2>
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Original implementation</a><a class="headerlink" href="#original-implementation" title="Link to this heading">¶</a></h2>
 <p>Actual code from a commercial software product that computes the luminosity
 histogram (variable names have been changed and unrelated parts removed):</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">luminosity_hist</span><span class="p">(</span><span class="w"></span>
-<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="kt">uint8_t</span><span class="w"> </span><span class="k">const</span><span class="o">*</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="kt">uint8_t</span><span class="w"> </span><span class="k">const</span><span class="o">*</span><span class="w"> </span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="kt">uint8_t</span><span class="w"> </span><span class="k">const</span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"></span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">rows</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">cols</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">sRowBytes</span><span class="p">,</span><span class="w"> </span><span class="n">Histogram</span><span class="o">*</span><span class="w"> </span><span class="n">hist</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">rows</span><span class="p">;</span><span class="w"> </span><span class="n">r</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">cols</span><span class="p">;</span><span class="w"> </span><span class="n">c</span><span class="o">++</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="p">{</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">luminosity_hist</span><span class="p">(</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="kt">uint8_t</span><span class="w"> </span><span class="k">const</span><span class="o">*</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="kt">uint8_t</span><span class="w"> </span><span class="k">const</span><span class="o">*</span><span class="w"> </span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="kt">uint8_t</span><span class="w"> </span><span class="k">const</span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="p">,</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">rows</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">cols</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">sRowBytes</span><span class="p">,</span><span class="w"> </span><span class="n">Histogram</span><span class="o">*</span><span class="w"> </span><span class="n">hist</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">rows</span><span class="p">;</span><span class="w"> </span><span class="n">r</span><span class="o">++</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">cols</span><span class="p">;</span><span class="w"> </span><span class="n">c</span><span class="o">++</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
 <span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RGBToGray</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="n">c</span><span class="p">],</span><span class="w"> </span><span class="n">g</span><span class="p">[</span><span class="n">c</span><span class="p">],</span><span class="w"> </span><span class="n">b</span><span class="p">[</span><span class="n">c</span><span class="p">]);</span><span class="w"> </span><span class="c1">// call internal function or macro</span>
-<span class="w">            </span><span class="p">(</span><span class="o">*</span><span class="n">hist</span><span class="p">)[</span><span class="n">v</span><span class="p">]</span><span class="o">++</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="p">}</span><span class="w"></span>
-<span class="w">        </span><span class="n">r</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">sRowBytes</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="n">g</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">sRowBytes</span><span class="p">;</span><span class="w"></span>
-<span class="w">        </span><span class="n">b</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">sRowBytes</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">            </span><span class="p">(</span><span class="o">*</span><span class="n">hist</span><span class="p">)[</span><span class="n">v</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">r</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">sRowBytes</span><span class="p">;</span>
+<span class="w">        </span><span class="n">g</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">sRowBytes</span><span class="p">;</span>
+<span class="w">        </span><span class="n">b</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">sRowBytes</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>Let’s consider the following issues of the implementation above:</p>
@@ -109,30 +108,30 @@ histogram (variable names have been changed and unrelated parts removed):</p>
 </ul>
 </section>
 <section id="gil-implementation">
-<h2><a class="toc-backref" href="#id2">GIL implementation</a></h2>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">GrayView</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">R</span><span class="o">&gt;</span><span class="w"></span>
-<span class="kt">void</span><span class="w"> </span><span class="n">grayimage_histogram</span><span class="p">(</span><span class="n">GrayView</span><span class="o">&amp;</span><span class="w"> </span><span class="n">img</span><span class="p">,</span><span class="w"> </span><span class="n">R</span><span class="o">&amp;</span><span class="w"> </span><span class="n">hist</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">typename</span><span class="w"> </span><span class="nc">GrayView</span><span class="o">::</span><span class="n">iterator</span><span class="w"> </span><span class="n">it</span><span class="o">=</span><span class="n">img</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"> </span><span class="n">it</span><span class="o">!=</span><span class="n">img</span><span class="p">.</span><span class="n">end</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">it</span><span class="p">)</span><span class="w"></span>
-<span class="w">        </span><span class="o">++</span><span class="n">hist</span><span class="p">[</span><span class="o">*</span><span class="n">it</span><span class="p">];</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">GIL implementation</a><a class="headerlink" href="#gil-implementation" title="Link to this heading">¶</a></h2>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">GrayView</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">R</span><span class="o">&gt;</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">grayimage_histogram</span><span class="p">(</span><span class="n">GrayView</span><span class="o">&amp;</span><span class="w"> </span><span class="n">img</span><span class="p">,</span><span class="w"> </span><span class="n">R</span><span class="o">&amp;</span><span class="w"> </span><span class="n">hist</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">typename</span><span class="w"> </span><span class="nc">GrayView</span><span class="o">::</span><span class="n">iterator</span><span class="w"> </span><span class="n">it</span><span class="o">=</span><span class="n">img</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span><span class="w"> </span><span class="n">it</span><span class="o">!=</span><span class="n">img</span><span class="p">.</span><span class="n">end</span><span class="p">();</span><span class="w"> </span><span class="o">++</span><span class="n">it</span><span class="p">)</span>
+<span class="w">        </span><span class="o">++</span><span class="n">hist</span><span class="p">[</span><span class="o">*</span><span class="n">it</span><span class="p">];</span>
+<span class="p">}</span>
 
-<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">View</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">R</span><span class="o">&gt;</span><span class="w"></span>
-<span class="kt">void</span><span class="w"> </span><span class="n">luminosity8bit_hist</span><span class="p">(</span><span class="n">View</span><span class="o">&amp;</span><span class="w"> </span><span class="n">img</span><span class="p">,</span><span class="w"> </span><span class="n">R</span><span class="o">&amp;</span><span class="w"> </span><span class="n">hist</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">grayimage_histogram</span><span class="p">(</span><span class="n">color_converted_view</span><span class="o">&lt;</span><span class="n">gray8_pixel_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">img</span><span class="p">),</span><span class="n">hist</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">View</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">R</span><span class="o">&gt;</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">luminosity8bit_hist</span><span class="p">(</span><span class="n">View</span><span class="o">&amp;</span><span class="w"> </span><span class="n">img</span><span class="p">,</span><span class="w"> </span><span class="n">R</span><span class="o">&amp;</span><span class="w"> </span><span class="n">hist</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">grayimage_histogram</span><span class="p">(</span><span class="n">color_converted_view</span><span class="o">&lt;</span><span class="n">gray8_pixel_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">img</span><span class="p">),</span><span class="n">hist</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>Using the Boost.Lambda library (or C++11 lambda) features it can written
 even simpler:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">boost</span><span class="o">::</span><span class="n">lambda</span><span class="p">;</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">boost</span><span class="o">::</span><span class="n">lambda</span><span class="p">;</span>
 
-<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">GrayView</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">R</span><span class="o">&gt;</span><span class="w"></span>
-<span class="kt">void</span><span class="w"> </span><span class="n">grayimage_histogram</span><span class="p">(</span><span class="n">GrayView</span><span class="o">&amp;</span><span class="w"> </span><span class="n">img</span><span class="p">,</span><span class="w"> </span><span class="n">R</span><span class="o">&amp;</span><span class="w"> </span><span class="n">hist</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">for_each_pixel</span><span class="p">(</span><span class="n">img</span><span class="p">,</span><span class="w"> </span><span class="o">++</span><span class="n">var</span><span class="p">(</span><span class="n">hist</span><span class="p">)[</span><span class="n">_1</span><span class="p">]);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">GrayView</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">R</span><span class="o">&gt;</span>
+<span class="kt">void</span><span class="w"> </span><span class="n">grayimage_histogram</span><span class="p">(</span><span class="n">GrayView</span><span class="o">&amp;</span><span class="w"> </span><span class="n">img</span><span class="p">,</span><span class="w"> </span><span class="n">R</span><span class="o">&amp;</span><span class="w"> </span><span class="n">hist</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">for_each_pixel</span><span class="p">(</span><span class="n">img</span><span class="p">,</span><span class="w"> </span><span class="o">++</span><span class="n">var</span><span class="p">(</span><span class="n">hist</span><span class="p">)[</span><span class="n">_1</span><span class="p">]);</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>Let’s consider the following advantages of the GIL version:</p>
@@ -147,17 +146,17 @@ provided in future extensions of GIL</p></li>
 <p>Shortly, it is also very flexible.</p>
 <p>For example, to compute the histogram of the second channel of the top left
 quadrant of the image, taking every other row and column, call:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">grayimage_histogram</span><span class="p">(</span><span class="w"></span>
-<span class="w">    </span><span class="n">nth_channel_view</span><span class="p">(</span><span class="w"></span>
-<span class="w">        </span><span class="n">subsampled_view</span><span class="p">(</span><span class="w"></span>
-<span class="w">            </span><span class="n">subimage_view</span><span class="p">(</span><span class="n">img</span><span class="p">,</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">grayimage_histogram</span><span class="p">(</span>
+<span class="w">    </span><span class="n">nth_channel_view</span><span class="p">(</span>
+<span class="w">        </span><span class="n">subsampled_view</span><span class="p">(</span>
+<span class="w">            </span><span class="n">subimage_view</span><span class="p">(</span><span class="n">img</span><span class="p">,</span>
 <span class="w">                </span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">img</span><span class="p">.</span><span class="n">width</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">img</span><span class="p">.</span><span class="n">height</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="c1">// upper left quadrant</span>
 <span class="w">                </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="w">                                     </span><span class="c1">// skip every other row and column</span>
-<span class="w">            </span><span class="p">),</span><span class="w"></span>
+<span class="w">            </span><span class="p">),</span>
 <span class="w">        </span><span class="mi">1</span><span class="w">   </span><span class="c1">// index of the second channel (for example, green for RGB)</span>
-<span class="w">    </span><span class="p">),</span><span class="w"></span>
-<span class="w">    </span><span class="n">hist</span><span class="w"></span>
-<span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">),</span>
+<span class="w">    </span><span class="n">hist</span>
+<span class="p">);</span>
 </pre></div>
 </div>
 <p>Since GIL operates on the source pixels of <code class="docutils literal notranslate"><span class="pre">img</span></code> object directly, no extra
@@ -175,8 +174,8 @@ memory is allocated and no images are copied.</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2024-12-08 19:12:25.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.2.
+      Last updated on 2025-04-04 16:04:45.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>
