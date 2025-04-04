@@ -29,18 +29,20 @@ jobs:
           - toolset: gcc-7
             cxxstd: "14,17"
             install: g++-7
-            os: ubuntu-20.04
+            os: ubuntu-latest
+            container: ubuntu:20.04
           - toolset: gcc-8
             cxxstd: "14"
-            os: ubuntu-20.04
+            os: ubuntu-latest
+            container: ubuntu:20.04
             install: g++-8
           - toolset: gcc-9
             cxxstd: "14,17"
-            os: ubuntu-20.04
+            os: ubuntu-24.04
             install: g++-9
           - toolset: gcc-10
             cxxstd: "14,17"
-            os: ubuntu-20.04
+            os: ubuntu-24.04
             install: g++-10
           - toolset: clang
             compiler: clang++-3.9
@@ -63,27 +65,33 @@ jobs:
           - toolset: clang
             compiler: clang++-6.0
             cxxstd: "14,17"
-            os: ubuntu-20.04
+            os: ubuntu-latest
+            container: ubuntu:20.04
             install: clang-6.0
           - toolset: clang
             compiler: clang++-7
             cxxstd: "14,17"
-            os: ubuntu-20.04
+            os: ubuntu-latest
+            container: ubuntu:20.04
             install: clang-7
           - toolset: clang
             compiler: clang++-8
             cxxstd: "14,17"
-            os: ubuntu-20.04
+            os: ubuntu-latest
+            container: ubuntu:20.04
             install: clang-8
           - toolset: clang
             compiler: clang++-9
             cxxstd: "14,17"
-            os: ubuntu-20.04
+            os: ubuntu-latest
+            container: ubuntu:20.04
             install: clang-9
           - toolset: clang
             compiler: clang++-10
             cxxstd: "14,17"
-            os: ubuntu-20.04
+            os: ubuntu-latest
+            container: ubuntu:20.04
+            install: clang-10
           - toolset: clang
             cxxstd: "14,17"
             os: macos-13
