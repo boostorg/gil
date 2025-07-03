@@ -1145,7 +1145,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l01238" name="l01238"></a><span class="lineno"> 1238</span>        BinaryOperation2 binary_op2)</div>
 <div class="line"><a id="l01239" name="l01239"></a><span class="lineno"> 1239</span>    {</div>
 <div class="line"><a id="l01240" name="l01240"></a><span class="lineno"> 1240</span>        init = binary_op1(init, binary_op2(*first1, *first2));</div>
-<div class="line"><a id="l01241" name="l01241"></a><span class="lineno"> 1241</span>        <span class="keywordflow">return</span> inner_product_k_t&lt;Size - 1&gt;::template apply(</div>
+<div class="line"><a id="l01241" name="l01241"></a><span class="lineno"> 1241</span>        <span class="keywordflow">return</span> inner_product_k_t&lt;Size - 1&gt;::apply(</div>
 <div class="line"><a id="l01242" name="l01242"></a><span class="lineno"> 1242</span>            first1 + 1, first2 + 1, init, binary_op1, binary_op2);</div>
 <div class="line"><a id="l01243" name="l01243"></a><span class="lineno"> 1243</span>    }</div>
 <div class="line"><a id="l01244" name="l01244"></a><span class="lineno"> 1244</span>};</div>
@@ -1191,7 +1191,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l01285" name="l01285"></a><span class="lineno"> 1285</span>    BinaryOperation1 binary_op1,</div>
 <div class="line"><a id="l01286" name="l01286"></a><span class="lineno"> 1286</span>    BinaryOperation2 binary_op2)</div>
 <div class="line"><a id="l01287" name="l01287"></a><span class="lineno"> 1287</span>{</div>
-<div class="line"><a id="l01288" name="l01288"></a><span class="lineno"> 1288</span>    <span class="keywordflow">return</span> detail::inner_product_k_t&lt;Size&gt;::template apply(</div>
+<div class="line"><a id="l01288" name="l01288"></a><span class="lineno"> 1288</span>    <span class="keywordflow">return</span> detail::inner_product_k_t&lt;Size&gt;::apply(</div>
 <div class="line"><a id="l01289" name="l01289"></a><span class="lineno"> 1289</span>        first1, first2, init, binary_op1, binary_op2);</div>
 <div class="line"><a id="l01290" name="l01290"></a><span class="lineno"> 1290</span>}</div>
 <div class="line"><a id="l01291" name="l01291"></a><span class="lineno"> 1291</span> </div>
