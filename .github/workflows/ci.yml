@@ -44,6 +44,32 @@ jobs:
             cxxstd: "14,17"
             os: ubuntu-24.04
             install: g++-10
+          - toolset: gcc
+            compiler: g++-11
+            cxxstd: "14,17"
+            os: ubuntu-24.04
+            install: g++-11
+          - toolset: gcc
+            compiler: g++-12
+            cxxstd: "14,17,20"
+            os: ubuntu-24.04
+            install: g++-12
+          - toolset: gcc
+            compiler: g++-13
+            cxxstd: "14,17,20"
+            os: ubuntu-24.04
+            install: g++-13
+          - toolset: gcc
+            compiler: g++-14
+            cxxstd: "14,17,20"
+            os: ubuntu-24.04
+            install: g++-14
+          - toolset: gcc
+            compiler: g++-15
+            cxxstd: "14,17,20"
+            os: ubuntu-latest
+            container: ubuntu:25.04
+            install: g++-15
           - toolset: clang
             compiler: clang++-3.9
             cxxstd: "14"
