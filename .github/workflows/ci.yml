@@ -156,14 +156,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - toolset: msvc-14.2
-            cxxstd: "14,17"
-            addrmd: 32,64
-            os: windows-2019
           - toolset: gcc
             cxxstd: "14,17"
             addrmd: 64
-            os: windows-2019
+            os: windows-2022
           - toolset: msvc-14.3
             cxxstd: "14,17"
             addrmd: 32,64
