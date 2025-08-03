@@ -119,6 +119,58 @@ jobs:
             container: ubuntu:20.04
             install: clang-10
           - toolset: clang
+            compiler: clang++-11
+            cxxstd: "14,17,20"
+            os: ubuntu-22.04
+            install: clang-11
+          - toolset: clang
+            compiler: clang++-12
+            cxxstd: "14,17,20"
+            os: ubuntu-22.04
+            install: clang-12
+          - toolset: clang
+            compiler: clang++-13
+            cxxstd: "14,17,20"
+            os: ubuntu-22.04
+            install: clang-13
+          - toolset: clang
+            compiler: clang++-14
+            cxxstd: "14,17,20"
+            os: ubuntu-24.04
+            install: clang-14
+          - toolset: clang
+            compiler: clang++-15
+            cxxstd: "14,17,20"
+            os: ubuntu-24.04
+            install: clang-15
+          - toolset: clang
+            compiler: clang++-16
+            cxxstd: "14,17,20"
+            os: ubuntu-24.04
+            install: clang-16
+          - toolset: clang
+            compiler: clang++-17
+            cxxstd: "14,17,20"
+            os: ubuntu-latest
+            container: ubuntu:24.04
+            install: clang-17
+          - toolset: clang
+            compiler: clang++-18
+            cxxstd: "14,17,20,23"
+            os: ubuntu-24.04
+            install: clang-18
+          - toolset: clang
+            compiler: clang++-19
+            cxxstd: "14,17,20,23"
+            os: ubuntu-24.04
+            install: clang-19
+          - toolset: clang
+            compiler: clang++-20
+            cxxstd: "14,17,20,23"
+            os: ubuntu-latest
+            container: ubuntu:25.04
+            install: clang-20
+          - toolset: clang
             cxxstd: "14,17"
             os: macos-13
 
