@@ -319,7 +319,7 @@ One example for instance is the JPEG quality.
 Refer to the format specific sections under 3.3. to have a list of all
 the possible settings.
 
-Writing an any_image<...> is supported. See the following example:
+Writing an any_image<...> is supported. See the following example::
 
     any_image< gray8_image_t
              , gray16_image_t
