@@ -7,7 +7,7 @@ algorithms is to enhance visual beauty, some applications of this in medical res
 prevalent.
 
 We have a few contrast enhancement algorithms in the GIL image processing suite as well.
-These include :
+These include:
     #. :ref:`he`
     #. :ref:`hm`
     #. :ref:`ahe` 
