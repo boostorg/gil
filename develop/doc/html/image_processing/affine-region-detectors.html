@@ -92,7 +92,7 @@ or any other stable features.</p>
 <h2>Algorithm steps<a class="headerlink" href="#algorithm-steps" title="Link to this heading">¶</a></h2>
 <section id="harris-and-hessian">
 <h3>Harris and Hessian<a class="headerlink" href="#harris-and-hessian" title="Link to this heading">¶</a></h3>
-<p>Both are derived from a concept called Moravec window. Lets have a look
+<p>Both are derived from a concept called Moravec window. Let’s have a look
 at the image below:</p>
 <figure class="align-default" id="id1">
 <img alt="Moravec window corner case" src="../_images/Moravec-window-corner.png" />
@@ -101,7 +101,7 @@ at the image below:</p>
 </figcaption>
 </figure>
 <p>As can be noticed, moving the yellow window in any direction will cause
-very big change in intensity. Now, lets have a look at the edge case:</p>
+very big change in intensity. Now, let’s have a look at the edge case:</p>
 <figure class="align-default" id="id2">
 <img alt="Moravec window edge case" src="../_images/Moravec-window-edge.png" />
 <figcaption>
@@ -115,7 +115,7 @@ work.</p>
 <p>The algorithms have the same structure:</p>
 <ol class="arabic simple">
 <li><p>Compute image derivatives</p></li>
-<li><p>Compute Weighted sum</p></li>
+<li><p>Compute weighted sum</p></li>
 <li><p>Compute response</p></li>
 <li><p>Threshold (optional)</p></li>
 </ol>
@@ -148,7 +148,7 @@ extremely noisy. For complex images, like the ones of outdoors, for
 Harris it will be in order of 100000000 and for Hessian will be in order
 of 10000. For simpler images values in order of 100s and 1000s should be
 enough. The numbers assume <code class="docutils literal notranslate"><span class="pre">uint8_t</span></code> gray image.</p>
-<p>To get deeper explanation please refer to following <strong>paper</strong>:</p>
+<p>To get a deeper explanation please refer to the following <strong>papers</strong>:</p>
 <p><a class="reference external" href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.434.4816&amp;rep=rep1&amp;type=pdf">Harris, Christopher G., and Mike Stephens. “A combined corner and edge
 detector.” In Alvey vision conference, vol. 15, no. 50, pp. 10-5244.
 1988.</a></p>
@@ -169,7 +169,7 @@ detector.” In Alvey vision conference, vol. 15, no. 50, pp. 10-5244.
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2025-08-25 22:08:54.
+      Last updated on 2025-08-27 09:08:12.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>

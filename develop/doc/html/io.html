@@ -134,7 +134,7 @@ then the above call would look as follows:</p>
 </pre></div>
 </div>
 <p>The image_read_settings class will provide the user with image format
-independent reading setting but can also serves as a pointer for format
+independent reading setting but can also serve as a pointer for format
 dependent settings.
 Please see the specific image format sections
 [link gil.io.using_io.supported_image_formats Supported Image Formats]
@@ -204,7 +204,7 @@ set to 95 percent.</p>
 </pre></div>
 </div>
 <p>In case the user is using his own stream classes he has to make sure it
-has the common interface read, write, seek, close, etc. Interface.</p>
+has the common interface read, write, seek, close, etc. interface.</p>
 </section>
 </section>
 <section id="using-io">
@@ -264,10 +264,10 @@ Devices could be a <code class="docutils literal notranslate"><span class="pre">
 The third and last parameter is either an instance of the
 <code class="docutils literal notranslate"><span class="pre">image_read_settings&lt;FormatTag&gt;</span></code> or just the <code class="docutils literal notranslate"><span class="pre">FormatTag</span></code>.
 The settings can be various depending on the format which is being read.
-But the all share settings for reading a partial image area.
+But they all share settings for reading a partial image area.
 The first point describes the top left image coordinate whereas the second
 are the dimensions in x and y directions.</p>
-<p>Here an example of setting up partial read:</p>
+<p>Here is an example of setting up partial read:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">read_image</span><span class="p">(</span><span class="w"> </span><span class="n">filename</span>
 <span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">img</span>
 <span class="w">          </span><span class="p">,</span><span class="w"> </span><span class="n">image_read_settings</span><span class="o">&lt;</span><span class="w"> </span><span class="n">tiff_tag</span><span class="w"> </span><span class="o">&gt;</span><span class="p">(</span><span class="w"> </span><span class="n">point_t</span><span class="p">(</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">point_t</span><span class="p">(</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">)</span>
@@ -354,7 +354,7 @@ The availability of the <code class="docutils literal notranslate"><span class="
 unless <code class="docutils literal notranslate"><span class="pre">BOOST_GIL_IO_USE_BOOST_FILESYSTEM</span></code> macro is defined that forces
 preference of the Boost.Filesystem.
 Devices could be <code class="docutils literal notranslate"><span class="pre">FILE*</span></code>, <code class="docutils literal notranslate"><span class="pre">std::ifstream</span></code>, and <code class="docutils literal notranslate"><span class="pre">TIFF*</span></code> for TIFF images.</p>
-<p>The second parameter is an view object to image being written.
+<p>The second parameter is a view object to image being written.
 The third and last parameter is either a tag or an
 <code class="docutils literal notranslate"><span class="pre">image_write_info&lt;FormatTag&gt;</span></code> object containing more settings.
 One example for instance is the JPEG quality.
@@ -445,15 +445,15 @@ that can be set by the user:</p>
 <p>For a general overview of the BMP image file format go to the
 following <a class="reference external" href="http://en.wikipedia.org/wiki/BMP_file_format">BMP_Wiki</a>.</p>
 <p>Please note, the code has not been tested on X Windows System variations
-of the BMP format which are usually referred to XBM and XPM formats.</p>
+of the BMP format which are usually referred to as XBM and XPM formats.</p>
 <p>Here, only the MS Windows and OS/2 format is relevant.</p>
 <p>Currently the code is able to read and write the following image types:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Read<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">gray1_image_t</span></code>, <code class="docutils literal notranslate"><span class="pre">gray4_image_t</span></code>, <code class="docutils literal notranslate"><span class="pre">gray8_image_t</span></code>, <code class="docutils literal notranslate"><span class="pre">rgb8_image_t</span></code> and, <code class="docutils literal notranslate"><span class="pre">rgba8_image_t</span></code></p>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">gray1_image_t</span></code>, <code class="docutils literal notranslate"><span class="pre">gray4_image_t</span></code>, <code class="docutils literal notranslate"><span class="pre">gray8_image_t</span></code>, <code class="docutils literal notranslate"><span class="pre">rgb8_image_t</span></code> and <code class="docutils literal notranslate"><span class="pre">rgba8_image_t</span></code></p>
 </dd>
 <dt class="field-even">Write<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">rgb8_image_t</span></code> and, <code class="docutils literal notranslate"><span class="pre">rgba8_image_t</span></code></p>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">rgb8_image_t</span></code> and <code class="docutils literal notranslate"><span class="pre">rgba8_image_t</span></code></p>
 </dd>
 </dl>
 <p>The lack of having an indexed image type in gil restricts the current
@@ -481,7 +481,7 @@ It could potentially save you a lot of trouble.</p>
 </dl>
 <p>Reading YCbCr or YCCK images is possible but might result in inaccuracies since
 both color spaces aren’t available yet for gil.
-For now these color space are read as rgb images.
+For now these color spaces are read as rgb images.
 This is subject to change soon.</p>
 </section>
 <section id="png">
@@ -565,7 +565,7 @@ formats, like integer values or floating point values.</p>
 </ul>
 <p>The author of this extension is not claiming all tiff formats are supported.
 This extension is likely to be a moving target adding new features with each
-new milestone. Here is an incomplete lists:</p>
+new milestone. Here is an incomplete list:</p>
 <ul class="simple">
 <li><p>Multi-page TIFF - read only</p></li>
 <li><p>Strip TIFF - read and write support</p></li>
@@ -588,8 +588,8 @@ implementations and then trying to follow a couple of guidelines:</p>
 <ul>
 <li><dl class="simple">
 <dt>Create the following files for your new xxx format</dt><dd><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">xxx_read.hpp</span></code> - Only includes read code</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">xxx_write.hpp</span></code> - Only includes write code</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xxx_read.hpp</span></code> - only includes read code</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">xxx_write.hpp</span></code> - only includes write code</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">xxx_all.hpp</span></code> - includes xxx_read.hpp and xxx_write.hpp</p></li>
 </ul>
 </dd>
@@ -602,14 +602,14 @@ implementations and then trying to follow a couple of guidelines:</p>
 </div>
 </li>
 <li><p>Create the image_read_info for the new format. It contains all the
-information that are necessary to read an image. It should be filled
+information that is necessary to read an image. It should be filled
 and returned by the <code class="docutils literal notranslate"><span class="pre">get_info</span></code> member of the reader class. See below:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">image_read_info</span><span class="o">&lt;</span><span class="w"> </span><span class="n">xxx_tag</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">{};</span>
 </pre></div>
 </div>
 </li>
 <li><p>Create the image_write_info for the new format. It contains all the
-information that are necessary to write an image:</p>
+information that is necessary to write an image:</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="o">&lt;&gt;</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">image_write_info</span><span class="o">&lt;</span><span class="w"> </span><span class="n">xxx_tag</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">{};</span>
 </pre></div>
 </div>
@@ -731,7 +731,7 @@ to enable the tests:</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2025-08-25 22:08:54.
+      Last updated on 2025-08-27 09:08:12.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>

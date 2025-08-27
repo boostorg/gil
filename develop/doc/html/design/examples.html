@@ -178,7 +178,7 @@ is how to simplify this code using the <code class="docutils literal notranslate
 </pre></div>
 </div>
 <p>(Note also that <code class="docutils literal notranslate"><span class="pre">image::recreate</span></code> is more efficient than <code class="docutils literal notranslate"><span class="pre">operator=</span></code>, as
-the latter will do an unnecessary copy construction). Not only does the above
+the latter will do an unnecessary copy construction.) Not only does the above
 example work for planar and interleaved images of any color space and pixel
 depth; it is also optimized. GIL overrides <code class="docutils literal notranslate"><span class="pre">std::copy</span></code> - when called on two
 identical interleaved images with no padding at the end of rows, it simply
@@ -186,7 +186,7 @@ does a <code class="docutils literal notranslate"><span class="pre">memmove</spa
 If one of the images has padding, (as in our case) it will try to do
 <code class="docutils literal notranslate"><span class="pre">memmove</span></code> for each row. When an image has no padding, it will use its
 lightweight horizontal iterator (as opposed to the more complex 1D image
-iterator that has to check for the end of rows). It choses the fastest method,
+iterator that has to check for the end of rows). It chooses the fastest method,
 taking into account both static and run-time parameters.</p>
 </section>
 <section id="histogram">
@@ -267,7 +267,7 @@ channel depth. They could be either planar or interleaved.</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2025-08-25 22:08:54.
+      Last updated on 2025-08-27 09:08:12.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>

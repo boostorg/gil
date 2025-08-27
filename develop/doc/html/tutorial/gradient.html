@@ -175,7 +175,7 @@ given location and we set it to the half-difference of its left and right
 neighbors. <code class="docutils literal notranslate"><span class="pre">operator()</span></code> returns a reference to a grayscale pixel.
 A grayscale pixel is convertible to its channel type (<code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">char</span></code> for
 <code class="docutils literal notranslate"><span class="pre">src</span></code>) and it can be copy-constructed from a channel.
-(This is only true for grayscale pixels).</p>
+(This is only true for grayscale pixels.)</p>
 <p>While the above code is easy to read, it is not very fast, because the binary
 <code class="docutils literal notranslate"><span class="pre">operator()</span></code> computes the location of the pixel in a 2D grid, which involves
 addition and multiplication. Here is a faster version of the above:</p>
@@ -350,7 +350,7 @@ second one is mutable and that their color spaces are compatible
 <p>GIL does not require using its own built-in constructs. You are free
 to use your own channels, color spaces, iterators, locators, views and
 images. However, to work with the rest of GIL they have to satisfy a
-set of requirements; in other words, they have to e model the
+set of requirements; in other words, they have to emph model the
 corresponding GIL <em>concept</em>. GIL’s concepts are defined in the user
 guide.</p>
 <p>One of the biggest drawbacks of using templates and generic
@@ -616,14 +616,14 @@ instead of references to pixels, pass to the generic function pixel
 locators. This allows for more powerful functions that can use the
 pixel neighbors through the passed locators. GIL algorithms iterate
 through the pixels using the more efficient two nested loops (as
-opposed to the single loop using 1-D iterators)</p>
+opposed to the single loop using 1-D iterators).</p>
 </section>
 <section id="color-conversion">
 <h2><a class="toc-backref" href="#id8" role="doc-backlink">Color Conversion</a><a class="headerlink" href="#color-conversion" title="Link to this heading">¶</a></h2>
 <p>Instead of computing the gradient of each color plane of an image, we
 often want to compute the gradient of the luminosity. In other words,
 we want to convert the color image to grayscale and compute the
-gradient of the result. Here how to compute the luminosity gradient of
+gradient of the result. Here is how to compute the luminosity gradient of
 a 32-bit float RGB image:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">x_gradient_rgb_luminosity</span><span class="p">(</span><span class="n">rgb32fc_view_t</span><span class="w"> </span><span class="k">const</span><span class="o">&amp;</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="n">gray8s_view_t</span><span class="w"> </span><span class="k">const</span><span class="o">&amp;</span><span class="w"> </span><span class="n">dst</span><span class="p">)</span>
 <span class="p">{</span>
@@ -852,7 +852,7 @@ place to create other variants, such as <code class="docutils literal notranslat
 view transformation functions also work with run-time instantiated
 image views and binary algorithms, such as <code class="docutils literal notranslate"><span class="pre">copy_pixels</span></code> can have
 either or both arguments be variants.</p>
-<p>Lets make our <code class="docutils literal notranslate"><span class="pre">x_luminosity_gradient</span></code> algorithm take a variant image
+<p>Let’s make our <code class="docutils literal notranslate"><span class="pre">x_luminosity_gradient</span></code> algorithm take a variant image
 view. For simplicity, let’s assume that only the source view can be a
 variant. As an example of using multiple variants, see GIL’s image
 view algorithm overloads taking multiple variants.</p>
@@ -929,7 +929,7 @@ view, whereas for image variants it returns a view variant. For
 example, the return type of <code class="docutils literal notranslate"><span class="pre">view(runtime_image)</span></code> is
 <code class="docutils literal notranslate"><span class="pre">any_image_view&lt;Views&gt;</span></code> where <code class="docutils literal notranslate"><span class="pre">Views</span></code> enumerates four views
 corresponding to the four image types. <code class="docutils literal notranslate"><span class="pre">const_view(runtime_image)</span></code>
-returns a <code class="docutils literal notranslate"><span class="pre">any_image_view</span></code> of the four read-only view types, etc.</p>
+returns an <code class="docutils literal notranslate"><span class="pre">any_image_view</span></code> of the four read-only view types, etc.</p>
 <p>A warning about using variants: instantiating an algorithm with a
 variant effectively instantiates it with every possible type the
 variant can take. For binary algorithms, the algorithm is
@@ -991,7 +991,7 @@ code with different compilers.</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2025-08-25 22:08:54.
+      Last updated on 2025-08-27 09:08:12.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
