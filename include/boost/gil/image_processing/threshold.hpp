@@ -337,7 +337,7 @@ void threshold_optimal
 {
     if (mode == threshold_optimal_value::otsu)
     {
-        for (std::size_t i = 0; i < src_view.num_channels(); i++)
+        for (index_t i = 0; i < src_view.num_channels(); i++)
         {
             detail::otsu_impl
                 (nth_channel_view(src_view, i), nth_channel_view(dst_view, i), direction);
