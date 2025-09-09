@@ -17,9 +17,6 @@ doc/warnings.txt
 *.code-workspace
 out
 
-# Clang/LLVM
-/.clang-format
-
 # CMake
 /*build*
 /cmake-build-debug/
