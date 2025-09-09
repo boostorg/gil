@@ -9,6 +9,7 @@
 message(STATUS "Boost.GIL: Configuring tests in test/extension/toolbox")
 
 foreach(_name
+  aligned
   channel_type
   channel_view
   color_convert_cmyka

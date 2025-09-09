@@ -17,6 +17,7 @@ compile is_bit_aligned.cpp ;
 compile is_homogeneous.cpp ;
 compile pixel_bit_size.cpp ;
 
+run aligned.cpp ;
 run channel_view.cpp ;
 run color_convert_cmyka.cpp ;
 run color_convert_gray.cpp ;
