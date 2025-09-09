@@ -143,30 +143,24 @@ namespace std {
 template<typename T, typename CS>
 BOOST_FORCEINLINE
 auto copy(
-    boost::gil::pixel<T, CS>* first,
-    boost::gil::pixel<T, CS>* last,
+    boost::gil::pixel<T, CS> const* first,
+    boost::gil::pixel<T, CS> const* last,
     boost::gil::pixel<T, CS>* dst)
     ->  boost::gil::pixel<T, CS>*
 {
-    auto p = std::copy((unsigned char*)first, (unsigned char*)last, (unsigned char*)dst);
+    auto p = std::copy(
+        reinterpret_cast<unsigned char const*>(first),
+        reinterpret_cast<unsigned char const*>(last),
+        reinterpret_cast<unsigned char*>(dst));
     return reinterpret_cast<boost::gil::pixel<T, CS>*>(p);
 }
 
-/// \ingroup STLOptimizations
-/// \brief Copy when both src and dst are interleaved and of the same type can be just memmove
-template<typename T, typename CS>
-BOOST_FORCEINLINE
-auto copy(const boost::gil::pixel<T,CS>* first, const boost::gil::pixel<T,CS>* last,
-     boost::gil::pixel<T,CS>* dst) -> boost::gil::pixel<T,CS>*
-{
-    return (boost::gil::pixel<T,CS>*)std::copy((unsigned char*)first,(unsigned char*)last, (unsigned char*)dst);
-}
 } // namespace std
 
 namespace boost { namespace gil {
 namespace detail {
 template <typename I, typename O> struct copy_fn {
-    BOOST_FORCEINLINE I operator()(I first, I last, O dst) const { return std::copy(first,last,dst); }
+    BOOST_FORCEINLINE O operator()(I first, I last, O dst) const { return std::copy(first,last,dst); }
 };
 } // namespace detail
 } }  // namespace boost::gil
@@ -454,8 +448,9 @@ void destruct_range_impl(Iterator first, Iterator last,
                 detail::is_trivially_destructible<typename std::iterator_traits<Iterator>::value_type>
             >
         >::value
-    >::type* /*ptr*/ = 0)
+    >::type* /* ptr */ = nullptr)
 {
+    using value_t = typename std::iterator_traits<Iterator>::value_type;
     while (first != last)
     {
         first->~value_t();
