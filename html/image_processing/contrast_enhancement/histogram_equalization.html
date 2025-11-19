@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Histogram Equalization - Boost.GIL  documentation</title>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -19,9 +19,8 @@
       };
     </script>
     <script type="text/javascript" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sphinx_highlight.js"></script>
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/searchtools.js"></script>
     <script src="../../_static/language_data.js"></script>
@@ -36,7 +35,7 @@
       <tr>
         <td valign="top" width="300">
           <h3><a href="../../index.html"><img
-          alt="C++ Boost" src="../../_static/gil.png" border="0"></a></h3>
+          alt="C++ Boost" src="../../../../_static/gil.png" border="0"></a></h3>
         </td>
 
         <td >
@@ -65,9 +64,9 @@
     </div>
       
   <section id="histogram-equalization">
-<span id="he"></span><h1>Histogram Equalization</h1>
+<span id="he"></span><h1>Histogram Equalization<a class="headerlink" href="#histogram-equalization" title="Link to this heading">¶</a></h1>
 <section id="description">
-<h2>Description</h2>
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading">¶</a></h2>
 <p>Histogram equalization also known as histogram flattening, is a non-linear image enhancement
 algorithm that follows the idea that not only should an image cover the entire grayscale space
 but also be uniformly distributed over that range.</p>
@@ -80,12 +79,12 @@ the image contrast.</p>
 <figure class="align-center" id="id1">
 <a class="reference internal image-reference" href="image_processing/contrast_enhancement/he_chart.png"><img alt="Could not load image." src="image_processing/contrast_enhancement/he_chart.png" style="width: 200px; height: 100px;" /></a>
 <figcaption>
-<p><span class="caption-text">Pixels concentrated in an interval spread out.</span></p>
+<p><span class="caption-text">Pixels concentrated in an interval spread out.</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
 <section id="algorithm">
-<h2>Algorithm</h2>
+<h2>Algorithm<a class="headerlink" href="#algorithm" title="Link to this heading">¶</a></h2>
 <ol class="arabic simple">
 <li><p>First calculate the histogram corresponding to input image.</p></li>
 <li><p>If it is a multi channeled image (e.g. RGB), convert it to a independent color space
@@ -108,7 +107,7 @@ the cumulative histogram of the image to the cumulative histogram of a flat hist
 </div></blockquote>
 </section>
 <section id="results">
-<h2>Results</h2>
+<h2>Results<a class="headerlink" href="#results" title="Link to this heading">¶</a></h2>
 <p>The algorithm is applied on a few standard images. One of the transformations in shown below:</p>
 <p><strong>Grayscale Image</strong></p>
 <figure class="align-center">
@@ -120,18 +119,18 @@ the cumulative histogram of the image to the cumulative histogram of a flat hist
 </figure>
 </section>
 <section id="demo">
-<h2>Demo</h2>
+<h2>Demo<a class="headerlink" href="#demo" title="Link to this heading">¶</a></h2>
 <p>Usage Syntax:</p>
 <blockquote>
-<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">gray8_image_t</span><span class="w"> </span><span class="n">inp_img</span><span class="p">;</span><span class="w"></span>
-<span class="n">read_image</span><span class="p">(</span><span class="s">&quot;your_image.png&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">inp_img</span><span class="p">,</span><span class="w"> </span><span class="n">png_tag</span><span class="p">{});</span><span class="w"></span>
-<span class="n">gray8_image_t</span><span class="w"> </span><span class="nf">dst_img</span><span class="p">(</span><span class="n">inp_img</span><span class="p">.</span><span class="n">dimensions</span><span class="p">());</span><span class="w"></span>
-<span class="n">histogram_equalization</span><span class="p">(</span><span class="n">view</span><span class="p">(</span><span class="n">inp_img</span><span class="p">),</span><span class="w"> </span><span class="n">view</span><span class="p">(</span><span class="n">dst_img</span><span class="p">));</span><span class="w"></span>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">gray8_image_t</span><span class="w"> </span><span class="n">inp_img</span><span class="p">;</span>
+<span class="n">read_image</span><span class="p">(</span><span class="s">&quot;your_image.png&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">inp_img</span><span class="p">,</span><span class="w"> </span><span class="n">png_tag</span><span class="p">{});</span>
+<span class="n">gray8_image_t</span><span class="w"> </span><span class="nf">dst_img</span><span class="p">(</span><span class="n">inp_img</span><span class="p">.</span><span class="n">dimensions</span><span class="p">());</span>
+<span class="n">histogram_equalization</span><span class="p">(</span><span class="n">view</span><span class="p">(</span><span class="n">inp_img</span><span class="p">),</span><span class="w"> </span><span class="n">view</span><span class="p">(</span><span class="n">dst_img</span><span class="p">));</span>
 
 <span class="c1">// To specify mask over input image</span>
 
-<span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">mask</span><span class="p">(</span><span class="n">inp_img</span><span class="p">.</span><span class="n">height</span><span class="p">(),</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="n">inp_img</span><span class="p">.</span><span class="n">width</span><span class="p">(),</span><span class="w"> </span><span class="nb">true</span><span class="p">));</span><span class="w"></span>
-<span class="n">histogram_equalization</span><span class="p">(</span><span class="n">view</span><span class="p">(</span><span class="n">inp_img</span><span class="p">),</span><span class="w"> </span><span class="n">view</span><span class="p">(</span><span class="n">dst_img</span><span class="p">),</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="n">mask</span><span class="p">);</span><span class="w"></span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">mask</span><span class="p">(</span><span class="n">inp_img</span><span class="p">.</span><span class="n">height</span><span class="p">(),</span><span class="w"> </span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="n">inp_img</span><span class="p">.</span><span class="n">width</span><span class="p">(),</span><span class="w"> </span><span class="nb">true</span><span class="p">));</span>
+<span class="n">histogram_equalization</span><span class="p">(</span><span class="n">view</span><span class="p">(</span><span class="n">inp_img</span><span class="p">),</span><span class="w"> </span><span class="n">view</span><span class="p">(</span><span class="n">dst_img</span><span class="p">),</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="n">mask</span><span class="p">);</span>
 </pre></div>
 </div>
 <div class="admonition tip">
@@ -151,8 +150,8 @@ before trying the histogram equalization algorithm.</p>
     </div>
     </div>
     <div class="footer" role="contentinfo">
-      Last updated on 2024-07-07 12:07:55.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.2.
+      Last updated on 2025-11-19 13:11:56.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>
