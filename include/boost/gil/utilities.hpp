@@ -22,9 +22,6 @@
 #pragma GCC diagnostic ignored "-Wconversion"
 #endif
 
-#include <boost/iterator/iterator_adaptor.hpp>
-#include <boost/iterator/iterator_facade.hpp>
-
 #if defined(BOOST_CLANG)
 #pragma clang diagnostic pop
 #endif
