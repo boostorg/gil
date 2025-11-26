@@ -84,7 +84,7 @@ jobs:
             install: clang-4.0
           - toolset: clang
             compiler: clang++-5.0
-            cxxstd: "14,1z"
+            cxxstd: "14"
             os: ubuntu-latest
             container: ubuntu:18.04
             install: clang-5.0
@@ -171,8 +171,11 @@ jobs:
             container: ubuntu:25.04
             install: clang-20
           - toolset: clang
-            cxxstd: "14,17"
-            os: macos-13
+            cxxstd: "14,17,20"
+            os: macos-14
+          - toolset: clang
+            cxxstd: "14,17,20"
+            os: macos-15
 
     runs-on: ${{matrix.os}}
     container:
