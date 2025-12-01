@@ -91,10 +91,7 @@ public:
         }
     };
 
-    image_view() : _dimensions(0,0) {}
-    image_view(image_view const& img_view)
-        : _dimensions(img_view.dimensions()), _pixels(img_view.pixels())
-    {}
+    image_view() noexcept : _dimensions(0,0) {}
 
     template <typename View>
     image_view(View const& view) : _dimensions(view.dimensions()), _pixels(view.pixels()) {}
@@ -110,14 +107,6 @@ public:
     template <typename View>
     image_view& operator=(View const& view)
     {
-        _pixels = view.pixels();
-        _dimensions = view.dimensions();
-        return *this;
-    }
-
-    image_view& operator=(image_view const& view)
-    {
-        // TODO: Self-assignment protection?
         _pixels = view.pixels();
         _dimensions = view.dimensions();
         return *this;
