@@ -34,6 +34,9 @@ struct std_common_type
         >::type;
 };
 
+template <typename T, typename U> 
+using std_common_type_t = std_common_type<T, U>::type;
+
 }}} // namespace boost::gil::detail
 
 #endif

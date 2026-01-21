@@ -24,7 +24,7 @@ template <typename P> std::ptrdiff_t memunit_step(const P*);
 template <typename P> P* memunit_advanced(const P* p, std::ptrdiff_t diff);
 template <typename P> P& memunit_advanced_ref(P* p, std::ptrdiff_t diff);
 template <typename Iterator, typename D> struct iterator_add_deref;
-template <typename T> class point;
+template <BOOST_GIL_CONSTRAINT(std::regular) T> class point;
 namespace detail {
     // helper class specialized for each axis of pixel_2d_locator
     template <std::size_t D, typename Loc>  class locator_axis;

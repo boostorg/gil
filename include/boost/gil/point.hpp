@@ -9,11 +9,11 @@
 #define BOOST_GIL_POINT_HPP
 
 #include <boost/gil/utilities.hpp>
+#include <boost/gil/detail/config.hpp>
 #include <boost/gil/detail/std_common_type.hpp>
 
-#include <boost/config.hpp>
-
 #include <cstddef>
+#include <concepts>
 #include <type_traits>
 
 namespace boost { namespace gil {
@@ -31,7 +31,7 @@ namespace boost { namespace gil {
 /// \brief 2D point both axes of which have the same dimension type
 /// \ingroup PointModel
 /// Models: Point2DConcept
-template <typename T>
+template <BOOST_GIL_CONSTRAINT(std::regular) T>
 class point
 {
 public:
@@ -109,14 +109,14 @@ private:
 };
 
 /// Alias template for backward compatibility with Boost <=1.68.
-template <typename T>
+template <std::regular T>
 using point2 = point<T>;
 
 /// Common type to represent 2D dimensions or in-memory size of image or view.
 /// @todo TODO: rename to dims_t or dimensions_t for purpose clarity?
 using point_t = point<std::ptrdiff_t>;
 
-template <typename T>
+template <std::regular T>
 T point<T>::* const point<T>::mem_array[point<T>::num_dimensions] =
 {
     &point<T>::x,
@@ -124,7 +124,7 @@ T point<T>::* const point<T>::mem_array[point<T>::num_dimensions] =
 };
 
 /// \ingroup PointModel
-template <typename T>
+template <std::regular T>
 BOOST_FORCEINLINE
 bool operator==(const point<T>& p1, const point<T>& p2)
 {
@@ -132,7 +132,7 @@ bool operator==(const point<T>& p1, const point<T>& p2)
 }
 
 /// \ingroup PointModel
-template <typename T>
+template <std::regular T>
 BOOST_FORCEINLINE
 bool operator!=(const point<T>& p1, const point<T>& p2)
 {
@@ -140,7 +140,7 @@ bool operator!=(const point<T>& p1, const point<T>& p2)
 }
 
 /// \ingroup PointModel
-template <typename T>
+template <std::regular T>
 BOOST_FORCEINLINE
 point<T> operator+(const point<T>& p1, const point<T>& p2)
 {
@@ -148,7 +148,7 @@ point<T> operator+(const point<T>& p1, const point<T>& p2)
 }
 
 /// \ingroup PointModel
-template <typename T>
+template <std::regular T>
 BOOST_FORCEINLINE
 point<T> operator-(const point<T>& p)
 {
@@ -156,15 +156,18 @@ point<T> operator-(const point<T>& p)
 }
 
 /// \ingroup PointModel
-template <typename T>
+template <std::regular T>
 BOOST_FORCEINLINE
 point<T> operator-(const point<T>& p1, const point<T>& p2)
 {
     return { p1.x - p2.x, p1.y - p2.y };
 }
 
+template <typename T>
+concept arithmetic = std::is_arithmetic_v<T>;
+
 /// \ingroup PointModel
-template <typename T, typename D>
+template <std::regular T, arithmetic D>
 BOOST_FORCEINLINE
 auto operator/(point<T> const& p, D d)
     -> typename std::enable_if

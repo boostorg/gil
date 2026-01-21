@@ -9,6 +9,8 @@
 #ifndef BOOST_GIL_TYPEDEFS_HPP
 #define BOOST_GIL_TYPEDEFS_HPP
 
+#include <boost/gil/detail/config.hpp>
+
 #include <boost/gil/cmyk.hpp>
 #include <boost/gil/device_n.hpp>
 #include <boost/gil/gray.hpp>
@@ -22,25 +24,49 @@
 #    include <memory_resource>
 #endif  //!defined(BOOST_NO_CXX17_HDR_MEMORY_RESOURCE)
 
+namespace boost { namespace gil {
+
+#if defined(BOOST_GIL_HAS_CONCEPTS)
+    template <typename, typename>                                                                  
+    struct pixel;                                                                                  
+    template <typename, typename>                                                                  
+    struct planar_pixel_reference;                                                                 
+    template <typename, typename>                                                                  
+    struct planar_pixel_iterator;                                                                  
+    template <typename>                                                                            
+    class memory_based_step_iterator;                                                              
+    template <std::regular>                                                
+    class point;                                                                                   
+    template <typename>                                                                            
+    class memory_based_2d_locator;                                                                 
+    template <typename>                                                                            
+    class image_view;                                                                              
+    template <typename, bool, typename>                                                            
+    class image;
+#else
+    template <typename, typename>                                                                  
+    struct pixel;                                                                                  
+    template <typename, typename>                                                                  
+    struct planar_pixel_reference;                                                                 
+    template <typename, typename>                                                                  
+    struct planar_pixel_iterator;                                                                  
+    template <typename>                                                                            
+    class memory_based_step_iterator;                                                              
+    template <typename>                                                
+    class point;                                                                                   
+    template <typename>                                                                            
+    class memory_based_2d_locator;                                                                 
+    template <typename>                                                                            
+    class image_view;                                                                              
+    template <typename, bool, typename>                                                            
+    class image;
+#endif //defined(BOOST_GIL_HAS_CONCEPTS)
+
+}} // namespace boost::gil
+
 // B - bits size/signedness, CM - channel model, CS - colour space, LAYOUT - pixel layout
 // Example: B = '8', CM = 'uint8_t', CS = 'bgr,  LAYOUT='bgr_layout_t'
 #define BOOST_GIL_DEFINE_BASE_TYPEDEFS_INTERNAL(B, CM, CS, LAYOUT)                                 \
-    template <typename, typename>                                                                  \
-    struct pixel;                                                                                  \
-    template <typename, typename>                                                                  \
-    struct planar_pixel_reference;                                                                 \
-    template <typename, typename>                                                                  \
-    struct planar_pixel_iterator;                                                                  \
-    template <typename>                                                                            \
-    class memory_based_step_iterator;                                                              \
-    template <typename>                                                                            \
-    class point;                                                                                   \
-    template <typename>                                                                            \
-    class memory_based_2d_locator;                                                                 \
-    template <typename>                                                                            \
-    class image_view;                                                                              \
-    template <typename, bool, typename>                                                            \
-    class image;                                                                                   \
     using CS##B##_pixel_t = pixel<CM, LAYOUT>;                                                     \
     using CS##B##c_pixel_t = pixel<CM, LAYOUT> const;                                              \
     using CS##B##_ref_t = pixel<CM, LAYOUT>&;                                                      \
