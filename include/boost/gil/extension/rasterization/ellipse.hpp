@@ -33,9 +33,9 @@ struct midpoint_ellipse_rasterizer
     using type = ellipse_rasterizer_t;
 
     /// \brief Creates a midpoint ellipse rasterizer
-    /// \param center - Point containing positive integer x co-ordinate and y co-ordinate of the
+    /// \param center_point - Point containing positive integer x co-ordinate and y co-ordinate of the
     /// center respectively.
-    /// \param semi_axes - Point containing positive integer lengths of horizontal semi-axis
+    /// \param semi_axes_values - Point containing positive integer lengths of horizontal semi-axis
     /// and vertical semi-axis respectively.
     midpoint_ellipse_rasterizer(point<unsigned int> center_point,
         point<unsigned int> semi_axes_values)

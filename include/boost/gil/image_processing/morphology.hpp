@@ -93,7 +93,7 @@ void morph_impl(SrcView const& src_view, DstView const& dst_view, Kernel const& 
 /// input image.
 /// \param src_view - Source/Input image view.
 /// \param dst_view - View which stores the final result of operations performed by this function.
-/// \param kernel - Kernel matrix/structuring element containing 0's and 1's
+/// \param ker_mat - Kernel matrix/structuring element containing 0's and 1's
 /// which will be used for applying the required morphological operation.
 /// \param identifier - Indicates the type of morphological operation to be applied.
 /// \tparam SrcView type of source image.

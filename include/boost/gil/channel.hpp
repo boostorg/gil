@@ -476,14 +476,15 @@ private:
 /// \endcode
 
 /// \tparam BitField A type that holds the bits of the pixel from which the channel is referenced. Typically an integral type, like std::uint16_t
-/// \tparam Defines the sequence of bits in the data value that contain the channel
-/// \tparam true if the reference is mutable
+/// \tparam FirstBit Defines, with NumBits, the sequence of bits in the data value that contain the channel
+/// \tparam NumBits Defines, with FirstBit, the sequence of bits in the data value that contain the channel
+/// \tparam IsMutable true if the reference is mutable
 template <typename BitField, int FirstBit, int NumBits, bool IsMutable>
 class packed_channel_reference;
 
-/// \tparam A type that holds the bits of the pixel from which the channel is referenced. Typically an integral type, like std::uint16_t
-/// \tparam Defines the sequence of bits in the data value that contain the channel
-/// \tparam true if the reference is mutable
+/// \tparam BitField A type that holds the bits of the pixel from which the channel is referenced. Typically an integral type, like std::uint16_t
+/// \tparam NumBits Defines the sequence of bits in the data value that contain the channel
+/// \tparam IsMutable true if the reference is mutable
 template <typename BitField, int NumBits, bool IsMutable>
 class packed_dynamic_channel_reference;
 
