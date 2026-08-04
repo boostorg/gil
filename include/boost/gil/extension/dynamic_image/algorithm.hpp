@@ -152,7 +152,7 @@ void copy_and_convert_pixels(View const& src, any_image_view<Types...> const& ds
 
 /// \ingroup ImageViewSTLAlgorithmsCopyAndConvertPixels
 /// \tparam View Model ImageViewConcept
-/// \tparam Type Model Boost.MP11-compatible list of models of MutableImageViewConcept
+/// \tparam Types Model Boost.MP11-compatible list of models of MutableImageViewConcept
 template <typename View, typename ...Types>
 void copy_and_convert_pixels(View const& src, any_image_view<Types...> const& dst)
 {

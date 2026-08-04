@@ -45,7 +45,7 @@ void read_and_convert_view(Reader& reader, View const& view,
 }
 
 /// \brief Reads and color-converts an image view. No memory is allocated.
-/// \param file      It's a device. Must satisfy is_input_device metafunction.
+/// \param device    It's a device. Must satisfy is_input_device metafunction.
 /// \param view      The image view in which the data is read into.
 /// \param settings  Specifies read settings depending on the image format.
 /// \param cc        Color converter function object.
@@ -132,7 +132,7 @@ void read_and_convert_view(
 }
 
 /// \brief Reads and color-converts an image view. No memory is allocated.
-/// \param file It's a device. Must satisfy is_input_device metafunction or is_adaptable_input_device.
+/// \param device It's a device. Must satisfy is_input_device metafunction or is_adaptable_input_device.
 /// \param view The image view in which the data is read into.
 /// \param cc   Color converter function object.
 /// \param tag  Defines the image format. Must satisfy is_format_tag metafunction.
@@ -188,7 +188,7 @@ void read_and_convert_view(
 }
 
 /// \brief Reads and color-converts an image view. No memory is allocated.
-/// \param file      It's a device. Must satisfy is_input_device metafunction or is_adaptable_input_device.
+/// \param device    It's a device. Must satisfy is_input_device metafunction or is_adaptable_input_device.
 /// \param view      The image view in which the data is read into.
 /// \param settings  Specifies read settings depending on the image format.
 /// \throw std::ios_base::failure
@@ -242,7 +242,7 @@ void read_and_convert_view(
 }
 
 /// \brief Reads and color-converts an image view. No memory is allocated.
-/// \param file It's a device. Must satisfy is_input_device metafunction or is_adaptable_input_device.
+/// \param device It's a device. Must satisfy is_input_device metafunction or is_adaptable_input_device.
 /// \param view The image view in which the data is read into.
 /// \param tag  Defines the image format. Must satisfy is_format_tag metafunction.
 /// \throw std::ios_base::failure

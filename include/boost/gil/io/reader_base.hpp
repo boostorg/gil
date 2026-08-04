@@ -47,8 +47,8 @@ public:
     ///
     /// @tparam Image Image which implements boost::gil's ImageConcept.
     ///
-    /// @param img  The image.
-    /// @param info The image read info.
+    /// @param img      The image.
+    /// @param settings The image read settings.
     template< typename Image >
     void init_image( Image&                                  img
                    , const image_read_settings< FormatTag >& settings
