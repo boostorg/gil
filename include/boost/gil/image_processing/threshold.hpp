@@ -102,7 +102,7 @@ enum class threshold_adaptive_method
 /// \param dst_view - TODO
 /// \param threshold_value - TODO
 /// \param max_value - TODO
-/// \param threshold_direction - if regular, values greater than threshold_value are
+/// \param direction - if regular, values greater than threshold_value are
 /// set to max_value else set to 0; if inverse, values greater than threshold_value are
 /// set to 0 else set to max_value.
 template <typename SrcView, typename DstView>

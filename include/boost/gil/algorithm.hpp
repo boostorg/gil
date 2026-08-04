@@ -1518,8 +1518,8 @@ void extend_row_impl(
 /// Image padding introduces new pixels around the edges of an image.
 /// The border provides space for annotations or acts as a boundary when using advanced filtering techniques.
 /// \tparam SrcView Models ImageViewConcept
-/// \tparam extend_count number of rows to be added each side
-/// \tparam option - TODO
+/// \param extend_count number of rows to be added each side
+/// \param option - TODO
 template <typename SrcView>
 auto extend_row(
     SrcView const& src_view,
@@ -1540,8 +1540,8 @@ auto extend_row(
 /// Image padding introduces new pixels around the edges of an image.
 /// The border provides space for annotations or acts as a boundary when using advanced filtering techniques.
 /// \tparam SrcView Models ImageViewConcept
-/// \tparam extend_count number of columns to be added each side
-/// \tparam option - TODO
+/// \param extend_count number of columns to be added each side
+/// \param option - TODO
 template <typename SrcView>
 auto extend_col(
     SrcView const& src_view,
@@ -1563,8 +1563,8 @@ auto extend_col(
 /// Image padding introduces new pixels around the edges of an image.
 /// The border provides space for annotations or acts as a boundary when using advanced filtering techniques.
 /// \tparam SrcView Models ImageViewConcept
-/// \tparam extend_count number of rows/column to be added each side
-/// \tparam option - TODO
+/// \param extend_count number of rows/column to be added each side
+/// \param option - TODO
 template <typename SrcView>
 auto extend_boundary(
     SrcView const& src_view,
