@@ -42,8 +42,11 @@ auto read_image_info(Device& file, image_read_settings<FormatTag> const& setting
 }
 
 /// \brief Returns the image format backend. Backend is format specific.
+///
+/// The unnamed FormatTag argument defines the image format and must satisfy
+/// the is_format_tag metafunction.
+///
 /// \param file It's a device. Must satisfy is_adaptable_input_device metafunction.
-/// \param tag  Defines the image format. Must satisfy is_format_tag metafunction.
 /// \return image_read_info object dependent on the image format.
 /// \throw std::ios_base::failure
 template <typename Device, typename FormatTag>
@@ -85,8 +88,11 @@ auto read_image_info(
 }
 
 /// \brief Returns the image format backend. Backend is format specific.
+///
+/// The unnamed FormatTag argument defines the image format and must satisfy
+/// the is_format_tag metafunction.
+///
 /// \param file_name File name. Must satisfy is_supported_path_spec metafunction.
-/// \param tag       Defines the image format. Must satisfy is_format_tag metafunction.
 /// \return image_read_info object dependent on the image format.
 /// \throw std::ios_base::failure
 template <typename String, typename FormatTag>
