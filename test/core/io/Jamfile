@@ -8,6 +8,4 @@
 
 import testing ;
 
-compile path_spec.cpp ;
-
 run path_spec.cpp ;
