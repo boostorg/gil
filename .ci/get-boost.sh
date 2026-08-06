@@ -41,7 +41,6 @@ git submodule --quiet update --init $GIT_SUBMODULE_OPTS \
     libs/crc \
     libs/filesystem \
     libs/integer \
-    libs/iterator \
     libs/mp11 \
     libs/mpl \
     libs/preprocessor \
