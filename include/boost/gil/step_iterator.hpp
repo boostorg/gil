@@ -73,6 +73,7 @@ public:
     using base_difference_type = typename std::iterator_traits<Iterator>::difference_type;
     using difference_type = typename SFn::difference_type;
     using reference = typename std::iterator_traits<Iterator>::reference;
+    using iterator_category = typename parent_t::iterator_concept;
 
     step_iterator_adaptor() {}
     step_iterator_adaptor(Iterator const& it, SFn step_fn=SFn()) : it_(it), _step_fn(step_fn) {}

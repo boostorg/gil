@@ -44,6 +44,7 @@ public:
         typename DFn::reference>;
     using reference = typename DFn::result_type;
     using difference_type = typename std::iterator_traits<Iterator>::difference_type;
+    using iterator_category = typename parent_t::iterator_concept;
     using dereference_fn = DFn;
 
     dereference_iterator_adaptor() {}

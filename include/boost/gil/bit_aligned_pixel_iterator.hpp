@@ -62,6 +62,7 @@ private:
 public:
     using difference_type = typename parent_t::difference_type;
     using reference = typename parent_t::reference;
+    using iterator_category = typename parent_t::iterator_concept;
 
     bit_aligned_pixel_iterator() {}
     bit_aligned_pixel_iterator(const bit_aligned_pixel_iterator& p) : _bit_range(p._bit_range) {}

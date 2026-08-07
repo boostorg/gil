@@ -51,6 +51,7 @@ public:
 
     using difference_type = typename parent_t::difference_type;
     using reference = typename parent_t::reference;
+    using iterator_category = typename parent_t::iterator_concept;
 
     using parent_t::operator++;
     using parent_t::operator--;
