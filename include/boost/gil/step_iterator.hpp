@@ -82,7 +82,10 @@ public:
 
     constexpr Derived& operator+=(base_difference_type d) { advance(d); return derived(); }
 
-    constexpr auto operator-(step_iterator_adaptor other) const noexcept { return -distance_to(other); }
+    friend constexpr auto operator-(Derived const& lhs, Derived const& rhs) noexcept -> difference_type
+    {
+        return -lhs.distance_to(rhs);
+    }
 
     // It is really common for iterator adaptors to have a base() member
     // function that returns the adapted iterator.
