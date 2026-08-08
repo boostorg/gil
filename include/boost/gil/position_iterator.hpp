@@ -53,9 +53,6 @@ public:
     using reference = typename parent_t::reference;
     using iterator_category = typename parent_t::iterator_concept;
 
-    using parent_t::operator++;
-    using parent_t::operator--;
-
     using point_t = typename Deref::argument_type;
 
     position_iterator() {}
@@ -86,6 +83,9 @@ public:
 
     constexpr auto operator++() noexcept -> position_iterator& { increment(); return *this; }
     constexpr auto operator--() noexcept -> position_iterator& { decrement(); return *this; }
+
+    constexpr auto operator++(int) noexcept -> position_iterator { auto tmp = *this; increment(); return tmp; }
+    constexpr auto operator--(int) noexcept -> position_iterator { auto tmp = *this; decrement(); return tmp; }
 
     constexpr auto operator-(position_iterator other) const noexcept { return -distance_to(other); }
 

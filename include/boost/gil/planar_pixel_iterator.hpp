@@ -82,9 +82,6 @@ public:
     using difference_type = typename parent_t::difference_type;
     using iterator_category = typename parent_t::iterator_concept;
 
-    using parent_t::operator++;
-    using parent_t::operator--;
-
     planar_pixel_iterator() : color_base_parent_t(0) {}
     planar_pixel_iterator(bool) {}        // constructor that does not fill with zero (for performance)
 
@@ -123,6 +120,9 @@ public:
 
     constexpr auto operator++() noexcept -> planar_pixel_iterator& { increment(); return *this; }
     constexpr auto operator--() noexcept -> planar_pixel_iterator& { decrement(); return *this; }
+
+    constexpr auto operator++(int) noexcept -> planar_pixel_iterator { auto tmp = *this; increment(); return tmp; }
+    constexpr auto operator--(int) noexcept -> planar_pixel_iterator { auto tmp = *this; decrement(); return tmp; }
 
     constexpr auto operator-(const planar_pixel_iterator& other) const noexcept { return -distance_to(other); }
 

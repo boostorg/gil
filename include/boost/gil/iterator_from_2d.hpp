@@ -62,9 +62,6 @@ public:
     using reference = typename parent_t::reference;
     using iterator_category = typename parent_t::iterator_concept;
 
-    using parent_t::operator++;
-    using parent_t::operator--;
-
     using x_iterator = typename Loc2::x_iterator;
     using point_t = typename Loc2::point_t;
 
@@ -87,6 +84,9 @@ public:
 
     constexpr auto operator++() noexcept -> iterator_from_2d& { increment(); return *this; }
     constexpr auto operator--() noexcept -> iterator_from_2d& { decrement(); return *this; }
+
+    constexpr auto operator++(int) noexcept -> iterator_from_2d { auto tmp = *this; increment(); return tmp; }
+    constexpr auto operator--(int) noexcept -> iterator_from_2d { auto tmp = *this; decrement(); return tmp; }
 
     constexpr auto operator-(iterator_from_2d other) const noexcept { return -distance_to(other); }
 
