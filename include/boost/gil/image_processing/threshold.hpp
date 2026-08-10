@@ -9,20 +9,20 @@
 #ifndef BOOST_GIL_IMAGE_PROCESSING_THRESHOLD_HPP
 #define BOOST_GIL_IMAGE_PROCESSING_THRESHOLD_HPP
 
-#include <limits>
-#include <array>
-#include <type_traits>
-#include <cstddef>
-#include <algorithm>
-#include <vector>
-#include <cmath>
-
 #include <boost/assert.hpp>
 
+#include <boost/gil/channel.hpp>
 #include <boost/gil/image.hpp>
-#include <boost/gil/image_processing/kernel.hpp>
 #include <boost/gil/image_processing/convolve.hpp>
+#include <boost/gil/image_processing/kernel.hpp>
 #include <boost/gil/image_processing/numeric.hpp>
+
+#include <algorithm>
+#include <array>
+#include <cmath>
+#include <cstddef>
+#include <type_traits>
+#include <vector>
 
 namespace boost { namespace gil {
 
@@ -30,8 +30,6 @@ namespace detail {
 
 template
 <
-    typename SourceChannelT,
-    typename ResultChannelT,
     typename SrcView,
     typename DstView,
     typename Operator
@@ -59,7 +57,7 @@ void threshold_impl(SrcView const& src_view, DstView const& dst_view, Operator c
     }
 }
 
-} //namespace boost::gil::detail
+} // namespace detail
 
 /// \addtogroup ImageProcessing
 /// @{
@@ -114,22 +112,24 @@ void threshold_binary(
     threshold_direction direction = threshold_direction::regular
 )
 {
-    //deciding output channel type and creating functor
     using source_channel_t = typename channel_type<SrcView>::type;
     using result_channel_t = typename channel_type<DstView>::type;
 
+    auto const min_value = channel_traits<result_channel_t>::min_value();
+    max_value = (std::min)(max_value, channel_traits<result_channel_t>::max_value());
+
     if (direction == threshold_direction::regular)
     {
-        detail::threshold_impl<source_channel_t, result_channel_t>(src_view, dst_view,
-            [threshold_value, max_value](source_channel_t px) -> result_channel_t {
-                return px > threshold_value ? max_value : 0;
+        detail::threshold_impl(src_view, dst_view,
+            [&](source_channel_t px) -> result_channel_t {
+                return px > threshold_value ? max_value : min_value;
             });
     }
     else
     {
-        detail::threshold_impl<source_channel_t, result_channel_t>(src_view, dst_view,
-            [threshold_value, max_value](source_channel_t px) -> result_channel_t {
-                return px > threshold_value ? 0 : max_value;
+        detail::threshold_impl(src_view, dst_view,
+            [&](source_channel_t px) -> result_channel_t {
+                return px > threshold_value ? min_value : max_value;
             });
     }
 }
@@ -152,10 +152,9 @@ void threshold_binary(
     threshold_direction direction = threshold_direction::regular
 )
 {
-    //deciding output channel type and creating functor
     using result_channel_t = typename channel_type<DstView>::type;
 
-    result_channel_t max_value = (std::numeric_limits<result_channel_t>::max)();
+    result_channel_t max_value = channel_traits<result_channel_t>::max_value();
     threshold_binary(src_view, dst_view, threshold_value, max_value, direction);
 }
 
@@ -179,24 +178,23 @@ void threshold_truncate(
     threshold_direction direction = threshold_direction::regular
 )
 {
-    //deciding output channel type and creating functor
     using source_channel_t = typename channel_type<SrcView>::type;
     using result_channel_t = typename channel_type<DstView>::type;
 
-    std::function<result_channel_t(source_channel_t)> threshold_logic;
+    auto const min_value = channel_traits<result_channel_t>::min_value();
 
     if (mode == threshold_truncate_mode::threshold)
     {
         if (direction == threshold_direction::regular)
         {
-            detail::threshold_impl<source_channel_t, result_channel_t>(src_view, dst_view,
+            detail::threshold_impl(src_view, dst_view,
                 [threshold_value](source_channel_t px) -> result_channel_t {
                     return px > threshold_value ? threshold_value : px;
                 });
         }
         else
         {
-            detail::threshold_impl<source_channel_t, result_channel_t>(src_view, dst_view,
+            detail::threshold_impl(src_view, dst_view,
                 [threshold_value](source_channel_t px) -> result_channel_t {
                     return px > threshold_value ? px : threshold_value;
                 });
@@ -206,34 +204,34 @@ void threshold_truncate(
     {
         if (direction == threshold_direction::regular)
         {
-            detail::threshold_impl<source_channel_t, result_channel_t>(src_view, dst_view,
-                [threshold_value](source_channel_t px) -> result_channel_t {
-                    return px > threshold_value ? px : 0;
+            detail::threshold_impl(src_view, dst_view,
+                [threshold_value, min_value](source_channel_t px) -> result_channel_t {
+                    return px > threshold_value ? px : min_value;
                 });
         }
         else
         {
-            detail::threshold_impl<source_channel_t, result_channel_t>(src_view, dst_view,
-                [threshold_value](source_channel_t px) -> result_channel_t {
-                    return px > threshold_value ? 0 : px;
+            detail::threshold_impl(src_view, dst_view,
+                [threshold_value, min_value](source_channel_t px) -> result_channel_t {
+                    return px > threshold_value ? min_value : px;
                 });
         }
     }
 }
 
-namespace detail{
+namespace detail {
 
 template <typename SrcView, typename DstView>
 void otsu_impl(SrcView const& src_view, DstView const& dst_view, threshold_direction direction)
 {
-    //deciding output channel type and creating functor
     using source_channel_t = typename channel_type<SrcView>::type;
+    using result_channel_t = typename channel_type<DstView>::type;
 
     std::array<std::size_t, 256> histogram{};
     //initial value of min is set to maximum possible value to compare histogram data
     //initial value of max is set to minimum possible value to compare histogram data
-    auto min = (std::numeric_limits<source_channel_t>::max)(),
-        max = (std::numeric_limits<source_channel_t>::min)();
+    auto min = channel_traits<result_channel_t>::max_value();
+    auto max = channel_traits<result_channel_t>::min_value();
 
     if (sizeof(source_channel_t) > 1 || std::is_signed<source_channel_t>::value)
     {
@@ -324,7 +322,8 @@ void otsu_impl(SrcView const& src_view, DstView const& dst_view, threshold_direc
         threshold_binary(src_view, dst_view, threshold, direction);
     }
 }
-} //namespace detail
+
+} // namespace detail
 
 template <typename SrcView, typename DstView>
 void threshold_optimal
@@ -349,8 +348,6 @@ namespace detail {
 
 template
 <
-    typename SourceChannelT,
-    typename ResultChannelT,
     typename SrcView,
     typename DstView,
     typename Operator
@@ -386,7 +383,8 @@ void adaptive_impl
         }
     }
 }
-} //namespace boost::gil::detail
+
+} // namespace detail
 
 template <typename SrcView, typename DstView>
 void threshold_adaptive
@@ -402,8 +400,11 @@ void threshold_adaptive
 {
     BOOST_ASSERT_MSG((kernel_size % 2 != 0), "Kernel size must be an odd number");
 
-    typedef typename channel_type<SrcView>::type source_channel_t;
-    typedef typename channel_type<DstView>::type result_channel_t;
+    using source_channel_t = typename channel_type<SrcView>::type;
+    using result_channel_t = typename channel_type<DstView>::type;
+
+    auto const min_value = channel_traits<result_channel_t>::min_value();
+    max_value = (std::min)(max_value, channel_traits<result_channel_t>::max_value());
 
     image<typename SrcView::value_type> temp_img(src_view.width(), src_view.height());
     typename image<typename SrcView::value_type>::view_t temp_view = view(temp_img);
@@ -427,15 +428,15 @@ void threshold_adaptive
 
     if (direction == threshold_direction::regular)
     {
-        detail::adaptive_impl<source_channel_t, result_channel_t>(src_view, temp_conv, dst_view,
-            [max_value, constant](source_channel_t px, source_channel_t threshold) -> result_channel_t
-        { return px > (threshold - constant) ? max_value : 0; });
+        detail::adaptive_impl(src_view, temp_conv, dst_view,
+            [&](source_channel_t px, source_channel_t threshold) -> result_channel_t
+        { return px > (threshold - constant) ? max_value : min_value; });
     }
     else
     {
-        detail::adaptive_impl<source_channel_t, result_channel_t>(src_view, temp_conv, dst_view,
-            [max_value, constant](source_channel_t px, source_channel_t threshold) -> result_channel_t
-        { return px > (threshold - constant) ? 0 : max_value; });
+        detail::adaptive_impl(src_view, temp_conv, dst_view,
+            [&](source_channel_t px, source_channel_t threshold) -> result_channel_t
+        { return px > (threshold - constant) ? min_value : max_value; });
     }
 }
 
@@ -450,16 +451,14 @@ void threshold_adaptive
     int constant = 0
 )
 {
-    //deciding output channel type and creating functor
-    typedef typename channel_type<DstView>::type result_channel_t;
+    using result_channel_t = typename channel_type<DstView>::type;
 
-    result_channel_t max_value = (std::numeric_limits<result_channel_t>::max)();
-
+    result_channel_t max_value = channel_traits<result_channel_t>::max_value();
     threshold_adaptive(src_view, dst_view, max_value, kernel_size, method, direction, constant);
 }
 
 /// @}
 
-}} //namespace boost::gil
+}} // namespace boost::gil
 
-#endif //BOOST_GIL_IMAGE_PROCESSING_THRESHOLD_HPP
+#endif
