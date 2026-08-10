@@ -16,5 +16,6 @@
 #include <boost/gil/extension/toolbox/metafunctions/is_homogeneous.hpp>
 #include <boost/gil/extension/toolbox/metafunctions/is_similar.hpp>
 #include <boost/gil/extension/toolbox/metafunctions/pixel_bit_size.hpp>
+#include <boost/gil/extension/toolbox/metafunctions/shrink.hpp>
 
 #endif
