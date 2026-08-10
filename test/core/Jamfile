@@ -25,6 +25,7 @@ build-project point ;
 build-project channel ;
 build-project color ;
 build-project color_base ;
+build-project detail ;
 build-project pixel ;
 build-project iterator ;
 build-project locator ;
