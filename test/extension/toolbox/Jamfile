@@ -28,6 +28,7 @@ run color_convert_luminance.cpp ;
 run color_convert_rgb.cpp ;
 run color_convert_xyz.cpp ;
 run indexed_image.cpp ;
+run pattern.cpp ;
 
 # TODO: Add subchroma_image.cpp after fixing run-time failure,
 #      for details see https://github.com/boostorg/gil/pull/164
