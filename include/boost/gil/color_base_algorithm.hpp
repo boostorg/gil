@@ -367,6 +367,13 @@ struct element_recursion
         op2(semantic_at_c<N-1>(p1), semantic_at_c<N-1>(p2), semantic_at_c<N-1>(p3));
         return op2;
     }
+    //static_for_each with 5 sources
+    template <typename P1,typename P2,typename P3,typename P4,typename P5,typename Op>
+    static Op static_for_each(const P1& p1, const P2& p2, const P3& p3, const P4& p4, P5& p5, Op op) {
+        Op op2(element_recursion<N-1>::static_for_each(p1,p2,p3,p4,p5,op));
+        op2(semantic_at_c<N-1>(p1), semantic_at_c<N-1>(p2), semantic_at_c<N-1>(p3), semantic_at_c<N-1>(p4), semantic_at_c<N-1>(p5));
+        return op2;
+    }
     //static_transform with one source
     template <typename P1,typename Dst,typename Op>
     static Op static_transform(P1& src, Dst& dst, Op op) {
@@ -405,6 +412,8 @@ struct element_recursion
         semantic_at_c<N-1>(dst)=op2(semantic_at_c<N-1>(src1), semantic_at_c<N-1>(src2));
         return op2;
     }
+
+    
 };
 
 // Termination condition of the compile-time recursion for element operations on a color base
@@ -430,12 +439,16 @@ template<> struct element_recursion<0> {
     //static_for_each with three sources
     template <typename P1,typename P2,typename P3,typename Op>
     static Op static_for_each(const P1&,const P2&,const P3&,Op op){return op;}
+    //static_for_each with 5 sources
+    template <typename P1,typename P2,typename P3,typename P4,typename P5,typename Op>
+    static Op static_for_each(const P1&,const P2&,const P3&,const P4&,const P5&,Op op){return op;}
     //static_transform with one source
     template <typename P1,typename Dst,typename Op>
     static Op static_transform(const P1&,const Dst&,Op op){return op;}
     //static_transform with two sources
     template <typename P1,typename P2,typename Dst,typename Op>
     static Op static_transform(const P1&,const P2&,const Dst&,Op op){return op;}
+
 };
 
 // std::min and std::max don't have the mutable overloads...
@@ -737,6 +750,9 @@ Op static_for_each(const P1& p1,const P2& p2,P3& p3,Op op) { return detail::elem
 template <typename P1,typename P2,typename P3,typename Op>
 BOOST_FORCEINLINE
 Op static_for_each(const P1& p1,const P2& p2,const P3& p3,Op op) { return detail::element_recursion<size<P1>::value>::static_for_each(p1,p2,p3,op); }
+template <typename P1,typename P2,typename P3,typename P4,typename P5,typename Op>
+BOOST_FORCEINLINE
+Op static_for_each(const P1& p1,const P2& p2,const P3& p3,const P4& p4,P5& p5,Op op) { return detail::element_recursion<size<P1>::value>::static_for_each(p1,p2,p3,p4,p5,op); }
 ///\}
 
 }}  // namespace boost::gil

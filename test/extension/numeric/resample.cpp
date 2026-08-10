@@ -95,9 +95,61 @@ void test_bilinear_sampler_test()
     BOOST_TEST_EQ(gil::rgb8_pixel_t(0, 128, 0), dv(3, 3));
 }
 
+void test_bicubic_sampler_test()
+{
+    // R G B R
+    // G W W G
+    // B W W B
+    // R G B R
+    gil::rgb8_image_t img(4, 4);
+    gil::rgb8_view_t v = view(img);
+    v(0, 0) = v(0, 3) = v(3, 0) = v(3, 3) = gil::rgb8_pixel_t(255, 0, 0);
+    v(0, 1) = v(1, 0) = v(1, 3) = v(3, 1) = gil::rgb8_pixel_t(0, 255, 0);
+    v(0, 2) = v(2, 0) = v(2, 3) = v(3, 2) =  gil::rgb8_pixel_t(0, 0, 255);
+    v(1, 1) = v(1, 2) = v(2, 1) = v(2, 2) = gil::rgb8_pixel_t(255, 255, 255);
+
+    gil::rgb8_image_t dims(5, 5);
+    gil::rgb8c_view_t dv = gil::const_view(dims);
+
+    test_map_fn<double, gil::rgb8_image_t::coord_t> mf;
+
+    gil::resample_pixels(gil::const_view(img), gil::view(dims), mf, gil::bicubic_sampler());
+
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(255, 0, 0), dv(0, 0));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(127, 143, 0), dv(0, 1));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(0, 143, 143), dv(0, 2));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(127, 0, 143), dv(0, 3));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(255, 0, 0), dv(0, 4));
+
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(127, 143, 0), dv(1, 0));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(127, 207, 55), dv(1, 1));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(127, 197, 214), dv(1, 2));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(127, 127, 135), dv(1, 3));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(127, 143, 0), dv(1, 4));
+
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(0, 143, 143), dv(2, 0));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(127, 199, 199), dv(2, 1));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(255, 255, 255), dv(2, 2));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(127, 199, 199), dv(2, 3));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(0, 143, 143), dv(2, 4));
+
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(127, 0, 143), dv(3, 0));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(127, 135, 127), dv(3, 1));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(127, 214, 197), dv(3, 2));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(127, 55, 207), dv(3, 3));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(127, 0, 143), dv(3, 4));
+
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(255, 0, 0), dv(4, 0));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(127, 143, 0), dv(4, 1));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(0, 143, 143), dv(4, 2));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(127, 0, 143), dv(4, 3));
+    BOOST_TEST_EQ(gil::rgb8_pixel_t(255, 0, 0), dv(4, 4));
+}
+
 int main()
 {
     test_bilinear_sampler_test();
+    test_bicubic_sampler_test();
 
     return ::boost::report_errors();
 }
