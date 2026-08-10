@@ -752,6 +752,9 @@ void swap(const boost::gil::packed_dynamic_channel_reference<BF,NB,M> x, const b
 
 // \brief Determines the fundamental type which may be used, e.g., to cast from larger to smaller channel types.
 namespace boost { namespace gil {
+
+namespace detail {
+
 template <typename T>
 struct base_channel_type_impl { using type = T; };
 
@@ -775,8 +778,10 @@ template <typename ChannelValue, typename MinV, typename MaxV>
 struct base_channel_type_impl<scoped_channel_value<ChannelValue, MinV, MaxV> >
 { using type = ChannelValue; };
 
+} // namespace detail
+
 template <typename T>
-struct base_channel_type : base_channel_type_impl<typename std::remove_cv<T>::type> {};
+struct base_channel_type : detail::base_channel_type_impl<typename std::remove_cv<T>::type> {};
 
 }} //namespace boost::gil
 
