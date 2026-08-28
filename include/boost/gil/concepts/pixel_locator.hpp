@@ -136,8 +136,8 @@ struct RandomAccessNDLocatorConcept
 
         using first_it_type = typename Loc::template axis<0>::iterator;
         using last_it_type = typename Loc::template axis<N-1>::iterator;
-        gil_function_requires<boost_concepts::RandomAccessTraversalConcept<first_it_type>>();
-        gil_function_requires<boost_concepts::RandomAccessTraversalConcept<last_it_type>>();
+        gil_function_requires<RandomAccessIterator<first_it_type>>();
+        gil_function_requires<RandomAccessIterator<last_it_type>>();
 
         // point_t must be an N-dimensional point, each dimension of which must
         // have the same type as difference_type of the corresponding iterator
@@ -309,11 +309,11 @@ struct RandomAccessNDLocatorIsMutableConcept
 {
     void constraints()
     {
-        gil_function_requires<detail::RandomAccessIteratorIsMutableConcept
+        gil_function_requires<Mutable_RandomAccessIterator
             <
                 typename Loc::template axis<0>::iterator
             >>();
-        gil_function_requires<detail::RandomAccessIteratorIsMutableConcept
+        gil_function_requires<Mutable_RandomAccessIterator
             <
                 typename Loc::template axis<Loc::num_dimensions-1>::iterator
             >>();
