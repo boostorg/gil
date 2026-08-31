@@ -25,6 +25,7 @@ run iterator.cpp ;
 run planar_rgba_view.cpp ;
 run reverse_iterator.cpp ;
 run subimage_view.cpp ;
+run view_type_is_nothrow_moveable.cpp ;
 run x_iterator.cpp ;
 run xy_locator.cpp ;
 run y_iterator.cpp ;
