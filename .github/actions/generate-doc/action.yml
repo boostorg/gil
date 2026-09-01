@@ -1,13 +1,12 @@
 name: 'Generate Doc'
-description: 'Runs b2 on lib/gil/doc to generate documentation'
+description: 'Builds the Antora documentation for lib/gil/doc'
 runs:
   using: composite
   steps:
     - run: |
-        echo "using doxygen ;" > ~/user-config.jam
-        cd ../boost-root/libs
-        ../b2 gil/doc
-        cd gil
+        cd ../boost-root/libs/gil/doc
+        bash build_antora.sh
+        cd ..
         chmod +x $GITHUB_WORKSPACE/.github/actions/generate-doc/docs-config.sh
         $GITHUB_WORKSPACE/.github/actions/generate-doc/docs-config.sh
       shell: bash

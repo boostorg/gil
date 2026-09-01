@@ -1,0 +1,40 @@
+#
+# Copyright (c) 2026 Samuel Debionne
+#
+# Distributed under the Boost Software License, Version 1.0. (See accompanying
+# file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+#
+# Official repository: https://github.com/boostorg/gil
+#
+# An Antora playbook used for local development and CI.
+# The playbook includes Boost.GIL as its only component.
+
+site:
+  title: Boost.GIL
+  url: https://antora.cppalliance.org/develop/lib/doc
+  start_page: gil::index.adoc
+  robots: allow
+  keys:
+    repo_url: 'https://github.com/boostorg/gil'
+
+content:
+  sources:
+    - url: ..
+      start_path: doc
+      edit_url: 'https://github.com/boostorg/gil/edit/{refname}/{path}'
+
+ui:
+  bundle:
+    url: https://github.com/boostorg/website-v2-docs/releases/download/ui-master/ui-bundle.zip
+    snapshot: true
+
+asciidoc:
+  attributes:
+    page-pagination: ''
+
+output:
+  dir: build/site
+
+runtime:
+  log:
+    failure_level: error

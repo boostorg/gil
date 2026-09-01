@@ -1,0 +1,25 @@
+//
+// Copyright (c) 2026 Samuel Debionne
+//
+// Distributed under the Boost Software License, Version 1.0. (See accompanying
+// file LICENSE_1_0.txt or copy at https://www.boost.org/LICENSE_1_0.txt)
+//
+// Official repository: https://github.com/boostorg/gil
+//
+
+[#reference]
+= Reference
+
+The complete API reference is generated from the header comments with
+Doxygen and published alongside this documentation.
+
+link:reference/index.html[Open the API Reference,window=_blank]
+
+NOTE: This library's API reference is planned to move to a
+https://github.com/cppalliance/mrdocs[MrDocs]-generated, AsciiDoc-native
+reference (as https://www.boost.org/doc/libs/master/libs/url/doc/html/url.html[Boost.URL]
+and https://www.boost.org/doc/libs/master/libs/redis/doc/html/redis.html[Boost.Redis]
+already do), so that API pages can be cross-referenced directly from the rest
+of this documentation. That migration is blocked on a MrDocs issue with
+GIL's CRTP-based pixel/image/iterator/locator types; see `doc/mrdocs.yml`
+for details.

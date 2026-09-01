@@ -1,0 +1,26 @@
+= Examples
+
+The following example programs, shipped with GIL, demonstrate various features of the library.
+
+* link:https://github.com/boostorg/gil/blob/develop/example/x_gradient.cpp[x_gradient.cpp]:
+  Writing an algorithm that operates on generic images
+* link:https://github.com/boostorg/gil/blob/develop/example/dynamic_image.cpp[dynamic_image.cpp]:
+  Using images whose properties (color space, channel type) are specified
+  at run time
+* link:https://github.com/boostorg/gil/blob/develop/example/histogram.cpp[histogram.cpp]: Creating a histogram
+* link:https://github.com/boostorg/gil/blob/develop/example/interleaved_ptr.cpp[interleaved_ptr.cpp],
+  link:https://github.com/boostorg/gil/blob/develop/example/interleaved_ptr.hpp[interleaved_ptr.hpp],
+  link:https://github.com/boostorg/gil/blob/develop/example/interleaved_ref.hpp[interleaved_ref.hpp]:
+  Creating your own pixel reference and pixel iterator
+* link:https://github.com/boostorg/gil/blob/develop/example/mandelbrot.cpp[mandelbrot.cpp]:
+  Creating a synthetic image defined by a function
+* link:https://github.com/boostorg/gil/blob/develop/example/packed_pixel.cpp[packed_pixel.cpp]:
+  Defining bitmasks and images whose channels or pixels are not byte-aligned
+* link:https://github.com/boostorg/gil/blob/develop/example/resize.cpp[resize.cpp]:
+  Rescaling an image using bilinear sampling (requires the optional
+  Numeric extension)
+* link:https://github.com/boostorg/gil/blob/develop/example/affine.cpp[affine.cpp]:
+  Applying an affine transformation to an image (requires the optional
+  Numeric extension)
+* link:https://github.com/boostorg/gil/blob/develop/example/convolution.cpp[convolution.cpp]:
+  Blurring images (requires the optional Numeric extension)

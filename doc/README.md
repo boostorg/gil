@@ -2,33 +2,31 @@
 
 A simple guide about writing and building documentation for Boost.GIL.
 
+The documentation is written in AsciiDoc and built with [Antora](https://antora.org/).
+The C++ API reference is still generated with [Doxygen](https://www.doxygen.org)
+(see `doxyfile`) and stitched into the Antora site by
+`modules/ROOT/pages/reference.adoc` — this library is expected to move to a
+[MrDocs](https://github.com/cppalliance/mrdocs)-generated, AsciiDoc-native
+reference once an upstream MrDocs crash on GIL's header patterns is fixed;
+see `mrdocs.yml` for details.
+
 ## Prerequisites
 
-- Python 3
-- Install [Sphinx](https://www.sphinx-doc.org/en/master/index.html) (see `requirements.txt`)
-- Install [Doxygen](http://www.doxygen.org)
+- [Node.js](https://nodejs.org/) 20+ (for Antora)
+- [Doxygen](https://www.doxygen.org)
 
-
-## Installation
-
-Create Python virtual environment:
+Both are available through the repository's `pixi.toml` under the `docs`
+environment; from the repository root:
 
 ```console
-$ python3 -m venv .venv
-$ source ~/.venv/bin/activate
+$ pixi run -e docs docs-build
 ```
 
-Install Sphinx and Sphinx extensions:
+## Build manually
 
 ```console
-(.venv)$ cd boost-root
-(.venv)$ pip install -r libs/gil/doc/requirements.txt
+$ cd libs/gil/doc
+$ bash build_antora.sh
 ```
 
-## Build
-
-```console
-$ echo "using doxygen ;" > ~/user-config.jam
-$ cd boost-root
-$ b2 libs/gil/doc
-```
+The site is generated at `doc/build/site/index.html`.

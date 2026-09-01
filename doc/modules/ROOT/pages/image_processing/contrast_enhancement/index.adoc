@@ -1,0 +1,4 @@
+= Contrast Enhancement
+
+The GIL documentation sections listed below are dedicated to describe image
+processing algorithms used for contrast enhancement.

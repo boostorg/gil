@@ -1,0 +1,50 @@
+#
+# Copyright (c) 2026 Samuel Debionne
+#
+# Distributed under the Boost Software License, Version 1.0. (See accompanying
+# file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+#
+# Official repository: https://github.com/boostorg/gil
+#
+# NOT YET WIRED IN. This is a best-effort MrDocs config prepared for when
+# https://github.com/cppalliance/mrdocs handles GIL's headers without crashing.
+# As of MrDocs 0.8.0, most of GIL's core headers (anything using the CRTP
+# proxy-reference pattern: pixel, image, image_view, locator, the pixel
+# iterators, algorithm.hpp, rgb.hpp, and all of image_processing/) segfault
+# the tool in isolation -- this is not a config problem. Once that's fixed
+# upstream, add to antora.yml:
+#   ext:
+#     cpp-reference:
+#       config: doc/mrdocs.yml
+# and replace modules/ROOT/pages/reference.adoc's link to the Doxygen HTML
+# with xref:reference:boost/gil/<symbol>.adoc[] links, as boostorg/redis and
+# boostorg/url do.
+
+source-root: ..
+
+# Same subdirectories doc/doxyfile currently lists (RECURSIVE = NO there too).
+input:
+  - ../include/boost/gil
+  - ../include/boost/gil/concepts
+  - ../include/boost/gil/image_processing
+  - ../include/boost/gil/io
+  - ../include/boost/gil/extension/io
+  - ../include/boost/gil/extension/dynamic_image
+file-patterns:
+  - '*.hpp'
+
+include-symbols:
+  - 'boost::gil::**'
+exclude-symbols:
+  - 'boost::gil::detail'
+  - 'boost::gil::**::detail'
+
+generator: adoc
+multipage: true
+base-url: https://github.com/boostorg/gil/blob/develop/
+
+# GIL is header-only; this single translation unit includes everything the
+# `input` filter above will look for, following the pattern documented in
+# boostorg/url's mrdocs.yml (a single TU is much faster than a full project
+# build and MrDocs only needs compile flags, not a real link step).
+cmake: '-D BOOST_GIL_BUILD_EXAMPLES=OFF -D BOOST_GIL_BUILD_HEADER_TESTS=OFF -D BUILD_TESTING=OFF'
