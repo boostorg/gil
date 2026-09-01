@@ -358,7 +358,7 @@ template&lt;typename SrcView , typename DstView , typename Kernel &gt; </div>
   <table class="params">
     <tr><td class="paramname">src_view</td><td>- Source/Input image view. </td></tr>
     <tr><td class="paramname">dst_view</td><td>- View which stores the final result of operations performed by this function. </td></tr>
-    <tr><td class="paramname">kernel</td><td>- Kernel matrix/structuring element containing 0's and 1's which will be used for applying the required morphological operation. </td></tr>
+    <tr><td class="paramname">ker_mat</td><td>- Kernel matrix/structuring element containing 0's and 1's which will be used for applying the required morphological operation. </td></tr>
     <tr><td class="paramname">identifier</td><td>- Indicates the type of morphological operation to be applied. </td></tr>
   </table>
   </dd>
@@ -488,7 +488,7 @@ template&lt;typename SrcView , typename DstView &gt; </div>
     <tr><td class="paramname">dst_view</td><td>- TODO </td></tr>
     <tr><td class="paramname">threshold_value</td><td>- TODO </td></tr>
     <tr><td class="paramname">max_value</td><td>- TODO </td></tr>
-    <tr><td class="paramname">threshold_direction</td><td>- if regular, values greater than threshold_value are set to max_value else set to 0; if inverse, values greater than threshold_value are set to 0 else set to max_value. </td></tr>
+    <tr><td class="paramname">direction</td><td>- if regular, values greater than threshold_value are set to max_value else set to 0; if inverse, values greater than threshold_value are set to 0 else set to max_value. </td></tr>
   </table>
   </dd>
 </dl>

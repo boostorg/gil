@@ -81,9 +81,9 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>difference_type</b> 
 using&#160;</td><td class="memItemRight" valign="bottom"><b>x_iterator</b> = Iterator</td></tr>
 <tr class="separator:abda96f6e8bcbe011f40941740b62c61f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_types_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="classboost_1_1gil_1_1detail_1_1step__iterator__adaptor.html">step_iterator_adaptor&lt; memory_based_step_iterator&lt; Iterator &gt;, Iterator, memunit_step_fn&lt; Iterator &gt; &gt;</a></td></tr>
-<tr class="memitem:aaddc7de362ea82f391ca5035f9d418da inherit pub_types_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor" id="r_aaddc7de362ea82f391ca5035f9d418da"><td class="memItemLeft" align="right" valign="top">
-using&#160;</td><td class="memItemRight" valign="bottom"><b>parent_t</b> = iterator_adaptor&lt; <a class="el" href="classboost_1_1gil_1_1memory__based__step__iterator.html">memory_based_step_iterator</a>&lt; Iterator &gt;, Iterator, use_default, use_default, use_default, typename SFn::difference_type &gt;</td></tr>
-<tr class="separator:aaddc7de362ea82f391ca5035f9d418da inherit pub_types_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad98a4f146382aa571c8a92711c49cdd0 inherit pub_types_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor" id="r_ad98a4f146382aa571c8a92711c49cdd0"><td class="memItemLeft" align="right" valign="top">
+using&#160;</td><td class="memItemRight" valign="bottom"><b>parent_t</b> = stl_interfaces::iterator_interface&lt; <a class="el" href="classboost_1_1gil_1_1memory__based__step__iterator.html">memory_based_step_iterator</a>&lt; Iterator &gt;, std::random_access_iterator_tag, typename std::iterator_traits&lt; Iterator &gt;::value_type, typename std::iterator_traits&lt; Iterator &gt;::reference, typename std::iterator_traits&lt; Iterator &gt;::pointer, typename SFn::difference_type &gt;</td></tr>
+<tr class="separator:ad98a4f146382aa571c8a92711c49cdd0 inherit pub_types_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac3ecbee039e86d5e6592e81da05c7e79 inherit pub_types_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor" id="r_ac3ecbee039e86d5e6592e81da05c7e79"><td class="memItemLeft" align="right" valign="top">
 using&#160;</td><td class="memItemRight" valign="bottom"><b>base_difference_type</b> = typename std::iterator_traits&lt; Iterator &gt;::difference_type</td></tr>
 <tr class="separator:ac3ecbee039e86d5e6592e81da05c7e79 inherit pub_types_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -93,6 +93,9 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>difference_type</b> 
 <tr class="memitem:a57d818f6bd24dee2a8803cb3be635373 inherit pub_types_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor" id="r_a57d818f6bd24dee2a8803cb3be635373"><td class="memItemLeft" align="right" valign="top">
 using&#160;</td><td class="memItemRight" valign="bottom"><b>reference</b> = typename std::iterator_traits&lt; Iterator &gt;::reference</td></tr>
 <tr class="separator:a57d818f6bd24dee2a8803cb3be635373 inherit pub_types_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c51c933c2421a00018401d37afdd642 inherit pub_types_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor" id="r_a7c51c933c2421a00018401d37afdd642"><td class="memItemLeft" align="right" valign="top">
+using&#160;</td><td class="memItemRight" valign="bottom"><b>iterator_category</b> = typename parent_t::iterator_concept</td></tr>
+<tr class="separator:a7c51c933c2421a00018401d37afdd642 inherit pub_types_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -103,8 +106,6 @@ Public Member Functions</h2></td></tr>
 template&lt;typename I2 &gt; </td></tr>
 <tr class="memitem:a4ef5f75f4ab577d869b8affa7efbe1fd"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>memory_based_step_iterator</b> (const <a class="el" href="classboost_1_1gil_1_1memory__based__step__iterator.html">memory_based_step_iterator</a>&lt; I2 &gt; &amp;it)</td></tr>
 <tr class="separator:a4ef5f75f4ab577d869b8affa7efbe1fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3832fa78e567d765df5630ec4555a659" id="r_a3832fa78e567d765df5630ec4555a659"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1gil_1_1memory__based__step__iterator.html#a3832fa78e567d765df5630ec4555a659">operator[]</a> (difference_type d) const -&gt; reference</td></tr>
-<tr class="separator:a3832fa78e567d765df5630ec4555a659"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2db2a1eeeaff81d48e6c3ae3fb21cdd9" id="r_a2db2a1eeeaff81d48e6c3ae3fb21cdd9"><td class="memItemLeft" align="right" valign="top"><a id="a2db2a1eeeaff81d48e6c3ae3fb21cdd9" name="a2db2a1eeeaff81d48e6c3ae3fb21cdd9"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_step</b> (std::ptrdiff_t memunit_step)</td></tr>
 <tr class="separator:a2db2a1eeeaff81d48e6c3ae3fb21cdd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -121,10 +122,29 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><b>base</b> () const -&g
 <tr class="memitem:a36ea8ec0eead3802809f7c437ea57ba6 inherit pub_methods_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor" id="r_a36ea8ec0eead3802809f7c437ea57ba6"><td class="memItemLeft" align="right" valign="top">
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>step</b> () const -&gt; difference_type</td></tr>
 <tr class="separator:a36ea8ec0eead3802809f7c437ea57ba6 inherit pub_methods_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60f1a976beb59218d2a8f27118bde2c6 inherit pub_methods_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor" id="r_a60f1a976beb59218d2a8f27118bde2c6"><td class="memItemLeft" align="right" valign="top">
+constexpr <a class="el" href="classboost_1_1gil_1_1memory__based__step__iterator.html">memory_based_step_iterator</a>&lt; Iterator &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator+=</b> (base_difference_type d)</td></tr>
+<tr class="separator:a60f1a976beb59218d2a8f27118bde2c6 inherit pub_methods_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93470953b6db0ec55793c464c40986e3 inherit pub_methods_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor" id="r_a93470953b6db0ec55793c464c40986e3"><td class="memItemLeft" align="right" valign="top">
+constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>base</b> () noexcept</td></tr>
+<tr class="separator:a93470953b6db0ec55793c464c40986e3 inherit pub_methods_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dbb659830b195356dc872392d522385 inherit pub_methods_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor" id="r_a7dbb659830b195356dc872392d522385"><td class="memItemLeft" align="right" valign="top">
+constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>base</b> () const noexcept</td></tr>
+<tr class="separator:a7dbb659830b195356dc872392d522385 inherit pub_methods_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_methods_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classboost_1_1gil_1_1detail_1_1step__iterator__adaptor.html">step_iterator_adaptor&lt; memory_based_step_iterator&lt; Iterator &gt;, Iterator, memunit_step_fn&lt; Iterator &gt; &gt;</a></td></tr>
+<tr class="memitem:a6c7533725ecca2b2bbf3ef9f95d16cbe inherit pro_methods_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor" id="r_a6c7533725ecca2b2bbf3ef9f95d16cbe"><td class="memItemLeft" align="right" valign="top">
+constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>base_reference</b> () noexcept -&gt; Iterator &amp;</td></tr>
+<tr class="separator:a6c7533725ecca2b2bbf3ef9f95d16cbe inherit pro_methods_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ef373c383bd797edb05039f37520608 inherit pro_methods_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor" id="r_a7ef373c383bd797edb05039f37520608"><td class="memItemLeft" align="right" valign="top">
+constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>base_reference</b> () const noexcept -&gt; Iterator const &amp;</td></tr>
+<tr class="separator:a7ef373c383bd797edb05039f37520608 inherit pro_methods_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classboost_1_1gil_1_1detail_1_1step__iterator__adaptor.html">step_iterator_adaptor&lt; memory_based_step_iterator&lt; Iterator &gt;, Iterator, memunit_step_fn&lt; Iterator &gt; &gt;</a></td></tr>
+<tr class="memitem:ade6f07f53171a0cb771ec5600771f7ed inherit pro_attribs_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor" id="r_ade6f07f53171a0cb771ec5600771f7ed"><td class="memItemLeft" align="right" valign="top">
+Iterator&#160;</td><td class="memItemRight" valign="bottom"><b>it_</b></td></tr>
+<tr class="separator:ade6f07f53171a0cb771ec5600771f7ed inherit pro_attribs_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6f3d4cf659c02cbee3b014d8d9dc90c inherit pro_attribs_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor" id="r_aa6f3d4cf659c02cbee3b014d8d9dc90c"><td class="memItemLeft" align="right" valign="top">
 <a class="el" href="structboost_1_1gil_1_1memunit__step__fn.html">memunit_step_fn</a>&lt; Iterator &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>_step_fn</b></td></tr>
 <tr class="separator:aa6f3d4cf659c02cbee3b014d8d9dc90c inherit pro_attribs_classboost_1_1gil_1_1detail_1_1step__iterator__adaptor"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -136,37 +156,7 @@ class boost::gil::memory_based_step_iterator&lt; Iterator &gt;</div><p>MEMORY-BA
 <p>A refinement of step_iterator_adaptor that uses a dynamic parameter for the step which is specified in memory units, such as bytes or bits</p>
 <p>Pixel step iterators are used to provide iteration over non-adjacent pixels. Common use is a vertical traversal, where the step is the row stride.</p>
 <p>Another application is as a sub-channel view. For example, a red intensity image over interleaved RGB data would use a step iterator adaptor with step sizeof(channel_t)*3 In the latter example the step size could be fixed at compile time for efficiency. Compile-time fixed step can be implemented by providing a step function object that takes the step as a template </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a3832fa78e567d765df5630ec4555a659" name="a3832fa78e567d765df5630ec4555a659"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3832fa78e567d765df5630ec4555a659">&#9670;&#160;</a></span>operator[]()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Iterator &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">auto operator[] </td>
-          <td>(</td>
-          <td class="paramtype">difference_type&#160;</td>
-          <td class="paramname"><em>d</em></td><td>)</td>
-          <td> const -&gt; reference </td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>For some reason operator[] provided by iterator_adaptor returns a custom class that is convertible to reference We require our own reference because it is registered in iterator_traits </p>
-
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following files:<ul>
+</div><hr/>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="algorithm_8hpp_source.html">algorithm.hpp</a></li>
 <li><a class="el" href="step__iterator_8hpp_source.html">step_iterator.hpp</a></li>
 </ul>

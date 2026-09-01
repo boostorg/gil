@@ -57,19 +57,28 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="scanline__read__iterator_8hpp_source.html">scanline_read_iterator.hpp</a>&gt;</code></p>
 
-<p>Inherits iterator_facade&lt; scanline_read_iterator&lt; Reader &gt;, byte_t *, std::input_iterator_tag &gt;.</p>
+<p>Inherits iterator_interface&lt; scanline_read_iterator&lt; Reader &gt;, byte_t *, std::input_iterator_tag &gt;.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a88eb60b1b0edba802ae20d0f677a7127" id="r_a88eb60b1b0edba802ae20d0f677a7127"><td class="memItemLeft" align="right" valign="top"><a id="a88eb60b1b0edba802ae20d0f677a7127" name="a88eb60b1b0edba802ae20d0f677a7127"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>scanline_read_iterator</b> (Reader &amp;reader, int pos=0)</td></tr>
 <tr class="separator:a88eb60b1b0edba802ae20d0f677a7127"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf756bdc112aa2efba0caf17c83147cb" id="r_aaf756bdc112aa2efba0caf17c83147cb"><td class="memItemLeft" align="right" valign="top"><a id="aaf756bdc112aa2efba0caf17c83147cb" name="aaf756bdc112aa2efba0caf17c83147cb"></a>
+constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> () const noexcept</td></tr>
+<tr class="separator:aaf756bdc112aa2efba0caf17c83147cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab796f5eb3812ab3b4751dc165f7ad1b0" id="r_ab796f5eb3812ab3b4751dc165f7ad1b0"><td class="memItemLeft" align="right" valign="top"><a id="ab796f5eb3812ab3b4751dc165f7ad1b0" name="ab796f5eb3812ab3b4751dc165f7ad1b0"></a>
+constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator++</b> () noexcept -&gt; <a class="el" href="classboost_1_1gil_1_1scanline__read__iterator.html">scanline_read_iterator</a> &amp;</td></tr>
+<tr class="separator:ab796f5eb3812ab3b4751dc165f7ad1b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff16e66474a4191e1a0c0004f15ef10a" id="r_aff16e66474a4191e1a0c0004f15ef10a"><td class="memItemLeft" align="right" valign="top"><a id="aff16e66474a4191e1a0c0004f15ef10a" name="aff16e66474a4191e1a0c0004f15ef10a"></a>
+constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (<a class="el" href="classboost_1_1gil_1_1scanline__read__iterator.html">scanline_read_iterator</a> other) const noexcept</td></tr>
+<tr class="separator:aff16e66474a4191e1a0c0004f15ef10a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>
-<tr class="memitem:ac09f73e325921cc50ebcd96bed0f8096" id="r_ac09f73e325921cc50ebcd96bed0f8096"><td class="memItemLeft" align="right" valign="top"><a id="ac09f73e325921cc50ebcd96bed0f8096" name="ac09f73e325921cc50ebcd96bed0f8096"></a>
-class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::iterator_core_access</b></td></tr>
-<tr class="separator:ac09f73e325921cc50ebcd96bed0f8096"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c0c2fd5ac1a0064ffa0dbf545bf5fa3" id="r_a0c0c2fd5ac1a0064ffa0dbf545bf5fa3"><td class="memItemLeft" align="right" valign="top"><a id="a0c0c2fd5ac1a0064ffa0dbf545bf5fa3" name="a0c0c2fd5ac1a0064ffa0dbf545bf5fa3"></a>
+struct&#160;</td><td class="memItemRight" valign="bottom"><b>boost::stl_interfaces::access</b></td></tr>
+<tr class="separator:a0c0c2fd5ac1a0064ffa0dbf545bf5fa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Reader&gt;<br />

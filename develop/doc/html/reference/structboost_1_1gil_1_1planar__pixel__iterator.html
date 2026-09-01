@@ -58,7 +58,7 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="planar__pixel__iterator_8hpp_source.html">planar_pixel_iterator.hpp</a>&gt;</code></p>
 
-<p>Inherits iterator_facade&lt; planar_pixel_iterator&lt; ChannelPtr, ColorSpace &gt;, pixel&lt; std::iterator_traits&lt; ChannelPtr &gt;::value_type, layout&lt; ColorSpace &gt; &gt;, std::random_access_iterator_tag, planar_pixel_reference&lt; std::iterator_traits&lt; ChannelPtr &gt;::reference, ColorSpace &gt; const &gt;, and homogeneous_color_base&lt; Element, Layout, K &gt;.</p>
+<p>Inherits iterator_interface&lt; planar_pixel_iterator&lt; ChannelPtr, ColorSpace &gt;, std::random_access_iterator_tag, pixel&lt; std::iterator_traits&lt; ChannelPtr &gt;::value_type, layout&lt; ColorSpace &gt; &gt;, planar_pixel_reference&lt; std::iterator_traits&lt; ChannelPtr &gt;::reference, ColorSpace &gt; const &gt;, and homogeneous_color_base&lt; Element, Layout, K &gt;.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -71,6 +71,9 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>reference</b> = type
 <tr class="memitem:a2ae9f9bc144b7bd7d8523c345ac34a58" id="r_a2ae9f9bc144b7bd7d8523c345ac34a58"><td class="memItemLeft" align="right" valign="top"><a id="a2ae9f9bc144b7bd7d8523c345ac34a58" name="a2ae9f9bc144b7bd7d8523c345ac34a58"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>difference_type</b> = typename parent_t::difference_type</td></tr>
 <tr class="separator:a2ae9f9bc144b7bd7d8523c345ac34a58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c51c933c2421a00018401d37afdd642" id="r_a7c51c933c2421a00018401d37afdd642"><td class="memItemLeft" align="right" valign="top"><a id="a7c51c933c2421a00018401d37afdd642" name="a7c51c933c2421a00018401d37afdd642"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>iterator_category</b> = typename parent_t::iterator_concept</td></tr>
+<tr class="separator:a7c51c933c2421a00018401d37afdd642"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -100,23 +103,36 @@ template&lt;typename IC1 , typename C1 &gt; </td></tr>
 template&lt;typename P &gt; </td></tr>
 <tr class="memitem:a2350a8890cdbc1c21427b853e9e73e3e"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structboost_1_1gil_1_1planar__pixel__iterator.html">planar_pixel_iterator</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator=</b> (P *pix)</td></tr>
 <tr class="separator:a2350a8890cdbc1c21427b853e9e73e3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16d8e6857dd561244ca73764f2b94801" id="r_a16d8e6857dd561244ca73764f2b94801"><td class="memItemLeft" align="right" valign="top">reference&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1gil_1_1planar__pixel__iterator.html#a16d8e6857dd561244ca73764f2b94801">operator[]</a> (difference_type d) const</td></tr>
-<tr class="separator:a16d8e6857dd561244ca73764f2b94801"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a805e05f32890139f6f2665c7ec37bf6e" id="r_a805e05f32890139f6f2665c7ec37bf6e"><td class="memItemLeft" align="right" valign="top"><a id="a805e05f32890139f6f2665c7ec37bf6e" name="a805e05f32890139f6f2665c7ec37bf6e"></a>
-reference&#160;</td><td class="memItemRight" valign="bottom"><b>operator-&gt;</b> () const</td></tr>
-<tr class="separator:a805e05f32890139f6f2665c7ec37bf6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6de5530ab982b221dbcd0e1383882c81" id="r_a6de5530ab982b221dbcd0e1383882c81"><td class="memItemLeft" align="right" valign="top"><a id="a6de5530ab982b221dbcd0e1383882c81" name="a6de5530ab982b221dbcd0e1383882c81"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;</b> (const <a class="el" href="structboost_1_1gil_1_1planar__pixel__iterator.html">planar_pixel_iterator</a> &amp;ptr) const</td></tr>
-<tr class="separator:a6de5530ab982b221dbcd0e1383882c81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a40a5c353e71dc2d07f2446a88dd03ce7" id="r_a40a5c353e71dc2d07f2446a88dd03ce7"><td class="memItemLeft" align="right" valign="top"><a id="a40a5c353e71dc2d07f2446a88dd03ce7" name="a40a5c353e71dc2d07f2446a88dd03ce7"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (const <a class="el" href="structboost_1_1gil_1_1planar__pixel__iterator.html">planar_pixel_iterator</a> &amp;ptr) const</td></tr>
-<tr class="separator:a40a5c353e71dc2d07f2446a88dd03ce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaae1754e75304b5a5eeccb4cd37b3d3d" id="r_aaae1754e75304b5a5eeccb4cd37b3d3d"><td class="memItemLeft" align="right" valign="top"><a id="aaae1754e75304b5a5eeccb4cd37b3d3d" name="aaae1754e75304b5a5eeccb4cd37b3d3d"></a>
+constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> () const noexcept -&gt; reference</td></tr>
+<tr class="separator:aaae1754e75304b5a5eeccb4cd37b3d3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a963df2feddd22d4373607ae9050273e2" id="r_a963df2feddd22d4373607ae9050273e2"><td class="memItemLeft" align="right" valign="top"><a id="a963df2feddd22d4373607ae9050273e2" name="a963df2feddd22d4373607ae9050273e2"></a>
+constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator+=</b> (difference_type d) -&gt; <a class="el" href="structboost_1_1gil_1_1planar__pixel__iterator.html">planar_pixel_iterator</a> &amp;</td></tr>
+<tr class="separator:a963df2feddd22d4373607ae9050273e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a035eddbb548ea41587bbcf57f74ffe" id="r_a4a035eddbb548ea41587bbcf57f74ffe"><td class="memItemLeft" align="right" valign="top"><a id="a4a035eddbb548ea41587bbcf57f74ffe" name="a4a035eddbb548ea41587bbcf57f74ffe"></a>
+constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator++</b> () noexcept -&gt; <a class="el" href="structboost_1_1gil_1_1planar__pixel__iterator.html">planar_pixel_iterator</a> &amp;</td></tr>
+<tr class="separator:a4a035eddbb548ea41587bbcf57f74ffe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4eb96b5569d545a3ba7e8df13eb88fdc" id="r_a4eb96b5569d545a3ba7e8df13eb88fdc"><td class="memItemLeft" align="right" valign="top"><a id="a4eb96b5569d545a3ba7e8df13eb88fdc" name="a4eb96b5569d545a3ba7e8df13eb88fdc"></a>
+constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator--</b> () noexcept -&gt; <a class="el" href="structboost_1_1gil_1_1planar__pixel__iterator.html">planar_pixel_iterator</a> &amp;</td></tr>
+<tr class="separator:a4eb96b5569d545a3ba7e8df13eb88fdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e25248941777f81a0ddeebda7ecae1e" id="r_a8e25248941777f81a0ddeebda7ecae1e"><td class="memItemLeft" align="right" valign="top"><a id="a8e25248941777f81a0ddeebda7ecae1e" name="a8e25248941777f81a0ddeebda7ecae1e"></a>
+constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator++</b> (int) noexcept -&gt; <a class="el" href="structboost_1_1gil_1_1planar__pixel__iterator.html">planar_pixel_iterator</a></td></tr>
+<tr class="separator:a8e25248941777f81a0ddeebda7ecae1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fb54612e1e1d799f6f4736da9efe470" id="r_a8fb54612e1e1d799f6f4736da9efe470"><td class="memItemLeft" align="right" valign="top"><a id="a8fb54612e1e1d799f6f4736da9efe470" name="a8fb54612e1e1d799f6f4736da9efe470"></a>
+constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator--</b> (int) noexcept -&gt; <a class="el" href="structboost_1_1gil_1_1planar__pixel__iterator.html">planar_pixel_iterator</a></td></tr>
+<tr class="separator:a8fb54612e1e1d799f6f4736da9efe470"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdfecd9d441a3d8d3239c24b73344142" id="r_afdfecd9d441a3d8d3239c24b73344142"><td class="memItemLeft" align="right" valign="top"><a id="afdfecd9d441a3d8d3239c24b73344142" name="afdfecd9d441a3d8d3239c24b73344142"></a>
+constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> (const <a class="el" href="structboost_1_1gil_1_1planar__pixel__iterator.html">planar_pixel_iterator</a> &amp;other) const noexcept</td></tr>
+<tr class="separator:afdfecd9d441a3d8d3239c24b73344142"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0c809470ae2350773b0aa4ccfe6c341" id="r_ae0c809470ae2350773b0aa4ccfe6c341"><td class="memItemLeft" align="right" valign="top"><a id="ae0c809470ae2350773b0aa4ccfe6c341" name="ae0c809470ae2350773b0aa4ccfe6c341"></a>
+constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const <a class="el" href="structboost_1_1gil_1_1planar__pixel__iterator.html">planar_pixel_iterator</a> &amp;other) const noexcept</td></tr>
+<tr class="separator:ae0c809470ae2350773b0aa4ccfe6c341"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>
-<tr class="memitem:ac09f73e325921cc50ebcd96bed0f8096" id="r_ac09f73e325921cc50ebcd96bed0f8096"><td class="memItemLeft" align="right" valign="top"><a id="ac09f73e325921cc50ebcd96bed0f8096" name="ac09f73e325921cc50ebcd96bed0f8096"></a>
-class&#160;</td><td class="memItemRight" valign="bottom"><b>boost::iterator_core_access</b></td></tr>
-<tr class="separator:ac09f73e325921cc50ebcd96bed0f8096"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c0c2fd5ac1a0064ffa0dbf545bf5fa3" id="r_a0c0c2fd5ac1a0064ffa0dbf545bf5fa3"><td class="memItemLeft" align="right" valign="top"><a id="a0c0c2fd5ac1a0064ffa0dbf545bf5fa3" name="a0c0c2fd5ac1a0064ffa0dbf545bf5fa3"></a>
+struct&#160;</td><td class="memItemRight" valign="bottom"><b>boost::stl_interfaces::access</b></td></tr>
+<tr class="separator:a0c0c2fd5ac1a0064ffa0dbf545bf5fa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename ChannelPtr, typename ColorSpace&gt;<br />
@@ -151,36 +167,6 @@ template&lt;typename P &gt; </div>
 </table>
 </div><div class="memdoc">
 <p>Copy constructor and operator= from pointers to compatible planar pixels or planar pixel references. That allow constructs like pointer = &amp;value or pointer = &amp;reference Since we should not override operator&amp; that's the best we can do. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a16d8e6857dd561244ca73764f2b94801" name="a16d8e6857dd561244ca73764f2b94801"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a16d8e6857dd561244ca73764f2b94801">&#9670;&#160;</a></span>operator[]()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename ChannelPtr , typename ColorSpace &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">reference operator[] </td>
-          <td>(</td>
-          <td class="paramtype">difference_type&#160;</td>
-          <td class="paramname"><em>d</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>For some reason operator[] provided by iterator_facade returns a custom class that is convertible to reference We require our own reference because it is registered in iterator_traits </p>
 
 </div>
 </div>
