@@ -106,7 +106,7 @@ void convolve_2d_extend_constant(SrcView const& src_view, DstView const& dst_vie
 /// 
 /// \param src_view  - Source image view.
 /// \param dst_view  - Destination image view.
-/// \param sigma     - Standard deviation for generating gaussian kernel.
+/// \param sigma     - Standard deviation for generating gaussian kernel. Must be greater than 0.
 /// \param amount    - Sharpening amount or weight.
 /// \param threshold - Minimum local contrast for each pixel, 
 ///                    specified in the range 0 to 1, to apply sharpening.
@@ -130,6 +130,7 @@ void sharpen(SrcView const& src_view, DstView const& dst_view, double sigma = 1,
                  "Incompatible Color space used.");
 
     BOOST_ASSERT(src_view.dimensions() == dst_view.dimensions());
+    BOOST_ASSERT(sigma > 0.0);
 
     int const kernel_size = static_cast<int>(std::ceil(sigma) * 6 + 1);
     detail::kernel_2d<float> highpass_kernel = generate_gaussian_kernel<float>
