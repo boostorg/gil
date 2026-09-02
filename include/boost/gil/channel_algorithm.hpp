@@ -267,10 +267,13 @@ struct channel_converter_unsigned_integral_nondivisible<SrcChannelV, DstChannelV
 {
     auto operator()(SrcChannelV src) const -> DstChannelV
     {
-        using dest_t = typename base_channel_type<DstChannelV>::type;
-        return DstChannelV(
-            static_cast<dest_t>(src * unsigned_integral_max_value<DstChannelV>::value)
-            / unsigned_integral_max_value<SrcChannelV>::value);
+        // The mp_less check that selects this specialization guarantees that
+        // (src_max * dst_max) fits in uintmax_t, so the whole expression must
+        // be computed in a type at least that wide -- not in dest_t, which is
+        // only sized to hold dst_max and can be much narrower.
+        return DstChannelV(static_cast<uintmax_t>(
+            static_cast<uintmax_t>(src) * unsigned_integral_max_value<DstChannelV>::value
+            / unsigned_integral_max_value<SrcChannelV>::value));
     }
 };
 
