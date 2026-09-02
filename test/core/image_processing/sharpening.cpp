@@ -84,10 +84,88 @@ void amount_zero()
     sharpen(in_view, view(gray_img_out), 1, 0);
     BOOST_TEST(equal_pixels(const_view(gray_img_out), exp_view));
 }
+
+void spike_produces_halo()
+{
+    // Sharpening a single bright spike on a flat background must boost the
+    // spike itself and push its immediate neighbours *below* the background
+    // level (the classic unsharp-mask overshoot/undershoot halo). Unlike the
+    // tests above, this exercises an input where the correct output is
+    // actually different from the input.
+    int const w = 15;
+    int const h = 3;
+
+    gray8_image_t in(w, h);
+    gray8_image_t out(w, h);
+    fill_pixels(view(in), gray8_pixel_t(50));
+    for (int y = 0; y < h; ++y)
+        view(in)(w / 2, y) = gray8_pixel_t(200);
+
+    sharpen(const_view(in), view(out), 1.0, 1.0, 0.0);
+
+    uint8_t expected[] =
+    {
+        50, 50, 50, 50, 49, 42, 14, 255, 14, 42, 49, 50, 50, 50, 50,
+        50, 50, 50, 50, 49, 42, 14, 255, 14, 42, 49, 50, 50, 50, 50,
+        50, 50, 50, 50, 49, 42, 14, 255, 14, 42, 49, 50, 50, 50, 50
+    };
+    gray8c_view_t exp_view = interleaved_view(w, h, reinterpret_cast<const gray8_pixel_t*>(expected), w);
+
+    BOOST_TEST(equal_pixels(const_view(out), exp_view));
+}
+
+void threshold_suppresses_weak_edge()
+{
+    // Two edges of different strength: a weak one (50 -> 70) and a strong
+    // one (50 -> 250). With threshold = 0.5, only the strong edge (whose
+    // contrast exceeds half of the image's maximum contrast) should be
+    // sharpened; the weak edge must come out byte-for-byte identical to the
+    // input.
+    int const w = 40;
+    int const h = 3;
+
+    gray8_image_t in(w, h);
+    gray8_image_t out(w, h);
+    for (int y = 0; y < h; ++y)
+    {
+        for (int x = 0; x < w; ++x)
+        {
+            uint8_t v;
+            if (x < w / 2)
+                v = (x < w / 4) ? 50 : 70;
+            else
+                v = (x < 3 * w / 4) ? 50 : 250;
+            view(in)(x, y) = gray8_pixel_t(v);
+        }
+    }
+
+    sharpen(const_view(in), view(out), 1.0, 1.0, 0.5);
+
+    uint8_t expected[] =
+    {
+        50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70,
+        50, 50, 50, 50, 50, 50, 50, 50, 50,  0, 255, 250, 250, 250, 250, 250, 250, 250, 250, 250,
+        50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70,
+        50, 50, 50, 50, 50, 50, 50, 50, 50,  0, 255, 250, 250, 250, 250, 250, 250, 250, 250, 250,
+        50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70,
+        50, 50, 50, 50, 50, 50, 50, 50, 50,  0, 255, 250, 250, 250, 250, 250, 250, 250, 250, 250
+    };
+    gray8c_view_t exp_view = interleaved_view(w, h, reinterpret_cast<const gray8_pixel_t*>(expected), w);
+
+    // The weak edge (columns [0, w/2)) must be completely unaffected.
+    BOOST_TEST(equal_pixels(
+        subimage_view(const_view(out), 0, 0, w / 2, h),
+        subimage_view(const_view(in), 0, 0, w / 2, h)));
+
+    BOOST_TEST(equal_pixels(const_view(out), exp_view));
+}
+
 int main()
 {
     no_edges();
     no_edges_rgb();
     amount_zero();
+    spike_produces_halo();
+    threshold_suppresses_weak_edge();
     return ::boost::report_errors();
 }
