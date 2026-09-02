@@ -1009,11 +1009,53 @@ void test_all_uint8_t_input_float32_t_ouptut_distance_from_off_pixels()
     BOOST_TEST(equal_pixels(const_view(img_out), const_view(img_expected)));
 }
 
+void test_precise_no_reachable_target_reports_clamped_sentinel()
+{
+    // When no pixel of the requested kind exists (here: no 'on' pixel, while
+    // asking for the distance to the nearest 'on' pixel), every output pixel
+    // is unreachable and must report the same clamped sentinel value that
+    // the mask-3/mask-5 chamfer methods report for the identical input.
+    //
+    // The precise (Felzenszwalt-Huttenlocher) method computes everything in
+    // squared-distance space and only takes a final sqrt(): naively
+    // sqrt()-ing the internal infinity sentinel collapses dt_infinite
+    // (1e9) down to a small, misleadingly finite ~31623, which would then
+    // slip straight past the dst_channel_max clamp instead of being
+    // recognized as "unreachable".
+    gil::gray8_image_t img_in(5, 5);
+    gil::gray32f_image_t img_out_precise(5, 5);
+    gil::gray32f_image_t img_out_chamfer(5, 5);
+
+    gil::fill_pixels(view(img_in), gil::gray8_pixel_t(0)); // no 'on' pixel anywhere
+
+    gil::distance_transform(
+        const_view(img_in),
+        view(img_out_precise),
+        gil::distance_from::on_pixels,
+        gil::distance_type::precise_euclidean,
+        gil::mask_size::not_applicable);
+
+    gil::distance_transform(
+        const_view(img_in),
+        view(img_out_chamfer),
+        gil::distance_from::on_pixels,
+        gil::distance_type::euclidean_approximation,
+        gil::mask_size::three);
+
+    // Both must agree on the clamped sentinel for every pixel.
+    BOOST_TEST(equal_pixels(const_view(img_out_precise), const_view(img_out_chamfer)));
+
+    for (std::ptrdiff_t y = 0; y < img_out_precise.height(); ++y)
+        for (std::ptrdiff_t x = 0; x < img_out_precise.width(); ++x)
+            BOOST_TEST_EQ(view(img_out_precise)(x, y)[0], view(img_out_chamfer)(x, y)[0]);
+}
+
 int main()
 {
     test_manhattan_uint8_t_input_uint8_t_output_distance_from_off_pixels();
     test_chessboard_uint16_t_input_uint8_t_output_distance_from_on_pixels();
     test_euclidean_approx_and_manhattan_uint8_t_input_float32_t_output_distance_from_off_pixels();
     test_all_uint8_t_input_float32_t_ouptut_distance_from_off_pixels();
+    test_precise_no_reachable_target_reports_clamped_sentinel();
     return ::boost::report_errors();
 }

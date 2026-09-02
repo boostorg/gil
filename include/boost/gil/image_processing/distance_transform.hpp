@@ -492,8 +492,6 @@ void distance_transorm_precise_impl(
         {
             intermediate_row_itr[x][0] = one_dimensional_sq_euclidean_dt_along_row[x];
 
-            float const distance_transform = std::sqrt(intermediate_row_itr[x][0]);
-
             float constexpr dst_channel_max
                 = (is_same<DstView, gray32f_view_t>::value)
                     ? dt_infinite
@@ -505,6 +503,17 @@ void distance_transorm_precise_impl(
                     ? 0.f
                     : static_cast<float>(
                         (std::numeric_limits<typename channel_type<DstView>::type>::min)());
+
+            // A squared distance at or beyond dt_infinite means no target pixel was
+            // reachable (e.g. no 'on' pixel exists when dist_from == on_pixels).
+            // Report the clamped sentinel directly instead of sqrt(dt_infinite):
+            // taking the square root first would collapse it down to a small,
+            // misleadingly finite value (~31623 for dt_infinite == 1e9) that
+            // would then slip straight past the dst_channel_max clamp below.
+            float const squared_distance = intermediate_row_itr[x][0];
+            float const distance_transform = (squared_distance >= dt_infinite)
+                ? dst_channel_max
+                : std::sqrt(squared_distance);
 
             dst_view(x, y)[0]
                 = static_cast<typename channel_type<typename DstView::value_type>::type>(
