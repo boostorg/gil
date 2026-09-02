@@ -189,7 +189,11 @@ namespace detail {
 /// \ingroup CopyPixels
 template <typename I, typename O>
 struct copier_n {
-    BOOST_FORCEINLINE void operator()(I src, typename std::iterator_traits<I>::difference_type n, O dst) const { std::copy(src,src+n, dst); }
+    BOOST_FORCEINLINE void operator()(I src, typename std::iterator_traits<I>::difference_type n, O dst) const {
+        if (n < 0)
+            return;
+        std::copy(src, src + n, dst);
+    }
 };
 
 /// Source range is delimited by image iterators
@@ -1518,8 +1522,8 @@ void extend_row_impl(
 /// Image padding introduces new pixels around the edges of an image.
 /// The border provides space for annotations or acts as a boundary when using advanced filtering techniques.
 /// \tparam SrcView Models ImageViewConcept
-/// \tparam extend_count number of rows to be added each side
-/// \tparam option - TODO
+/// \param extend_count number of rows to be added each side
+/// \param option - TODO
 template <typename SrcView>
 auto extend_row(
     SrcView const& src_view,
@@ -1540,8 +1544,8 @@ auto extend_row(
 /// Image padding introduces new pixels around the edges of an image.
 /// The border provides space for annotations or acts as a boundary when using advanced filtering techniques.
 /// \tparam SrcView Models ImageViewConcept
-/// \tparam extend_count number of columns to be added each side
-/// \tparam option - TODO
+/// \param extend_count number of columns to be added each side
+/// \param option - TODO
 template <typename SrcView>
 auto extend_col(
     SrcView const& src_view,
@@ -1563,8 +1567,8 @@ auto extend_col(
 /// Image padding introduces new pixels around the edges of an image.
 /// The border provides space for annotations or acts as a boundary when using advanced filtering techniques.
 /// \tparam SrcView Models ImageViewConcept
-/// \tparam extend_count number of rows/column to be added each side
-/// \tparam option - TODO
+/// \param extend_count number of rows/column to be added each side
+/// \param option - TODO
 template <typename SrcView>
 auto extend_boundary(
     SrcView const& src_view,

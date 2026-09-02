@@ -678,7 +678,7 @@ struct image_read_settings< png_tag > : public image_read_settings_base
     /// Constructor
     /// \param top_left Top left coordinate for reading partial image.
     /// \param dim      Dimensions for reading partial image.
-    /// \param gamma    Screen gamma value.
+    /// \param screen_gamma Screen gamma value.
     image_read_settings( point_t const&         top_left
                        , point_t const&         dim
                        , const bool             apply_screen_gamma = false

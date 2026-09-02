@@ -15,8 +15,6 @@
 #include <boost/gil/concepts/pixel.hpp>
 #include <boost/gil/concepts/pixel_based.hpp>
 
-#include <boost/iterator/iterator_concepts.hpp>
-
 #include <cstddef>
 #include <iterator>
 #include <type_traits>
@@ -45,48 +43,48 @@ template <typename It> struct iterator_adaptor_get_base;
 // Isolating mutability to result in faster compile time
 namespace detail {
 
-// Preconditions: TT Models boost_concepts::ForwardTraversalConcept
-template <class TT>
-struct ForwardIteratorIsMutableConcept
-{
-    void constraints()
-    {
-        auto const tmp = *i;
-        *i++ = tmp; // require postincrement and assignment
-    }
-    TT i;
-};
-
-// Preconditions: TT Models boost::BidirectionalIteratorConcept
-template <class TT>
-struct BidirectionalIteratorIsMutableConcept
-{
-    void constraints()
-    {
-        gil_function_requires< ForwardIteratorIsMutableConcept<TT>>();
-        auto const tmp = *i;
-        *i-- = tmp; // require postdecrement and assignment
-    }
-    TT i;
-};
-
-// Preconditions: TT Models boost_concepts::RandomAccessTraversalConcept
-template <class TT>
-struct RandomAccessIteratorIsMutableConcept
-{
-    void constraints()
-    {
-        gil_function_requires<BidirectionalIteratorIsMutableConcept<TT>>();
-
-        typename std::iterator_traits<TT>::difference_type n = 0;
-        ignore_unused_variable_warning(n);
-        i[n] = *i; // require element access and assignment
-    }
-    TT i;
-};
+//// Preconditions: TT Models ForwardIterator
+//template <class TT>
+//struct ForwardIteratorIsMutableConcept
+//{
+//    void constraints()
+//    {
+//        auto const tmp = *i;
+//        *i++ = tmp; // require postincrement and assignment
+//    }
+//    TT i;
+//};
+//
+//// Preconditions: TT Models BidirectionalIterator
+//template <class TT>
+//struct BidirectionalIteratorIsMutableConcept
+//{
+//    void constraints()
+//    {
+//        gil_function_requires< ForwardIteratorIsMutableConcept<TT>>();
+//        auto const tmp = *i;
+//        *i-- = tmp; // require postdecrement and assignment
+//    }
+//    TT i;
+//};
+//
+//// Preconditions: TT Models RandomAccessIterator
+//template <class TT>
+//struct RandomAccessIteratorIsMutableConcept
+//{
+//    void constraints()
+//    {
+//        gil_function_requires<BidirectionalIteratorIsMutableConcept<TT>>();
+//
+//        typename std::iterator_traits<TT>::difference_type n = 0;
+//        ignore_unused_variable_warning(n);
+//        i[n] = *i; // require element access and assignment
+//    }
+//    TT i;
+//};
 
 // Iterators that can be used as the base of memory_based_step_iterator require some additional functions
-// \tparam Iterator Models boost_concepts::RandomAccessTraversalConcept
+// \tparam Iterator Models RandomAccessIterator
 template <typename Iterator>
 struct RandomAccessIteratorIsMemoryBasedConcept
 {
@@ -111,7 +109,7 @@ struct PixelIteratorIsMutableConcept
 {
     void constraints()
     {
-        gil_function_requires<detail::RandomAccessIteratorIsMutableConcept<Iterator>>();
+        gil_function_requires<Mutable_RandomAccessIterator<Iterator>>();
 
         using ref_t = typename std::remove_reference
             <
@@ -157,7 +155,7 @@ struct HasTransposedTypeConcept
 ///
 /// \code
 /// concept PixelIteratorConcept<typename Iterator>
-///     : boost_concepts::RandomAccessTraversalConcept<Iterator>, PixelBasedConcept<Iterator>
+///     : RandomAccessIterator<Iterator>, PixelBasedConcept<Iterator>
 /// {
 ///     where PixelValueConcept<value_type>;
 ///     typename const_iterator_type<It>::type;
@@ -171,7 +169,7 @@ struct PixelIteratorConcept
 {
     void constraints()
     {
-        gil_function_requires<boost_concepts::RandomAccessTraversalConcept<Iterator>>();
+        gil_function_requires<RandomAccessIterator<Iterator>>(); 
         gil_function_requires<PixelBasedConcept<Iterator>>();
 
         using value_type = typename std::iterator_traits<Iterator>::value_type;
@@ -222,7 +220,7 @@ struct MutablePixelIteratorConcept
 /// \ingroup PixelIteratorConceptStepIterator
 /// \brief Concept of a random-access iterator that can be advanced in memory units (bytes or bits)
 /// \code
-/// concept MemoryBasedIteratorConcept<boost_concepts::RandomAccessTraversalConcept Iterator>
+/// concept MemoryBasedIteratorConcept<RandomAccessIterator Iterator>
 /// {
 ///     typename byte_to_memunit<Iterator>; where metafunction<byte_to_memunit<Iterator> >;
 ///     std::ptrdiff_t      memunit_step(const Iterator&);
@@ -237,7 +235,7 @@ struct MemoryBasedIteratorConcept
 {
     void constraints()
     {
-        gil_function_requires<boost_concepts::RandomAccessTraversalConcept<Iterator>>();
+        gil_function_requires<RandomAccessIterator<Iterator>>();
         gil_function_requires<detail::RandomAccessIteratorIsMemoryBasedConcept<Iterator>>();
     }
 };
@@ -247,7 +245,7 @@ struct MemoryBasedIteratorConcept
 ///
 /// Step iterators are iterators that have a set_step method
 /// \code
-/// concept StepIteratorConcept<boost_concepts::ForwardTraversalConcept Iterator>
+/// concept StepIteratorConcept<ForwardIterator Iterator>
 /// {
 ///     template <Integral D>
 ///     void Iterator::set_step(D step);
@@ -258,7 +256,7 @@ struct StepIteratorConcept
 {
     void constraints()
     {
-        gil_function_requires<boost_concepts::ForwardTraversalConcept<Iterator>>();
+        gil_function_requires<ForwardIterator<Iterator>>();
         it.set_step(0);
     }
     Iterator it;
@@ -277,7 +275,7 @@ struct MutableStepIteratorConcept
     void constraints()
     {
         gil_function_requires<StepIteratorConcept<Iterator>>();
-        gil_function_requires<detail::ForwardIteratorIsMutableConcept<Iterator>>();
+        gil_function_requires<Mutable_ForwardIterator<Iterator>>();
     }
 };
 
@@ -297,17 +295,17 @@ struct MutableStepIteratorConcept
 /// The adaptee can be obtained from the iterator via the "base()" method.
 ///
 /// \code
-/// concept IteratorAdaptorConcept<boost_concepts::ForwardTraversalConcept Iterator>
+/// concept IteratorAdaptorConcept<ForwardIterator Iterator>
 /// {
 ///     where SameType<is_iterator_adaptor<Iterator>::type, std::true_type>;
 ///
 ///     typename iterator_adaptor_get_base<Iterator>;
 ///         where Metafunction<iterator_adaptor_get_base<Iterator> >;
-///         where boost_concepts::ForwardTraversalConcept<iterator_adaptor_get_base<Iterator>::type>;
+///         where ForwardIterator<iterator_adaptor_get_base<Iterator>::type>;
 ///
 ///     typename another_iterator;
 ///     typename iterator_adaptor_rebind<Iterator,another_iterator>::type;
-///         where boost_concepts::ForwardTraversalConcept<another_iterator>;
+///         where ForwardIterator<another_iterator>;
 ///         where IteratorAdaptorConcept<iterator_adaptor_rebind<Iterator,another_iterator>::type>;
 ///
 ///     const iterator_adaptor_get_base<Iterator>::type& Iterator::base() const;
@@ -318,10 +316,10 @@ struct IteratorAdaptorConcept
 {
     void constraints()
     {
-        gil_function_requires<boost_concepts::ForwardTraversalConcept<Iterator>>();
+        gil_function_requires<ForwardIterator<Iterator>>();
 
         using base_t = typename iterator_adaptor_get_base<Iterator>::type;
-        gil_function_requires<boost_concepts::ForwardTraversalConcept<base_t>>();
+        gil_function_requires<ForwardIterator<base_t>>();
 
         static_assert(is_iterator_adaptor<Iterator>::value, "");
         using rebind_t = typename iterator_adaptor_rebind<Iterator, void*>::type;
@@ -344,7 +342,7 @@ struct MutableIteratorAdaptorConcept
     void constraints()
     {
         gil_function_requires<IteratorAdaptorConcept<Iterator>>();
-        gil_function_requires<detail::ForwardIteratorIsMutableConcept<Iterator>>();
+        gil_function_requires<Mutable_ForwardIterator<Iterator>>();
     }
 };
 

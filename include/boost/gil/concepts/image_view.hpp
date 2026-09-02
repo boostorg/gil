@@ -120,13 +120,13 @@ struct RandomAccessNDImageViewConcept
         static const std::size_t N=View::num_dimensions;
 
         gil_function_requires<RandomAccessNDLocatorConcept<locator>>();
-        gil_function_requires<boost_concepts::RandomAccessTraversalConcept<iterator>>();
-        gil_function_requires<boost_concepts::RandomAccessTraversalConcept<reverse_iterator>>();
+        gil_function_requires<RandomAccessIterator<iterator>>();
+        gil_function_requires<RandomAccessIterator<reverse_iterator>>();
 
         using first_it_type = typename View::template axis<0>::iterator;
         using last_it_type = typename View::template axis<N-1>::iterator;
-        gil_function_requires<boost_concepts::RandomAccessTraversalConcept<first_it_type>>();
-        gil_function_requires<boost_concepts::RandomAccessTraversalConcept<last_it_type>>();
+        gil_function_requires<RandomAccessIterator<first_it_type>>();
+        gil_function_requires<RandomAccessIterator<last_it_type>>();
 
 //        static_assert(typename std::iterator_traits<first_it_type>::difference_type, typename point_t::template axis<0>::coord_t>::value, "");
 //        static_assert(typename std::iterator_traits<last_it_type>::difference_type, typename point_t::template axis<N-1>::coord_t>::value, "");
@@ -399,19 +399,19 @@ struct RandomAccessNDImageViewIsMutableConcept
     {
         gil_function_requires<detail::RandomAccessNDLocatorIsMutableConcept<typename View::locator>>();
 
-        gil_function_requires<detail::RandomAccessIteratorIsMutableConcept<typename View::iterator>>();
+        gil_function_requires<Mutable_RandomAccessIterator<typename View::iterator>>();
 
-        gil_function_requires<detail::RandomAccessIteratorIsMutableConcept
+        gil_function_requires<Mutable_RandomAccessIterator
             <
                 typename View::reverse_iterator
             >>();
 
-        gil_function_requires<detail::RandomAccessIteratorIsMutableConcept
+        gil_function_requires<Mutable_RandomAccessIterator
             <
                 typename View::template axis<0>::iterator
             >>();
 
-        gil_function_requires<detail::RandomAccessIteratorIsMutableConcept
+        gil_function_requires<Mutable_RandomAccessIterator
             <
                 typename View::template axis<View::num_dimensions - 1>::iterator
             >>();

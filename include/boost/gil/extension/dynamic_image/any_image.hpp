@@ -159,7 +159,7 @@ auto view(any_image<Images...>& img) -> typename any_image<Images...>::view_t
 }
 
 /// \brief Returns the constant-pixel view of any image. The returned view is any view.
-/// \tparam Types Models ImageVectorConcept
+/// \tparam Images Models ImageVectorConcept
 template <typename ...Images>
 BOOST_FORCEINLINE
 auto const_view(any_image<Images...> const& img) -> typename any_image<Images...>::const_view_t

@@ -98,7 +98,7 @@ struct Format_Type
             <
                 typename is_bit_aligned<typename get_pixel_type<View>::type>::type
             >,
-            is_floating_point<Channel>
+            std::is_floating_point<Channel>
         >::value
     >::type
 >
@@ -125,7 +125,7 @@ struct Format_Type
 //        return SAMPLEFORMAT_INT;
 //    }
 //
-//    else if( is_floating_point< Channel >::value )
+//    else if( std::is_floating_point< Channel >::value )
 //    {
 //        return SAMPLEFORMAT_IEEEFP;
 //    }

@@ -239,7 +239,7 @@ void read_and_convert_image(
 }
 
 /// \brief Reads and color-converts an image. Image memory is allocated. Default color converter is used.
-/// \param file_name File name. Must satisfy is_supported_path_spec metafunction.
+/// \param device    It's a device. Must satisfy is_input_device metafunction or is_adaptable_input_device.
 /// \param img       The image in which the data is read into.
 /// \param tag       Defines the image format. Must satisfy is_format_tag metafunction.
 /// \throw std::ios_base::failure
