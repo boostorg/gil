@@ -45,7 +45,7 @@ private:
                      )
     {
         char buf[1000];
-        snprintf(buf, 1000, fmt, ap);
+        vsnprintf(buf, sizeof(buf), fmt, ap);
         std::cout << "error: " << buf << std::endl;
     }
 
@@ -55,8 +55,8 @@ private:
                        )
     {
         char buf[1000];
-        snprintf(buf, 1000, fmt, ap);
-        std::cout << "warning: " << fmt << std::endl;
+        vsnprintf(buf, sizeof(buf), fmt, ap);
+        std::cout << "warning: " << buf << std::endl;
     }
 };
 
