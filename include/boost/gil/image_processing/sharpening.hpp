@@ -8,9 +8,6 @@
 #ifndef BOOST_GIL_IMAGE_PROCESSING_SHARPENING_HPP
 #define BOOST_GIL_IMAGE_PROCESSING_SHARPENING_HPP
 
-#include <boost/gil/extension/numeric/algorithm.hpp>
-#include <boost/gil/extension/numeric/convolve.hpp>
-#include <boost/gil/extension/numeric/kernel.hpp>
 #include <boost/gil/extension/toolbox/color_spaces/lab.hpp>
 
 #include <boost/gil/concepts/concept_check.hpp>
