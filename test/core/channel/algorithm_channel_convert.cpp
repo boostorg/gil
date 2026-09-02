@@ -11,6 +11,7 @@
 #include <boost/core/lightweight_test.hpp>
 
 #include <cstdint>
+#include <limits>
 
 #include "test_fixture.hpp"
 
@@ -240,6 +241,33 @@ struct test_channel_reference_const_convert_from_float64_t
     }
 };
 
+//--- Regression test: channel_convert must not overflow when the intermediate
+//    product (src * dst_max) does not fit in the destination's own storage
+//    type, only in a full uintmax_t. This hits
+//    channel_converter_unsigned_integral_nondivisible<Src, Dst, true, false>,
+//    selected when src_max < dst_max, dst_max is not a multiple of src_max,
+//    and bits(Src) + bits(Dst) <= bits(uintmax_t).
+void test_channel_convert_nondivisible_no_overflow()
+{
+    using src_t = std::uint16_t;
+    using dst_t = gil::packed_channel_value<24>;
+
+    // 65535 * 16777215 ~= 1.1e12: overflows a 32-bit intermediate (the size of
+    // dst_t's own storage), but fits in uintmax_t.
+    dst_t const dst_from_max = gil::channel_convert<dst_t>((std::numeric_limits<src_t>::max)());
+    BOOST_TEST_EQ(
+        static_cast<std::uintmax_t>(dst_from_max),
+        static_cast<std::uintmax_t>(gil::channel_traits<dst_t>::max_value()));
+
+    src_t const src_mid = 12345;
+    dst_t const dst_from_mid = gil::channel_convert<dst_t>(src_mid);
+    std::uintmax_t const expected =
+        static_cast<std::uintmax_t>(src_mid)
+        * gil::channel_traits<dst_t>::max_value()
+        / gil::channel_traits<src_t>::max_value();
+    BOOST_TEST_EQ(static_cast<std::uintmax_t>(dst_from_mid), expected);
+}
+
 int main()
 {
     test_channel_value_convert_from_uint8_t::run();
@@ -248,6 +276,8 @@ int main()
     test_channel_value_convert_from_int16_t::run();
     test_channel_value_convert_from_uint32_t::run();
     test_channel_value_convert_from_int32_t::run();
+
+    test_channel_convert_nondivisible_no_overflow();
 
     test_channel_value_convert_from_float32_t::run();
     test_channel_reference_convert_from_float32_t::run();
