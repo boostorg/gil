@@ -157,9 +157,9 @@ void non_overlapping_interpolated_clahe(
     using dst_channel_t    = typename channel_type<DstView>::type;
     using coord_t          = typename SrcView::x_coord_t;
 
-    std::size_t const channels = num_channels<SrcView>::value;
-    coord_t const width        = src_view.width();
-    coord_t const height       = src_view.height();
+    index_t const channels = num_channels<SrcView>::value;
+    coord_t const width    = src_view.width();
+    coord_t const height   = src_view.height();
 
     // Find control points
 
@@ -184,7 +184,7 @@ void non_overlapping_interpolated_clahe(
 
     copy_pixels(src_view, subimage_view(view(padded_img), top_left_x, top_left_y, width, height));
 
-    for (std::size_t k = 0; k < channels; k++)
+    for (index_t k = 0; k < channels; k++)
     {
         std::vector<histogram<source_channel_t>> prev_row(new_width / tile_width_x),
             next_row((new_width / tile_width_x));

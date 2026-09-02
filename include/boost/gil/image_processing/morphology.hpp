@@ -112,7 +112,7 @@ void morph(SrcView const& src_view, DstView const& dst_view, Kernel const& ker_m
 
     gil::image<typename DstView::value_type> intermediate_img(src_view.dimensions());
 
-    for (std::size_t i = 0; i < src_view.num_channels(); i++)
+    for (index_t i = 0; i < src_view.num_channels(); i++)
     {
         morph_impl(nth_channel_view(src_view, i), nth_channel_view(view(intermediate_img), i),
                    ker_mat, identifier);
@@ -153,7 +153,7 @@ void difference(SrcView const& src_view1, SrcView const& src_view2, DiffView con
     gil_function_requires<ColorSpacesCompatibleConcept<
         typename color_space_type<SrcView>::type, typename color_space_type<DiffView>::type>>();
 
-    for (std::size_t i = 0; i < src_view1.num_channels(); i++)
+    for (index_t i = 0; i < src_view1.num_channels(); i++)
     {
         difference_impl(nth_channel_view(src_view1, i), nth_channel_view(src_view2, i),
                         nth_channel_view(diff_view, i));

@@ -117,13 +117,13 @@ void histogram_equalization(
     using dst_channel_t    = typename channel_type<DstView>::type;
     using coord_t          = typename SrcView::x_coord_t;
 
-    std::size_t const channels = num_channels<SrcView>::value;
-    coord_t const width        = src_view.width();
-    coord_t const height       = src_view.height();
-    std::size_t pixel_max      = (std::numeric_limits<dst_channel_t>::max)();
-    std::size_t pixel_min      = (std::numeric_limits<dst_channel_t>::min)();
+    index_t const channels = num_channels<SrcView>::value;
+    coord_t const width    = src_view.width();
+    coord_t const height   = src_view.height();
+    std::size_t pixel_max  = (std::numeric_limits<dst_channel_t>::max)();
+    std::size_t pixel_min  = (std::numeric_limits<dst_channel_t>::min)();
 
-    for (std::size_t i = 0; i < channels; i++)
+    for (index_t i = 0; i < channels; i++)
     {
         histogram<source_channel_t> h;
         fill_histogram(nth_channel_view(src_view, i), h, bin_width, false, false, mask, src_mask);
