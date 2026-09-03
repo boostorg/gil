@@ -1,0 +1,4 @@
+= Histogram
+
+The GIL documentation sections listed below are dedicated to describe the
+histogram class and functions used in many image processing algorithms.
