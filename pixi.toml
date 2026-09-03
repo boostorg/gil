@@ -1,0 +1,30 @@
+#
+# Copyright (c) 2026 Samuel Debionne
+#
+# Distributed under the Boost Software License, Version 1.0. (See accompanying
+# file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+#
+# Official repository: https://github.com/boostorg/gil
+#
+# Tooling for building the documentation (doc/). See doc/build_antora.sh.
+# `mrdocs` comes from a personal channel repackaging a fixed MrDocs dev
+# build (0.8.0+47bdd690824e) -- see doc/mrdocs.yml and the upstream issue
+# at https://github.com/cppalliance/mrdocs/issues for the segfault it fixes.
+# Drop this dependency once that fix is in an official MrDocs release.
+
+[workspace]
+channels = ["sdebionne/label/esrf-bcu", "conda-forge"]
+name = "gil"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[feature.docs.dependencies]
+nodejs = "20.*"
+cxx-compiler = "*"
+mrdocs = "*"
+
+[feature.docs.tasks]
+docs-build = "cd doc && bash build_antora.sh"
+
+[environments]
+docs = ["docs"]
