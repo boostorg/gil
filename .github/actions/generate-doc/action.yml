@@ -4,7 +4,14 @@ runs:
   using: composite
   steps:
     - run: |
-        cd ../boost-root/libs/gil/doc
+        # Antora's local content source (doc/local-playbook.yml: `url: ..`)
+        # must be a real git repository. setup-boost's copy into
+        # ../boost-root/libs/gil (via `cp -r`) drops .git, so the build must
+        # run from the original checkout ($GITHUB_WORKSPACE) -- only
+        # BOOST_SRC_DIR (cross-library headers for MrDocs) comes from
+        # ../boost-root.
+        export BOOST_SRC_DIR="$(cd ../boost-root && pwd)"
+        cd doc
         bash build_antora.sh
         cd ..
         chmod +x $GITHUB_WORKSPACE/.github/actions/generate-doc/docs-config.sh
