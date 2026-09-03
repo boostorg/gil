@@ -11,9 +11,7 @@ runs:
         # BOOST_SRC_DIR (cross-library headers for MrDocs) comes from
         # ../boost-root.
         export BOOST_SRC_DIR="$(cd ../boost-root && pwd)"
-        cd doc
-        bash build_antora.sh
-        cd ..
+        pixi run -e docs docs-build
         chmod +x $GITHUB_WORKSPACE/.github/actions/generate-doc/docs-config.sh
         $GITHUB_WORKSPACE/.github/actions/generate-doc/docs-config.sh
       shell: bash
