@@ -24,3 +24,7 @@ The following example programs, shipped with GIL, demonstrate various features o
   Numeric extension)
 * link:https://github.com/boostorg/gil/blob/develop/example/convolution.cpp[convolution.cpp]:
   Blurring images (requires the optional Numeric extension)
+* link:https://github.com/boostorg/gil/blob/develop/example/sharpening.cpp[sharpening.cpp]:
+  Sharpening an image using unsharp masking
+* link:https://github.com/boostorg/gil/blob/develop/example/euclidean_distance_transform.cpp[euclidean_distance_transform.cpp]:
+  Computing the distance transform of a binary image
