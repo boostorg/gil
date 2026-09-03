@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<style>html.fonts-loading{visibility:hidden;opacity:0}</style>
+<script>document.documentElement.classList.add('fonts-loading');</script>
+
+<link rel="preload" href="../../_/font/NotoSansDisplay.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/NotoSansDisplay-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/MonaspaceNeon-Var.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/MonaspaceXenon-Var.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+
+<script>
+(function() {
+  'use strict';
+  
+  var revealed = false;
+  
+  var reveal = function() {
+    if (revealed) return;
+    revealed = true;
+    document.documentElement.classList.remove('fonts-loading');
+  };
+  
+  setTimeout(reveal, 3000);
+  
+  if (!('FontFace' in window) || !('fonts' in document)) {
+    setTimeout(reveal, 100);
+    return;
+  }
+  
+  var uiRoot = '../../_';
+  var fonts = [
+    { 
+      family: 'Noto Sans', 
+      url: uiRoot + '/font/NotoSansDisplay.woff2',
+      descriptors: { style: 'normal', weight: '100 900', stretch: '62.5% 100%' }
+    },
+    { 
+      family: 'Noto Sans', 
+      url: uiRoot + '/font/NotoSansDisplay-Italic.woff2',
+      descriptors: { style: 'italic', weight: '100 900', stretch: '62.5% 100%' }
+    },
+    { 
+      family: 'Monaspace Neon', 
+      url: uiRoot + '/font/MonaspaceNeon-Var.woff2',
+      descriptors: { style: 'normal', weight: '400' }
+    },
+    { 
+      family: 'Monaspace Xenon', 
+      url: uiRoot + '/font/MonaspaceXenon-Var.woff2',
+      descriptors: { style: 'italic', weight: '400' }
+    }
+  ];
+  
+  var loadPromises = fonts.map(function(f) {
+    try {
+      var face = new FontFace(f.family, 'url("' + f.url + '")', f.descriptors);
+      return face.load().then(function(loaded) {
+        document.fonts.add(loaded);
+        return loaded;
+      }).catch(function() {
+        return null;
+      });
+    } catch (e) {
+      return Promise.resolve(null);
+    }
+  });
+  
+  Promise.all(loadPromises)
+    .then(function() {
+      return document.fonts.ready;
+    })
+    .then(reveal)
+    .catch(reveal);
+})();
+</script>    <title>Metafunctions :: Boost.GIL</title>
+  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/design/metafunctions.html">
+    <link rel="prev" href="dynamic_image.html">
+    <link rel="next" href="examples.html">
+  <meta name="generator" content="Antora 3.2.0">
+    <link rel="stylesheet" href="../../_/css/boostlook.css">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/vendor/tabs.css">
+    <script>
+    (function() {
+      if (window.self !== window.top) return;
+      var theme = localStorage.getItem('antora-theme');
+      if (!theme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        theme = 'dark';
+      }
+      if (theme === 'dark') document.documentElement.classList.add('dark');
+    })();
+    </script>
+    <script>var uiRootPath = '../../_'</script>
+<link rel="icon" href="../../_/img/favicons/favicon.ico" type="image/x-icon">
+    <!-- Favicon configuration -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../../_/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../_/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../_/img/favicons/favicon-16x16.png">
+    <link rel="manifest" href="../../_/img/favicons/site.webmanifest">
+    <link rel="shortcut icon" href="../../_/img/favicons/favicon.ico">
+  </head>
+  <body class="article toc2 toc-left">
+    <div class="boostlook">
+   <div id="header">
+      <div id="toc" class="nav-container toc2" data-component="gil" data-version="">
+  <aside class="nav">
+    <button class="nav-close"></button>
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+      <div class="title-row">
+        <h3 class="title"><a href="../index.html">Boost.GIL</a></h3>
+        <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme" style="display:none">
+  <i class="fas fa-sun theme-icon-light"></i>
+  <i class="fas fa-moon theme-icon-dark"></i>
+</button>      </div>
+      <ul class="nav-list">
+        <ul class="nav-list">
+        <li class="" data-depth="1">
+            <a class="nav-link" href="../index.html">Introduction</a>
+        </li>
+              <li class="" data-depth="1">
+            <span class="nav-text">Quickstart</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../installation.html">Installation</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/video.html">Tutorial: Video Lecture</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/histogram.html">Tutorial: Histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/gradient.html">Tutorial: Image Gradient</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../naming.html">Naming Conventions</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Design Guide</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="index.html">Design Guide</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="basics.html">Basics</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="concepts.html">Concepts</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="point.html">Point</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="color_space.html">Color Space and Layout</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="color_base.html">Color Base</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="channel.html">Channel</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="pixel.html">Pixel</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="pixel_iterator.html">Pixel Iterator</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="pixel_locator.html">Pixel Locator</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="image_view.html">Image View</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="image.html">Image</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="dynamic_image.html">Dynamic images and image views</a>
+        </li>
+              <li class=" is-current-page" data-depth="2">
+            <a class="nav-link" href="metafunctions.html">Metafunctions</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="examples.html">Examples</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="technicalities.html">Technicalities</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="extending.html">Extending</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="conclusions.html">Conclusions</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Image Processing</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/index.html">Image Processing</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/basics.html">Basics</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/affine-region-detectors.html">Affine region detectors</a>
+        </li>
+              <li class="" data-depth="2">
+            <span class="nav-text">Contrast Enhancement</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/index.html">Contrast Enhancement</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/histogram_equalization.html">Histogram Equalization</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/histogram_matching.html">Histogram Matching</a>
+        </li>
+        </ul>
+  </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Histogram</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/index.html">Histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/create.html">Create a histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/fill.html">Fill histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/subhistogram.html">Making a sub-histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/cumulative.html">Making a cumulative histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/stl_compatibility.html">STL compatibility</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/utilities.html">Utilities</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/extend.html">Extending the class</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/limitations.html">Limitations</a>
+        </li>
+              <li class="" data-depth="2">
+            <span class="nav-text">Extension</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/index.html">Extensions</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/std.html">STD extension</a>
+        </li>
+        </ul>
+  </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Extensions</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../io.html">IO extensions</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../toolbox.html">ToolBox extension</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../numeric.html">Numeric extension</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <a class="nav-link" href="../examples.html">Examples</a>
+        </li>
+              <li class="" data-depth="1">
+            <a class="nav-link" href="../reference.html">Reference</a>
+        </li>
+        </ul>
+  </ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+  </div>  <div id="content">
+    <article class="doc max-width-reset">
+  <div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li>
+      <a href="../index.html" aria-label="Home: Boost.GIL">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 -960 960 960" fill="#000000" aria-hidden="true"><path d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z"/></svg>
+      </a>
+    </li>
+    <li>Design Guide</li>
+    <li><a href="metafunctions.html">Metafunctions</a></li>
+  </ul>
+</nav>
+<div class="spirit-nav">
+    <a accesskey="p" href="dynamic_image.html">
+      <span class="material-symbols-outlined" title="Previous: Dynamic images and image views">arrow_back</span>
+    </a>
+    <a class="disabled" accesskey="u" aria-disabled="true" tabindex="-1">
+      <span class="material-symbols-outlined" title="Up:">arrow_upward</span>
+    </a>
+    <a accesskey="n" href="examples.html">
+      <span class="material-symbols-outlined" title="Next: Examples">arrow_forward</span>
+    </a>
+</div></div>
+    <h1 class="page">Metafunctions</h1>
+  <div class="sect1">
+<h2 id="_overview"><a class="anchor" href="#_overview"></a>Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Flexibility comes at a price. GIL types can be very long and hard to read.
+To address this problem, GIL provides typedefs to refer to any standard image,
+pixel iterator, pixel locator, pixel reference or pixel value.</p>
+</div>
+<div class="paragraph">
+<p>They follow this pattern:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">*ColorSpace* + *BitDepth* + ["s|f"] + ["c"] + ["_planar"] + ["_step"] + *ClassType* + "_t"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where <strong>ColorSpace</strong> also indicates the ordering of components.</p>
+</div>
+<div class="paragraph">
+<p>Examples are <code>rgb</code>, <code>bgr</code>, <code>cmyk</code>, <code>rgba</code>. <strong>BitDepth</strong> can be, for
+example, <code>8</code>, <code>16</code>, <code>32</code>. By default the bits are unsigned integral type.
+Append <code>s</code> to the bit depth to indicate signed integral, or <code>f</code> to
+indicate floating point. <code>c</code> indicates object whose associated pixel
+reference is immutable. <code>_planar</code> indicates planar organization (as opposed
+to interleaved). <code>_step</code> indicates the type has a dynamic step and
+<strong>ClassType</strong> is <code>_image</code> (image, using a standard allocator), <code>_view</code>
+(image view), <code>_loc</code> (pixel locator), <code>_ptr</code> (pixel iterator), <code>_ref</code>
+(pixel reference), <code>_pixel</code> (pixel value).</p>
+</div>
+<div class="paragraph">
+<p>Here are examples:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">bgr8_image_t               i;     // 8-bit unsigned (unsigned char) interleaved BGR image
+cmyk16_pixel_t;            x;     // 16-bit unsigned (unsigned short) CMYK pixel value
+cmyk16sc_planar_ref_t      p(x);  // const reference to a 16-bit signed integral (signed short) planar CMYK pixel x
+rgb32f_planar_step_ptr_t   ii;    // step iterator to a floating point 32-bit (float) planar RGB pixel</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_homogeneous_memory_based_images"><a class="anchor" href="#_homogeneous_memory_based_images"></a>Homogeneous memory-based images</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>GIL provides the metafunctions that return the types of standard
+homogeneous memory-based GIL constructs given a channel type, a
+layout, and whether the construct is planar, has a step along the X
+direction, and is mutable:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template &lt;typename ChannelValue, typename Layout, bool IsPlanar=false, bool IsMutable=true&gt;
+struct pixel_reference_type { typedef ... type; };
+
+template &lt;typename Channel, typename Layout&gt;
+struct pixel_value_type { typedef ... type; };
+
+template &lt;typename ChannelValue, typename Layout, bool IsPlanar=false, bool IsStep=false,  bool IsMutable=true&gt;
+struct iterator_type { typedef ... type; };
+
+template &lt;typename ChannelValue, typename Layout, bool IsPlanar=false, bool IsXStep=false, bool IsMutable=true&gt;
+struct locator_type { typedef ... type; };
+
+template &lt;typename ChannelValue, typename Layout, bool IsPlanar=false, bool IsXStep=false, bool IsMutable=true&gt;
+struct view_type { typedef ... type; };
+
+template &lt;typename ChannelValue, typename Layout, bool IsPlanar=false, typename Alloc=std::allocator&lt;unsigned char&gt; &gt;
+struct image_type { typedef ... type; };
+
+template &lt;typename BitField, typename ChannelBitSizeVector, typename Layout, typename Alloc=std::allocator&lt;unsigned char&gt; &gt;
+struct packed_image_type { typedef ... type; };
+
+template &lt;typename ChannelBitSizeVector, typename Layout, typename Alloc=std::allocator&lt;unsigned char&gt; &gt;
+struct bit_aligned_image_type { typedef ... type; };</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_packed_and_bit_aligned_images"><a class="anchor" href="#_packed_and_bit_aligned_images"></a>Packed and bit-aligned images</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There are also helper metafunctions to construct packed and
+bit-aligned images with up to five channels:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template &lt;typename BitField, unsigned Size1,
+        typename Layout, typename Alloc=std::allocator&lt;unsigned char&gt; &gt;
+struct packed_image1_type { typedef ... type; };
+
+template &lt;typename BitField, unsigned Size1, unsigned Size2,
+        typename Layout, typename Alloc=std::allocator&lt;unsigned char&gt; &gt;
+struct packed_image2_type { typedef ... type; };
+
+template &lt;typename BitField, unsigned Size1, unsigned Size2, unsigned Size3,
+        typename Layout, typename Alloc=std::allocator&lt;unsigned char&gt; &gt;
+struct packed_image3_type { typedef ... type; };
+
+template &lt;typename BitField, unsigned Size1, unsigned Size2, unsigned Size3, unsigned Size4,
+        typename Layout, typename Alloc=std::allocator&lt;unsigned char&gt; &gt;
+struct packed_image4_type { typedef ... type; };
+
+template &lt;typename BitField, unsigned Size1, unsigned Size2, unsigned Size3, unsigned Size4, unsigned Size5,
+        typename Layout, typename Alloc=std::allocator&lt;unsigned char&gt; &gt;
+struct packed_image5_type { typedef ... type; };
+
+template &lt;unsigned Size1,
+        typename Layout, typename Alloc=std::allocator&lt;unsigned char&gt; &gt;
+struct bit_aligned_image1_type { typedef ... type; };
+
+template &lt;unsigned Size1, unsigned Size2,
+        typename Layout, typename Alloc=std::allocator&lt;unsigned char&gt; &gt;
+struct bit_aligned_image2_type { typedef ... type; };
+
+template &lt;unsigned Size1, unsigned Size2, unsigned Size3,
+        typename Layout, typename Alloc=std::allocator&lt;unsigned char&gt; &gt;
+struct bit_aligned_image3_type { typedef ... type; };
+
+template &lt;unsigned Size1, unsigned Size2, unsigned Size3, unsigned Size4,
+        typename Layout, typename Alloc=std::allocator&lt;unsigned char&gt; &gt;
+struct bit_aligned_image4_type { typedef ... type; };
+
+template &lt;unsigned Size1, unsigned Size2, unsigned Size3, unsigned Size4, unsigned Size5,
+        typename Layout, typename Alloc=std::allocator&lt;unsigned char&gt; &gt;
+struct bit_aligned_image5_type { typedef ... type; };</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_iterators_and_views"><a class="anchor" href="#_iterators_and_views"></a>Iterators and views</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Here <code>ChannelValue</code> models <code>ChannelValueConcept</code>. We don&#8217;t need
+<code>IsYStep</code> because GIL&#8217;s memory-based locator and view already allow
+the vertical step to be specified dynamically. Iterators and views can
+be constructed from a pixel type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template &lt;typename Pixel, bool IsPlanar=false, bool IsStep=false, bool IsMutable=true&gt;
+struct iterator_type_from_pixel { typedef ... type; };
+
+template &lt;typename Pixel, bool IsPlanar=false, bool IsStepX=false, bool IsMutable=true&gt;
+struct view_type_from_pixel { typedef ... type; };</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Using a heterogeneous pixel type will result in heterogeneous iterators and
+views. Types can also be constructed from horizontal iterator:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template &lt;typename XIterator&gt;
+struct type_from_x_iterator
+{
+  typedef ... step_iterator_t;
+  typedef ... xy_locator_t;
+  typedef ... view_t;
+};</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_pixel_components"><a class="anchor" href="#_pixel_components"></a>Pixel components</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can get pixel-related types of any pixel-based GIL constructs (pixels,
+iterators, locators and views) using the following metafunctions provided by
+<code>PixelBasedConcept</code>, <code>HomogeneousPixelBasedConcept</code> and metafunctions
+built on top of them:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template &lt;typename T&gt; struct color_space_type { typedef ... type; };
+template &lt;typename T&gt; struct channel_mapping_type { typedef ... type; };
+template &lt;typename T&gt; struct is_planar { typedef ... type; };
+
+// Defined by homogeneous constructs
+template &lt;typename T&gt; struct channel_type { typedef ... type; };
+template &lt;typename T&gt; struct num_channels { typedef ... type; };</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_deriving_and_manipulating_existing_types"><a class="anchor" href="#_deriving_and_manipulating_existing_types"></a>Deriving and manipulating existing types</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There are metafunctions to construct the type of a construct from an existing
+type by changing one or more of its properties:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template &lt;typename PixelReference,
+        typename ChannelValue, typename Layout, typename IsPlanar, typename IsMutable&gt;
+struct derived_pixel_reference_type
+{
+  typedef ... type;  // Models PixelConcept
+};
+
+template &lt;typename Iterator,
+        typename ChannelValue, typename Layout, typename IsPlanar, typename IsStep, typename IsMutable&gt;
+struct derived_iterator_type
+{
+  typedef ... type;  // Models PixelIteratorConcept
+};
+
+template &lt;typename View,
+        typename ChannelValue, typename Layout, typename IsPlanar, typename IsXStep, typename IsMutable&gt;
+struct derived_view_type
+{
+  typedef ... type;  // Models ImageViewConcept
+};
+
+template &lt;typename Image,
+        typename ChannelValue, typename Layout, typename IsPlanar&gt;
+struct derived_image_type
+{
+  typedef ... type;  // Models ImageConcept
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can replace one or more of its properties and use <code>boost::use_default</code>
+for the rest. In this case <code>IsPlanar</code>, <code>IsStep</code> and <code>IsMutable</code> are
+MPL boolean constants. For example, here is how to create the type of a view
+just like <code>View</code>, but being grayscale and planar:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">using VT = typename derived_view_type&lt;View, boost::use_default, gray_t, mp11::mp_true&gt;::type;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_type_traits"><a class="anchor" href="#_type_traits"></a>Type traits</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>These are metafunctions, some of which return integral types which can be
+evaluated like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">static_assert(is_planar&lt;rgb8_planar_view_t&gt;::value == true, "");</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>GIL also supports type analysis metafunctions of the form:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">[pixel_reference/iterator/locator/view/image] + "_is_" + [basic/mutable/step]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">if (view_is_mutable&lt;View&gt;::value)
+{
+ ...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A <em>basic</em> GIL construct is a memory-based construct that uses the built-in GIL
+classes and does not have any function object to invoke upon dereferencing.
+For example, a simple planar or interleaved, step or non-step RGB image view
+is basic, but a color converted view or a virtual view is not.</p>
+</div>
+</div>
+</div>
+  <div class="edit-this-page">
+      <a href="https://github.com/boostorg/gil/edit/develop/doc/modules/ROOT/pages/design/metafunctions.adoc">Edit this Page</a>
+      </div>
+      <nav class="pagination">
+        <span class="prev"><a href="dynamic_image.html">Dynamic images and image views</a></span>
+        <span class="next"><a href="examples.html">Examples</a></span>
+    </nav>
+</article>
+</div>
+  <div id="footer">
+  <script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async src="../../_/js/vendor/tabs.js" data-sync-storage-key="preferred-tab"></script>
+</div>
+</div>
+  </body>
+</html>

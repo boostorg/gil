@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<style>html.fonts-loading{visibility:hidden;opacity:0}</style>
+<script>document.documentElement.classList.add('fonts-loading');</script>
+
+<link rel="preload" href="../../_/font/NotoSansDisplay.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/NotoSansDisplay-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/MonaspaceNeon-Var.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/MonaspaceXenon-Var.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+
+<script>
+(function() {
+  'use strict';
+  
+  var revealed = false;
+  
+  var reveal = function() {
+    if (revealed) return;
+    revealed = true;
+    document.documentElement.classList.remove('fonts-loading');
+  };
+  
+  setTimeout(reveal, 3000);
+  
+  if (!('FontFace' in window) || !('fonts' in document)) {
+    setTimeout(reveal, 100);
+    return;
+  }
+  
+  var uiRoot = '../../_';
+  var fonts = [
+    { 
+      family: 'Noto Sans', 
+      url: uiRoot + '/font/NotoSansDisplay.woff2',
+      descriptors: { style: 'normal', weight: '100 900', stretch: '62.5% 100%' }
+    },
+    { 
+      family: 'Noto Sans', 
+      url: uiRoot + '/font/NotoSansDisplay-Italic.woff2',
+      descriptors: { style: 'italic', weight: '100 900', stretch: '62.5% 100%' }
+    },
+    { 
+      family: 'Monaspace Neon', 
+      url: uiRoot + '/font/MonaspaceNeon-Var.woff2',
+      descriptors: { style: 'normal', weight: '400' }
+    },
+    { 
+      family: 'Monaspace Xenon', 
+      url: uiRoot + '/font/MonaspaceXenon-Var.woff2',
+      descriptors: { style: 'italic', weight: '400' }
+    }
+  ];
+  
+  var loadPromises = fonts.map(function(f) {
+    try {
+      var face = new FontFace(f.family, 'url("' + f.url + '")', f.descriptors);
+      return face.load().then(function(loaded) {
+        document.fonts.add(loaded);
+        return loaded;
+      }).catch(function() {
+        return null;
+      });
+    } catch (e) {
+      return Promise.resolve(null);
+    }
+  });
+  
+  Promise.all(loadPromises)
+    .then(function() {
+      return document.fonts.ready;
+    })
+    .then(reveal)
+    .catch(reveal);
+})();
+</script>    <title>Image View :: Boost.GIL</title>
+  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/design/image_view.html">
+    <link rel="prev" href="pixel_locator.html">
+    <link rel="next" href="image.html">
+  <meta name="generator" content="Antora 3.2.0">
+    <link rel="stylesheet" href="../../_/css/boostlook.css">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/vendor/tabs.css">
+    <script>
+    (function() {
+      if (window.self !== window.top) return;
+      var theme = localStorage.getItem('antora-theme');
+      if (!theme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        theme = 'dark';
+      }
+      if (theme === 'dark') document.documentElement.classList.add('dark');
+    })();
+    </script>
+    <script>var uiRootPath = '../../_'</script>
+<link rel="icon" href="../../_/img/favicons/favicon.ico" type="image/x-icon">
+    <!-- Favicon configuration -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../../_/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../_/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../_/img/favicons/favicon-16x16.png">
+    <link rel="manifest" href="../../_/img/favicons/site.webmanifest">
+    <link rel="shortcut icon" href="../../_/img/favicons/favicon.ico">
+  </head>
+  <body class="article toc2 toc-left">
+    <div class="boostlook">
+   <div id="header">
+      <div id="toc" class="nav-container toc2" data-component="gil" data-version="">
+  <aside class="nav">
+    <button class="nav-close"></button>
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+      <div class="title-row">
+        <h3 class="title"><a href="../index.html">Boost.GIL</a></h3>
+        <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme" style="display:none">
+  <i class="fas fa-sun theme-icon-light"></i>
+  <i class="fas fa-moon theme-icon-dark"></i>
+</button>      </div>
+      <ul class="nav-list">
+        <ul class="nav-list">
+        <li class="" data-depth="1">
+            <a class="nav-link" href="../index.html">Introduction</a>
+        </li>
+              <li class="" data-depth="1">
+            <span class="nav-text">Quickstart</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../installation.html">Installation</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/video.html">Tutorial: Video Lecture</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/histogram.html">Tutorial: Histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/gradient.html">Tutorial: Image Gradient</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../naming.html">Naming Conventions</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Design Guide</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="index.html">Design Guide</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="basics.html">Basics</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="concepts.html">Concepts</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="point.html">Point</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="color_space.html">Color Space and Layout</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="color_base.html">Color Base</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="channel.html">Channel</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="pixel.html">Pixel</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="pixel_iterator.html">Pixel Iterator</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="pixel_locator.html">Pixel Locator</a>
+        </li>
+              <li class=" is-current-page" data-depth="2">
+            <a class="nav-link" href="image_view.html">Image View</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="image.html">Image</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="dynamic_image.html">Dynamic images and image views</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="metafunctions.html">Metafunctions</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="examples.html">Examples</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="technicalities.html">Technicalities</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="extending.html">Extending</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="conclusions.html">Conclusions</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Image Processing</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/index.html">Image Processing</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/basics.html">Basics</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/affine-region-detectors.html">Affine region detectors</a>
+        </li>
+              <li class="" data-depth="2">
+            <span class="nav-text">Contrast Enhancement</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/index.html">Contrast Enhancement</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/histogram_equalization.html">Histogram Equalization</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/histogram_matching.html">Histogram Matching</a>
+        </li>
+        </ul>
+  </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Histogram</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/index.html">Histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/create.html">Create a histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/fill.html">Fill histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/subhistogram.html">Making a sub-histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/cumulative.html">Making a cumulative histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/stl_compatibility.html">STL compatibility</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/utilities.html">Utilities</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/extend.html">Extending the class</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/limitations.html">Limitations</a>
+        </li>
+              <li class="" data-depth="2">
+            <span class="nav-text">Extension</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/index.html">Extensions</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/std.html">STD extension</a>
+        </li>
+        </ul>
+  </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Extensions</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../io.html">IO extensions</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../toolbox.html">ToolBox extension</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../numeric.html">Numeric extension</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <a class="nav-link" href="../examples.html">Examples</a>
+        </li>
+              <li class="" data-depth="1">
+            <a class="nav-link" href="../reference.html">Reference</a>
+        </li>
+        </ul>
+  </ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+  </div>  <div id="content">
+    <article class="doc max-width-reset">
+  <div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li>
+      <a href="../index.html" aria-label="Home: Boost.GIL">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 -960 960 960" fill="#000000" aria-hidden="true"><path d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z"/></svg>
+      </a>
+    </li>
+    <li>Design Guide</li>
+    <li><a href="image_view.html">Image View</a></li>
+  </ul>
+</nav>
+<div class="spirit-nav">
+    <a accesskey="p" href="pixel_locator.html">
+      <span class="material-symbols-outlined" title="Previous: Pixel Locator">arrow_back</span>
+    </a>
+    <a class="disabled" accesskey="u" aria-disabled="true" tabindex="-1">
+      <span class="material-symbols-outlined" title="Up:">arrow_upward</span>
+    </a>
+    <a accesskey="n" href="image.html">
+      <span class="material-symbols-outlined" title="Next: Image">arrow_forward</span>
+    </a>
+</div></div>
+    <h1 class="page">Image View</h1>
+  <div class="sect1">
+<h2 id="_overview"><a class="anchor" href="#_overview"></a>Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An image view is a generalization of STL range concept to multiple dimensions.
+Similar to ranges (and iterators), image views are shallow, don&#8217;t own the
+underlying data and don&#8217;t propagate their constness over the data.
+For example, a constant image view cannot be resized, but may allow modifying
+the pixels. For pixel-immutable operations, use constant-value image view
+(also called non-mutable image view). Most general N-dimensional views satisfy
+the following concept:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">concept RandomAccessNDImageViewConcept&lt;Regular View&gt;
+{
+  typename value_type;      // for pixel-based views, the pixel type
+  typename reference;       // result of dereferencing
+  typename difference_type; // result of operator-(iterator,iterator) (1-dimensional!)
+  typename const_t;  where RandomAccessNDImageViewConcept&lt;View&gt;; // same as View, but over immutable values
+  typename point_t;  where PointNDConcept&lt;point_t&gt;; // N-dimensional point
+  typename locator;  where RandomAccessNDLocatorConcept&lt;locator&gt;; // N-dimensional locator.
+  typename iterator; where RandomAccessTraversalConcept&lt;iterator&gt;; // 1-dimensional iterator over all values
+  typename reverse_iterator; where RandomAccessTraversalConcept&lt;reverse_iterator&gt;;
+  typename size_type;       // the return value of size()
+
+  // Equivalent to RandomAccessNDLocatorConcept::axis
+  template &lt;size_t D&gt; struct axis {
+      typename coord_t = point_t::axis&lt;D&gt;::coord_t;
+      typename iterator; where RandomAccessTraversalConcept&lt;iterator&gt;;   // iterator along D-th axis.
+      where SameType&lt;coord_t, iterator::difference_type&gt;;
+      where SameType&lt;iterator::value_type,value_type&gt;;
+  };
+
+  // Defines the type of a view similar to this type, except it invokes Deref upon dereferencing
+  template &lt;PixelDereferenceAdaptorConcept Deref&gt; struct add_deref {
+      typename type;        where RandomAccessNDImageViewConcept&lt;type&gt;;
+      static type make(const View&amp; v, const Deref&amp; deref);
+  };
+
+  static const size_t num_dimensions = point_t::num_dimensions;
+
+  // Create from a locator at the top-left corner and dimensions
+  View::View(const locator&amp;, const point_type&amp;);
+
+  size_type        View::size()       const; // total number of elements
+  reference        operator[](View, const difference_type&amp;) const; // 1-dimensional reference
+  iterator         View::begin()      const;
+  iterator         View::end()        const;
+  reverse_iterator View::rbegin()     const;
+  reverse_iterator View::rend()       const;
+  iterator         View::at(const point_t&amp;);
+  point_t          View::dimensions() const; // number of elements along each dimension
+  bool             View::is_1d_traversable() const;   // Does an iterator over the first dimension visit each value?
+
+  // iterator along a given dimension starting at a given point
+  template &lt;size_t D&gt; View::axis&lt;D&gt;::iterator View::axis_iterator(const point_t&amp;) const;
+
+  reference operator()(View,const point_t&amp;) const;
+};
+
+concept MutableRandomAccessNDImageViewConcept&lt;RandomAccessNDImageViewConcept View&gt;
+{
+  where Mutable&lt;reference&gt;;
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Two-dimensional image views have the following extra requirements:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">concept RandomAccess2DImageViewConcept&lt;RandomAccessNDImageViewConcept View&gt;
+{
+  where num_dimensions==2;
+
+  typename x_iterator = axis&lt;0&gt;::iterator;
+  typename y_iterator = axis&lt;1&gt;::iterator;
+  typename x_coord_t  = axis&lt;0&gt;::coord_t;
+  typename y_coord_t  = axis&lt;1&gt;::coord_t;
+  typename xy_locator = locator;
+
+  x_coord_t View::width()  const;
+  y_coord_t View::height() const;
+
+  // X-navigation
+  x_iterator View::x_at(const point_t&amp;) const;
+  x_iterator View::row_begin(y_coord_t) const;
+  x_iterator View::row_end  (y_coord_t) const;
+
+  // Y-navigation
+  y_iterator View::y_at(const point_t&amp;) const;
+  y_iterator View::col_begin(x_coord_t) const;
+  y_iterator View::col_end  (x_coord_t) const;
+
+  // navigating in 2D
+  xy_locator View::xy_at(const point_t&amp;) const;
+
+  // (x,y) versions of all methods taking point_t
+  View::View(x_coord_t,y_coord_t,const locator&amp;);
+  iterator View::at(x_coord_t,y_coord_t) const;
+  reference operator()(View,x_coord_t,y_coord_t) const;
+  xy_locator View::xy_at(x_coord_t,y_coord_t) const;
+  x_iterator View::x_at(x_coord_t,y_coord_t) const;
+  y_iterator View::y_at(x_coord_t,y_coord_t) const;
+};
+
+concept MutableRandomAccess2DImageViewConcept&lt;RandomAccess2DImageViewConcept View&gt;
+  : MutableRandomAccessNDImageViewConcept&lt;View&gt; {};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Image views that GIL typically uses operate on value types that model
+<code>PixelValueConcept</code> and have some additional requirements:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">concept ImageViewConcept&lt;RandomAccess2DImageViewConcept View&gt;
+{
+  where PixelValueConcept&lt;value_type&gt;;
+  where PixelIteratorConcept&lt;x_iterator&gt;;
+  where PixelIteratorConcept&lt;y_iterator&gt;;
+  where x_coord_t == y_coord_t;
+
+  typename coord_t = x_coord_t;
+
+  std::size_t View::num_channels() const;
+};
+
+
+concept MutableImageViewConcept&lt;ImageViewConcept View&gt;
+  : MutableRandomAccess2DImageViewConcept&lt;View&gt;
+{};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Two image views are compatible if they have compatible pixels and the same
+number of dimensions:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">concept ViewsCompatibleConcept&lt;ImageViewConcept V1, ImageViewConcept V2&gt;
+{
+  where PixelsCompatibleConcept&lt;V1::value_type, V2::value_type&gt;;
+  where V1::num_dimensions == V2::num_dimensions;
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Compatible views must also have the same dimensions (i.e. the same width and
+height). Many algorithms taking multiple views require that they be pairwise
+compatible.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>See also:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../reference/boost/gil/RandomAccessNDImageViewConcept.html" class="xref page">RandomAccessNDImageViewConcept&lt;View&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/MutableRandomAccessNDImageViewConcept.html" class="xref page">MutableRandomAccessNDImageViewConcept&lt;View&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/RandomAccess2DImageViewConcept.html" class="xref page">RandomAccess2DImageViewConcept&lt;View&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/MutableRandomAccess2DImageViewConcept.html" class="xref page">MutableRandomAccess2DImageViewConcept&lt;View&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/ImageViewConcept.html" class="xref page">ImageViewConcept&lt;View&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/MutableImageViewConcept.html" class="xref page">MutableImageViewConcept&lt;View&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/ViewsCompatibleConcept.html" class="xref page">ViewsCompatibleConcept&lt;View1,View2&gt;</a></p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_models"><a class="anchor" href="#_models"></a>Models</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>GIL provides a model for <code>ImageViewConcept</code> called <code>image_view</code>. It is
+templated over a model of <code>PixelLocatorConcept</code>. (If instantiated with a
+model of <code>MutablePixelLocatorConcept</code>, it models
+<code>MutableImageViewConcept</code>.) Synopsis:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Locator models PixelLocatorConcept, could be MutablePixelLocatorConcept
+template &lt;typename Locator&gt;
+class image_view
+{
+public:
+  typedef Locator xy_locator;
+  typedef iterator_from_2d&lt;Locator&gt; iterator;
+  ...
+private:
+  xy_locator _pixels;     // 2D pixel locator at the top left corner of the image view range
+  point_t    _dimensions; // width and height
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Image views are lightweight objects. A regular interleaved view is typically
+16 bytes long - two integers for the width and height (inside dimensions), one
+for the number of bytes between adjacent rows (inside the locator) and one
+pointer to the beginning of the pixel block.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_algorithms"><a class="anchor" href="#_algorithms"></a>Algorithms</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>GIL provides algorithms constructing views from raw data or other views.</p>
+</div>
+<div class="sect2">
+<h3 id="_creating_views_from_raw_pixels"><a class="anchor" href="#_creating_views_from_raw_pixels"></a>Creating Views from Raw Pixels</h3>
+<div class="paragraph">
+<p>Standard image views can be constructed from raw data of any supported color
+space, bit depth, channel ordering or planar vs. interleaved structure.
+Interleaved views are constructed using <code>interleaved_view</code>, supplying the
+image dimensions, number of bytes per row, and a pointer to the first pixel:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Iterator models pixel iterator (e.g. rgb8_ptr_t or rgb8c_ptr_t)
+template &lt;typename Iterator&gt;
+image_view&lt;...&gt; interleaved_view(ptrdiff_t width, ptrdiff_t height, Iterator pixels, ptrdiff_t rowsize)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Planar views are defined for every color space and take each plane separately.
+Here is the RGB one:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Iterator models channel iterator (e.g. bits8* or bits8 const*)
+template &lt;typename Iterator&gt;
+image_view&lt;...&gt; planar_rgb_view(
+    ptrdiff_t width, ptrdiff_t height,
+    IC r, IC g, IC b, ptrdiff_t rowsize);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that the supplied pixel/channel iterators could be constant (read-only),
+in which case the returned view is a constant-value (immutable) view.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_creating_image_views_from_other_image_views"><a class="anchor" href="#_creating_image_views_from_other_image_views"></a>Creating Image Views from Other Image Views</h3>
+<div class="paragraph">
+<p>It is possible to construct one image view from another by changing some
+policy of how image data is interpreted. The result could be a view whose type
+is derived from the type of the source. GIL uses the following metafunctions
+to get the derived types:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Some result view types
+template &lt;typename View&gt;
+struct dynamic_xy_step_type : public dynamic_y_step_type&lt;typename dynamic_x_step_type&lt;View&gt;::type&gt; {};
+
+template &lt;typename View&gt;
+struct dynamic_xy_step_transposed_type : public dynamic_xy_step_type&lt;typename transposed_type&lt;View&gt;::type&gt; {};
+
+// color and bit depth converted view to match pixel type P
+template &lt;typename SrcView, // Models ImageViewConcept
+        typename DstP,    // Models PixelConcept
+        typename ColorConverter=gil::default_color_converter&gt;
+struct color_converted_view_type
+{
+  typedef ... type;     // image view adaptor with value type DstP, over SrcView
+};
+
+// single-channel view of the N-th channel of a given view
+template &lt;typename SrcView&gt;
+struct nth_channel_view_type
+{
+  typedef ... type;
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>GIL provides the following view transformations:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// flipped upside-down, left-to-right, transposed view
+template &lt;typename View&gt; typename dynamic_y_step_type&lt;View&gt;::type             flipped_up_down_view(const View&amp; src);
+template &lt;typename View&gt; typename dynamic_x_step_type&lt;View&gt;::type             flipped_left_right_view(const View&amp; src);
+template &lt;typename View&gt; typename dynamic_xy_step_transposed_type&lt;View&gt;::type transposed_view(const View&amp; src);
+
+// rotations
+template &lt;typename View&gt; typename dynamic_xy_step_type&lt;View&gt;::type            rotated180_view(const View&amp; src);
+template &lt;typename View&gt; typename dynamic_xy_step_transposed_type&lt;View&gt;::type rotated90cw_view(const View&amp; src);
+template &lt;typename View&gt; typename dynamic_xy_step_transposed_type&lt;View&gt;::type rotated90ccw_view(const View&amp; src);
+
+// view of an axis-aligned rectangular area within an image
+template &lt;typename View&gt; View                                                 subimage_view(const View&amp; src,
+           const View::point_t&amp; top_left, const View::point_t&amp; dimensions);
+
+// subsampled view (skipping pixels in X and Y)
+template &lt;typename View&gt; typename dynamic_xy_step_type&lt;View&gt;::type            subsampled_view(const View&amp; src,
+           const View::point_t&amp; step);
+
+template &lt;typename View, typename P&gt;
+color_converted_view_type&lt;View,P&gt;::type                                       color_converted_view(const View&amp; src);
+template &lt;typename View, typename P, typename CCV&gt; // with a custom color converter
+color_converted_view_type&lt;View,P,CCV&gt;::type                                   color_converted_view(const View&amp; src);
+
+template &lt;typename View&gt;
+nth_channel_view_type&lt;View&gt;::view_t                                           nth_channel_view(const View&amp; view, int n);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The implementations of most of these view factory methods are straightforward.
+Here is, for example, how the flip views are implemented. The flip upside-down
+view creates a view whose first pixel is the bottom left pixel of the original
+view and whose y-step is the negated step of the source.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template &lt;typename View&gt;
+typename dynamic_y_step_type&lt;View&gt;::type flipped_up_down_view(const View&amp; src)
+{
+  gil_function_requires&lt;ImageViewConcept&lt;View&gt; &gt;();
+  typedef typename dynamic_y_step_type&lt;View&gt;::type RView;
+  return RView(src.dimensions(),typename RView::xy_locator(src.xy_at(0,src.height()-1),-1));
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The call to <code>gil_function_requires</code> ensures (at compile time) that the
+template parameter is a valid model of <code>ImageViewConcept</code>. Using it
+generates easier to track compile errors, creates no extra code and has no
+run-time performance impact. We are using the <code>boost::concept_check library</code>,
+but wrapping it in <code>gil_function_requires</code>, which performs the check if the
+<code>BOOST_GIL_USE_CONCEPT_CHECK</code> is set. It is unset by default, because there
+is a significant increase in compile time when using concept checks. We will
+skip <code>gil_function_requires</code> in the code examples in this guide for the sake
+of succinctness.</p>
+</div>
+<div class="paragraph">
+<p>Image views can be freely composed (see section <a href="metafunctions.html" class="xref page">metafunctions</a> for
+explanation of the typedefs <code>rgb16_image_t</code> and <code>gray16_step_view_t)</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">rgb16_image_t img(100,100);    // an RGB interleaved image
+
+// grayscale view over the green (index 1) channel of img
+gray16_step_view_t green=nth_channel_view(view(img),1);
+
+// 50x50 view of the green channel of img, upside down and taking every other pixel in X and in Y
+gray16_step_view_t ud_fud=flipped_up_down_view(subsampled_view(green,2,2));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As previously stated, image views are fast, constant-time, shallow views over
+the pixel data. The above code does not copy any pixels; it operates on the
+pixel data allocated when <code>img</code> was created.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_stl_style_algorithms_on_image_views"><a class="anchor" href="#_stl_style_algorithms_on_image_views"></a>STL-Style Algorithms on Image Views</h3>
+<div class="paragraph">
+<p>Image views provide 1D iteration of their pixels via <code>begin()</code> and <code>end()</code>
+methods, which makes it possible to use STL algorithms with them. However,
+using nested loops over X and Y is in many cases more efficient.
+The algorithms in this section resemble STL algorithms, but they abstract away
+the nested loops and take views (as opposed to ranges) as input.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Equivalents of std::copy and std::uninitialized_copy
+// where ImageViewConcept&lt;V1&gt;, MutableImageViewConcept&lt;V2&gt;, ViewsCompatibleConcept&lt;V1,V2&gt;
+template &lt;typename V1, typename V2&gt;
+void copy_pixels(const V1&amp; src, const V2&amp; dst);
+template &lt;typename V1, typename V2&gt;
+void uninitialized_copy_pixels(const V1&amp; src, const V2&amp; dst);
+
+// Equivalents of std::fill and std::uninitialized_fill
+// where MutableImageViewConcept&lt;V&gt;, PixelConcept&lt;Value&gt;, PixelsCompatibleConcept&lt;Value,V::value_type&gt;
+template &lt;typename V, typename Value&gt;
+void fill_pixels(const V&amp; dst, const Value&amp; val);
+template &lt;typename V, typename Value&gt;
+void uninitialized_fill_pixels(const V&amp; dst, const Value&amp; val);
+
+// Equivalent of std::for_each
+// where ImageViewConcept&lt;V&gt;, boost::UnaryFunctionConcept&lt;F&gt;
+// where PixelsCompatibleConcept&lt;V::reference, F::argument_type&gt;
+template &lt;typename V, typename F&gt;
+F for_each_pixel(const V&amp; view, F fun);
+template &lt;typename V, typename F&gt;
+F for_each_pixel_position(const V&amp; view, F fun);
+
+// Equivalent of std::generate
+// where MutableImageViewConcept&lt;V&gt;, boost::UnaryFunctionConcept&lt;F&gt;
+// where PixelsCompatibleConcept&lt;V::reference, F::argument_type&gt;
+template &lt;typename V, typename F&gt;
+void generate_pixels(const V&amp; dst, F fun);
+
+// Equivalent of std::transform with one source
+// where ImageViewConcept&lt;V1&gt;, MutableImageViewConcept&lt;V2&gt;
+// where boost::UnaryFunctionConcept&lt;F&gt;
+// where PixelsCompatibleConcept&lt;V1::const_reference, F::argument_type&gt;
+// where PixelsCompatibleConcept&lt;F::result_type, V2::reference&gt;
+template &lt;typename V1, typename V2, typename F&gt;
+F transform_pixels(const V1&amp; src, const V2&amp; dst, F fun);
+template &lt;typename V1, typename V2, typename F&gt;
+F transform_pixel_positions(const V1&amp; src, const V2&amp; dst, F fun);
+
+// Equivalent of std::transform with two sources
+// where ImageViewConcept&lt;V1&gt;, ImageViewConcept&lt;V2&gt;, MutableImageViewConcept&lt;V3&gt;
+// where boost::BinaryFunctionConcept&lt;F&gt;
+// where PixelsCompatibleConcept&lt;V1::const_reference, F::first_argument_type&gt;
+// where PixelsCompatibleConcept&lt;V2::const_reference, F::second_argument_type&gt;
+// where PixelsCompatibleConcept&lt;F::result_type, V3::reference&gt;
+template &lt;typename V1, typename V2, typename V3, typename F&gt;
+F transform_pixels(const V1&amp; src1, const V2&amp; src2, const V3&amp; dst, F fun);
+template &lt;typename V1, typename V2, typename V3, typename F&gt;
+F transform_pixel_positions(const V1&amp; src1, const V2&amp; src2, const V3&amp; dst, F fun);
+
+// Copies a view into another, color converting the pixels if needed, with the default or user-defined color converter
+// where ImageViewConcept&lt;V1&gt;, MutableImageViewConcept&lt;V2&gt;
+// V1::value_type must be convertible to V2::value_type.
+template &lt;typename V1, typename V2&gt;
+void copy_and_convert_pixels(const V1&amp; src, const V2&amp; dst);
+template &lt;typename V1, typename V2, typename ColorConverter&gt;
+void copy_and_convert_pixels(const V1&amp; src, const V2&amp; dst, ColorConverter ccv);
+
+// Equivalent of std::equal
+// where ImageViewConcept&lt;V1&gt;, ImageViewConcept&lt;V2&gt;, ViewsCompatibleConcept&lt;V1,V2&gt;
+template &lt;typename V1, typename V2&gt;
+bool equal_pixels(const V1&amp; view1, const V2&amp; view2);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Algorithms that take multiple views require that they have the same
+dimensions. <code>for_each_pixel_position</code> and <code>transform_pixel_positions</code> pass
+pixel locators, as opposed to pixel references, to their function objects.
+This allows for writing algorithms that use pixel neighbours, as the tutorial
+demonstrates.</p>
+</div>
+<div class="paragraph">
+<p>Most of these algorithms check whether the image views are 1D-traversable.
+A 1D-traversable image view has no gaps at the end of the rows.
+In other words, if an x_iterator of that view is advanced past the last pixel
+in a row it will move to the first pixel of the next row. When image views are
+1D-traversable, the algorithms use a single loop and run more efficiently.
+If one or more of the input views are not 1D-traversable, the algorithms
+fall-back to an X-loop nested inside a Y-loop.</p>
+</div>
+<div class="paragraph">
+<p>The algorithms typically delegate the work to their corresponding STL
+algorithms. For example, <code>copy_pixels</code> calls <code>std::copy</code> either for each
+row, or, when the images are 1D-traversable, once for all pixels.</p>
+</div>
+<div class="paragraph">
+<p>In addition, overloads are sometimes provided for the STL algorithms.
+For example, <code>std::copy</code> for planar iterators is overloaded to perform
+<code>std::copy</code> for each of the planes. <code>std::copy</code> over bitwise-copyable
+pixels results in <code>std::copy</code> over unsigned char, which STL
+implements via <code>memmove</code>.</p>
+</div>
+<div class="paragraph">
+<p>As a result <code>copy_pixels</code> may result in a single call to <code>memmove</code> for
+interleaved 1D-traversable views, or one per each plane of planar
+1D-traversable views, or one per each row of interleaved non-1D-traversable
+images, etc.</p>
+</div>
+<div class="paragraph">
+<p>GIL also provides some beta-versions of image processing algorithms, such as
+resampling and convolution in a numerics extension available on
+<a href="http://stlab.adobe.com/gil/download.html" class="bare">http://stlab.adobe.com/gil/download.html</a>. This code is in early stage of
+development and is not optimized for speed</p>
+</div>
+</div>
+</div>
+</div>
+  <div class="edit-this-page">
+      <a href="https://github.com/boostorg/gil/edit/develop/doc/modules/ROOT/pages/design/image_view.adoc">Edit this Page</a>
+      </div>
+      <nav class="pagination">
+        <span class="prev"><a href="pixel_locator.html">Pixel Locator</a></span>
+        <span class="next"><a href="image.html">Image</a></span>
+    </nav>
+</article>
+</div>
+  <div id="footer">
+  <script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async src="../../_/js/vendor/tabs.js" data-sync-storage-key="preferred-tab"></script>
+</div>
+</div>
+  </body>
+</html>

@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<style>html.fonts-loading{visibility:hidden;opacity:0}</style>
+<script>document.documentElement.classList.add('fonts-loading');</script>
+
+<link rel="preload" href="../../_/font/NotoSansDisplay.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/NotoSansDisplay-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/MonaspaceNeon-Var.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/MonaspaceXenon-Var.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+
+<script>
+(function() {
+  'use strict';
+  
+  var revealed = false;
+  
+  var reveal = function() {
+    if (revealed) return;
+    revealed = true;
+    document.documentElement.classList.remove('fonts-loading');
+  };
+  
+  setTimeout(reveal, 3000);
+  
+  if (!('FontFace' in window) || !('fonts' in document)) {
+    setTimeout(reveal, 100);
+    return;
+  }
+  
+  var uiRoot = '../../_';
+  var fonts = [
+    { 
+      family: 'Noto Sans', 
+      url: uiRoot + '/font/NotoSansDisplay.woff2',
+      descriptors: { style: 'normal', weight: '100 900', stretch: '62.5% 100%' }
+    },
+    { 
+      family: 'Noto Sans', 
+      url: uiRoot + '/font/NotoSansDisplay-Italic.woff2',
+      descriptors: { style: 'italic', weight: '100 900', stretch: '62.5% 100%' }
+    },
+    { 
+      family: 'Monaspace Neon', 
+      url: uiRoot + '/font/MonaspaceNeon-Var.woff2',
+      descriptors: { style: 'normal', weight: '400' }
+    },
+    { 
+      family: 'Monaspace Xenon', 
+      url: uiRoot + '/font/MonaspaceXenon-Var.woff2',
+      descriptors: { style: 'italic', weight: '400' }
+    }
+  ];
+  
+  var loadPromises = fonts.map(function(f) {
+    try {
+      var face = new FontFace(f.family, 'url("' + f.url + '")', f.descriptors);
+      return face.load().then(function(loaded) {
+        document.fonts.add(loaded);
+        return loaded;
+      }).catch(function() {
+        return null;
+      });
+    } catch (e) {
+      return Promise.resolve(null);
+    }
+  });
+  
+  Promise.all(loadPromises)
+    .then(function() {
+      return document.fonts.ready;
+    })
+    .then(reveal)
+    .catch(reveal);
+})();
+</script>    <title>Pixel :: Boost.GIL</title>
+  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/design/pixel.html">
+    <link rel="prev" href="channel.html">
+    <link rel="next" href="pixel_iterator.html">
+  <meta name="generator" content="Antora 3.2.0">
+    <link rel="stylesheet" href="../../_/css/boostlook.css">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/vendor/tabs.css">
+    <script>
+    (function() {
+      if (window.self !== window.top) return;
+      var theme = localStorage.getItem('antora-theme');
+      if (!theme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        theme = 'dark';
+      }
+      if (theme === 'dark') document.documentElement.classList.add('dark');
+    })();
+    </script>
+    <script>var uiRootPath = '../../_'</script>
+<link rel="icon" href="../../_/img/favicons/favicon.ico" type="image/x-icon">
+    <!-- Favicon configuration -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../../_/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../_/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../_/img/favicons/favicon-16x16.png">
+    <link rel="manifest" href="../../_/img/favicons/site.webmanifest">
+    <link rel="shortcut icon" href="../../_/img/favicons/favicon.ico">
+  </head>
+  <body class="article toc2 toc-left">
+    <div class="boostlook">
+   <div id="header">
+      <div id="toc" class="nav-container toc2" data-component="gil" data-version="">
+  <aside class="nav">
+    <button class="nav-close"></button>
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+      <div class="title-row">
+        <h3 class="title"><a href="../index.html">Boost.GIL</a></h3>
+        <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme" style="display:none">
+  <i class="fas fa-sun theme-icon-light"></i>
+  <i class="fas fa-moon theme-icon-dark"></i>
+</button>      </div>
+      <ul class="nav-list">
+        <ul class="nav-list">
+        <li class="" data-depth="1">
+            <a class="nav-link" href="../index.html">Introduction</a>
+        </li>
+              <li class="" data-depth="1">
+            <span class="nav-text">Quickstart</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../installation.html">Installation</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/video.html">Tutorial: Video Lecture</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/histogram.html">Tutorial: Histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/gradient.html">Tutorial: Image Gradient</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../naming.html">Naming Conventions</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Design Guide</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="index.html">Design Guide</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="basics.html">Basics</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="concepts.html">Concepts</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="point.html">Point</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="color_space.html">Color Space and Layout</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="color_base.html">Color Base</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="channel.html">Channel</a>
+        </li>
+              <li class=" is-current-page" data-depth="2">
+            <a class="nav-link" href="pixel.html">Pixel</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="pixel_iterator.html">Pixel Iterator</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="pixel_locator.html">Pixel Locator</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="image_view.html">Image View</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="image.html">Image</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="dynamic_image.html">Dynamic images and image views</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="metafunctions.html">Metafunctions</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="examples.html">Examples</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="technicalities.html">Technicalities</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="extending.html">Extending</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="conclusions.html">Conclusions</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Image Processing</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/index.html">Image Processing</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/basics.html">Basics</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/affine-region-detectors.html">Affine region detectors</a>
+        </li>
+              <li class="" data-depth="2">
+            <span class="nav-text">Contrast Enhancement</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/index.html">Contrast Enhancement</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/histogram_equalization.html">Histogram Equalization</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/histogram_matching.html">Histogram Matching</a>
+        </li>
+        </ul>
+  </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Histogram</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/index.html">Histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/create.html">Create a histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/fill.html">Fill histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/subhistogram.html">Making a sub-histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/cumulative.html">Making a cumulative histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/stl_compatibility.html">STL compatibility</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/utilities.html">Utilities</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/extend.html">Extending the class</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/limitations.html">Limitations</a>
+        </li>
+              <li class="" data-depth="2">
+            <span class="nav-text">Extension</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/index.html">Extensions</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/std.html">STD extension</a>
+        </li>
+        </ul>
+  </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Extensions</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../io.html">IO extensions</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../toolbox.html">ToolBox extension</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../numeric.html">Numeric extension</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <a class="nav-link" href="../examples.html">Examples</a>
+        </li>
+              <li class="" data-depth="1">
+            <a class="nav-link" href="../reference.html">Reference</a>
+        </li>
+        </ul>
+  </ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+  </div>  <div id="content">
+    <article class="doc max-width-reset">
+  <div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li>
+      <a href="../index.html" aria-label="Home: Boost.GIL">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 -960 960 960" fill="#000000" aria-hidden="true"><path d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z"/></svg>
+      </a>
+    </li>
+    <li>Design Guide</li>
+    <li><a href="pixel.html">Pixel</a></li>
+  </ul>
+</nav>
+<div class="spirit-nav">
+    <a accesskey="p" href="channel.html">
+      <span class="material-symbols-outlined" title="Previous: Channel">arrow_back</span>
+    </a>
+    <a class="disabled" accesskey="u" aria-disabled="true" tabindex="-1">
+      <span class="material-symbols-outlined" title="Up:">arrow_upward</span>
+    </a>
+    <a accesskey="n" href="pixel_iterator.html">
+      <span class="material-symbols-outlined" title="Next: Pixel Iterator">arrow_forward</span>
+    </a>
+</div></div>
+    <h1 class="page">Pixel</h1>
+  <div class="sect1">
+<h2 id="_overview"><a class="anchor" href="#_overview"></a>Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A pixel is a set of channels defining the color at a given point in an
+image. Conceptually, a pixel is little more than a color base whose
+elements model <code>ChannelConcept</code>. All properties of pixels inherit
+from color bases: pixels may be <em>homogeneous</em> if all of their channels
+have the same type; otherwise they are called <em>heterogeneous</em>. The
+channels of a pixel may be addressed using semantic or physical
+indexing, or by color; all color-base algorithms work on pixels as
+well. Two pixels are <em>compatible</em> if their color spaces are the same
+and their channels, paired semantically, are compatible. Note that
+constness, memory organization and reference/value are ignored. For
+example, an 8-bit RGB planar reference is compatible to a constant
+8-bit BGR interleaved pixel value. Most pairwise pixel operations
+(copy construction, assignment, equality, etc.) are only defined for
+compatible pixels.</p>
+</div>
+<div class="paragraph">
+<p>Pixels (as well as other GIL constructs built on pixels, such as
+iterators, locators, views and images) must provide metafunctions to
+access their color space, channel mapping, number of channels, and
+(for homogeneous pixels) the channel type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">concept PixelBasedConcept&lt;typename T&gt;
+{
+  typename color_space_type&lt;T&gt;;
+      where Metafunction&lt;color_space_type&lt;T&gt; &gt;;
+      where ColorSpaceConcept&lt;color_space_type&lt;T&gt;::type&gt;;
+  typename channel_mapping_type&lt;T&gt;;
+      where Metafunction&lt;channel_mapping_type&lt;T&gt; &gt;;
+      where ChannelMappingConcept&lt;channel_mapping_type&lt;T&gt;::type&gt;;
+  typename is_planar&lt;T&gt;;
+      where Metafunction&lt;is_planar&lt;T&gt; &gt;;
+      where SameType&lt;is_planar&lt;T&gt;::type, bool&gt;;
+};
+
+concept HomogeneousPixelBasedConcept&lt;PixelBasedConcept T&gt;
+{
+  typename channel_type&lt;T&gt;;
+      where Metafunction&lt;channel_type&lt;T&gt; &gt;;
+      where ChannelConcept&lt;channel_type&lt;T&gt;::type&gt;;
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Pixels model the following concepts:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">concept PixelConcept&lt;typename P&gt; : ColorBaseConcept&lt;P&gt;, PixelBasedConcept&lt;P&gt;
+{
+  where is_pixel&lt;P&gt;::value==true;
+  // where for each K [0..size&lt;P&gt;::value-1]:
+  //      ChannelConcept&lt;kth_element_type&lt;K&gt; &gt;;
+
+  typename value_type;       where PixelValueConcept&lt;value_type&gt;;
+  typename reference;        where PixelConcept&lt;reference&gt;;
+  typename const_reference;  where PixelConcept&lt;const_reference&gt;;
+  static const bool P::is_mutable;
+
+  template &lt;PixelConcept P2&gt; where { PixelConcept&lt;P,P2&gt; }
+      P::P(P2);
+  template &lt;PixelConcept P2&gt; where { PixelConcept&lt;P,P2&gt; }
+      bool operator==(const P&amp;, const P2&amp;);
+  template &lt;PixelConcept P2&gt; where { PixelConcept&lt;P,P2&gt; }
+      bool operator!=(const P&amp;, const P2&amp;);
+};
+
+concept MutablePixelConcept&lt;typename P&gt; : PixelConcept&lt;P&gt;, MutableColorBaseConcept&lt;P&gt;
+{
+  where is_mutable==true;
+};
+
+concept HomogeneousPixelConcept&lt;PixelConcept P&gt; : HomogeneousColorBaseConcept&lt;P&gt;, HomogeneousPixelBasedConcept&lt;P&gt;
+{
+  P::template element_const_reference_type&lt;P&gt;::type operator[](P p, std::size_t i) const { return dynamic_at_c(P,i); }
+};
+
+concept MutableHomogeneousPixelConcept&lt;MutablePixelConcept P&gt; : MutableHomogeneousColorBaseConcept&lt;P&gt;
+{
+  P::template element_reference_type&lt;P&gt;::type operator[](P p, std::size_t i) { return dynamic_at_c(p,i); }
+};
+
+concept PixelValueConcept&lt;typename P&gt; : PixelConcept&lt;P&gt;, Regular&lt;P&gt;
+{
+  where SameType&lt;value_type,P&gt;;
+};
+
+concept PixelsCompatibleConcept&lt;PixelConcept P1, PixelConcept P2&gt; : ColorBasesCompatibleConcept&lt;P1,P2&gt;
+{
+  // where for each K [0..size&lt;P1&gt;::value):
+  //    ChannelsCompatibleConcept&lt;kth_semantic_element_type&lt;P1,K&gt;::type, kth_semantic_element_type&lt;P2,K&gt;::type&gt;;
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A pixel is <em>convertible</em> to a second pixel if it is possible to
+approximate its color in the form of the second pixel. Conversion is
+an explicit, non-symmetric and often lossy operation (due to both
+channel and color space approximation). Convertibility requires
+modeling the following concept:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template &lt;PixelConcept SrcPixel, MutablePixelConcept DstPixel&gt;
+concept PixelConvertibleConcept
+{
+  void color_convert(const SrcPixel&amp;, DstPixel&amp;);
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The distinction between <code>PixelConcept</code> and <code>PixelValueConcept</code> is
+analogous to that for channels and color bases - pixel reference proxies model
+both, but only pixel values model the latter.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>See also:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../reference/boost/gil/PixelBasedConcept.html" class="xref page">PixelBasedConcept&lt;P&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/PixelConcept.html" class="xref page">PixelConcept&lt;Pixel&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/MutablePixelConcept.html" class="xref page">MutablePixelConcept&lt;Pixel&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/PixelValueConcept.html" class="xref page">PixelValueConcept&lt;Pixel&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/HomogeneousPixelConcept.html" class="xref page">HomogeneousPixelConcept&lt;Pixel&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/MutableHomogeneousPixelConcept.html" class="xref page">MutableHomogeneousPixelConcept&lt;Pixel&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/HomogeneousPixelValueConcept.html" class="xref page">HomogeneousPixelValueConcept&lt;Pixel&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/PixelsCompatibleConcept.html" class="xref page">PixelsCompatibleConcept&lt;Pixel1, Pixel2&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/PixelConvertibleConcept.html" class="xref page">PixelConvertibleConcept&lt;SrcPixel, DstPixel&gt;</a></p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_models"><a class="anchor" href="#_models"></a>Models</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The most commonly used pixel is a homogeneous pixel whose values are
+together in memory. For this purpose GIL provides the struct
+<code>pixel</code>, templated over the channel value and layout:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// models HomogeneousPixelValueConcept
+template &lt;typename ChannelValue, typename Layout&gt; struct pixel;
+
+// Those typedefs are already provided by GIL
+typedef pixel&lt;bits8, rgb_layout_t&gt; rgb8_pixel_t;
+typedef pixel&lt;bits8, bgr_layout_t&gt; bgr8_pixel_t;
+
+bgr8_pixel_t bgr8(255,0,0);     // pixels can be initialized with the channels directly
+rgb8_pixel_t rgb8(bgr8);        // compatible pixels can also be copy-constructed
+
+rgb8 = bgr8;            // assignment and equality is defined between compatible pixels
+assert(rgb8 == bgr8);   // assignment and equality operate on the semantic channels
+
+// The first physical channels of the two pixels are different
+assert(at_c&lt;0&gt;(rgb8) != at_c&lt;0&gt;(bgr8));
+assert(dynamic_at_c(bgr8,0) != dynamic_at_c(rgb8,0));
+assert(rgb8[0] != bgr8[0]); // same as above (but operator[] is defined for pixels only)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Planar pixels have their channels distributed in memory. While they share the
+same value type (<code>pixel</code>) with interleaved pixels, their reference type is a
+proxy class containing references to each of the channels.
+This is implemented with the struct <code>planar_pixel_reference</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// models HomogeneousPixel
+template &lt;typename ChannelReference, typename ColorSpace&gt; struct planar_pixel_reference;
+
+// Define the type of a mutable and read-only reference. (These typedefs are already provided by GIL)
+typedef planar_pixel_reference&lt;      bits8&amp;,rgb_t&gt; rgb8_planar_ref_t;
+typedef planar_pixel_reference&lt;const bits8&amp;,rgb_t&gt; rgb8c_planar_ref_t;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that, unlike the <code>pixel</code> struct, planar pixel references are templated
+over the color space, not over the pixel layout. They always use a canonical
+channel ordering. Ordering of their elements is unnecessary because their
+elements are references to the channels.</p>
+</div>
+<div class="paragraph">
+<p>Sometimes the channels of a pixel may not be byte-aligned. For example an RGB
+pixel in '5-5-6' format is a 16-bit pixel whose red, green and blue channels
+occupy bits [0..4],[5..9] and [10..15] respectively. GIL provides a model for
+such packed pixel formats:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// define an rgb565 pixel
+typedef packed_pixel_type&lt;uint16_t, mp11::mp_list_c&lt;unsigned,5,6,5&gt;, rgb_layout_t&gt;::type rgb565_pixel_t;
+
+function_requires&lt;PixelValueConcept&lt;rgb565_pixel_t&gt; &gt;();
+static_assert(sizeof(rgb565_pixel_t) == 2, "");
+
+// define a bgr556 pixel
+typedef packed_pixel_type&lt;uint16_t, mp11::mp_list_c&lt;unsigned,5,6,5&gt;, bgr_layout_t&gt;::type bgr556_pixel_t;
+
+function_requires&lt;PixelValueConcept&lt;bgr556_pixel_t&gt; &gt;();
+
+// rgb565 is compatible with bgr556.
+function_requires&lt;PixelsCompatibleConcept&lt;rgb565_pixel_t,bgr556_pixel_t&gt; &gt;();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In some cases, the pixel itself may not be byte aligned. For example,
+consider an RGB pixel in '2-3-2' format. Its size is 7 bits. GIL
+refers to such pixels, pixel iterators and images as
+"bit-aligned". Bit-aligned pixels (and images) are more complex than
+packed ones. Since packed pixels are byte-aligned, we can use a C++
+reference as the reference type to a packed pixel, and a C pointer as
+an x_iterator over a row of packed pixels. For bit-aligned constructs
+we need a special reference proxy class (bit_aligned_pixel_reference)
+and iterator class (bit_aligned_pixel_iterator). The value type of
+bit-aligned pixels is a packed_pixel. Here is how to use bit_aligned
+pixels and pixel iterators:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Mutable reference to a BGR232 pixel
+typedef const bit_aligned_pixel_reference&lt;unsigned char, mp11::mp_list_c&lt;unsigned,2,3,2&gt;, bgr_layout_t, true&gt;  bgr232_ref_t;
+
+// A mutable iterator over BGR232 pixels
+typedef bit_aligned_pixel_iterator&lt;bgr232_ref_t&gt; bgr232_ptr_t;
+
+// BGR232 pixel value. It is a packed_pixel of size 1 byte. (The last bit is unused)
+typedef std::iterator_traits&lt;bgr232_ptr_t&gt;::value_type bgr232_pixel_t;
+static_assert(sizeof(bgr232_pixel_t) == 1, "");
+
+bgr232_pixel_t red(0,0,3); // = 0RRGGGBB, = 01100000 = 0x60
+
+// a buffer of 7 bytes fits exactly 8 BGR232 pixels.
+unsigned char pix_buffer[7];
+std::fill(pix_buffer,pix_buffer+7,0);
+
+// Fill the 8 pixels with red
+bgr232_ptr_t pix_it(&amp;pix_buffer[0],0);  // start at bit 0 of the first pixel
+for (int i=0; i&lt;8; ++i)
+{
+  *pix_it++ = red;
+}
+// Result: 0x60 0x30 0x11 0x0C 0x06 0x83 0xC1</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_algorithms"><a class="anchor" href="#_algorithms"></a>Algorithms</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Since pixels model <code>ColorBaseConcept</code> and <code>PixelBasedConcept</code> all
+algorithms and metafunctions of color bases can work with them as well:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// This is how to access the first semantic channel (red)
+assert(semantic_at_c&lt;0&gt;(rgb8) == semantic_at_c&lt;0&gt;(bgr8));
+
+// This is how to access the red channel by name
+assert(get_color&lt;red_t&gt;(rgb8) == get_color&lt;red_t&gt;(bgr8));
+
+// This is another way of doing it (some compilers don't like the first one)
+assert(get_color(rgb8,red_t()) == get_color(bgr8,red_t()));
+
+// This is how to use the PixelBasedConcept metafunctions
+BOOST_MPL_ASSERT(num_channels&lt;rgb8_pixel_t&gt;::value == 3);
+BOOST_MPL_ASSERT((is_same&lt;channel_type&lt;rgb8_pixel_t&gt;::type, bits8&gt;));
+BOOST_MPL_ASSERT((is_same&lt;color_space_type&lt;bgr8_pixel_t&gt;::type, rgb_t&gt; ));
+BOOST_MPL_ASSERT((is_same&lt;channel_mapping_type&lt;bgr8_pixel_t&gt;::type, mp11::mp_list_c&lt;int,2,1,0&gt; &gt; ));
+
+// Pixels contain just the three channels and nothing extra
+BOOST_MPL_ASSERT(sizeof(rgb8_pixel_t)==3);
+
+rgb8_planar_ref_t ref(bgr8);    // copy construction is allowed from a compatible mutable pixel type
+
+get_color&lt;red_t&gt;(ref) = 10;     // assignment is ok because the reference is mutable
+assert(get_color&lt;red_t&gt;(bgr8)==10);  // references modify the value they are bound to
+
+// Create a zero packed pixel and a full regular unpacked pixel.
+rgb565_pixel_t r565;
+rgb8_pixel_t rgb_full(255,255,255);
+
+// Convert all channels of the unpacked pixel to the packed one &amp; assert the packed one is full
+get_color(r565,red_t())   = channel_convert&lt;rgb565_channel0_t&gt;(get_color(rgb_full,red_t()));
+get_color(r565,green_t()) = channel_convert&lt;rgb565_channel1_t&gt;(get_color(rgb_full,green_t()));
+get_color(r565,blue_t())  = channel_convert&lt;rgb565_channel2_t&gt;(get_color(rgb_full,blue_t()));
+assert(r565 == rgb565_pixel_t((uint16_t)65535));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>GIL also provides the <code>color_convert</code> algorithm to convert between pixels of
+different color spaces and channel types:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">rgb8_pixel_t red_in_rgb8(255,0,0);
+cmyk16_pixel_t red_in_cmyk16;
+color_convert(red_in_rgb8,red_in_cmyk16);</code></pre>
+</div>
+</div>
+</div>
+</div>
+  <div class="edit-this-page">
+      <a href="https://github.com/boostorg/gil/edit/develop/doc/modules/ROOT/pages/design/pixel.adoc">Edit this Page</a>
+      </div>
+      <nav class="pagination">
+        <span class="prev"><a href="channel.html">Channel</a></span>
+        <span class="next"><a href="pixel_iterator.html">Pixel Iterator</a></span>
+    </nav>
+</article>
+</div>
+  <div id="footer">
+  <script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async src="../../_/js/vendor/tabs.js" data-sync-storage-key="preferred-tab"></script>
+</div>
+</div>
+  </body>
+</html>

@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<style>html.fonts-loading{visibility:hidden;opacity:0}</style>
+<script>document.documentElement.classList.add('fonts-loading');</script>
+
+<link rel="preload" href="../../_/font/NotoSansDisplay.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/NotoSansDisplay-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/MonaspaceNeon-Var.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/MonaspaceXenon-Var.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+
+<script>
+(function() {
+  'use strict';
+  
+  var revealed = false;
+  
+  var reveal = function() {
+    if (revealed) return;
+    revealed = true;
+    document.documentElement.classList.remove('fonts-loading');
+  };
+  
+  setTimeout(reveal, 3000);
+  
+  if (!('FontFace' in window) || !('fonts' in document)) {
+    setTimeout(reveal, 100);
+    return;
+  }
+  
+  var uiRoot = '../../_';
+  var fonts = [
+    { 
+      family: 'Noto Sans', 
+      url: uiRoot + '/font/NotoSansDisplay.woff2',
+      descriptors: { style: 'normal', weight: '100 900', stretch: '62.5% 100%' }
+    },
+    { 
+      family: 'Noto Sans', 
+      url: uiRoot + '/font/NotoSansDisplay-Italic.woff2',
+      descriptors: { style: 'italic', weight: '100 900', stretch: '62.5% 100%' }
+    },
+    { 
+      family: 'Monaspace Neon', 
+      url: uiRoot + '/font/MonaspaceNeon-Var.woff2',
+      descriptors: { style: 'normal', weight: '400' }
+    },
+    { 
+      family: 'Monaspace Xenon', 
+      url: uiRoot + '/font/MonaspaceXenon-Var.woff2',
+      descriptors: { style: 'italic', weight: '400' }
+    }
+  ];
+  
+  var loadPromises = fonts.map(function(f) {
+    try {
+      var face = new FontFace(f.family, 'url("' + f.url + '")', f.descriptors);
+      return face.load().then(function(loaded) {
+        document.fonts.add(loaded);
+        return loaded;
+      }).catch(function() {
+        return null;
+      });
+    } catch (e) {
+      return Promise.resolve(null);
+    }
+  });
+  
+  Promise.all(loadPromises)
+    .then(function() {
+      return document.fonts.ready;
+    })
+    .then(reveal)
+    .catch(reveal);
+})();
+</script>    <title>Dynamic images and image views :: Boost.GIL</title>
+  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/design/dynamic_image.html">
+    <link rel="prev" href="image.html">
+    <link rel="next" href="metafunctions.html">
+  <meta name="generator" content="Antora 3.2.0">
+    <link rel="stylesheet" href="../../_/css/boostlook.css">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/vendor/tabs.css">
+    <script>
+    (function() {
+      if (window.self !== window.top) return;
+      var theme = localStorage.getItem('antora-theme');
+      if (!theme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        theme = 'dark';
+      }
+      if (theme === 'dark') document.documentElement.classList.add('dark');
+    })();
+    </script>
+    <script>var uiRootPath = '../../_'</script>
+<link rel="icon" href="../../_/img/favicons/favicon.ico" type="image/x-icon">
+    <!-- Favicon configuration -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../../_/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../_/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../_/img/favicons/favicon-16x16.png">
+    <link rel="manifest" href="../../_/img/favicons/site.webmanifest">
+    <link rel="shortcut icon" href="../../_/img/favicons/favicon.ico">
+  </head>
+  <body class="article toc2 toc-left">
+    <div class="boostlook">
+   <div id="header">
+      <div id="toc" class="nav-container toc2" data-component="gil" data-version="">
+  <aside class="nav">
+    <button class="nav-close"></button>
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+      <div class="title-row">
+        <h3 class="title"><a href="../index.html">Boost.GIL</a></h3>
+        <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme" style="display:none">
+  <i class="fas fa-sun theme-icon-light"></i>
+  <i class="fas fa-moon theme-icon-dark"></i>
+</button>      </div>
+      <ul class="nav-list">
+        <ul class="nav-list">
+        <li class="" data-depth="1">
+            <a class="nav-link" href="../index.html">Introduction</a>
+        </li>
+              <li class="" data-depth="1">
+            <span class="nav-text">Quickstart</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../installation.html">Installation</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/video.html">Tutorial: Video Lecture</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/histogram.html">Tutorial: Histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/gradient.html">Tutorial: Image Gradient</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../naming.html">Naming Conventions</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Design Guide</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="index.html">Design Guide</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="basics.html">Basics</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="concepts.html">Concepts</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="point.html">Point</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="color_space.html">Color Space and Layout</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="color_base.html">Color Base</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="channel.html">Channel</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="pixel.html">Pixel</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="pixel_iterator.html">Pixel Iterator</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="pixel_locator.html">Pixel Locator</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="image_view.html">Image View</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="image.html">Image</a>
+        </li>
+              <li class=" is-current-page" data-depth="2">
+            <a class="nav-link" href="dynamic_image.html">Dynamic images and image views</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="metafunctions.html">Metafunctions</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="examples.html">Examples</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="technicalities.html">Technicalities</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="extending.html">Extending</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="conclusions.html">Conclusions</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Image Processing</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/index.html">Image Processing</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/basics.html">Basics</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/affine-region-detectors.html">Affine region detectors</a>
+        </li>
+              <li class="" data-depth="2">
+            <span class="nav-text">Contrast Enhancement</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/index.html">Contrast Enhancement</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/histogram_equalization.html">Histogram Equalization</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/histogram_matching.html">Histogram Matching</a>
+        </li>
+        </ul>
+  </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Histogram</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/index.html">Histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/create.html">Create a histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/fill.html">Fill histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/subhistogram.html">Making a sub-histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/cumulative.html">Making a cumulative histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/stl_compatibility.html">STL compatibility</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/utilities.html">Utilities</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/extend.html">Extending the class</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/limitations.html">Limitations</a>
+        </li>
+              <li class="" data-depth="2">
+            <span class="nav-text">Extension</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/index.html">Extensions</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/std.html">STD extension</a>
+        </li>
+        </ul>
+  </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Extensions</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../io.html">IO extensions</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../toolbox.html">ToolBox extension</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../numeric.html">Numeric extension</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <a class="nav-link" href="../examples.html">Examples</a>
+        </li>
+              <li class="" data-depth="1">
+            <a class="nav-link" href="../reference.html">Reference</a>
+        </li>
+        </ul>
+  </ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+  </div>  <div id="content">
+    <article class="doc max-width-reset">
+  <div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li>
+      <a href="../index.html" aria-label="Home: Boost.GIL">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 -960 960 960" fill="#000000" aria-hidden="true"><path d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z"/></svg>
+      </a>
+    </li>
+    <li>Design Guide</li>
+    <li><a href="dynamic_image.html">Dynamic images and image views</a></li>
+  </ul>
+</nav>
+<div class="spirit-nav">
+    <a accesskey="p" href="image.html">
+      <span class="material-symbols-outlined" title="Previous: Image">arrow_back</span>
+    </a>
+    <a class="disabled" accesskey="u" aria-disabled="true" tabindex="-1">
+      <span class="material-symbols-outlined" title="Up:">arrow_upward</span>
+    </a>
+    <a accesskey="n" href="metafunctions.html">
+      <span class="material-symbols-outlined" title="Next: Metafunctions">arrow_forward</span>
+    </a>
+</div></div>
+    <h1 class="page">Dynamic images and image views</h1>
+  <div class="paragraph">
+<p>The GIL extension called <code>dynamic_image</code> allows for images, image views
+or any GIL constructs to have their parameters defined at run time.</p>
+</div>
+<div class="paragraph">
+<p>The color space, channel depth, channel ordering, and interleaved/planar
+structure of an image are defined by the type of its template argument, which
+makes them compile-time bound. Often some of these parameters are available
+only at run time. Consider, for example, writing a module that opens the image
+at a given file path, rotates it and saves it back in its original color space
+and channel depth. How can we possibly write this using our generic image?
+What type is the image loading code supposed to return?</p>
+</div>
+<div class="paragraph">
+<p>Here is an example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">#include &lt;boost/gil/extension/dynamic_image/dynamic_image_all.hpp&gt;
+using namespace boost;
+
+#define ASSERT_SAME(A,B) static_assert(is_same&lt; A,B &gt;::value, "")
+
+// Create any_image class (or any_image_view) class with a set of allowed images
+typedef any_image&lt;rgb8_image_t, cmyk16_planar_image_t&gt; my_any_image_t;
+
+// Associated view types are available (equivalent to the ones in image_t)
+typedef any_image_view&lt;rgb8_view_t, cmyk16_planar_view_t&gt; AV;
+ASSERT_SAME(my_any_image_t::view_t, AV);
+
+typedef any_image_view&lt;rgb8c_view_t, cmyk16c_planar_view_t&gt;&gt; CAV;
+ASSERT_SAME(my_any_image_t::const_view_t, CAV);
+ASSERT_SAME(my_any_image_t::const_view_t, my_any_image_t::view_t::const_t);
+
+typedef any_image_view&lt;rgb8_step_view_t, cmyk16_planar_step_view_t&gt; SAV;
+ASSERT_SAME(typename dynamic_x_step_type&lt;my_any_image_t::view_t&gt;::type, SAV);
+
+// Assign it a concrete image at run time:
+my_any_image_t myImg = my_any_image_t(rgb8_image_t(100,100));
+
+// Change it to another at run time. The previous image gets destroyed
+myImg = cmyk16_planar_image_t(200,100);
+
+// Assigning to an image not in the allowed set throws an exception
+myImg = gray8_image_t();        // will throw std::bad_cast</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>any_image</code> and <code>any_image_view</code> subclass from Boost.Variant2 <code>variant</code> class,
+a never valueless variant type, compatible with <code>std::variant</code> in C++17.</p>
+</div>
+<div class="paragraph">
+<p>GIL <code>any_image_view</code> and <code>any_image</code> are subclasses of <code>variant</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template &lt;typename ...ImageViewTypes&gt;
+class any_image_view : public variant&lt;ImageViewTypes...&gt;
+{
+public:
+  typedef ... const_t; // immutable equivalent of this
+  typedef std::ptrdiff_t x_coord_t;
+  typedef std::ptrdiff_t y_coord_t;
+  typedef point&lt;std::ptrdiff_t&gt; point_t;
+  using size_type = std::size_t;
+
+  any_image_view();
+  template &lt;typename T&gt; explicit any_image_view(const T&amp; obj);
+  any_image_view(const any_image_view&amp; v);
+
+  template &lt;typename T&gt; any_image_view&amp; operator=(const T&amp; obj);
+  any_image_view&amp;                       operator=(const any_image_view&amp; v);
+
+  // parameters of the currently instantiated view
+  std::size_t num_channels()  const;
+  point_t     dimensions()    const;
+  size_type   size()          const;
+  x_coord_t   width()         const;
+  y_coord_t   height()        const;
+};
+
+template &lt;typename ...ImageTypes&gt;
+class any_image : public variant&lt;ImageTypes...&gt;
+{
+public:
+  typedef ... const_view_t;
+  typedef ... view_t;
+  typedef std::ptrdiff_t x_coord_t;
+  typedef std::ptrdiff_t y_coord_t;
+  typedef point&lt;std::ptrdiff_t&gt; point_t;
+
+  any_image();
+  template &lt;typename T&gt; explicit any_image(const T&amp; obj);
+  template &lt;typename T&gt; explicit any_image(T&amp; obj, bool do_swap);
+  any_image(const any_image&amp; v);
+
+  template &lt;typename T&gt; any_image&amp; operator=(const T&amp; obj);
+  any_image&amp;                       operator=(const any_image&amp; v);
+
+  void recreate(const point_t&amp; dims, unsigned alignment=1);
+  void recreate(x_coord_t width, y_coord_t height, unsigned alignment=1);
+
+  std::size_t num_channels()  const;
+  point_t     dimensions()    const;
+  x_coord_t   width()         const;
+  y_coord_t   height()        const;
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Operations are invoked on variants via <code>variant2::visit</code> passing a
+function object to perform the operation. The code for every allowed
+type in the variant is instantiated and the appropriate instantiation
+is selected via a switch statement. Since image view algorithms
+typically have time complexity at least linear on the number of
+pixels, the single switch statement of image view variant adds
+practically no measurable performance overhead compared to templated
+image views.</p>
+</div>
+<div class="paragraph">
+<p>Variants behave like the underlying type. Their copy constructor will
+invoke the copy constructor of the underlying instance. Equality
+operator will check if the two instances are of the same type and then
+invoke their <code>operator==</code>, etc. The default constructor of a variant
+will default-construct the first type. That means that
+<code>any_image_view</code> has shallow default-constructor, copy-constructor,
+assignment and equality comparison, whereas <code>any_image</code> has deep
+ones.</p>
+</div>
+<div class="paragraph">
+<p>It is important to note that even though <code>any_image_view</code> and
+<code>any_image</code> resemble the static <code>image_view</code> and <code>image</code>, they
+do not model the full requirements of <code>ImageViewConcept</code> and
+<code>ImageConcept</code>. In particular they don&#8217;t provide access to the
+pixels. There is no "any_pixel" or "any_pixel_iterator" in GIL. Such
+constructs could be provided via the <code>variant</code> mechanism, but doing
+so would result in inefficient algorithms, since the type resolution
+would have to be performed per pixel. Image-level algorithms should be
+implemented via <code>variant2::visit</code>. That said, many common operations
+are shared between the static and dynamic types. In addition, all of
+the image view transformations and many STL-like image view algorithms
+have overloads operating on <code>any_image_view</code>, as illustrated with
+<code>copy_pixels</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">rgb8_view_t v1(...);  // concrete image view
+bgr8_view_t v2(...);  // concrete image view compatible with v1 and of the same size
+any_image_view&lt;Types&gt;  av(...);  // run-time specified image view
+
+// Copies the pixels from v1 into v2.
+// If the pixels are incompatible triggers compile error
+copy_pixels(v1,v2);
+
+// The source or destination (or both) may be run-time instantiated.
+// If they happen to be incompatible, throws std::bad_cast
+copy_pixels(v1, av);
+copy_pixels(av, v2);
+copy_pixels(av, av);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By having algorithm overloads supporting dynamic constructs, we create
+a base upon which it is possible to write algorithms that can work
+with either compile-time or runtime images or views. The following
+code, for example, uses the GIL I/O extension to turn an image on disk
+upside down:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">#include &lt;boost\gil\extension\io\jpeg.hpp&gt;
+
+template &lt;typename Image&gt;    // Could be rgb8_image_t or any_image&lt;...&gt;
+void save_180rot(const std::string&amp; file_name)
+{
+  Image img;
+  read_image(file_name, img, jpeg_tag());
+  write_view(file_name, rotated180_view(view(img)), jpeg_tag());
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It can be instantiated with either a compile-time or a runtime image
+because all functions it uses have overloads taking runtime
+constructs. For example, here is how <code>rotated180_view</code> is
+implemented:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// implementation using templated view
+template &lt;typename View&gt;
+typename dynamic_xy_step_type&lt;View&gt;::type rotated180_view(const View&amp; src) { ... }
+
+namespace detail {
+  // the function, wrapped inside a function object
+  template &lt;typename Result&gt; struct rotated180_view_fn
+  {
+      typedef Result result_type;
+      template &lt;typename View&gt; result_type operator()(const View&amp; src) const
+      {
+          return result_type(rotated180_view(src));
+      }
+  };
+}
+
+// overloading of the function using variant. Takes and returns run-time bound view.
+// The returned view has a dynamic step
+template &lt;typename ...ViewTypes&gt; inline
+typename dynamic_xy_step_type&lt;any_image_view&lt;ViewTypes...&gt;&gt;::type rotated180_view(const any_image_view&lt;ViewTypes...&gt;&amp; src)
+{
+  using result_view_t = typename dynamic_xy_step_type&lt;any_image_view&lt;ViewTypes...&gt;&gt;::type;
+  return variant2::visit(detail::rotated180_view_fn&lt;result_view_t&gt;(), src);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Variants should be used with caution (especially algorithms that take
+more than one variant) because they instantiate the algorithm for
+every possible model that the variant can take. This can take a toll
+on compile time and executable size. Despite these limitations,
+<code>variant</code> is a powerful technique that allows us to combine the
+speed of compile-time resolution with the flexibility of run-time
+resolution. It allows us to treat images of different parameters
+uniformly as a collection and store them in the same container.</p>
+</div>
+  <div class="edit-this-page">
+      <a href="https://github.com/boostorg/gil/edit/develop/doc/modules/ROOT/pages/design/dynamic_image.adoc">Edit this Page</a>
+      </div>
+      <nav class="pagination">
+        <span class="prev"><a href="image.html">Image</a></span>
+        <span class="next"><a href="metafunctions.html">Metafunctions</a></span>
+    </nav>
+</article>
+</div>
+  <div id="footer">
+  <script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async src="../../_/js/vendor/tabs.js" data-sync-storage-key="preferred-tab"></script>
+</div>
+</div>
+  </body>
+</html>

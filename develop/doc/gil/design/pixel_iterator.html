@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<style>html.fonts-loading{visibility:hidden;opacity:0}</style>
+<script>document.documentElement.classList.add('fonts-loading');</script>
+
+<link rel="preload" href="../../_/font/NotoSansDisplay.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/NotoSansDisplay-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/MonaspaceNeon-Var.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/MonaspaceXenon-Var.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+
+<script>
+(function() {
+  'use strict';
+  
+  var revealed = false;
+  
+  var reveal = function() {
+    if (revealed) return;
+    revealed = true;
+    document.documentElement.classList.remove('fonts-loading');
+  };
+  
+  setTimeout(reveal, 3000);
+  
+  if (!('FontFace' in window) || !('fonts' in document)) {
+    setTimeout(reveal, 100);
+    return;
+  }
+  
+  var uiRoot = '../../_';
+  var fonts = [
+    { 
+      family: 'Noto Sans', 
+      url: uiRoot + '/font/NotoSansDisplay.woff2',
+      descriptors: { style: 'normal', weight: '100 900', stretch: '62.5% 100%' }
+    },
+    { 
+      family: 'Noto Sans', 
+      url: uiRoot + '/font/NotoSansDisplay-Italic.woff2',
+      descriptors: { style: 'italic', weight: '100 900', stretch: '62.5% 100%' }
+    },
+    { 
+      family: 'Monaspace Neon', 
+      url: uiRoot + '/font/MonaspaceNeon-Var.woff2',
+      descriptors: { style: 'normal', weight: '400' }
+    },
+    { 
+      family: 'Monaspace Xenon', 
+      url: uiRoot + '/font/MonaspaceXenon-Var.woff2',
+      descriptors: { style: 'italic', weight: '400' }
+    }
+  ];
+  
+  var loadPromises = fonts.map(function(f) {
+    try {
+      var face = new FontFace(f.family, 'url("' + f.url + '")', f.descriptors);
+      return face.load().then(function(loaded) {
+        document.fonts.add(loaded);
+        return loaded;
+      }).catch(function() {
+        return null;
+      });
+    } catch (e) {
+      return Promise.resolve(null);
+    }
+  });
+  
+  Promise.all(loadPromises)
+    .then(function() {
+      return document.fonts.ready;
+    })
+    .then(reveal)
+    .catch(reveal);
+})();
+</script>    <title>Pixel Iterator :: Boost.GIL</title>
+  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/design/pixel_iterator.html">
+    <link rel="prev" href="pixel.html">
+    <link rel="next" href="pixel_locator.html">
+  <meta name="generator" content="Antora 3.2.0">
+    <link rel="stylesheet" href="../../_/css/boostlook.css">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/vendor/tabs.css">
+    <script>
+    (function() {
+      if (window.self !== window.top) return;
+      var theme = localStorage.getItem('antora-theme');
+      if (!theme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        theme = 'dark';
+      }
+      if (theme === 'dark') document.documentElement.classList.add('dark');
+    })();
+    </script>
+    <script>var uiRootPath = '../../_'</script>
+<link rel="icon" href="../../_/img/favicons/favicon.ico" type="image/x-icon">
+    <!-- Favicon configuration -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../../_/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../_/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../_/img/favicons/favicon-16x16.png">
+    <link rel="manifest" href="../../_/img/favicons/site.webmanifest">
+    <link rel="shortcut icon" href="../../_/img/favicons/favicon.ico">
+  </head>
+  <body class="article toc2 toc-left">
+    <div class="boostlook">
+   <div id="header">
+      <div id="toc" class="nav-container toc2" data-component="gil" data-version="">
+  <aside class="nav">
+    <button class="nav-close"></button>
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+      <div class="title-row">
+        <h3 class="title"><a href="../index.html">Boost.GIL</a></h3>
+        <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme" style="display:none">
+  <i class="fas fa-sun theme-icon-light"></i>
+  <i class="fas fa-moon theme-icon-dark"></i>
+</button>      </div>
+      <ul class="nav-list">
+        <ul class="nav-list">
+        <li class="" data-depth="1">
+            <a class="nav-link" href="../index.html">Introduction</a>
+        </li>
+              <li class="" data-depth="1">
+            <span class="nav-text">Quickstart</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../installation.html">Installation</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/video.html">Tutorial: Video Lecture</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/histogram.html">Tutorial: Histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/gradient.html">Tutorial: Image Gradient</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../naming.html">Naming Conventions</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Design Guide</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="index.html">Design Guide</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="basics.html">Basics</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="concepts.html">Concepts</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="point.html">Point</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="color_space.html">Color Space and Layout</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="color_base.html">Color Base</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="channel.html">Channel</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="pixel.html">Pixel</a>
+        </li>
+              <li class=" is-current-page" data-depth="2">
+            <a class="nav-link" href="pixel_iterator.html">Pixel Iterator</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="pixel_locator.html">Pixel Locator</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="image_view.html">Image View</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="image.html">Image</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="dynamic_image.html">Dynamic images and image views</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="metafunctions.html">Metafunctions</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="examples.html">Examples</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="technicalities.html">Technicalities</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="extending.html">Extending</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="conclusions.html">Conclusions</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Image Processing</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/index.html">Image Processing</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/basics.html">Basics</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/affine-region-detectors.html">Affine region detectors</a>
+        </li>
+              <li class="" data-depth="2">
+            <span class="nav-text">Contrast Enhancement</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/index.html">Contrast Enhancement</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/histogram_equalization.html">Histogram Equalization</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/histogram_matching.html">Histogram Matching</a>
+        </li>
+        </ul>
+  </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Histogram</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/index.html">Histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/create.html">Create a histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/fill.html">Fill histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/subhistogram.html">Making a sub-histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/cumulative.html">Making a cumulative histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/stl_compatibility.html">STL compatibility</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/utilities.html">Utilities</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/extend.html">Extending the class</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/limitations.html">Limitations</a>
+        </li>
+              <li class="" data-depth="2">
+            <span class="nav-text">Extension</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/index.html">Extensions</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/std.html">STD extension</a>
+        </li>
+        </ul>
+  </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Extensions</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../io.html">IO extensions</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../toolbox.html">ToolBox extension</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../numeric.html">Numeric extension</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <a class="nav-link" href="../examples.html">Examples</a>
+        </li>
+              <li class="" data-depth="1">
+            <a class="nav-link" href="../reference.html">Reference</a>
+        </li>
+        </ul>
+  </ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+  </div>  <div id="content">
+    <article class="doc max-width-reset">
+  <div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li>
+      <a href="../index.html" aria-label="Home: Boost.GIL">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 -960 960 960" fill="#000000" aria-hidden="true"><path d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z"/></svg>
+      </a>
+    </li>
+    <li>Design Guide</li>
+    <li><a href="pixel_iterator.html">Pixel Iterator</a></li>
+  </ul>
+</nav>
+<div class="spirit-nav">
+    <a accesskey="p" href="pixel.html">
+      <span class="material-symbols-outlined" title="Previous: Pixel">arrow_back</span>
+    </a>
+    <a class="disabled" accesskey="u" aria-disabled="true" tabindex="-1">
+      <span class="material-symbols-outlined" title="Up:">arrow_upward</span>
+    </a>
+    <a accesskey="n" href="pixel_locator.html">
+      <span class="material-symbols-outlined" title="Next: Pixel Locator">arrow_forward</span>
+    </a>
+</div></div>
+    <h1 class="page">Pixel Iterator</h1>
+  <div class="sect1">
+<h2 id="_overview"><a class="anchor" href="#_overview"></a>Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Pixel iterators are random traversal iterators whose <code>value_type
+models</code> <code>PixelValueConcept</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_fundamental_iterator"><a class="anchor" href="#_fundamental_iterator"></a>Fundamental Iterator</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Pixel iterators provide metafunctions to determine whether they are mutable
+(i.e. whether they allow for modifying the pixel they refer to), to get the
+immutable (read-only) type of the iterator, and to determine whether they are
+plain iterators or adaptors over another pixel iterator:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">concept PixelIteratorConcept&lt;RandomAccessTraversalIteratorConcept Iterator&gt;
+    : PixelBasedConcept&lt;Iterator&gt;
+{
+  where PixelValueConcept&lt;value_type&gt;;
+  typename const_iterator_type&lt;It&gt;::type;
+      where PixelIteratorConcept&lt;const_iterator_type&lt;It&gt;::type&gt;;
+  static const bool  iterator_is_mutable&lt;It&gt;::value;
+  static const bool  is_iterator_adaptor&lt;It&gt;::value;   // is it an iterator adaptor
+};
+
+template &lt;typename Iterator&gt;
+concept MutablePixelIteratorConcept : PixelIteratorConcept&lt;Iterator&gt;, MutableRandomAccessIteratorConcept&lt;Iterator&gt; {};</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>See also:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../reference/boost/gil/PixelIteratorConcept.html" class="xref page">PixelIteratorConcept&lt;Iterator&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/MutablePixelIteratorConcept.html" class="xref page">MutablePixelIteratorConcept&lt;Iterator&gt;</a></p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_models"><a class="anchor" href="#_models"></a>Models</h3>
+<div class="paragraph">
+<p>A built-in pointer to pixel, <code>pixel&lt;ChannelValue,Layout&gt;*</code>, is GIL model for
+pixel iterator over interleaved homogeneous pixels. Similarly,
+<code>packed_pixel&lt;PixelData,ChannelRefVec,Layout&gt;*</code> is GIL model for an iterator
+over interleaved packed pixels.</p>
+</div>
+<div class="paragraph">
+<p>For planar homogeneous pixels, GIL provides the class
+<code>planar_pixel_iterator</code>, templated over a channel iterator and color space.
+Here is how the standard mutable and read-only planar RGB iterators over
+unsigned char are defined:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template &lt;typename ChannelPtr, typename ColorSpace&gt;
+struct planar_pixel_iterator;
+
+// GIL provided typedefs
+typedef planar_pixel_iterator&lt;const bits8*, rgb_t&gt; rgb8c_planar_ptr_t;
+typedef planar_pixel_iterator&lt;      bits8*, rgb_t&gt; rgb8_planar_ptr_t;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>planar_pixel_iterator</code> also models <code>HomogeneousColorBaseConcept</code> (it
+subclasses from <code>homogeneous_color_base</code>) and, as a result, all color base
+algorithms apply to it. The element type of its color base is a channel
+iterator. For example, GIL implements <code>operator++</code> of planar iterators
+approximately like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template &lt;typename T&gt;
+struct inc : public std::unary_function&lt;T,T&gt;
+{
+  T operator()(T x) const { return ++x; }
+};
+
+template &lt;typename ChannelPtr, typename ColorSpace&gt;
+planar_pixel_iterator&lt;ChannelPtr,ColorSpace&gt;&amp;
+planar_pixel_iterator&lt;ChannelPtr,ColorSpace&gt;::operator++()
+{
+  static_transform(*this,*this,inc&lt;ChannelPtr&gt;());
+  return *this;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Since <code>static_transform</code> uses compile-time recursion, incrementing an
+instance of <code>rgb8_planar_ptr_t</code> amounts to three pointer increments.
+GIL also uses the class <code>bit_aligned_pixel_iterator</code> as a model for a pixel
+iterator over bit-aligned pixels. Internally it keeps track of the current
+byte and the bit offset.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_iterator_adaptor"><a class="anchor" href="#_iterator_adaptor"></a>Iterator Adaptor</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Iterator adaptor is an iterator that wraps around another iterator. Its
+<code>is_iterator_adaptor</code> metafunction must evaluate to true, and it needs to
+provide a member method to return the base iterator, a metafunction to get its
+type, and a metafunction to rebind to another base iterator:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">concept IteratorAdaptorConcept&lt;RandomAccessTraversalIteratorConcept Iterator&gt;
+{
+  where SameType&lt;is_iterator_adaptor&lt;Iterator&gt;::type, mp11::mp_true&gt;;
+
+  typename iterator_adaptor_get_base&lt;Iterator&gt;;
+      where Metafunction&lt;iterator_adaptor_get_base&lt;Iterator&gt; &gt;;
+      where boost_concepts::ForwardTraversalConcept&lt;iterator_adaptor_get_base&lt;Iterator&gt;::type&gt;;
+
+  typename another_iterator;
+  typename iterator_adaptor_rebind&lt;Iterator,another_iterator&gt;::type;
+      where boost_concepts::ForwardTraversalConcept&lt;another_iterator&gt;;
+      where IteratorAdaptorConcept&lt;iterator_adaptor_rebind&lt;Iterator,another_iterator&gt;::type&gt;;
+
+  const iterator_adaptor_get_base&lt;Iterator&gt;::type&amp; Iterator::base() const;
+};
+
+template &lt;boost_concepts::Mutable_ForwardIteratorConcept Iterator&gt;
+concept MutableIteratorAdaptorConcept : IteratorAdaptorConcept&lt;Iterator&gt; {};</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>See also:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../reference/boost/gil/IteratorAdaptorConcept.html" class="xref page">IteratorAdaptorConcept&lt;Iterator&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/MutableIteratorAdaptorConcept.html" class="xref page">MutableIteratorAdaptorConcept&lt;Iterator&gt;</a></p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_models_2"><a class="anchor" href="#_models_2"></a>Models</h3>
+<div class="paragraph">
+<p>GIL provides several models of <code>IteratorAdaptorConcept</code>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>memory_based_step_iterator&lt;Iterator&gt;</code>: An iterator adaptor that changes
+the fundamental step of the base iterator
+(see <a href="#_step_iterator">Step Iterator</a>)</p>
+</li>
+<li>
+<p><code>dereference_iterator_adaptor&lt;Iterator,Fn&gt;</code>: An iterator that applies a
+unary function <code>Fn</code> upon dereferencing. It is used, for example, for
+on-the-fly color conversion. It can be used to construct a shallow image
+"view" that pretends to have a different color space or channel depth.
+See <a href="image_view.html" class="xref page">image_view</a> for more. The unary function <code>Fn</code> must
+model <code>PixelDereferenceAdaptorConcept</code> (see below).</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_pixel_dereference_adaptor"><a class="anchor" href="#_pixel_dereference_adaptor"></a>Pixel Dereference Adaptor</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Pixel dereference adaptor is a unary function that can be applied upon
+dereferencing a pixel iterator. Its argument type could be anything (usually a
+<code>PixelConcept</code>) and the result type must be convertible to <code>PixelConcept</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template &lt;boost::UnaryFunctionConcept D&gt;
+concept PixelDereferenceAdaptorConcept:
+    DefaultConstructibleConcept&lt;D&gt;,
+    CopyConstructibleConcept&lt;D&gt;,
+    AssignableConcept&lt;D&gt;
+{
+  typename const_t;         where PixelDereferenceAdaptorConcept&lt;const_t&gt;;
+  typename value_type;      where PixelValueConcept&lt;value_type&gt;;
+  typename reference;       where PixelConcept&lt;remove_reference&lt;reference&gt;::type&gt;;  // may be mutable
+  typename const_reference;   // must not be mutable
+  static const bool D::is_mutable;
+
+  where Convertible&lt;value_type, result_type&gt;;
+};</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_models_3"><a class="anchor" href="#_models_3"></a>Models</h3>
+<div class="paragraph">
+<p>GIL provides several models of <code>PixelDereferenceAdaptorConcept</code>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>color_convert_deref_fn</code>: a function object that performs color conversion</p>
+</li>
+<li>
+<p><code>detail::nth_channel_deref_fn</code>: a function object that returns a grayscale
+pixel corresponding to the n-th channel of a given pixel</p>
+</li>
+<li>
+<p><code>deref_compose</code>: a function object that composes two models of
+<code>PixelDereferenceAdaptorConcept</code>. Similar to <code>std::unary_compose</code>,
+except it needs to pull the additional typedefs required by
+<code>PixelDereferenceAdaptorConcept</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>GIL uses pixel dereference adaptors to implement image views that perform
+color conversion upon dereferencing, or that return the N-th channel of the
+underlying pixel. They can be used to model virtual image views that perform
+an arbitrary function upon dereferencing, for example a view of the Mandelbrot
+set. <code>dereference_iterator_adaptor&lt;Iterator,Fn&gt;</code> is an iterator wrapper over
+a pixel iterator <code>Iterator</code> that invokes the given dereference iterator
+adaptor <code>Fn</code> upon dereferencing.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_step_iterator"><a class="anchor" href="#_step_iterator"></a>Step Iterator</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Sometimes we want to traverse pixels with a unit step other than the one
+provided by the fundamental pixel iterators. Examples where this would be
+useful:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>a single-channel view of the red channel of an RGB interleaved image</p>
+</li>
+<li>
+<p>left-to-right flipped image (step = -fundamental_step)</p>
+</li>
+<li>
+<p>subsampled view, taking every N-th pixel (step = N*fundamental_step)</p>
+</li>
+<li>
+<p>traversal in vertical direction (step = number of bytes per row)</p>
+</li>
+<li>
+<p>any combination of the above (steps are multiplied)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Step iterators are forward traversal iterators that allow changing the step
+between adjacent values:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">concept StepIteratorConcept&lt;boost_concepts::ForwardTraversalConcept Iterator&gt;
+{
+  template &lt;Integral D&gt; void Iterator::set_step(D step);
+};
+
+concept MutableStepIteratorConcept&lt;boost_concepts::Mutable_ForwardIteratorConcept Iterator&gt;
+    : StepIteratorConcept&lt;Iterator&gt;
+{};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>GIL currently provides a step iterator whose <code>value_type models</code>
+<code>PixelValueConcept</code>. In addition, the step is specified in memory units
+(which are bytes or bits). This is necessary, for example, when implementing
+an iterator navigating along a column of pixels - the size of a row of pixels
+may sometimes not be divisible by the size of a pixel; for example rows may be
+word-aligned.</p>
+</div>
+<div class="paragraph">
+<p>To advance in bytes/bits, the base iterator must model
+<code>MemoryBasedIteratorConcept</code>. A memory-based iterator has an inherent memory
+unit, which is either a bit or a byte. It must supply functions returning the
+number of bits per memory unit (1 or 8), the current step in memory units, the
+memory-unit distance between two iterators, and a reference a given distance
+in memunits away. It must also supply a function that advances an iterator a
+given distance in memory units. <code>memunit_advanced</code> and
+<code>memunit_advanced_ref</code> have a default implementation but some iterators may
+supply a more efficient version:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">concept MemoryBasedIteratorConcept
+&lt;
+    boost_concepts::RandomAccessTraversalConcept Iterator
+&gt;
+{
+  typename byte_to_memunit&lt;Iterator&gt;; where metafunction&lt;byte_to_memunit&lt;Iterator&gt; &gt;;
+  std::ptrdiff_t      memunit_step(const Iterator&amp;);
+  std::ptrdiff_t      memunit_distance(const Iterator&amp; , const Iterator&amp;);
+  void                memunit_advance(Iterator&amp;, std::ptrdiff_t diff);
+  Iterator            memunit_advanced(const Iterator&amp; p, std::ptrdiff_t diff) { Iterator tmp; memunit_advance(tmp,diff); return tmp; }
+  Iterator::reference memunit_advanced_ref(const Iterator&amp; p, std::ptrdiff_t diff) { return *memunit_advanced(p,diff); }
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It is useful to be able to construct a step iterator over another iterator.
+More generally, given a type, we want to be able to construct an equivalent
+type that allows for dynamically specified horizontal step:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">concept HasDynamicXStepTypeConcept&lt;typename T&gt;
+{
+  typename dynamic_x_step_type&lt;T&gt;;
+      where Metafunction&lt;dynamic_x_step_type&lt;T&gt; &gt;;
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>All models of pixel iterators, locators and image views that GIL provides
+support <code>HasDynamicXStepTypeConcept</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>See also:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../reference/boost/gil/StepIteratorConcept.html" class="xref page">StepIteratorConcept&lt;Iterator&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/MutableStepIteratorConcept.html" class="xref page">MutableStepIteratorConcept&lt;Iterator&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/MemoryBasedIteratorConcept.html" class="xref page">MemoryBasedIteratorConcept&lt;Iterator&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/HasDynamicXStepTypeConcept.html" class="xref page">HasDynamicXStepTypeConcept&lt;T&gt;</a></p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_models_4"><a class="anchor" href="#_models_4"></a>Models</h3>
+<div class="paragraph">
+<p>All standard memory-based iterators GIL currently provides model
+<code>MemoryBasedIteratorConcept</code>. GIL provides the class
+<code>memory_based_step_iterator</code> which models <code>PixelIteratorConcept</code>,
+<code>StepIteratorConcept</code>, and <code>MemoryBasedIteratorConcept</code>. It takes the base
+iterator as a template parameter (which must model <code>PixelIteratorConcept</code>
+and <code>MemoryBasedIteratorConcept</code>) and allows changing the step dynamically.
+GIL implementation contains the base iterator and a <code>ptrdiff_t</code> denoting the
+number of memory units (bytes or bits) to skip for a unit step. It may also be
+used with a negative number. GIL provides a function to create a step iterator
+from a base iterator and a step:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Iterator models MemoryBasedIteratorConcept, HasDynamicXStepTypeConcept
+template &lt;typename Iterator&gt;
+typename dynamic_x_step_type&lt;Iterator&gt;::type make_step_iterator(Iterator const&amp; it, std::ptrdiff_t step);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>GIL also provides a model of an iterator over a virtual array of pixels,
+<code>position_iterator</code>. It is a step iterator that keeps track of the pixel
+position and invokes a function object to get the value of the pixel upon
+dereferencing. It models <code>PixelIteratorConcept</code> and <code>StepIteratorConcept</code>
+but not <code>MemoryBasedIteratorConcept</code>.</p>
+</div>
+</div>
+</div>
+</div>
+  <div class="edit-this-page">
+      <a href="https://github.com/boostorg/gil/edit/develop/doc/modules/ROOT/pages/design/pixel_iterator.adoc">Edit this Page</a>
+      </div>
+      <nav class="pagination">
+        <span class="prev"><a href="pixel.html">Pixel</a></span>
+        <span class="next"><a href="pixel_locator.html">Pixel Locator</a></span>
+    </nav>
+</article>
+</div>
+  <div id="footer">
+  <script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async src="../../_/js/vendor/tabs.js" data-sync-storage-key="preferred-tab"></script>
+</div>
+</div>
+  </body>
+</html>

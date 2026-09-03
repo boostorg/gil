@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<style>html.fonts-loading{visibility:hidden;opacity:0}</style>
+<script>document.documentElement.classList.add('fonts-loading');</script>
+
+<link rel="preload" href="../../_/font/NotoSansDisplay.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/NotoSansDisplay-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/MonaspaceNeon-Var.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/MonaspaceXenon-Var.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+
+<script>
+(function() {
+  'use strict';
+  
+  var revealed = false;
+  
+  var reveal = function() {
+    if (revealed) return;
+    revealed = true;
+    document.documentElement.classList.remove('fonts-loading');
+  };
+  
+  setTimeout(reveal, 3000);
+  
+  if (!('FontFace' in window) || !('fonts' in document)) {
+    setTimeout(reveal, 100);
+    return;
+  }
+  
+  var uiRoot = '../../_';
+  var fonts = [
+    { 
+      family: 'Noto Sans', 
+      url: uiRoot + '/font/NotoSansDisplay.woff2',
+      descriptors: { style: 'normal', weight: '100 900', stretch: '62.5% 100%' }
+    },
+    { 
+      family: 'Noto Sans', 
+      url: uiRoot + '/font/NotoSansDisplay-Italic.woff2',
+      descriptors: { style: 'italic', weight: '100 900', stretch: '62.5% 100%' }
+    },
+    { 
+      family: 'Monaspace Neon', 
+      url: uiRoot + '/font/MonaspaceNeon-Var.woff2',
+      descriptors: { style: 'normal', weight: '400' }
+    },
+    { 
+      family: 'Monaspace Xenon', 
+      url: uiRoot + '/font/MonaspaceXenon-Var.woff2',
+      descriptors: { style: 'italic', weight: '400' }
+    }
+  ];
+  
+  var loadPromises = fonts.map(function(f) {
+    try {
+      var face = new FontFace(f.family, 'url("' + f.url + '")', f.descriptors);
+      return face.load().then(function(loaded) {
+        document.fonts.add(loaded);
+        return loaded;
+      }).catch(function() {
+        return null;
+      });
+    } catch (e) {
+      return Promise.resolve(null);
+    }
+  });
+  
+  Promise.all(loadPromises)
+    .then(function() {
+      return document.fonts.ready;
+    })
+    .then(reveal)
+    .catch(reveal);
+})();
+</script>    <title>Channel :: Boost.GIL</title>
+  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/design/channel.html">
+    <link rel="prev" href="color_base.html">
+    <link rel="next" href="pixel.html">
+  <meta name="generator" content="Antora 3.2.0">
+    <link rel="stylesheet" href="../../_/css/boostlook.css">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/vendor/tabs.css">
+    <script>
+    (function() {
+      if (window.self !== window.top) return;
+      var theme = localStorage.getItem('antora-theme');
+      if (!theme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        theme = 'dark';
+      }
+      if (theme === 'dark') document.documentElement.classList.add('dark');
+    })();
+    </script>
+    <script>var uiRootPath = '../../_'</script>
+<link rel="icon" href="../../_/img/favicons/favicon.ico" type="image/x-icon">
+    <!-- Favicon configuration -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../../_/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../_/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../_/img/favicons/favicon-16x16.png">
+    <link rel="manifest" href="../../_/img/favicons/site.webmanifest">
+    <link rel="shortcut icon" href="../../_/img/favicons/favicon.ico">
+  </head>
+  <body class="article toc2 toc-left">
+    <div class="boostlook">
+   <div id="header">
+      <div id="toc" class="nav-container toc2" data-component="gil" data-version="">
+  <aside class="nav">
+    <button class="nav-close"></button>
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+      <div class="title-row">
+        <h3 class="title"><a href="../index.html">Boost.GIL</a></h3>
+        <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme" style="display:none">
+  <i class="fas fa-sun theme-icon-light"></i>
+  <i class="fas fa-moon theme-icon-dark"></i>
+</button>      </div>
+      <ul class="nav-list">
+        <ul class="nav-list">
+        <li class="" data-depth="1">
+            <a class="nav-link" href="../index.html">Introduction</a>
+        </li>
+              <li class="" data-depth="1">
+            <span class="nav-text">Quickstart</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../installation.html">Installation</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/video.html">Tutorial: Video Lecture</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/histogram.html">Tutorial: Histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/gradient.html">Tutorial: Image Gradient</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../naming.html">Naming Conventions</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Design Guide</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="index.html">Design Guide</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="basics.html">Basics</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="concepts.html">Concepts</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="point.html">Point</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="color_space.html">Color Space and Layout</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="color_base.html">Color Base</a>
+        </li>
+              <li class=" is-current-page" data-depth="2">
+            <a class="nav-link" href="channel.html">Channel</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="pixel.html">Pixel</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="pixel_iterator.html">Pixel Iterator</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="pixel_locator.html">Pixel Locator</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="image_view.html">Image View</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="image.html">Image</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="dynamic_image.html">Dynamic images and image views</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="metafunctions.html">Metafunctions</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="examples.html">Examples</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="technicalities.html">Technicalities</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="extending.html">Extending</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="conclusions.html">Conclusions</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Image Processing</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/index.html">Image Processing</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/basics.html">Basics</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/affine-region-detectors.html">Affine region detectors</a>
+        </li>
+              <li class="" data-depth="2">
+            <span class="nav-text">Contrast Enhancement</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/index.html">Contrast Enhancement</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/histogram_equalization.html">Histogram Equalization</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/histogram_matching.html">Histogram Matching</a>
+        </li>
+        </ul>
+  </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Histogram</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/index.html">Histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/create.html">Create a histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/fill.html">Fill histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/subhistogram.html">Making a sub-histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/cumulative.html">Making a cumulative histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/stl_compatibility.html">STL compatibility</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/utilities.html">Utilities</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/extend.html">Extending the class</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/limitations.html">Limitations</a>
+        </li>
+              <li class="" data-depth="2">
+            <span class="nav-text">Extension</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/index.html">Extensions</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/std.html">STD extension</a>
+        </li>
+        </ul>
+  </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Extensions</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../io.html">IO extensions</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../toolbox.html">ToolBox extension</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../numeric.html">Numeric extension</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <a class="nav-link" href="../examples.html">Examples</a>
+        </li>
+              <li class="" data-depth="1">
+            <a class="nav-link" href="../reference.html">Reference</a>
+        </li>
+        </ul>
+  </ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+  </div>  <div id="content">
+    <article class="doc max-width-reset">
+  <div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li>
+      <a href="../index.html" aria-label="Home: Boost.GIL">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 -960 960 960" fill="#000000" aria-hidden="true"><path d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z"/></svg>
+      </a>
+    </li>
+    <li>Design Guide</li>
+    <li><a href="channel.html">Channel</a></li>
+  </ul>
+</nav>
+<div class="spirit-nav">
+    <a accesskey="p" href="color_base.html">
+      <span class="material-symbols-outlined" title="Previous: Color Base">arrow_back</span>
+    </a>
+    <a class="disabled" accesskey="u" aria-disabled="true" tabindex="-1">
+      <span class="material-symbols-outlined" title="Up:">arrow_upward</span>
+    </a>
+    <a accesskey="n" href="pixel.html">
+      <span class="material-symbols-outlined" title="Next: Pixel">arrow_forward</span>
+    </a>
+</div></div>
+    <h1 class="page">Channel</h1>
+  <div class="sect1">
+<h2 id="_overview"><a class="anchor" href="#_overview"></a>Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A channel indicates the intensity of a color component (for example, the red
+channel in an RGB pixel). Typical channel operations are getting, comparing
+and setting the channel values. Channels have associated minimum and maximum
+value. GIL channels model the following concept:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">concept ChannelConcept&lt;typename T&gt; : EqualityComparable&lt;T&gt;
+{
+    typename value_type      = T;        // use channel_traits&lt;T&gt;::value_type to access it
+    where ChannelValueConcept&lt;value_type&gt;;
+    typename reference       = T&amp;;       // use channel_traits&lt;T&gt;::reference to access it
+    typename pointer         = T*;       // use channel_traits&lt;T&gt;::pointer to access it
+    typename const_reference = const T&amp;; // use channel_traits&lt;T&gt;::const_reference to access it
+    typename const_pointer   = const T*; // use channel_traits&lt;T&gt;::const_pointer to access it
+    static const bool is_mutable;        // use channel_traits&lt;T&gt;::is_mutable to access it
+
+    static T min_value();                // use channel_traits&lt;T&gt;::min_value to access it
+    static T max_value();                // use channel_traits&lt;T&gt;::max_value to access it
+};
+
+concept MutableChannelConcept&lt;ChannelConcept T&gt; : Swappable&lt;T&gt;, Assignable&lt;T&gt; {};
+
+concept ChannelValueConcept&lt;ChannelConcept T&gt; : Regular&lt;T&gt; {};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>GIL allows built-in integral and floating point types to be channels.
+Therefore the associated types and range information are defined in
+<code>channel_traits</code> with the following default implementation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template &lt;typename T&gt;
+struct channel_traits
+{
+    typedef T         value_type;
+    typedef T&amp;        reference;
+    typedef T*        pointer;
+    typedef T&amp; const  const_reference;
+    typedef T* const  const_pointer;
+
+    static value_type min_value() { return std::numeric_limits&lt;T&gt;::min(); }
+    static value_type max_value() { return std::numeric_limits&lt;T&gt;::max(); }
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Two channel types are <em>compatible</em> if they have the same value type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">concept ChannelsCompatibleConcept&lt;ChannelConcept T1, ChannelConcept T2&gt;
+{
+    where SameType&lt;T1::value_type, T2::value_type&gt;;
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A channel may be <em>convertible</em> to another channel:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template &lt;ChannelConcept Src, ChannelValueConcept Dst&gt;
+concept ChannelConvertibleConcept
+{
+    Dst channel_convert(Src);
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that <code>ChannelConcept</code> and <code>MutableChannelConcept</code> do not require a
+default constructor. Channels that also support default construction (and thus
+are regular types) model <code>ChannelValueConcept</code>.
+To understand the motivation for this distinction, consider a 16-bit RGB pixel
+in a "565" bit pattern. Its channels correspond to bit ranges. To support such
+channels, we need to create a custom proxy class corresponding to a reference
+to a sub-byte channel.
+Such a proxy reference class models only <code>ChannelConcept</code>, because, similar
+to native C++ references, it may not have a default constructor.</p>
+</div>
+<div class="paragraph">
+<p>Note also that algorithms may impose additional requirements on channels,
+such as support for arithmetic operations.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>See also:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../reference/boost/gil/ChannelConcept.html" class="xref page">ChannelConcept&lt;T&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/ChannelValueConcept.html" class="xref page">ChannelValueConcept&lt;T&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/MutableChannelConcept.html" class="xref page">MutableChannelConcept&lt;T&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/ChannelsCompatibleConcept.html" class="xref page">ChannelsCompatibleConcept&lt;T1,T2&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/ChannelConvertibleConcept.html" class="xref page">ChannelConvertibleConcept&lt;SrcChannel,DstChannel&gt;</a></p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_models"><a class="anchor" href="#_models"></a>Models</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>All C++11 fundamental integer and float point types are valid channels.</p>
+</div>
+<div class="paragraph">
+<p>The minimum and maximum values of a channel modeled by a built-in type
+correspond to the minimum and maximum physical range of the built-in type, as
+specified by its <code>std::numeric_limits</code>. Sometimes the physical range is not
+appropriate. GIL provides <code>scoped_channel_value</code>, a model for a channel
+adapter that allows for specifying a custom range.
+We use it to define a <code>[0..1]</code> floating point channel type as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">struct float_zero { static float apply() { return 0.0f; } };
+struct float_one  { static float apply() { return 1.0f; } };
+typedef scoped_channel_value&lt;float,float_zero,float_one&gt; bits32f;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>GIL also provides models for channels corresponding to ranges of bits:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Value of a channel defined over NumBits bits. Models ChannelValueConcept
+template &lt;int NumBits&gt; class packed_channel_value;
+
+// Reference to a channel defined over NumBits bits. Models ChannelConcept
+template &lt;int FirstBit,
+        int NumBits,       // Defines the sequence of bits in the data value that contain the channel
+        bool Mutable&gt;      // true if the reference is mutable
+class packed_channel_reference;
+
+// Reference to a channel defined over NumBits bits. Its FirstBit is a run-time parameter. Models ChannelConcept
+template &lt;int NumBits,       // Defines the sequence of bits in the data value that contain the channel
+        bool Mutable&gt;      // true if the reference is mutable
+class packed_dynamic_channel_reference;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that there are two models of a reference proxy which differ based on
+whether the offset of the channel range is specified as a template or a
+run-time parameter. The first model is faster and more compact while the
+second model is more flexible. For example, the second model allows us to
+construct an iterator over bit range channels.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_algorithms"><a class="anchor" href="#_algorithms"></a>Algorithms</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Here is how to construct the three channels of a 16-bit "565" pixel and set
+them to their maximum value:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">using channel16_0_5_reference_t  = packed_channel_reference&lt;0, 5, true&gt;;
+using channel16_5_6_reference_t  = packed_channel_reference&lt;5, 6, true&gt;;
+using channel16_11_5_reference_t = packed_channel_reference&lt;11, 5, true&gt;;
+
+std::uint16_t data=0;
+channel16_0_5_reference_t  channel1(&amp;data);
+channel16_5_6_reference_t  channel2(&amp;data);
+channel16_11_5_reference_t channel3(&amp;data);
+
+channel1 = channel_traits&lt;channel16_0_5_reference_t&gt;::max_value();
+channel2 = channel_traits&lt;channel16_5_6_reference_t&gt;::max_value();
+channel3 = channel_traits&lt;channel16_11_5_reference_t&gt;::max_value();
+assert(data == 65535);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Assignment, equality comparison and copy construction are defined only between
+compatible channels:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">packed_channel_value&lt;5&gt; channel_6bit = channel1;
+channel_6bit = channel3;
+
+// compile error: Assignment between incompatible channels
+//channel_6bit = channel2;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>All channel models provided by GIL are pairwise convertible:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">channel1 = channel_traits&lt;channel16_0_5_reference_t&gt;::max_value();
+assert(channel1 == 31);
+
+bits16 chan16 = channel_convert&lt;bits16&gt;(channel1);
+assert(chan16 == 65535);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Channel conversion is a lossy operation. GIL&#8217;s channel conversion is a linear
+transformation between the ranges of the source and destination channel.
+It maps precisely the minimum to the minimum and the maximum to the maximum.
+(For example, to convert from uint8_t to uint16_t GIL does not do a bit shift
+because it will not properly match the maximum values. Instead GIL multiplies
+the source by 257.)</p>
+</div>
+<div class="paragraph">
+<p>All channel models that GIL provides are convertible from/to an integral or
+floating point type. Thus they support arithmetic operations. Here are the
+channel-level algorithms that GIL provides:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Converts a source channel value into a destination channel.
+// Linearly maps the value of the source into the range of the destination.
+template &lt;typename DstChannel, typename SrcChannel&gt;
+typename channel_traits&lt;DstChannel&gt;::value_type channel_convert(SrcChannel src);
+
+// returns max_value - x + min_value
+template &lt;typename Channel&gt;
+typename channel_traits&lt;Channel&gt;::value_type channel_invert(Channel x);
+
+// returns a * b / max_value
+template &lt;typename Channel&gt;
+typename channel_traits&lt;Channel&gt;::value_type channel_multiply(Channel a, Channel b);</code></pre>
+</div>
+</div>
+</div>
+</div>
+  <div class="edit-this-page">
+      <a href="https://github.com/boostorg/gil/edit/develop/doc/modules/ROOT/pages/design/channel.adoc">Edit this Page</a>
+      </div>
+      <nav class="pagination">
+        <span class="prev"><a href="color_base.html">Color Base</a></span>
+        <span class="next"><a href="pixel.html">Pixel</a></span>
+    </nav>
+</article>
+</div>
+  <div id="footer">
+  <script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async src="../../_/js/vendor/tabs.js" data-sync-storage-key="preferred-tab"></script>
+</div>
+</div>
+  </body>
+</html>

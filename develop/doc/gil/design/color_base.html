@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<style>html.fonts-loading{visibility:hidden;opacity:0}</style>
+<script>document.documentElement.classList.add('fonts-loading');</script>
+
+<link rel="preload" href="../../_/font/NotoSansDisplay.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/NotoSansDisplay-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/MonaspaceNeon-Var.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/MonaspaceXenon-Var.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+
+<script>
+(function() {
+  'use strict';
+  
+  var revealed = false;
+  
+  var reveal = function() {
+    if (revealed) return;
+    revealed = true;
+    document.documentElement.classList.remove('fonts-loading');
+  };
+  
+  setTimeout(reveal, 3000);
+  
+  if (!('FontFace' in window) || !('fonts' in document)) {
+    setTimeout(reveal, 100);
+    return;
+  }
+  
+  var uiRoot = '../../_';
+  var fonts = [
+    { 
+      family: 'Noto Sans', 
+      url: uiRoot + '/font/NotoSansDisplay.woff2',
+      descriptors: { style: 'normal', weight: '100 900', stretch: '62.5% 100%' }
+    },
+    { 
+      family: 'Noto Sans', 
+      url: uiRoot + '/font/NotoSansDisplay-Italic.woff2',
+      descriptors: { style: 'italic', weight: '100 900', stretch: '62.5% 100%' }
+    },
+    { 
+      family: 'Monaspace Neon', 
+      url: uiRoot + '/font/MonaspaceNeon-Var.woff2',
+      descriptors: { style: 'normal', weight: '400' }
+    },
+    { 
+      family: 'Monaspace Xenon', 
+      url: uiRoot + '/font/MonaspaceXenon-Var.woff2',
+      descriptors: { style: 'italic', weight: '400' }
+    }
+  ];
+  
+  var loadPromises = fonts.map(function(f) {
+    try {
+      var face = new FontFace(f.family, 'url("' + f.url + '")', f.descriptors);
+      return face.load().then(function(loaded) {
+        document.fonts.add(loaded);
+        return loaded;
+      }).catch(function() {
+        return null;
+      });
+    } catch (e) {
+      return Promise.resolve(null);
+    }
+  });
+  
+  Promise.all(loadPromises)
+    .then(function() {
+      return document.fonts.ready;
+    })
+    .then(reveal)
+    .catch(reveal);
+})();
+</script>    <title>Color Base :: Boost.GIL</title>
+  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/design/color_base.html">
+    <link rel="prev" href="color_space.html">
+    <link rel="next" href="channel.html">
+  <meta name="generator" content="Antora 3.2.0">
+    <link rel="stylesheet" href="../../_/css/boostlook.css">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/vendor/tabs.css">
+    <script>
+    (function() {
+      if (window.self !== window.top) return;
+      var theme = localStorage.getItem('antora-theme');
+      if (!theme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        theme = 'dark';
+      }
+      if (theme === 'dark') document.documentElement.classList.add('dark');
+    })();
+    </script>
+    <script>var uiRootPath = '../../_'</script>
+<link rel="icon" href="../../_/img/favicons/favicon.ico" type="image/x-icon">
+    <!-- Favicon configuration -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../../_/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../_/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../_/img/favicons/favicon-16x16.png">
+    <link rel="manifest" href="../../_/img/favicons/site.webmanifest">
+    <link rel="shortcut icon" href="../../_/img/favicons/favicon.ico">
+  </head>
+  <body class="article toc2 toc-left">
+    <div class="boostlook">
+   <div id="header">
+      <div id="toc" class="nav-container toc2" data-component="gil" data-version="">
+  <aside class="nav">
+    <button class="nav-close"></button>
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+      <div class="title-row">
+        <h3 class="title"><a href="../index.html">Boost.GIL</a></h3>
+        <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme" style="display:none">
+  <i class="fas fa-sun theme-icon-light"></i>
+  <i class="fas fa-moon theme-icon-dark"></i>
+</button>      </div>
+      <ul class="nav-list">
+        <ul class="nav-list">
+        <li class="" data-depth="1">
+            <a class="nav-link" href="../index.html">Introduction</a>
+        </li>
+              <li class="" data-depth="1">
+            <span class="nav-text">Quickstart</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../installation.html">Installation</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/video.html">Tutorial: Video Lecture</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/histogram.html">Tutorial: Histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/gradient.html">Tutorial: Image Gradient</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../naming.html">Naming Conventions</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Design Guide</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="index.html">Design Guide</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="basics.html">Basics</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="concepts.html">Concepts</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="point.html">Point</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="color_space.html">Color Space and Layout</a>
+        </li>
+              <li class=" is-current-page" data-depth="2">
+            <a class="nav-link" href="color_base.html">Color Base</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="channel.html">Channel</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="pixel.html">Pixel</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="pixel_iterator.html">Pixel Iterator</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="pixel_locator.html">Pixel Locator</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="image_view.html">Image View</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="image.html">Image</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="dynamic_image.html">Dynamic images and image views</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="metafunctions.html">Metafunctions</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="examples.html">Examples</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="technicalities.html">Technicalities</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="extending.html">Extending</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="conclusions.html">Conclusions</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Image Processing</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/index.html">Image Processing</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/basics.html">Basics</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/affine-region-detectors.html">Affine region detectors</a>
+        </li>
+              <li class="" data-depth="2">
+            <span class="nav-text">Contrast Enhancement</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/index.html">Contrast Enhancement</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/histogram_equalization.html">Histogram Equalization</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/histogram_matching.html">Histogram Matching</a>
+        </li>
+        </ul>
+  </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Histogram</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/index.html">Histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/create.html">Create a histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/fill.html">Fill histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/subhistogram.html">Making a sub-histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/cumulative.html">Making a cumulative histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/stl_compatibility.html">STL compatibility</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/utilities.html">Utilities</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/extend.html">Extending the class</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/limitations.html">Limitations</a>
+        </li>
+              <li class="" data-depth="2">
+            <span class="nav-text">Extension</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/index.html">Extensions</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/std.html">STD extension</a>
+        </li>
+        </ul>
+  </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Extensions</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../io.html">IO extensions</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../toolbox.html">ToolBox extension</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../numeric.html">Numeric extension</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <a class="nav-link" href="../examples.html">Examples</a>
+        </li>
+              <li class="" data-depth="1">
+            <a class="nav-link" href="../reference.html">Reference</a>
+        </li>
+        </ul>
+  </ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+  </div>  <div id="content">
+    <article class="doc max-width-reset">
+  <div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li>
+      <a href="../index.html" aria-label="Home: Boost.GIL">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 -960 960 960" fill="#000000" aria-hidden="true"><path d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z"/></svg>
+      </a>
+    </li>
+    <li>Design Guide</li>
+    <li><a href="color_base.html">Color Base</a></li>
+  </ul>
+</nav>
+<div class="spirit-nav">
+    <a accesskey="p" href="color_space.html">
+      <span class="material-symbols-outlined" title="Previous: Color Space and Layout">arrow_back</span>
+    </a>
+    <a class="disabled" accesskey="u" aria-disabled="true" tabindex="-1">
+      <span class="material-symbols-outlined" title="Up:">arrow_upward</span>
+    </a>
+    <a accesskey="n" href="channel.html">
+      <span class="material-symbols-outlined" title="Next: Channel">arrow_forward</span>
+    </a>
+</div></div>
+    <h1 class="page">Color Base</h1>
+  <div class="sect1">
+<h2 id="_overview"><a class="anchor" href="#_overview"></a>Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A color base is a container of color elements. The most common use of color
+base is in the implementation of a pixel, in which case the color elements are
+channel values. The color base concept, however, can be used in other
+scenarios. For example, a planar pixel has channels that are not contiguous in
+memory. Its reference is a proxy class that uses a color base whose elements
+are channel references. Its iterator uses a color base whose elements are
+channel iterators.</p>
+</div>
+<div class="paragraph">
+<p>Color base models must satisfy the following concepts:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">concept ColorBaseConcept&lt;typename T&gt;
+    : CopyConstructible&lt;T&gt;, EqualityComparable&lt;T&gt;
+{
+  // a GIL layout (the color space and element permutation)
+  typename layout_t;
+
+  // The type of K-th element
+  template &lt;int K&gt; struct kth_element_type;
+      where Metafunction&lt;kth_element_type&gt;;
+
+  // The result of at_c
+  template &lt;int K&gt; struct kth_element_const_reference_type;
+      where Metafunction&lt;kth_element_const_reference_type&gt;;
+
+  template &lt;int K&gt; kth_element_const_reference_type&lt;T,K&gt;::type at_c(T);
+
+  template &lt;ColorBaseConcept T2&gt; where { ColorBasesCompatibleConcept&lt;T,T2&gt; }
+      T::T(T2);
+  template &lt;ColorBaseConcept T2&gt; where { ColorBasesCompatibleConcept&lt;T,T2&gt; }
+      bool operator==(const T&amp;, const T2&amp;);
+  template &lt;ColorBaseConcept T2&gt; where { ColorBasesCompatibleConcept&lt;T,T2&gt; }
+      bool operator!=(const T&amp;, const T2&amp;);
+
+};
+
+concept MutableColorBaseConcept&lt;ColorBaseConcept T&gt;
+    : Assignable&lt;T&gt;, Swappable&lt;T&gt;
+{
+  template &lt;int K&gt; struct kth_element_reference_type;
+      where Metafunction&lt;kth_element_reference_type&gt;;
+
+  template &lt;int K&gt; kth_element_reference_type&lt;T,K&gt;::type at_c(T);
+
+  template &lt;ColorBaseConcept T2&gt; where { ColorBasesCompatibleConcept&lt;T,T2&gt; }
+      T&amp; operator=(T&amp;, const T2&amp;);
+};
+
+concept ColorBaseValueConcept&lt;typename T&gt; : MutableColorBaseConcept&lt;T&gt;, Regular&lt;T&gt;
+{
+};
+
+concept HomogeneousColorBaseConcept&lt;ColorBaseConcept CB&gt;
+{
+  // For all K in [0 ... size&lt;C1&gt;::value-1):
+  //     where SameType&lt;kth_element_type&lt;K&gt;::type, kth_element_type&lt;K+1&gt;::type&gt;;
+  kth_element_const_reference_type&lt;0&gt;::type dynamic_at_c(const CB&amp;, std::size_t n) const;
+};
+
+concept MutableHomogeneousColorBaseConcept&lt;MutableColorBaseConcept CB&gt;
+    : HomogeneousColorBaseConcept&lt;CB&gt;
+{
+  kth_element_reference_type&lt;0&gt;::type dynamic_at_c(const CB&amp;, std::size_t n);
+};
+
+concept HomogeneousColorBaseValueConcept&lt;typename T&gt;
+    : MutableHomogeneousColorBaseConcept&lt;T&gt;, Regular&lt;T&gt;
+{
+};
+
+concept ColorBasesCompatibleConcept&lt;ColorBaseConcept C1, ColorBaseConcept C2&gt;
+{
+  where SameType&lt;C1::layout_t::color_space_t, C2::layout_t::color_space_t&gt;;
+  // also, for all K in [0 ... size&lt;C1&gt;::value):
+  //     where Convertible&lt;kth_semantic_element_type&lt;C1,K&gt;::type, kth_semantic_element_type&lt;C2,K&gt;::type&gt;;
+  //     where Convertible&lt;kth_semantic_element_type&lt;C2,K&gt;::type, kth_semantic_element_type&lt;C1,K&gt;::type&gt;;
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A color base must have an associated layout (which consists of a color space,
+as well as an ordering of the channels). There are two ways to index the
+elements of a color base: A physical index corresponds to the way they are
+ordered in memory, and a semantic index corresponds to the way the elements
+are ordered in their color space. For example, in the RGB color space the
+elements are ordered as <code>{red_t, green_t, blue_t}</code>. For a color base with
+a BGR layout, the first element in physical ordering is the blue element,
+whereas the first semantic element is the red one.  Models of
+<code>ColorBaseConcept</code> are required to provide the <code>at_c&lt;K&gt;(ColorBase)</code>
+function, which allows for accessing the elements based on their physical
+order. GIL provides a <code>semantic_at_c&lt;K&gt;(ColorBase)</code> function (described
+later) which can operate on any model of ColorBaseConcept and returns the
+corresponding semantic element.</p>
+</div>
+<div class="paragraph">
+<p>Two color bases are <em>compatible</em> if they have the same color space and their
+elements (paired semantically) are convertible to each other.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_models"><a class="anchor" href="#_models"></a>Models</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>GIL provides a model for a homogeneous color base (a color base whose elements
+all have the same type).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">namespace detail
+{
+  template &lt;typename Element, typename Layout, int K&gt;
+  struct homogeneous_color_base;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It is used in the implementation of GIL&#8217;s pixel, planar pixel reference and
+planar pixel iterator. Another model of <code>ColorBaseConcept</code> is
+<code>packed_pixel</code> - it is a pixel whose channels are bit ranges.</p>
+</div>
+<div class="paragraph">
+<p>See the <a href="pixel.html" class="xref page">pixel</a> section for more.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_algorithms"><a class="anchor" href="#_algorithms"></a>Algorithms</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>GIL provides the following functions and metafunctions operating on color
+bases:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Metafunction returning an integral constant equal to the number of elements in the color base
+template &lt;class ColorBase&gt; struct size;
+
+// Returns the type of the return value of semantic_at_c&lt;K&gt;(color_base)
+template &lt;class ColorBase, int K&gt; struct kth_semantic_element_reference_type;
+template &lt;class ColorBase, int K&gt; struct kth_semantic_element_const_reference_type;
+
+// Returns a reference to the element with K-th semantic index.
+template &lt;class ColorBase, int K&gt;
+typename kth_semantic_element_reference_type&lt;ColorBase,K&gt;::type       semantic_at_c(ColorBase&amp; p)
+template &lt;class ColorBase, int K&gt;
+typename kth_semantic_element_const_reference_type&lt;ColorBase,K&gt;::type semantic_at_c(const ColorBase&amp; p)
+
+// Returns the type of the return value of get_color&lt;Color&gt;(color_base)
+template &lt;typename Color, typename ColorBase&gt; struct color_reference_t;
+template &lt;typename Color, typename ColorBase&gt; struct color_const_reference_t;
+
+// Returns a reference to the element corresponding to the given color
+template &lt;typename ColorBase, typename Color&gt;
+typename color_reference_t&lt;Color,ColorBase&gt;::type get_color(ColorBase&amp; cb, Color=Color());
+template &lt;typename ColorBase, typename Color&gt;
+typename color_const_reference_t&lt;Color,ColorBase&gt;::type get_color(const ColorBase&amp; cb, Color=Color());
+
+// Returns the element type of the color base. Defined for homogeneous color bases only
+template &lt;typename ColorBase&gt; struct element_type;
+template &lt;typename ColorBase&gt; struct element_reference_type;
+template &lt;typename ColorBase&gt; struct element_const_reference_type;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>GIL also provides the following algorithms which operate on color bases.
+Note that they all pair the elements semantically:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// Equivalents to std::equal, std::copy, std::fill, std::generate
+template &lt;typename CB1,typename CB2&gt;   bool static_equal(const CB1&amp; p1, const CB2&amp; p2);
+template &lt;typename Src,typename Dst&gt;   void static_copy(const Src&amp; src, Dst&amp; dst);
+template &lt;typename CB, typename Op&gt;    void static_generate(CB&amp; dst,Op op);
+
+// Equivalents to std::transform
+template &lt;typename CB ,             typename Dst,typename Op&gt; Op static_transform(      CB&amp;,Dst&amp;,Op);
+template &lt;typename CB ,             typename Dst,typename Op&gt; Op static_transform(const CB&amp;,Dst&amp;,Op);
+template &lt;typename CB1,typename CB2,typename Dst,typename Op&gt; Op static_transform(      CB1&amp;,      CB2&amp;,Dst&amp;,Op);
+template &lt;typename CB1,typename CB2,typename Dst,typename Op&gt; Op static_transform(const CB1&amp;,      CB2&amp;,Dst&amp;,Op);
+template &lt;typename CB1,typename CB2,typename Dst,typename Op&gt; Op static_transform(      CB1&amp;,const CB2&amp;,Dst&amp;,Op);
+template &lt;typename CB1,typename CB2,typename Dst,typename Op&gt; Op static_transform(const CB1&amp;,const CB2&amp;,Dst&amp;,Op);
+
+// Equivalents to std::for_each
+template &lt;typename CB1,                          typename Op&gt; Op static_for_each(      CB1&amp;,Op);
+template &lt;typename CB1,                          typename Op&gt; Op static_for_each(const CB1&amp;,Op);
+template &lt;typename CB1,typename CB2,             typename Op&gt; Op static_for_each(      CB1&amp;,      CB2&amp;,Op);
+template &lt;typename CB1,typename CB2,             typename Op&gt; Op static_for_each(      CB1&amp;,const CB2&amp;,Op);
+template &lt;typename CB1,typename CB2,             typename Op&gt; Op static_for_each(const CB1&amp;,      CB2&amp;,Op);
+template &lt;typename CB1,typename CB2,             typename Op&gt; Op static_for_each(const CB1&amp;,const CB2&amp;,Op);
+template &lt;typename CB1,typename CB2,typename CB3,typename Op&gt; Op static_for_each(      CB1&amp;,      CB2&amp;,      CB3&amp;,Op);
+template &lt;typename CB1,typename CB2,typename CB3,typename Op&gt; Op static_for_each(      CB1&amp;,      CB2&amp;,const CB3&amp;,Op);
+template &lt;typename CB1,typename CB2,typename CB3,typename Op&gt; Op static_for_each(      CB1&amp;,const CB2&amp;,      CB3&amp;,Op);
+template &lt;typename CB1,typename CB2,typename CB3,typename Op&gt; Op static_for_each(      CB1&amp;,const CB2&amp;,const CB3&amp;,Op);
+template &lt;typename CB1,typename CB2,typename CB3,typename Op&gt; Op static_for_each(const CB1&amp;,      CB2&amp;,      CB3&amp;,Op);
+template &lt;typename CB1,typename CB2,typename CB3,typename Op&gt; Op static_for_each(const CB1&amp;,      CB2&amp;,const CB3&amp;,Op);
+template &lt;typename CB1,typename CB2,typename CB3,typename Op&gt; Op static_for_each(const CB1&amp;,const CB2&amp;,      CB3&amp;,Op);
+template &lt;typename CB1,typename CB2,typename CB3,typename Op&gt; Op static_for_each(const CB1&amp;,const CB2&amp;,const CB3&amp;,Op);
+
+// The following algorithms are only defined for homogeneous color bases:
+// Equivalent to std::fill
+template &lt;typename HCB, typename Element&gt; void static_fill(HCB&amp; p, const Element&amp; v);
+
+// Equivalents to std::min_element and std::max_element
+template &lt;typename HCB&gt; typename element_const_reference_type&lt;HCB&gt;::type static_min(const HCB&amp;);
+template &lt;typename HCB&gt; typename element_reference_type&lt;HCB&gt;::type       static_min(      HCB&amp;);
+template &lt;typename HCB&gt; typename element_const_reference_type&lt;HCB&gt;::type static_max(const HCB&amp;);
+template &lt;typename HCB&gt; typename element_reference_type&lt;HCB&gt;::type       static_max(      HCB&amp;);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These algorithms are designed after the corresponding STL algorithms, except
+that instead of ranges they take color bases and operate on their elements.
+In addition, they are implemented with a compile-time recursion (thus the
+prefix "static_"). Finally, they pair the elements semantically instead of
+based on their physical order in memory.</p>
+</div>
+<div class="paragraph">
+<p>For example, here is the implementation of <code>static_equal</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">namespace detail
+{
+  template &lt;int K&gt; struct element_recursion
+  {
+    template &lt;typename P1,typename P2&gt;
+    static bool static_equal(const P1&amp; p1, const P2&amp; p2)
+    {
+      return element_recursion&lt;K-1&gt;::static_equal(p1,p2) &amp;&amp;
+             semantic_at_c&lt;K-1&gt;(p1)==semantic_at_c&lt;N-1&gt;(p2);
+    }
+  };
+  template &lt;&gt; struct element_recursion<i class="conum" data-value="0"></i><b>(0)</b>
+  {
+    template &lt;typename P1,typename P2&gt;
+    static bool static_equal(const P1&amp;, const P2&amp;) { return true; }
+  };
+}
+
+template &lt;typename P1,typename P2&gt;
+bool static_equal(const P1&amp; p1, const P2&amp; p2)
+{
+  gil_function_requires&lt;ColorSpacesCompatibleConcept&lt;P1::layout_t::color_space_t,P2::layout_t::color_space_t&gt; &gt;();
+  return detail::element_recursion&lt;size&lt;P1&gt;::value&gt;::static_equal(p1,p2);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This algorithm is used when invoking <code>operator==</code> on two pixels, for
+example. By using semantic accessors we are properly comparing an RGB pixel to
+a BGR pixel. Notice also that all of the above algorithms taking more than one
+color base require that they all have the same color space.</p>
+</div>
+</div>
+</div>
+  <div class="edit-this-page">
+      <a href="https://github.com/boostorg/gil/edit/develop/doc/modules/ROOT/pages/design/color_base.adoc">Edit this Page</a>
+      </div>
+      <nav class="pagination">
+        <span class="prev"><a href="color_space.html">Color Space and Layout</a></span>
+        <span class="next"><a href="channel.html">Channel</a></span>
+    </nav>
+</article>
+</div>
+  <div id="footer">
+  <script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async src="../../_/js/vendor/tabs.js" data-sync-storage-key="preferred-tab"></script>
+</div>
+</div>
+  </body>
+</html>

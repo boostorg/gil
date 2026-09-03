@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<style>html.fonts-loading{visibility:hidden;opacity:0}</style>
+<script>document.documentElement.classList.add('fonts-loading');</script>
+
+<link rel="preload" href="../../_/font/NotoSansDisplay.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/NotoSansDisplay-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/MonaspaceNeon-Var.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/MonaspaceXenon-Var.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+
+<script>
+(function() {
+  'use strict';
+  
+  var revealed = false;
+  
+  var reveal = function() {
+    if (revealed) return;
+    revealed = true;
+    document.documentElement.classList.remove('fonts-loading');
+  };
+  
+  setTimeout(reveal, 3000);
+  
+  if (!('FontFace' in window) || !('fonts' in document)) {
+    setTimeout(reveal, 100);
+    return;
+  }
+  
+  var uiRoot = '../../_';
+  var fonts = [
+    { 
+      family: 'Noto Sans', 
+      url: uiRoot + '/font/NotoSansDisplay.woff2',
+      descriptors: { style: 'normal', weight: '100 900', stretch: '62.5% 100%' }
+    },
+    { 
+      family: 'Noto Sans', 
+      url: uiRoot + '/font/NotoSansDisplay-Italic.woff2',
+      descriptors: { style: 'italic', weight: '100 900', stretch: '62.5% 100%' }
+    },
+    { 
+      family: 'Monaspace Neon', 
+      url: uiRoot + '/font/MonaspaceNeon-Var.woff2',
+      descriptors: { style: 'normal', weight: '400' }
+    },
+    { 
+      family: 'Monaspace Xenon', 
+      url: uiRoot + '/font/MonaspaceXenon-Var.woff2',
+      descriptors: { style: 'italic', weight: '400' }
+    }
+  ];
+  
+  var loadPromises = fonts.map(function(f) {
+    try {
+      var face = new FontFace(f.family, 'url("' + f.url + '")', f.descriptors);
+      return face.load().then(function(loaded) {
+        document.fonts.add(loaded);
+        return loaded;
+      }).catch(function() {
+        return null;
+      });
+    } catch (e) {
+      return Promise.resolve(null);
+    }
+  });
+  
+  Promise.all(loadPromises)
+    .then(function() {
+      return document.fonts.ready;
+    })
+    .then(reveal)
+    .catch(reveal);
+})();
+</script>    <title>Pixel Locator :: Boost.GIL</title>
+  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/design/pixel_locator.html">
+    <link rel="prev" href="pixel_iterator.html">
+    <link rel="next" href="image_view.html">
+  <meta name="generator" content="Antora 3.2.0">
+    <link rel="stylesheet" href="../../_/css/boostlook.css">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/vendor/tabs.css">
+    <script>
+    (function() {
+      if (window.self !== window.top) return;
+      var theme = localStorage.getItem('antora-theme');
+      if (!theme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        theme = 'dark';
+      }
+      if (theme === 'dark') document.documentElement.classList.add('dark');
+    })();
+    </script>
+    <script>var uiRootPath = '../../_'</script>
+<link rel="icon" href="../../_/img/favicons/favicon.ico" type="image/x-icon">
+    <!-- Favicon configuration -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../../_/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../_/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../_/img/favicons/favicon-16x16.png">
+    <link rel="manifest" href="../../_/img/favicons/site.webmanifest">
+    <link rel="shortcut icon" href="../../_/img/favicons/favicon.ico">
+  </head>
+  <body class="article toc2 toc-left">
+    <div class="boostlook">
+   <div id="header">
+      <div id="toc" class="nav-container toc2" data-component="gil" data-version="">
+  <aside class="nav">
+    <button class="nav-close"></button>
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+      <div class="title-row">
+        <h3 class="title"><a href="../index.html">Boost.GIL</a></h3>
+        <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme" style="display:none">
+  <i class="fas fa-sun theme-icon-light"></i>
+  <i class="fas fa-moon theme-icon-dark"></i>
+</button>      </div>
+      <ul class="nav-list">
+        <ul class="nav-list">
+        <li class="" data-depth="1">
+            <a class="nav-link" href="../index.html">Introduction</a>
+        </li>
+              <li class="" data-depth="1">
+            <span class="nav-text">Quickstart</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../installation.html">Installation</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/video.html">Tutorial: Video Lecture</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/histogram.html">Tutorial: Histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/gradient.html">Tutorial: Image Gradient</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../naming.html">Naming Conventions</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Design Guide</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="index.html">Design Guide</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="basics.html">Basics</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="concepts.html">Concepts</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="point.html">Point</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="color_space.html">Color Space and Layout</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="color_base.html">Color Base</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="channel.html">Channel</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="pixel.html">Pixel</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="pixel_iterator.html">Pixel Iterator</a>
+        </li>
+              <li class=" is-current-page" data-depth="2">
+            <a class="nav-link" href="pixel_locator.html">Pixel Locator</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="image_view.html">Image View</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="image.html">Image</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="dynamic_image.html">Dynamic images and image views</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="metafunctions.html">Metafunctions</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="examples.html">Examples</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="technicalities.html">Technicalities</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="extending.html">Extending</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="conclusions.html">Conclusions</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Image Processing</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/index.html">Image Processing</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/basics.html">Basics</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/affine-region-detectors.html">Affine region detectors</a>
+        </li>
+              <li class="" data-depth="2">
+            <span class="nav-text">Contrast Enhancement</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/index.html">Contrast Enhancement</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/histogram_equalization.html">Histogram Equalization</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/histogram_matching.html">Histogram Matching</a>
+        </li>
+        </ul>
+  </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Histogram</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/index.html">Histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/create.html">Create a histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/fill.html">Fill histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/subhistogram.html">Making a sub-histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/cumulative.html">Making a cumulative histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/stl_compatibility.html">STL compatibility</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/utilities.html">Utilities</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/extend.html">Extending the class</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/limitations.html">Limitations</a>
+        </li>
+              <li class="" data-depth="2">
+            <span class="nav-text">Extension</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/index.html">Extensions</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/std.html">STD extension</a>
+        </li>
+        </ul>
+  </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Extensions</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../io.html">IO extensions</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../toolbox.html">ToolBox extension</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../numeric.html">Numeric extension</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <a class="nav-link" href="../examples.html">Examples</a>
+        </li>
+              <li class="" data-depth="1">
+            <a class="nav-link" href="../reference.html">Reference</a>
+        </li>
+        </ul>
+  </ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+  </div>  <div id="content">
+    <article class="doc max-width-reset">
+  <div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li>
+      <a href="../index.html" aria-label="Home: Boost.GIL">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 -960 960 960" fill="#000000" aria-hidden="true"><path d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z"/></svg>
+      </a>
+    </li>
+    <li>Design Guide</li>
+    <li><a href="pixel_locator.html">Pixel Locator</a></li>
+  </ul>
+</nav>
+<div class="spirit-nav">
+    <a accesskey="p" href="pixel_iterator.html">
+      <span class="material-symbols-outlined" title="Previous: Pixel Iterator">arrow_back</span>
+    </a>
+    <a class="disabled" accesskey="u" aria-disabled="true" tabindex="-1">
+      <span class="material-symbols-outlined" title="Up:">arrow_upward</span>
+    </a>
+    <a accesskey="n" href="image_view.html">
+      <span class="material-symbols-outlined" title="Next: Image View">arrow_forward</span>
+    </a>
+</div></div>
+    <h1 class="page">Pixel Locator</h1>
+  <div class="sect1">
+<h2 id="_overview"><a class="anchor" href="#_overview"></a>Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A Locator allows for navigation in two or more dimensions. Locators are
+N-dimensional iterators in spirit, but we use a different name because they
+don&#8217;t satisfy all the requirements of iterators. For example, they don&#8217;t
+supply increment and decrement operators because it is unclear which dimension
+the operators should advance along.
+N-dimensional locators model the following concept:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">concept RandomAccessNDLocatorConcept&lt;Regular Loc&gt;
+{
+  typename value_type;        // value over which the locator navigates
+  typename reference;         // result of dereferencing
+  typename difference_type; where PointNDConcept&lt;difference_type&gt;; // return value of operator-.
+  typename const_t;           // same as Loc, but operating over immutable values
+  typename cached_location_t; // type to store relative location (for efficient repeated access)
+  typename point_t  = difference_type;
+
+  static const size_t num_dimensions; // dimensionality of the locator
+  where num_dimensions = point_t::num_dimensions;
+
+  // The difference_type and iterator type along each dimension. The iterators may only differ in
+  // difference_type. Their value_type must be the same as Loc::value_type
+  template &lt;size_t D&gt; struct axis {
+      typename coord_t = point_t::axis&lt;D&gt;::coord_t;
+      typename iterator; where RandomAccessTraversalConcept&lt;iterator&gt;; // iterator along D-th axis.
+      where iterator::value_type == value_type;
+  };
+
+  // Defines the type of a locator similar to this type, except it invokes Deref upon dereferencing
+  template &lt;PixelDereferenceAdaptorConcept Deref&gt; struct add_deref {
+      typename type;        where RandomAccessNDLocatorConcept&lt;type&gt;;
+      static type make(const Loc&amp; loc, const Deref&amp; deref);
+  };
+
+  Loc&amp; operator+=(Loc&amp;, const difference_type&amp;);
+  Loc&amp; operator-=(Loc&amp;, const difference_type&amp;);
+  Loc operator+(const Loc&amp;, const difference_type&amp;);
+  Loc operator-(const Loc&amp;, const difference_type&amp;);
+
+  reference operator*(const Loc&amp;);
+  reference operator[](const Loc&amp;, const difference_type&amp;);
+
+  // Storing relative location for faster repeated access and accessing it
+  cached_location_t Loc::cache_location(const difference_type&amp;) const;
+  reference operator[](const Loc&amp;,const cached_location_t&amp;);
+
+  // Accessing iterators along a given dimension at the current location or at a given offset
+  template &lt;size_t D&gt; axis&lt;D&gt;::iterator&amp;       Loc::axis_iterator();
+  template &lt;size_t D&gt; axis&lt;D&gt;::iterator const&amp; Loc::axis_iterator() const;
+  template &lt;size_t D&gt; axis&lt;D&gt;::iterator        Loc::axis_iterator(const difference_type&amp;) const;
+};
+
+template &lt;typename Loc&gt;
+concept MutableRandomAccessNDLocatorConcept
+    : RandomAccessNDLocatorConcept&lt;Loc&gt;
+{
+  where Mutable&lt;reference&gt;;
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Two-dimensional locators have additional requirements:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">concept RandomAccess2DLocatorConcept&lt;RandomAccessNDLocatorConcept Loc&gt;
+{
+  where num_dimensions==2;
+  where Point2DConcept&lt;point_t&gt;;
+
+  typename x_iterator = axis&lt;0&gt;::iterator;
+  typename y_iterator = axis&lt;1&gt;::iterator;
+  typename x_coord_t  = axis&lt;0&gt;::coord_t;
+  typename y_coord_t  = axis&lt;1&gt;::coord_t;
+
+  // Only available to locators that have dynamic step in Y
+  //Loc::Loc(const Loc&amp; loc, y_coord_t);
+
+  // Only available to locators that have dynamic step in X and Y
+  //Loc::Loc(const Loc&amp; loc, x_coord_t, y_coord_t, bool transposed=false);
+
+  x_iterator&amp;       Loc::x();
+  x_iterator const&amp; Loc::x() const;
+  y_iterator&amp;       Loc::y();
+  y_iterator const&amp; Loc::y() const;
+
+  x_iterator Loc::x_at(const difference_type&amp;) const;
+  y_iterator Loc::y_at(const difference_type&amp;) const;
+  Loc Loc::xy_at(const difference_type&amp;) const;
+
+  // x/y versions of all methods that can take difference type
+  x_iterator        Loc::x_at(x_coord_t, y_coord_t) const;
+  y_iterator        Loc::y_at(x_coord_t, y_coord_t) const;
+  Loc               Loc::xy_at(x_coord_t, y_coord_t) const;
+  reference         operator()(const Loc&amp;, x_coord_t, y_coord_t);
+  cached_location_t Loc::cache_location(x_coord_t, y_coord_t) const;
+
+  bool      Loc::is_1d_traversable(x_coord_t width) const;
+  y_coord_t Loc::y_distance_to(const Loc&amp; loc2, x_coord_t x_diff) const;
+};
+
+concept MutableRandomAccess2DLocatorConcept&lt;RandomAccess2DLocatorConcept Loc&gt;
+  : MutableRandomAccessNDLocatorConcept&lt;Loc&gt; {};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>2D locators can have a dynamic step not just horizontally, but
+vertically. This gives rise to the Y equivalent of
+<code>HasDynamicXStepTypeConcept</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">concept HasDynamicYStepTypeConcept&lt;typename T&gt;
+{
+  typename dynamic_y_step_type&lt;T&gt;;
+      where Metafunction&lt;dynamic_y_step_type&lt;T&gt; &gt;;
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>All locators and image views that GIL provides model
+<code>HasDynamicYStepTypeConcept</code>.</p>
+</div>
+<div class="paragraph">
+<p>Sometimes it is necessary to swap the meaning of X and Y for a given locator
+or image view type (for example, GIL provides a function to transpose an image
+view). Such locators and views must be transposable:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">concept HasTransposedTypeConcept&lt;typename T&gt;
+{
+  typename transposed_type&lt;T&gt;;
+      where Metafunction&lt;transposed_type&lt;T&gt; &gt;;
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>All GIL provided locators and views model <code>HasTransposedTypeConcept</code>.</p>
+</div>
+<div class="paragraph">
+<p>The locators GIL uses operate over models of <code>PixelConcept</code> and their x and
+y dimension types are the same. They model the following concept:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">concept PixelLocatorConcept&lt;RandomAccess2DLocatorConcept Loc&gt;
+{
+  where PixelValueConcept&lt;value_type&gt;;
+  where PixelIteratorConcept&lt;x_iterator&gt;;
+  where PixelIteratorConcept&lt;y_iterator&gt;;
+  where x_coord_t == y_coord_t;
+
+  typename coord_t = x_coord_t;
+};
+
+concept MutablePixelLocatorConcept&lt;PixelLocatorConcept Loc&gt; : MutableRandomAccess2DLocatorConcept&lt;Loc&gt; {};</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>See also:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../reference/boost/gil/HasDynamicYStepTypeConcept.html" class="xref page">HasDynamicYStepTypeConcept&lt;T&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/HasTransposedTypeConcept.html" class="xref page">HasTransposedTypeConcept&lt;T&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/RandomAccessNDLocatorConcept.html" class="xref page">RandomAccessNDLocatorConcept&lt;Locator&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/MutableRandomAccessNDLocatorConcept.html" class="xref page">MutableRandomAccessNDLocatorConcept&lt;Locator&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/RandomAccess2DLocatorConcept.html" class="xref page">RandomAccess2DLocatorConcept&lt;Locator&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/MutableRandomAccess2DLocatorConcept.html" class="xref page">MutableRandomAccess2DLocatorConcept&lt;Locator&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/PixelLocatorConcept.html" class="xref page">PixelLocatorConcept&lt;Locator&gt;</a></p>
+</li>
+<li>
+<p><a href="../reference/boost/gil/MutablePixelLocatorConcept.html" class="xref page">MutablePixelLocatorConcept&lt;Locator&gt;</a></p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_models"><a class="anchor" href="#_models"></a>Models</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>GIL provides two models of <code>PixelLocatorConcept</code> - a memory-based locator,
+<code>memory_based_2d_locator</code> and a virtual locator <code>virtual_2d_locator</code>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>memory_based_2d_locator</code> is a locator over planar or interleaved images
+that have their pixels in memory. It takes a model of <code>StepIteratorConcept</code>
+over pixels as a template parameter. (When instantiated with a model of
+<code>MutableStepIteratorConcept</code>, it models <code>MutablePixelLocatorConcept</code>.)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// StepIterator models StepIteratorConcept, MemoryBasedIteratorConcept
+template &lt;typename StepIterator&gt;
+class memory_based_2d_locator;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The step of <code>StepIterator</code> must be the number of memory units (bytes or
+bits) per row (thus it must be memunit advanceable). The class
+<code>memory_based_2d_locator</code> is a wrapper around <code>StepIterator</code> and uses it
+to navigate vertically, while its base iterator is used to navigate
+horizontally.</p>
+</div>
+<div class="paragraph">
+<p>Combining fundamental iterator and step iterator allows us to create locators
+that describe complex pixel memory organizations. First, we have a choice of
+iterator to use for horizontal direction, i.e. for iterating over the pixels
+on the same row. Using the fundamental and step iterators gives us four
+choices:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>pixel&lt;T,C&gt;*</code> - for interleaved images</p>
+</li>
+<li>
+<p><code>planar_pixel_iterator&lt;T*,C&gt;</code> - for planar images</p>
+</li>
+<li>
+<p><code>memory_based_step_iterator&lt;pixel&lt;T,C&gt;*&gt;</code> - for interleaved images with
+non-standard step</p>
+</li>
+<li>
+<p><code>memory_based_step_iterator&lt;planar_pixel_iterator&lt;T*,C&gt; &gt;</code> - for planar
+images with non-standard step</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Of course, one could provide their own custom x-iterator. One such example
+described later is an iterator adaptor that performs color conversion when
+dereferenced.</p>
+</div>
+<div class="paragraph">
+<p>Given a horizontal iterator <code>XIterator</code>, we could choose the <code>y-iterator</code>,
+the iterator that moves along a column, as
+<code>memory_based_step_iterator&lt;XIterator&gt;</code> with a step equal to the number of
+memory units (bytes or bits) per row. Again, one is free to provide their own
+y-iterator.</p>
+</div>
+<div class="paragraph">
+<p>Then we can instantiate
+<code>memory_based_2d_locator&lt;memory_based_step_iterator&lt;XIterator&gt; &gt;</code> to obtain
+a 2D pixel locator, as the diagram indicates:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/pixel_locator.gif" alt="pixel locator">
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>memory_based_2d_locator</code> also offers <code>cached_location_t</code> as mechanism
+to store relative locations for optimized repeated access of neighborhood
+pixels. The 2D coordinates of relative locations are cached as 1-dimensional
+raw byte offsets. This provides efficient access if neighboring locations
+relative to a given locator are read or written frequently (e.g. in filters).</p>
+</div>
+<div class="paragraph">
+<p>The <code>virtual_2d_locator</code> is a locator that is instantiated with a function
+object invoked upon dereferencing a pixel. It returns the value of a pixel
+given its X,Y coordinates. Virtual locators can be used to implement virtual
+image views that can model any user-defined function. See the GIL tutorial for
+an example of using virtual locators to create a view of the Mandelbrot set.</p>
+</div>
+<div class="paragraph">
+<p>Both the virtual and the memory-based locators subclass from
+<code>pixel_2d_locator_base</code>, a base class that provides most of the interface
+required by <code>PixelLocatorConcept</code>. Users may find this base class useful if
+they need to provide other models of <code>PixelLocatorConcept</code>.</p>
+</div>
+<div class="paragraph">
+<p>Here is some sample code using locators:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">loc=img.xy_at(10,10);            // start at pixel (x=10,y=10)
+above=loc.cache_location(0,-1);  // remember relative locations of neighbors above and below
+below=loc.cache_location(0, 1);
+++loc.x();                       // move to (11,10)
+loc.y()+=15;                     // move to (11,25)
+loc-=point&lt;std::ptrdiff_t&gt;(1,1);// move to (10,24)
+*loc=(loc(0,-1)+loc(0,1))/2;     // set pixel (10,24) to the average of (10,23) and (10,25) (grayscale pixels only)
+*loc=(loc[above]+loc[below])/2;  // the same, but faster using cached relative neighbor locations</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The standard GIL locators are fast and lightweight objects. For example, the
+locator for a simple interleaved image consists of one raw pointer to the
+pixel location plus one integer for the row size in bytes, for a total of
+8 bytes. <code>++loc.x()</code> amounts to incrementing a raw pointer (or N pointers
+for planar images). Computing 2D offsets is slower as it requires
+multiplication and addition. Filters, for example, need to access the same
+neighbors for every pixel in the image, in which case the relative positions
+can be cached into a raw byte difference using <code>cache_location</code>.
+In the above example <code>loc[above]</code> for simple interleaved images amounts to a
+raw array index operator.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_iterator_over_2d_image"><a class="anchor" href="#_iterator_over_2d_image"></a>Iterator over 2D image</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Sometimes we want to perform the same, location-independent operation
+over all pixels of an image. In such a case it is useful to represent
+the pixels as a one-dimensional array. GIL&#8217;s <code>iterator_from_2d</code> is a
+random access traversal iterator that visits all pixels in an image in
+the natural memory-friendly order left-to-right inside
+top-to-bottom. It takes a locator, the width of the image and the
+current X position. This is sufficient information for it to determine
+when to do a "carriage return". Synopsis:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template &lt;typename Locator&gt;  // Models PixelLocatorConcept
+class iterator_from_2d
+{
+public:
+  iterator_from_2d(const Locator&amp; loc, int x, int width);
+
+  iterator_from_2d&amp; operator++(); // if (++_x&lt;_width) ++_p.x(); else _p+=point_t(-_width,1);
+
+  ...
+private:
+  int _x, _width;
+  Locator _p;
+};</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Iterating through the pixels in an image using <code>iterator_from_2d</code> is slower
+than going through all rows and using the x-iterator at each row. This is
+because two comparisons are done per iteration step - one for the end
+condition of the loop using the iterators, and one inside
+<code>iterator_from_2d::operator++</code> to determine whether we are at the end of a
+row. For fast operations, such as pixel copy, this second check adds about
+15% performance delay (measured for interleaved images on Intel platform).
+GIL overrides some STL algorithms, such as <code>std::copy</code> and <code>std::fill</code>,
+when invoked with <code>iterator_from_2d</code>-s, to go through each row using their
+base x-iterators, and, if the image has no padding (i.e.
+<code>iterator_from_2d::is_1d_traversable()</code> returns true), to simply iterate
+using the x-iterators directly.</p>
+</div>
+</div>
+</div>
+  <div class="edit-this-page">
+      <a href="https://github.com/boostorg/gil/edit/develop/doc/modules/ROOT/pages/design/pixel_locator.adoc">Edit this Page</a>
+      </div>
+      <nav class="pagination">
+        <span class="prev"><a href="pixel_iterator.html">Pixel Iterator</a></span>
+        <span class="next"><a href="image_view.html">Image View</a></span>
+    </nav>
+</article>
+</div>
+  <div id="footer">
+  <script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async src="../../_/js/vendor/tabs.js" data-sync-storage-key="preferred-tab"></script>
+</div>
+</div>
+  </body>
+</html>

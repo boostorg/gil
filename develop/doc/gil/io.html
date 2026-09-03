@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<style>html.fonts-loading{visibility:hidden;opacity:0}</style>
+<script>document.documentElement.classList.add('fonts-loading');</script>
+
+<link rel="preload" href="../_/font/NotoSansDisplay.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../_/font/NotoSansDisplay-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../_/font/MonaspaceNeon-Var.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../_/font/MonaspaceXenon-Var.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+
+<script>
+(function() {
+  'use strict';
+  
+  var revealed = false;
+  
+  var reveal = function() {
+    if (revealed) return;
+    revealed = true;
+    document.documentElement.classList.remove('fonts-loading');
+  };
+  
+  setTimeout(reveal, 3000);
+  
+  if (!('FontFace' in window) || !('fonts' in document)) {
+    setTimeout(reveal, 100);
+    return;
+  }
+  
+  var uiRoot = '../_';
+  var fonts = [
+    { 
+      family: 'Noto Sans', 
+      url: uiRoot + '/font/NotoSansDisplay.woff2',
+      descriptors: { style: 'normal', weight: '100 900', stretch: '62.5% 100%' }
+    },
+    { 
+      family: 'Noto Sans', 
+      url: uiRoot + '/font/NotoSansDisplay-Italic.woff2',
+      descriptors: { style: 'italic', weight: '100 900', stretch: '62.5% 100%' }
+    },
+    { 
+      family: 'Monaspace Neon', 
+      url: uiRoot + '/font/MonaspaceNeon-Var.woff2',
+      descriptors: { style: 'normal', weight: '400' }
+    },
+    { 
+      family: 'Monaspace Xenon', 
+      url: uiRoot + '/font/MonaspaceXenon-Var.woff2',
+      descriptors: { style: 'italic', weight: '400' }
+    }
+  ];
+  
+  var loadPromises = fonts.map(function(f) {
+    try {
+      var face = new FontFace(f.family, 'url("' + f.url + '")', f.descriptors);
+      return face.load().then(function(loaded) {
+        document.fonts.add(loaded);
+        return loaded;
+      }).catch(function() {
+        return null;
+      });
+    } catch (e) {
+      return Promise.resolve(null);
+    }
+  });
+  
+  Promise.all(loadPromises)
+    .then(function() {
+      return document.fonts.ready;
+    })
+    .then(reveal)
+    .catch(reveal);
+})();
+</script>    <title>IO extensions :: Boost.GIL</title>
+  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/io.html">
+    <link rel="prev" href="histogram/extension/std.html">
+    <link rel="next" href="toolbox.html">
+  <meta name="generator" content="Antora 3.2.0">
+    <link rel="stylesheet" href="../_/css/boostlook.css">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/css/vendor/tabs.css">
+    <script>
+    (function() {
+      if (window.self !== window.top) return;
+      var theme = localStorage.getItem('antora-theme');
+      if (!theme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        theme = 'dark';
+      }
+      if (theme === 'dark') document.documentElement.classList.add('dark');
+    })();
+    </script>
+    <script>var uiRootPath = '../_'</script>
+<link rel="icon" href="../_/img/favicons/favicon.ico" type="image/x-icon">
+    <!-- Favicon configuration -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../_/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../_/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../_/img/favicons/favicon-16x16.png">
+    <link rel="manifest" href="../_/img/favicons/site.webmanifest">
+    <link rel="shortcut icon" href="../_/img/favicons/favicon.ico">
+  </head>
+  <body class="article toc2 toc-left">
+    <div class="boostlook">
+   <div id="header">
+      <div id="toc" class="nav-container toc2" data-component="gil" data-version="">
+  <aside class="nav">
+    <button class="nav-close"></button>
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+      <div class="title-row">
+        <h3 class="title"><a href="index.html">Boost.GIL</a></h3>
+        <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme" style="display:none">
+  <i class="fas fa-sun theme-icon-light"></i>
+  <i class="fas fa-moon theme-icon-dark"></i>
+</button>      </div>
+      <ul class="nav-list">
+        <ul class="nav-list">
+        <li class="" data-depth="1">
+            <a class="nav-link" href="index.html">Introduction</a>
+        </li>
+              <li class="" data-depth="1">
+            <span class="nav-text">Quickstart</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="installation.html">Installation</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="tutorial/video.html">Tutorial: Video Lecture</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="tutorial/histogram.html">Tutorial: Histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="tutorial/gradient.html">Tutorial: Image Gradient</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="naming.html">Naming Conventions</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Design Guide</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="design/index.html">Design Guide</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="design/basics.html">Basics</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="design/concepts.html">Concepts</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="design/point.html">Point</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="design/color_space.html">Color Space and Layout</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="design/color_base.html">Color Base</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="design/channel.html">Channel</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="design/pixel.html">Pixel</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="design/pixel_iterator.html">Pixel Iterator</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="design/pixel_locator.html">Pixel Locator</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="design/image_view.html">Image View</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="design/image.html">Image</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="design/dynamic_image.html">Dynamic images and image views</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="design/metafunctions.html">Metafunctions</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="design/examples.html">Examples</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="design/technicalities.html">Technicalities</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="design/extending.html">Extending</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="design/conclusions.html">Conclusions</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Image Processing</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="image_processing/index.html">Image Processing</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="image_processing/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="image_processing/basics.html">Basics</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="image_processing/affine-region-detectors.html">Affine region detectors</a>
+        </li>
+              <li class="" data-depth="2">
+            <span class="nav-text">Contrast Enhancement</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="3">
+            <a class="nav-link" href="image_processing/contrast_enhancement/index.html">Contrast Enhancement</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="image_processing/contrast_enhancement/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="image_processing/contrast_enhancement/histogram_equalization.html">Histogram Equalization</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="image_processing/contrast_enhancement/histogram_matching.html">Histogram Matching</a>
+        </li>
+        </ul>
+  </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Histogram</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="histogram/index.html">Histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="histogram/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="histogram/create.html">Create a histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="histogram/fill.html">Fill histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="histogram/subhistogram.html">Making a sub-histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="histogram/cumulative.html">Making a cumulative histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="histogram/stl_compatibility.html">STL compatibility</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="histogram/utilities.html">Utilities</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="histogram/extend.html">Extending the class</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="histogram/limitations.html">Limitations</a>
+        </li>
+              <li class="" data-depth="2">
+            <span class="nav-text">Extension</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="3">
+            <a class="nav-link" href="histogram/extension/index.html">Extensions</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="histogram/extension/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="histogram/extension/std.html">STD extension</a>
+        </li>
+        </ul>
+  </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Extensions</span>
+        </li>
+        <ul class="nav-list">
+        <li class=" is-current-page" data-depth="2">
+            <a class="nav-link" href="io.html">IO extensions</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="toolbox.html">ToolBox extension</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="numeric.html">Numeric extension</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <a class="nav-link" href="examples.html">Examples</a>
+        </li>
+              <li class="" data-depth="1">
+            <a class="nav-link" href="reference.html">Reference</a>
+        </li>
+        </ul>
+  </ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+  </div>  <div id="content">
+    <article class="doc max-width-reset">
+  <div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li>
+      <a href="index.html" aria-label="Home: Boost.GIL">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 -960 960 960" fill="#000000" aria-hidden="true"><path d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z"/></svg>
+      </a>
+    </li>
+    <li>Extensions</li>
+    <li><a href="io.html">IO extensions</a></li>
+  </ul>
+</nav>
+<div class="spirit-nav">
+    <a accesskey="p" href="histogram/extension/std.html">
+      <span class="material-symbols-outlined" title="Previous: STD extension">arrow_back</span>
+    </a>
+    <a class="disabled" accesskey="u" aria-disabled="true" tabindex="-1">
+      <span class="material-symbols-outlined" title="Up:">arrow_upward</span>
+    </a>
+    <a accesskey="n" href="toolbox.html">
+      <span class="material-symbols-outlined" title="Next: ToolBox extension">arrow_forward</span>
+    </a>
+</div></div>
+    <h1 class="page">IO extensions</h1>
+  <div class="sect1">
+<h2 id="_overview"><a class="anchor" href="#_overview"></a>Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This extension to boost::gil provides an easy to use interface for reading and
+writing various image formats. It also includes a framework for adding
+new formats.</p>
+</div>
+<div class="paragraph">
+<p>Please see the <a href="#supported_image_formats">Supported Image Formats</a> section for
+all supported image formats. A basic tutorial is provided in the
+<a href="#tutorial">Tutorial</a> section.
+Also, this extension requires Boost version 1.42 and up.
+Furthermore the GIL extension Toolbox is used.</p>
+</div>
+<div class="paragraph">
+<p>For adding new image formats please refer to the
+<a href="#extending_gil_io_with_new_formats">Extending GIL::IO with new Formats</a> section.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_supported_platforms"><a class="anchor" href="#_supported_platforms"></a>Supported Platforms</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>All platforms supported by Boost which have a decent C++ compiler.
+Depending on the image format one or more of the following image
+libraries might be needed:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>libtiff</p>
+</li>
+<li>
+<p>libjpeg</p>
+</li>
+<li>
+<p>libpng</p>
+</li>
+<li>
+<p>libraw</p>
+</li>
+<li>
+<p>zlib</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The library is designed to support as many formats as required by the user.
+For instance, if the user only needs bmp support none of the above mentioned
+dependencies are required.</p>
+</div>
+<div class="paragraph">
+<p>There are more details available in this documentation on the image format
+dependencies. Please see the <a href="#supported_image_formats">Supported Image Formats</a> section.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="tutorial"><a class="anchor" href="#tutorial"></a>Tutorial</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Thanks to modern C++ programming techniques the interface for this library
+is rather small and easy to use. In this tutorial I&#8217;ll give you a short
+walk-around on how to use this boost::gil extension.
+For more details please refer to the <a href="#using_io">Using IO</a> section.</p>
+</div>
+<div class="paragraph">
+<p>For each supported IO format a single top-level header file is provided.
+For instance, include <code>boost/gil/extension/io/tiff.hpp</code> to be able
+to read or write TIFF files.</p>
+</div>
+<div class="sect2">
+<h3 id="_reading_an_image"><a class="anchor" href="#_reading_an_image"></a>Reading An Image</h3>
+<div class="paragraph">
+<p>Probably the most common case to read a tiff image can be done as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">std::string filename( "image.tif" );
+rgb8_image_t img;
+read_image( filename, img, tiff_tag() );</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The code would be same for all other image formats. The only thing that needs
+to change is the tag type ( tiff_tag ) in the read_image call.
+The read_image() expects the supplied image type to be compatible with the
+image stored in the file. If the user doesn&#8217;t know what format an image has she
+can use read_and_convert_image().
+Another important fact is that read_image() will allocate the appropriate
+memory needed for the read operation. There are <code>read_view</code> or
+<code>read_and_convert_view</code> counterparts, if the memory is already allocated.</p>
+</div>
+<div class="paragraph">
+<p>Sometimes the user only wants to read a sub-part of an image,
+then the above call would look as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">read_image( filename
+          , img
+          , image_read_settings&lt; tiff_tag &gt;( point_t( 0, 0 ), point_t( 50, 50 ) )
+          );</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The image_read_settings class will provide the user with image format
+independent reading setting but can also serve as a pointer for format
+dependent settings.
+Please see the specific image format sections
+<a href="#supported_image_formats">Supported Image Formats</a>
+for more details.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_writing_an_image"><a class="anchor" href="#_writing_an_image"></a>Writing An Image</h3>
+<div class="paragraph">
+<p>Besides reading the information also writing is the second part of this
+Boost.GIL extension. Writing is a lot simpler than reading since an existing
+image view contains all the information.</p>
+</div>
+<div class="paragraph">
+<p>For instance writing an image can be done as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">std::string filename( "image.tif" );
+rgb8_image_t img( 640, 480 );
+
+// write data into image
+
+write_view( filename
+          , view( img )
+          , tiff_tag()
+          );</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The interface is similar to reading an image. To add image format specific
+parameter the user can use <code>image_write_info</code> class.
+For instance, a user can specify the JPEG quality when writing like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">std::string filename( "image.jpg" );
+rgb8_image_t img( 640, 480 );
+
+// write data into image
+
+write_view( filename
+          , view( img )
+          , image_write_info&lt; jpeg_tag &gt;( 95 )
+          );</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The above example will write an image where the jpeg quality is
+set to 95 percent.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_reading_and_writing_in_memory_buffers"><a class="anchor" href="#_reading_and_writing_in_memory_buffers"></a>Reading And Writing In-Memory Buffers</h3>
+<div class="paragraph">
+<p>Reading and writing in-memory buffers are supported as well. See as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">// 1. Read an image.
+ifstream in( "test.tif", ios::binary );
+
+rgb8_image_t img;
+read_image( in, img, tiff_tag() );
+
+// 2. Write image to in-memory buffer.
+stringstream out_buffer( ios_base::out | ios_base::binary );
+
+rgb8_image_t src;
+write_view( out_buffer, view( src ), tiff_tag() );
+
+// 3. Copy in-memory buffer to another.
+stringstream in_buffer( ios_base::in | ios_base::binary );
+in_buffer &lt;&lt; out_buffer.rdbuf();
+
+// 4. Read in-memory buffer to gil image
+rgb8_image_t dst;
+read_image( in_buffer, dst, tag_t() );
+
+// 5. Write out image.
+string filename( "out.tif" );
+ofstream out( filename.c_str(), ios_base::binary );
+write_view( out, view( dst ), tiff_tag() );</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In case the user is using his own stream classes he has to make sure it
+has the common interface read, write, seek, close, etc. interface.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="using_io"><a class="anchor" href="#using_io"></a>Using IO</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_general_overview"><a class="anchor" href="#_general_overview"></a>General Overview</h3>
+<div class="paragraph">
+<p>The tutorial pointed out some use cases for reading and writing images in
+various image formats. This section will provide a more thorough overview.</p>
+</div>
+<div class="paragraph">
+<p>The next sections will introduce the Read and Write interface. But it might be
+worth pointing out that by using some advanced metaprogramming techniques the
+interface is rather small and hopefully easy to understand.</p>
+</div>
+<div class="paragraph">
+<p>Besides the general interface the user also has the ability to interface
+directly with the underlying image format. For that each reader or writer
+provides access to the so-called backend.</p>
+</div>
+<div class="paragraph">
+<p>For instance:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">typedef bmp_tag tag_t;
+
+typedef get_reader_backend&lt; const std::string
+                          , tag_t
+                          &gt;::type backend_t;
+
+backend_t backend = read_image_info( bmp_filename
+                                   , tag_t()
+                                   );
+
+BOOST_CHECK_EQUAL( backend._info._width , 127 );
+BOOST_CHECK_EQUAL( backend._info._height, 64 );</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Of course, the typedef can be removed when using c++11&#8217;s auto feature.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_read_interface"><a class="anchor" href="#_read_interface"></a>Read Interface</h3>
+<div class="paragraph">
+<p>As the Tutorial demonstrated there are a few ways to read images.
+Here is an enumeration of all read functions with a short description:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>read_image</code> - read into a gil image with no conversion.
+Memory is allocated.</p>
+</li>
+<li>
+<p><code>read_view</code> - read into a gil view with no conversion.</p>
+</li>
+<li>
+<p><code>read_and_convert_image</code> - read and convert into a gil image.
+Memory is allocated.</p>
+</li>
+<li>
+<p><code>read_and_convert_view</code> - read and convert into a gil view.</p>
+</li>
+<li>
+<p><code>read_image_info</code> - read the image header.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Conversion in this context is necessary if the source (file) has an
+incompatible color space with the destination (gil image type).
+If that&#8217;s the case the user has to use the xxx_and_convert_xxx variants.</p>
+</div>
+<div class="paragraph">
+<p>All functions take the filename or a device as the first parameter.
+The filename can be anything from a C-string, <code>std::string</code>,
+<code>std::wstring</code> to <code>std::filesystem</code> and <code>boost::filesystem</code> path.
+The availability of the <code>std::filesystem</code> is detected automatically,
+unless <code>BOOST_GIL_IO_USE_BOOST_FILESYSTEM</code> macro is defined that forces
+preference of the Boost.Filesystem.
+Devices could be a <code>FILE*</code>, <code>std::ifstream</code>, and <code>TIFF*</code> for TIFF images.</p>
+</div>
+<div class="paragraph">
+<p>The second parameter is either an image or view type depending on the
+<code>read_xxx</code> function.
+The third and last parameter is either an instance of the
+<code>image_read_settings&lt;FormatTag&gt;</code> or just the <code>FormatTag</code>.
+The settings can be various depending on the format which is being read.
+But they all share settings for reading a partial image area.
+The first point describes the top left image coordinate whereas the second
+are the dimensions in x and y directions.</p>
+</div>
+<div class="paragraph">
+<p>Here is an example of setting up partial read:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">read_image( filename
+          , img
+          , image_read_settings&lt; tiff_tag &gt;( point_t( 0, 0 ), point_t( 50, 50 ) )
+          );</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Each format supports reading just the header information,
+using <code>read_image_info</code>. Please refer to the format specific sections
+under <a href="#supported_image_formats">Supported Image Formats</a>. A basic example follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">image_read_info&lt; tiff_t &gt; info = read_image_info( filename
+                                                , tiff_t()
+                                                );</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>GIL also comes with a dynamic image extension.
+In the context of GIL.IO a user can define an <code>any_image</code> type based on
+several image types. The IO extension would then pick the matching image type
+to the current image file.
+The following example shows this feature:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">any_image&lt; gray8_image_t
+         , gray16_image_t
+         , rgb8_image_t
+         , rgba8_image_t
+         &gt; runtime_image;
+
+read_image( filename
+          , runtime_image
+          , tiff_tag()
+          );</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>During the review it became clear that there is a need to read big images
+scanline by scanline. To support such use case a <code>scanline_reader</code> is
+implemented for all supported image formats.
+The <code>scanline_read_iterators</code> will then allow to traverse through the image.
+The following code sample shows the usage:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">typedef tiff_tag tag_t;
+
+typedef scanline_reader&lt; typename get_read_device&lt; const char*
+                                                 , tag_t
+                                                 &gt;::type
+                        , tag_t
+                        &gt; reader_t;
+
+reader_t reader = make_scanline_reader( "C:/boost/libs/gil/test/extension/io/images/tiff/test.tif", tag_t() );
+
+typedef rgba8_image_t image_t;
+
+image_t dst( reader._info._width, reader._info._height );
+fill_pixels( view(dst), image_t::value_type() );
+
+typedef reader_t::iterator_t iterator_t;
+
+iterator_t it  = reader.begin();
+iterator_t end = reader.end();
+
+for( int row = 0; it != end; ++it, ++row )
+{
+    copy_pixels( interleaved_view( reader._info._width
+                                    , 1
+                                    , ( image_t::view_t::x_iterator ) *it
+                                    , reader._scanline_length
+                                    )
+                , subimage_view( view( dst )
+                                , 0
+                                , row
+                                , reader._info._width
+                                , 1
+                                )
+                );
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There are many ways to traverse an image but for as of now only by
+scanline is supported.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_write_interface"><a class="anchor" href="#_write_interface"></a>Write Interface</h3>
+<div class="paragraph">
+<p>There is only one function for writing out images, write_view.
+Similar to reading the first parameter is either a filename or a device.
+The filename can be anything from a C-string, <code>std::string</code>,
+<code>std::wstring</code> to <code>std::filesystem</code> and <code>boost::filesystem</code> path.
+The availability of the <code>std::filesystem</code> is detected automatically,
+unless <code>BOOST_GIL_IO_USE_BOOST_FILESYSTEM</code> macro is defined that forces
+preference of the Boost.Filesystem.
+Devices could be <code>FILE*</code>, <code>std::ifstream</code>, and <code>TIFF*</code> for TIFF images.</p>
+</div>
+<div class="paragraph">
+<p>The second parameter is a view object to image being written.
+The third and last parameter is either a tag or an
+<code>image_write_info&lt;FormatTag&gt;</code> object containing more settings.
+One example for instance is the JPEG quality.
+Refer to the format specific sections under <a href="#supported_image_formats">Supported Image Formats</a>
+to have a list of all the possible settings.</p>
+</div>
+<div class="paragraph">
+<p>Writing an any_image&lt;&#8230;&#8203;&gt; is supported. See the following example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">any_image&lt; gray8_image_t
+         , gray16_image_t
+         , rgb8_image_t
+         , rgba8_image_t
+         &gt; runtime_image;
+
+// fill any_image
+
+write_view( filename
+          , view( runtime_image )
+          , tiff_tag()
+          );</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_compiler_symbols"><a class="anchor" href="#_compiler_symbols"></a>Compiler Symbols</h3>
+<div class="paragraph">
+<p>The following table gives an overview of all supported compiler symbols
+that can be set by the user:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BOOST_GIL_IO_ENABLE_GRAY_ALPHA</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable the color space "gray_alpha".</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BOOST_GIL_IO_PNG_FLOATING_POINT_SUPPORTED</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Use libpng in floating point mode. This symbol is incompatible with BOOST_GIL_IO_PNG_FIXED_POINT_SUPPORTED.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BOOST_GIL_IO_PNG_FIXED_POINT_SUPPORTED</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Use libpng in integer mode. This symbol is incompatible with BOOST_GIL_IO_PNG_FLOATING_POINT_SUPPORTED.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BOOST_GIL_IO_PNG_DITHERING_SUPPORTED</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Look up "dithering" in libpng manual for explanation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BOOST_GIL_IO_PNG_1_4_OR_LOWER</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allow compiling with libpng 1.4 or lower.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BOOST_GIL_EXTENSION_IO_JPEG_C_LIB_COMPILED_AS_CPLUSPLUS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">libjpeg is compiled as c++ lib.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BOOST_GIL_EXTENSION_IO_PNG_C_LIB_COMPILED_AS_CPLUSPLUS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">libpng is compiled as c++ lib.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BOOST_GIL_EXTENSION_IO_TIFF_C_LIB_COMPILED_AS_CPLUSPLUS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">libtiff is compiled as c++ lib.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BOOST_GIL_EXTENSION_IO_ZLIB_C_LIB_COMPILED_AS_CPLUSPLUS</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">zlib is compiled as c++ lib.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allow basic test images to be read from local hard drive. The paths can be set in paths.hpp</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allow images to be written to the local hard drive. The paths can be set in paths.hpp</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BOOST_GIL_IO_USE_BMP_TEST_SUITE_IMAGES</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Run tests using the bmp test images suite. See _BMP_TEST_FILES</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BOOST_GIL_IO_USE_PNG_TEST_SUITE_IMAGES</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Run tests using the png test images suite. See _PNG_TEST_FILES</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BOOST_GIL_IO_USE_PNM_TEST_SUITE_IMAGES</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Run tests using the pnm test images suite. Send me an email for accessing the files.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BOOST_GIL_IO_USE_TIFF_LIBTIFF_TEST_SUITE_IMAGES</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Run tests using the targa file format test images suite. See _TIFF_LIB_TIFF_TEST_FILES</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>BOOST_GIL_IO_USE_TIFF_GRAPHICSMAGICK_TEST_SUITE_IMAGES</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Run tests using the targa file format test images suite. See _TIFF_GRAPHICSMAGICK_TEST_FILES</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="supported_image_formats"><a class="anchor" href="#supported_image_formats"></a>Supported Image Formats</h3>
+<div class="sect3">
+<h4 id="_bmp"><a class="anchor" href="#_bmp"></a>BMP</h4>
+<div class="paragraph">
+<p>For a general overview of the BMP image file format go to the
+following <a href="http://en.wikipedia.org/wiki/BMP_file_format">BMP_Wiki</a>.</p>
+</div>
+<div class="paragraph">
+<p>Please note, the code has not been tested on X Windows System variations
+of the BMP format which are usually referred to as XBM and XPM formats.</p>
+</div>
+<div class="paragraph">
+<p>Here, only the MS Windows and OS/2 format is relevant.</p>
+</div>
+<div class="paragraph">
+<p>Currently the code is able to read and write the following image types:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Read</dt>
+<dd>
+<p><code>gray1_image_t</code>, <code>gray4_image_t</code>, <code>gray8_image_t</code>, <code>rgb8_image_t</code> and <code>rgba8_image_t</code></p>
+</dd>
+<dt class="hdlist1">Write</dt>
+<dd>
+<p><code>rgb8_image_t</code> and <code>rgba8_image_t</code></p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The lack of having an indexed image type in gil restricts the current
+interface to only write out non-indexed images.
+This is subject to change soon.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_jpeg"><a class="anchor" href="#_jpeg"></a>JPEG</h4>
+<div class="paragraph">
+<p>For a general overview of the JPEG image file format go to the
+following <a href="http://en.wikipedia.org/wiki/JPEG">JPEG_Wiki</a>.</p>
+</div>
+<div class="paragraph">
+<p>This jpeg extension is based on the libjpeg library which can be
+found here, <a href="http://www.ijg.org/">JPEG_Lib</a>.</p>
+</div>
+<div class="paragraph">
+<p>All versions starting from 8x are supported.</p>
+</div>
+<div class="paragraph">
+<p>The user has to make sure this library is properly installed.
+I strongly recommend the user to build the library yourself.
+It could potentially save you a lot of trouble.</p>
+</div>
+<div class="paragraph">
+<p>Currently the code is able to read and write the following image types:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Read</dt>
+<dd>
+<p><code>gray8_image_t</code>, <code>rgb8_image_t</code>, <code>cmyk8_image_t</code></p>
+</dd>
+<dt class="hdlist1">Write</dt>
+<dd>
+<p><code>gray8_image_t</code>, <code>rgb8_image_t</code>, <code>cmyk8_image_t</code></p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Reading YCbCr or YCCK images is possible but might result in inaccuracies since
+both color spaces aren&#8217;t available yet for gil.
+For now these color spaces are read as rgb images.
+This is subject to change soon.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_png"><a class="anchor" href="#_png"></a>PNG</h4>
+<div class="paragraph">
+<p>For a general overview of the PNG image file format go to the
+following <a href="http://en.wikipedia.org/wiki/Portable_Network_Graphics">PNG_Wiki</a>.</p>
+</div>
+<div class="paragraph">
+<p>This png extension is based on the libpng, which can be found
+here, <a href="http://libpng.org/pub/png/libpng.html">PNG_Lib</a>.</p>
+</div>
+<div class="paragraph">
+<p>All versions starting from 1.5.x are supported.</p>
+</div>
+<div class="paragraph">
+<p>The user has to make sure this library is properly installed.
+I strongly recommend the user to build the library yourself.
+It could potentially save you a lot of trouble.</p>
+</div>
+<div class="paragraph">
+<p>Currently the code is able to read and write the following image types:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Read</dt>
+<dd>
+<p>gray1, gray2, gray4, gray8, gray16, gray_alpha_8, gray_alpha_16, rgb8, rgb16, rgba8, rgba16</p>
+</dd>
+<dt class="hdlist1">Write</dt>
+<dd>
+<p>gray1, gray2, gray4, gray8, gray16, gray_alpha_8, gray_alpha_16, rgb8, rgb16, rgba8, rgba16</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>For reading gray_alpha images the user has to compile application with <code>BOOST_GIL_IO_ENABLE_GRAY_ALPHA</code>
+macro  defined. This color space is defined in the toolbox by using <code>gray_alpha.hpp</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_pnm"><a class="anchor" href="#_pnm"></a>PNM</h4>
+<div class="paragraph">
+<p>For a general overview of the PNM image file format go to the
+following <a href="http://en.wikipedia.org/wiki/Portable_anymap">PNM_Wiki</a>. No external library is needed for the pnm format.</p>
+</div>
+<div class="paragraph">
+<p>The extension can read images in both flavours of the formats, ASCII and binary,
+that is types from P1 through P6; can write only binary formats.</p>
+</div>
+<div class="paragraph">
+<p>Currently the code is able to read and write the following image types:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Read</dt>
+<dd>
+<p>gray1, gray8, rgb8</p>
+</dd>
+<dt class="hdlist1">Write</dt>
+<dd>
+<p>gray1, gray8, rgb8</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>When reading a mono text image the data is read as a gray8 image.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_raw"><a class="anchor" href="#_raw"></a>RAW</h4>
+<div class="paragraph">
+<p>For a general overview see <a href="http://en.wikipedia.org/wiki/Raw_image_format">RAW_Wiki</a>.</p>
+</div>
+<div class="paragraph">
+<p>Currently the extension is only able to read rgb8 images.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_targa"><a class="anchor" href="#_targa"></a>TARGA</h4>
+<div class="paragraph">
+<p>For a general overview of the BMP image file format go to the
+following <a href="http://en.wikipedia.org/wiki/Truevision_TGA">TARGA_Wiki</a>.</p>
+</div>
+<div class="paragraph">
+<p>Currently the code is able to read and write the following image types:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Read</dt>
+<dd>
+<p>rgb8_image_t and rgba8_image_t</p>
+</dd>
+<dt class="hdlist1">Write</dt>
+<dd>
+<p>rgb8_image_t and rgba8_image_t</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The lack of having an indexed image type in gil restricts the current
+interface to only write out non-indexed images.
+This is subject to change soon.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_tiff"><a class="anchor" href="#_tiff"></a>TIFF</h4>
+<div class="paragraph">
+<p>For a general overview of the TIFF image file format go to the
+following <a href="http://en.wikipedia.org/wiki/Tagged_Image_File_Format">TIFF_Wiki</a>.</p>
+</div>
+<div class="paragraph">
+<p>This tiff extension is based on the libtiff, which can be found, <a href="http://www.remotesensing.org/libtiff/">TIFF_Lib</a>.</p>
+</div>
+<div class="paragraph">
+<p>All versions starting from 3.9.x are supported.</p>
+</div>
+<div class="paragraph">
+<p>The user has to make sure this library is properly installed. I strongly
+recommend the user to build the library yourself. It could potentially
+save you a lot of trouble.</p>
+</div>
+<div class="paragraph">
+<p>TIFF images can virtually encode all kinds of channel sizes representing
+various color spaces. Even planar images are possible.
+For instance, <code>rbg323</code> or <code>gray7</code>. The channels also can have specific
+formats, like integer values or floating point values.</p>
+</div>
+<div class="paragraph">
+<p>For a complete set of options please consult the following websites:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://www.awaresystems.be/imaging/tiff/tifftags/baseline.html">TIFF_Base_Tags</a></p>
+</li>
+<li>
+<p><a href="http://www.awaresystems.be/imaging/tiff/tifftags/extension.html">TIFF_Extension_Tags</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The author of this extension is not claiming all tiff formats are supported.
+This extension is likely to be a moving target adding new features with each
+new milestone. Here is an incomplete list:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Multi-page TIFF - read only</p>
+</li>
+<li>
+<p>Strip TIFF - read and write support</p>
+</li>
+<li>
+<p>Tiled TIFF - read and write support with user defined tiled sizes</p>
+</li>
+<li>
+<p>Bit images TIFF - fully supported, like <code>gray1_image_t</code> (minisblack)</p>
+</li>
+<li>
+<p>Planar TIFF - fully supported</p>
+</li>
+<li>
+<p>Floating-point TIFF - fully supported</p>
+</li>
+<li>
+<p>Palette TIFF - supported but no indexed image type is available as of now</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This gil extension uses two different test image suites to test read and
+write capabilities. See <code>test_image</code> folder.
+It&#8217;s advisable to use ImageMagick test viewer to display images.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="extending_gil_io_with_new_formats"><a class="anchor" href="#extending_gil_io_with_new_formats"></a>Extending GIL::IO with new Formats</h3>
+<div class="paragraph">
+<p>Extending the gil::io with new formats is meant to be simple and
+straightforward. Before adding I would recommend to have a look at existing
+implementations and then trying to follow a couple of guidelines:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Create the following files for your new xxx format</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>xxx_read.hpp</code> - only includes read code</p>
+</li>
+<li>
+<p><code>xxx_write.hpp</code> - only includes write code</p>
+</li>
+<li>
+<p><code>xxx_all.hpp</code> - includes xxx_read.hpp and xxx_write.hpp</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Add the code to the <code>boost::gil::detail</code> namespace</p>
+</li>
+<li>
+<p>Create a tag type for the new format. Like this:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">struct xxx_tag : format_tag {};</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create the image_read_info for the new format. It contains all the
+information that is necessary to read an image. It should be filled
+and returned by the <code>get_info</code> member of the reader class. See below:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template&lt;&gt; struct image_read_info&lt; xxx_tag &gt; {};</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create the image_write_info for the new format. It contains all the
+information that is necessary to write an image:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template&lt;&gt; struct image_write_info&lt; xxx_tag &gt; {};</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Use the following reader skeleton as a start:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template&lt; typename Device
+        , typename ConversionPolicy
+        &gt;
+class reader&lt; Device
+            , xxx_tag
+            , ConversionPolicy
+            &gt;
+            : public reader_base&lt; xxx_tag
+                                , ConversionPolicy
+                                &gt;
+{
+private:
+
+    typedef typename ConversionPolicy::color_converter_type cc_t;
+
+public:
+
+    reader( Device&amp; device )
+    : _io_dev( device )
+    {}
+
+    reader( Device&amp;     device
+          , const cc_t&amp; cc
+          )
+    : _io_dev( device )
+    , reader_base&lt; xxx_tag
+                 , ConversionPolicy
+                 &gt;( cc )
+    {}
+
+    image_read_info&lt; xxx_tag &gt; get_info()
+    {
+        // your implementation here
+    }
+
+    template&lt; typename View &gt;
+    void apply( const View&amp; dst_view )
+    {
+        // your implementation here
+    }
+};</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>The writer skeleton:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template&lt; typename Device &gt;
+class writer&lt; Device
+            , xxx_tag
+            &gt;
+{
+public:
+
+    writer( Device &amp; file )
+    : out(file)
+    {}
+
+    template&lt;typename View&gt;
+    void apply( const View&amp; view )
+    {
+        // your implementation here
+    }
+
+    template&lt;typename View&gt;
+    void apply( const View&amp;                        view
+              , const image_write_info&lt; xxx_tag &gt;&amp; info )
+    {
+        // your implementation here
+    }
+};</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_running_gilio_tests"><a class="anchor" href="#_running_gilio_tests"></a>Running gil::io tests</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>gil::io comes with a large suite of test cases which reads and writes various
+file formats. It uses some test image suites which can be found online or
+which can be demanded from me by sending me an email.</p>
+</div>
+<div class="paragraph">
+<p>There are some test images created by me in the test folder.
+To enable unit tests which make use of them set the following compiler options
+<code>BOOST_GIL_IO_TEST_ALLOW_READING_IMAGES</code> and
+<code>BOOST_GIL_IO_TEST_ALLOW_WRITING_IMAGES</code>.</p>
+</div>
+<div class="paragraph">
+<p>The following list provides all links to the image suites the compiler symbol
+to enable the tests:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">BMP</dt>
+<dd>
+<p><a href="http://entropymine.com/jason/bmpsuite/">BMP_TEST_FILES</a>&#8201;&#8212;&#8201;<code>BOOST_GIL_IO_USE_BMP_TEST_SUITE_IMAGES</code></p>
+</dd>
+<dt class="hdlist1">PNG</dt>
+<dd>
+<p><a href="http://www.schaik.com/pngsuite/pngsuite.html">PNG_TEST_FILES</a>&#8201;&#8212;&#8201;<code>BOOST_GIL_IO_USE_PNG_TEST_SUITE_IMAGES</code></p>
+</dd>
+<dt class="hdlist1">PNM</dt>
+<dd>
+<p>request files from me&#8201;&#8212;&#8201;<code>BOOST_GIL_IO_USE_PNM_TEST_SUITE_IMAGES</code></p>
+</dd>
+<dt class="hdlist1">TIFF</dt>
+<dd>
+<p><a href="http://www.remotesensing.org/libtiff/images.html">TIFF_LIB_TIFF_TEST_FILES</a>&#8201;&#8212;&#8201;<code>BOOST_GIL_IO_USE_TIFF_LIBTIFF_TEST_SUITE_IMAGES</code></p>
+</dd>
+<dt class="hdlist1">TIFF</dt>
+<dd>
+<p><a href="ftp://ftp.graphicsmagick.org/pub/tiff-samples/tiff-sample-images-be.tar.gz">TIFF_GRAPHICSMAGICK_TEST_FILES</a>&#8201;&#8212;&#8201;<code>BOOST_GIL_IO_USE_TIFF_GRAPHICSMAGICK_TEST_SUITE_IMAGES</code></p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+  <div class="edit-this-page">
+      <a href="https://github.com/boostorg/gil/edit/develop/doc/modules/ROOT/pages/io.adoc">Edit this Page</a>
+      </div>
+      <nav class="pagination">
+        <span class="prev"><a href="histogram/extension/std.html">STD extension</a></span>
+        <span class="next"><a href="toolbox.html">ToolBox extension</a></span>
+    </nav>
+</article>
+</div>
+  <div id="footer">
+  <script id="site-script" src="../_/js/site.js" data-ui-root-path="../_"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script async src="../_/js/vendor/tabs.js" data-sync-storage-key="preferred-tab"></script>
+</div>
+</div>
+  </body>
+</html>

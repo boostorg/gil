@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<style>html.fonts-loading{visibility:hidden;opacity:0}</style>
+<script>document.documentElement.classList.add('fonts-loading');</script>
+
+<link rel="preload" href="../../_/font/NotoSansDisplay.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/NotoSansDisplay-Italic.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/MonaspaceNeon-Var.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" href="../../_/font/MonaspaceXenon-Var.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+
+<script>
+(function() {
+  'use strict';
+  
+  var revealed = false;
+  
+  var reveal = function() {
+    if (revealed) return;
+    revealed = true;
+    document.documentElement.classList.remove('fonts-loading');
+  };
+  
+  setTimeout(reveal, 3000);
+  
+  if (!('FontFace' in window) || !('fonts' in document)) {
+    setTimeout(reveal, 100);
+    return;
+  }
+  
+  var uiRoot = '../../_';
+  var fonts = [
+    { 
+      family: 'Noto Sans', 
+      url: uiRoot + '/font/NotoSansDisplay.woff2',
+      descriptors: { style: 'normal', weight: '100 900', stretch: '62.5% 100%' }
+    },
+    { 
+      family: 'Noto Sans', 
+      url: uiRoot + '/font/NotoSansDisplay-Italic.woff2',
+      descriptors: { style: 'italic', weight: '100 900', stretch: '62.5% 100%' }
+    },
+    { 
+      family: 'Monaspace Neon', 
+      url: uiRoot + '/font/MonaspaceNeon-Var.woff2',
+      descriptors: { style: 'normal', weight: '400' }
+    },
+    { 
+      family: 'Monaspace Xenon', 
+      url: uiRoot + '/font/MonaspaceXenon-Var.woff2',
+      descriptors: { style: 'italic', weight: '400' }
+    }
+  ];
+  
+  var loadPromises = fonts.map(function(f) {
+    try {
+      var face = new FontFace(f.family, 'url("' + f.url + '")', f.descriptors);
+      return face.load().then(function(loaded) {
+        document.fonts.add(loaded);
+        return loaded;
+      }).catch(function() {
+        return null;
+      });
+    } catch (e) {
+      return Promise.resolve(null);
+    }
+  });
+  
+  Promise.all(loadPromises)
+    .then(function() {
+      return document.fonts.ready;
+    })
+    .then(reveal)
+    .catch(reveal);
+})();
+</script>    <title>Examples :: Boost.GIL</title>
+  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/design/examples.html">
+    <link rel="prev" href="metafunctions.html">
+    <link rel="next" href="technicalities.html">
+  <meta name="generator" content="Antora 3.2.0">
+    <link rel="stylesheet" href="../../_/css/boostlook.css">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/vendor/tabs.css">
+    <script>
+    (function() {
+      if (window.self !== window.top) return;
+      var theme = localStorage.getItem('antora-theme');
+      if (!theme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        theme = 'dark';
+      }
+      if (theme === 'dark') document.documentElement.classList.add('dark');
+    })();
+    </script>
+    <script>var uiRootPath = '../../_'</script>
+<link rel="icon" href="../../_/img/favicons/favicon.ico" type="image/x-icon">
+    <!-- Favicon configuration -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../../_/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../_/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../_/img/favicons/favicon-16x16.png">
+    <link rel="manifest" href="../../_/img/favicons/site.webmanifest">
+    <link rel="shortcut icon" href="../../_/img/favicons/favicon.ico">
+  </head>
+  <body class="article toc2 toc-left">
+    <div class="boostlook">
+   <div id="header">
+      <div id="toc" class="nav-container toc2" data-component="gil" data-version="">
+  <aside class="nav">
+    <button class="nav-close"></button>
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+      <div class="title-row">
+        <h3 class="title"><a href="../index.html">Boost.GIL</a></h3>
+        <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme" style="display:none">
+  <i class="fas fa-sun theme-icon-light"></i>
+  <i class="fas fa-moon theme-icon-dark"></i>
+</button>      </div>
+      <ul class="nav-list">
+        <ul class="nav-list">
+        <li class="" data-depth="1">
+            <a class="nav-link" href="../index.html">Introduction</a>
+        </li>
+              <li class="" data-depth="1">
+            <span class="nav-text">Quickstart</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../installation.html">Installation</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/video.html">Tutorial: Video Lecture</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/histogram.html">Tutorial: Histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../tutorial/gradient.html">Tutorial: Image Gradient</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../naming.html">Naming Conventions</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Design Guide</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="index.html">Design Guide</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="basics.html">Basics</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="concepts.html">Concepts</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="point.html">Point</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="color_space.html">Color Space and Layout</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="color_base.html">Color Base</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="channel.html">Channel</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="pixel.html">Pixel</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="pixel_iterator.html">Pixel Iterator</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="pixel_locator.html">Pixel Locator</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="image_view.html">Image View</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="image.html">Image</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="dynamic_image.html">Dynamic images and image views</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="metafunctions.html">Metafunctions</a>
+        </li>
+              <li class=" is-current-page" data-depth="2">
+            <a class="nav-link" href="examples.html">Examples</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="technicalities.html">Technicalities</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="extending.html">Extending</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="conclusions.html">Conclusions</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Image Processing</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/index.html">Image Processing</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/basics.html">Basics</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../image_processing/affine-region-detectors.html">Affine region detectors</a>
+        </li>
+              <li class="" data-depth="2">
+            <span class="nav-text">Contrast Enhancement</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/index.html">Contrast Enhancement</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/histogram_equalization.html">Histogram Equalization</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../image_processing/contrast_enhancement/histogram_matching.html">Histogram Matching</a>
+        </li>
+        </ul>
+  </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Histogram</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/index.html">Histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/create.html">Create a histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/fill.html">Fill histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/subhistogram.html">Making a sub-histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/cumulative.html">Making a cumulative histogram</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/stl_compatibility.html">STL compatibility</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/utilities.html">Utilities</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/extend.html">Extending the class</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../histogram/limitations.html">Limitations</a>
+        </li>
+              <li class="" data-depth="2">
+            <span class="nav-text">Extension</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/index.html">Extensions</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/overview.html">Overview</a>
+        </li>
+              <li class="" data-depth="3">
+            <a class="nav-link" href="../histogram/extension/std.html">STD extension</a>
+        </li>
+        </ul>
+  </ul>
+        <li class="" data-depth="1">
+            <span class="nav-text">Extensions</span>
+        </li>
+        <ul class="nav-list">
+        <li class="" data-depth="2">
+            <a class="nav-link" href="../io.html">IO extensions</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../toolbox.html">ToolBox extension</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../numeric.html">Numeric extension</a>
+        </li>
+        </ul>
+        <li class="" data-depth="1">
+            <a class="nav-link" href="../examples.html">Examples</a>
+        </li>
+              <li class="" data-depth="1">
+            <a class="nav-link" href="../reference.html">Reference</a>
+        </li>
+        </ul>
+  </ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+  </div>  <div id="content">
+    <article class="doc max-width-reset">
+  <div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li>
+      <a href="../index.html" aria-label="Home: Boost.GIL">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 -960 960 960" fill="#000000" aria-hidden="true"><path d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z"/></svg>
+      </a>
+    </li>
+    <li>Design Guide</li>
+    <li><a href="examples.html">Examples</a></li>
+  </ul>
+</nav>
+<div class="spirit-nav">
+    <a accesskey="p" href="metafunctions.html">
+      <span class="material-symbols-outlined" title="Previous: Metafunctions">arrow_back</span>
+    </a>
+    <a class="disabled" accesskey="u" aria-disabled="true" tabindex="-1">
+      <span class="material-symbols-outlined" title="Up:">arrow_upward</span>
+    </a>
+    <a accesskey="n" href="technicalities.html">
+      <span class="material-symbols-outlined" title="Next: Technicalities">arrow_forward</span>
+    </a>
+</div></div>
+    <h1 class="page">Examples</h1>
+  <div class="sect1">
+<h2 id="_pixel_level_operations"><a class="anchor" href="#_pixel_level_operations"></a>Pixel-level Operations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Here are some operations you can do with pixel values, pixel pointers and
+pixel references:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">rgb8_pixel_t p1(255,0,0);     // make a red RGB pixel
+bgr8_pixel_t p2 = p1;         // RGB and BGR are compatible and the channels will be properly mapped.
+assert(p1==p2);               // p2 will also be red.
+assert(p2[0]!=p1[0]);         // operator[] gives physical channel order (as laid down in memory)
+assert(semantic_at_c&lt;0&gt;(p1)==semantic_at_c&lt;0&gt;(p2)); // this is how to compare the two red channels
+get_color(p1,green_t()) = get_color(p2,blue_t());  // channels can also be accessed by name
+
+const unsigned char* r;
+const unsigned char* g;
+const unsigned char* b;
+rgb8c_planar_ptr_t ptr(r,g,b); // constructing const planar pointer from const pointers to each plane
+
+rgb8c_planar_ref_t ref=*ptr;   // just like built-in reference, dereferencing a planar pointer returns a planar reference
+
+p2=ref; p2=p1; p2=ptr[7]; p2=rgb8_pixel_t(1,2,3);    // planar/interleaved references and values to RGB/BGR can be freely mixed
+
+//rgb8_planar_ref_t ref2;      // compile error: References have no default constructors
+//ref2=*ptr;                   // compile error: Cannot construct non-const reference by dereferencing const pointer
+//ptr[3]=p1;                   // compile error: Cannot set the fourth pixel through a const pointer
+//p1 = pixel&lt;float, rgb_layout_t&gt;();// compile error: Incompatible channel depth
+//p1 = pixel&lt;bits8, rgb_layout_t&gt;();// compile error: Incompatible color space (even though it has the same number of channels)
+//p1 = pixel&lt;bits8,rgba_layout_t&gt;();// compile error: Incompatible color space (even though it contains red, green and blue channels)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is how to use pixels in generic code:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template &lt;typename GrayPixel, typename RGBPixel&gt;
+void gray_to_rgb(const GrayPixel&amp; src, RGBPixel&amp; dst)
+{
+  gil_function_requires&lt;PixelConcept&lt;GrayPixel&gt; &gt;();
+  gil_function_requires&lt;MutableHomogeneousPixelConcept&lt;RGBPixel&gt; &gt;();
+
+  typedef typename color_space_type&lt;GrayPixel&gt;::type gray_cs_t;
+  static_assert(boost::is_same&lt;gray_cs_t,gray_t&gt;::value, "");
+
+  typedef typename color_space_type&lt;RGBPixel&gt;::type  rgb_cs_t;
+  static_assert(boost::is_same&lt;rgb_cs_t,rgb_t&gt;::value, "");
+
+  typedef typename channel_type&lt;GrayPixel&gt;::type gray_channel_t;
+  typedef typename channel_type&lt;RGBPixel&gt;::type  rgb_channel_t;
+
+  gray_channel_t gray = get_color(src,gray_color_t());
+  static_fill(dst, channel_convert&lt;rgb_channel_t&gt;(gray));
+}
+
+// example use patterns:
+
+// converting gray l-value to RGB and storing at (5,5) in a 16-bit BGR interleaved image:
+bgr16_view_t b16(...);
+gray_to_rgb(gray8_pixel_t(33), b16(5,5));
+
+// storing the first pixel of an 8-bit grayscale image as the 5-th pixel of 32-bit planar RGB image:
+rgb32f_planar_view_t rpv32;
+gray8_view_t gv8(...);
+gray_to_rgb(*gv8.begin(), rpv32[5]);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As the example shows, both the source and the destination can be references or
+values, planar or interleaved, as long as they model <code>PixelConcept</code> and
+<code>MutablePixelConcept</code> respectively.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_resizing_image_canvas"><a class="anchor" href="#_resizing_image_canvas"></a>Resizing image canvas</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Resizing an image canvas means adding a buffer of pixels around existing
+pixels. Size of canvas of an image can never be smaller than the image itself.</p>
+</div>
+<div class="paragraph">
+<p>Suppose we want to convolve an image with multiple kernels, the largest of
+which is 2K+1 x 2K+1 pixels. It may be worth creating a margin of K pixels
+around the image borders. Here is how to do it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template &lt;typename SrcView,   // Models ImageViewConcept (the source view)
+        typename DstImage&gt;  // Models ImageConcept     (the returned image)
+void create_with_margin(const SrcView&amp; src, int k, DstImage&amp; result)
+{
+  gil_function_requires&lt;ImageViewConcept&lt;SrcView&gt; &gt;();
+  gil_function_requires&lt;ImageConcept&lt;DstImage&gt; &gt;();
+  gil_function_requires&lt;ViewsCompatibleConcept&lt;SrcView, typename DstImage::view_t&gt; &gt;();
+
+  result=DstImage(src.width()+2*k, src.height()+2*k);
+  typename DstImage::view_t centerImg=subimage_view(view(result), k,k,src.width(),src.height());
+  std::copy(src.begin(), src.end(), centerImg.begin());
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We allocated a larger image, then we used <code>subimage_view</code> to create a
+shallow image of its center area of top left corner at (k,k) and of identical
+size as <code>src</code>, and finally we copied <code>src</code> into that center image. If the
+margin needs initialization, we could have done it with <code>fill_pixels</code>. Here
+is how to simplify this code using the <code>copy_pixels</code> algorithm:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template &lt;typename SrcView, typename DstImage&gt;
+void create_with_margin(const SrcView&amp; src, int k, DstImage&amp; result)
+{
+  result.recreate(src.width()+2*k, src.height()+2*k);
+  copy_pixels(src, subimage_view(view(result), k,k,src.width(),src.height()));
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>(Note also that <code>image::recreate</code> is more efficient than <code>operator=</code>, as
+the latter will do an unnecessary copy construction.) Not only does the above
+example work for planar and interleaved images of any color space and pixel
+depth; it is also optimized. GIL overrides <code>std::copy</code> - when called on two
+identical interleaved images with no padding at the end of rows, it simply
+does a <code>memmove</code>. For planar images it does <code>memmove</code> for each channel.
+If one of the images has padding, (as in our case) it will try to do
+<code>memmove</code> for each row. When an image has no padding, it will use its
+lightweight horizontal iterator (as opposed to the more complex 1D image
+iterator that has to check for the end of rows). It chooses the fastest method,
+taking into account both static and run-time parameters.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_histogram"><a class="anchor" href="#_histogram"></a>Histogram</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The histogram can be computed by counting the number of pixel values that fall
+in each bin. The following method takes a grayscale (one-dimensional) image
+view, since only grayscale pixels are convertible to integers:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template &lt;typename GrayView, typename R&gt;
+void grayimage_histogram(const GrayView&amp; img, R&amp; hist)
+{
+  for (typename GrayView::iterator it=img.begin(); it!=img.end(); ++it)
+      ++hist[*it];
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Using <code>boost::lambda</code> and GIL&#8217;s <code>for_each_pixel</code> algorithm, we can write
+this more compactly:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template &lt;typename GrayView, typename R&gt;
+void grayimage_histogram(const GrayView&amp; v, R&amp; hist)
+{
+  for_each_pixel(v, ++var(hist)[_1]);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Where <code>for_each_pixel</code> invokes <code>std::for_each</code> and <code>var</code> and <code>_1</code> are
+<code>boost::lambda</code> constructs. To compute the luminosity histogram, we call the
+above method using the grayscale view of an image:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template &lt;typename View, typename R&gt;
+void luminosity_histogram(const View&amp; v, R&amp; hist)
+{
+  grayimage_histogram(color_converted_view&lt;gray8_pixel_t&gt;(v),hist);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is how to invoke it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">unsigned char hist[256];
+std::fill(hist,hist+256,0);
+luminosity_histogram(my_view,hist);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If we want to view the histogram of the second channel of the image in the top
+left 100x100 area, we call:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">grayimage_histogram(nth_channel_view(subimage_view(img,0,0,100,100),1),hist);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>No pixels are copied and no extra memory is allocated - the code operates
+directly on the source pixels, which could be in any supported color space and
+channel depth. They could be either planar or interleaved.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_using_image_views"><a class="anchor" href="#_using_image_views"></a>Using image views</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The following code illustrates the power of using image views:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">jpeg_read_image("monkey.jpg", img);
+step1=view(img);
+step2=subimage_view(step1, 200,300, 150,150);
+step3=color_converted_view&lt;rgb8_view_t,gray8_pixel_t&gt;(step2);
+step4=rotated180_view(step3);
+step5=subsampled_view(step4, 2,1);
+jpeg_write_view("monkey_transform.jpg", step5);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The intermediate images are shown here:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/monkey_steps.jpg" alt="monkey steps">
+</div>
+</div>
+<div class="paragraph">
+<p>Notice that no pixels are ever copied. All the work is done inside
+<code>jpeg_write_view</code>. If we call our <code>luminosity_histogram</code> with
+<code>step5</code> it will do the right thing.</p>
+</div>
+</div>
+</div>
+  <div class="edit-this-page">
+      <a href="https://github.com/boostorg/gil/edit/develop/doc/modules/ROOT/pages/design/examples.adoc">Edit this Page</a>
+      </div>
+      <nav class="pagination">
+        <span class="prev"><a href="metafunctions.html">Metafunctions</a></span>
+        <span class="next"><a href="technicalities.html">Technicalities</a></span>
+    </nav>
+</article>
+</div>
+  <div id="footer">
+  <script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async src="../../_/js/vendor/tabs.js" data-sync-storage-key="preferred-tab"></script>
+</div>
+</div>
+  </body>
+</html>
