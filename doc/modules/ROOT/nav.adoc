@@ -36,6 +36,7 @@
 *** xref:image_processing/contrast_enhancement/overview.adoc[]
 *** xref:image_processing/contrast_enhancement/histogram_equalization.adoc[]
 *** xref:image_processing/contrast_enhancement/histogram_matching.adoc[]
+*** xref:image_processing/contrast_enhancement/adaptive_histogram_equalization.adoc[]
 * Histogram
 ** xref:histogram/index.adoc[]
 ** xref:histogram/overview.adoc[]
