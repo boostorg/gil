@@ -160,14 +160,14 @@ concept MutablePixelLocatorConcept<PixelLocatorConcept Loc> : MutableRandomAcces
 ====
 See also:
 
-* link:../reference/structboost_1_1gil_1_1_has_dynamic_y_step_type_concept.html[HasDynamicYStepTypeConcept<T>]
-* link:../reference/structboost_1_1gil_1_1_has_transposed_type_concept.html[HasTransposedTypeConcept<T>]
-* link:../reference/structboost_1_1gil_1_1_random_access_n_d_locator_concept.html[RandomAccessNDLocatorConcept<Locator>]
-* link:../reference/structboost_1_1gil_1_1_mutable_random_access_n_d_locator_concept.html[MutableRandomAccessNDLocatorConcept<Locator>]
-* link:../reference/structboost_1_1gil_1_1_random_access2_d_locator_concept.html[RandomAccess2DLocatorConcept<Locator>]
-* link:../reference/structboost_1_1gil_1_1_mutable_random_access2_d_locator_concept.html[MutableRandomAccess2DLocatorConcept<Locator>]
-* link:../reference/structboost_1_1gil_1_1_pixel_locator_concept.html[PixelLocatorConcept<Locator>]
-* link:../reference/structboost_1_1gil_1_1_mutable_pixel_locator_concept.html[MutablePixelLocatorConcept<Locator>]
+* xref:reference:boost/gil/HasDynamicYStepTypeConcept.adoc[HasDynamicYStepTypeConcept<T>]
+* xref:reference:boost/gil/HasTransposedTypeConcept.adoc[HasTransposedTypeConcept<T>]
+* xref:reference:boost/gil/RandomAccessNDLocatorConcept.adoc[RandomAccessNDLocatorConcept<Locator>]
+* xref:reference:boost/gil/MutableRandomAccessNDLocatorConcept.adoc[MutableRandomAccessNDLocatorConcept<Locator>]
+* xref:reference:boost/gil/RandomAccess2DLocatorConcept.adoc[RandomAccess2DLocatorConcept<Locator>]
+* xref:reference:boost/gil/MutableRandomAccess2DLocatorConcept.adoc[MutableRandomAccess2DLocatorConcept<Locator>]
+* xref:reference:boost/gil/PixelLocatorConcept.adoc[PixelLocatorConcept<Locator>]
+* xref:reference:boost/gil/MutablePixelLocatorConcept.adoc[MutablePixelLocatorConcept<Locator>]
 ====
 
 == Models

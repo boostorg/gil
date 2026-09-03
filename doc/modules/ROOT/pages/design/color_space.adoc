@@ -13,9 +13,9 @@ same set of colors in the same order).
 ====
 See also:
 
-* link:../reference/structboost_1_1gil_1_1_color_space_concept.html[ColorSpaceConcept<ColorSpace>]
-* link:../reference/structboost_1_1gil_1_1_color_spaces_compatible_concept.html[ColorSpacesCompatibleConcept<ColorSpace1,ColorSpace2>]
-* link:../reference/structboost_1_1gil_1_1_channel_mapping_concept.html[ChannelMappingConcept<Mapping>]
+* xref:reference:boost/gil/ColorSpaceConcept.adoc[ColorSpaceConcept<ColorSpace>]
+* xref:reference:boost/gil/ColorSpacesCompatibleConcept.adoc[ColorSpacesCompatibleConcept<ColorSpace1,ColorSpace2>]
+* xref:reference:boost/gil/ChannelMappingConcept.adoc[ChannelMappingConcept<Mapping>]
 ====
 
 == Models

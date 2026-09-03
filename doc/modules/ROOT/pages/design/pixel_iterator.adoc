@@ -32,8 +32,8 @@ concept MutablePixelIteratorConcept : PixelIteratorConcept<Iterator>, MutableRan
 ====
 See also:
 
-* link:../reference/group___pixel_iterator_concept_pixel_iterator.html[PixelIteratorConcept<Iterator>]
-* link:../reference/structboost_1_1gil_1_1_mutable_pixel_iterator_concept.html[MutablePixelIteratorConcept<Iterator>]
+* xref:reference:boost/gil/PixelIteratorConcept.adoc[PixelIteratorConcept<Iterator>]
+* xref:reference:boost/gil/MutablePixelIteratorConcept.adoc[MutablePixelIteratorConcept<Iterator>]
 ====
 
 === Models
@@ -120,8 +120,8 @@ concept MutableIteratorAdaptorConcept : IteratorAdaptorConcept<Iterator> {};
 ====
 See also:
 
-* link:../reference/structboost_1_1gil_1_1_iterator_adaptor_concept.html[IteratorAdaptorConcept<Iterator>]
-* link:../reference/structboost_1_1gil_1_1_mutable_iterator_adaptor_concept.html[MutableIteratorAdaptorConcept<Iterator>]
+* xref:reference:boost/gil/IteratorAdaptorConcept.adoc[IteratorAdaptorConcept<Iterator>]
+* xref:reference:boost/gil/MutableIteratorAdaptorConcept.adoc[MutableIteratorAdaptorConcept<Iterator>]
 ====
 
 === Models
@@ -266,10 +266,10 @@ support `HasDynamicXStepTypeConcept`.
 ====
 See also:
 
-* link:../reference/structboost_1_1gil_1_1_step_iterator_concept.html[StepIteratorConcept<Iterator>]
-* link:../reference/structboost_1_1gil_1_1_mutable_step_iterator_concept.html[MutableStepIteratorConcept<Iterator>]
-* link:../reference/structboost_1_1gil_1_1_memory_based_iterator_concept.html[MemoryBasedIteratorConcept<Iterator>]
-* link:../reference/structboost_1_1gil_1_1_has_dynamic_x_step_type_concept.html[HasDynamicXStepTypeConcept<T>]
+* xref:reference:boost/gil/StepIteratorConcept.adoc[StepIteratorConcept<Iterator>]
+* xref:reference:boost/gil/MutableStepIteratorConcept.adoc[MutableStepIteratorConcept<Iterator>]
+* xref:reference:boost/gil/MemoryBasedIteratorConcept.adoc[MemoryBasedIteratorConcept<Iterator>]
+* xref:reference:boost/gil/HasDynamicXStepTypeConcept.adoc[HasDynamicXStepTypeConcept<T>]
 ====
 
 === Models

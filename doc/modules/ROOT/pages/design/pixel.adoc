@@ -118,15 +118,15 @@ both, but only pixel values model the latter.
 ====
 See also:
 
-* link:../reference/structboost_1_1gil_1_1_pixel_based_concept.html[PixelBasedConcept<P>]
-* link:../reference/structboost_1_1gil_1_1_pixel_concept.html[PixelConcept<Pixel>]
-* link:../reference/structboost_1_1gil_1_1_mutable_pixel_concept.html[MutablePixelConcept<Pixel>]
-* link:../reference/structboost_1_1gil_1_1_pixel_value_concept.html[PixelValueConcept<Pixel>]
-* link:../reference/structboost_1_1gil_1_1_homogeneous_pixel_based_concept.html[HomogeneousPixelConcept<Pixel>]
-* link:../reference/structboost_1_1gil_1_1_mutable_homogeneous_pixel_concept.html[MutableHomogeneousPixelConcept<Pixel>]
-* link:../reference/structboost_1_1gil_1_1_homogeneous_pixel_value_concept.html[HomogeneousPixelValueConcept<Pixel>]
-* link:../reference/structboost_1_1gil_1_1_pixels_compatible_concept.html[PixelsCompatibleConcept<Pixel1, Pixel2>]
-* link:../reference/structboost_1_1gil_1_1_pixel_convertible_concept.html[PixelConvertibleConcept<SrcPixel, DstPixel>]
+* xref:reference:boost/gil/PixelBasedConcept.adoc[PixelBasedConcept<P>]
+* xref:reference:boost/gil/PixelConcept.adoc[PixelConcept<Pixel>]
+* xref:reference:boost/gil/MutablePixelConcept.adoc[MutablePixelConcept<Pixel>]
+* xref:reference:boost/gil/PixelValueConcept.adoc[PixelValueConcept<Pixel>]
+* xref:reference:boost/gil/HomogeneousPixelConcept.adoc[HomogeneousPixelConcept<Pixel>]
+* xref:reference:boost/gil/MutableHomogeneousPixelConcept.adoc[MutableHomogeneousPixelConcept<Pixel>]
+* xref:reference:boost/gil/HomogeneousPixelValueConcept.adoc[HomogeneousPixelValueConcept<Pixel>]
+* xref:reference:boost/gil/PixelsCompatibleConcept.adoc[PixelsCompatibleConcept<Pixel1, Pixel2>]
+* xref:reference:boost/gil/PixelConvertibleConcept.adoc[PixelConvertibleConcept<SrcPixel, DstPixel>]
 ====
 
 == Models

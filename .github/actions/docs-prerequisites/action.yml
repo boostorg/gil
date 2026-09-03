@@ -3,8 +3,6 @@ description: 'Downloads all the necessary packages for building documentation'
 runs:
   using: composite
   steps:
-    - run: sudo apt-get install doxygen
-      shell: bash
     - uses: actions/setup-node@v4
       with:
         node-version: 20

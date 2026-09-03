@@ -151,13 +151,13 @@ compatible.
 ====
 See also:
 
-* link:../reference/structboost_1_1gil_1_1_random_access_n_d_image_view_concept.html[RandomAccessNDImageViewConcept<View>]
-* link:../reference/structboost_1_1gil_1_1_mutable_random_access_n_d_image_view_concept.html[MutableRandomAccessNDImageViewConcept<View>]
-* link:../reference/structboost_1_1gil_1_1_random_access2_d_image_view_concept.html[RandomAccess2DImageViewConcept<View>]
-* link:../reference/structboost_1_1gil_1_1_mutable_random_access2_d_image_view_concept.html[MutableRandomAccess2DImageViewConcept<View>]
-* link:../reference/structboost_1_1gil_1_1_image_view_concept.html[ImageViewConcept<View>]
-* link:../reference/structboost_1_1gil_1_1_mutable_image_view_concept.html[MutableImageViewConcept<View>]
-* link:../reference/structboost_1_1gil_1_1_views_compatible_concept.html[ViewsCompatibleConcept<View1,View2>]
+* xref:reference:boost/gil/RandomAccessNDImageViewConcept.adoc[RandomAccessNDImageViewConcept<View>]
+* xref:reference:boost/gil/MutableRandomAccessNDImageViewConcept.adoc[MutableRandomAccessNDImageViewConcept<View>]
+* xref:reference:boost/gil/RandomAccess2DImageViewConcept.adoc[RandomAccess2DImageViewConcept<View>]
+* xref:reference:boost/gil/MutableRandomAccess2DImageViewConcept.adoc[MutableRandomAccess2DImageViewConcept<View>]
+* xref:reference:boost/gil/ImageViewConcept.adoc[ImageViewConcept<View>]
+* xref:reference:boost/gil/MutableImageViewConcept.adoc[MutableImageViewConcept<View>]
+* xref:reference:boost/gil/ViewsCompatibleConcept.adoc[ViewsCompatibleConcept<View1,View2>]
 ====
 
 == Models

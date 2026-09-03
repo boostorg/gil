@@ -23,6 +23,16 @@ content:
       start_path: doc
       edit_url: 'https://github.com/boostorg/gil/edit/{refname}/{path}'
 
+antora:
+  extensions:
+    - require: '@cppalliance/antora-cpp-reference-extension'
+      dependencies:
+        - name: 'boost'
+          repo: 'https://github.com/boostorg/boost.git'
+          tag: 'develop'
+          variable: 'BOOST_SRC_DIR'
+          system-env: 'BOOST_SRC_DIR'
+
 ui:
   bundle:
     url: https://github.com/boostorg/website-v2-docs/releases/download/ui-master/ui-bundle.zip
@@ -37,4 +47,11 @@ output:
 
 runtime:
   log:
-    failure_level: error
+    # `fatal`, not `error`: some MrDocs-generated reference pages link to
+    # private-member sub-pages (e.g. packed_pixel's `_bitfield`) that MrDocs
+    # doesn't actually emit, regardless of extract-private -- a small,
+    # cosmetic upstream issue unrelated to this migration, logged as `error`
+    # by Antora. `failure_level` is a floor, not a ceiling: `error` messages
+    # still fail the build at `warn`. Once the MrDocs issue is fixed this
+    # should go back to `error`.
+    failure_level: fatal

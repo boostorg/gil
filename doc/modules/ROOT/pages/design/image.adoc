@@ -72,9 +72,9 @@ because immutable images are not very useful.
 ====
 See also:
 
-* link:../reference/structboost_1_1gil_1_1_random_access_n_d_image_concept.html[RandomAccessNDImageConcept<Image>]
-* link:../reference/structboost_1_1gil_1_1_random_access2_d_image_concept.html[RandomAccess2DImageConcept<Image>]
-* link:../reference/structboost_1_1gil_1_1_image_concept.html[ImageConcept<Image>]
+* xref:reference:boost/gil/RandomAccessNDImageConcept.adoc[RandomAccessNDImageConcept<Image>]
+* xref:reference:boost/gil/RandomAccess2DImageConcept.adoc[RandomAccess2DImageConcept<Image>]
+* xref:reference:boost/gil/ImageConcept.adoc[ImageConcept<Image>]
 ====
 
 == Models

@@ -44,8 +44,8 @@ concept Point2DConcept<typename T> : PointNDConcept<T>
 ====
 See also:
 
-* link:../reference/structboost_1_1gil_1_1_point_n_d_concept.html[PointNDConcept]
-* link:../reference/structboost_1_1gil_1_1_point2_d_concept.html[Point2DConcept]
+* xref:reference:boost/gil/PointNDConcept.adoc[PointNDConcept]
+* xref:reference:boost/gil/Point2DConcept.adoc[Point2DConcept]
 ====
 
 == Models

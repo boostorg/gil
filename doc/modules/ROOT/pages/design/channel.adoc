@@ -86,11 +86,11 @@ such as support for arithmetic operations.
 ====
 See also:
 
-* link:../reference/structboost_1_1gil_1_1_channel_concept.html[ChannelConcept<T>]
-* link:../reference/structboost_1_1gil_1_1_channel_value_concept.html[ChannelValueConcept<T>]
-* link:../reference/structboost_1_1gil_1_1_mutable_channel_concept.html[MutableChannelConcept<T>]
-* link:../reference/structboost_1_1gil_1_1_channels_compatible_concept.html[ChannelsCompatibleConcept<T1,T2>]
-* link:../reference/structboost_1_1gil_1_1_channel_convertible_concept.html[ChannelConvertibleConcept<SrcChannel,DstChannel>]
+* xref:reference:boost/gil/ChannelConcept.adoc[ChannelConcept<T>]
+* xref:reference:boost/gil/ChannelValueConcept.adoc[ChannelValueConcept<T>]
+* xref:reference:boost/gil/MutableChannelConcept.adoc[MutableChannelConcept<T>]
+* xref:reference:boost/gil/ChannelsCompatibleConcept.adoc[ChannelsCompatibleConcept<T1,T2>]
+* xref:reference:boost/gil/ChannelConvertibleConcept.adoc[ChannelConvertibleConcept<SrcChannel,DstChannel>]
 ====
 
 == Models
