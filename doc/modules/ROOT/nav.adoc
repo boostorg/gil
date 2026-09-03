@@ -31,6 +31,9 @@
 ** xref:image_processing/affine-region-detectors.adoc[]
 ** xref:image_processing/sharpening.adoc[]
 ** xref:image_processing/distance_transform.adoc[]
+** xref:image_processing/morphology.adoc[]
+** xref:image_processing/thresholding.adoc[]
+** xref:image_processing/convolution.adoc[]
 ** Contrast Enhancement
 *** xref:image_processing/contrast_enhancement/index.adoc[]
 *** xref:image_processing/contrast_enhancement/overview.adoc[]
