@@ -25,7 +25,8 @@ foreach(_name
     convolve_rows
     kernel
     kernel_fixed
-    sharpening)
+    sharpening
+    distance_transform)
     set(_test t_core_image_processing_${_name})
     set(_target test_core_image_processing_${_name})
 
