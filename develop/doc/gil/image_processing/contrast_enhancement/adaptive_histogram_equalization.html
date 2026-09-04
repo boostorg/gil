@@ -75,10 +75,10 @@
     .then(reveal)
     .catch(reveal);
 })();
-</script>    <title>Overview :: Boost.GIL</title>
-  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/image_processing/contrast_enhancement/overview.html">
-    <link rel="prev" href="index.html">
-    <link rel="next" href="histogram_equalization.html">
+</script>    <title>Adaptive Histogram Equalization :: Boost.GIL</title>
+  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/image_processing/contrast_enhancement/adaptive_histogram_equalization.html">
+    <link rel="prev" href="histogram_matching.html">
+    <link rel="next" href="../../histogram/index.html">
   <meta name="generator" content="Antora 3.2.0">
     <link rel="stylesheet" href="../../../_/css/boostlook.css">
     <link rel="stylesheet" href="../../../_/css/site.css">
@@ -218,14 +218,26 @@
             <a class="nav-link" href="../affine-region-detectors.html">Affine region detectors</a>
         </li>
               <li class="" data-depth="2">
+            <a class="nav-link" href="../sharpening.html">Sharpening</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../distance_transform.html">Distance Transform</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../morphology.html">Morphology</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../thresholding.html">Thresholding</a>
+        </li>
+              <li class="" data-depth="2">
+            <a class="nav-link" href="../convolution.html">Convolution</a>
+        </li>
+              <li class="" data-depth="2">
             <span class="nav-text">Contrast Enhancement</span>
         </li>
         <ul class="nav-list">
         <li class="" data-depth="3">
             <a class="nav-link" href="index.html">Contrast Enhancement</a>
-        </li>
-              <li class=" is-current-page" data-depth="3">
-            <a class="nav-link" href="overview.html">Overview</a>
         </li>
               <li class="" data-depth="3">
             <a class="nav-link" href="histogram_equalization.html">Histogram Equalization</a>
@@ -233,56 +245,59 @@
               <li class="" data-depth="3">
             <a class="nav-link" href="histogram_matching.html">Histogram Matching</a>
         </li>
+              <li class=" is-current-page" data-depth="3">
+            <a class="nav-link" href="adaptive_histogram_equalization.html">Adaptive Histogram Equalization</a>
+        </li>
         </ul>
-  </ul>
-        <li class="" data-depth="1">
+        <li class="" data-depth="2">
             <span class="nav-text">Histogram</span>
         </li>
         <ul class="nav-list">
-        <li class="" data-depth="2">
+        <li class="" data-depth="3">
             <a class="nav-link" href="../../histogram/index.html">Histogram</a>
         </li>
-              <li class="" data-depth="2">
+              <li class="" data-depth="3">
             <a class="nav-link" href="../../histogram/overview.html">Overview</a>
         </li>
-              <li class="" data-depth="2">
+              <li class="" data-depth="3">
             <a class="nav-link" href="../../histogram/create.html">Create a histogram</a>
         </li>
-              <li class="" data-depth="2">
+              <li class="" data-depth="3">
             <a class="nav-link" href="../../histogram/fill.html">Fill histogram</a>
         </li>
-              <li class="" data-depth="2">
+              <li class="" data-depth="3">
             <a class="nav-link" href="../../histogram/subhistogram.html">Making a sub-histogram</a>
         </li>
-              <li class="" data-depth="2">
+              <li class="" data-depth="3">
             <a class="nav-link" href="../../histogram/cumulative.html">Making a cumulative histogram</a>
         </li>
-              <li class="" data-depth="2">
+              <li class="" data-depth="3">
             <a class="nav-link" href="../../histogram/stl_compatibility.html">STL compatibility</a>
         </li>
-              <li class="" data-depth="2">
+              <li class="" data-depth="3">
             <a class="nav-link" href="../../histogram/utilities.html">Utilities</a>
         </li>
-              <li class="" data-depth="2">
+              <li class="" data-depth="3">
             <a class="nav-link" href="../../histogram/extend.html">Extending the class</a>
         </li>
-              <li class="" data-depth="2">
+              <li class="" data-depth="3">
             <a class="nav-link" href="../../histogram/limitations.html">Limitations</a>
         </li>
-              <li class="" data-depth="2">
+              <li class="" data-depth="3">
             <span class="nav-text">Extension</span>
         </li>
         <ul class="nav-list">
-        <li class="" data-depth="3">
+        <li class="" data-depth="4">
             <a class="nav-link" href="../../histogram/extension/index.html">Extensions</a>
         </li>
-              <li class="" data-depth="3">
+              <li class="" data-depth="4">
             <a class="nav-link" href="../../histogram/extension/overview.html">Overview</a>
         </li>
-              <li class="" data-depth="3">
+              <li class="" data-depth="4">
             <a class="nav-link" href="../../histogram/extension/std.html">STD extension</a>
         </li>
         </ul>
+  </ul>
   </ul>
         <li class="" data-depth="1">
             <span class="nav-text">Extensions</span>
@@ -324,53 +339,165 @@
     </li>
     <li>Image Processing</li>
     <li>Contrast Enhancement</li>
-    <li><a href="overview.html">Overview</a></li>
+    <li><a href="adaptive_histogram_equalization.html">Adaptive Histogram Equalization</a></li>
   </ul>
 </nav>
 <div class="spirit-nav">
-    <a accesskey="p" href="index.html">
-      <span class="material-symbols-outlined" title="Previous: Contrast Enhancement">arrow_back</span>
+    <a accesskey="p" href="histogram_matching.html">
+      <span class="material-symbols-outlined" title="Previous: Histogram Matching">arrow_back</span>
     </a>
     <a class="disabled" accesskey="u" aria-disabled="true" tabindex="-1">
       <span class="material-symbols-outlined" title="Up:">arrow_upward</span>
     </a>
-    <a accesskey="n" href="histogram_equalization.html">
-      <span class="material-symbols-outlined" title="Next: Histogram Equalization">arrow_forward</span>
+    <a accesskey="n" href="../../histogram/index.html">
+      <span class="material-symbols-outlined" title="Next: Histogram">arrow_forward</span>
     </a>
 </div></div>
-    <h1 class="page">Overview</h1>
-  <div class="paragraph">
-<p>Contrast Enhancement is a significant part of image processing algorithms. Too dark or too
-light images don&#8217;t look good to the human eyes. Hence while the primary focus of these
-algorithms is to enhance visual beauty, some applications of this in medical research are also
-prevalent.</p>
+    <h1 class="page">Adaptive Histogram Equalization</h1>
+  <div class="sect1">
+<h2 id="_description"><a class="anchor" href="#_description"></a>Description</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Adaptive Histogram Equalization (AHE) is a variant of
+<a href="histogram_equalization.html" class="xref page">histogram equalization</a>
+that computes several histograms, each corresponding to a different section (tile) of the
+image, and uses them to redistribute the lightness values of the image locally.</p>
 </div>
 <div class="paragraph">
-<p>We have a few contrast enhancement algorithms in the GIL image processing suite as well.
-These include:</p>
+<p>Unlike plain histogram equalization, which computes a single mapping for the whole image, AHE
+adapts to local contrast, which improves detail in both dark and bright regions at once. Applied
+without limits, however, it tends to over-amplify noise in flat (near-uniform) tiles. GIL
+implements the Contrast Limited variant (CLAHE), which clips each tile&#8217;s histogram at a
+configurable limit and redistributes the clipped, excess count uniformly over the other bins
+before computing the mapping.</p>
 </div>
+<div class="paragraph">
+<p><code>non_overlapping_interpolated_clahe</code> is named after the specific strategy it implements: the
+image is split into non-overlapping tiles, equalized independently, and the tile mappings are
+then bilinearly interpolated across the image to remove the tile-boundary artifacts that would
+otherwise appear.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_algorithm"><a class="anchor" href="#_algorithm"></a>Algorithm</h2>
+<div class="sectionbody">
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><a href="histogram_equalization.html" class="xref page">Histogram Equalization</a></p>
+<p>Split the image into non-overlapping tiles of size <code>tile_width_x</code> by <code>tile_width_y</code>.</p>
 </li>
 <li>
-<p><a href="histogram_matching.html" class="xref page">Histogram Matching</a></p>
+<p>For each tile and channel, compute the histogram of pixel values, using bins of width
+<code>bin_width</code>.</p>
 </li>
 <li>
-<p><code>ahe</code></p>
+<p>Clip the histogram: find the actual clip limit (a bin count) whose value, when every bin above
+it is clipped down to it, redistributes exactly <code>clip_limit * (pixels in tile)</code> excess pixels;
+then clip every bin to that limit and spread the removed excess uniformly across all bins.</p>
 </li>
 <li>
-<p>Linear and Non-Linear Contrast stretching</p>
+<p>Compute the histogram equalization mapping for each (clipped) tile histogram, as in
+<a href="histogram_equalization.html" class="xref page">histogram equalization</a>.</p>
+</li>
+<li>
+<p>For each pixel, bilinearly interpolate between the mappings of the (up to four) tiles whose
+centers surround it, so that intensities change smoothly across tile boundaries instead of
+jumping at them.</p>
 </li>
 </ol>
 </div>
+<div class="paragraph">
+<p>References:</p>
+</div>
+<div class="paragraph">
+<p><a href="http://www.cs.unc.edu/techreports/86-013.pdf">Pizer, Stephen M., et al. "Adaptive Histogram
+Equalization and Its Variations." Computer Vision, Graphics, and Image Processing 39, no. 3
+(1987): 355-368.</a></p>
+</div>
+<div class="paragraph">
+<p>Graphics Gems IV, Paul S. Heckbert (ed.), p. 474 (clip-and-redistribute algorithm).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_parameters"><a class="anchor" href="#_parameters"></a>Parameters</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>src_view</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Source image view.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>dst_view</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Destination image view, same color space and dimensions as <code>src_view</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tile_width_x</code>, <code>tile_width_y</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tile size, in pixels, along the x and y axes. Defaults to <code>20</code> for both. Smaller tiles adapt
+more locally but increase the risk of amplifying noise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>clip_limit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fraction of a tile&#8217;s pixel count above which a histogram bin is clipped, in the range
+<code>(0, 1]</code>. Defaults to <code>0.03</code>. Lower values limit contrast amplification (and noise) more
+aggressively.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bin_width</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Width of each histogram bin. Defaults to <code>1</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mask</code>, <code>src_mask</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When <code>mask</code> is <code>true</code>, <code>src_mask</code> selects which pixels of <code>src_view</code> are copied unmodified
+to <code>dst_view</code> instead of being equalized. Defaults to no mask.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_demo"><a class="anchor" href="#_demo"></a>Demo</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">#include &lt;boost/gil.hpp&gt;
+#include &lt;boost/gil/extension/io/png.hpp&gt;
+#include &lt;boost/gil/image_processing/adaptive_histogram_equalization.hpp&gt;
+
+using namespace boost::gil;
+
+gray8_image_t img_in;
+read_image("test_adaptive.png", img_in, png_tag{});
+gray8_image_t img_out(img_in.dimensions());
+
+non_overlapping_interpolated_clahe(view(img_in), view(img_out));
+write_view("out-adaptive.png", view(img_out), png_tag{});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See also the full example at
+<a href="https://github.com/boostorg/gil/blob/develop/example/adaptive_histogram_equalization.cpp">example/adaptive_histogram_equalization.cpp</a>.</p>
+</div>
+</div>
+</div>
   <div class="edit-this-page">
-      <a href="https://github.com/boostorg/gil/edit/develop/doc/modules/ROOT/pages/image_processing/contrast_enhancement/overview.adoc">Edit this Page</a>
+      <a href="https://github.com/boostorg/gil/edit/develop/doc/modules/ROOT/pages/image_processing/contrast_enhancement/adaptive_histogram_equalization.adoc">Edit this Page</a>
       </div>
       <nav class="pagination">
-        <span class="prev"><a href="index.html">Contrast Enhancement</a></span>
-        <span class="next"><a href="histogram_equalization.html">Histogram Equalization</a></span>
+        <span class="prev"><a href="histogram_matching.html">Histogram Matching</a></span>
+        <span class="next"><a href="../../histogram/index.html">Histogram</a></span>
     </nav>
 </article>
 </div>
