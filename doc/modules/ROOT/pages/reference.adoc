@@ -1,0 +1,150 @@
+//
+// Copyright (c) 2026 Samuel Debionne
+//
+// Distributed under the Boost Software License, Version 1.0. (See accompanying
+// file LICENSE_1_0.txt or copy at https://www.boost.org/LICENSE_1_0.txt)
+//
+// Official repository: https://github.com/boostorg/gil
+//
+
+[#reference]
+= Reference
+
+The complete API reference is generated from the header comments with
+https://github.com/cppalliance/mrdocs[MrDocs]. This page groups the most
+commonly used types and concepts by area; browse
+xref:reference:boost/gil.adoc[the full `boost::gil` namespace index] for
+everything else, including free functions and metafunctions (most of which
+are heavily overloaded and don't have a single canonical page).
+
+[width=100%]
+|===
+| *Point* | *Channel* | *Color Space & Layout*
+
+|
+xref:reference:boost/gil/point.adoc[`point`]
+
+xref:reference:boost/gil/Point2DConcept.adoc[`Point2DConcept`]
+
+xref:reference:boost/gil/PointNDConcept.adoc[`PointNDConcept`]
+
+|
+xref:reference:boost/gil/ChannelConcept.adoc[`ChannelConcept`]
+
+xref:reference:boost/gil/ChannelValueConcept.adoc[`ChannelValueConcept`]
+
+xref:reference:boost/gil/MutableChannelConcept.adoc[`MutableChannelConcept`]
+
+|
+xref:reference:boost/gil/ColorSpaceConcept.adoc[`ColorSpaceConcept`]
+
+xref:reference:boost/gil/ColorSpacesCompatibleConcept.adoc[`ColorSpacesCompatibleConcept`]
+
+xref:reference:boost/gil/ChannelMappingConcept.adoc[`ChannelMappingConcept`]
+
+xref:reference:boost/gil/layout.adoc[`layout`]
+
+xref:reference:boost/gil/gray_t.adoc[`gray_t`],
+xref:reference:boost/gil/rgb_t.adoc[`rgb_t`],
+xref:reference:boost/gil/rgba_t.adoc[`rgba_t`],
+xref:reference:boost/gil/cmyk_t.adoc[`cmyk_t`]
+
+| *Color Base* | *PixelBased* | *Pixel*
+
+|
+xref:reference:boost/gil/ColorBaseConcept.adoc[`ColorBaseConcept`]
+
+xref:reference:boost/gil/HomogeneousColorBaseConcept.adoc[`HomogeneousColorBaseConcept`]
+
+xref:reference:boost/gil/MutableColorBaseConcept.adoc[`MutableColorBaseConcept`]
+
+|
+xref:reference:boost/gil/PixelBasedConcept.adoc[`PixelBasedConcept`]
+
+xref:reference:boost/gil/HomogeneousPixelBasedConcept.adoc[`HomogeneousPixelBasedConcept`]
+
+|
+xref:reference:boost/gil/pixel.adoc[`pixel`]
+
+xref:reference:boost/gil/packed_pixel.adoc[`packed_pixel`]
+
+xref:reference:boost/gil/bit_aligned_pixel_reference.adoc[`bit_aligned_pixel_reference`]
+
+xref:reference:boost/gil/planar_pixel_reference.adoc[`planar_pixel_reference`]
+
+xref:reference:boost/gil/PixelConcept.adoc[`PixelConcept`]
+
+xref:reference:boost/gil/HomogeneousPixelConcept.adoc[`HomogeneousPixelConcept`]
+
+xref:reference:boost/gil/MutablePixelConcept.adoc[`MutablePixelConcept`]
+
+| *Pixel Iterator* | *Pixel Locator* | *Image View*
+
+|
+xref:reference:boost/gil/PixelIteratorConcept.adoc[`PixelIteratorConcept`]
+
+xref:reference:boost/gil/MutablePixelIteratorConcept.adoc[`MutablePixelIteratorConcept`]
+
+xref:reference:boost/gil/memory_based_step_iterator.adoc[`memory_based_step_iterator`]
+
+xref:reference:boost/gil/planar_pixel_iterator.adoc[`planar_pixel_iterator`]
+
+xref:reference:boost/gil/bit_aligned_pixel_iterator.adoc[`bit_aligned_pixel_iterator`]
+
+|
+xref:reference:boost/gil/PixelLocatorConcept.adoc[`PixelLocatorConcept`]
+
+xref:reference:boost/gil/RandomAccess2DLocatorConcept.adoc[`RandomAccess2DLocatorConcept`]
+
+xref:reference:boost/gil/memory_based_2d_locator.adoc[`memory_based_2d_locator`]
+
+xref:reference:boost/gil/virtual_2d_locator.adoc[`virtual_2d_locator`]
+
+|
+xref:reference:boost/gil/ImageViewConcept.adoc[`ImageViewConcept`]
+
+xref:reference:boost/gil/RandomAccess2DImageViewConcept.adoc[`RandomAccess2DImageViewConcept`]
+
+xref:reference:boost/gil/image_view.adoc[`image_view`]
+
+| *Image* | *Dynamic Image (Variant)* | *Toolbox*
+
+|
+xref:reference:boost/gil/ImageConcept.adoc[`ImageConcept`]
+
+xref:reference:boost/gil/image.adoc[`image`]
+
+|
+xref:reference:boost/gil/any_image.adoc[`any_image`]
+
+xref:reference:boost/gil/any_image_view.adoc[`any_image_view`]
+
+|
+xref:reference:boost/gil/indexed_image.adoc[`indexed_image`]
+
+| *Numeric* | *IO* |
+
+|
+xref:reference:boost/gil/matrix3x2.adoc[`matrix3x2`]
+
+xref:reference:boost/gil/kernel_1d.adoc[`kernel_1d`]
+
+xref:reference:boost/gil/kernel_1d_fixed.adoc[`kernel_1d_fixed`]
+
+|
+xref:reference:boost/gil/image_read_settings.adoc[`image_read_settings`]
+
+xref:reference:boost/gil/image_write_info.adoc[`image_write_info`]
+
+xref:reference:boost/gil/format_tag.adoc[`format_tag`]
+
+xref:reference:boost/gil/reader_backend.adoc[`reader_backend`]
+
+|
+|===
+
+NOTE: The `extension/io/{jpeg,png,tiff,bmp,pnm,raw}` format backends aren't
+in this reference yet -- MrDocs needs the corresponding image library
+(libjpeg, libpng, libtiff, ...) just to parse those headers, and the doc
+build doesn't pull those in. See `doc/mrdocs-src/all.cpp` for the exact
+scope.
