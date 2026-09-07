@@ -9,12 +9,10 @@ platforms:
 environments:
   default:
     channels:
-    - url: https://conda.anaconda.org/sdebionne/label/esrf-bcu/
     - url: https://conda.anaconda.org/conda-forge/
     packages: {}
   docs:
     channels:
-    - url: https://conda.anaconda.org/sdebionne/label/esrf-bcu/
     - url: https://conda.anaconda.org/conda-forge/
     packages:
       linux-64:
@@ -44,7 +42,6 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/libstdcxx-devel_linux-64-15.3.0-hb2c5482_104.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/sysroot_linux-64-2.28-h4ee821c_9.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/tzdata-2026c-h151e31d_0.conda
-      - conda: https://conda.anaconda.org/sdebionne/label/esrf-bcu/linux-64/mrdocs-0.8.0-hb0f4dca_0.conda
 packages:
 - conda: https://conda.anaconda.org/conda-forge/linux-64/_openmp_mutex-4.5-20_gnu.conda
   build_number: 20
@@ -373,9 +370,3 @@ packages:
   run_exports: {}
   size: 118849
   timestamp: 1784250406640
-- conda: https://conda.anaconda.org/sdebionne/label/esrf-bcu/linux-64/mrdocs-0.8.0-hb0f4dca_0.conda
-  sha256: e94797f3625b895e0ae0fc8c9edb6d750531416fb216608d60ad990efcf24210
-  md5: ba3589b52b90663769840e331ee33b3e
-  license: Apache-2.0 WITH LLVM-exception
-  size: 54790420
-  timestamp: 1788428774442
