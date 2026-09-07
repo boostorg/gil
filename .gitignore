@@ -7,7 +7,8 @@ stdcerr
 /doc/build/
 /io/output
 
-# Documentation (Antora + Doxygen)
+# Documentation (Antora + MrDocs)
+.tools
 doc/html
 doc/warnings.txt
 doc/node_modules
