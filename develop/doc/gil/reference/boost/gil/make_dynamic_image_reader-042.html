@@ -75,8 +75,8 @@
     .then(reveal)
     .catch(reveal);
 })();
-</script>    <title>boost::gil::gray10&lowbar;image&lowbar;t :: Boost.GIL</title>
-  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/reference/boost/gil/gray10_image_t.html">
+</script>    <title>boost::gil::make&lowbar;dynamic&lowbar;image&lowbar;reader :: Boost.GIL</title>
+  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/reference/boost/gil/make_dynamic_image_reader-042.html">
   <meta name="generator" content="Antora 3.2.0">
     <link rel="stylesheet" href="../../../../_/css/boostlook.css">
     <link rel="stylesheet" href="../../../../_/css/site.css">
@@ -335,7 +335,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 -960 960 960" fill="#000000" aria-hidden="true"><path d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z"/></svg>
       </a>
     </li>
-    <li><a href="gray10_image_t.html"><a href="../../boost.html">boost</a>::<a href="../../boost/gil.html">gil</a>::gray10&lowbar;image&lowbar;t</a></li>
+    <li><a href="make_dynamic_image_reader-042.html"><a href="../../boost.html">boost</a>::<a href="../../boost/gil.html">gil</a>::make&lowbar;dynamic&lowbar;image&lowbar;reader</a></li>
   </ul>
 </nav>
 <div class="spirit-nav">
@@ -343,16 +343,20 @@
       <span class="material-symbols-outlined" title="Up:">arrow_upward</span>
     </a>
 </div></div>
-    <h1 class="page"><a href="../../boost.html">boost</a>::<a href="../../boost/gil.html">gil</a>::gray10&lowbar;image&lowbar;t</h1>
+    <h1 class="page"><a href="../../boost.html">boost</a>::<a href="../../boost/gil.html">gil</a>::make&lowbar;dynamic&lowbar;image&lowbar;reader</h1>
   <div class="sect1">
 <h2 id="_synopsis"><a class="anchor" href="#_synopsis"></a>Synopsis</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/develop/doc/../include/boost/gil/io/typedefs.hpp#L55">boost&sol;gil&sol;io&sol;typedefs&period;hpp</a>&gt;</code></p>
+<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/develop/doc/../include/boost/gil/io/make_dynamic_image_reader.hpp#L57">boost&sol;gil&sol;io&sol;make&lowbar;dynamic&lowbar;image&lowbar;reader&period;hpp</a>&gt;</code></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">using gray10&lowbar;image&lowbar;t = <a href="bit_aligned_image_type-00.html" class="xref page">bit&lowbar;aligned&lowbar;image1&lowbar;type&lt;10, gray&lowbar;layout&lowbar;t&gt;::type</a>;</code></pre>
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template&lt;typename FormatTag&gt;
+get&lowbar;dynamic&lowbar;image&lowbar;reader&lt;std::wstring, FormatTag&gt;::type
+make&lowbar;dynamic&lowbar;image&lowbar;reader(
+    detail::filesystem::path const&amp; path,
+    <a href="image_read_settings.html" class="xref page">image&lowbar;read&lowbar;settings&lt;FormatTag&gt;</a> const&amp; settings);</code></pre>
 </div>
 </div>
 <div class="paragraph">
