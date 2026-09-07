@@ -1,21 +1,25 @@
-# Boost.GIL (Generic Image Library) - documentation
 #
 # Copyright (c) 2018 Stefan Seefeld
 # Copyright (c) 2026 Samuel Debionne
 #
 # Distributed under the Boost Software License, Version 1.0. (See accompanying
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+#
 
 # Adapted from Boost.Redis / Boost.Graph, following the boostorg/unordered scheme.
-make build/site/index.html : build_antora.sh : @run-script ;
+make html/index.html : build_antora.sh : @run-script ;
 
+# Runs the Antora script
 actions run-script
 {
-    bash $(>)
+    bash -x $(>)
 }
 
-###############################################################################
+# These are used to inform the build system of the
+# means to build the integrated and stand-alone docs.
+
 alias boostdoc ;
 explicit boostdoc ;
-alias boostrelease : build/site/index.html ;
+
+alias boostrelease : html/index.html ;
 explicit boostrelease ;

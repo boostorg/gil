@@ -30,4 +30,4 @@ $ cd libs/gil/doc
 $ bash build_antora.sh
 ```
 
-The site is generated at `doc/build/site/index.html`.
+The site is generated at `doc/html/index.html`.
