@@ -1,10 +1,7 @@
 {
-  "devDependencies": {
-    "@antora/cli": "^3.1.15",
-    "@antora/site-generator": "^3.1.15",
-    "antora": "^3.1.15"
-  },
   "dependencies": {
-    "@cppalliance/antora-cpp-reference-extension": "^0.1.1"
+    "@cppalliance/antora-downloads-extension": "^0.0.2",
+    "@cppalliance/antora-cpp-reference-extension": "^0.1.1",
+    "antora": "^3.1.15"
   }
 }

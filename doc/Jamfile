@@ -6,7 +6,7 @@
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #
 
-# Adapted from Boost.Redis / Boost.Graph, following the boostorg/unordered scheme.
+# Adapted from Boost.Redis
 make html/index.html : build_antora.sh : @run-script ;
 
 # Runs the Antora script

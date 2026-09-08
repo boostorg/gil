@@ -21,6 +21,7 @@ version = "0.1.0"
 [feature.docs.dependencies]
 nodejs = "20.*"
 cxx-compiler = "*"
+cmake = "*"
 
 [feature.docs.tasks]
 docs-build = "cd doc && bash build_antora.sh"

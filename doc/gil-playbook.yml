@@ -4,24 +4,12 @@
 # Distributed under the Boost Software License, Version 1.0. (See accompanying
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #
-# Official repository: https://github.com/boostorg/gil
-#
-# An Antora playbook used for local development and CI.
-# The playbook includes Boost.GIL as its only component.
 
 site:
+  url: 'https://github.com/boostorg/gil'
   title: Boost.GIL
-  url: https://antora.cppalliance.org/develop/lib/doc
-  start_page: gil::index.adoc
   robots: allow
-  keys:
-    repo_url: 'https://github.com/boostorg/gil'
-
-content:
-  sources:
-    - url: ..
-      start_path: doc
-      edit_url: 'https://github.com/boostorg/gil/edit/{refname}/{path}'
+  start_page: gil::index.adoc
 
 antora:
   extensions:
@@ -32,18 +20,27 @@ antora:
           tag: 'develop'
           variable: 'BOOST_SRC_DIR'
           system-env: 'BOOST_SRC_DIR'
+    - require: '@cppalliance/antora-downloads-extension'
+
+asciidoc:
+  attributes:
+    # Scrolling problems appear without this
+    page-pagination: ''
+
+content:
+  sources:
+    - url: ..
+      start_path: doc
+      edit_url: 'https://github.com/boostorg/gil/edit/{refname}/{path}'
 
 ui:
   bundle:
     url: https://github.com/boostorg/website-v2-docs/releases/download/ui-master/ui-bundle.zip
     snapshot: true
-
-asciidoc:
-  attributes:
-    page-pagination: ''
+  output_dir: _
 
 output:
-  dir: build/site
+  dir: html
 
 runtime:
   log:
