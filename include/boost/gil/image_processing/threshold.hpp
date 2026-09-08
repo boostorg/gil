@@ -88,10 +88,12 @@ enum class threshold_truncate_mode
     zero        ///< \todo TODO
 };
 
+/// \ingroup ImageProcessing
+/// \brief Method used to compute the local threshold for adaptive thresholding.
 enum class threshold_adaptive_method
 {
-    mean,
-    gaussian
+    mean,    ///< local threshold is the unweighted mean of the neighborhood
+    gaussian ///< local threshold is a Gaussian-weighted sum of the neighborhood
 };
 
 /// \ingroup ImageProcessing

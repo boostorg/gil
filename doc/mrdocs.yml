@@ -22,5 +22,6 @@ multipage: true
 sort-members: false
 base-url: https://github.com/boostorg/gil/blob/master/include/
 use-system-libc: true
+warn-as-error: true
 warn-if-undocumented: false
 warn-no-paramdoc: false
