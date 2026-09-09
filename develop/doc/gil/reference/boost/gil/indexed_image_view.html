@@ -76,7 +76,7 @@
     .catch(reveal);
 })();
 </script>    <title>boost::gil::indexed&lowbar;image&lowbar;view :: Boost.GIL</title>
-  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/reference/boost/gil/indexed_image_view.html">
+  <link rel="canonical" href="https://github.com/boostorg/gil/gil/reference/boost/gil/indexed_image_view.html">
   <meta name="generator" content="Antora 3.2.0">
     <link rel="stylesheet" href="../../../../_/css/boostlook.css">
     <link rel="stylesheet" href="../../../../_/css/site.css">
@@ -348,7 +348,7 @@
 <h2 id="_synopsis"><a class="anchor" href="#_synopsis"></a>Synopsis</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/develop/doc/../include/boost/gil/extension/toolbox/image_types/indexed_image.hpp#L150">boost&sol;gil&sol;extension&sol;toolbox&sol;image&lowbar;types&sol;indexed&lowbar;image&period;hpp</a>&gt;</code></p>
+<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/master/include/boost/gil/extension/toolbox/image_types/indexed_image.hpp#L150">boost&sol;gil&sol;extension&sol;toolbox&sol;image&lowbar;types&sol;indexed&lowbar;image&period;hpp</a>&gt;</code></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -392,10 +392,10 @@ class indexed&lowbar;image&lowbar;view
 <td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/add_deref.html" class="xref page"><code>add&lowbar;deref</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/axis.html" class="xref page"><code>axis</code></a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/axis.html" class="xref page"><code>axis</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/add_deref.html" class="xref page"><code>add&lowbar;deref</code></a></p></td>
 </tr>
 </tbody>
 </table>
@@ -413,49 +413,52 @@ class indexed&lowbar;image&lowbar;view
 <td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="indexed_image_view/deref_fn_t.html" class="xref page"><code>deref&lowbar;fn&lowbar;t</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="indexed_image_view/indices_locator_t.html" class="xref page"><code>indices&lowbar;locator&lowbar;t</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="indexed_image_view/palette_locator_t.html" class="xref page"><code>palette&lowbar;locator&lowbar;t</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="indexed_image_view/const_t.html" class="xref page"><code>const&lowbar;t</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="indexed_image_view/indices_view_t.html" class="xref page"><code>indices&lowbar;view&lowbar;t</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="indexed_image_view/palette_view_t.html" class="xref page"><code>palette&lowbar;view&lowbar;t</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/value_type.html" class="xref page"><code>value&lowbar;type</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/reference.html" class="xref page"><code>reference</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/coord_t.html" class="xref page"><code>coord&lowbar;t</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/difference_type.html" class="xref page"><code>difference&lowbar;type</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/point_t.html" class="xref page"><code>point&lowbar;t</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/locator.html" class="xref page"><code>locator</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/iterator.html" class="xref page"><code>iterator</code></a></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/const_iterator.html" class="xref page"><code>const&lowbar;iterator</code></a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/const_reference.html" class="xref page"><code>const&lowbar;reference</code></a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="indexed_image_view/const_t.html" class="xref page"><code>const&lowbar;t</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/coord_t.html" class="xref page"><code>coord&lowbar;t</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="indexed_image_view/deref_fn_t.html" class="xref page"><code>deref&lowbar;fn&lowbar;t</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/difference_type.html" class="xref page"><code>difference&lowbar;type</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="indexed_image_view/indices_locator_t.html" class="xref page"><code>indices&lowbar;locator&lowbar;t</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="indexed_image_view/indices_view_t.html" class="xref page"><code>indices&lowbar;view&lowbar;t</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/iterator.html" class="xref page"><code>iterator</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/locator.html" class="xref page"><code>locator</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="indexed_image_view/palette_locator_t.html" class="xref page"><code>palette&lowbar;locator&lowbar;t</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="indexed_image_view/palette_view_t.html" class="xref page"><code>palette&lowbar;view&lowbar;t</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/point_t.html" class="xref page"><code>point&lowbar;t</code></a></p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/pointer.html" class="xref page"><code>pointer</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/reference.html" class="xref page"><code>reference</code></a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/reverse_iterator.html" class="xref page"><code>reverse&lowbar;iterator</code></a></p></td>
@@ -464,22 +467,19 @@ class indexed&lowbar;image&lowbar;view
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/size_type.html" class="xref page"><code>size&lowbar;type</code></a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/value_type.html" class="xref page"><code>value&lowbar;type</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/x_coord_t.html" class="xref page"><code>x&lowbar;coord&lowbar;t</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/xy_locator.html" class="xref page"><code>xy&lowbar;locator</code></a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/x_iterator.html" class="xref page"><code>x&lowbar;iterator</code></a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/xy_locator.html" class="xref page"><code>xy&lowbar;locator</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/y_iterator.html" class="xref page"><code>y&lowbar;iterator</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/x_coord_t.html" class="xref page"><code>x&lowbar;coord&lowbar;t</code></a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/y_coord_t.html" class="xref page"><code>y&lowbar;coord&lowbar;t</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/y_iterator.html" class="xref page"><code>y&lowbar;iterator</code></a></p></td>
 </tr>
 </tbody>
 </table>
@@ -503,48 +503,16 @@ class indexed&lowbar;image&lowbar;view
 <td class="tableblock halign-left valign-top"><p class="tableblock">Constructors</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/operator_assign-07.html" class="xref page"><code>operator&equals;</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Assignment operators</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/at-0c.html" class="xref page"><code>at</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="indexed_image_view/num_colors.html" class="xref page"><code>num&lowbar;colors</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/axis_iterator.html" class="xref page"><code>axis&lowbar;iterator</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="indexed_image_view/indices.html" class="xref page"><code>indices</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/back.html" class="xref page"><code>back</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Returns a reference to the last element in raster order&period;</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/begin.html" class="xref page"><code>begin</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="indexed_image_view/palette.html" class="xref page"><code>palette</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/col_begin.html" class="xref page"><code>col&lowbar;begin</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/col_end.html" class="xref page"><code>col&lowbar;end</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/dimensions.html" class="xref page"><code>dimensions</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/empty.html" class="xref page"><code>empty</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Returns true if the view has no elements, false otherwise&period;</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/end.html" class="xref page"><code>end</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/front.html" class="xref page"><code>front</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Returns a reference to the first element in raster order&period;</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="indexed_image_view/get_indices_view.html" class="xref page"><code>get&lowbar;indices&lowbar;view</code></a></p></td>
@@ -555,15 +523,35 @@ class indexed&lowbar;image&lowbar;view
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/operator_assign-07.html" class="xref page"><code>operator&equals;</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Assignment operators</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/operator_eq.html" class="xref page"><code>operator&equals;&equals;</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Equality operator</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/operator_not_eq.html" class="xref page"><code>operator!&equals;</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Inequality operator</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/swap.html" class="xref page"><code>swap</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Exchanges the elements of the current view with those of <em>other</em> in constant time&period;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/dimensions.html" class="xref page"><code>dimensions</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/pixels.html" class="xref page"><code>pixels</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/width.html" class="xref page"><code>width</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/height.html" class="xref page"><code>height</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="indexed_image_view/indices.html" class="xref page"><code>indices</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/is_1d_traversable.html" class="xref page"><code>is&lowbar;1d&lowbar;traversable</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -571,23 +559,31 @@ class indexed&lowbar;image&lowbar;view
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="indexed_image_view/num_colors.html" class="xref page"><code>num&lowbar;colors</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/is_1d_traversable.html" class="xref page"><code>is&lowbar;1d&lowbar;traversable</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/operator_call-03.html" class="xref page"><code>operator()</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Function call operators</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/empty.html" class="xref page"><code>empty</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns true if the view has no elements, false otherwise&period;</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/operator_subs.html" class="xref page"><code>operator&lsqb;&rsqb;</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/front.html" class="xref page"><code>front</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns a reference to the first element in raster order&period;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/back.html" class="xref page"><code>back</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns a reference to the last element in raster order&period;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/size.html" class="xref page"><code>size</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="indexed_image_view/palette.html" class="xref page"><code>palette</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/begin.html" class="xref page"><code>begin</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/pixels.html" class="xref page"><code>pixels</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/end.html" class="xref page"><code>end</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -599,6 +595,30 @@ class indexed&lowbar;image&lowbar;view
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/operator_subs.html" class="xref page"><code>operator&lsqb;&rsqb;</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/at-0c.html" class="xref page"><code>at</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/operator_call-03.html" class="xref page"><code>operator()</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Function call operators</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/axis_iterator.html" class="xref page"><code>axis&lowbar;iterator</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/xy_at-0e.html" class="xref page"><code>xy&lowbar;at</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/x_at-07.html" class="xref page"><code>x&lowbar;at</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/row_begin.html" class="xref page"><code>row&lowbar;begin</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -607,36 +627,16 @@ class indexed&lowbar;image&lowbar;view
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/size.html" class="xref page"><code>size</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/swap.html" class="xref page"><code>swap</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Exchanges the elements of the current view with those of <em>other</em> in constant time&period;</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/width.html" class="xref page"><code>width</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/x_at-07.html" class="xref page"><code>x&lowbar;at</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/xy_at-0e.html" class="xref page"><code>xy&lowbar;at</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/y_at-0a8.html" class="xref page"><code>y&lowbar;at</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/operator_eq.html" class="xref page"><code>operator&equals;&equals;</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Equality operator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/col_begin.html" class="xref page"><code>col&lowbar;begin</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/operator_not_eq.html" class="xref page"><code>operator!&equals;</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Inequality operator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image_view/col_end.html" class="xref page"><code>col&lowbar;end</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
 </table>

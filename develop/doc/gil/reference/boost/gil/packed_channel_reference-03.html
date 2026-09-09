@@ -76,7 +76,7 @@
     .catch(reveal);
 })();
 </script>    <title>boost::gil::packed&lowbar;channel&lowbar;reference&lt;BitField, FirstBit, NumBits, false&gt; :: Boost.GIL</title>
-  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/reference/boost/gil/packed_channel_reference-03.html">
+  <link rel="canonical" href="https://github.com/boostorg/gil/gil/reference/boost/gil/packed_channel_reference-03.html">
   <meta name="generator" content="Antora 3.2.0">
     <link rel="stylesheet" href="../../../../_/css/boostlook.css">
     <link rel="stylesheet" href="../../../../_/css/site.css">
@@ -355,7 +355,7 @@
 <h2 id="_synopsis"><a class="anchor" href="#_synopsis"></a>Synopsis</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/develop/doc/../include/boost/gil/channel.hpp#L494">boost&sol;gil&sol;channel&period;hpp</a>&gt;</code></p>
+<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/master/include/boost/gil/channel.hpp#L494">boost&sol;gil&sol;channel&period;hpp</a>&gt;</code></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -402,28 +402,28 @@ class <a href="packed_channel_reference-02.html" class="xref page">packed&lowbar
 <td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/bitfield_t.html" class="xref page"><code>bitfield&lowbar;t</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/const_pointer.html" class="xref page"><code>const&lowbar;pointer</code></a></p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/const_reference.html" class="xref page"><code>const&lowbar;reference</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/integer_t.html" class="xref page"><code>integer&lowbar;t</code></a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/mutable_reference.html" class="xref page"><code>mutable&lowbar;reference</code></a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/pointer.html" class="xref page"><code>pointer</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/integer_t.html" class="xref page"><code>integer&lowbar;t</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/value_type.html" class="xref page"><code>value&lowbar;type</code></a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/reference.html" class="xref page"><code>reference</code></a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/value_type.html" class="xref page"><code>value&lowbar;type</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/pointer.html" class="xref page"><code>pointer</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/const_pointer.html" class="xref page"><code>const&lowbar;pointer</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/bitfield_t.html" class="xref page"><code>bitfield&lowbar;t</code></a></p></td>
 </tr>
 </tbody>
 </table>
@@ -447,10 +447,6 @@ class <a href="packed_channel_reference-02.html" class="xref page">packed&lowbar
 <td class="tableblock halign-left valign-top"><p class="tableblock">Constructors</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/operator_assign.html" class="xref page"><code>operator&equals;</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/first_bit.html" class="xref page"><code>first&lowbar;bit</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -459,11 +455,7 @@ class <a href="packed_channel_reference-02.html" class="xref page">packed&lowbar
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/operator_bitand.html" class="xref page"><code>operator&amp;</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/operator_star_eq.html" class="xref page"><code>operator&ast;&equals;</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/operator_assign.html" class="xref page"><code>operator&equals;</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -471,15 +463,19 @@ class <a href="packed_channel_reference-02.html" class="xref page">packed&lowbar
 <td class="tableblock halign-left valign-top"><p class="tableblock">Increment operators</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/operator_plus_eq.html" class="xref page"><code>operator&plus;&equals;</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/operator_dec-03.html" class="xref page"><code>operator&hyphen;&hyphen;</code></a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Decrement operators</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/operator_plus_eq.html" class="xref page"><code>operator&plus;&equals;</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/operator_minus_eq.html" class="xref page"><code>operator&hyphen;&equals;</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/operator_star_eq.html" class="xref page"><code>operator&ast;&equals;</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -489,6 +485,10 @@ class <a href="packed_channel_reference-02.html" class="xref page">packed&lowbar
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/2conversion.html" class="xref page"><code>operator integer&lowbar;t</code></a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Conversion to <code>integer&lowbar;t</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/operator_bitand.html" class="xref page"><code>operator&amp;</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
 </table>
@@ -506,10 +506,10 @@ class <a href="packed_channel_reference-02.html" class="xref page">packed&lowbar
 <td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/max_value.html" class="xref page"><code>max&lowbar;value</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/min_value.html" class="xref page"><code>min&lowbar;value</code></a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/min_value.html" class="xref page"><code>min&lowbar;value</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/max_value.html" class="xref page"><code>max&lowbar;value</code></a></p></td>
 </tr>
 </tbody>
 </table>
@@ -545,10 +545,10 @@ class <a href="packed_channel_reference-02.html" class="xref page">packed&lowbar
 <td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/is_mutable.html" class="xref page"><code>is&lowbar;mutable</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/num_bits.html" class="xref page"><code>num&lowbar;bits</code></a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/num_bits.html" class="xref page"><code>num&lowbar;bits</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/is_mutable.html" class="xref page"><code>is&lowbar;mutable</code></a></p></td>
 </tr>
 </tbody>
 </table>
@@ -569,10 +569,10 @@ class <a href="packed_channel_reference-02.html" class="xref page">packed&lowbar
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/data_ptr_t.html" class="xref page"><code>data&lowbar;ptr&lowbar;t</code></a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/max_value_t.html" class="xref page"><code>max&lowbar;value&lowbar;t</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/num_value_t.html" class="xref page"><code>num&lowbar;value&lowbar;t</code></a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/num_value_t.html" class="xref page"><code>num&lowbar;value&lowbar;t</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/max_value_t.html" class="xref page"><code>max&lowbar;value&lowbar;t</code></a></p></td>
 </tr>
 </tbody>
 </table>
@@ -611,10 +611,10 @@ class <a href="packed_channel_reference-02.html" class="xref page">packed&lowbar
 <td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/max_val.html" class="xref page"><code>max&lowbar;val</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/num_values.html" class="xref page"><code>num&lowbar;values</code></a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/num_values.html" class="xref page"><code>num&lowbar;values</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="packed_channel_reference-03/max_val.html" class="xref page"><code>max&lowbar;val</code></a></p></td>
 </tr>
 </tbody>
 </table>

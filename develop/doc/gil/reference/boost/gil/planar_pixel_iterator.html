@@ -76,7 +76,7 @@
     .catch(reveal);
 })();
 </script>    <title>boost::gil::planar&lowbar;pixel&lowbar;iterator :: Boost.GIL</title>
-  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/reference/boost/gil/planar_pixel_iterator.html">
+  <link rel="canonical" href="https://github.com/boostorg/gil/gil/reference/boost/gil/planar_pixel_iterator.html">
   <meta name="generator" content="Antora 3.2.0">
     <link rel="stylesheet" href="../../../../_/css/boostlook.css">
     <link rel="stylesheet" href="../../../../_/css/site.css">
@@ -355,7 +355,7 @@
 <h2 id="_synopsis"><a class="anchor" href="#_synopsis"></a>Synopsis</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/develop/doc/../include/boost/gil/planar_pixel_iterator.hpp#L42">boost&sol;gil&sol;planar&lowbar;pixel&lowbar;iterator&period;hpp</a>&gt;</code></p>
+<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/master/include/boost/gil/planar_pixel_iterator.hpp#L42">boost&sol;gil&sol;planar&lowbar;pixel&lowbar;iterator&period;hpp</a>&gt;</code></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -363,7 +363,7 @@
     typename IC,
     typename C&gt;
 struct planar&lowbar;pixel&lowbar;iterator
-    : stl&lowbar;interfaces::iterator&lowbar;interface&lt;planar&lowbar;pixel&lowbar;iterator&lt;ChannelPtr, ColorSpace&gt;, std::random&lowbar;access&lowbar;iterator&lowbar;tag, pixel&lt;std::iterator&lowbar;traits&lt;ChannelPtr&gt;::value&lowbar;type, layout&lt;ColorSpace&gt;&gt;, planar&lowbar;pixel&lowbar;reference&lt;std::iterator&lowbar;traits&lt;ChannelPtr&gt;::reference, ColorSpace&gt; const&gt;
+    : stl&lowbar;interfaces::iterator&lowbar;interface&lt;std::random&lowbar;access&lowbar;iterator&lowbar;tag, pixel&lt;std::iterator&lowbar;traits&lt;ChannelPtr&gt;::value&lowbar;type, layout&lt;ColorSpace&gt;&gt;, planar&lowbar;pixel&lowbar;reference&lt;std::iterator&lowbar;traits&lt;ChannelPtr&gt;::reference, ColorSpace&gt; const&gt;
     , detail::homogeneous&lowbar;color&lowbar;base&lt;ChannelPtr, layout&lt;ColorSpace&gt;, mp11&colon;&colon;mp&lowbar;size&lt;ColorSpace&gt;&colon;&colon;value&gt;</code></pre>
 </div>
 </div>
@@ -394,7 +394,7 @@ struct planar&lowbar;pixel&lowbar;iterator
 <td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>stl&lowbar;interfaces::iterator&lowbar;interface&lt;planar&lowbar;pixel&lowbar;iterator&lt;ChannelPtr, ColorSpace&gt;, std::random&lowbar;access&lowbar;iterator&lowbar;tag, pixel&lt;std::iterator&lowbar;traits&lt;ChannelPtr&gt;::value&lowbar;type, layout&lt;ColorSpace&gt;&gt;, planar&lowbar;pixel&lowbar;reference&lt;std::iterator&lowbar;traits&lt;ChannelPtr&gt;::reference, ColorSpace&gt; const&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>stl&lowbar;interfaces::iterator&lowbar;interface&lt;std::random&lowbar;access&lowbar;iterator&lowbar;tag, pixel&lt;std::iterator&lowbar;traits&lt;ChannelPtr&gt;::value&lowbar;type, layout&lt;ColorSpace&gt;&gt;, planar&lowbar;pixel&lowbar;reference&lt;std::iterator&lowbar;traits&lt;ChannelPtr&gt;::reference, ColorSpace&gt; const&gt;</code></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -435,6 +435,12 @@ struct planar&lowbar;pixel&lowbar;iterator
 <td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="planar_pixel_iterator/value_type.html" class="xref page"><code>value&lowbar;type</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="planar_pixel_iterator/reference.html" class="xref page"><code>reference</code></a></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="planar_pixel_iterator/difference_type.html" class="xref page"><code>difference&lowbar;type</code></a></p></td>
 </tr>
 <tr>
@@ -445,12 +451,6 @@ struct planar&lowbar;pixel&lowbar;iterator
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="planar_pixel_iterator/pointer.html" class="xref page"><code>pointer</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="planar_pixel_iterator/reference.html" class="xref page"><code>reference</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="planar_pixel_iterator/value_type.html" class="xref page"><code>value&lowbar;type</code></a></p></td>
 </tr>
 </tbody>
 </table>
@@ -482,40 +482,36 @@ struct planar&lowbar;pixel&lowbar;iterator
 <td class="tableblock halign-left valign-top"><p class="tableblock">Dereference operators</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="planar_pixel_iterator/operator_plus.html" class="xref page"><code>operator&plus;</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="planar_pixel_iterator/operator_plus_eq-04.html" class="xref page"><code>operator&plus;&equals;</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Addition assignment operators</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="planar_pixel_iterator/operator_inc-02.html" class="xref page"><code>operator&plus;&plus;</code></a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Increment operators</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="planar_pixel_iterator/operator_plus_eq-04.html" class="xref page"><code>operator&plus;&equals;</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Addition assignment operators</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="planar_pixel_iterator/operator_minus-06.html" class="xref page"><code>operator&hyphen;</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Subtraction operators</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="planar_pixel_iterator/operator_dec-01.html" class="xref page"><code>operator&hyphen;&hyphen;</code></a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Decrement operators</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="planar_pixel_iterator/operator_minus_eq.html" class="xref page"><code>operator&hyphen;&equals;</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="planar_pixel_iterator/operator_minus.html" class="xref page"><code>operator&hyphen;</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="planar_pixel_iterator/operator_ptr-05.html" class="xref page"><code>operator&hyphen;&gt;</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Member access operators</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="planar_pixel_iterator/operator_eq.html" class="xref page"><code>operator&equals;&equals;</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Equality operator</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="planar_pixel_iterator/operator_ptr.html" class="xref page"><code>operator&hyphen;&gt;</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="planar_pixel_iterator/operator_subs.html" class="xref page"><code>operator&lsqb;&rsqb;</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="planar_pixel_iterator/operator_eq.html" class="xref page"><code>operator&equals;&equals;</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Equality operator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="planar_pixel_iterator/operator_minus_eq.html" class="xref page"><code>operator&hyphen;&equals;</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
 </table>

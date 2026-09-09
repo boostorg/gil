@@ -76,7 +76,7 @@
     .catch(reveal);
 })();
 </script>    <title>boost::gil::scanline&lowbar;read&lowbar;iterator::operator&plus;&plus; :: Boost.GIL</title>
-  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/reference/boost/gil/scanline_read_iterator/operator_inc-01.html">
+  <link rel="canonical" href="https://github.com/boostorg/gil/gil/reference/boost/gil/scanline_read_iterator/operator_inc-01.html">
   <meta name="generator" content="Antora 3.2.0">
     <link rel="stylesheet" href="../../../../../_/css/boostlook.css">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
@@ -355,7 +355,7 @@
 <h2 id="_synopses"><a class="anchor" href="#_synopses"></a>Synopses</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/develop/doc/../include/boost/gil/io/scanline_read_iterator.hpp#L30">boost&sol;gil&sol;io&sol;scanline&lowbar;read&lowbar;iterator&period;hpp</a>&gt;</code></p>
+<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/master/include/boost/gil/io/scanline_read_iterator.hpp#L30">boost&sol;gil&sol;io&sol;scanline&lowbar;read&lowbar;iterator&period;hpp</a>&gt;</code></p>
 </div>
 <div class="paragraph">
 <p>Increment operator</p>
@@ -372,39 +372,27 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template&lt;typename D = Derived&gt;
-constexpr
-decltype(std&colon;&colon;declval&lt;D &amp;&gt;() &plus;&equals; difference&lowbar;type(1), std&colon;&colon;declval&lt;D &amp;&gt;())
-<a href="operator_inc-0a.html" class="xref page">operator&plus;&plus;</a>() noexcept(&sol;&ast; see-below &ast;&sol;);</code></pre>
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">constexpr
+decltype(auto)
+<a href="operator_inc-0f.html" class="xref page">operator&plus;&plus;</a>(this auto&amp; self)
+requires requires &lcub; self &plus;&equals; difference&lowbar;type(1)&semi; &rcub;;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><span class="small"><a href="operator_inc-0a.html" class="xref page"><em>» more&period;&period;&period;</em></a></span></p>
+<p><span class="small"><a href="operator_inc-0f.html" class="xref page"><em>» more&period;&period;&period;</em></a></span></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template&lt;typename D = Derived&gt;
-requires !v1&lowbar;dtl&colon;&colon;plus&lowbar;eq&lt;D, difference&lowbar;type&gt;&colon;&colon;value
-constexpr
-decltype(&plus;&plus;access&colon;&colon;base(std&colon;&colon;declval&lt;D &amp;&gt;()), std&colon;&colon;declval&lt;D &amp;&gt;())
-<a href="operator_inc-0c.html" class="xref page">operator&plus;&plus;</a>() noexcept(&sol;&ast; see-below &ast;&sol;);</code></pre>
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">constexpr
+auto
+<a href="operator_inc-06.html" class="xref page">operator&plus;&plus;</a>(this
+    auto&amp; self,
+    int)
+requires requires &lcub; &plus;&plus;self&semi; &rcub;;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><span class="small"><a href="operator_inc-0c.html" class="xref page"><em>» more&period;&period;&period;</em></a></span></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template&lt;typename D = Derived&gt;
-constexpr
-std::remove&lowbar;reference&lowbar;t&lt;decltype(D(std&colon;&colon;declval&lt;D &amp;&gt;()),
-                &plus;&plus;std&colon;&colon;declval&lt;D &amp;&gt;(),
-                std&colon;&colon;declval&lt;D &amp;&gt;())&gt;
-<a href="operator_inc-03.html" class="xref page">operator&plus;&plus;</a>(int) noexcept(&sol;&ast; see-below &ast;&sol;);</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p><span class="small"><a href="operator_inc-03.html" class="xref page"><em>» more&period;&period;&period;</em></a></span></p>
+<p><span class="small"><a href="operator_inc-06.html" class="xref page"><em>» more&period;&period;&period;</em></a></span></p>
 </div>
 <div class="paragraph">
 <p><span class="small">Created with <a href="https://www.mrdocs.com">MrDocs</a></span></p>

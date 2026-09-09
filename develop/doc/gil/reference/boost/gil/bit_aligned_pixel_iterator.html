@@ -76,7 +76,7 @@
     .catch(reveal);
 })();
 </script>    <title>boost::gil::bit&lowbar;aligned&lowbar;pixel&lowbar;iterator :: Boost.GIL</title>
-  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/reference/boost/gil/bit_aligned_pixel_iterator.html">
+  <link rel="canonical" href="https://github.com/boostorg/gil/gil/reference/boost/gil/bit_aligned_pixel_iterator.html">
   <meta name="generator" content="Antora 3.2.0">
     <link rel="stylesheet" href="../../../../_/css/boostlook.css">
     <link rel="stylesheet" href="../../../../_/css/site.css">
@@ -355,13 +355,13 @@
 <h2 id="_synopsis"><a class="anchor" href="#_synopsis"></a>Synopsis</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/develop/doc/../include/boost/gil/bit_aligned_pixel_iterator.hpp#L36">boost&sol;gil&sol;bit&lowbar;aligned&lowbar;pixel&lowbar;iterator&period;hpp</a>&gt;</code></p>
+<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/master/include/boost/gil/bit_aligned_pixel_iterator.hpp#L36">boost&sol;gil&sol;bit&lowbar;aligned&lowbar;pixel&lowbar;iterator&period;hpp</a>&gt;</code></p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template&lt;typename NonAlignedPixelReference&gt;
 class bit&lowbar;aligned&lowbar;pixel&lowbar;iterator
-    : public stl&lowbar;interfaces::iterator&lowbar;interface&lt;bit&lowbar;aligned&lowbar;pixel&lowbar;iterator&lt;NonAlignedPixelReference&gt;, std::random&lowbar;access&lowbar;iterator&lowbar;tag, NonAlignedPixelReference::value&lowbar;type, NonAlignedPixelReference const, NonAlignedPixelReference::value&lowbar;type*, NonAlignedPixelReference::bit&lowbar;range&lowbar;t::difference&lowbar;type&gt;</code></pre>
+    : public stl&lowbar;interfaces::iterator&lowbar;interface&lt;std::random&lowbar;access&lowbar;iterator&lowbar;tag, NonAlignedPixelReference::value&lowbar;type, NonAlignedPixelReference const, NonAlignedPixelReference::value&lowbar;type*, NonAlignedPixelReference::bit&lowbar;range&lowbar;t::difference&lowbar;type&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -391,7 +391,7 @@ class bit&lowbar;aligned&lowbar;pixel&lowbar;iterator
 <td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>stl&lowbar;interfaces::iterator&lowbar;interface&lt;bit&lowbar;aligned&lowbar;pixel&lowbar;iterator&lt;NonAlignedPixelReference&gt;, std::random&lowbar;access&lowbar;iterator&lowbar;tag, NonAlignedPixelReference::value&lowbar;type, NonAlignedPixelReference const, NonAlignedPixelReference::value&lowbar;type*, NonAlignedPixelReference::bit&lowbar;range&lowbar;t::difference&lowbar;type&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>stl&lowbar;interfaces::iterator&lowbar;interface&lt;std::random&lowbar;access&lowbar;iterator&lowbar;tag, NonAlignedPixelReference::value&lowbar;type, NonAlignedPixelReference const, NonAlignedPixelReference::value&lowbar;type*, NonAlignedPixelReference::bit&lowbar;range&lowbar;t::difference&lowbar;type&gt;</code></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
@@ -413,19 +413,19 @@ class bit&lowbar;aligned&lowbar;pixel&lowbar;iterator
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="bit_aligned_pixel_iterator/difference_type.html" class="xref page"><code>difference&lowbar;type</code></a></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="bit_aligned_pixel_iterator/reference.html" class="xref page"><code>reference</code></a></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="bit_aligned_pixel_iterator/iterator_category.html" class="xref page"><code>iterator&lowbar;category</code></a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="bit_aligned_pixel_iterator/iterator_concept.html" class="xref page"><code>iterator&lowbar;concept</code></a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="bit_aligned_pixel_iterator/pointer.html" class="xref page"><code>pointer</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="bit_aligned_pixel_iterator/reference.html" class="xref page"><code>reference</code></a></p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="bit_aligned_pixel_iterator/value_type.html" class="xref page"><code>value&lowbar;type</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="bit_aligned_pixel_iterator/pointer.html" class="xref page"><code>pointer</code></a></p></td>
 </tr>
 </tbody>
 </table>
@@ -453,15 +453,27 @@ class bit&lowbar;aligned&lowbar;pixel&lowbar;iterator
 <td class="tableblock halign-left valign-top"><p class="tableblock">Copy assignment operator</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="bit_aligned_pixel_iterator/bit_range-0d.html" class="xref page"><code>bit&lowbar;range</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="bit_aligned_pixel_iterator/operator_star-0e.html" class="xref page"><code>operator&ast;</code></a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Dereference operators</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="bit_aligned_pixel_iterator/operator_plus.html" class="xref page"><code>operator&plus;</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="bit_aligned_pixel_iterator/operator_plus_eq-0e.html" class="xref page"><code>operator&plus;&equals;</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Addition assignment operators</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="bit_aligned_pixel_iterator/operator_minus.html" class="xref page"><code>operator&hyphen;</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="bit_aligned_pixel_iterator/bit_range-0d.html" class="xref page"><code>bit&lowbar;range</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="bit_aligned_pixel_iterator/operator_ptr.html" class="xref page"><code>operator&hyphen;&gt;</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="bit_aligned_pixel_iterator/operator_subs.html" class="xref page"><code>operator&lsqb;&rsqb;</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -469,27 +481,11 @@ class bit&lowbar;aligned&lowbar;pixel&lowbar;iterator
 <td class="tableblock halign-left valign-top"><p class="tableblock">Increment operators</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="bit_aligned_pixel_iterator/operator_plus_eq-0e.html" class="xref page"><code>operator&plus;&equals;</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Addition assignment operators</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="bit_aligned_pixel_iterator/operator_minus-000.html" class="xref page"><code>operator&hyphen;</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Subtraction operators</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="bit_aligned_pixel_iterator/operator_dec-07c.html" class="xref page"><code>operator&hyphen;&hyphen;</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="bit_aligned_pixel_iterator/operator_dec-07.html" class="xref page"><code>operator&hyphen;&hyphen;</code></a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Decrement operators</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="bit_aligned_pixel_iterator/operator_minus_eq.html" class="xref page"><code>operator&hyphen;&equals;</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="bit_aligned_pixel_iterator/operator_ptr-0a.html" class="xref page"><code>operator&hyphen;&gt;</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Member access operators</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="bit_aligned_pixel_iterator/operator_subs.html" class="xref page"><code>operator&lsqb;&rsqb;</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>

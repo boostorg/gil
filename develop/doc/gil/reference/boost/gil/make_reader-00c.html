@@ -76,7 +76,7 @@
     .catch(reveal);
 })();
 </script>    <title>boost::gil::make&lowbar;reader :: Boost.GIL</title>
-  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/reference/boost/gil/make_reader-00c.html">
+  <link rel="canonical" href="https://github.com/boostorg/gil/gil/reference/boost/gil/make_reader-00c.html">
   <meta name="generator" content="Antora 3.2.0">
     <link rel="stylesheet" href="../../../../_/css/boostlook.css">
     <link rel="stylesheet" href="../../../../_/css/site.css">
@@ -348,22 +348,7 @@
 <h2 id="_synopses"><a class="anchor" href="#_synopses"></a>Synopses</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/develop/doc/../include/boost/gil/io/make_reader.hpp#L18">boost&sol;gil&sol;io&sol;make&lowbar;reader&period;hpp</a>&gt;</code></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template&lt;
-    typename FormatTag,
-    typename ConversionPolicy&gt;
-get&lowbar;reader&lt;std::wstring, FormatTag, ConversionPolicy&gt;::type
-<a href="make_reader-09.html" class="xref page">make&lowbar;reader</a>(
-    detail::filesystem::path const&amp; path,
-    FormatTag const&amp;,
-    ConversionPolicy const&amp; cc);</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p><span class="small"><a href="make_reader-09.html" class="xref page"><em>» more&period;&period;&period;</em></a></span></p>
+<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/master/include/boost/gil/io/make_reader.hpp#L18">boost&sol;gil&sol;io&sol;make&lowbar;reader&period;hpp</a>&gt;</code></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -373,7 +358,7 @@ get&lowbar;reader&lt;std::wstring, FormatTag, ConversionPolicy&gt;::type
 get&lowbar;reader&lt;std::wstring, FormatTag, ConversionPolicy&gt;::type
 <a href="make_reader-05.html" class="xref page">make&lowbar;reader</a>(
     detail::filesystem::path const&amp; path,
-    <a href="image_read_settings.html" class="xref page">image&lowbar;read&lowbar;settings&lt;FormatTag&gt;</a> const&amp; settings,
+    FormatTag const&amp;,
     ConversionPolicy const&amp; cc);</code></pre>
 </div>
 </div>
@@ -386,14 +371,14 @@ get&lowbar;reader&lt;std::wstring, FormatTag, ConversionPolicy&gt;::type
     typename FormatTag,
     typename ConversionPolicy&gt;
 get&lowbar;reader&lt;std::wstring, FormatTag, ConversionPolicy&gt;::type
-<a href="make_reader-02b2.html" class="xref page">make&lowbar;reader</a>(
-    std::wstring const&amp; file&lowbar;name,
-    FormatTag const&amp;,
+<a href="make_reader-04.html" class="xref page">make&lowbar;reader</a>(
+    detail::filesystem::path const&amp; path,
+    <a href="image_read_settings.html" class="xref page">image&lowbar;read&lowbar;settings&lt;FormatTag&gt;</a> const&amp; settings,
     ConversionPolicy const&amp; cc);</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><span class="small"><a href="make_reader-02b2.html" class="xref page"><em>» more&period;&period;&period;</em></a></span></p>
+<p><span class="small"><a href="make_reader-04.html" class="xref page"><em>» more&period;&period;&period;</em></a></span></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -401,14 +386,29 @@ get&lowbar;reader&lt;std::wstring, FormatTag, ConversionPolicy&gt;::type
     typename FormatTag,
     typename ConversionPolicy&gt;
 get&lowbar;reader&lt;std::wstring, FormatTag, ConversionPolicy&gt;::type
-<a href="make_reader-0e.html" class="xref page">make&lowbar;reader</a>(
+<a href="make_reader-07a.html" class="xref page">make&lowbar;reader</a>(
+    std::wstring const&amp; file&lowbar;name,
+    FormatTag const&amp;,
+    ConversionPolicy const&amp; cc);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span class="small"><a href="make_reader-07a.html" class="xref page"><em>» more&period;&period;&period;</em></a></span></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template&lt;
+    typename FormatTag,
+    typename ConversionPolicy&gt;
+get&lowbar;reader&lt;std::wstring, FormatTag, ConversionPolicy&gt;::type
+<a href="make_reader-02bf.html" class="xref page">make&lowbar;reader</a>(
     std::wstring const&amp; file&lowbar;name,
     <a href="image_read_settings.html" class="xref page">image&lowbar;read&lowbar;settings&lt;FormatTag&gt;</a> const&amp; settings,
     ConversionPolicy const&amp;);</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><span class="small"><a href="make_reader-0e.html" class="xref page"><em>» more&period;&period;&period;</em></a></span></p>
+<p><span class="small"><a href="make_reader-02bf.html" class="xref page"><em>» more&period;&period;&period;</em></a></span></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -480,7 +480,7 @@ requires mp11&colon;&colon;mp&lowbar;and
     typename FormatTag,
     typename ConversionPolicy&gt;
 get&lowbar;reader&lt;String, FormatTag, ConversionPolicy&gt;::type
-<a href="make_reader-07.html" class="xref page">make&lowbar;reader</a>(
+<a href="make_reader-075.html" class="xref page">make&lowbar;reader</a>(
     String const&amp; file&lowbar;name,
     <a href="image_read_settings.html" class="xref page">image&lowbar;read&lowbar;settings&lt;FormatTag&gt;</a> const&amp; settings,
     ConversionPolicy const&amp;)
@@ -492,7 +492,7 @@ requires mp11&colon;&colon;mp&lowbar;and
 </div>
 </div>
 <div class="paragraph">
-<p><span class="small"><a href="make_reader-07.html" class="xref page"><em>» more&period;&period;&period;</em></a></span></p>
+<p><span class="small"><a href="make_reader-075.html" class="xref page"><em>» more&period;&period;&period;</em></a></span></p>
 </div>
 <div class="paragraph">
 <p><span class="small">Created with <a href="https://www.mrdocs.com">MrDocs</a></span></p>

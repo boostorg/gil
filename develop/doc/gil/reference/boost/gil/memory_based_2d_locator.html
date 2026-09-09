@@ -76,7 +76,7 @@
     .catch(reveal);
 })();
 </script>    <title>boost::gil::memory&lowbar;based&lowbar;2d&lowbar;locator :: Boost.GIL</title>
-  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/reference/boost/gil/memory_based_2d_locator.html">
+  <link rel="canonical" href="https://github.com/boostorg/gil/gil/reference/boost/gil/memory_based_2d_locator.html">
   <meta name="generator" content="Antora 3.2.0">
     <link rel="stylesheet" href="../../../../_/css/boostlook.css">
     <link rel="stylesheet" href="../../../../_/css/site.css">
@@ -355,7 +355,7 @@
 <h2 id="_synopsis"><a class="anchor" href="#_synopsis"></a>Synopsis</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/develop/doc/../include/boost/gil/locator.hpp#L229">boost&sol;gil&sol;locator&period;hpp</a>&gt;</code></p>
+<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/master/include/boost/gil/locator.hpp#L229">boost&sol;gil&sol;locator&period;hpp</a>&gt;</code></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -434,7 +434,7 @@ class memory&lowbar;based&lowbar;2d&lowbar;locator
 <td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/cached_location_t.html" class="xref page"><code>cached&lowbar;location&lowbar;t</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/parent_t.html" class="xref page"><code>parent&lowbar;t</code></a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/const_t.html" class="xref page"><code>const&lowbar;t</code></a></p></td>
@@ -443,31 +443,31 @@ class memory&lowbar;based&lowbar;2d&lowbar;locator
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/coord_t.html" class="xref page"><code>coord&lowbar;t</code></a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/difference_type.html" class="xref page"><code>difference&lowbar;type</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/parent_t.html" class="xref page"><code>parent&lowbar;t</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="pixel_2d_locator_base/point_t.html" class="xref page"><code>point&lowbar;t</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/reference.html" class="xref page"><code>reference</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="pixel_2d_locator_base/value_type.html" class="xref page"><code>value&lowbar;type</code></a></p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/x_coord_t.html" class="xref page"><code>x&lowbar;coord&lowbar;t</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/x_iterator.html" class="xref page"><code>x&lowbar;iterator</code></a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/y_coord_t.html" class="xref page"><code>y&lowbar;coord&lowbar;t</code></a></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/x_iterator.html" class="xref page"><code>x&lowbar;iterator</code></a></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/y_iterator.html" class="xref page"><code>y&lowbar;iterator</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/difference_type.html" class="xref page"><code>difference&lowbar;type</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/reference.html" class="xref page"><code>reference</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/cached_location_t.html" class="xref page"><code>cached&lowbar;location&lowbar;t</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="pixel_2d_locator_base/value_type.html" class="xref page"><code>value&lowbar;type</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="pixel_2d_locator_base/point_t.html" class="xref page"><code>point&lowbar;t</code></a></p></td>
 </tr>
 </tbody>
 </table>
@@ -495,55 +495,15 @@ class memory&lowbar;based&lowbar;2d&lowbar;locator
 <td class="tableblock halign-left valign-top"><p class="tableblock">Copy assignment operator</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="pixel_2d_locator_base/axis_iterator-0b.html" class="xref page"><code>axis&lowbar;iterator</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/cache_location-0d.html" class="xref page"><code>cache&lowbar;location</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/is_1d_traversable.html" class="xref page"><code>is&lowbar;1d&lowbar;traversable</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/operator_call.html" class="xref page"><code>operator()</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="pixel_2d_locator_base/operator_star.html" class="xref page"><code>operator&ast;</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="pixel_2d_locator_base/operator_plus.html" class="xref page"><code>operator&plus;</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/operator_plus_eq.html" class="xref page"><code>operator&plus;&equals;</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="pixel_2d_locator_base/operator_minus.html" class="xref page"><code>operator&hyphen;</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/operator_minus_eq.html" class="xref page"><code>operator&hyphen;&equals;</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/operator_subs-03.html" class="xref page"><code>operator&lsqb;&rsqb;</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Subscript operators</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/pixel_size.html" class="xref page"><code>pixel&lowbar;size</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/row_size.html" class="xref page"><code>row&lowbar;size</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/operator_eq.html" class="xref page"><code>operator&equals;&equals;</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Equality operator</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/x-06.html" class="xref page"><code>x</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/y-07.html" class="xref page"><code>y</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -555,11 +515,35 @@ class memory&lowbar;based&lowbar;2d&lowbar;locator
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/y-07.html" class="xref page"><code>y</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/operator_call.html" class="xref page"><code>operator()</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="pixel_2d_locator_base/y_at-0e.html" class="xref page"><code>y&lowbar;at</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/operator_subs-03.html" class="xref page"><code>operator&lsqb;&rsqb;</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Subscript operators</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/operator_plus_eq.html" class="xref page"><code>operator&plus;&equals;</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/operator_minus_eq.html" class="xref page"><code>operator&hyphen;&equals;</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/cache_location-0d.html" class="xref page"><code>cache&lowbar;location</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/row_size.html" class="xref page"><code>row&lowbar;size</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/pixel_size.html" class="xref page"><code>pixel&lowbar;size</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/is_1d_traversable.html" class="xref page"><code>is&lowbar;1d&lowbar;traversable</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -567,12 +551,28 @@ class memory&lowbar;based&lowbar;2d&lowbar;locator
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="memory_based_2d_locator/operator_eq.html" class="xref page"><code>operator&equals;&equals;</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Equality operator</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="pixel_2d_locator_base/operator_not_eq.html" class="xref page"><code>operator!&equals;</code></a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Inequality operator</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="pixel_2d_locator_base/y_at-0e.html" class="xref page"><code>y&lowbar;at</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="pixel_2d_locator_base/axis_iterator-0b.html" class="xref page"><code>axis&lowbar;iterator</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="pixel_2d_locator_base/operator_star.html" class="xref page"><code>operator&ast;</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="pixel_2d_locator_base/operator_plus.html" class="xref page"><code>operator&plus;</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="pixel_2d_locator_base/operator_minus.html" class="xref page"><code>operator&hyphen;</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
 </table>

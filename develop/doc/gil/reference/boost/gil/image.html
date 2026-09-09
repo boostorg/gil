@@ -76,7 +76,7 @@
     .catch(reveal);
 })();
 </script>    <title>boost::gil::image :: Boost.GIL</title>
-  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/reference/boost/gil/image.html">
+  <link rel="canonical" href="https://github.com/boostorg/gil/gil/reference/boost/gil/image.html">
   <meta name="generator" content="Antora 3.2.0">
     <link rel="stylesheet" href="../../../../_/css/boostlook.css">
     <link rel="stylesheet" href="../../../../_/css/site.css">
@@ -355,7 +355,7 @@
 <h2 id="_synopsis"><a class="anchor" href="#_synopsis"></a>Synopsis</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/develop/doc/../include/boost/gil/image.hpp#L41">boost&sol;gil&sol;image&period;hpp</a>&gt;</code></p>
+<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/master/include/boost/gil/image.hpp#L41">boost&sol;gil&sol;image&period;hpp</a>&gt;</code></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -403,19 +403,19 @@ class image;</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image/allocator_type.html" class="xref page"><code>allocator&lowbar;type</code></a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image/const_view_t.html" class="xref page"><code>const&lowbar;view&lowbar;t</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image/view_t.html" class="xref page"><code>view&lowbar;t</code></a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image/coord_t.html" class="xref page"><code>coord&lowbar;t</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image/const_view_t.html" class="xref page"><code>const&lowbar;view&lowbar;t</code></a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image/point_t.html" class="xref page"><code>point&lowbar;t</code></a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image/value_type.html" class="xref page"><code>value&lowbar;type</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image/coord_t.html" class="xref page"><code>coord&lowbar;t</code></a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image/view_t.html" class="xref page"><code>view&lowbar;t</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image/value_type.html" class="xref page"><code>value&lowbar;type</code></a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image/x_coord_t.html" class="xref page"><code>x&lowbar;coord&lowbar;t</code></a></p></td>
@@ -441,23 +441,11 @@ class image;</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image/2constructor-08.html" class="xref page"><code>image</code></a>         <span class="small">[constructor]</span></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Constructors</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image/2destructor.html" class="xref page"><code>&#126;image</code></a> <span class="small">[destructor]</span></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Destructor</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image/operator_assign-0a.html" class="xref page"><code>operator&equals;</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Assignment operators</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image/allocator-05.html" class="xref page"><code>allocator</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image/dimensions.html" class="xref page"><code>dimensions</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image/dimensions.html" class="xref page"><code>dimensions</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image/width.html" class="xref page"><code>width</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -465,16 +453,28 @@ class image;</code></pre>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image/recreate-07.html" class="xref page"><code>recreate</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&sol;&sol;&sol;&sol;&sol;&sol;&sol;&sol;&sol;&sol;&sol;&sol;&sol;&sol;&sol;&sol;&sol;&sol;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image/2constructor-08.html" class="xref page"><code>image</code></a>         <span class="small">[constructor]</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Constructors</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image/operator_assign-0a.html" class="xref page"><code>operator&equals;</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Assignment operators</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image/2destructor.html" class="xref page"><code>&#126;image</code></a> <span class="small">[destructor]</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Destructor</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image/allocator-05.html" class="xref page"><code>allocator</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image/swap.html" class="xref page"><code>swap</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image/width.html" class="xref page"><code>width</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="image/recreate-07.html" class="xref page"><code>recreate</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&sol;&sol;&sol;&sol;&sol;&sol;&sol;&sol;&sol;&sol;&sol;&sol;&sol;&sol;&sol;&sol;&sol;&sol;</p></td>
 </tr>
 </tbody>
 </table>

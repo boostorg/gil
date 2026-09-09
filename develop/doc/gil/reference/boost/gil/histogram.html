@@ -76,7 +76,7 @@
     .catch(reveal);
 })();
 </script>    <title>boost::gil::histogram :: Boost.GIL</title>
-  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/reference/boost/gil/histogram.html">
+  <link rel="canonical" href="https://github.com/boostorg/gil/gil/reference/boost/gil/histogram.html">
   <meta name="generator" content="Antora 3.2.0">
     <link rel="stylesheet" href="../../../../_/css/boostlook.css">
     <link rel="stylesheet" href="../../../../_/css/site.css">
@@ -355,7 +355,7 @@
 <h2 id="_synopsis"><a class="anchor" href="#_synopsis"></a>Synopsis</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/develop/doc/../include/boost/gil/histogram.hpp#L213">boost&sol;gil&sol;histogram&period;hpp</a>&gt;</code></p>
+<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/master/include/boost/gil/histogram.hpp#L213">boost&sol;gil&sol;histogram&period;hpp</a>&gt;</code></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -418,51 +418,11 @@ h(1, 1, 1) = 0;</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/allocator_type.html" class="xref page"><code>allocator&lowbar;type</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/const_iterator.html" class="xref page"><code>const&lowbar;iterator</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/const_local_iterator.html" class="xref page"><code>const&lowbar;local&lowbar;iterator</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/const_pointer.html" class="xref page"><code>const&lowbar;pointer</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/const_reference.html" class="xref page"><code>const&lowbar;reference</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/difference_type.html" class="xref page"><code>difference&lowbar;type</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/hasher.html" class="xref page"><code>hasher</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/insert_return_type.html" class="xref page"><code>insert&lowbar;return&lowbar;type</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/iterator.html" class="xref page"><code>iterator</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/key_equal.html" class="xref page"><code>key&lowbar;equal</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/key_type.html" class="xref page"><code>key&lowbar;type</code></a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">@&lcub; Public typedefs&period;</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/local_iterator.html" class="xref page"><code>local&lowbar;iterator</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/value_type.html" class="xref page"><code>value&lowbar;type</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -470,7 +430,15 @@ h(1, 1, 1) = 0;</code></pre>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/node_type.html" class="xref page"><code>node&lowbar;type</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/hasher.html" class="xref page"><code>hasher</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/key_equal.html" class="xref page"><code>key&lowbar;equal</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/allocator_type.html" class="xref page"><code>allocator&lowbar;type</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -478,7 +446,31 @@ h(1, 1, 1) = 0;</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">@&lcub; Iterator&hyphen;related typedefs&period;</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/const_pointer.html" class="xref page"><code>const&lowbar;pointer</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/reference.html" class="xref page"><code>reference</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/const_reference.html" class="xref page"><code>const&lowbar;reference</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/iterator.html" class="xref page"><code>iterator</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/const_iterator.html" class="xref page"><code>const&lowbar;iterator</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/local_iterator.html" class="xref page"><code>local&lowbar;iterator</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/const_local_iterator.html" class="xref page"><code>const&lowbar;local&lowbar;iterator</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -486,7 +478,15 @@ h(1, 1, 1) = 0;</code></pre>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/value_type.html" class="xref page"><code>value&lowbar;type</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/difference_type.html" class="xref page"><code>difference&lowbar;type</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/node_type.html" class="xref page"><code>node&lowbar;type</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/insert_return_type.html" class="xref page"><code>insert&lowbar;return&lowbar;type</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
@@ -511,44 +511,92 @@ h(1, 1, 1) = 0;</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Default constructor</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/operator_call.html" class="xref page"><code>operator()</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns bin value corresponding to specified tuple</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/equals.html" class="xref page"><code>equals</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks if 2 histograms are equal&period; Ignores type, and checks if the keys (after type casting) match&period;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/is_tuple_compatible.html" class="xref page"><code>is&lowbar;tuple&lowbar;compatible</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks if the histogram class is compatible to be used with the specified tuple type</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/key_from_tuple.html" class="xref page"><code>key&lowbar;from&lowbar;tuple</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns a key compatible to be used as the histogram key from the input tuple</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/key_from_pixel.html" class="xref page"><code>key&lowbar;from&lowbar;pixel</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns a histogram compatible key from the input pixel which can be directly used</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/nearest_key.html" class="xref page"><code>nearest&lowbar;key</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Return nearest smaller key to specified histogram key</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/fill.html" class="xref page"><code>fill</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fills the histogram with the input image view</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/sub_histogram-0f.html" class="xref page"><code>sub&lowbar;histogram</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sub&lowbar;histogram</code> overloads</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/normalize.html" class="xref page"><code>normalize</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Normalize this histogram class</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/sum.html" class="xref page"><code>sum</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Return the sum count of all bins</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/min_key.html" class="xref page"><code>min&lowbar;key</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Return the minimum key in histogram</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/max_key.html" class="xref page"><code>max&lowbar;key</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Return the maximum key in histogram</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/sorted_keys.html" class="xref page"><code>sorted&lowbar;keys</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Return sorted keys in a vector</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/operator_assign-0f.html" class="xref page"><code>operator&equals;</code></a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Assignment operators</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/at-05.html" class="xref page"><code>at</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Access to %unordered&lowbar;map data&period;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/get_allocator.html" class="xref page"><code>get&lowbar;allocator</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the allocator object used by the %unordered&lowbar;map&period;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/empty.html" class="xref page"><code>empty</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns true if the %unordered&lowbar;map is empty&period;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/size.html" class="xref page"><code>size</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the size of the %unordered&lowbar;map&period;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/max_size.html" class="xref page"><code>max&lowbar;size</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the maximum size of the %unordered&lowbar;map&period;</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/begin-07.html" class="xref page"><code>begin</code></a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>begin</code> overloads</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/bucket.html" class="xref page"><code>bucket</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/bucket_count.html" class="xref page"><code>bucket&lowbar;count</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the number of buckets of the %unordered&lowbar;map&period;</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/bucket_size.html" class="xref page"><code>bucket&lowbar;size</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/cbegin-0c.html" class="xref page"><code>cbegin</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/end-0c.html" class="xref page"><code>end</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>end</code> overloads</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/cend-04.html" class="xref page"><code>cend</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/clear.html" class="xref page"><code>clear</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Erases all elements in an %unordered&lowbar;map&period; Note that this function only erases the elements, and that if the elements themselves are pointers, the pointed&hyphen;to memory is not touched in any way&period; Managing the pointer is the user&apos;s responsibility&period;</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/count.html" class="xref page"><code>count</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Finds the number of elements&period;</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/emplace.html" class="xref page"><code>emplace</code></a></p></td>
@@ -559,112 +607,92 @@ h(1, 1, 1) = 0;</code></pre>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Attempts to build and insert a std&colon;&colon;pair into the %unordered&lowbar;map&period;</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/empty.html" class="xref page"><code>empty</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Returns true if the %unordered&lowbar;map is empty&period;</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/end-0c.html" class="xref page"><code>end</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>end</code> overloads</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/equal_range-0c.html" class="xref page"><code>equal&lowbar;range</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Finds a subsequence matching given key&period;</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/equals.html" class="xref page"><code>equals</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Checks if 2 histograms are equal&period; Ignores type, and checks if the keys (after type casting) match&period;</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/erase-03.html" class="xref page"><code>erase</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>erase</code> overloads</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/extract-0a.html" class="xref page"><code>extract</code></a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Extract a node&period;</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/fill.html" class="xref page"><code>fill</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Fills the histogram with the input image view</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/find-07b.html" class="xref page"><code>find</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Tries to locate an element in an %unordered&lowbar;map&period;</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/get_allocator.html" class="xref page"><code>get&lowbar;allocator</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the allocator object used by the %unordered&lowbar;map&period;</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/hash_function.html" class="xref page"><code>hash&lowbar;function</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the hash functor object with which the %unordered&lowbar;map was constructed&period;</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/insert-02.html" class="xref page"><code>insert</code></a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>insert</code> overloads</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/try_emplace-0e.html" class="xref page"><code>try&lowbar;emplace</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Attempts to build and insert a std&colon;&colon;pair into the %unordered&lowbar;map&period;</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/insert_or_assign-01.html" class="xref page"><code>insert&lowbar;or&lowbar;assign</code></a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Attempts to insert a std&colon;&colon;pair into the %unordered&lowbar;map&period;</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/is_tuple_compatible.html" class="xref page"><code>is&lowbar;tuple&lowbar;compatible</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Checks if the histogram class is compatible to be used with the specified tuple type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/erase-03.html" class="xref page"><code>erase</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>erase</code> overloads</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/key_eq.html" class="xref page"><code>key&lowbar;eq</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the key comparison object with which the %unordered&lowbar;map was constructed&period;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/clear.html" class="xref page"><code>clear</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Erases all elements in an %unordered&lowbar;map&period; Note that this function only erases the elements, and that if the elements themselves are pointers, the pointed&hyphen;to memory is not touched in any way&period; Managing the pointer is the user&apos;s responsibility&period;</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/key_from_pixel.html" class="xref page"><code>key&lowbar;from&lowbar;pixel</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Returns a histogram compatible key from the input pixel which can be directly used</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/key_from_tuple.html" class="xref page"><code>key&lowbar;from&lowbar;tuple</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Returns a key compatible to be used as the histogram key from the input tuple</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/load_factor.html" class="xref page"><code>load&lowbar;factor</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the average number of elements per bucket&period;</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/max_bucket_count.html" class="xref page"><code>max&lowbar;bucket&lowbar;count</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the maximum number of buckets of the %unordered&lowbar;map&period;</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/max_key.html" class="xref page"><code>max&lowbar;key</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Return the maximum key in histogram</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/max_load_factor-00.html" class="xref page"><code>max&lowbar;load&lowbar;factor</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>max&lowbar;load&lowbar;factor</code> overloads</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/max_size.html" class="xref page"><code>max&lowbar;size</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the maximum size of the %unordered&lowbar;map&period;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/swap.html" class="xref page"><code>swap</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Swaps data with another %unordered&lowbar;map&period;</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/merge-00a.html" class="xref page"><code>merge</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/min_key.html" class="xref page"><code>min&lowbar;key</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Return the minimum key in histogram</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/hash_function.html" class="xref page"><code>hash&lowbar;function</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the hash functor object with which the %unordered&lowbar;map was constructed&period;</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/nearest_key.html" class="xref page"><code>nearest&lowbar;key</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Return nearest smaller key to specified histogram key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/key_eq.html" class="xref page"><code>key&lowbar;eq</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the key comparison object with which the %unordered&lowbar;map was constructed&period;</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/normalize.html" class="xref page"><code>normalize</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Normalize this histogram class</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/find-07b.html" class="xref page"><code>find</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tries to locate an element in an %unordered&lowbar;map&period;</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/operator_call.html" class="xref page"><code>operator()</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Returns bin value corresponding to specified tuple</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/count-07.html" class="xref page"><code>count</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Finds the number of elements&period;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/contains-06.html" class="xref page"><code>contains</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Finds whether an element with the given key exists&period;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/equal_range-0c.html" class="xref page"><code>equal&lowbar;range</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Finds a subsequence matching given key&period;</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/operator_subs-07.html" class="xref page"><code>operator&lsqb;&rsqb;</code></a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Subscript ( <code>&lsqb;&rsqb;</code> ) access to %unordered&lowbar;map data&period;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/at-05.html" class="xref page"><code>at</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Access to %unordered&lowbar;map data&period;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/bucket_count.html" class="xref page"><code>bucket&lowbar;count</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the number of buckets of the %unordered&lowbar;map&period;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/max_bucket_count.html" class="xref page"><code>max&lowbar;bucket&lowbar;count</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the maximum number of buckets of the %unordered&lowbar;map&period;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/bucket_size.html" class="xref page"><code>bucket&lowbar;size</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/bucket.html" class="xref page"><code>bucket</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/load_factor.html" class="xref page"><code>load&lowbar;factor</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the average number of elements per bucket&period;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/max_load_factor-00.html" class="xref page"><code>max&lowbar;load&lowbar;factor</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>max&lowbar;load&lowbar;factor</code> overloads</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/rehash.html" class="xref page"><code>rehash</code></a></p></td>
@@ -673,30 +701,6 @@ h(1, 1, 1) = 0;</code></pre>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/reserve.html" class="xref page"><code>reserve</code></a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Prepare the %unordered&lowbar;map for a specified number of elements&period;</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/size.html" class="xref page"><code>size</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the size of the %unordered&lowbar;map&period;</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/sorted_keys.html" class="xref page"><code>sorted&lowbar;keys</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Return sorted keys in a vector</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/sub_histogram-0f.html" class="xref page"><code>sub&lowbar;histogram</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sub&lowbar;histogram</code> overloads</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/sum.html" class="xref page"><code>sum</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Return the sum count of all bins</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/swap.html" class="xref page"><code>swap</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Swaps data with another %unordered&lowbar;map&period;</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="histogram/try_emplace-0e.html" class="xref page"><code>try&lowbar;emplace</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Attempts to build and insert a std&colon;&colon;pair into the %unordered&lowbar;map&period;</p></td>
 </tr>
 </tbody>
 </table>

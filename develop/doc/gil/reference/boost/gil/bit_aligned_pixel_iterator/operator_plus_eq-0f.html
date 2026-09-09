@@ -76,7 +76,7 @@
     .catch(reveal);
 })();
 </script>    <title>boost::gil::bit&lowbar;aligned&lowbar;pixel&lowbar;iterator::operator&plus;&equals; :: Boost.GIL</title>
-  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/reference/boost/gil/bit_aligned_pixel_iterator/operator_plus_eq-0f.html">
+  <link rel="canonical" href="https://github.com/boostorg/gil/gil/reference/boost/gil/bit_aligned_pixel_iterator/operator_plus_eq-0f.html">
   <meta name="generator" content="Antora 3.2.0">
     <link rel="stylesheet" href="../../../../../_/css/boostlook.css">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
@@ -344,28 +344,55 @@
     </a>
 </div></div>
     <h1 class="page"><a href="../../../boost.html">boost</a>::<a href="../../../boost/gil.html">gil</a>::<a href="../../../boost/gil/bit_aligned_pixel_iterator.html">bit&lowbar;aligned&lowbar;pixel&lowbar;iterator</a>::operator&plus;&equals;</h1>
-  <div class="sect1">
+  <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Addition assignment operator</p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_synopsis"><a class="anchor" href="#_synopsis"></a>Synopsis</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/develop/doc/../include/boost/gil/bit_aligned_pixel_iterator.hpp#L37">boost&sol;gil&sol;bit&lowbar;aligned&lowbar;pixel&lowbar;iterator&period;hpp</a>&gt;</code></p>
+<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/master/include/boost/gil/bit_aligned_pixel_iterator.hpp#L78">boost&sol;gil&sol;bit&lowbar;aligned&lowbar;pixel&lowbar;iterator&period;hpp</a>&gt;</code></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template&lt;typename D = Derived&gt;
-constexpr
-decltype(access&colon;&colon;base(std&colon;&colon;declval&lt;D &amp;&gt;()) &plus;&equals; n, std&colon;&colon;declval&lt;D &amp;&gt;())
-operator&plus;&equals;(difference&lowbar;type n) noexcept(&sol;&ast; see-below &ast;&sol;);</code></pre>
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">constexpr
+<a href="../bit_aligned_pixel_iterator.html" class="xref page">bit&lowbar;aligned&lowbar;pixel&lowbar;iterator</a>&amp;
+operator&plus;&equals;(<a href="difference_type.html" class="xref page">difference&lowbar;type</a> i) noexcept;</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_exception_specification"><a class="anchor" href="#_exception_specification"></a>Exception specification</h2>
+<h2 id="_return_value"><a class="anchor" href="#_return_value"></a>Return Value</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This function is potentially-throwing unless <code>noexcept(access&colon;&colon;base(std&colon;&colon;declval&lt;D &amp;&gt;()) &plus;&equals; n)</code>.</p>
+<p>Reference to the current object</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_parameters"><a class="anchor" href="#_parameters"></a>Parameters</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>i</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The right operand</p></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p><span class="small">Created with <a href="https://www.mrdocs.com">MrDocs</a></span></p>
 </div>

@@ -76,7 +76,7 @@
     .catch(reveal);
 })();
 </script>    <title>boost::gil::any&lowbar;image :: Boost.GIL</title>
-  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/reference/boost/gil/any_image.html">
+  <link rel="canonical" href="https://github.com/boostorg/gil/gil/reference/boost/gil/any_image.html">
   <meta name="generator" content="Antora 3.2.0">
     <link rel="stylesheet" href="../../../../_/css/boostlook.css">
     <link rel="stylesheet" href="../../../../_/css/site.css">
@@ -355,7 +355,7 @@
 <h2 id="_synopsis"><a class="anchor" href="#_synopsis"></a>Synopsis</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/develop/doc/../include/boost/gil/extension/dynamic_image/any_image.hpp#L87">boost&sol;gil&sol;extension&sol;dynamic&lowbar;image&sol;any&lowbar;image&period;hpp</a>&gt;</code></p>
+<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/master/include/boost/gil/extension/dynamic_image/any_image.hpp#L87">boost&sol;gil&sol;extension&sol;dynamic&lowbar;image&sol;any&lowbar;image&period;hpp</a>&gt;</code></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -410,19 +410,19 @@ class any&lowbar;image
 <td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="any_image/const_view_t.html" class="xref page"><code>const&lowbar;view&lowbar;t</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="any_image/point_t.html" class="xref page"><code>point&lowbar;t</code></a></p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="any_image/view_t.html" class="xref page"><code>view&lowbar;t</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="any_image/const_view_t.html" class="xref page"><code>const&lowbar;view&lowbar;t</code></a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="any_image/x_coord_t.html" class="xref page"><code>x&lowbar;coord&lowbar;t</code></a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="any_image/y_coord_t.html" class="xref page"><code>y&lowbar;coord&lowbar;t</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="any_image/point_t.html" class="xref page"><code>point&lowbar;t</code></a></p></td>
 </tr>
 </tbody>
 </table>
@@ -446,15 +446,7 @@ class any&lowbar;image
 <td class="tableblock halign-left valign-top"><p class="tableblock">Assignment operators</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="any_image/dimensions.html" class="xref page"><code>dimensions</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="any_image/emplace-0a.html" class="xref page"><code>emplace</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="any_image/height.html" class="xref page"><code>height</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="any_image/recreate-0b5.html" class="xref page"><code>recreate</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -462,15 +454,19 @@ class any&lowbar;image
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="any_image/recreate-0b5.html" class="xref page"><code>recreate</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="any_image/dimensions.html" class="xref page"><code>dimensions</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="any_image/subset-0f9.html" class="xref page"><code>subset</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="any_image/width.html" class="xref page"><code>width</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="any_image/swap.html" class="xref page"><code>swap</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="any_image/height.html" class="xref page"><code>height</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="any_image/emplace-0a.html" class="xref page"><code>emplace</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -478,7 +474,11 @@ class any&lowbar;image
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="any_image/width.html" class="xref page"><code>width</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="any_image/swap.html" class="xref page"><code>swap</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="any_image/subset-0f9.html" class="xref page"><code>subset</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
@@ -500,13 +500,13 @@ class any&lowbar;image
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#../../boost/gil/any_image/_10using.adoc" class="xref unresolved"><code>Unnamed using</code></a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#../../boost/gil/any_image/_get_impl.adoc" class="xref unresolved"><code>&lowbar;get&lowbar;impl</code></a></p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="any_image/index.html" class="xref page"><code>index</code></a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="any_image/uses_double_storage.html" class="xref page"><code>uses&lowbar;double&lowbar;storage</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#../../boost/gil/any_image/_get_impl.adoc" class="xref unresolved"><code>&lowbar;get&lowbar;impl</code></a></p></td>
 </tr>
 </tbody>
 </table>

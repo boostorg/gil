@@ -76,7 +76,7 @@
     .catch(reveal);
 })();
 </script>    <title>boost::gil::dereference&lowbar;iterator&lowbar;adaptor :: Boost.GIL</title>
-  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/reference/boost/gil/dereference_iterator_adaptor.html">
+  <link rel="canonical" href="https://github.com/boostorg/gil/gil/reference/boost/gil/dereference_iterator_adaptor.html">
   <meta name="generator" content="Antora 3.2.0">
     <link rel="stylesheet" href="../../../../_/css/boostlook.css">
     <link rel="stylesheet" href="../../../../_/css/site.css">
@@ -355,7 +355,7 @@
 <h2 id="_synopsis"><a class="anchor" href="#_synopsis"></a>Synopsis</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/develop/doc/../include/boost/gil/pixel_iterator_adaptor.hpp#L27">boost&sol;gil&sol;pixel&lowbar;iterator&lowbar;adaptor&period;hpp</a>&gt;</code></p>
+<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/master/include/boost/gil/pixel_iterator_adaptor.hpp#L27">boost&sol;gil&sol;pixel&lowbar;iterator&lowbar;adaptor&period;hpp</a>&gt;</code></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -363,7 +363,7 @@
     typename Iterator,
     typename DFn&gt;
 class dereference&lowbar;iterator&lowbar;adaptor
-    : public stl&lowbar;interfaces::iterator&lowbar;interface&lt;dereference&lowbar;iterator&lowbar;adaptor&lt;Iterator, DFn&gt;, std::iterator&lowbar;traits&lt;Iterator&gt;::iterator&lowbar;category, DFn::value&lowbar;type, DFn::reference&gt;</code></pre>
+    : public stl&lowbar;interfaces::iterator&lowbar;interface&lt;std::iterator&lowbar;traits&lt;Iterator&gt;::iterator&lowbar;category, DFn::value&lowbar;type, DFn::reference&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -382,7 +382,7 @@ class dereference&lowbar;iterator&lowbar;adaptor
 <td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>stl&lowbar;interfaces::iterator&lowbar;interface&lt;dereference&lowbar;iterator&lowbar;adaptor&lt;Iterator, DFn&gt;, std::iterator&lowbar;traits&lt;Iterator&gt;::iterator&lowbar;category, DFn::value&lowbar;type, DFn::reference&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>stl&lowbar;interfaces::iterator&lowbar;interface&lt;std::iterator&lowbar;traits&lt;Iterator&gt;::iterator&lowbar;category, DFn::value&lowbar;type, DFn::reference&gt;</code></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
@@ -401,7 +401,10 @@ class dereference&lowbar;iterator&lowbar;adaptor
 <td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/dereference_fn.html" class="xref page"><code>dereference&lowbar;fn</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/parent_t.html" class="xref page"><code>parent&lowbar;t</code></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/reference.html" class="xref page"><code>reference</code></a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/difference_type.html" class="xref page"><code>difference&lowbar;type</code></a></p></td>
@@ -410,19 +413,16 @@ class dereference&lowbar;iterator&lowbar;adaptor
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/iterator_category.html" class="xref page"><code>iterator&lowbar;category</code></a></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/dereference_fn.html" class="xref page"><code>dereference&lowbar;fn</code></a></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/iterator_concept.html" class="xref page"><code>iterator&lowbar;concept</code></a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/parent_t.html" class="xref page"><code>parent&lowbar;t</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/value_type.html" class="xref page"><code>value&lowbar;type</code></a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/pointer.html" class="xref page"><code>pointer</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/reference.html" class="xref page"><code>reference</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/value_type.html" class="xref page"><code>value&lowbar;type</code></a></p></td>
 </tr>
 </tbody>
 </table>
@@ -446,6 +446,10 @@ class dereference&lowbar;iterator&lowbar;adaptor
 <td class="tableblock halign-left valign-top"><p class="tableblock">Constructors</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/operator_star-0b.html" class="xref page"><code>operator&ast;</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dereference operators</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/base-01.html" class="xref page"><code>base</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -454,23 +458,19 @@ class dereference&lowbar;iterator&lowbar;adaptor
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/operator_star-0b.html" class="xref page"><code>operator&ast;</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Dereference operators</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/operator_plus.html" class="xref page"><code>operator&plus;</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/operator_ptr.html" class="xref page"><code>operator&hyphen;&gt;</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/operator_inc-079.html" class="xref page"><code>operator&plus;&plus;</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/operator_subs.html" class="xref page"><code>operator&lsqb;&rsqb;</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/operator_inc-07.html" class="xref page"><code>operator&plus;&plus;</code></a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Increment operators</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/operator_plus_eq.html" class="xref page"><code>operator&plus;&equals;</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/operator_minus.html" class="xref page"><code>operator&hyphen;</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -479,14 +479,6 @@ class dereference&lowbar;iterator&lowbar;adaptor
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/operator_minus_eq.html" class="xref page"><code>operator&hyphen;&equals;</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/operator_ptr-05.html" class="xref page"><code>operator&hyphen;&gt;</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Member access operators</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/operator_subs.html" class="xref page"><code>operator&lsqb;&rsqb;</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
@@ -523,10 +515,10 @@ class dereference&lowbar;iterator&lowbar;adaptor
 <td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#../../boost/gil/dereference_iterator_adaptor/_deref_fn.adoc" class="xref unresolved"><code>&lowbar;deref&lowbar;fn</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/it_.html" class="xref page"><code>it&lowbar;</code></a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="dereference_iterator_adaptor/it_.html" class="xref page"><code>it&lowbar;</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#../../boost/gil/dereference_iterator_adaptor/_deref_fn.adoc" class="xref unresolved"><code>&lowbar;deref&lowbar;fn</code></a></p></td>
 </tr>
 </tbody>
 </table>

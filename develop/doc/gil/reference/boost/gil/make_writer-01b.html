@@ -76,7 +76,7 @@
     .catch(reveal);
 })();
 </script>    <title>boost::gil::make&lowbar;writer :: Boost.GIL</title>
-  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/reference/boost/gil/make_writer-01b.html">
+  <link rel="canonical" href="https://github.com/boostorg/gil/gil/reference/boost/gil/make_writer-01b.html">
   <meta name="generator" content="Antora 3.2.0">
     <link rel="stylesheet" href="../../../../_/css/boostlook.css">
     <link rel="stylesheet" href="../../../../_/css/site.css">
@@ -348,31 +348,43 @@
 <h2 id="_synopses"><a class="anchor" href="#_synopses"></a>Synopses</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/develop/doc/../include/boost/gil/io/make_writer.hpp#L18">boost&sol;gil&sol;io&sol;make&lowbar;writer&period;hpp</a>&gt;</code></p>
+<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/master/include/boost/gil/io/make_writer.hpp#L18">boost&sol;gil&sol;io&sol;make&lowbar;writer&period;hpp</a>&gt;</code></p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template&lt;typename FormatTag&gt;
 get&lowbar;writer&lt;std::wstring, FormatTag&gt;::type
-<a href="make_writer-0e.html" class="xref page">make&lowbar;writer</a>(
+<a href="make_writer-0b.html" class="xref page">make&lowbar;writer</a>(
     detail::filesystem::path const&amp; path,
     FormatTag const&amp; tag);</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><span class="small"><a href="make_writer-0e.html" class="xref page"><em>» more&period;&period;&period;</em></a></span></p>
+<p><span class="small"><a href="make_writer-0b.html" class="xref page"><em>» more&period;&period;&period;</em></a></span></p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template&lt;typename FormatTag&gt;
 get&lowbar;writer&lt;std::wstring, FormatTag&gt;::type
-<a href="make_writer-013.html" class="xref page">make&lowbar;writer</a>(
+<a href="make_writer-04b2.html" class="xref page">make&lowbar;writer</a>(
     detail::filesystem::path const&amp; path,
     <a href="image_write_info.html" class="xref page">image&lowbar;write&lowbar;info&lt;FormatTag&gt;</a> const&amp; info);</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><span class="small"><a href="make_writer-013.html" class="xref page"><em>» more&period;&period;&period;</em></a></span></p>
+<p><span class="small"><a href="make_writer-04b2.html" class="xref page"><em>» more&period;&period;&period;</em></a></span></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template&lt;typename FormatTag&gt;
+get&lowbar;writer&lt;std::wstring, FormatTag&gt;::type
+<a href="make_writer-011.html" class="xref page">make&lowbar;writer</a>(
+    std::wstring const&amp; file&lowbar;name,
+    FormatTag const&amp;);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span class="small"><a href="make_writer-011.html" class="xref page"><em>» more&period;&period;&period;</em></a></span></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -380,23 +392,11 @@ get&lowbar;writer&lt;std::wstring, FormatTag&gt;::type
 get&lowbar;writer&lt;std::wstring, FormatTag&gt;::type
 <a href="make_writer-07.html" class="xref page">make&lowbar;writer</a>(
     std::wstring const&amp; file&lowbar;name,
-    FormatTag const&amp;);</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p><span class="small"><a href="make_writer-07.html" class="xref page"><em>» more&period;&period;&period;</em></a></span></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template&lt;typename FormatTag&gt;
-get&lowbar;writer&lt;std::wstring, FormatTag&gt;::type
-<a href="make_writer-0f.html" class="xref page">make&lowbar;writer</a>(
-    std::wstring const&amp; file&lowbar;name,
     <a href="image_write_info.html" class="xref page">image&lowbar;write&lowbar;info&lt;FormatTag&gt;</a> const&amp; info);</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><span class="small"><a href="make_writer-0f.html" class="xref page"><em>» more&period;&period;&period;</em></a></span></p>
+<p><span class="small"><a href="make_writer-07.html" class="xref page"><em>» more&period;&period;&period;</em></a></span></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -461,7 +461,7 @@ requires mp11&colon;&colon;mp&lowbar;and
     typename String,
     typename FormatTag&gt;
 get&lowbar;writer&lt;String, FormatTag&gt;::type
-<a href="make_writer-04.html" class="xref page">make&lowbar;writer</a>(
+<a href="make_writer-04b4.html" class="xref page">make&lowbar;writer</a>(
     String const&amp; file&lowbar;name,
     <a href="image_write_info.html" class="xref page">image&lowbar;write&lowbar;info&lt;FormatTag&gt;</a> const&amp; info)
 requires mp11&colon;&colon;mp&lowbar;and
@@ -472,7 +472,7 @@ requires mp11&colon;&colon;mp&lowbar;and
 </div>
 </div>
 <div class="paragraph">
-<p><span class="small"><a href="make_writer-04.html" class="xref page"><em>» more&period;&period;&period;</em></a></span></p>
+<p><span class="small"><a href="make_writer-04b4.html" class="xref page"><em>» more&period;&period;&period;</em></a></span></p>
 </div>
 <div class="paragraph">
 <p><span class="small">Created with <a href="https://www.mrdocs.com">MrDocs</a></span></p>

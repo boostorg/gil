@@ -76,7 +76,7 @@
     .catch(reveal);
 })();
 </script>    <title>boost::gil::iterator&lowbar;from&lowbar;2d :: Boost.GIL</title>
-  <link rel="canonical" href="https://antora.cppalliance.org/develop/lib/doc/gil/reference/boost/gil/iterator_from_2d.html">
+  <link rel="canonical" href="https://github.com/boostorg/gil/gil/reference/boost/gil/iterator_from_2d.html">
   <meta name="generator" content="Antora 3.2.0">
     <link rel="stylesheet" href="../../../../_/css/boostlook.css">
     <link rel="stylesheet" href="../../../../_/css/site.css">
@@ -355,13 +355,13 @@
 <h2 id="_synopsis"><a class="anchor" href="#_synopsis"></a>Synopsis</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/develop/doc/../include/boost/gil/iterator_from_2d.hpp#L41">boost&sol;gil&sol;iterator&lowbar;from&lowbar;2d&period;hpp</a>&gt;</code></p>
+<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/master/include/boost/gil/iterator_from_2d.hpp#L41">boost&sol;gil&sol;iterator&lowbar;from&lowbar;2d&period;hpp</a>&gt;</code></p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template&lt;typename Loc2&gt;
 class iterator&lowbar;from&lowbar;2d
-    : public stl&lowbar;interfaces::iterator&lowbar;interface&lt;iterator&lowbar;from&lowbar;2d&lt;Loc2&gt;, std::random&lowbar;access&lowbar;iterator&lowbar;tag, Loc2::value&lowbar;type, Loc2::reference&gt;</code></pre>
+    : public stl&lowbar;interfaces::iterator&lowbar;interface&lt;std::random&lowbar;access&lowbar;iterator&lowbar;tag, Loc2::value&lowbar;type, Loc2::reference&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -388,7 +388,7 @@ class iterator&lowbar;from&lowbar;2d
 <td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>stl&lowbar;interfaces::iterator&lowbar;interface&lt;iterator&lowbar;from&lowbar;2d&lt;Loc2&gt;, std::random&lowbar;access&lowbar;iterator&lowbar;tag, Loc2::value&lowbar;type, Loc2::reference&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>stl&lowbar;interfaces::iterator&lowbar;interface&lt;std::random&lowbar;access&lowbar;iterator&lowbar;tag, Loc2::value&lowbar;type, Loc2::reference&gt;</code></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
@@ -410,25 +410,25 @@ class iterator&lowbar;from&lowbar;2d
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/difference_type.html" class="xref page"><code>difference&lowbar;type</code></a></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/reference.html" class="xref page"><code>reference</code></a></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/iterator_category.html" class="xref page"><code>iterator&lowbar;category</code></a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/iterator_concept.html" class="xref page"><code>iterator&lowbar;concept</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/x_iterator.html" class="xref page"><code>x&lowbar;iterator</code></a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/point_t.html" class="xref page"><code>point&lowbar;t</code></a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/pointer.html" class="xref page"><code>pointer</code></a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/reference.html" class="xref page"><code>reference</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/iterator_concept.html" class="xref page"><code>iterator&lowbar;concept</code></a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/value_type.html" class="xref page"><code>value&lowbar;type</code></a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/x_iterator.html" class="xref page"><code>x&lowbar;iterator</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/pointer.html" class="xref page"><code>pointer</code></a></p></td>
 </tr>
 </tbody>
 </table>
@@ -448,59 +448,7 @@ class iterator&lowbar;from&lowbar;2d
 <td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/2constructor-01.html" class="xref page"><code>iterator&lowbar;from&lowbar;2d</code></a>         <span class="small">[constructor]</span></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Constructors</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/operator_assign.html" class="xref page"><code>operator&equals;</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Copy assignment operator</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/is_1d_traversable.html" class="xref page"><code>is&lowbar;1d&lowbar;traversable</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/operator_star-0f.html" class="xref page"><code>operator&ast;</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Dereference operators</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/operator_plus.html" class="xref page"><code>operator&plus;</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/operator_inc-0b9.html" class="xref page"><code>operator&plus;&plus;</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Increment operators</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/operator_plus_eq-04.html" class="xref page"><code>operator&plus;&equals;</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Addition assignment operators</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/operator_minus-04.html" class="xref page"><code>operator&hyphen;</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Subtraction operators</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/operator_dec-05.html" class="xref page"><code>operator&hyphen;&hyphen;</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Decrement operators</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/operator_minus_eq.html" class="xref page"><code>operator&hyphen;&equals;</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/operator_ptr-0b.html" class="xref page"><code>operator&hyphen;&gt;</code></a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Member access operators</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/operator_subs.html" class="xref page"><code>operator&lsqb;&rsqb;</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/width.html" class="xref page"><code>width</code></a></p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/x.html" class="xref page"><code>x</code></a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -512,8 +460,56 @@ class iterator&lowbar;from&lowbar;2d
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/is_1d_traversable.html" class="xref page"><code>is&lowbar;1d&lowbar;traversable</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/x.html" class="xref page"><code>x</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/2constructor-01.html" class="xref page"><code>iterator&lowbar;from&lowbar;2d</code></a>         <span class="small">[constructor]</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Constructors</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/operator_assign.html" class="xref page"><code>operator&equals;</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Copy assignment operator</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/operator_star-0f.html" class="xref page"><code>operator&ast;</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dereference operators</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/operator_plus_eq-04.html" class="xref page"><code>operator&plus;&equals;</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Addition assignment operators</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/operator_inc-0b.html" class="xref page"><code>operator&plus;&plus;</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Increment operators</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/operator_dec-05.html" class="xref page"><code>operator&hyphen;&hyphen;</code></a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Decrement operators</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/operator_minus.html" class="xref page"><code>operator&hyphen;</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/operator_eq.html" class="xref page"><code>operator&equals;&equals;</code></a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Equality operator</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/operator_ptr.html" class="xref page"><code>operator&hyphen;&gt;</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/operator_subs.html" class="xref page"><code>operator&lsqb;&rsqb;</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iterator_from_2d/operator_minus_eq.html" class="xref page"><code>operator&hyphen;&equals;</code></a></p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
 </table>
