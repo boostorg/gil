@@ -9,7 +9,7 @@ runs:
         cd ..
         git clone -b $BOOST_BRANCH --depth 1 https://github.com/boostorg/boost.git boost-root
         cd boost-root
-        cp -r $GITHUB_WORKSPACE/* libs/gil
+        cp -a $GITHUB_WORKSPACE/. libs/gil/
         git submodule update --init tools/boostdep
         python tools/boostdep/depinst/depinst.py --git_args "--jobs 3" gil
         ./bootstrap.sh
