@@ -18,12 +18,12 @@ if [ "${GITHUB_REF##*/}" = develop ]; then
     rm -rf develop
     mkdir -p develop/doc
     cp ../index.html develop/
-    cp -a ../doc/build/site/. develop/doc/
+    cp -a ../doc/html/. develop/doc/
 else
     # main branch
     rm -f index.html
     rm -rf html gil
-    cp -a ../doc/build/site/. .
+    cp -a ../doc/html/. .
 fi
 
 # Remove version control
