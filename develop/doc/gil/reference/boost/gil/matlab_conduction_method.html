@@ -344,11 +344,18 @@
     </a>
 </div></div>
     <h1 class="page"><a href="../../boost.html">boost</a>::<a href="../../boost/gil.html">gil</a>::matlab&lowbar;conduction&lowbar;method</h1>
-  <div class="sect1">
+  <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Conduction (edge&hyphen;stopping) function used by MATLAB&hyphen;compatible anisotropic diffusion</p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_synopsis"><a class="anchor" href="#_synopsis"></a>Synopsis</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/master/include/boost/gil/extension/image_processing/diffusion.hpp#L278">boost&sol;gil&sol;extension&sol;image&lowbar;processing&sol;diffusion&period;hpp</a>&gt;</code></p>
+<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/master/include/boost/gil/extension/image_processing/diffusion.hpp#L280">boost&sol;gil&sol;extension&sol;image&lowbar;processing&sol;diffusion&period;hpp</a>&gt;</code></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -362,17 +369,21 @@
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 100%;">
+<col style="width: 20%;">
+<col style="width: 80%;">
 </colgroup>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>exponential</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">exponential conduction function, favors high&hyphen;contrast edges</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>quadratic</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">quadratic conduction function, favors wide regions over smaller ones</p></td>
 </tr>
 </tbody>
 </table>

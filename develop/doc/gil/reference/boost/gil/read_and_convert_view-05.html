@@ -355,7 +355,7 @@
 <h2 id="_synopses"><a class="anchor" href="#_synopses"></a>Synopses</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/master/include/boost/gil/io/read_and_convert_view.hpp#L30">boost&sol;gil&sol;io&sol;read&lowbar;and&lowbar;convert&lowbar;view&period;hpp</a>&gt;</code></p>
+<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/master/include/boost/gil/io/read_and_convert_view.hpp#L28">boost&sol;gil&sol;io&sol;read&lowbar;and&lowbar;convert&lowbar;view&period;hpp</a>&gt;</code></p>
 </div>
 <div class="paragraph">
 <p>Reads and color&hyphen;converts an image view&period; No memory is allocated&period;</p>
@@ -599,32 +599,28 @@ requires mp11&colon;&colon;mp&lowbar;and
 <td class="tableblock halign-left valign-top"><p class="tableblock">An image reader&period;</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>img</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The image in which the data is read into&period;</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>settings</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies read settings depending on the image format&period;</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>cc</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Color converter function object&period;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>view</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The image view in which the data is read into&period;</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>device</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">It&apos;s a device&period; Must satisfy is&lowbar;input&lowbar;device metafunction or is&lowbar;adaptable&lowbar;input&lowbar;device&period;</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>view</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The image view in which the data is read into&period;</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>tag</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Defines the image format&period; Must satisfy is&lowbar;format&lowbar;tag metafunction&period;</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>settings</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies read settings depending on the image format&period;</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>file&lowbar;name</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">File name&period; Must satisfy is&lowbar;supported&lowbar;path&lowbar;spec metafunction&period;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>cc</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Color converter function object&period;</p></td>
 </tr>
 </tbody>
 </table>
