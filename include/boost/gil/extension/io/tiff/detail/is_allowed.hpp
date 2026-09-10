@@ -98,7 +98,7 @@ struct Format_Type
             <
                 typename is_bit_aligned<typename get_pixel_type<View>::type>::type
             >,
-            std::is_floating_point<Channel>
+            is_floating_point<Channel>
         >::value
     >::type
 >

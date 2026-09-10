@@ -269,16 +269,18 @@ struct rgb_luminance
 
 } // namespace brightness_function
 
+/// \brief Pixel connectivity used by MATLAB-compatible anisotropic diffusion
 enum class matlab_connectivity
 {
-    minimal,
-    maximal
+    minimal, ///< 4-connectivity (N, S, E, W neighbors only)
+    maximal  ///< 8-connectivity (including diagonal neighbors)
 };
 
+/// \brief Conduction (edge-stopping) function used by MATLAB-compatible anisotropic diffusion
 enum class matlab_conduction_method
 {
-    exponential,
-    quadratic
+    exponential, ///< exponential conduction function, favors high-contrast edges
+    quadratic    ///< quadratic conduction function, favors wide regions over smaller ones
 };
 
 template <typename InputView, typename OutputView>

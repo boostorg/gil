@@ -1,0 +1,91 @@
+= Morphology
+
+== Description
+
+https://en.wikipedia.org/wiki/Mathematical_morphology[Morphological
+operations] process an image based on the shape of a
+_structuring element_ — a small binary matrix, represented in GIL by a
+`kernel_2d`, that is compared against the neighborhood of each pixel. They
+are most commonly applied to binary (black and white) images, for example to
+remove noise or extract shape features, but GIL's implementation works on
+grayscale channel values too.
+
+`morphology.hpp` defines two base operations, `dilate` and `erode`, and a
+number of operations built out of them by chaining them or subtracting their
+results.
+
+TIP: Morphological operations expect a binary image. Use
+xref:image_processing/thresholding.adoc#_binary_threshold[`threshold_binary`]
+to convert a grayscale image first.
+
+== Base operations
+
+`dilate` replaces each pixel with the *maximum* value found within the
+structuring element's neighborhood; it grows bright regions and shrinks dark
+ones. `erode` replaces each pixel with the *minimum* value found in the
+neighborhood, having the opposite effect. Both accept an `iterations`
+parameter to apply the operation repeatedly.
+
+[source,cpp]
+----
+// dilate(src_view, dst_view, structuring_element, iterations)
+dilate(view(img), view(img_out), ker_mat, 1);
+erode(view(img), view(img_out), ker_mat, 1);
+----
+
+== Compound operations
+
+[cols="1,3"]
+|===
+|Operation |Description
+
+|`opening`
+|Erosion followed by dilation. Removes small bright spots (noise) while
+leaving the overall shape and size of larger bright regions largely intact.
+
+|`closing`
+|Dilation followed by erosion, the opposite of opening. Closes small dark
+holes inside bright regions.
+
+|`morphological_gradient`
+|Difference between the dilation and the erosion of the image. Highlights
+the outline of objects in the image.
+
+|`top_hat`
+|Difference between the image and its opening. Extracts small bright
+elements and details that opening would otherwise remove.
+
+|`black_hat`
+|Difference between the closing of the image and the image itself. Extracts
+small dark elements and details that closing would otherwise remove.
+|===
+
+[source,cpp]
+----
+// opening(src_view, dst_view, structuring_element)
+opening(view(img), view(img_out), ker_mat);
+closing(view(img), view(img_out), ker_mat);
+
+// morphological_gradient/top_hat/black_hat(src_view, dst_view, structuring_element)
+morphological_gradient(view(img), view(img_out), ker_mat);
+top_hat(view(img), view(img_out), ker_mat);
+black_hat(view(img), view(img_out), ker_mat);
+----
+
+== Structuring element
+
+The structuring element is a `kernel_2d` of `0`s and `1`s: only the pixels
+overlapped by a `1` participate in the min/max comparison. A common choice is
+a square of `1`s, which makes every pixel in the neighborhood participate:
+
+[source,cpp]
+----
+std::vector<float> ker_vec(9, 1.0f); // 3x3 structuring element, all ones
+gil::detail::kernel_2d<float> ker_mat(ker_vec.begin(), ker_vec.size(), 1, 1);
+----
+
+== Demo
+
+See the full example at
+link:https://github.com/boostorg/gil/blob/develop/example/morphology.cpp[example/morphology.cpp],
+which applies each operation from the command line to a PNG image.

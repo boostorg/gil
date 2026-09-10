@@ -1,0 +1,57 @@
+#
+# Copyright (c) 2026 Samuel Debionne
+#
+# Distributed under the Boost Software License, Version 1.0. (See accompanying
+# file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+#
+
+site:
+  url: 'https://github.com/boostorg/gil'
+  title: Boost.GIL
+  robots: allow
+  start_page: gil::index.adoc
+
+antora:
+  extensions:
+    - require: '@cppalliance/antora-cpp-reference-extension'
+      dependencies:
+        - name: 'boost'
+          repo: 'https://github.com/boostorg/boost.git'
+          tag: 'develop'
+          variable: 'BOOST_SRC_DIR'
+          system-env: 'BOOST_SRC_DIR'
+    - require: '@cppalliance/antora-downloads-extension'
+
+asciidoc:
+  attributes:
+    # Scrolling problems appear without this
+    page-pagination: ''
+
+content:
+  sources:
+    - url: ..
+      start_path: doc
+      edit_url: 'https://github.com/boostorg/gil/edit/{refname}/{path}'
+
+ui:
+  bundle:
+    url: https://github.com/boostorg/website-v2-docs/releases/download/ui-master/ui-bundle.zip
+    snapshot: true
+  output_dir: _
+
+output:
+  dir: html
+
+runtime:
+  log:
+    # `fatal`, not `error`: MrDocs still has an open bug where some generated
+    # reference pages link to private-member sub-pages it never actually
+    # emits (github.com/cppalliance/mrdocs/issues/1277). On top of that,
+    # @cppalliance/antora-cpp-reference-extension's release-selection logic
+    # always considers cppalliance/mrdocs' rolling `develop`/`master` release
+    # tags first regardless of any `version:` pin here, so the exact MrDocs
+    # build used isn't pinned and can vary run to run. Don't let the
+    # resulting dangling-xref noise hard-fail the build; a real extraction
+    # failure still raises above `fatal`. Safe to tighten back to `error`
+    # once #1277 is closed.
+    failure_level: fatal

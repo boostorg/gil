@@ -29,12 +29,19 @@ using byte_vector_t = std::vector<byte_t>;
 
 }} // namespace boost::gil
 
-namespace std {
+namespace boost { namespace gil { namespace detail {
 
-template<> struct is_floating_point<::boost::gil::float32_t> : std::true_type {};
-template<> struct is_floating_point<::boost::gil::float64_t> : std::true_type {};
+// Specializing std::is_floating_point for program-defined types is
+// undefined behavior (Clause 20 [meta.type.synop]), so GIL IO code that
+// needs to know whether a channel type is a floating point type (e.g.
+// TIFF SAMPLEFORMAT detection) should use this trait instead.
+template <typename T>
+struct is_floating_point : std::is_floating_point<T> {};
 
-} // namespace std
+template<> struct is_floating_point<float32_t> : std::true_type {};
+template<> struct is_floating_point<float64_t> : std::true_type {};
+
+}}} // namespace boost::gil::detail
 
 namespace boost { namespace gil {
 

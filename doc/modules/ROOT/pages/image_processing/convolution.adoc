@@ -1,0 +1,89 @@
+= Convolution
+
+== Description
+
+`convolve.hpp` provides
+xref:image_processing/basics.adoc#_convolution[convolution] of an image with
+a kernel, in two flavors: separable one-dimensional convolution along rows
+and/or columns, and general two-dimensional convolution. Kernels come from
+`kernel.hpp` and can be fixed-size (`kernel_1d_fixed`, `kernel_2d_fixed`,
+known at compile time) or resizable (`kernel_1d`, `kernel_2d`).
+
+== Separable (1D) convolution
+
+Many kernels, such as the Gaussian kernel, are _separable_: convolving with
+the full 2D kernel gives the same result as convolving with a 1D kernel along
+the rows, then convolving the result with a 1D kernel along the columns. This
+is significantly cheaper than a full 2D convolution.
+
+`convolve_rows` and `convolve_cols` (and their `_fixed` counterparts, for
+fixed-size kernels) convolve along one axis:
+
+[source,cpp]
+----
+#include <boost/gil/image_processing/kernel.hpp>
+#include <boost/gil/image_processing/convolve.hpp>
+
+// radius-1 Gaussian kernel, size 9
+float gaussian[] = {
+    0.00022923296f, 0.0059770769f, 0.060597949f, 0.24173197f, 0.38292751f,
+    0.24173197f, 0.060597949f, 0.0059770769f, 0.00022923296f};
+kernel_1d_fixed<float, 9> kernel(gaussian, 4);
+
+rgb8_image_t convolved(img);
+convolve_rows_fixed<rgb32f_pixel_t>(const_view(img), kernel, view(convolved));
+convolve_cols_fixed<rgb32f_pixel_t>(const_view(convolved), kernel, view(convolved));
+----
+
+`PixelAccum`, the explicit template argument (`rgb32f_pixel_t` above), is the
+pixel type used to accumulate intermediate sums; it should have a channel
+type wide and precise enough to avoid overflow or precision loss, typically a
+floating point pixel type matching the source's color space.
+
+== 2D convolution
+
+`convolve_2d` (in the `detail` namespace) convolves the image directly with a
+2D kernel, useful when the kernel is not separable:
+
+[source,cpp]
+----
+std::vector<float> v(9, 1.0f / 9.0f); // 3x3 mean/box filter
+detail::kernel_2d<float> kernel(v.begin(), v.size(), 1, 1);
+detail::convolve_2d(view(img), kernel, view(img_out));
+----
+
+== Boundary handling
+
+Pixels near the border don't have a full neighborhood available. `convolve_rows`,
+`convolve_cols` and their `_fixed` counterparts accept a `boundary_option`
+(defined in `algorithm.hpp`) to control how out-of-bounds pixels are handled:
+
+[cols="1,3"]
+|===
+|Option |Description
+
+|`output_ignore`
+|Leave the corresponding output pixels unchanged.
+
+|`output_zero`
+|Set the corresponding output pixels to zero.
+
+|`extend_padded`
+|Assume the source view is already padded with extra boundary pixels.
+
+|`extend_zero`
+|Treat out-of-bounds source pixels as zero.
+
+|`extend_constant`
+|Treat out-of-bounds source pixels as equal to the nearest edge pixel.
+|===
+
+`convolve_2d` only supports `extend_zero` boundary handling.
+
+== Demo
+
+See the full examples at
+link:https://github.com/boostorg/gil/blob/develop/example/convolution.cpp[example/convolution.cpp]
+(separable convolution) and
+link:https://github.com/boostorg/gil/blob/develop/example/convolve2d.cpp[example/convolve2d.cpp]
+(2D convolution).

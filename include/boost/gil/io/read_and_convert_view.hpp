@@ -23,9 +23,7 @@ namespace boost{ namespace gil {
 
 /// \brief Reads and color-converts an image view. No memory is allocated.
 /// \param reader    An image reader.
-/// \param img       The image in which the data is read into.
-/// \param settings  Specifies read settings depending on the image format.
-/// \param cc        Color converter function object.
+/// \param view      The image view in which the data is read into.
 /// \throw std::ios_base::failure
 template <typename Reader, typename View>
 inline

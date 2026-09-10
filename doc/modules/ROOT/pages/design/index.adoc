@@ -1,0 +1,4 @@
+= Design Guide
+
+The sections listed below are dedicated to describe the design,
+structure and basic elements of the Generic Image Library (GIL).

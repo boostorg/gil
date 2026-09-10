@@ -167,6 +167,7 @@ private:
 } // namespace detail
 
 /// \ingroup ImageViewTransformationsFlipUD
+/// \brief Returns a runtime-typed view of a runtime source image view, flipped vertically.
 /// \tparam Views Models Boost.MP11-compatible list of models of ImageViewConcept
 template <typename ...Views>
 inline
@@ -178,6 +179,7 @@ auto flipped_up_down_view(any_image_view<Views...> const& src)
 }
 
 /// \ingroup ImageViewTransformationsFlipLR
+/// \brief Returns a runtime-typed view of a runtime source image view, flipped horizontally.
 /// \tparam Views Models Boost.MP11-compatible list of models of ImageViewConcept
 template <typename ...Views>
 inline
@@ -189,6 +191,7 @@ auto flipped_left_right_view(any_image_view<Views...> const& src)
 }
 
 /// \ingroup ImageViewTransformationsTransposed
+/// \brief Returns a runtime-typed transposed view of a runtime source image view.
 /// \tparam Views Models Boost.MP11-compatible list of models of ImageViewConcept
 template <typename ...Views>
 inline
@@ -200,6 +203,7 @@ auto transposed_view(any_image_view<Views...> const& src)
 }
 
 /// \ingroup ImageViewTransformations90CW
+/// \brief Returns a runtime-typed view of a runtime source image view, rotated 90 degrees clockwise.
 /// \tparam Views Models Boost.MP11-compatible list of models of ImageViewConcept
 template <typename ...Views>
 inline
@@ -211,6 +215,7 @@ auto rotated90cw_view(any_image_view<Views...> const& src)
 }
 
 /// \ingroup ImageViewTransformations90CCW
+/// \brief Returns a runtime-typed view of a runtime source image view, rotated 90 degrees counterclockwise.
 /// \tparam Views Models Boost.MP11-compatible list of models of ImageViewConcept
 template <typename ...Views>
 inline
@@ -222,6 +227,7 @@ auto rotated90ccw_view(any_image_view<Views...> const& src)
 }
 
 /// \ingroup ImageViewTransformations180
+/// \brief Returns a runtime-typed view of a runtime source image view, rotated 180 degrees.
 /// \tparam Views Models Boost.MP11-compatible list of models of ImageViewConcept
 template <typename ...Views>
 inline
@@ -233,6 +239,7 @@ auto rotated180_view(any_image_view<Views...> const& src)
 }
 
 /// \ingroup ImageViewTransformationsSubimage
+/// \brief Returns a runtime-typed view over a rectangular subimage of a runtime source image view.
 /// \tparam Views Models Boost.MP11-compatible list of models of ImageViewConcept
 template <typename ...Views>
 inline
@@ -247,6 +254,7 @@ auto subimage_view(
 }
 
 /// \ingroup ImageViewTransformationsSubimage
+/// \brief Returns a runtime-typed view over a rectangular subimage of a runtime source image view.
 /// \tparam Views Models Boost.MP11-compatible list of models of ImageViewConcept
 template <typename ...Views>
 inline
@@ -260,6 +268,7 @@ auto subimage_view(
 }
 
 /// \ingroup ImageViewTransformationsSubsampled
+/// \brief Returns a runtime-typed subsampled view of a runtime source image view.
 /// \tparam Views Models Boost.MP11-compatible list of models of ImageViewConcept
 template <typename ...Views>
 inline
@@ -272,6 +281,7 @@ auto subsampled_view(any_image_view<Views...> const& src, point_t const& step)
 }
 
 /// \ingroup ImageViewTransformationsSubsampled
+/// \brief Returns a runtime-typed subsampled view of a runtime source image view.
 /// \tparam Views Models Boost.MP11-compatible list of models of ImageViewConcept
 template <typename ...Views>
 inline
@@ -302,6 +312,7 @@ struct nth_channel_view_type<any_image_view<Views...>>
 };
 
 /// \ingroup ImageViewTransformationsNthChannel
+/// \brief Returns a runtime-typed view over a single channel of a runtime source image view.
 /// \tparam Views Models Boost.MP11-compatible list of models of ImageViewConcept
 template <typename ...Views>
 inline

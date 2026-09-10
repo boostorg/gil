@@ -4,12 +4,14 @@
 
 # Boost.Build
 stdcerr
-/doc/*build*
+/doc/build/
 /io/output
 
-# Documentation and Sphinx
+# Documentation (Antora + MrDocs)
+.tools
 doc/html
 doc/warnings.txt
+doc/node_modules
 
 # Visual Studio (Code)
 /.vs

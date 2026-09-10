@@ -32,6 +32,7 @@ target_link_libraries(boost_gil
     Boost::iterator
     Boost::mp11
     Boost::preprocessor
+    Boost::stl_interfaces
     Boost::type_traits
     Boost::variant2
 )

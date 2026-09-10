@@ -1,0 +1,110 @@
+= Distance Transform
+
+== Description
+
+The https://en.wikipedia.org/wiki/Distance_transform[distance transform]
+computes, for every pixel of a binary (grayscale, two-level) image, the
+distance to the nearest "on" or "off" pixel. The result is a grayscale image
+where each pixel's value represents that distance.
+
+`distance_transform` operates on grayscale image views only. A pixel is
+considered "off" when its value equals the minimum value of the channel type
+(e.g. `0` for `uint8_t`), and "on" otherwise.
+
+== Parameters
+
+[cols="1,3"]
+|===
+|Parameter |Description
+
+|`src_view`
+|Source (binary) grayscale image view.
+
+|`dst_view`
+|Destination grayscale image view, of the same dimensions as `src_view`,
+receiving the computed distances.
+
+|`dist_from`
+|A `distance_from` enum value, either `distance_from::on_pixels` or
+`distance_from::off_pixels`, selecting which set of pixels distances are
+measured from.
+
+|`dist_type`
+|The distance metric to use, see <<Distance types>>.
+
+|`mask_size`
+|The neighborhood mask size used by the approximate algorithms, see
+<<Mask sizes>>.
+|===
+
+== Distance types
+
+[cols="1,3"]
+|===
+|Type |Description
+
+|`distance_type::euclidean_approximation`
+|Approximates the Euclidean distance using optimal local distances for a
+3x3 or 5x5 neighborhood (Borgefors, 1986). Fast, two-pass algorithm.
+
+|`distance_type::manhattan`
+|City block (`L1`) distance, using a 3x3 or 5x5 neighborhood.
+
+|`distance_type::chessboard`
+|Chessboard (`L`&#8734;) distance, using a 3x3 or 5x5 neighborhood.
+
+|`distance_type::precise_euclidean`
+|Exact Euclidean distance, computed in linear time using the two-pass,
+one-dimensional squared distance transform of Felzenszwalb and Huttenlocher.
+Requires `mask_size::not_applicable`.
+|===
+
+== Mask sizes
+
+`euclidean_approximation`, `manhattan` and `chessboard` require either
+`mask_size::three` (3x3 neighborhood) or `mask_size::five` (5x5
+neighborhood); a larger mask trades speed for accuracy. `precise_euclidean`
+does not use a neighborhood mask and must be paired with
+`mask_size::not_applicable`. Any other combination of `dist_type` and
+`mask_size` fails to compile.
+
+Reference: _Principles of Digital Image Processing: Core Algorithms_,
+section 11.2.2, and
+http://www.theoryofcomputing.org/articles/v008a019/v008a019.pdf[Felzenszwalb,
+Pedro F., and Daniel P. Huttenlocher. "Distance transforms of sampled
+functions." Theory of computing 8, no. 1 (2012): 415-428.]
+
+== Demo
+
+[source,cpp]
+----
+#include <boost/gil.hpp>
+#include <boost/gil/extension/io/png.hpp>
+#include <boost/gil/image_processing/distance_transform.hpp>
+
+using namespace boost::gil;
+
+gray8_image_t input;
+read_image("input.png", input, png_tag{});
+gray8_image_t output(input.dimensions());
+
+// Approximate Euclidean distance to the nearest 'on' pixel, 3x3 mask.
+distance_transform(
+    view(input),
+    view(output),
+    distance_from::on_pixels,
+    distance_type::euclidean_approximation,
+    mask_size::three);
+write_view("distance.png", view(output), png_tag{});
+
+// Exact Euclidean distance.
+distance_transform(
+    view(input),
+    view(output),
+    distance_from::on_pixels,
+    distance_type::precise_euclidean,
+    mask_size::not_applicable);
+----
+
+See also the full example at
+link:https://github.com/boostorg/gil/blob/develop/example/euclidean_distance_transform.cpp[example/euclidean_distance_transform.cpp].

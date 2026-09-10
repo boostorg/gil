@@ -1,0 +1,27 @@
+#
+# Copyright (c) 2026 Samuel Debionne
+#
+# Distributed under the Boost Software License, Version 1.0. (See accompanying
+# file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+#
+
+source-root: ../include
+compilation-database: ./CMakeLists.txt
+file-patterns:
+  - "*.hpp"
+exclude:
+  - ../include/boost/gil/extension/io
+include-symbols:
+  - "boost::gil::**"
+exclude-symbols:
+  - "boost::gil::detail"
+  - "boost::gil::**::detail"
+
+generator: adoc
+multipage: true
+sort-members: false
+base-url: https://github.com/boostorg/gil/blob/master/include/
+use-system-libc: true
+warn-as-error: true
+warn-if-undocumented: false
+warn-no-paramdoc: false

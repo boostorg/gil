@@ -1,0 +1,100 @@
+= Thresholding
+
+== Description
+
+Thresholding segments an image by comparing each pixel's channel value against
+a threshold, producing pixels classified as either "foreground" or
+"background", or an image with saturated (clipped) intensities.
+
+All functions described here operate on a per-channel basis, so they apply
+equally to grayscale and multi-channel (e.g. RGB) images, and accept a
+`threshold_direction`:
+
+* `threshold_direction::regular` treats values greater than the threshold as
+  foreground.
+* `threshold_direction::inverse` treats values less than or equal to the
+  threshold as foreground.
+
+== Binary threshold
+
+`threshold_binary` sets each pixel to `max_value` or `0`, depending on
+whether it lies on the foreground or background side of `threshold_value`
+(swapped when `direction` is `inverse`). If `max_value` is omitted, it
+defaults to the maximum value representable by the destination channel type.
+
+[source,cpp]
+----
+#include <boost/gil/image_processing/threshold.hpp>
+
+// values above 150 become 255, others become 0
+threshold_binary(view(img), view(img_out), 150, 255);
+----
+
+== Truncating threshold
+
+`threshold_truncate` leaves foreground pixels either clipped to
+`threshold_value` or set to `0`, depending on `threshold_truncate_mode`:
+
+* `threshold_truncate_mode::threshold` clips foreground pixels to
+  `threshold_value` and leaves background pixels unchanged.
+* `threshold_truncate_mode::zero` zeroes background pixels and leaves
+  foreground pixels unchanged.
+
+[source,cpp]
+----
+// values above 150 are clipped down to 150, others are left unchanged
+threshold_truncate(view(img), view(img_out), 150, threshold_truncate_mode::threshold);
+----
+
+== Optimal threshold
+
+`threshold_optimal` computes the threshold value itself instead of taking one
+as a parameter. The only method currently implemented,
+`threshold_optimal_value::otsu`, picks the threshold that
+https://en.wikipedia.org/wiki/Otsu%27s_method[minimizes intra-class intensity
+variance] between the two resulting classes, then applies it as a binary
+threshold.
+
+[source,cpp]
+----
+threshold_optimal(view(img), view(img_out), threshold_optimal_value::otsu);
+----
+
+== Adaptive threshold
+
+Unlike the fixed thresholds above, `threshold_adaptive` computes a different
+threshold for each pixel, based on the pixels in its local neighborhood. This
+copes better than a single, fixed threshold with images where illumination
+varies across the frame.
+
+For each pixel, the local threshold is the value of a blurred version of the
+image at that pixel (optionally offset by `constant`), where the blur is
+computed by convolving with a `kernel_size` x `kernel_size` kernel chosen by
+`threshold_adaptive_method`:
+
+* `threshold_adaptive_method::mean` averages the neighborhood uniformly.
+* `threshold_adaptive_method::gaussian` weights the neighborhood with a
+  Gaussian kernel, giving nearby pixels more influence than distant ones.
+
+`kernel_size` must be odd. If `max_value` is omitted, it defaults to the
+maximum value representable by the destination channel type.
+
+[source,cpp]
+----
+#include <boost/gil/image_processing/threshold.hpp>
+
+// mean-adaptive threshold with an 11x11 neighborhood, offset by 2
+threshold_adaptive(view(img), view(img_out), 11, threshold_adaptive_method::mean,
+    threshold_direction::regular, 2);
+
+// gaussian-adaptive threshold with a 7x7 neighborhood, offset by 2
+threshold_adaptive(view(img), view(img_out), 7, threshold_adaptive_method::gaussian,
+    threshold_direction::regular, 2);
+----
+
+== Demo
+
+See the full examples at
+link:https://github.com/boostorg/gil/blob/develop/example/threshold.cpp[example/threshold.cpp]
+and
+link:https://github.com/boostorg/gil/blob/develop/example/adaptive_threshold.cpp[example/adaptive_threshold.cpp].
