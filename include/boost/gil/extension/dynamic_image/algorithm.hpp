@@ -44,6 +44,7 @@ struct equal_pixels_fn : binary_operation_obj<equal_pixels_fn, bool>
 } // namespace detail
 
 /// \ingroup ImageViewSTLAlgorithmsEqualPixels
+/// \brief Compares a run-time typed image view to a statically-typed view for equality.
 /// \tparam Types Model Boost.MP11-compatible list of models of ImageViewConcept
 /// \tparam View Model MutableImageViewConcept
 template <typename ...Types, typename View>
@@ -55,6 +56,7 @@ auto equal_pixels(any_image_view<Types...> const& src, View const& dst) -> bool
 }
 
 /// \ingroup ImageViewSTLAlgorithmsEqualPixels
+/// \brief Compares a statically-typed image view to a run-time typed view for equality.
 /// \tparam View Model ImageViewConcept
 /// \tparam Types Model Boost.MP11-compatible list of models of MutableImageViewConcept
 template <typename View, typename ...Types>
@@ -66,6 +68,7 @@ auto equal_pixels(View const& src, any_image_view<Types...> const& dst) -> bool
 }
 
 /// \ingroup ImageViewSTLAlgorithmsEqualPixels
+/// \brief Compares two run-time typed image views for equality.
 /// \tparam Types1 Model Boost.MP11-compatible list of models of ImageViewConcept
 /// \tparam Types2 Model Boost.MP11-compatible list of models of MutableImageViewConcept
 template <typename ...Types1, typename ...Types2>
@@ -89,6 +92,7 @@ struct copy_pixels_fn : public binary_operation_obj<copy_pixels_fn>
 } // namespace detail
 
 /// \ingroup ImageViewSTLAlgorithmsCopyPixels
+/// \brief Copies pixels from a run-time typed image view into a statically-typed view.
 /// \tparam Types Model Boost.MP11-compatible list of models of ImageViewConcept
 /// \tparam View Model MutableImageViewConcept
 template <typename ...Types, typename View>
@@ -98,6 +102,7 @@ void copy_pixels(any_image_view<Types...> const& src, View const& dst)
 }
 
 /// \ingroup ImageViewSTLAlgorithmsCopyPixels
+/// \brief Copies pixels from a statically-typed image view into a run-time typed view.
 /// \tparam Types Model Boost.MP11-compatible list of models of MutableImageViewConcept
 /// \tparam View Model ImageViewConcept
 template <typename ...Types, typename View>
@@ -107,6 +112,7 @@ void copy_pixels(View const& src, any_image_view<Types...> const& dst)
 }
 
 /// \ingroup ImageViewSTLAlgorithmsCopyPixels
+/// \brief Copies pixels between two run-time typed image views.
 /// \tparam Types1 Model Boost.MP11-compatible list of models of ImageViewConcept
 /// \tparam Types2 Model Boost.MP11-compatible list of models of MutableImageViewConcept
 template <typename ...Types1, typename ...Types2>
@@ -119,6 +125,7 @@ void copy_pixels(any_image_view<Types1...> const& src, any_image_view<Types2...>
 struct default_color_converter;
 
 /// \ingroup ImageViewSTLAlgorithmsCopyAndConvertPixels
+/// \brief Copies and color-converts pixels from a run-time typed image view into a statically-typed view, using the given color converter.
 /// \tparam Types Model Boost.MP11-compatible list of models of ImageViewConcept
 /// \tparam View Model MutableImageViewConcept
 /// \tparam CC Model ColorConverterConcept
@@ -130,6 +137,7 @@ void copy_and_convert_pixels(any_image_view<Types...> const& src, View const& ds
 }
 
 /// \ingroup ImageViewSTLAlgorithmsCopyAndConvertPixels
+/// \brief Copies and color-converts pixels from a run-time typed image view into a statically-typed view, using the default color converter.
 /// \tparam Types Model Boost.MP11-compatible list of models of ImageViewConcept
 /// \tparam View Model MutableImageViewConcept
 template <typename ...Types, typename View>
@@ -140,6 +148,7 @@ void copy_and_convert_pixels(any_image_view<Types...> const& src, View const& ds
 }
 
 /// \ingroup ImageViewSTLAlgorithmsCopyAndConvertPixels
+/// \brief Copies and color-converts pixels from a statically-typed image view into a run-time typed view, using the given color converter.
 /// \tparam View Model ImageViewConcept
 /// \tparam Types Model Boost.MP11-compatible list of models of MutableImageViewConcept
 /// \tparam CC Model ColorConverterConcept
@@ -151,6 +160,7 @@ void copy_and_convert_pixels(View const& src, any_image_view<Types...> const& ds
 }
 
 /// \ingroup ImageViewSTLAlgorithmsCopyAndConvertPixels
+/// \brief Copies and color-converts pixels from a statically-typed image view into a run-time typed view, using the default color converter.
 /// \tparam View Model ImageViewConcept
 /// \tparam Types Model Boost.MP11-compatible list of models of MutableImageViewConcept
 template <typename View, typename ...Types>
@@ -161,6 +171,7 @@ void copy_and_convert_pixels(View const& src, any_image_view<Types...> const& ds
 }
 
 /// \ingroup ImageViewSTLAlgorithmsCopyAndConvertPixels
+/// \brief Copies and color-converts pixels between two run-time typed image views, using the given color converter.
 /// \tparam Types1 Model Boost.MP11-compatible list of models of ImageViewConcept
 /// \tparam Types2 Model Boost.MP11-compatible list of models of MutableImageViewConcept
 /// \tparam CC Model ColorConverterConcept
@@ -173,6 +184,7 @@ void copy_and_convert_pixels(
 }
 
 /// \ingroup ImageViewSTLAlgorithmsCopyAndConvertPixels
+/// \brief Copies and color-converts pixels between two run-time typed image views, using the default color converter.
 /// \tparam Types1 Model Boost.MP11-compatible list of models of ImageViewConcept
 /// \tparam Types2 Model Boost.MP11-compatible list of models of MutableImageViewConcept
 template <typename ...Types1, typename ...Types2>

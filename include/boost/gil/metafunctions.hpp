@@ -77,36 +77,44 @@ struct pixel_reference_is_basic<const planar_pixel_reference<TR, CS>> : std::tru
 template <typename Iterator>
 struct iterator_is_basic : std::false_type {};
 
+/// \brief Specialization for a mutable interleaved pixel iterator.
 /// \tparam T mutable interleaved pixel type
 template <typename T, typename L>
 struct iterator_is_basic<pixel<T, L>*> : std::true_type {};
 
+/// \brief Specialization for an immutable interleaved pixel iterator.
 /// \tparam T immutable interleaved pixel type
 template <typename T, typename L>
 struct iterator_is_basic<pixel<T, L> const*> : std::true_type {};
 
+/// \brief Specialization for a mutable planar pixel iterator.
 /// \tparam T mutable planar pixel type
 template <typename T, typename CS>
 struct iterator_is_basic<planar_pixel_iterator<T*, CS>> : std::true_type {};
 
+/// \brief Specialization for an immutable planar pixel iterator.
 /// \tparam T immutable planar pixel type
 template <typename T, typename CS>
 struct iterator_is_basic<planar_pixel_iterator<T const*, CS>> : std::true_type {};
 
+/// \brief Specialization for a mutable interleaved step iterator.
 /// \tparam T mutable interleaved step
 template <typename T, typename L>
 struct iterator_is_basic<memory_based_step_iterator<pixel<T, L>*>> : std::true_type {};
 
+/// \brief Specialization for an immutable interleaved step iterator.
 /// \tparam T immutable interleaved step
 template <typename T, typename L>
 struct iterator_is_basic<memory_based_step_iterator<pixel<T, L> const*>> : std::true_type {};
 
+/// \brief Specialization for a mutable planar step iterator.
 /// \tparam T mutable planar step
 template <typename T, typename CS>
 struct iterator_is_basic<memory_based_step_iterator<planar_pixel_iterator<T*, CS>>>
     : std::true_type
 {};
 
+/// \brief Specialization for an immutable planar step iterator.
 /// \tparam T immutable planar step
 template <typename T, typename CS>
 struct iterator_is_basic<memory_based_step_iterator<planar_pixel_iterator<T const*, CS>>>

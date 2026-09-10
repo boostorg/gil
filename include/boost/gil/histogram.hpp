@@ -614,7 +614,7 @@ void fill_histogram(SrcView const&, Container&);
 /// @param hist        Output Histogram to be filled
 /// @param bin_width   Input  Specify the bin widths for the histogram.
 /// @param accumulate  Input  Specify whether to accumulate over the values already present in h (default = false)
-/// @param sparsaefill Input  Specify whether to have a sparse or continuous histogram (default = true)
+/// @param sparsefill  Input  Specify whether to have a sparse or continuous histogram (default = true)
 /// @param applymask   Input  Specify if image mask is to be specified
 /// @param mask        Input  Mask as a 2D vector. Used only if prev argument specified
 /// @param lower       Input  Lower limit on the values in histogram (default numeric_limit::min() on axes)

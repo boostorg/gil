@@ -475,6 +475,7 @@ private:
 /// assert(data == 6);                                          // == 3<<1 == 6
 /// \endcode
 
+/// \brief Represents a reference proxy to a channel operating over a bit range whose offset is fixed at compile time. Models ChannelConcept
 /// \tparam BitField A type that holds the bits of the pixel from which the channel is referenced. Typically an integral type, like std::uint16_t
 /// \tparam FirstBit Defines, with NumBits, the sequence of bits in the data value that contain the channel
 /// \tparam NumBits Defines, with FirstBit, the sequence of bits in the data value that contain the channel
@@ -482,6 +483,7 @@ private:
 template <typename BitField, int FirstBit, int NumBits, bool IsMutable>
 class packed_channel_reference;
 
+/// \brief Represents a reference proxy to a channel operating over a bit range whose offset is specified at run time. Models ChannelConcept
 /// \tparam BitField A type that holds the bits of the pixel from which the channel is referenced. Typically an integral type, like std::uint16_t
 /// \tparam NumBits Defines the sequence of bits in the data value that contain the channel
 /// \tparam IsMutable true if the reference is mutable
