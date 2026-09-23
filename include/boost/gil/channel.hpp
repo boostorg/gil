@@ -452,6 +452,32 @@ protected:
     }
 #endif
 
+    // Bounded variants that copy only the bytes containing the referenced
+    // channel's bits. The last bit field of a bit-aligned image row may
+    // occupy fewer than sizeof(bitfield_t) bytes, so a full-width copy
+    // would read or write past the end of the image buffer.
+    auto get_data(std::size_t byte_count) const -> bitfield_t
+    {
+        bitfield_t ret = 0;
+        unsigned char const* src = gil_reinterpret_cast_c<const unsigned char*>(_data_ptr);
+        unsigned char* dst = gil_reinterpret_cast<unsigned char*>(&ret);
+        if (byte_count > sizeof(bitfield_t))
+            byte_count = sizeof(bitfield_t);
+        for (std::size_t i = 0; i < byte_count; ++i)
+            dst[i] = src[i];
+        return ret;
+    }
+
+    void set_data(bitfield_t const& val, std::size_t byte_count) const
+    {
+        unsigned char const* src = gil_reinterpret_cast_c<const unsigned char*>(&val);
+        unsigned char* dst = gil_reinterpret_cast<unsigned char*>(_data_ptr);
+        if (byte_count > sizeof(bitfield_t))
+            byte_count = sizeof(bitfield_t);
+        for (std::size_t i = 0; i < byte_count; ++i)
+            dst[i] = src[i];
+    }
+
 private:
     void set(integer_t value) const {     // can this be done faster??
         this->derived().set_unsafe(((value % num_values) + num_values) % num_values);
@@ -526,7 +552,7 @@ public:
 
     auto first_bit() const -> unsigned int { return FirstBit; }
 
-    auto get() const -> integer_t { return integer_t((this->get_data()&channel_mask) >> FirstBit); }
+    auto get() const -> integer_t { return integer_t((this->get_data((FirstBit + NumBits + 7) / 8)&channel_mask) >> FirstBit); }
 };
 
 /// \ingroup PackedChannelReferenceModel
@@ -555,19 +581,19 @@ public:
         return *this;
     }
 
-    auto operator=(mutable_reference const& ref) const -> packed_channel_reference const& { set_from_reference(ref.get_data()); return *this; }
-    auto operator=(const_reference const& ref) const -> packed_channel_reference const& { set_from_reference(ref.get_data()); return *this; }
+    auto operator=(mutable_reference const& ref) const -> packed_channel_reference const& { set_from_reference(ref.get_data((FirstBit + NumBits + 7) / 8)); return *this; }
+    auto operator=(const_reference const& ref) const -> packed_channel_reference const& { set_from_reference(ref.get_data((FirstBit + NumBits + 7) / 8)); return *this; }
 
     template <bool Mutable1>
     auto operator=(packed_dynamic_channel_reference<BitField,NumBits,Mutable1> const& ref) const -> packed_channel_reference const& { set_unsafe(ref.get()); return *this; }
 
     auto first_bit() const -> unsigned int { return FirstBit; }
 
-    auto get() const -> integer_t { return integer_t((this->get_data()&channel_mask) >> FirstBit); }
-    void set_unsafe(integer_t value) const { this->set_data((this->get_data() & ~channel_mask) | (( static_cast< BitField >( value )<<FirstBit))); }
+    auto get() const -> integer_t { return integer_t((this->get_data((FirstBit + NumBits + 7) / 8)&channel_mask) >> FirstBit); }
+    void set_unsafe(integer_t value) const { this->set_data((this->get_data((FirstBit + NumBits + 7) / 8) & ~channel_mask) | (( static_cast< BitField >( value )<<FirstBit)), (FirstBit + NumBits + 7) / 8); }
 
 private:
-    void set_from_reference(const BitField& other_bits) const { this->set_data((this->get_data() & ~channel_mask) | (other_bits & channel_mask)); }
+    void set_from_reference(const BitField& other_bits) const { this->set_data((this->get_data((FirstBit + NumBits + 7) / 8) & ~channel_mask) | (other_bits & channel_mask), (FirstBit + NumBits + 7) / 8); }
 };
 
 }}  // namespace boost::gil
@@ -665,7 +691,7 @@ public:
     auto get() const -> integer_t
     {
         const BitField channel_mask = static_cast< integer_t >( parent_t::max_val ) <<_first_bit;
-        return static_cast< integer_t >(( this->get_data()&channel_mask ) >> _first_bit );
+        return static_cast< integer_t >(( this->get_data((_first_bit + NumBits + 7) / 8)&channel_mask ) >> _first_bit );
     }
 };
 
@@ -711,12 +737,12 @@ public:
     auto get() const -> integer_t
     {
         BitField const channel_mask = static_cast< integer_t >( parent_t::max_val ) << _first_bit;
-        return static_cast< integer_t >(( this->get_data()&channel_mask ) >> _first_bit );
+        return static_cast< integer_t >(( this->get_data((_first_bit + NumBits + 7) / 8)&channel_mask ) >> _first_bit );
     }
 
     void set_unsafe(integer_t value) const {
         const BitField channel_mask = static_cast< integer_t >( parent_t::max_val ) << _first_bit;
-        this->set_data((this->get_data() & ~channel_mask) | value<<_first_bit);
+        this->set_data((this->get_data((_first_bit + NumBits + 7) / 8) & ~channel_mask) | value<<_first_bit, (_first_bit + NumBits + 7) / 8);
     }
 };
 } }  // namespace boost::gil
