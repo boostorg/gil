@@ -10,7 +10,8 @@ foreach(_name
   for_each_pixel
   std_fill
   std_uninitialized_fill
-  extend_boundary)
+  extend_boundary
+  transposed_views)
   set(_test t_core_algorithm_${_name})
   set(_target test_core_algorithm_${_name})
 
