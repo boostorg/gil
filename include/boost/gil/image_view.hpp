@@ -135,6 +135,8 @@ public:
         return !(*this == view);
     }
 
+    /// \brief Exchanges the elements of the \a lhs view with those of \a rhs
+    ///       in constant time.
     template <typename L2>
     friend void swap(image_view<L2> &lhs, image_view<L2> &rhs);
 
