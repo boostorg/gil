@@ -75,8 +75,8 @@
     .then(reveal)
     .catch(reveal);
 })();
-</script>    <title>boost::gil::swap :: Boost.GIL</title>
-  <link rel="canonical" href="https://github.com/boostorg/gil/gil/reference/boost/gil/swap-09.html">
+</script>    <title>boost::gil::operator&equals;&equals; :: Boost.GIL</title>
+  <link rel="canonical" href="https://github.com/boostorg/gil/gil/reference/boost/gil/operator_eq-02.html">
   <meta name="generator" content="Antora 3.2.0">
     <link rel="stylesheet" href="../../../../_/css/boostlook.css">
     <link rel="stylesheet" href="../../../../_/css/site.css">
@@ -335,7 +335,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="1rem" height="1rem" viewBox="0 -960 960 960" fill="#000000" aria-hidden="true"><path d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z"/></svg>
       </a>
     </li>
-    <li><a href="swap-09.html"><a href="../../boost.html">boost</a>::<a href="../../boost/gil.html">gil</a>::swap</a></li>
+    <li><a href="operator_eq-02.html"><a href="../../boost.html">boost</a>::<a href="../../boost/gil.html">gil</a>::operator&equals;&equals;</a></li>
   </ul>
 </nav>
 <div class="spirit-nav">
@@ -343,11 +343,11 @@
       <span class="material-symbols-outlined" title="Up:">arrow_upward</span>
     </a>
 </div></div>
-    <h1 class="page"><a href="../../boost.html">boost</a>::<a href="../../boost/gil.html">gil</a>::swap</h1>
+    <h1 class="page"><a href="../../boost.html">boost</a>::<a href="../../boost/gil.html">gil</a>::operator&equals;&equals;</h1>
   <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Exchanges the elements of the <em>lhs</em> view with those of <em>rhs</em> in constant time&period;</p>
+<p>Equality operator</p>
 </div>
 </div>
 </div>
@@ -355,15 +355,20 @@
 <h2 id="_synopsis"><a class="anchor" href="#_synopsis"></a>Synopsis</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/master/include/boost/gil/image_view.hpp#L140">boost&sol;gil&sol;image&lowbar;view&period;hpp</a>&gt;</code></p>
+<p>Declared in <code>&lt;<a href="https://github.com/boostorg/gil/blob/master/include/boost/gil/histogram.hpp#L214">boost&sol;gil&sol;histogram&period;hpp</a>&gt;</code></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template&lt;typename L2&gt;
-void
-swap(
-    <a href="image_view.html" class="xref page">image&lowbar;view&lt;L2&gt;</a>&amp; lhs,
-    <a href="image_view.html" class="xref page">image&lowbar;view&lt;L2&gt;</a>&amp; rhs);</code></pre>
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">template&lt;
+    typename &lowbar;Key1,
+    typename &lowbar;Tp1,
+    typename &lowbar;Hash1,
+    typename &lowbar;Pred1,
+    typename &lowbar;Alloc1&gt;
+bool
+operator&equals;&equals;(
+    <a href="histogram.html" class="xref page">histogram</a> const&amp; lhs,
+    <a href="histogram.html" class="xref page">histogram</a> const&amp; rhs);</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -374,11 +379,19 @@ swap(
 </td>
 <td class="content">
 <div class="paragraph">
-<p>This function is a <a href="https://en.cppreference.com/w/cpp/language/friend">hidden friend</a> of <a href="image_view.html" class="xref page">image&lowbar;view</a>, declared only inside that class: it can be found only through argument-dependent lookup.</p>
+<p>This function is a <a href="https://en.cppreference.com/w/cpp/language/friend">hidden friend</a> of <a href="histogram.html" class="xref page">histogram</a>, declared inside its base class unordered&lowbar;map: it can be found only through argument-dependent lookup.</p>
 </div>
 </td>
 </tr>
 </table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_return_value"><a class="anchor" href="#_return_value"></a>Return Value</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>true</code> if the objects are equal, <code>false</code> otherwise</p>
 </div>
 </div>
 </div>
@@ -397,11 +410,11 @@ swap(
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>lhs</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A lightweight object that interprets memory as a 2D array of pixels&period; Models ImageViewConcept,PixelBasedConcept,HasDynamicXStepTypeConcept,HasDynamicYStepTypeConcept,HasTransposedTypeConcept</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The left operand</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>rhs</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A lightweight object that interprets memory as a 2D array of pixels&period; Models ImageViewConcept,PixelBasedConcept,HasDynamicXStepTypeConcept,HasDynamicYStepTypeConcept,HasTransposedTypeConcept</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The right operand</p></td>
 </tr>
 </tbody>
 </table>
