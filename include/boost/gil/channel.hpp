@@ -539,6 +539,8 @@ class packed_channel_reference<BitField, FirstBit, NumBits, false>
     friend class packed_channel_reference<BitField, FirstBit, NumBits, true>;
 
     static const BitField channel_mask = static_cast<BitField>(parent_t::max_val) << FirstBit;
+    // Number of bytes spanned by the channel
+    static constexpr std::size_t num_bytes = (FirstBit + NumBits + 7) / 8;
 
     void operator=(packed_channel_reference const&);
 public:
@@ -552,7 +554,7 @@ public:
 
     auto first_bit() const -> unsigned int { return FirstBit; }
 
-    auto get() const -> integer_t { return integer_t((this->get_data((FirstBit + NumBits + 7) / 8)&channel_mask) >> FirstBit); }
+    auto get() const -> integer_t { return integer_t((this->get_data(num_bytes)&channel_mask) >> FirstBit); }
 };
 
 /// \ingroup PackedChannelReferenceModel
@@ -565,6 +567,8 @@ class packed_channel_reference<BitField,FirstBit,NumBits,true>
     friend class packed_channel_reference<BitField,FirstBit,NumBits,false>;
 
     static const BitField channel_mask = static_cast< BitField >( parent_t::max_val ) << FirstBit;
+    // Number of bytes spanned by the channel
+    static constexpr std::size_t num_bytes = (FirstBit + NumBits + 7) / 8;
 
 public:
     using const_reference = packed_channel_reference<BitField,FirstBit,NumBits,false> const;
@@ -581,19 +585,19 @@ public:
         return *this;
     }
 
-    auto operator=(mutable_reference const& ref) const -> packed_channel_reference const& { set_from_reference(ref.get_data((FirstBit + NumBits + 7) / 8)); return *this; }
-    auto operator=(const_reference const& ref) const -> packed_channel_reference const& { set_from_reference(ref.get_data((FirstBit + NumBits + 7) / 8)); return *this; }
+    auto operator=(mutable_reference const& ref) const -> packed_channel_reference const& { set_from_reference(ref.get_data(num_bytes)); return *this; }
+    auto operator=(const_reference const& ref) const -> packed_channel_reference const& { set_from_reference(ref.get_data(num_bytes)); return *this; }
 
     template <bool Mutable1>
     auto operator=(packed_dynamic_channel_reference<BitField,NumBits,Mutable1> const& ref) const -> packed_channel_reference const& { set_unsafe(ref.get()); return *this; }
 
     auto first_bit() const -> unsigned int { return FirstBit; }
 
-    auto get() const -> integer_t { return integer_t((this->get_data((FirstBit + NumBits + 7) / 8)&channel_mask) >> FirstBit); }
-    void set_unsafe(integer_t value) const { this->set_data((this->get_data((FirstBit + NumBits + 7) / 8) & ~channel_mask) | (( static_cast< BitField >( value )<<FirstBit)), (FirstBit + NumBits + 7) / 8); }
+    auto get() const -> integer_t { return integer_t((this->get_data(num_bytes)&channel_mask) >> FirstBit); }
+    void set_unsafe(integer_t value) const { this->set_data((this->get_data(num_bytes) & ~channel_mask) | (( static_cast< BitField >( value )<<FirstBit)), num_bytes); }
 
 private:
-    void set_from_reference(const BitField& other_bits) const { this->set_data((this->get_data((FirstBit + NumBits + 7) / 8) & ~channel_mask) | (other_bits & channel_mask), (FirstBit + NumBits + 7) / 8); }
+    void set_from_reference(const BitField& other_bits) const { this->set_data((this->get_data(num_bytes) & ~channel_mask) | (other_bits & channel_mask), num_bytes); }
 };
 
 }}  // namespace boost::gil
