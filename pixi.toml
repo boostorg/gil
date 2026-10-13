@@ -3,14 +3,6 @@
 #
 # Distributed under the Boost Software License, Version 1.0. (See accompanying
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-#
-# Official repository: https://github.com/boostorg/gil
-#
-# Tooling for building the documentation (doc/) locally. See
-# doc/build_antora.sh -- MrDocs itself is fetched automatically by
-# @cppalliance/antora-cpp-reference-extension (the latest release, as of
-# MrDocs 2026.9.4 that's a fixed build for GIL's headers), so it isn't a
-# pixi dependency.
 
 [workspace]
 channels = ["conda-forge"]
@@ -18,6 +10,7 @@ name = "gil"
 platforms = ["linux-64"]
 version = "0.1.0"
 
+# Tooling for building the documentation (doc/) locally
 [feature.docs.dependencies]
 nodejs = "20.*"
 cxx-compiler = "*"
@@ -26,5 +19,65 @@ cmake = "*"
 [feature.docs.tasks]
 docs-build = "cd doc && bash build_antora.sh"
 
+# Google Benchmark-based benchmarks (benchmark/).
+[feature.bench]
+# IPP is not on conda-forge but from Intel channel.
+channels = ["conda-forge", "https://software.repos.intel.com/python/conda"]
+
+[feature.bench.dependencies]
+cxx-compiler = "*"
+cmake = "*"
+ninja = "*"
+git = "*"
+# Libraries compared against GIL (BOOST_GIL_BUILD_BENCHMARKS_OPENCV/_IPP)
+libopencv = { version = "*", build = "headless*" }
+ipp-devel = "*"
+
+[feature.bench.tasks.boost-configure]
+cmd = """cmake -S ../.. -B build-boost -G Ninja \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DBUILD_SHARED_LIBS=OFF \
+  -DBOOST_INCLUDE_LIBRARIES=gil \
+  -DCMAKE_INSTALL_MESSAGE=LAZY \
+  -DCMAKE_INSTALL_PREFIX=$PIXI_PROJECT_ROOT/build-boost/install"""
+outputs = ["build-boost/CMakeCache.txt"]
+description = "Configure Boost (GIL and its dependencies) from the superproject in build-boost"
+
+[feature.bench.tasks.boost-install]
+cmd = "cmake --build build-boost --target install"
+depends-on = ["boost-configure"]
+description = "Build and install Boost in build-boost/install"
+
+[feature.bench.tasks.bench-configure]
+cmd = """cmake -S . -B build-bench -G Ninja \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DBOOST_ROOT=$PIXI_PROJECT_ROOT/build-boost/install \
+  -DCMAKE_PREFIX_PATH=$CONDA_PREFIX \
+  -DIPP_ROOT=$CONDA_PREFIX \
+  -DBUILD_TESTING=OFF \
+  -DBOOST_GIL_BUILD_BENCHMARKS=ON \
+  -DBOOST_GIL_BUILD_BENCHMARKS_OPENCV=ON \
+  -DBOOST_GIL_BUILD_BENCHMARKS_IPP=ON \
+  -DBOOST_GIL_BUILD_EXAMPLES=OFF \
+  -DBOOST_GIL_BUILD_HEADER_TESTS=OFF \
+  -DBOOST_GIL_ENABLE_EXT_IO=OFF"""
+depends-on = ["boost-install"]
+description = "Configure the benchmarks in build-bench"
+
+[feature.bench.tasks.bench-build]
+cmd = "cmake --build build-bench --target benchmark/all"
+depends-on = ["bench-configure"]
+description = "Build the benchmarks (benchmark)"
+
+[feature.bench.tasks.bench-run]
+# The OpenCV and IPP benchmarks are prefixed with ocv_ and ipp_. With no name
+# (the default "*"), every built benchmark is run in turn.
+cmd = """bash -c 'find build-bench/benchmark -type f -executable -not -path "*/vendor/*" \
+  -name "benchmark_{{ name }}" | sort | while read -r f; do echo "=== $f ==="; "$f"; done'"""
+args = [{ arg = "name", default = "*" }]
+depends-on = ["bench-build"]
+description = "Run one or all benchmarks, e.g. `pixi run bench-run ocv_view_transpose`"
+
 [environments]
 docs = ["docs"]
+bench = ["bench"]

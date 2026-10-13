@@ -51,6 +51,7 @@ cmake_minimum_required(VERSION 3.10)
 #-----------------------------------------------------------------------------
 # Options
 #-----------------------------------------------------------------------------
+option(BOOST_GIL_BUILD_BENCHMARKS "Builds all available benchmarks in the benchmark directory" OFF)
 option(BOOST_GIL_BUILD_EXAMPLES "Build examples" ON)
 option(BOOST_GIL_BUILD_HEADER_TESTS "Enable self-contained header tests" ON)
 option(BOOST_GIL_ENABLE_EXT_DYNAMIC_IMAGE "Enable Dynamic Image extension, tests and examples" ON)
@@ -157,7 +158,7 @@ set(Boost_required_components headers)
 if (BOOST_GIL_USE_BOOST_FILESYSTEM)
   list(APPEND Boost_required_components filesystem)
 endif()
-find_package(Boost 1.80.0 REQUIRED COMPONENTS ${Boost_required_components})
+find_package(Boost CONFIG 1.80.0 REQUIRED COMPONENTS ${Boost_required_components})
 message(STATUS "Boost.GIL: Using Boost_INCLUDE_DIRS=${Boost_INCLUDE_DIRS}")
 message(STATUS "Boost.GIL: Using Boost_LIBRARY_DIRS=${Boost_LIBRARY_DIRS}")
 
@@ -305,6 +306,13 @@ endif()
 #-----------------------------------------------------------------------------
 if(BOOST_GIL_BUILD_EXAMPLES AND BOOST_GIL_ENABLE_EXT_IO)
   add_subdirectory(example)
+endif()
+
+#-----------------------------------------------------------------------------
+# Benchmarks
+#-----------------------------------------------------------------------------
+if(BOOST_GIL_BUILD_BENCHMARKS)
+  add_subdirectory(benchmark)
 endif()
 
 endif()
