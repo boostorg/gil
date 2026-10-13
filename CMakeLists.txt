@@ -158,7 +158,7 @@ set(Boost_required_components headers)
 if (BOOST_GIL_USE_BOOST_FILESYSTEM)
   list(APPEND Boost_required_components filesystem)
 endif()
-find_package(Boost 1.80.0 REQUIRED COMPONENTS ${Boost_required_components})
+find_package(Boost CONFIG 1.80.0 REQUIRED COMPONENTS ${Boost_required_components})
 message(STATUS "Boost.GIL: Using Boost_INCLUDE_DIRS=${Boost_INCLUDE_DIRS}")
 message(STATUS "Boost.GIL: Using Boost_LIBRARY_DIRS=${Boost_LIBRARY_DIRS}")
 
