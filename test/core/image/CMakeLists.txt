@@ -9,6 +9,7 @@ foreach(_name
   concepts
   alignment
   empty_dimensions
+  bit_aligned_bounds
   image)
   set(_test t_core_image_${_name})
   set(_target test_core_image_${_name})

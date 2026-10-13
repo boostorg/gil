@@ -12,4 +12,5 @@ compile concepts.cpp ;
 
 run alignment.cpp ;
 run empty_dimensions.cpp ;
+run bit_aligned_bounds.cpp ;
 run image.cpp ;
