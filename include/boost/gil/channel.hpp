@@ -21,35 +21,16 @@
 
 #ifdef BOOST_GIL_DOXYGEN_ONLY
 /// \def BOOST_GIL_CONFIG_HAS_UNALIGNED_ACCESS
-/// \brief Define to allow unaligned memory access for models of packed channel value.
-/// Theoretically (or historically?) on platforms which support dereferencing on
-/// non-word memory boundary, unaligned access may result in performance improvement.
-/// \warning Unfortunately, this optimization may be a C/C++ strict aliasing rules
-/// violation, if accessed data buffer has effective type that cannot be aliased
-/// without leading to undefined behaviour.
+/// \brief Deprecated, has no effect.
+/// Used to allow unaligned memory access for models of packed channel value.
+/// Packed channel references now copy only the bytes spanned by the channel
+/// (see issue #808), so this optimization no longer applies.
 #define BOOST_GIL_CONFIG_HAS_UNALIGNED_ACCESS
 #endif
 
 #ifdef BOOST_GIL_CONFIG_HAS_UNALIGNED_ACCESS
-#if defined(sun) || defined(__sun) || \             // SunOS
-    defined(__osf__) || defined(__osf) || \         // Tru64
-    defined(_hpux) || defined(hpux) || \            // HP-UX
-    defined(__arm__) || defined(__ARM_ARCH) || \    // ARM
-    defined(_AIX)                                   // AIX
-#error Unaligned access strictly disabled for some UNIX platforms or ARM architecture
-#elif defined(__i386__) || defined(__x86_64__) || defined(__vax__)
-    // The check for little-endian architectures that tolerate unaligned memory
-    // accesses is just an optimization. Nothing will break if it fails to detect
-    // a suitable architecture.
-    //
-    // Unfortunately, this optimization may be a C/C++ strict aliasing rules violation
-    // if accessed data buffer has effective type that cannot be aliased
-    // without leading to undefined behaviour.
-BOOST_PRAGMA_MESSAGE("CAUTION: Unaligned access tolerated on little-endian may cause undefined behaviour")
-#else
-#error Unaligned access disabled for unknown platforms and architectures
+BOOST_PRAGMA_MESSAGE("BOOST_GIL_CONFIG_HAS_UNALIGNED_ACCESS is deprecated and has no effect")
 #endif
-#endif // defined(BOOST_GIL_CONFIG_HAS_UNALIGNED_ACCESS)
 
 namespace boost { namespace gil {
 
@@ -339,22 +320,6 @@ private:
 
 namespace detail {
 
-template <std::size_t K>
-struct static_copy_bytes
-{
-    void operator()(unsigned char const* from, unsigned char* to) const
-    {
-        *to = *from;
-        static_copy_bytes<K - 1>()(++from, ++to);
-    }
-};
-
-template <>
-struct static_copy_bytes<0>
-{
-    void operator()(unsigned char const*, unsigned char*) const {}
-};
-
 template <typename Derived, typename BitField, int NumBits, bool IsMutable>
 class packed_channel_reference_base
 {
@@ -435,22 +400,31 @@ protected:
     static const num_value_t num_values = static_cast< num_value_t >( 1 ) << NumBits ;
     static const max_value_t max_val    = static_cast< max_value_t >( num_values - 1 );
 
-#if defined(BOOST_GIL_CONFIG_HAS_UNALIGNED_ACCESS)
-    const bitfield_t& get_data()                      const { return *static_cast<const bitfield_t*>(_data_ptr); }
-    void              set_data(const bitfield_t& val) const {        *static_cast<      bitfield_t*>(_data_ptr) = val; }
-#else
-    auto get_data() const -> bitfield_t
+    // Copy only the bytes containing the referenced channel's bits.
+    // The last bit field of a bit-aligned image row may occupy fewer than
+    // sizeof(bitfield_t) bytes, so a full-width copy would read or write
+    // past the end of the image buffer (see issue #808).
+    auto get_data(std::size_t byte_count) const -> bitfield_t
     {
-        bitfield_t ret;
-        static_copy_bytes<sizeof(bitfield_t) >()(gil_reinterpret_cast_c<const unsigned char*>(_data_ptr),gil_reinterpret_cast<unsigned char*>(&ret));
+        bitfield_t ret = 0;
+        unsigned char const* src = gil_reinterpret_cast_c<const unsigned char*>(_data_ptr);
+        unsigned char* dst = gil_reinterpret_cast<unsigned char*>(&ret);
+        if (byte_count > sizeof(bitfield_t))
+            byte_count = sizeof(bitfield_t);
+        for (std::size_t i = 0; i < byte_count; ++i)
+            dst[i] = src[i];
         return ret;
     }
-    
-    void set_data(bitfield_t const& val) const
+
+    void set_data(bitfield_t const& val, std::size_t byte_count) const
     {
-        static_copy_bytes<sizeof(bitfield_t) >()(gil_reinterpret_cast_c<const unsigned char*>(&val),gil_reinterpret_cast<unsigned char*>(_data_ptr));
+        unsigned char const* src = gil_reinterpret_cast_c<const unsigned char*>(&val);
+        unsigned char* dst = gil_reinterpret_cast<unsigned char*>(_data_ptr);
+        if (byte_count > sizeof(bitfield_t))
+            byte_count = sizeof(bitfield_t);
+        for (std::size_t i = 0; i < byte_count; ++i)
+            dst[i] = src[i];
     }
-#endif
 
 private:
     void set(integer_t value) const {     // can this be done faster??
@@ -513,6 +487,8 @@ class packed_channel_reference<BitField, FirstBit, NumBits, false>
     friend class packed_channel_reference<BitField, FirstBit, NumBits, true>;
 
     static const BitField channel_mask = static_cast<BitField>(parent_t::max_val) << FirstBit;
+    // Number of bytes spanned by the channel
+    static constexpr std::size_t num_bytes = (FirstBit + NumBits + 7) / 8;
 
     void operator=(packed_channel_reference const&);
 public:
@@ -526,7 +502,7 @@ public:
 
     auto first_bit() const -> unsigned int { return FirstBit; }
 
-    auto get() const -> integer_t { return integer_t((this->get_data()&channel_mask) >> FirstBit); }
+    auto get() const -> integer_t { return integer_t((this->get_data(num_bytes)&channel_mask) >> FirstBit); }
 };
 
 /// \ingroup PackedChannelReferenceModel
@@ -539,6 +515,8 @@ class packed_channel_reference<BitField,FirstBit,NumBits,true>
     friend class packed_channel_reference<BitField,FirstBit,NumBits,false>;
 
     static const BitField channel_mask = static_cast< BitField >( parent_t::max_val ) << FirstBit;
+    // Number of bytes spanned by the channel
+    static constexpr std::size_t num_bytes = (FirstBit + NumBits + 7) / 8;
 
 public:
     using const_reference = packed_channel_reference<BitField,FirstBit,NumBits,false> const;
@@ -555,19 +533,19 @@ public:
         return *this;
     }
 
-    auto operator=(mutable_reference const& ref) const -> packed_channel_reference const& { set_from_reference(ref.get_data()); return *this; }
-    auto operator=(const_reference const& ref) const -> packed_channel_reference const& { set_from_reference(ref.get_data()); return *this; }
+    auto operator=(mutable_reference const& ref) const -> packed_channel_reference const& { set_from_reference(ref.get_data(num_bytes)); return *this; }
+    auto operator=(const_reference const& ref) const -> packed_channel_reference const& { set_from_reference(ref.get_data(num_bytes)); return *this; }
 
     template <bool Mutable1>
     auto operator=(packed_dynamic_channel_reference<BitField,NumBits,Mutable1> const& ref) const -> packed_channel_reference const& { set_unsafe(ref.get()); return *this; }
 
     auto first_bit() const -> unsigned int { return FirstBit; }
 
-    auto get() const -> integer_t { return integer_t((this->get_data()&channel_mask) >> FirstBit); }
-    void set_unsafe(integer_t value) const { this->set_data((this->get_data() & ~channel_mask) | (( static_cast< BitField >( value )<<FirstBit))); }
+    auto get() const -> integer_t { return integer_t((this->get_data(num_bytes)&channel_mask) >> FirstBit); }
+    void set_unsafe(integer_t value) const { this->set_data((this->get_data(num_bytes) & ~channel_mask) | (( static_cast< BitField >( value )<<FirstBit)), num_bytes); }
 
 private:
-    void set_from_reference(const BitField& other_bits) const { this->set_data((this->get_data() & ~channel_mask) | (other_bits & channel_mask)); }
+    void set_from_reference(const BitField& other_bits) const { this->set_data((this->get_data(num_bytes) & ~channel_mask) | (other_bits & channel_mask), num_bytes); }
 };
 
 }}  // namespace boost::gil
@@ -665,7 +643,7 @@ public:
     auto get() const -> integer_t
     {
         const BitField channel_mask = static_cast< integer_t >( parent_t::max_val ) <<_first_bit;
-        return static_cast< integer_t >(( this->get_data()&channel_mask ) >> _first_bit );
+        return static_cast< integer_t >(( this->get_data((_first_bit + NumBits + 7) / 8)&channel_mask ) >> _first_bit );
     }
 };
 
@@ -711,12 +689,12 @@ public:
     auto get() const -> integer_t
     {
         BitField const channel_mask = static_cast< integer_t >( parent_t::max_val ) << _first_bit;
-        return static_cast< integer_t >(( this->get_data()&channel_mask ) >> _first_bit );
+        return static_cast< integer_t >(( this->get_data((_first_bit + NumBits + 7) / 8)&channel_mask ) >> _first_bit );
     }
 
     void set_unsafe(integer_t value) const {
         const BitField channel_mask = static_cast< integer_t >( parent_t::max_val ) << _first_bit;
-        this->set_data((this->get_data() & ~channel_mask) | value<<_first_bit);
+        this->set_data((this->get_data((_first_bit + NumBits + 7) / 8) & ~channel_mask) | value<<_first_bit, (_first_bit + NumBits + 7) / 8);
     }
 };
 } }  // namespace boost::gil
