@@ -46,7 +46,7 @@ public:
     static constexpr std::size_t num_dimensions = 2;
 
     point() = default;
-    point(T px, T py) : x(px), y(py) {}
+    point(T px, T py) noexcept(std::is_nothrow_copy_constructible<T>::value) : x(px), y(py) {}
 
     point operator<<(std::ptrdiff_t shift) const
     {

@@ -83,6 +83,19 @@ using bit_aligned_image_types = std::tuple
     gil::bit_aligned_image3_type<6, 6, 6, gil::rgb_layout_t>::type
 >;
 
+using rgb_planar_image_types = std::tuple
+<
+    gil::image<gil::bgr8_pixel_t, true>,
+    gil::image<gil::bgr16_pixel_t, true>,
+    gil::image<gil::bgr32_pixel_t, true>,
+    gil::image<gil::rgb8_pixel_t, true>,
+    gil::image<gil::rgb16_pixel_t, true>,
+    gil::image<gil::rgb32_pixel_t, true>,
+    gil::image<gil::rgba8_pixel_t, true>,
+    gil::image<gil::rgba16_pixel_t, true>,
+    gil::image<gil::rgba32_pixel_t, true>
+>;
+
 template <typename Image, typename Generator>
 auto generate_image(std::ptrdiff_t size_x, std::ptrdiff_t size_y, Generator&& generate) -> Image
 {
