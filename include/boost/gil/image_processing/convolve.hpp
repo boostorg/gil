@@ -430,7 +430,7 @@ void convolve_2d(SrcView const& src_view, Kernel const& kernel, DstView const& d
         typename color_space_type<DstView>::type
     >::value, "Source and destination views must have pixels with the same color space");
 
-    for (std::size_t i = 0; i < src_view.num_channels(); i++)
+    for (index_t i = 0; i < src_view.num_channels(); i++)
     {
         detail::convolve_2d_impl(
             nth_channel_view(src_view, i),
