@@ -26,6 +26,7 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <cstdlib>
 #include <cstring>
 #include <iterator>
 #include <memory>
@@ -269,6 +270,201 @@ BOOST_FORCEINLINE auto copy_with_2d_iterators(SrcIterator first, SrcIterator las
     }
     return dst+n;
 }
+
+//////////////////////////////////////////////////////////////////////////////////////
+// Support for views with a transposed memory layout (e.g. transposed_view, rotated90cw_view)
+//////////////////////////////////////////////////////////////////////////////////////
+
+template <typename Locator>
+struct is_memory_based_2d_locator : std::false_type {};
+
+template <typename StepIterator>
+struct is_memory_based_2d_locator<memory_based_2d_locator<StepIterator>> : std::true_type {};
+
+/// Whether a view of this type can have a transposed memory layout, i.e. a memory-based view
+/// whose horizontal step is dynamic.
+template <typename View>
+struct may_have_transposed_layout
+    : std::integral_constant
+    <
+        bool,
+        is_memory_based_2d_locator<typename View::xy_locator>::value &&
+        iterator_is_step<typename View::x_iterator>::value
+    >
+{};
+
+template <typename View>
+BOOST_FORCEINLINE bool has_transposed_layout(View const& view, std::true_type)
+{
+    // Adjacent pixels of a row are further apart in memory than adjacent pixels of a column
+    return std::abs(view.pixels().pixel_size()) > std::abs(view.pixels().row_size());
+}
+
+template <typename View>
+BOOST_FORCEINLINE bool has_transposed_layout(View const&, std::false_type)
+{
+    return false;
+}
+
+/// Returns true if traversing the view row by row accesses the memory with a large stride
+template <typename View>
+BOOST_FORCEINLINE bool has_transposed_layout(View const& view)
+{
+    return has_transposed_layout(view,
+        std::integral_constant<bool, may_have_transposed_layout<View>::value>{});
+}
+
+/// Whether the views of these types may be traversed along different memory axes
+template <typename View1, typename View2>
+struct may_have_different_layouts
+    : std::integral_constant
+    <
+        bool,
+        may_have_transposed_layout<View1>::value || may_have_transposed_layout<View2>::value
+    >
+{};
+
+struct identity_pixel_fn
+{
+    template <typename P>
+    BOOST_FORCEINLINE auto operator()(P&& p) const -> P&&
+    {
+        return std::forward<P>(p);
+    }
+};
+
+/// \brief Performs dst(x,y) = fun(src(x,y)) by square blocks of BlockSize x BlockSize pixels
+///
+/// Intended for views that are traversed along different memory axes (one of them has a
+/// transposed memory layout). BlockSize rows of dst are written at once while the src pixels
+/// of the block are read with precomputed offsets, so that both views are accessed with
+/// BlockSize sequential streams instead of one of them being accessed with a large stride.
+/// The blocks are processed by vertical panels of PanelWidth columns, so that the memory
+/// touched in src by a panel stays in cache while the panel is processed.
+template <std::ptrdiff_t BlockSize, std::ptrdiff_t PanelWidth, typename View1, typename View2, typename F>
+void transform_pixels_blocked(View1 const& src, View2 const& dst, F& fun)
+{
+    static_assert(BlockSize > 0, "BlockSize must be positive");
+    static_assert(PanelWidth > 0 && PanelWidth % BlockSize == 0,
+        "PanelWidth must be a positive multiple of BlockSize");
+    BOOST_ASSERT(src.dimensions() == dst.dimensions());
+
+    using src_locator_t = typename View1::xy_locator;
+    using cached_location_t = typename src_locator_t::cached_location_t;
+
+    std::ptrdiff_t const width = src.width();
+    std::ptrdiff_t const height = src.height();
+    std::ptrdiff_t const blocked_width = width - width % BlockSize;
+    std::ptrdiff_t const blocked_height = height - height % BlockSize;
+
+    // offsets[k][l] is the location of src(x + l, y + k) relative to src(x, y)
+    cached_location_t offsets[BlockSize][BlockSize];
+    {
+        src_locator_t const loc = src.xy_at(0, 0);
+        for (std::ptrdiff_t k = 0; k < BlockSize; ++k)
+            for (std::ptrdiff_t l = 0; l < BlockSize; ++l)
+                offsets[k][l] = loc.cache_location(l, k);
+    }
+
+    typename View2::x_iterator d[BlockSize];
+
+    for (std::ptrdiff_t x0 = 0; x0 < blocked_width; x0 += PanelWidth)
+    {
+        std::ptrdiff_t const x1 = (std::min)(x0 + PanelWidth, blocked_width);
+
+        for (std::ptrdiff_t y = 0; y < blocked_height; y += BlockSize)
+        {
+            for (std::ptrdiff_t k = 0; k < BlockSize; ++k)
+                d[k] = dst.row_begin(y + k);
+
+            for (std::ptrdiff_t x = x0; x < x1; x += BlockSize)
+            {
+                src_locator_t const s = src.xy_at(x, y);
+                for (std::ptrdiff_t k = 0; k < BlockSize; ++k)
+                    for (std::ptrdiff_t l = 0; l < BlockSize; ++l)
+                        d[k][x + l] = fun(s[offsets[k][l]]);
+            }
+        }
+
+        // Remaining rows of the panel
+        for (std::ptrdiff_t y = blocked_height; y < height; ++y)
+        {
+            typename View1::x_iterator const s = src.row_begin(y);
+            typename View2::x_iterator const d0 = dst.row_begin(y);
+            for (std::ptrdiff_t x = x0; x < x1; ++x)
+                d0[x] = fun(s[x]);
+        }
+    }
+
+    // Remaining columns
+    if (blocked_width < width)
+    {
+        for (std::ptrdiff_t y = 0; y < height; ++y)
+        {
+            typename View1::x_iterator const s = src.row_begin(y);
+            typename View2::x_iterator const d0 = dst.row_begin(y);
+            for (std::ptrdiff_t x = blocked_width; x < width; ++x)
+                d0[x] = fun(s[x]);
+        }
+    }
+}
+
+/// Size in bits of a pixel in memory, given the reference and value types of a view
+template <typename Reference, typename Value>
+struct pixel_bit_size_impl
+    : std::integral_constant<std::size_t, 8 * sizeof(Value)>
+{};
+
+template <typename BitField, typename ChannelBitSizes, typename Layout, bool IsMutable, typename Value>
+struct pixel_bit_size_impl<bit_aligned_pixel_reference<BitField, ChannelBitSizes, Layout, IsMutable>, Value>
+    : std::integral_constant
+    <
+        std::size_t,
+        bit_aligned_pixel_reference<BitField, ChannelBitSizes, Layout, IsMutable>::bit_size
+    >
+{};
+
+/// Size in bits of the pixels of the view (exact for bit-aligned pixels)
+template <typename View>
+struct view_pixel_bit_size
+    : pixel_bit_size_impl
+    <
+        typename std::remove_cv<typename std::remove_reference<typename View::reference>::type>::type,
+        typename View::value_type
+    >
+{};
+
+/// Block size (in pixels) used by copy_pixels and transform_pixels for views with different
+/// memory layouts, depending on the size of the pixels in bits.
+/// Tuned on 1-bit to 128-bit pixels (bit-aligned, packed, interleaved and planar, integral and
+/// floating-point channels) and 1000x1000 to 8192x8192 images: a row of a block should span
+/// no more than about 32 bytes.
+constexpr std::ptrdiff_t transpose_block_size(std::size_t pixel_bit_size)
+{
+    return pixel_bit_size <= 24 ? 8 : pixel_bit_size <= 64 ? 4 : 2;
+}
+
+/// Panel width (in pixels) used by copy_pixels and transform_pixels for views with different
+/// memory layouts. Each column of a panel touches one cache line of the transposed view whatever
+/// the size of the pixels, hence it does not depend on it.
+constexpr std::ptrdiff_t transpose_panel_width = 128;
+
+/// Blocked transform of views with different memory layouts. The views are swapped to their
+/// transposed views if needed so that dst is the one that is written along its memory rows.
+template <typename View1, typename View2, typename F>
+void transform_pixels_blocked_dispatch(View1 const& src, View2 const& dst, F& fun, bool dst_transposed)
+{
+    constexpr std::size_t pixel_bit_size = (std::max)(
+        view_pixel_bit_size<View1>::value, view_pixel_bit_size<View2>::value);
+    constexpr std::ptrdiff_t block_size = transpose_block_size(pixel_bit_size);
+
+    if (dst_transposed)
+        transform_pixels_blocked<block_size, transpose_panel_width>(
+            transposed_view(src), transposed_view(dst), fun);
+    else
+        transform_pixels_blocked<block_size, transpose_panel_width>(src, dst, fun);
+}
+
 } // namespace detail
 } }  // namespace boost::gil
 
@@ -284,13 +480,50 @@ BOOST_FORCEINLINE auto copy1(boost::gil::iterator_from_2d<IL> first, boost::gil:
 } // namespace std
 
 namespace boost { namespace gil {
+
+namespace detail {
+
+template <typename View1, typename View2> BOOST_FORCEINLINE
+void copy_pixels_impl(View1 const& src, View2 const& dst, std::false_type)
+{
+    copy_with_2d_iterators(src.begin(), src.end(), dst.begin());
+}
+
+template <typename View1, typename View2> BOOST_FORCEINLINE
+void copy_pixels_impl(View1 const& src, View2 const& dst, std::true_type)
+{
+    bool const src_transposed = has_transposed_layout(src);
+    bool const dst_transposed = has_transposed_layout(dst);
+
+    if (src_transposed != dst_transposed)
+    {
+        identity_pixel_fn fun;
+        transform_pixels_blocked_dispatch(src, dst, fun, dst_transposed);
+    }
+    else if (src_transposed)
+    {
+        // Both views are transposed: traverse them along their memory rows
+        auto const tsrc = transposed_view(src);
+        auto const tdst = transposed_view(dst);
+        copy_with_2d_iterators(tsrc.begin(), tsrc.end(), tdst.begin());
+    }
+    else
+        copy_with_2d_iterators(src.begin(), src.end(), dst.begin());
+}
+
+} // namespace detail
+
 /// \ingroup ImageViewSTLAlgorithmsCopyPixels
 /// \brief std::copy for image views
+///
+/// If one of the views has a transposed memory layout (e.g. obtained with transposed_view)
+/// and the other one does not, the pixels are copied by blocks to limit the cache misses.
 template <typename View1, typename View2> BOOST_FORCEINLINE
 void copy_pixels(const View1& src, const View2& dst)
 {
     BOOST_ASSERT(src.dimensions() == dst.dimensions());
-    detail::copy_with_2d_iterators(src.begin(),src.end(),dst.begin());
+    detail::copy_pixels_impl(src, dst,
+        std::integral_constant<bool, detail::may_have_different_layouts<View1, View2>::value>{});
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -1120,17 +1353,53 @@ bool equal_pixels(const View1& v1, const View2& v2) {
 /// \ingroup ImageViewSTLAlgorithms
 /// \brief std::transform for image views
 
-/// \ingroup ImageViewSTLAlgorithmsTransformPixels
-/// \brief std::transform for image views
+namespace detail {
+
 template <typename View1, typename View2, typename F> BOOST_FORCEINLINE
-F transform_pixels(const View1& src,const View2& dst, F fun) {
-    BOOST_ASSERT(src.dimensions() == dst.dimensions());
+void transform_pixels_by_rows(View1 const& src, View2 const& dst, F& fun)
+{
     for (std::ptrdiff_t y=0; y<src.height(); ++y) {
         typename View1::x_iterator srcIt=src.row_begin(y);
         typename View2::x_iterator dstIt=dst.row_begin(y);
         for (std::ptrdiff_t x=0; x<src.width(); ++x)
             dstIt[x]=fun(srcIt[x]);
     }
+}
+
+template <typename View1, typename View2, typename F> BOOST_FORCEINLINE
+void transform_pixels_impl(View1 const& src, View2 const& dst, F& fun, std::false_type)
+{
+    transform_pixels_by_rows(src, dst, fun);
+}
+
+template <typename View1, typename View2, typename F> BOOST_FORCEINLINE
+void transform_pixels_impl(View1 const& src, View2 const& dst, F& fun, std::true_type)
+{
+    bool const src_transposed = has_transposed_layout(src);
+    bool const dst_transposed = has_transposed_layout(dst);
+
+    if (src_transposed != dst_transposed)
+        transform_pixels_blocked_dispatch(src, dst, fun, dst_transposed);
+    else if (src_transposed)
+        // Both views are transposed: traverse them along their memory rows
+        transform_pixels_by_rows(transposed_view(src), transposed_view(dst), fun);
+    else
+        transform_pixels_by_rows(src, dst, fun);
+}
+
+} // namespace detail
+
+/// \ingroup ImageViewSTLAlgorithmsTransformPixels
+/// \brief std::transform for image views
+///
+/// If one of the views has a transposed memory layout (e.g. obtained with transposed_view)
+/// and the other one does not, the pixels are processed by blocks to limit the cache misses.
+/// Hence the order in which \p fun is applied to the pixels is unspecified.
+template <typename View1, typename View2, typename F> BOOST_FORCEINLINE
+F transform_pixels(const View1& src,const View2& dst, F fun) {
+    BOOST_ASSERT(src.dimensions() == dst.dimensions());
+    detail::transform_pixels_impl(src, dst, fun,
+        std::integral_constant<bool, detail::may_have_different_layouts<View1, View2>::value>{});
     return fun;
 }
 
