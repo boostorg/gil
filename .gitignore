@@ -19,9 +19,6 @@ doc/node_modules
 *.code-workspace
 out
 
-# Clang/LLVM
-/.clang-format
-
 # CMake
 /*build*
 /cmake-build-debug/
